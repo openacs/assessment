@@ -267,7 +267,7 @@ create table as_assessment_section_map (
 			references as_sections (section_id),
 	feedback_text	text,
 	max_time_to_complete	integer,
-	sort_order	varchar(25)
+	sort_order	integer
 );
 
 -- Defines the items of a section
@@ -290,5 +290,5 @@ create table as_item_section_map (
 	feedback_text	text,
 	max_time_to_complete	integer,
 	adp_chunk	varchar(25),
-	sort_order	varchar(25)
+	sort_order	integer
 );
