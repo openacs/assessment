@@ -28,9 +28,22 @@
     and c.revision_id = t.as_item_type_id
     group by c.title, t.increasing_p, t.allow_negative_p,
     t.num_correct_answers, t.num_answers
+
 </querytext>
 </fullquery>
 
+<fullquery name="choice_orientation">
+	<querytext>
+
+	    select d.choice_orientation
+	    from as_item_rels r, as_item_display_$presentation_type d
+	    where r.item_rev_id = :as_item_id
+	    and r.rel_type = 'as_item_display_rel'
+	    and r.target_rev_id = d.as_item_display_id
+
+	</querytext>
+</fullquery>
+	
 <fullquery name="checks_related">
 <querytext>
 	

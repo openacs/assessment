@@ -133,6 +133,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Choice_Orientation_help">Which orientation shall the choices have</msg>
   <msg key="choice_set">Title</msg>
   <msg key="choice_set_title">Title</msg>
+  <msg key="Choice_Sets">Existing Choice Set</msg>
   <msg key="choose_action">Choose the action to perform</msg>
   <msg key="condition">Condition</msg>
   <msg key="Confirm_Consent">Confirmation</msg>

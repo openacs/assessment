@@ -37,13 +37,19 @@
       <if @items.content@ not nil><tr><td colspan="4">@items.content;noquote@</td></tr></if>
 
       <tr><td colspan="4">
-        <blockquote>
+        <blockquote><table>
+          <tr class="form-widget">
+          <td valign=top>@items.description@</td><td>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
             <formgroup id="response_to_item.@items.as_item_id@">
-              @formgroup.widget;noquote@
-              @formgroup.label;noquote@
-              <br>
+              <if @items.choice_orientation@ ne horizontal>
+                @formgroup.widget;noquote@ @formgroup.label;noquote@<br>
+              </if>
+              <else>
+                @formgroup.widget;noquote@ @formgroup.label;noquote@
+              </else>
             </formgroup>
+            <if @items.choice_orientation@ eq horizontal><br></if>
           </if>
           <elseif @items.presentation_type@ eq fitb>
             @items.html;noquote@
@@ -59,7 +65,9 @@
             </div>
           </if>
           <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
-          <if @items.submitted_p@ eq f><br><input type=submit value="#assessment.Submit#"></if>
+          </td></tr><tr class="form-widget"><td>
+            <if @items.submitted_p@ eq f><br><input type=submit value="#assessment.Submit#"></if>
+          </td></tr></table>
         </blockquote>
         <hr>
       </td></tr>

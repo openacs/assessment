@@ -216,7 +216,7 @@ ad_proc as::section::items {
     set open_positions ""
     set max_pos 0
     db_foreach section_items {} {
-	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type]
+	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type $as_item_type_id]
 	if {![empty_string_p $fixed_position] && $fixed_position != "0"} {
 	    set fixed_positions($fixed_position) $as_item_id
 	    if {$max_pos < $fixed_position} {

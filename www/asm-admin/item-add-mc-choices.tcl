@@ -47,9 +47,9 @@ set ad_form_code "-form \{\n"
 set count_correct 0
 db_foreach get_choices {} {
     if {$correct_answer_p == "t"} {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=/resources/assessment/correct.gif>\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $title\"\} \{value \"<img src=/resources/assessment/correct.gif>\"\}\}\n"
     } else {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=/resources/assessment/wrong.gif>\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $title\"\} \{value \"<img src=/resources/assessment/wrong.gif>\"\}\}\n"
     }
     append ad_form_code "\{selected.$choice_id:text(checkbox),optional \{label \"[_ assessment.Default_Selected]\"\} \{options \$selected_options\} \{help_text \"[_ assessment.Default_Selected_help]\"\}\}\n"
     append ad_form_code "\{fixed_pos.$choice_id:text,optional,nospell \{label \"[_ assessment.Fixed_Position]\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.choice_Fixed_Position_help]\"\}\}\n"

@@ -30,24 +30,51 @@
 
       <multiple name="items">
       <tr>
-      <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td>
-        <td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
-      <if @items.content@ not nil><tr><td colspan="4">@items.content;noquote@</td></tr></if>
-
-      <tr class="form-widget"><td colspan="4">
-        <blockquote>
-          <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
+      <tr><td bgcolor="#e4eaef" colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td>
+        <td bgcolor="#e4eaef"><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b>
+      <if @items.content@ not nil><tr><td bgcolor="#e4eaef" colspan="4"><br>@items.content;noquote@</if>
+      <if @items.title@ ne @items.next_title@>
+        </td></tr>
+        <tr class="form-widget"><td colspan=4>
+          <blockquote><table>
+      </if>
+      <else>
+        <td><blockquote><table>
+      </else>
+<group column=title>
+          <tr class="form-widget">
+          <if @items.title@ eq @items.next_title@ and @items.groupnum@ eq 1>
+            <td></td>
             <formgroup id="response_to_item.@items.as_item_id@">
-              @formgroup.widget;noquote@
-              @formgroup.label;noquote@
-              <br>
+              <td align=center>@formgroup.label;noquote@</td>
             </formgroup>
+            </tr><tr class="form-widget">
+          </if>
+          <td valign=top>@items.description@</td>
+          <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
+            <if @items.choice_orientation@ ne horizontal>
+              <td><formgroup id="response_to_item.@items.as_item_id@">
+                @formgroup.widget;noquote@ @formgroup.label;noquote@<br>
+              </formgroup>
+            </if>
+            <elseif @items.title@ ne @items.next_title@ and @items.groupnum@ eq 1>
+              <td><formgroup id="response_to_item.@items.as_item_id@">
+                @formgroup.widget;noquote@ @formgroup.label;noquote@
+              </formgroup>
+              <br>
+            </elseif>
+            <else>
+              <formgroup id="response_to_item.@items.as_item_id@">
+                <td align=center>@formgroup.widget;noquote@</td>
+              </formgroup>
+              </tr><tr><td></td><td colspan=10>
+            </else>
           </if>
           <elseif @items.presentation_type@ eq fitb>
-            @items.html;noquote@
+            <td>@items.html;noquote@
           </elseif>
           <else>
-            <formwidget id="response_to_item.@items.as_item_id@">
+            <td colspan=10><formwidget id="response_to_item.@items.as_item_id@">
           </else>
 
           <if @items.subtext@ not nil>
@@ -58,10 +85,12 @@
           </if>
 
           <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
+</td></tr>
+</group></td></tr></table>
 
         </blockquote>
-        <hr>
-      </td></tr>
+        </td></tr>
+        <tr><td colspan=4><hr></td></tr>
       </multiple>
 
   </table>
