@@ -104,11 +104,18 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					# Insert section in the CR (and in the as_sections table) getting the revision_id (section_id)
 					set as_sections__section_id [as::section::new -title $as_sections__title -description $as_sections__definition]
 					
+					set as_sections__points ""
+					
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
 					incr as_assessment_section_map__sort_order
 					# Process the items
 					as::qti::parse_item $section $as_sections__section_id [file dirname $xmlfile]
+					
+					#get points from a section
+					db_0or1row get_section_points {}
+					#update as_assessment_section_map with section points
+					db_dml update_as_assessment_section_map {}
 				}
 			}
 		} else {
@@ -293,7 +300,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		set as_item_type_id [as::item_type_mc::new]
 
 		# Insert as_item
-		set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
+		set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong -points $as_items__points]
 
 		# set the relation between as_items and as_item_type tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
