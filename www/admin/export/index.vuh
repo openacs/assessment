@@ -213,9 +213,9 @@ db_multirow sections query_all_sections {} {
 	        $response_str setAttribute rtiming "No"
 	        $flow appendChild $response_str	    
 	        #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =) 
-                db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_tax WHERE item_id=:item_display_id"
-                set rows "[lindex $abs_size 1]"
-		set columns "[lindex $abs_size 3]"
+                db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_tax WHERE item_id=:item_display_id"
+                set rows "[lindex $html_display_options 1]"
+		set columns "[lindex $html_display_options 3]"
 		#<render_fib>
 		set render_fib [$doc createElement render_fib]
 		$render_fib setAttribute fibtype "String"

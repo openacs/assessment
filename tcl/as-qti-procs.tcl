@@ -220,7 +220,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 					# we need the size of textarea (values of rows and cols)
 					set html "rows $rows cols $cols"
 					# insert as_item_display_ta in the CR (and in the as_item_display_ta table) getting the revision_id (item_display_id)					
-					set as_item_display_id [as::item_display_ta::new -abs_size $html]
+					set as_item_display_id [as::item_display_ta::new -html_display_options $html]
 					foreach node $presentationChildNodes {
 					# get the title of item
 					if {[$node nodeName] == {material}} {

@@ -108,8 +108,8 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   if {[string compare $presentation_type "textarea"] == 0} {  
       set text_answer {}
       #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =)        
-      db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
-      set html_options "[lindex $abs_size 0]=[lindex $abs_size 1] [lindex $abs_size 2]=[lindex $abs_size 3]"
+      db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
+      set html_options "[lindex $html_display_options 0]=[lindex $html_display_options 1] [lindex $html_display_options 2]=[lindex $html_display_options 3]"
       #get the user response
       db_0or1row shortanswer {} 
       #paint a disabled textarea with the user response
