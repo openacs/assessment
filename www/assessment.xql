@@ -35,6 +35,45 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="unfinished_section_order">
+	<querytext>
+
+	select max(s.sort_order) as section_order
+        from as_session_sections s, as_section_data d
+        where s.session_id = :session_id
+	and d.session_id = s.session_id
+	and d.section_id = s.section_id
+
+	</querytext>
+</fullquery>
+	
+<fullquery name="unfinished_section_id">
+	<querytext>
+
+	select section_id
+        from as_session_sections
+        where session_id = :session_id
+	and sort_order = :section_order
+
+	</querytext>
+</fullquery>
+	
+<fullquery name="unfinished_item_order">
+	<querytext>
+
+	select min(i.sort_order) as item_order
+        from as_session_items i
+        where i.session_id = :session_id
+	and i.section_id = :section_id
+        and not exists (select 1
+			from as_item_data d
+			where d.session_id = :session_id
+			and d.section_id = :section_id
+			and d.as_item_id = i.as_item_id)
+
+	</querytext>
+</fullquery>
+	
 <fullquery name="process_item_type">
 	<querytext>
 

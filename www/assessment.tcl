@@ -33,13 +33,18 @@ db_transaction {
     if {[empty_string_p $session_id]} {
 	
 	# Check if there is an unfinished session lying around
-	# todo: check if there's an old session that could be continued
-
 	set session_id [db_string unfinished_session_id {}]
 	if {[empty_string_p $session_id]} {
 	    set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id]
 	    # update the creation_datetime col of as_sessions table to set the time when the subject initiated the Assessment
 	    db_dml session_start {}
+	} else {
+	    # pick up old session
+	    db_1row unfinished_section_order {}
+	    db_1row unfinished_section_id {}
+	    db_1row unfinished_item_order {}
+	    incr section_order -1
+	    incr item_order -1
 	}
     }
 
@@ -47,9 +52,11 @@ db_transaction {
     set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation)]
 
     if {[empty_string_p $section_order]} {
+	# start at the first section
 	set section_order 0
 	set section_id [lindex $section_list 0]
     } else {
+	# continue with given section
 	set section_id [lindex $section_list $section_order]
     }
 
@@ -69,6 +76,14 @@ db_transaction {
 
     if {![empty_string_p $item_order]} {
 	# show next items on section page
+	if {![empty_string_p $display(num_items)]} {
+	    # make sure to display correct section page
+	    set item_order [expr $item_order - (($item_order+1) % $display(num_items))]
+	} elseif {$display(submit_answer_p) == "t"} {
+	    # show whole section when picking up a seperate submit section
+	    set item_order 0
+	}
+	# strip away items on previous section pages
 	set item_list [lreplace $item_list 0 [expr $item_order-1]]
     }
 
@@ -96,6 +111,7 @@ db_transaction {
     }
 
     if {$new_section_order == [llength $section_list]} {
+	# last section
 	set new_section_order ""
     }
 }
@@ -116,17 +132,20 @@ foreach one_item $item_list {
     util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type
 
     if {$required_p == "t"} {
+	# make sure that mandatory items are answered
 	lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
 	incr required_count
     }
     set default_value ""
     set submitted_p f
+
     if {$display(submit_answer_p) != "t"} {
 	# no seperate submit of each item
 	if {$assessment_data(reuse_responses_p) == "t"} {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
+
     } else {
 	# submit each item seperately
 	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id]
@@ -135,6 +154,7 @@ foreach one_item $item_list {
 	    set submitted_p t
 	    set mode display
 	    if {$required_p == "t"} {
+		# correct count of mandatory items not yet answered (to display next-button)
 		incr required_count -1
 	    }
 	} else {
@@ -145,6 +165,8 @@ foreach one_item $item_list {
 	    }
 	    lappend unsubmitted_list $as_item_id
 	}
+
+	# create seperate submit form for each item
 	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
 	    {session_id:text(hidden) {value $session_id}}
 	    {item_id:text(hidden) {value $as_item_id}}
@@ -156,6 +178,7 @@ foreach one_item $item_list {
 	    db_transaction {
 		db_dml session_updated {}
 
+		# save answer
 		set response_item_id \$item_id
 		db_1row process_item_type {}
 		set item_type \[string range \$item_type end-1 end\]
@@ -168,15 +191,8 @@ foreach one_item $item_list {
 	    }
 	}"
 	set after_submit "{
-	    if {!\[empty_string_p \$section_order\]} {
-		ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
-		ad_script_abort
-	    } else {
-		as::assessment::calculate -session_id \$session_id -assessment_id \$assessment_rev_id
-		db_dml session_finished {}
-		ad_returnredirect \[export_vars -base finish {session_id assessment_id}\]
-		ad_script_abort
-	    }
+	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
+	    ad_script_abort
 	}"
 
 	eval ad_form -extend -name show_item_form_$as_item_id -validate "{$validate_list}" -on_submit $on_submit -after_submit $after_submit
@@ -200,6 +216,7 @@ if {$display(submit_answer_p) != "t"} {
 	db_transaction {
 	    db_dml session_updated {}
 
+	    # save answers
 	    foreach one_response \$item_list {
 		util_unlist \$one_response response_item_id
 		db_1row process_item_type {}
@@ -213,17 +230,20 @@ if {$display(submit_answer_p) != "t"} {
 	    }
 
 	    if {\$section_order != \$new_section_order} {
+		# calculate section points at end of section
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
 	    }
 	}
     }"
     set after_submit "{
 	if {!\[empty_string_p \$new_section_order\]} {
+	    # go to next section
 	    set section_order \$new_section_order
 	    set item_order \$new_item_order
 	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
 	    ad_script_abort
 	} else {
+	    # calculate session points at end of session
 	    as::assessment::calculate -session_id \$session_id -assessment_id \$assessment_rev_id
 	    db_dml session_finished {}
 	    ad_returnredirect \[export_vars -base finish {session_id assessment_id}\]
@@ -232,10 +252,14 @@ if {$display(submit_answer_p) != "t"} {
     }"
 
     eval ad_form -extend -name show_item_form -validate "{$validate_list}" -on_submit $on_submit -after_submit $after_submit
+
 } else {
+
+    # process next button in seperate submit mode
     set template "assessment-single-submit"
     ad_form -extend -name show_item_form -on_submit {
 	db_transaction {
+	    # save empty answer for unanswered optional items
 	    foreach response_item_id $unsubmitted_list {
 		db_1row process_item_type {}
 		set item_type [string range $item_type end-1 end]
@@ -245,16 +269,19 @@ if {$display(submit_answer_p) != "t"} {
 	    }
 
 	    if {$section_order != $new_section_order} {
+		# calculate section points at end of section
 		as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
 	    }
 	}
     } -after_submit {
 	if {![empty_string_p $new_section_order]} {
+	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
 	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 	    ad_script_abort
 	} else {
+	    # calculate session points at end of session
 	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	    db_dml session_finished {}
 	    ad_returnredirect [export_vars -base finish {session_id assessment_id}]
