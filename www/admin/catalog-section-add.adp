@@ -33,4 +33,5 @@
 
 </multiple>
 
-
+<formtemplate id="catalog_section_add">
+</formtemplate>
