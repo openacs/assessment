@@ -31,5 +31,8 @@ db_multirow -extend { presentation_type html result_points feedback answered_p }
 	set result_points ""
 	set feedback ""
 	set answered_p f
-    }
+    }    
 }
+db_1row assessment_id_section {}
+# Get the assessment data
+as::assessment::data -assessment_id $assessment_id        

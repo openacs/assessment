@@ -61,13 +61,16 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						}
 					}
 				}
+				set show_feedback "all"
 				set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
 				set as_assessments__survey_p {f}				
 				if { [llength $resprocessNodes] == 0 } {				     
-				     set as_assessments__survey_p {t}				     
+				     set as_assessments__survey_p {t}
+				     #if it's a survey don't show feedback
+				     set show_feedback "none"				     
 				}				
 				# Insert assessment in the CR (and as_assessments table) getting the revision_id (assessment_id)
-				set as_assessments__assessment_id [as::assessment::new -title $as_assessments__title -description $as_assessments__definition -instructions $as_assessments__instructions -survey_p $as_assessments__survey_p]
+				set as_assessments__assessment_id [as::assessment::new -title $as_assessments__title -description $as_assessments__definition -instructions $as_assessments__instructions -survey_p $as_assessments__survey_p -show_feedback $show_feedback]
 				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]

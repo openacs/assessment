@@ -24,12 +24,14 @@
   </else>
 
 <td>
-<if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#<if @items.feedback@ not nil>: @items.feedback;noquote@</b></if></b>
+<if @assessment_data.survey_p@ in f>
+    <if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#<if @items.feedback@ not nil>: @items.feedback;noquote@</b></if></b>
+    </if>
+    <else>
+      <if @items.answered_p@ eq t><b>#assessment.not_yet_reviewed#</b></if>
+      <else><b>#assessment.not_answered#</b></else>
+    </else>
 </if>
-<else>
-  <if @items.answered_p@ eq t><b>#assessment.not_yet_reviewed#</b></if>
-  <else><b>#assessment.not_answered#</b></else>
-</else>
 </td></tr>
 
   <if @items.rownum@ odd>
