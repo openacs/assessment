@@ -4,15 +4,17 @@ ad_page_contract {
 } -query {
   assessment_id:notnull
 } -properties {
+    as_session_id
     context:onevalue
 }
 
 set context [list "Show Items"]
 
-as_session_new -assessment_id $assessment_id -subject_id [ad_conn user_id]
+set as_session_id [as_session_new -assessment_id $assessment_id -subject_id [ad_conn user_id]]
+db_dml session_start {UPDATE as_sessions SET creation_datetime = NOW() WHERE session_id=:as_session_id}
 
 ad_form -name show_item_form -action process-response -html {enctype multipart/form-data} -form {
-    { assessment_id:text {value $assessment_id} }
+    { as_session_id:text {value $as_session_id} }
 }
 
 #For each item:

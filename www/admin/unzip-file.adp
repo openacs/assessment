@@ -4,5 +4,5 @@
 <if @qti_items_imported_number@># items imported: @qti_items_imported_number@</if><br>
 <br>
 <a href="show-items">Show items</a>
-<a href="upload-file">Upload files</a>
+<a href="index">Upload files</a>
 </master>

@@ -190,13 +190,13 @@ ad_proc -public as_session_new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Check to see if there's a session already to not submit another one
-    set as_session_exists [db_string as_session_exists {SELECT COUNT(*) FROM as_sessionsx WHERE subject_id = :subject_id AND assessment_id = :assessment_id}]
-    if { ! $as_session_exists } {    
+    db_0or1row as_session_last {SELECT session_id AS as_session_id FROM as_sessionsx WHERE subject_id = :subject_id AND assessment_id = :assessment_id}
+    if { ! [info exists as_session_id] } {    
     # Insert as_session in the CR (and as_sessions table) getting the revision_id (session_id)
     set session_id [content::item::new -parent_id $folder_id -content_type {as_sessions} -name "$subject_id-$assessment_id" -title "$subject_id-$assessment_id" ]
     set as_session_id [content::revision::new -item_id $session_id -content_type {as_sessions} -title "$subject_id-$assessment_id" -attributes [list [list assessment_id $assessment_id] [list subject_id $subject_id] [list staff_id $staff_id] [list target_datetime $target_datetime] [list creation_datetime $creation_datetime] [list first_mod_datetime $first_mod_datetime] [list last_mod_datetime $last_mod_datetime] [list completed_datetime $completed_datetime] [list percent_score $percent_score] [list consent_timestamp $consent_timestamp] ] ]
-    return $as_session_id
     }
+    return $as_session_id
 }
 
 ad_proc -public as_item_data_new {
@@ -224,20 +224,8 @@ ad_proc -public as_item_data_new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_item_data in the CR (and as_item_data table) getting the revision_id (item_data_id)
-    set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$subject_id-$choice_id_answer" -title "$as_item_id-$subject_id-$choice_id_answer" ]
-    set as_item_data_id [content::revision::new -item_id $item_data_id -content_type {as_item_data} -title "$as_item_id-$subject_id-$choice_id_answer" -attributes [list [list session_id $session_id] [list event_id $event_id] [list subject_id $subject_id] [list staff_id $staff_id] [list as_item_id $as_item_id] [list choice_id_answer $choice_id_answer] [list boolean_answer $boolean_answer] [list numeric_answer $numeric_answer] [list integer_answer $integer_answer] [list text_answer $text_answer] [list timestamp_answer $timestamp_answer] [list content_answer $content_answer] [list signed_data $signed_data] [list percent_score $percent_score] ] ]
+    set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$session_id-$choice_id_answer" -title "$as_item_id-$session_id-$choice_id_answer" ]
+    set as_item_data_id [content::revision::new -item_id $item_data_id -content_type {as_item_data} -title "$as_item_id-$session_id-$choice_id_answer" -attributes [list [list session_id $session_id] [list event_id $event_id] [list subject_id $subject_id] [list staff_id $staff_id] [list as_item_id $as_item_id] [list choice_id_answer $choice_id_answer] [list boolean_answer $boolean_answer] [list numeric_answer $numeric_answer] [list integer_answer $integer_answer] [list text_answer $text_answer] [list timestamp_answer $timestamp_answer] [list content_answer $content_answer] [list signed_data $signed_data] [list percent_score $percent_score] ] ]
 
     return $as_item_data_id
-}
-
-ad_proc -public as_session__get_session_id_from_user_assessment {
-    {-subject_id:required}
-    {-assessment_id:required}
-} {
-    @author Eduardo Perez (eperez@it.uc3m.es)
-    @creation-date 2004-09-12
-
-    Get the session_id from the user_id and the assessment_id
-} {
-    return [db_string as_session_id_get {SELECT session_id FROM as_sessionsx WHERE creation_user = :subject_id AND assessment_id = :assessment_id}]
 }

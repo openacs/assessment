@@ -3,7 +3,7 @@
 <property name="context">@context;noquote@</property>
 
 <formtemplate id="show_item_form">
-    <input type="hidden" name="assessment_id" value="@assessment_id@">
+    <input type="hidden" name="as_session_id" value="@as_session_id@">
 	<table border="1">
 		<br>&nbsp;&nbsp;
 		<b>Items</b>
