@@ -9,247 +9,392 @@
 <span class="context"><span class="reg">
 <h2>Overview</h2>
 <p>
-The Item and Section catalogues are central parts of the assessment
+The&nbsp; As_Item and Section catalogues are central parts of the
+assessment
 system. These repositories support reuse of Assessment components by
-storing of the various Items (or questions if you like) and groups of
-Items (ie Sections) that can be used in an assessment. You are able to
-add/edit/delete an item of a certain type to a certain scope.
+storing of the various as_items (or questions if you like) and groups
+of as_items (ie Sections) that can be used in an assessment. You are
+able to
+add/edit/delete an as_item of a certain type to a certain scope.
 Furthermore it allows you to search and browse for questions for
 inclusion in your assesment as well as import and export multiple
 questions using various formats.
 </p>
 <p>In this description here we will only discuss the design
-implications for Items. Green colored tables have to be
+implications for as_items. Green colored tables have to be
 internationlized.
 </p>
-<p>Each Item consists of a specific Item Type like "Multiple Choice
-Question" or "Free Text". Each <a href="item_types.html">Item Type</a>
-adds additional Attributes to the Item, thereby making it pretty
-flexible. Additionally each item has a related <a
+<p>Each as_item consists of a specific as_item Type like "Multiple
+Choice
+Question" or "Free Text". Each <a href="item_types.html">as_item Type</a>
+adds additional Attributes to the as_item, thereby making it pretty
+flexible. Additionally each as_item has a related <a
  href="display_types.html">display type</a>
-storing information on how to display this item. This way we can create
-an adp-snippet which we can include to display a certain item (the
+storing information on how to display this as_item. This way we can
+create
+an adp-snippet which we can include to display a certain as_item (the
 snippet is stored de-normalized in the as_items table and update on
-every change to the item or the item_type).
+every change to the as_item or the as_item_type).<br>
+</p>
+<p>How is this achieved concretely? Each as_item Type has it's own
+table with attributes useful for this as_item type. All tables
+(as_items, as_item_type_*, as_item_display_*) are controlled by the
+content repository. Each as_item is linked using acs-relationships to
+the specific items of the as_item_type_*&nbsp; and as_item_display_*
+tables. Each as_item can only be linked to one as_item_type instance
+and one as_item_display instance.<br>
 </p>
 <p>Categorization and internationalization will make it into
 OpenACS 5.2, therefore we are not dealing with it in Assessment
 seperately but use the (to be) built in functionality of OpenACS 5.2</p>
 <p>
-Additionally we have support functionality for an item. This includes
+Additionally we have support functionality for an as_item. This
+includes
 the help functionality. To give Assessment authors flexibility in
-adapting Item defaults, help messages, etc for use in different
-Assessments, we abstract out a number of attributes from as_items into
+adapting as_item defaults, help messages, etc for use in different
+Assessments, we abstract out a number of attributes from as_as_items
+into
 mapping tables where "override" values for these attributes can
 optionally be set by authors. If they choose not to set overrides, then
-the values originally created in the Item supercede.
+the values originally created in the as_item supercede.
 </p>
-<p>Seperately we will deal with Checks on Items. These will allow
+<p>Seperately we will deal with Checks on as_items. These will allow
 us to make checks on the input (is the value given by the user actually
-a valid value??), branches (if we display this item, which responses
+a valid value??), branches (if we display this as_item, which responses
 have to have been given) and post-input checks (how many points does
 this answer give).
 </p>
-<p>Here is the graphical schema for the Item-related subsystems,
-including the Item Display subsystem described <a
+<p>Here is the graphical schema for the as_item-related subsystems,
+including the as_item Display subsystem described <a
  style="font-family: monospace;" href="display_types.html">here</a>.<br>
 </p>
-<p></p>
-<center><a
- href="http://openacs.org/storage/download/assessment-itemfocus.graffle?version_id=187545"></a>
+<center>
 <p><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg"
  style="width: 752px; height: 1121px;"></p>
 </center>
 <p>
 </p>
-<h2>Specific Entities: Core Functions</h2>
-<p>
-Here are the components of the Item model in Assessment:
-</p>
-<p></p>
+<h2>Core Function: as_items<br>
+</h2>
 <ul>
-  <li> <b>Items (as_items)</b> are the "questions" that constitute the
-atomic focus of the Assessment package. Each item is of a certain type,
-that can give the item additional attributes, making it really
-flexible. The following attributes are common to all item types.
-    <p></p>
+  <li><b>as_items (as_as_items)</b> are the "questions" that
+constitute the
+atomic focus of the Assessment package. Each as_item is of a certain
+type,
+that can give the as_item additional attributes, making it really
+flexible. The following attributes are common to all as_item types.
     <ul>
-      <li> item_id
-      </li>
-      <li> name - some phrase used in admin UIs
-      </li>
-      <li> item_text - the primary "label" attached to an Item's
-display
-      </li>
-      <li> item_subtext - a secondary label, needed for many kinds of
-questions
-      </li>
+      <li> as_item_id </li>
+      <li> cr::name - some phrase used in admin UIs </li>
+      <li>cr::title - the primary "label" attached to an as_item's
+display </li>
+      <li>subtext - a secondary label, needed for many kinds of
+questions </li>
       <li> field_code - a short label for use in data output header
-rows, etc
-      </li>
-      <li> definition - some descriptive text
-      </li>
-      <li> enabled_p - whether Item is released for actual use
-      </li>
-      <li> required_p - whether Item must be answered (default value,
-can be overriden)
-      </li>
-      <li> item_default - optional field that sets what the Item will
-display when first output (eg text in a textbox; eg the defaults that
-ad_dateentrywidget expects: "" for "no date", "0" for "today", or else
-some specific date set by the author; see <a
- href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
-this example</a>)
-      </li>
+rows, etc </li>
+      <li> definition - some descriptive text</li>
+      <li> required_p - whether as_item must be answered (default
+value,
+can be overriden)</li>
       <li> data_type - This is the expected data_type of the answer.
 Previously "abstract_data_type" but omitting the superfluous "abstract"
 term; selected from the data types supported in the RDBMS:
-        <p></p>
         <ol>
-          <li> integer
-          </li>
-          <li> numeric
-          </li>
+          <li> integer </li>
+          <li> numeric </li>
           <li> exponential - stored in the db as a varchar; of form
-9.999e99
-          </li>
-          <li> varchar
-          </li>
-          <li> text
-          </li>
-          <li> date
-          </li>
-          <li> boolean (char(1) 't' 'f' in Oracle)
-          </li>
+9.999e99 </li>
+          <li> varchar </li>
+          <li> text </li>
+          <li> date </li>
+          <li> boolean (char(1) 't' 'f' in Oracle) </li>
           <li> timestamp (should work for all coarser granularities
-like date etc)
-          </li>
+like date etc) </li>
           <li> content_type -- a derived type: something in the CR
-(instead of a blob type since we use the CR for such things now)
-          </li>
+(instead of a blob type since we use the CR for such things now) </li>
         </ol>
         <font color="red">This value was previously stored with each
-as_item_type. For retrieval purposes it makes more sense thought to
-store it with the item itself, as this prevents us to follow each
-relationship to the as_item_type objects if we want to retrieve the
-answer.</font>
-        <p></p>
-      </li>
+as_as_item_type. For retrieval purposes it makes more sense thought to
+store it with the as_item itself, as this prevents us to follow each
+relationship to the as_as_item_type objects if we want to retrieve the
+answer.</font> </li>
       <li> max_time_to_complete - optional max number of seconds to
-perform Item
-      </li>
+perform as_item </li>
       <li> adp_chunk - a denormalization to cache the generated
 "widget"
-for the Item (NB: when any change is made to an as_item_choice related
-to an as_item, this will have to be updated!)
-      </li>
+for the as_item (NB: when any change is made to an as_as_item_choice
+related
+to an as_as_item, this will have to be updated!) </li>
     </ul>
-    <p>
-    <i>Permissions / Scope</i>: Items need a clearly defined scope, in
+    <p> <i>Permissions / Scope</i>: as_items need a clearly defined
+scope, in
 which they can be reused. Instead of defining a special scope variable
 we will use the acs permission system to grant access rights to an
-item.
-    </p>
+as_item. </p>
     <ul>
       <li>Read: An assessment author (who is granted this permission)
 can
-reuse this item in one of his sections. (NB: Usually the original
-author has admin priviledges.)
-      </li>
-      <li>Write: Author can reuse and change this item.
-      </li>
+reuse this as_item in one of his sections. (NB: Usually the original
+author has admin priviledges.). This is a finer granulation than the
+previous "enabled_p" as it allows specific access to an item. </li>
+      <li>Write: Author can reuse and change this as_item. </li>
       <li>Admin: Author can reuse, change and give permission on this
-item
-      </li>
+as_item</li>
     </ul>
+    <br>
   </li>
-  <li> <b><font color="green">Item Types (as_item_types)</font></b>
-define types of items like "Open Question", "Calculation" and others.
-The item type will also define in what format the answer should be
-stored. For each item type a cr_item_type will be generated. Each
-object of this type is linked to the primary object of the item (see
+</ul>
+</span></span>
+<h2><span class="context"><span class="reg">As_item Types</span></span></h2>
+<h2><span class="context"><span class="reg"></span></span></h2>
+<span class="context"><span class="reg"><b><font color="green">as_item
+Types (as_item_type_*)</font></b>
+define types of as_items like "Open Question", "Calculation" and
+others.
+The as_item type will also define in what format the answer should be
+stored. For <span style="font-weight: bold;">each</span> as_item type
+a cr_as_item_type will be generated. Each
+object of this type is linked to the primary object of the as_item (see
 above) using relationships. This has the benefit that we split the core
-attributes of an item from the type specific ones and the display ones
-(see down below). Using cr_item_type usage allows us to create and
-reuse standard items (e.g. for the likert scale), by linking different
+attributes of an as_item from the type specific ones and the display
+ones
+(see down below). Using cr_as_item_type usage allows us to create and
+reuse standard as_items (e.g. for the likert scale), by linking
+different
 questions with the answer possibilities (and the same attributes) to
-one as_item_type object. If we have objects that are linked this way,
-we can generate the matrix for them.
-    <p>Alternatively we could make the as_item_type object a child of
-the
-as_item and therefore prevent storing all the relations. In that case
-we'd loose the ability described before, but it might be a considerable
-performance gain.
-    </p>
-    <p>Common attributes for *all* item_types:
-    </p>
-    <ul>
-      <li>item_type_id
-      </li>
-      <li>item_type_name - name like "Question Type"
-      </li>
-      <li>item_type_description
-      </li>
-    </ul>
-    <p>
-A list of all item types and their attributes can be found in the <a
+one as_as_item_type object. If we have objects that are linked this
+way,
+we can generate the matrix for them easily. </span></span>A functional
+list of all as_item types and their attributes can be
+found in the <a
  href="http://openacs.org/projects/openacs/packages/assessment/requirements/item_types">requirements
-section</a>
-    </p>
-    <p></p>
-  </li>
-  <li> <b><font color="green">Item Choices (as_item_choices)</font></b>
-contain additional information for all multiple choice item_types.
-Obvious examples are radiobutton and checkbox Items, but pop-up_date,
-typed_date and image_map Items also are constructed via Item Choices.
-Each choice is a child to an as_item_type Object. Note the difference.
-A choice does not belong to an item, but to the instance of the
-item_type! This way we can reuse multiple choice answers easier. It is
+section.</a><span class="context"><span class="reg">
+<ul>
+  <p> </p>
+</ul>
+</span></span>
+<ul>
+  <li><span class="context"><span class="reg"><span class="context"><span
+ class="reg"><b><font color="green">Open Question (as_item_type_oq):</font></b></span></span></span></span></li>
+  <ul>
+    <li>cr::name - Identifier<br>
+    </li>
+    <li>as_item_default: The content of this
+field will be prefilled in the response of the user taking the survey </li>
+    <li>feedback_text: The person correcting
+the answers will see the contents of this box as correct answer for
+comparison with the user response.</li>
+  </ul>
+  <p> </p>
+  <li><span class="context"><span class="reg"><span class="context"><span
+ class="reg"><b><font color="green">Multiple Choice Item
+(as_item_type_mc):<br>
+    </font></b></span></span></span></span></li>
+  <ul>
+    <li>cr::name - Identifier<br>
+    </li>
+    <li>increasing_p:&nbsp; Increasing will give (number of correct
+matches / number of
+total matches) *100% points. All or nothing will either give 100%, if
+all correct answers are given,
+or 0% else.</li>
+    <li>allow_negative_p: This will allow a
+negative percentage as well (as the total result).</li>
+    <li>num_correct_answers: How many
+correct
+options have to be displayed. Check if enough correct choices have been
+defined. </li>
+    <li>num_answers: How many options
+shall
+be displayed in total (correct and incorrect). Check if enough choices
+are available. </li>
+  </ul>
+</ul>
+<span class="context"><span class="reg">
+<ul>
+  <li><b><font color="green">Multiple Choices (as_as_item_choices)</font></b>
+contain additional information for all multiple choice as_item_types.
+Obvious examples are radiobutton and checkbox as_items, but
+pop-up_date,
+typed_date and image_map as_items also are constructed via as_item
+Choices.
+Each choice is a child to an as_as_item_type Object. Note the
+difference.
+    <span style="font-weight: bold;">A choice does not belong to an
+as_item, but to the instance of the
+as_item_type! </span>This way we can reuse multiple choice answers
+easier. It
+is
 debatable if we should allow n:m relationships between choices and
-item_types (thereby allowing the same choice been reused). In my
+as_item_types (thereby allowing the same choice been reused). In my
 opinion this is not necessary, therefore we have the parent_id.
 Following the Lars Skinny Table approach of conflating all the
 different potential data types into one table, we provide columns to
 hold values of the different types and another field to determine which
-of them is used. Item Choices have these attributes:
-    <p></p>
+of them is used. as_item Choices have these attributes:
     <ul>
-      <li> choice_id
+      <li> choice_id </li>
+      <li> parent_id (belonging to an as_as_item_<b>type</b>
+object).</li>
+      <li>table_name - To which table (eg. as_item_type_mc or
+as_item_type_im) does this choice belong to.<br>
       </li>
-      <li> parent_id (belonging to to an as_item_<b>type</b> object).
+      <li> cr::name - Identifier<br>
       </li>
-      <li> name
-      </li>
-      <li> choice_text - what is displayed in the choice's "label"
-      </li>
+      <li> cr::titel - what is displayed in the choice's "label" </li>
       <li> data_type - which of the value columns has the information
-this Choice conveys
-      </li>
+this Choice conveys </li>
       <li> numeric_value - we can stuff both integers and real numbers
-here - this is where "points" could be stored for each Choice
+here <br>
       </li>
-      <li> text_value </li>
-      <li> boolean_value
+      <li>text_value </li>
+      <li> boolean_value </li>
+      <li> content_value - references an as_item in the CR -- for an
+image, audio file, or video file </li>
+      <li>feedback_text - where optionally some preset feedback can be
+specified by the author</li>
+      <li>selected_p - Is this choice selected by default (when the
+item is presented to the user)<br>
       </li>
-      <li> content_value - references an item in the CR -- for an
-image, audio file, or video file
-      </li>
-      <li> shareable_p - whether Choice is shareable; defaults to 't'
-since this is the whole intent of this "repository" approach, but
-authors' should have option to prevent reuse
-      </li>
-      <li> feedback_text - where optionally some preset feedback can be
-specified by the author
+      <li>score - Score given to the user if this choice is selected
+(in percent). <br>
       </li>
     </ul>
     <p>NB: In earlier versions (surveys/questionnaire), each Choice
 definition carried with it any range-checking or text-filtering
-criteria; these are now abstracted to the Item-Checks and Inter-Item
-Checks.
-    </p>
-    <p></p>
+criteria; these are now abstracted to the as_item-Checks and
+Inter-as_item
+Checks.</p>
   </li>
 </ul>
+</span></span><span class="context"><span class="reg">
+<h2>Item Display Types</h2>
+Each item has an item_display_type object associated with it, that
+defines how to display the item. Each item_display_type has a couple of
+attributes, that can be passed to the formbuilder for the creation of
+the widget. Each widget has at least one item_display_type associated
+with it. In the long run I think this system has the potential to
+become a part of OpenACS itself (storing additional display information
+for each acs_object), but we are not there yet :). Obviouslly we are
+talking cr_item_types here as well.
+<p>Each item_display_type has a couple of attributes in common.
+</p>
+<ul>
+  <li>item_display_id </li>
+  <li>cr::name - name like "Select box, aligned right", stored in the
+name field of CR.<br>
+  </li>
+  <li>acs_widget - the type of "widget" displayed when the
+Item is output in html. There are many types we should support beyond
+the stock html types. We are talking <a
+ href="../../../acs-templating/www/doc/widgets/index.html">ACS
+Templating widgets</a> here.<br>
+  </li>
+  <li> item_answer_alignment - the orientation between the
+"question part" of the Item (the item_text/item_subtext) and the
+"answer part" -- the native Item widget (eg the textbox) or the 1..n
+choices. Alternatives accommodate L-&gt;R and R-&gt;L alphabets (or is
+this handled automagically be Internationalization?) and include:
+    <ol>
+      <li> beside_left - the "answers" are left of the "question" </li>
+      <li> beside_right - the "answers" are right of the "question" </li>
+      <li> below - the "answers" are below the "question" </li>
+      <li> above - the "answers" are above the "question" </li>
+    </ol>
+  </li>
+  <li> html_display_options - field to specify other stuff like
+textarea dimensions ("rows=10 cols=50" eg)</li>
+</ul>
+<p>
+Depending on the presentation_types <font color="red">additonal
+attributes (presentation_type attributes)</font>
+come into play (are added as attributes to the CR item type) (mark:
+this is not feature complete. It really is up to the coder to decide
+what attributes each widget should have, down here are only
+*suggestions*). Additionally we're not mentioning all HTML
+possibilities associated with each type (e.g. a textarea has width and
+heigth..) as these can be parsed in via the html_display_options.<br>
+</p>
+<ul>
+  <li> textbox - single-line typed entry
+    <ul>
+      <li> abs_size - An abstraction of the real size value in
+"small","medium","large". Up to the developer how this translates. </li>
+    </ul>
+  </li>
+  <li> text area - multiple-line typed entry
+    <ul>
+      <li> abs_size - An abstraction of the real size value in
+"small","medium","large". Up to the developer how this translates. </li>
+    </ul>
+  </li>
+  <li> radiobutton (as_item_display_rb) - single-choice multiple-option
+    <ul>
+      <li> choice_orientation - the pattern by which 2..n Item Choices
+are
+laid out when displayed. Note that this isn't a purely stylistic issue
+better left to the .adp templates or css; the patterns have semantic
+implications that the Assessment author appropriately should control
+here. Note also that Items with no Choices (eg a simple textbox Item)
+has no choice_orientation, but handles the location of that textbox
+relative to the Item label by the item_alignment option (discussed
+below).
+        <ol>
+          <li> horizontal - all Choices are in one line </li>
+          <li> vertical - all Choices are in one column </li>
+        </ol>
+      </li>
+      <li>choice_label_orientation - how shall the label be positioned
+in relation to the choice (top, left, right, buttom).<br>
+      </li>
+      <li>button_type - type of button to use</li>
+      <li>sort_order: Numerical, alphabetic, randomized or
+by order of entry (sort_order field). </li>
+    </ul>
+  </li>
+  <li> checkbox - multiple-choice multiple-option
+    <ul>
+      <li> choice_orientation (see above)</li>
+      <li>choice_label_orientation<br>
+      </li>
+      <li>allow_multiple_p - Is it allow to select multiple values ?</li>
+      <li>sort_order: Numerical, alphabetic, randomized or
+by order of entry (sort_order field). </li>
+    </ul>
+  </li>
+  <li> select (as_item_display_sb) - multiple-option displayed in
+"popup menu" (select box)<br>
+  </li>
+  <ul>
+    <li>sort_order: Numerical, alphabetic, randomized or
+by order of entry (sort_order field).</li>
+    <li><span class="context"><span class="reg">allow_multiple_p - Is
+it allow to select multiple values ?</span></span></li>
+  </ul>
+  <li> multiple-choice-other: Consider, for instance, a combo box
+that consists of a radiobutton plus a textbox -- used for instance when
+you need a check "other" and then fill in what that "other" datum is.
+In effect this is a single Item but it has two different forms: a
+radiobutton and a textbox.
+    <ul>
+      <li> other_size: size of the other text field. </li>
+      <li> other_label: label (instead of "other"). </li>
+      <li> display_type: What display type should be used for the
+multiple-choice-part ? </li>
+    </ul>
+  </li>
+  <li> pop-up_date - a widget with month-day-year select elements
+that resets the day element based on year and month (ie include Feb 29
+during leap years -- via Javascript) and tests for valid dates </li>
+  <li> typed_date - similar to pop-up_date but month-day-year
+elements are textboxes for all-keyboard entry; needs no resetting
+scripts but does need date validity check </li>
+  <li> image_map - requires a linked image; the image map coordinates
+are handled as Item Choices </li>
+  <li> file_upload - present a File box (browse button, file_name
+textbox, and submit button together) so user can upload a file </li>
+</ul>
+</span></span><span class="context"><span class="reg">
 <h2>Help System</h2>
 The help system should allow a small "?" appear
 next to an object's title that has a help text identified with it. Help
@@ -258,29 +403,23 @@ in the header. Each object can have multiple help texts associated with
 it (which will be displayed in sort order with each hit to the "?".)
 and we can reuse the help text, making this an n:m relationship (using
 cr_rels). E.g. you might want to have a default help text for certain
-cr_item_types, that's why I was thinking about reuse...
+cr_as_item_types, that's why I was thinking about reuse...
 <p>Relationship attributes:
 </p>
 <ul>
-  <li> item_id
-  </li>
-  <li> message_id - references as_messages
-  </li>
-  <li> sort_order (in which order do the messages appear)
-  </li>
+  <li> as_item_id </li>
+  <li> message_id - references as_messages </li>
+  <li> sort_order (in which order do the messages appear) </li>
 </ul>
 <p>
 <b>Messages (as_messages)</b> abstracts out help messages (and other
 types of messages) for use in this package. Attributes include:
 </p>
 <ul>
-  <li> message_id
-  </li>
-  <li> message
-  </li>
+  <li> message_id </li>
+  <li> message </li>
   <li> locale (Actually I hope the i18n system Joel proposed makes this
-obsolete).
-  </li>
+obsolete). </li>
 </ul>
 </span></span>
 </body>

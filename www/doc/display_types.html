@@ -33,13 +33,15 @@ talking cr_item_types here as well.
 <p>Each item_display_type has a couple of attributes in common.
 </p>
 <ul>
-  <li>item_display_type_id
-  </li>
-  <li>item_type_name - name like "Select box, aligned right"
+  <li>item_display_type_id </li>
+  <li>item_type_name - name like "Select box, aligned right", stored in
+the name field of CR.<br>
   </li>
   <li> presentation_type - the type of "widget" displayed when the
 Item is output in html. There are many types we should support beyond
-the stock html types.
+the stock html types. We are talking <a
+ href="../../../acs-templating/www/doc/widgets/index.html">ACS
+Templating widgets</a> here.<br>
   </li>
   <li> item_answer_alignment - the orientation between the
 "question part" of the Item (the item_text/item_subtext) and the
@@ -47,18 +49,21 @@ the stock html types.
 choices. Alternatives accommodate L-&gt;R and R-&gt;L alphabets (or is
 this handled automagically be Internationalization?) and include:
     <ol>
-      <li> beside_left - the "answers" are left of the "question"
-      </li>
-      <li> beside_right - the "answers" are right of the "question"
-      </li>
-      <li> below - the "answers" are below the "question"
-      </li>
-      <li> above - the "answers" are above the "question"
-      </li>
+      <li> beside_left - the "answers" are left of the "question" </li>
+      <li> beside_right - the "answers" are right of the "question" </li>
+      <li> below - the "answers" are below the "question" </li>
+      <li> above - the "answers" are above the "question" </li>
     </ol>
   </li>
   <li> html_display_options - field to specify other stuff like
-textarea dimensions ("rows=10 cols=50" eg) </li>
+textarea dimensions ("rows=10 cols=50" eg)</li>
+  <li><span class="context"><span class="reg"> as_item_default -
+optional field that sets what the as_item will
+display when first output (eg text in a textbox; eg the defaults that
+ad_dateentrywidget expects: "" for "no date", "0" for "today", or else
+some specific date set by the author; see <a
+ href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
+this example</a>)</span></span></li>
 </ul>
 <p>
 Depending on the presentation_types <font color="red">additonal
@@ -74,15 +79,13 @@ heigth..).
   <li> textbox - single-line typed entry
     <ul>
       <li> abs_size - An abstraction of the real size value in
-"small","medium","large". Up to the developer how this translates.
-      </li>
+"small","medium","large". Up to the developer how this translates. </li>
     </ul>
   </li>
   <li> text area - multiple-line typed entry
     <ul>
       <li> abs_size - An abstraction of the real size value in
-"small","medium","large". Up to the developer how this translates.
-      </li>
+"small","medium","large". Up to the developer how this translates. </li>
     </ul>
   </li>
   <li> radiobutton - single-choice multiple-option
@@ -97,61 +100,57 @@ has no choice_orientation, but handles the location of that textbox
 relative to the Item label by the item_alignment option (discussed
 below).
         <ol>
-          <li> horizontal - all Choices are in one line
-          </li>
-          <li> vertical - all Choices are in one column
-          </li>
+          <li> horizontal - all Choices are in one line </li>
+          <li> vertical - all Choices are in one column </li>
           <li> matrix_col-row - Choices are laid out in matrix, filling
-first col then row
-          </li>
+first col then row </li>
           <li> matrix_row-col -Choices are laid out in matrix, filling
-first row then col
-          </li>
+first row then col </li>
         </ol>
       </li>
-      <li> Button type - type of button to use
-      </li>
+      <li> Button type - type of button to use</li>
+      <li>sort_order: Numerical, alphabetic, randomized or
+by order of entry. </li>
     </ul>
   </li>
   <li> checkbox - multiple-choice multiple-option
     <ul>
-      <li> choice_orientation (see above)
-      </li>
+      <li> choice_orientation (see above)</li>
+      <li>allow_multiple_p - Is it allow to select multiple values ?</li>
+      <li>sort_order: Numerical, alphabetic, randomized or
+by order of entry. </li>
     </ul>
   </li>
-  <li> select - single-choice multiple-option displayed in "popup menu"
-  </li>
+  <li> select - multiple-option displayed in "popup menu"</li>
+  <ul>
+    <li>sort_order: Numerical, alphabetic, randomized or
+by order of entry. </li>
+    <li><span class="context"><span class="reg">allow_multiple_p - Is
+it allow to select multiple values ?</span></span></li>
+  </ul>
   <li> multiple-choice-other: Consider, for instance, a combo box
 that consists of a radiobutton plus a textbox -- used for instance when
 you need a check "other" and then fill in what that "other" datum is.
 In effect this is a single Item but it has two different forms: a
 radiobutton and a textbox.
     <ul>
-      <li> other_size: size of the other text field.
-      </li>
-      <li> other_label: label (instead of "other").
-      </li>
+      <li> other_size: size of the other text field. </li>
+      <li> other_label: label (instead of "other"). </li>
       <li> display_type: What display type should be used for the
-multiple-choice-part ?
-      </li>
+multiple-choice-part ? </li>
     </ul>
   </li>
   <li> pop-up_date - a widget with month-day-year select elements
 that resets the day element based on year and month (ie include Feb 29
-during leap years -- via Javascript) and tests for valid dates
-  </li>
+during leap years -- via Javascript) and tests for valid dates </li>
   <li> typed_date - similar to pop-up_date but month-day-year
 elements are textboxes for all-keyboard entry; needs no resetting
-scripts but does need date validity check
-  </li>
+scripts but does need date validity check </li>
   <li> image_map - requires a linked image; the image map coordinates
-are handled as Item Choices
-  </li>
+are handled as Item Choices </li>
   <li> file_upload - present a File box (browse button, file_name
-textbox, and submit button together) so user can upload a file
-  </li>
-  <li> <font color="red">many more</font>
-  </li>
+textbox, and submit button together) so user can upload a file </li>
+  <li> <font color="red">many more</font> </li>
 </ul>
 <p>
 In addition, there are some potential presentation_types that actually
@@ -164,10 +163,8 @@ exclusive rank ("Indicate the order of US Presidents from bad to
 worse"). Is this one Item with multiple Item Choices? Actually, not,
 since each alternative has a value that must be separately stored (the
 tester would want to know that the testee ranked GWB last, for
-instance).
-  </li>
-  <li> <font color="red">...</font>
-  </li>
+instance). </li>
+  <li> <font color="red">...</font> </li>
 </ul>
 <h2>Section display</h2>
 A section can be seen as a form with all the
@@ -175,14 +172,11 @@ items within this section making up the form. Depending on the type of
 assessment we are talking about, the section can be displayed in
 various ways (examples):
 <ul>
-  <li>Normal survey view, with a description on top.
-  </li>
+  <li>Normal survey view, with a description on top. </li>
   <li>Test view, which has certain restrictions on the display (e.g.
-not allowed to use the back button)
-  </li>
+not allowed to use the back button) </li>
   <li>Portlet view, only displaying the items of the section with a
-submit button
-  </li>
+submit button </li>
 </ul>
 Additionally each section has certain parameters that
 determine the look and feel of the section itself. Luckily it is not
