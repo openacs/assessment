@@ -19,6 +19,7 @@ ad_proc -public assessment::install::assessment_create_install {
 content::type::create_type -content_type {as_item_choices} -supertype {content_revision} -pretty_name {Assessment Item Choice} -pretty_plural {Assessment Item Choices} -table_name {as_item_choices} -id_column {choice_id}
 content::type::create_type -content_type {as_item_type_mc} -supertype {content_revision} -pretty_name {Assessment Item Type Multiple Choice} -pretty_plural {Assessment Item Type Multiple Choice} -table_name {as_item_type_mc} -id_column {as_item_type_id}
 content::type::create_type -content_type {as_item_display_rb} -supertype {content_revision} -pretty_name {Assessment Item Display Radio Button} -pretty_plural {Assessment Item Display Radio Button} -table_name {as_item_display_rb} -id_column {as_item_display_id}
+content::type::create_type -content_type {as_item_display_cb} -supertype {content_revision} -pretty_name {Assessment Item Display CheckBox} -pretty_plural {Assessment Item Display CheckBox} -table_name {as_item_display_cb} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_items} -supertype {content_revision} -pretty_name {Assessment Item} -pretty_plural {Assessment Items} -table_name {as_items} -id_column {as_item_id}
 content::type::create_type -content_type {as_sections} -supertype {content_revision} -pretty_name {Assessment Section} -pretty_plural {Assessment Sections} -table_name {as_sections} -id_column {section_id}
 content::type::create_type -content_type {as_assessments}  -supertype {content_revision} -pretty_name {Assessment Assessment} -pretty_plural {Assessment Assessments} -table_name {as_assessments} -id_column {assessment_id}
@@ -31,6 +32,13 @@ content::type::create_attribute -content_type {as_item_display_rb} -attribute_na
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
+
+content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
+content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {choice_orientation} -datatype {string}    -pretty_name {Choice Orientation} -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {allow_multiple_p} -datatype {string}    -pretty_name {Allow Multiple} -column_spec {char(1)}
+content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {increasing_p}  -datatype {boolean}  -pretty_name {Increasing} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {allow_negative_p} -datatype {boolean}  -pretty_name {Allow Negative} -column_spec {char(1)}
@@ -114,6 +122,7 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {si
 
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_mc} -relation_tag {as_item_type_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_rb} -relation_tag {as_item_display_rel}
+content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_cb} -relation_tag {as_item_display_rel}
 
 }
 
@@ -128,6 +137,7 @@ ad_proc -public assessment::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_mc} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_rb} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_cb} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
