@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d6" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d9" locale="es_ES" charset="ISO-8859-1">
 
   <msg key="above">Arriba</msg>
   <msg key="Absolute_Size">Tamaño Absoluto</msg>
@@ -57,6 +57,7 @@
   <msg key="Answer_Alignment">Alineación de las respuestas</msg>
   <msg key="Answer_Alignment_help">Alinear la respuesta en relación a la pregunta.</msg>
   <msg key="Answer_Choices">Respuestas</msg>
+  <msg key="Applet">Assessment Applet </msg>
   <msg key="approve">Aprobar</msg>
   <msg key="approve_actions">Aprobar acciones</msg>
   <msg key="approved">Aprobado</msg>
@@ -96,6 +97,7 @@
   <msg key="Assessment_Title">Título</msg>
   <msg key="assessment_too_many_tries">Solo se permiten %number_tries% intentos.</msg>
   <msg key="assessment_wait_retry">Tienes que esperar %pretty_wait_time% antes del siguiente intento.</msg>
+  <msg key="assessment_wrong_password">Contraseña incorrecta.</msg>
   <msg key="at_the_end">Al final de este assessment</msg>
   <msg key="Attempt">Número de intentos</msg>
   <msg key="Author">Autor</msg>
@@ -146,6 +148,7 @@
   <msg key="csv_export_name">Identificador de la pregunta</msg>
   <msg key="csv_export_title">Texto de la pregunta</msg>
   <msg key="CSV_file">Fichero CSV</msg>
+  <msg key="currently">Actualmente:</msg>
   <msg key="Data_Type">Tipo de Dato</msg>
   <msg key="data_type_boolean">Boleano</msg>
   <msg key="data_type_content_type">Fichero</msg>
@@ -313,8 +316,13 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="numerical">Numérico</msg>
   <msg key="on_creation_date">Fecha de creación</msg>
   <msg key="One_Assessment_data">Datos de un assessment</msg>
+  <msg key="one_correct_choice_req">Se requiere que al menos una respuesta sea correcta
+</msg>
   <msg key="Only_correct">Solo las respuestas correctas</msg>
   <msg key="Only_incorrect">Solo las respuestas incorrectas</msg>
+  <msg key="oq_Keywords">Palabras clave</msg>
+  <msg key="oq_Keywords_help">Palabras clave usadas para hacer una evaluación automática
+</msg>
   <msg key="or">O</msg>
   <msg key="order_of_entry">Orden de entrada</msg>
   <msg key="Order_Type">Tipo de orden</msg>
@@ -326,14 +334,22 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="parameter_type">Tipo</msg>
   <msg key="parameter_varname">Nombre de variable</msg>
   <msg key="parameters">Parámetros</msg>
+  <msg key="password">Contraseña</msg>
+  <msg key="Password_Enter">Introducir contraseña para el assessment
+</msg>
   <msg key="Percent_Score">Puntuación (en porcentaje)</msg>
   <msg key="Percent_Score_help">Porcentaje de puntos que supone responder esta respuesta para la puntuación total de la pregunta. Puede ser mayor que 100 y menor que 100.</msg>
   <msg key="performed">Realizado</msg>
   <msg key="permissions">Permisos</msg>
   <msg key="points">puntos</msg>
+  <msg key="points_answer">Puntos para la respuesta</msg>
+  <msg key="points_answer_help">Los puntos que vale responder esta pregunta.
+</msg>
   <msg key="points_item">Puntos por pregunta</msg>
   <msg key="points_item_help">Cuántos puntos vale esta pregunta en una sección. Ésta es una medida de la dificultad relativa.</msg>
   <msg key="points_section">Puntos por Sección</msg>
+  <msg key="points_section_help">Los puntos que vale esta sección en un assessment. Es una medida de la dificultad relativa de la sección.
+</msg>
   <msg key="Preview">Visualización previa</msg>
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
@@ -357,6 +373,9 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Response_Options">Opciones de la respuesta: </msg>
   <msg key="Response_Submitted">Respuesta Enviada</msg>
   <msg key="Results_by_user">Resultados del assessment por usuario</msg>
+  <msg key="Results_change_display">(el %results.date% por &amp;lt;a href=&amp;quot;%results.user_url%&amp;quot;&amp;gt;%results.first_names% %results.last_name%&amp;lt;/a&amp;gt;)</msg>
+  <msg key="Results_edit">Editar el resultado del assessment</msg>
+  <msg key="Results_edit_Description">Cambiar explicación</msg>
   <msg key="return">Volver</msg>
   <msg key="Return_Url">Devolver URL</msg>
   <msg key="reuse_responses">Visualizar las respuestas anteriores</msg>
@@ -437,14 +456,17 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="trigger">Condición</msg>
   <msg key="trigger_delete">Borrar condición</msg>
   <msg key="triggers">Condición</msg>
+  <msg key="try_again">Intentar de nuevo</msg>
   <msg key="two_days">Hace dos días</msg>
   <msg key="type_of_trigger">Tipo de condición</msg>
+  <msg key="unhappy_search">¿no estás satisfecho con el resultado de tu búsqueda?</msg>
   <msg key="unlimited_time">Tiempo para responder ilimitado</msg>
   <msg key="unlimited_tries">Número de intentos permitidos ilimitado</msg>
   <msg key="unsecure_access_allow">Permitir acceso no seguro</msg>
   <msg key="unsubscribe">Desuscribirse</msg>
   <msg key="unsubscribe_user">Desuscribir al usuario de esta regla</msg>
   <msg key="Upload_files">Subir ficheros</msg>
+  <msg key="User_Answer">Respuesta del usuario</msg>
   <msg key="User_ID">Usuario</msg>
   <msg key="Users_may_edit_their_">Los usuarios pueden editar sus respuestas</msg>
   <msg key="Users_may_not_edit_th">Los usuarios no pueden editar sus respuestas</msg>
