@@ -32,4 +32,7 @@
 
 
 </formtemplate>
+<br>
+<a href="show_items">Show data</a>
+<a href="upload_file">Upload files</a>
 </master>
