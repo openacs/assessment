@@ -21,9 +21,6 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 	# XPath v1.0
 	# get all <questestinterop> elements of a XML instance file
 	set questestinteropNodes [$root selectNodes {/questestinterop}]
-	if { [llength $questestinteropNodes] == 0 } {
-        	error "Root node was not <quetestinterop>. The XML file is not valid."
-    	}
 	foreach questestinterop $questestinteropNodes {
 		# Looks for assessments
 		set assessmentNodes [$questestinterop selectNodes {assessment}]
