@@ -95,11 +95,12 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 		array set as_item_choices__score {}
 		set as_items__feedback_right {}
 		set as_items__feedback_wrong {}
+		set as_items__description {}
 		set objectivesNodes [$item selectNodes {objectives}]
 		foreach objectives $objectivesNodes {
 			set mattextNodes [$objectives selectNodes {material/mattext/text()}]
 			foreach mattext $mattextNodes {
-				set as_items__name [$mattext nodeValue]
+				set as_items__description [$mattext nodeValue]
 			}
 		}
 		set itemfeedbackNodes [$item selectNodes {itemfeedback}]
@@ -141,43 +142,52 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 		}
 		set presentationNodes [$item selectNodes {presentation}]
 		foreach presentation $presentationNodes {
-			set nodeNodes [$presentation selectNodes {.//material}]
-			set node [lindex $nodeNodes 0]
+			set presentationChildNodes [$presentation selectNodes {.//material|.//response_str}]
+			set materialNodes [$presentation selectNodes {.//material}]
+			set material [lindex $materialNodes 0]
 			# Initialize in case it doesn't exist
 			set as_items__title {}
-			if {[$node nodeName] == {material}} {
-				set mattextNodes [$node selectNodes {mattext/text()}]
+			if {[$material nodeName] == {material}} {
+				set mattextNodes [$material selectNodes {mattext/text()}]
 				set mattext [lindex $mattextNodes 0]
 				set as_items__title [$mattext nodeValue]
 			}
 			set render_fibNodes [$presentation selectNodes {.//render_fib}]
 			if {[llength $render_fibNodes] > 0} {
-				# currently dead code
-				if {0 == 1} {
+				set as_items__title {}
 				# fillinblank or shortanswer
 				set render_fib [lindex $render_fibNodes 0]
 				# fillinblank (textbox)
 				# this is the default
-				set as_item__display_type_id 4
+				set as_item_display_id {}
 				if {[$render_fib hasAttribute {rows}]} {
 					# shortanswer (textarea)
-					set as_item__display_type_id 1
+					set as_item_display_id [as_item_display_sa_new -name [ad_generate_random_string]]
+				} else {
+					set as_item_display_id [as_item_display_tb_new -name [ad_generate_random_string]]
 				}
-				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-				set as_item_id [as_item_new -name $as_items__name -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
-				lappend items $as_item_id
-				foreach node $nodeNodes {
+				set as_item_type_id [as_item_type_mc_new -name [ad_generate_random_string]]
+				foreach node $presentationChildNodes {
 					if {[$node nodeName] == {material}} {
 						set mattextNodes [$node selectNodes {mattext/text()}]
 						set mattext [lindex $mattextNodes 0]
-						set as_item_choices__choice_text [$mattext nodeValue]
+						append as_items__title [ad_quotehtml [$mattext nodeValue]]
+					} elseif {[$node nodeName] == {response_str}} {
+						set as_item_choices__ident [$node getAttribute {ident}]
+						# get the correct response
+						set as_item_choices__choice_text_nodes [$node selectNodes "//conditionvar/or/varequal\[@respident='$as_item_choices__ident'\]/text()"]
+						set as_item_choices__choice_text [string trim [[lindex $as_item_choices__choice_text_nodes 0] nodeValue]]
 						# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
-						as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order
+						set as_item_choice_id [as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order]
 						# order of the item_choices
 						incr sort_order
+						append as_items__title "<textbox as_item_choice_id=$as_item_choice_id>"
 					}
 				}
-				}
+				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
+				set as_item_id [as_item_new -name $as_items__name -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
+				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
+				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
 			} else {
 				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
@@ -196,7 +206,6 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set as_item_type_id [as_item_type_mc_new -name $as_item_type__name]
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
 				set as_item_id [as_item_new -name $as_items__name -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
-				lappend items $as_item_id
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
