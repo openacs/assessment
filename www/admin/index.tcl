@@ -15,6 +15,8 @@ ad_page_contract {
 
 set title "[_ assessment.Administration]"
 set context {}
+set package_id [ad_conn package_id]
+set categories_url [db_string get_category_url {}]
 
 #form to upload a QTI ZIP file
 ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/form-data}  -form {

@@ -27,9 +27,6 @@
 
 <tr class="odd">
 	<td valign="top" rowspan="8"><nobr>#assessment.Response_Options# </nobr></td>
-	<td><if @assessment_data.editable_p@> #assessment.Users_may_edit_their_#</if><else>#assessment.Users_may_not_edit_th#</else> -
-	[ <a href="response-editable-toggle?assessment_id=@assessment_id@">
-	<if @assessment_data.editable_p@>#assessment.make_non_editable#</if><else>#assessment.make_editable#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
