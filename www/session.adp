@@ -24,8 +24,7 @@
 			<tr><td colspan="2">
 			<b>@items.title@</b>
 			</td></tr>
-			<tr><td valign="top" nowrap>
-			#assessment.Student_response#:</td><td>
+			<tr><td colspan="2">
 			@items.choice_html;noquote@</td></tr>
 			<tr><td nowrap>
 			#assessment.Score#</td><td><span>@items.score@ / @items.maxscore@</span>
