@@ -106,13 +106,13 @@
 
 <fullquery name="as::assessment::check::swap_actions.get_swap_check">
       <querytext>
-      select c.inter_item_check_id from as_inter_item_checks  c ,as_action_map am  where c.inter_item_check_id=am.inter_item_check_id and am.order_by=:order and c.section_id_from=:section_id and am.action_perform=:action_perform
+      select c.inter_item_check_id from as_inter_item_checks  c ,as_action_map am  where c.inter_item_check_id=am.inter_item_check_id and am.order_by=:order_p and c.section_id_from=:section_id and am.action_perform=:action_perform
       </querytext>
 </fullquery>
 
 <fullquery name="as::assessment::check::swap_actions.update_1">
       <querytext>
-      update as_action_map set order_by=:order where inter_item_check_id=:check_id
+      update as_action_map set order_by=:order_p where inter_item_check_id=:check_id
       </querytext>
 </fullquery>
 
@@ -124,12 +124,12 @@
 
 <fullquery name="as::assessment::check::swap_actions.get_swap_check_e">
       <querytext>
-      select c.inter_item_check_id from as_inter_item_checks c,as_action_map am  where c.inter_item_check_id=am.inter_item_check_id and am.order_by=:order and c.section_id_from=:section_id and am.action_perform=:action_perform
+      select c.inter_item_check_id from as_inter_item_checks c,as_action_map am  where c.inter_item_check_id=am.inter_item_check_id and am.order_by=:order_p and c.section_id_from=:section_id and am.action_perform=:action_perform
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::swap_actions.update_1_e">
       <querytext>
-	update as_action_map set order_by=:order where inter_item_check_id=:check_id
+	update as_action_map set order_by=:order_p where inter_item_check_id=:check_id
       </querytext>
 </fullquery>
 

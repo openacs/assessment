@@ -159,12 +159,12 @@ ad_proc -public as::assessment::check::swap_actions {
     
 } {
     if { $direction == "d"} {
-	set order [expr $order_by + 1]
+	set order_p [expr $order_by + 1]
 	set swap_check_id [db_string get_swap_check {}]
 	db_dml update_1 {}
 	db_dml update_2 {}
     } else {
-	set order [expr $order_by - 1]
+	set order_p [expr $order_by - 1]
 	set swap_check_id [db_string get_swap_check_e {}]
 	db_dml update_1_e {}
 	db_dml update_2_e {}
