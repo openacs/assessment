@@ -1,6 +1,6 @@
 <master src="admin-master">
-<property name="title">Waiting List</property>
-
+<property name="title">#assessment.Request# #assessment.Administration#</property>
+<property name="context_bar">@context;noquote@</property>
 
 <script language="JavaScript">
 

@@ -10,8 +10,7 @@ ad_page_contract {
 }
 
 as::assessment::data -assessment_id $assessment_id
-set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
-
+set new_assessment_revision $assessment_data(assessment_rev_id)
 
 
 if {![info exists assessment_data(assessment_id)]} {
@@ -19,8 +18,8 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set title "$assessment_data(title) \#assessment.triggers\#"
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title \#assessment.triggers\#"]
+set title "$assessment_data(title)"
+set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title [_ assessment.Administration]"]
 
 db_multirow aa_checks get_aa_checks {} 
 

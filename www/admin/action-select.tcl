@@ -20,7 +20,7 @@ if {![info exists assessment_data(assessment_id)]} {
 set edit_p [ db_string exist_check {}]
 
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] [ list "add-edit-check?assessment_id=$assessment_id&section_id=$section_id" "$title Triggers"] [_ assessment.action_select]]
+set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] [_ assessment.action_select]]
 
 set title "[_ assessment.action_select]" 
 set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"]]
@@ -74,13 +74,16 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
 		db_dml edit_action {}
 
 	    } else {
-		    ns_log notice "----------------------- no es igual $perform $action_perform"
+		ns_log notice "----------------------- no es igual $perform $action_perform"
 		#re-order the other group
 		as::assessment::check::re_order_actions -check_id $inter_item_check_id -section_id $section_id -action_perform $perform
 		set order [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
 		db_dml edit_action_order_by {}
 	    }
 	} else {
+	    db_dml delete_action_map {}
+	    db_dml delete_param_map {}
+		
 	    set order [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
 	    db_dml select_action {}
 	}

@@ -7,6 +7,11 @@ ad_page_contract {
     section_id
     assessment_id
 }
+as::assessment::data -assessment_id $assessment_id
+set title "$assessment_data(title)"
+set context [list [list "one-a?assessment_id=$assessment_id" $title] [list "checks-admin?assessment_id=$assessment_id&section_id=$section_id" "$title [_ assessment.Administration]"] "[_ assessment.trigger_delete]"]
+
+set title "[_ assessment.trigger_delete]"
 
 ad_form -name delete_checks -form {
 

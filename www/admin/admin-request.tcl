@@ -20,6 +20,7 @@ set approved_options [as::assessment::check::state_options]
 set assessment_list [as::assessment::check::get_assessments]
 set intervals [as::assessment::check::intervals]
 
+set context [list "[_ assessment.Request] [_ assessment.Administration]"]
 
 # set default values
 

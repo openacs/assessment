@@ -53,10 +53,25 @@
 </querytext>
 </fullquery>
 
+
 <fullquery name="edit_action_order_by">
 <querytext>
 	update as_action_map set action_perform=:action_perform, action_id=:action_id, user_message=:user_message,order_by=:order where inter_item_check_id=:inter_item_check_id
 </querytext>
 </fullquery>
+
+<fullquery name="delete_action_map">
+<querytext>
+	delete from as_action_map where inter_item_check_id=:inter_item_check_id;
+</querytext>
+</fullquery>
+
+<fullquery name="delete_param_map">
+<querytext>
+	delete from as_param_map where inter_item_check_id=:inter_item_check_id;
+</querytext>
+</fullquery>
+
+
 
 </queryset>

@@ -1,5 +1,6 @@
 <master>
 <property name="title">@title@ #assessment.Administration#</property>
+<property name="context_bar">@context_bar;noquote@</property>
 <br>
 <b>#assessment.after_this_asm#</b>
 <br>

@@ -8,8 +8,12 @@ ad_page_contract {
   assessment_id
   section_id
 }
-set check_name [db_string get_name {}]
-set title "[_ assessment.request_notif] $check_name"
+
+as::assessment::data -assessment_id $assessment_id
+set title "$assessment_data(title)"
+
+
+set context [list [list "one-a?assessment_id=$assessment_id" $title] [list "checks-admin?assessment_id=$assessment_id&section_id=$section_id" "$title [_ assessment.Administration]"] "[_ assessment.Request] [_ assessment.Notification]"]
 
 form create notify
 set type "as_inter_item_checks_notif"

@@ -19,7 +19,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] [ list "add-edit-check?assessment_id=$assessment_id&section_id=$section_id" "$title Checks"] [list "action-select?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&action_id=$action_id&section_id=$section_id" "[_ assessment.action_select]"] "[_ assessment.action_params]" ]
+set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "[_ assessment.action_params]" ]
 
 set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
 	

@@ -17,7 +17,7 @@ set item_id ""
 set section_id_from ""
 set return_url ""
 as::assessment::data -assessment_id $assessment_id
-
+set assessment_rev_id $assessment_data(assessment_rev_id)
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
@@ -102,7 +102,7 @@ ad_form -name new_check -export {assessment_id return_url} -form {
     set condition_sql [db_string get_item_id {}] 
     #parse condition_sql to get choice_id
     set cond_list  [split $condition_sql "="]
-#    set condition [string range [lindex $cond_list 1] 0 3]
+    #set condition [string range [lindex $cond_list 1] 0 3]
     set condition [lindex [split [lindex $cond_list 1] " "] 0]
 
 } -edit_data {

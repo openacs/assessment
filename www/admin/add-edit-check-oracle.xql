@@ -14,6 +14,7 @@
 		description		=>	:description,
 		postcheck_p		=>	:postcheck_p,
 		item_id			=>	null,
+		assessment_id		=>	:assessment_id,
 		creation_user		=>	:user_id,
 		context_id		=>	null,
 		object_type		=>	'as_inter_item_checks',
