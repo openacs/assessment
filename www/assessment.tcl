@@ -28,6 +28,11 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
+set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id]
+if {![empty_string_p $errors]} {
+    ad_return_complaint 1 $errors
+    ad_script_abort
+}
 
 db_transaction {
     if {[empty_string_p $session_id]} {
@@ -48,6 +53,14 @@ db_transaction {
 	}
     }
 
+    db_1row session_time {}
+    set assessment_data(elapsed_time) $elapsed_time
+    if {![empty_string_p $assessment_data(time_for_response)]} {
+	set assessment_data(time_for_response) [expr 60 * $assessment_data(time_for_response)]
+	set assessment_data(pretty_remaining_time) [as::assessment::pretty_time -seconds [expr $assessment_data(time_for_response) - $assessment_data(elapsed_time)]]
+    }
+
+
     # get all sections of assessment in correct order
     set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation)]
 
@@ -61,6 +74,7 @@ db_transaction {
     }
 
 
+    as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id
     db_1row section_data {} -column_array section
     set display_type_id $section(display_type_id)
     if {![empty_string_p $display_type_id]} {
@@ -69,10 +83,13 @@ db_transaction {
 	array set display [list num_items "" adp_chunk "" branched_p f back_button_p t submit_answer_p f sort_order_type order_of_entry]
     }
 
-
     # get all items of section in correct order
     set item_list [as::section::items -section_id $section_id -session_id $session_id -sort_order_type $display(sort_order_type) -num_items $section(num_items)]
-    as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id
+    set section(num_sections) [llength $section_list]
+    set section(num_items) [llength $item_list]
+    if {![empty_string_p $section(max_time_to_complete)]} {
+	set section(pretty_remaining_time) [as::assessment::pretty_time -seconds [expr $section(max_time_to_complete) - $section(elapsed_time)]]
+    }
 
     if {![empty_string_p $item_order]} {
 	# show next items on section page
@@ -113,6 +130,59 @@ db_transaction {
     if {$new_section_order == [llength $section_list]} {
 	# last section
 	set new_section_order ""
+    }
+}
+
+set section(cur_section) [expr $section_order + 1]
+set section(cur_first_item) [expr $item_order + 1]
+set section(cur_last_item) [expr $item_order + [llength $item_list]]
+
+# check if section or session time ran out
+if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(time_for_response) < $assessment_data(elapsed_time)) || (![empty_string_p $section(max_time_to_complete)] && $section(max_time_to_complete) < $section(elapsed_time))} {
+    if {[empty_string_p $assessment_data(time_for_response)] || $assessment_data(time_for_response) >= $assessment_data(elapsed_time)} {
+	# skip to next section
+	set new_section_order [expr $section_order + 1]
+	set new_item_order ""
+	if {$new_section_order == [llength $section_list]} {
+	    # last section
+	    set new_section_order ""
+	}
+
+	# answer all remaining section items with empty string
+	as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
+    } else {
+	# skip entire session
+	set new_section_order ""
+	set new_item_order ""
+	
+	db_transaction {
+	    # answer all remaining section items with empty string
+	    as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
+
+	    set section_list [lreplace $section_list 0 [expr $section_order]]
+	    foreach section_id $section_list {
+		# skip remaining sections
+		as::section::skip -section_id $section_id -session_id $session_id -subject_id $user_id
+	    }
+	}
+    }
+
+    if {![empty_string_p $new_section_order]} {
+	# go to next section
+	set section_order $new_section_order
+	set item_order $new_item_order
+	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
+	ad_script_abort
+    } else {
+	# calculate session points at end of session
+	as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
+	db_dml session_finished {}
+	if {[empty_string_p $assessment_data(return_url)]} {
+	    ad_returnredirect [export_vars -base finish {session_id assessment_id}]
+	} else {
+	    ad_returnredirect $assessment_data(return_url)
+	}
+	ad_script_abort
     }
 }
 
@@ -246,7 +316,11 @@ if {$display(submit_answer_p) != "t"} {
 	    # calculate session points at end of session
 	    as::assessment::calculate -session_id \$session_id -assessment_id \$assessment_rev_id
 	    db_dml session_finished {}
-	    ad_returnredirect \[export_vars -base finish {session_id assessment_id}\]
+	    if {\[empty_string_p \$assessment_data(return_url)\]} {
+		ad_returnredirect \[export_vars -base finish {session_id assessment_id}\]
+	    } else {
+		ad_returnredirect \$assessment_data(return_url)
+	    }
 	    ad_script_abort
 	}
     }"
@@ -284,7 +358,11 @@ if {$display(submit_answer_p) != "t"} {
 	    # calculate session points at end of session
 	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	    db_dml session_finished {}
-	    ad_returnredirect [export_vars -base finish {session_id assessment_id}]
+	    if {[empty_string_p $assessment_data(return_url)]} {
+		ad_returnredirect [export_vars -base finish {session_id assessment_id}]
+	    } else {
+		ad_returnredirect $assessment_data(return_url)
+	    }
 	    ad_script_abort
 	}
     }

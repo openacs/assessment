@@ -299,3 +299,43 @@ ad_proc -public as::section::calculate {
     set section_points [expr round($section_max_points * $item_points / $item_max_points)]
     db_dml update_section_points {}
 }
+
+ad_proc -public as::section::skip {
+    -section_id:required
+    -session_id:required
+    -subject_id:required
+    {-staff_id ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-22
+
+    Skip section in a session and award 0 points
+} {
+    db_transaction {
+	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $subject_id -staff_id $staff_id
+	db_dml set_zero_points {}
+    }
+}
+
+ad_proc -public as::section::close {
+    -section_id:required
+    -assessment_id:required
+    -session_id:required
+    -subject_id:required
+    {-staff_id ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-22
+
+    Close started section in a session and award 0 points with empty answers
+    to all remaining items
+} {
+    db_transaction {
+	set item_list [db_list remaining_items {}]
+	foreach as_item_id $item_list {
+	    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -points 0 -allow_overwrite_p f
+	}
+
+	calculate -section_id $section_id -assessment_id $assessment_id -session_id $session_id
+    }
+}

@@ -86,13 +86,17 @@
 	</querytext>
 </fullquery>
 	
-<fullquery name="as::section::calculate.update_section_points">
+<fullquery name="as::section::close.remaining_items">
 	<querytext>
 
-	update as_section_data
-	set points = :section_points
-	where session_id = :session_id
-	and section_id = :section_id
+	select i.as_item_id
+	from as_session_items i
+	where i.session_id = :session_id
+	and i.section_id = :section_id
+	and i.as_item_id not in (select d.as_item_id
+				from as_item_data d
+				where d.session_id = :session_id
+				and d.section_id = :section_id)
 
 	</querytext>
 </fullquery>

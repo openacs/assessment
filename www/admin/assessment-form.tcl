@@ -31,6 +31,10 @@ set feedback_options [list [list "[_ assessment.None]" none] [list "[_ assessmen
 set navigation_options [list [list "[_ assessment.Default_Path]" "default path"] [list "[_ assessment.Randomized]" randomized] [list "[_ assessment.Rulebased_branching]" "rule-based branching"]]
 
 
+##    {entry_page:text,optional,nospell {label "[_ assessment.Entry_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Entry_Page_help]"}}
+##    {exit_page:text,optional,nospell {label "[_ assessment.Exit_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Exit_Page_help]"}}
+
+
 ad_form -name assessment_form -action assessment-form -form {
     {assessment_id:key}
 }
@@ -61,15 +65,14 @@ ad_form -extend -name assessment_form -form {
     {secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
     {reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}
     {show_item_name_p:text(select) {label "[_ assessment.Show_Item_Name_1]"} {options $boolean_options} {help_text "[_ assessment.as_Show_Item_Name_help]"}}
-    {entry_page:text,optional,nospell {label "[_ assessment.Entry_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Entry_Page_help]"}}
-    {exit_page:text,optional,nospell {label "[_ assessment.Exit_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Exit_Page_help]"}}
     {consent_page:text(textarea),optional,nospell {label "[_ assessment.Consent_Page]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Consent_Page_help]"}}
     {return_url:text,optional,nospell {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}
     {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
     {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_End_Time_help]"}}
     {number_tries:integer,optional,nospell {label "[_ assessment.Number_of_Tries]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Number_Tries_help]"}}
     {wait_between_tries:integer,optional,nospell {label "[_ assessment.Minutes_for_Retry]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Minutes_Retry_help]"}}
-    {time_for_response:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_time_help]"}}
+    {time_for_response:integer,optional,nospell {label "[_ assessment.time_for_response]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_time_help]"}}
+    {ip_mask:text,optional,nospell {label "[_ assessment.ip_mask]"} {html {size 20 maxlength 100}} {help_text "[_ assessment.as_ip_mask_help]"}}
     {show_feedback:text(select),optional {label "[_ assessment.Show_Feedback]"} {options $feedback_options} {help_text "[_ assessment.as_Feedback_help]"}}
     {section_navigation:text(select),optional {label "[_ assessment.Section_Navigation]"} {options $navigation_options} {help_text "[_ assessment.as_Navigation_help]"}}
 } -new_request {
@@ -91,6 +94,7 @@ ad_form -extend -name assessment_form -form {
     set number_tries ""
     set wait_between_tries ""
     set time_for_response ""
+    set ip_mask ""
     set show_feedback "none"
     set section_navigation "default path"
 } -edit_request {
@@ -129,8 +133,8 @@ ad_form -extend -name assessment_form -form {
 				   -secure_access_p $secure_access_p \
 				   -reuse_responses_p $reuse_responses_p \
 				   -show_item_name_p $show_item_name_p \
-				   -entry_page $entry_page \
-				   -exit_page $exit_page \
+				   -entry_page "" \
+				   -exit_page "" \
 				   -consent_page $consent_page \
 				   -return_url $return_url \
 				   -start_time "" \
@@ -138,6 +142,7 @@ ad_form -extend -name assessment_form -form {
 				   -number_tries $number_tries \
 				   -wait_between_tries $wait_between_tries \
 				   -time_for_response $time_for_response \
+				   -ip_mask $ip_mask \
 				   -show_feedback $show_feedback \
 				   -section_navigation $section_navigation]
 
@@ -166,8 +171,8 @@ ad_form -extend -name assessment_form -form {
 				   -secure_access_p $secure_access_p \
 				   -reuse_responses_p $reuse_responses_p \
 				   -show_item_name_p $show_item_name_p \
-				   -entry_page $entry_page \
-				   -exit_page $exit_page \
+				   -entry_page "" \
+				   -exit_page "" \
 				   -consent_page $consent_page \
 				   -return_url $return_url \
 				   -start_time "" \
@@ -175,6 +180,7 @@ ad_form -extend -name assessment_form -form {
 				   -number_tries $number_tries \
 				   -wait_between_tries $wait_between_tries \
 				   -time_for_response $time_for_response \
+				   -ip_mask $ip_mask \
 				   -show_feedback $show_feedback \
 				   -section_navigation $section_navigation]
 

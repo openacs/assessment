@@ -26,6 +26,7 @@ ad_proc -public as::assessment::new {
     {-number_tries ""}
     {-wait_between_tries ""}
     {-time_for_response ""}
+    {-ip_mask ""}
     {-show_feedback ""}
     {-section_navigation ""}
     {-survey_p ""}
@@ -67,6 +68,7 @@ ad_proc -public as::assessment::new {
 						   [list number_tries $number_tries] \
 						   [list wait_between_tries $wait_between_tries] \
 						   [list time_for_response $time_for_response] \
+						   [list ip_mask $ip_mask] \
 						   [list show_feedback $show_feedback] \
 						   [list section_navigation $section_navigation] \
 						   [list survey_p $survey_p]] ]
@@ -95,6 +97,7 @@ ad_proc -public as::assessment::edit {
     {-number_tries ""}
     {-wait_between_tries ""}
     {-time_for_response ""}
+    {-ip_mask ""}
     {-show_feedback ""}
     {-section_navigation ""}
 } {
@@ -128,6 +131,7 @@ ad_proc -public as::assessment::edit {
 					     [list number_tries $number_tries] \
 					     [list wait_between_tries $wait_between_tries] \
 					     [list time_for_response $time_for_response] \
+					     [list ip_mask $ip_mask] \
 					     [list show_feedback $show_feedback] \
 					     [list section_navigation $section_navigation] ] ]
 
@@ -198,6 +202,7 @@ ad_proc -public as::assessment::new_revision {
 					     [list number_tries $a(number_tries)] \
 					     [list wait_between_tries $a(wait_between_tries)] \
 					     [list time_for_response $a(time_for_response)] \
+					     [list ip_mask $a(ip_mask)] \
 					     [list show_feedback $a(show_feedback)] \
 					     [list section_navigation $a(section_navigation)] ] ]
 	
@@ -295,6 +300,48 @@ ad_proc -public as::assessment::calculate {
     db_dml update_assessment_percent {}
 }
 
+ad_proc -public as::assessment::check_session_conditions {
+    -assessment_id:required
+    -subject_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-22
+
+    Checks if subject is allowed to take the assessment
+} {
+    db_1row assessment_data {}
+    db_1row total_tries {}
+    if {![empty_string_p $wait_between_tries]} {
+	set wait_between_tries [expr 60 * $wait_between_tries]
+    }
+    if {$total_tries > 0} {
+	db_1row cur_wait_time {}
+    } else {
+	set cur_wait_time $wait_between_tries
+    }
+
+    set error_list ""
+    if {(![empty_string_p $start_time] && $start_time > $cur_time) || (![empty_string_p $end_time] && $end_time < $cur_time)} {
+	append error_list "<li>[_ assessment.assessment_not_public]</li>"
+    }
+    if {![empty_string_p $number_tries] && $number_tries < $total_tries} {
+	append error_list "<li>[_ assessment.assessment_too_many_tries]</li>"
+    }
+    if {![empty_string_p $wait_between_tries] && $wait_between_tries > $cur_wait_time} {
+	set pretty_wait_time [pretty_time -seconds [expr $wait_between_tries - $cur_wait_time]]
+	append error_list "<li>[_ assessment.assessment_wait_retry]</li>"
+    }
+    if {![empty_string_p $ip_mask]} {
+	regsub -all {\.} "^$ip_mask" {\\.} ip_mask
+	regsub -all {\*} $ip_mask {.*} ip_mask
+	if {![regexp $ip_mask [ad_conn peeraddr]]} {
+	    append error_list "<li>[_ assessment.assessment_restricted_ips]</li>"
+	}
+    }
+
+    return $error_list
+}
+
 ad_proc as::assessment::pretty_time {
     {-seconds}
 } {
@@ -307,7 +354,8 @@ ad_proc as::assessment::pretty_time {
     if {![empty_string_p $seconds]} {
 	set time_min [expr $seconds / 60]
 	set time_sec [expr $seconds - ($time_min * 60)]
-	set time "$time_min\:$time_sec min"
+	set pad "00"
+	set time "[string range $pad [string length $time_min] end]$time_min\:[string range $pad [string length $time_sec] end]$time_sec min"
     }
     return $time
 }

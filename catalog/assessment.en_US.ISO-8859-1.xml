@@ -52,19 +52,23 @@ each question be shown to the subject.</msg>
   <msg key="as_Minutes_Retry_help">How many minutes have to pass between each retry.</msg>
   <msg key="as_Mode_help">is this a standalone assessment or does it provide an integrated assessment. Needs refinement, ignore for now</msg>
   <msg key="as_Navigation_help">How shall the navigation between sections happen in the assessment.</msg>
-  <msg key="as_Number_Tries_help">How often can a subject retake the test. 0 for infinite.</msg>
+  <msg key="as_Number_Tries_help">How often can a subject retake the test. empty for infinite.</msg>
   <msg key="as_Return_Url_help">URL to go to after the assessment has been finished by a subject</msg>
   <msg key="as_Reuse_Responses_help">If yes, the system will look for previous responses to the the questions and prefill the last answer the respondee has given in the assessment form of the respondee</msg>
   <msg key="as_Secure_Access_help">Is https:// method required to access this assessment?</msg>
   <msg key="as_Show_Item_Name_help">If yes, the respondee will see the name of the question&lt;br&gt;
 in addition to the question itself when taking the survey.</msg>
   <msg key="as_Start_Time_help">Start Time of the assessment</msg>
-  <msg key="as_time_help">Once started, how many seconds does the user have to finish the assessment. 0 for indefinite.</msg>
+  <msg key="as_time_help">Once started, how many minutes does the user have to finish the assessment. empty for indefinite.</msg>
   <msg key="as_Title_help">Helptext for Assessment Title</msg>
   <msg key="Assessment">Assessment</msg>
   <msg key="Assessment_Administration">Assessment Administration</msg>
   <msg key="Assessment_Imported_Correctly">Assessment Imported Correctly</msg>
+  <msg key="assessment_not_public">Assessment is not public.</msg>
+  <msg key="assessment_restricted_ips">Access restricted, wrong IP.</msg>
   <msg key="Assessment_Title">Title</msg>
+  <msg key="assessment_too_many_tries">Only %number_tries% tries allowed.</msg>
+  <msg key="assessment_wait_retry">You have to wait %pretty_wait_time% before your next try.</msg>
   <msg key="Attempt">Attempt</msg>
   <msg key="Author">Author</msg>
   <msg key="Back_Button">Back button allowed</msg>
@@ -175,7 +179,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Increasing_help">Increasing (true) will give (number of correct matches / number of total matches) *100% points.&lt;br&gt;
 Increasing (false) will either give 100%, if all correct answers are given, or 0% else. </msg>
   <msg key="Instructions">Instructions</msg>
+  <msg key="ip_mask">IP Mask</msg>
   <msg key="item_Content">Upload File</msg>
+  <msg key="item_counter">Questions %section.cur_first_item% - %section.cur_last_item% out of %section.num_items%</msg>
   <msg key="item_Definition_help">REDUNDANT, Description should be enough</msg>
   <msg key="item_Delete_Content">Delete File</msg>
   <msg key="item_Description_help">Additional searchable description for the question catalog</msg>
@@ -297,6 +303,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="section">SECTION</msg>
   <msg key="section_Branched">Branched section</msg>
   <msg key="section_branched_help">Is this a branched section?</msg>
+  <msg key="section_counter">Section %section.cur_section% out of %section.num_sections%</msg>
   <msg key="section_Definition_help">No clue what this is =&gt; No help</msg>
   <msg key="section_Description_help">Description for this section</msg>
   <msg key="section_Display_Type_help">Display Type to use for this section.</msg>
@@ -313,6 +320,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Section_Template">Section Template</msg>
   <msg key="section_template_help">Template for the section, made up of ADP commands.</msg>
   <msg key="section_time_help">Seconds allowed to finish this section.</msg>
+  <msg key="section_time_remaining">Remaining section time: %section.pretty_remaining_time%</msg>
   <msg key="section_Title_help">Title of the section, will be used in Display and HTML Title</msg>
   <msg key="Sections">Sections</msg>
   <msg key="Secure_Access_1">Secure Access Required</msg>
@@ -320,6 +328,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Selected_Sections">Selected Sections</msg>
   <msg key="Send_bulkmail">Send bulk mail</msg>
   <msg key="Session">Session</msg>
+  <msg key="session_time_remaining">Remaining session time: %assessment_data.pretty_remaining_time%</msg>
   <msg key="Sessions">Sessions</msg>
   <msg key="Show_Assessments">Show Assessments</msg>
   <msg key="Show_Feedback">Show Feedback</msg>
@@ -339,6 +348,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Summary">Summary</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
   <msg key="time_for_completion">Seconds allowed for completion</msg>
+  <msg key="time_for_response">Minutes allowed for completion</msg>
   <msg key="time_response">%assessment_data.time_for_response% seconds maximum response time</msg>
   <msg key="Time_spent">Time spent</msg>
   <msg key="time_to_wait">Retry allowed after %assessment_data.wait_between_tries% minutes</msg>

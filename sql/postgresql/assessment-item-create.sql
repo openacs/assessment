@@ -72,6 +72,8 @@ create table as_item_choices (
 			check (percent_score <= 100)	
 );
 
+create index as_item_choices_sort_order_idx on as_item_choices (mc_id, sort_order);
+
 -- Short Answer Answers
 create table as_item_sa_answers (
 	choice_id       integer

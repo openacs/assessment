@@ -53,7 +53,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    assessment_name {
 		label {Assessment}
-		link_url_eval {[export_vars -base "assessment" {assessment_id}]}
+		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name@</a></if><else>@sessions.assessment_name@</else>}
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}
@@ -79,7 +79,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    assessment_name {
 		label {Assessment}
-		link_url_eval {[export_vars -base "assessment" {assessment_id}]}
+		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name@</a></if><else>@sessions.assessment_name@</else>}
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}
@@ -103,9 +103,14 @@ if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
     set query "sessions_of_assessment"
 }
 
-db_multirow -extend { item_url } sessions $query {
+db_multirow -extend { item_url assessment_url } sessions $query {
 } {
     set item_url [export_vars -base "session" {session_id}]
+    if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
+	set assessment_url [export_vars -base "assessment" {assessment_id}]
+    } else {
+	set assessment_url ""
+    }
 }
 
 

@@ -153,6 +153,7 @@ content::type::attribute::new -content_type {as_assessments} -attribute_name {en
 content::type::attribute::new -content_type {as_assessments} -attribute_name {number_tries}            -datatype {number}  -pretty_name {Assessment Number Tries}  -column_spec {integer}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {wait_between_tries}            -datatype {number}  -pretty_name {Assessment Wait Between Tries}  -column_spec {integer}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {time_for_response}            -datatype {number}  -pretty_name {Assessment Time for Response}  -column_spec {integer}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask}            -datatype {string}  -pretty_name {IP Mask}  -column_spec {varchar(100)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {show_feedback}            -datatype {string}  -pretty_name {Assessment Show comments to the user}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {section_navigation}            -datatype {string}  -pretty_name {Assessment Navigation of sections}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {survey_p}            -datatype {string}  -pretty_name {Survey}  -column_spec {char(1)}
@@ -176,6 +177,8 @@ content::type::attribute::new -content_type {as_section_data} -attribute_name {s
 content::type::attribute::new -content_type {as_section_data} -attribute_name {subject_id}            -datatype {number}  -pretty_name {Subject ID}  -column_spec {integer}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {staff_id}            -datatype {number}  -pretty_name {Staff ID}  -column_spec {integer}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {points}            -datatype {number}  -pretty_name {Points Awarded}  -column_spec {integer}
+content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime}     -datatype {number}  -pretty_name {Creation Date Time}     -column_spec {timestamptz}
+content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime}     -datatype {number}  -pretty_name {Final Submission}     -column_spec {timestamptz}
 
 # Item data
 content::type::attribute::new -content_type {as_item_data} -attribute_name {session_id}     -datatype {number}  -pretty_name {Session ID}     -column_spec {integer}
@@ -253,5 +256,10 @@ ad_proc -public as::install::after_upgrade {
             0.10d1 0.10d2 {
 		content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id} -datatype {number} -pretty_name {Section ID} -column_spec {integer}
             }
+            0.10d2 0.10d3 {
+		content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime} -datatype {number} -pretty_name {Creation Date Time} -column_spec {timestamptz}
+		content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime} -datatype {number} -pretty_name {Final Submission} -column_spec {timestamptz}
+		content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask} -datatype {string} -pretty_name {IP Mask} -column_spec {varchar(100)}
+	    }
 	}
 }

@@ -37,6 +37,8 @@ ad_proc -public as::section_data::new {
 						     [list subject_id $subject_id] \
 						     [list staff_id $staff_id] \
 						     [list points $points] ] ]
+
+	db_dml update_creation_time {}
     }
 
     return $as_section_data_id

@@ -9,7 +9,8 @@
 
 create table as_item_types_map (
 	item_type		varchar(50),
-	display_type		varchar(50)
+	display_type		varchar(50),
+	constraint as_item_types_map_pk primary key (item_type, display_type)
 );
 
 insert into as_item_types_map (item_type, display_type)

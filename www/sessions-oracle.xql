@@ -8,13 +8,17 @@
 			SELECT r.item_id as assessment_id, s.session_id, s.percent_score,
 			       to_char(s.completed_datetime, :format) as completed_datetime,
 			       p.first_names || ' ' || p.last_name AS subject_name,
-			       r.title AS assessment_name, s.subject_id
-			FROM as_sessions s, cr_revisions r, persons p
+			       r.title AS assessment_name, s.subject_id,
+			       to_char(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start_time,
+			       to_char(a.end_time, 'YYYY-MM-DD HH24:MI:SS') as end_time,
+			       to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') as cur_time
+			FROM as_sessions s, cr_revisions r, persons p, as_assessments a
 			WHERE s.assessment_id = r.revision_id
 			AND s.subject_id = p.person_id
 			AND s.subject_id = :subject_id
 			AND r.item_id = :assessment_id
-			ORDER BY s.completed_datetime desc, s.creation_datetime desc
+			and a.assessment_id = :assessment_rev_id
+			ORDER BY s.session_id desc
 		</querytext>
 	</fullquery>	
 
@@ -23,12 +27,16 @@
 			SELECT r.item_id as assessment_id, s.session_id, s.percent_score,
 			       to_char(s.completed_datetime, :format) as completed_datetime,
 			       p.first_names || ' ' || p.last_name AS subject_name,
-			       r.title AS assessment_name, s.subject_id
-			FROM as_sessions s, cr_revisions r, persons p
+			       r.title AS assessment_name, s.subject_id,
+			       to_char(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start_time,
+			       to_char(a.end_time, 'YYYY-MM-DD HH24:MI:SS') as end_time,
+			       to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') as cur_time
+			FROM as_sessions s, cr_revisions r, persons p, as_assessments a
 			WHERE s.assessment_id = r.revision_id
 			AND s.subject_id = p.person_id
 			AND r.item_id = :assessment_id
-			ORDER BY s.completed_datetime desc, s.creation_datetime desc
+			and a.assessment_id = :assessment_rev_id
+			ORDER BY s.session_id desc
 		</querytext>
 	</fullquery>	
 	

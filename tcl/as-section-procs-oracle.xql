@@ -68,4 +68,29 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::section::calculate.update_section_points">
+	<querytext>
+
+	update as_section_data
+	set points = :section_points,
+	    completed_datetime = sysdate
+	where session_id = :session_id
+	and section_id = :section_id
+
+	</querytext>
+</fullquery>
+	
+<fullquery name="as::section::skip.set_zero_points">
+	<querytext>
+
+	update as_section_data
+	set creation_datetime= sysdate,
+	    completed_datetime = sysdate,
+	    points = 0
+	where session_id = :session_id
+	and section_id = :section_id
+
+	</querytext>
+</fullquery>
+	
 </queryset>

@@ -23,22 +23,24 @@ template::list::create \
     -elements {
         title {
             label {Assessment}
-            link_url_eval {[export_vars -base "assessment" {assessment_id}]}
-            link_html { title {@assessments.description@} }
-
+            display_template {<if @assessments.assessment_url@ not nil><a href="@assessments.assessment_url@">@assessments.title@</a></if><else>@assessments.title@</else>}
         }
         session {
             label {[_ assessment.Sessions]}
             link_url_eval {[export_vars -base "sessions" {assessment_id}]}
         }
-    } \
-    -main_class {
+    } -main_class {
         narrow
     }
 
 # get the information of all assessments store in the database
-db_multirow -extend { session } assessments asssessment_id_name_definition {} {
+db_multirow -extend { session assessment_url } assessments asssessment_id_name_definition {} {
     set session {Sessions}
+    if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
+	set assessment_url [export_vars -base "assessment" {assessment_id}]
+    } else {
+	set assessment_url ""
+    }
 }
 
 set admin_p [ad_permission_p $package_id admin]

@@ -103,6 +103,8 @@ create table as_assessments (
 	wait_between_tries integer,
 	-- how many minutes has the respondee to finish the assessment
 	time_for_response integer,
+	-- ip mask for restricted access
+	ip_mask varchar(100),
 	-- the feedback type which will be displayed to the respondee (all, none, correct, incorrect)
 	show_feedback varchar(50) default 'all'
 			constraint as_assessments_show_feedback_ck
@@ -149,8 +151,12 @@ create table as_assessment_section_map (
 	-- order in which a section will be displayed
 	sort_order	integer,
 	-- this is the relative weight of a section in an assessment
-	points		integer
+	points		integer,
+	constraint as_assessment_section_map_pk primary key (assessment_id, section_id)
 );
+
+create unique index as_assessment_section_map_pk2 on as_assessment_section_map (section_id, assessment_id);
+create index as_assessment_section_map_sort_order_idx on as_assessment_section_map (assessment_id, sort_order);
 
 -- Item Section Map: defines the items of a section
 create table as_item_section_map (
@@ -171,5 +177,9 @@ create table as_item_section_map (
 	-- fixed position in display. 0 for default, negative values relative to section end
 	fixed_position	integer,
 	-- this is the relative weight of an item in a section
-	points		integer
+	points		integer,
+	constraint as_item_section_map_pk primary key (section_id, as_item_id)
 );
+
+create unique index as_item_section_map_pk2 on as_item_section_map (as_item_id, section_id);
+create index as_item_section_map_sort_order_idx on as_item_section_map (section_id, sort_order);
