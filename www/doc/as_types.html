@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Item Types and Item Display Types</title>
+</head>
+<body>
+<span class="context"><span class="reg">
+<h2>Overview</h2>
+<p>
+What to do to add new item types or item display types:
+<ul>
+<li>add new table to assessment-item-types-create.sql</li>
+<li>add entry to matrix table item_type -> display_type in assessment-types-create.sql</li>
+<li>add content type data to tcl/as-install-procs.tcl. adhere to the naming standards!!</li>
+<li>add tcl procs to tcl/as-item-type-$$-procs or tcl/as-item-display-$$-procs with ::new, ::edit, ::copy procs. adhere to naming standards!!</li>
+<li>add admin pages to add new instance: www/admin/item-add-$$ or www/admin/item-add-display-$$</li>
+<li>add admin pages to edit new instance: www/admin/item-edit-$$ or www/admin/item-edit-display-$$</li>
+<li>add pages to display data: lib/item-show-$$ or lib/item-show-display-$$</li>
+</ul>
+</span></span>
+</body>
+</html>

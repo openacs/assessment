@@ -80,25 +80,23 @@ set itemmaxscore [expr $assessment_score/$assessment_items] ;# FIXME total_point
 set session_score 0
 db_multirow -extend [list choice_html score maxscore notanswered item_correct presentation_type] items query_all_items {} {
   #reset variables
-  set as_item_display_rbx__item_id {}
-  unset as_item_display_rbx__item_id
-  set as_item_display_tbx__item_id {}
-  unset as_item_display_tbx__item_id
-  set as_item_display_tax__item_id {}
-  unset as_item_display_tax__item_id
-  set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"]
-  set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
-  set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
-  set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
-  set items_as_item_id [db_string items_items_as_item_id "SELECT as_itemsx.as_item_id FROM as_itemsx WHERE as_itemsx.item_id = :item_item_id"]
-  db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
-  db_0or1row as_item_display_tbx "SELECT item_id AS as_item_display_tbx__item_id FROM as_item_display_tbx WHERE item_id=:item_display_id"
-  db_0or1row as_item_display_tax "SELECT item_id AS as_item_display_tax__item_id FROM as_item_display_tax WHERE item_id=:item_display_id"
+  set rb__display_id {}
+  unset rb__display_id
+  set tb__display_id {}
+  unset tb__display_id
+  set ta__display_id {}
+  unset ta__display_id
+  set mc_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_type_rel]
+  set item_display_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_display_rel]
+  set items_as_item_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :as_item_id"]
+  db_0or1row as_item_display_rbx "SELECT as_item_display_id AS rb__display_id FROM as_item_display_rb WHERE as_item_display_id=:item_display_id"
+  db_0or1row as_item_display_tbx "SELECT as_item_display_id AS tb__display_id FROM as_item_display_tb WHERE as_item_display_id=:item_display_id"
+  db_0or1row as_item_display_tax "SELECT as_item_display_id AS ta__display_id FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
   set presentation_type "checkbox" ;# DEFAULT
   #get the presentation type
-  if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radio"}
-  if {[info exists as_item_display_tbx__item_id]} {set presentation_type "fitb"}
-  if {[info exists as_item_display_tax__item_id]} {set presentation_type "textarea"}
+  if {[info exists rb__display_id]} {set presentation_type "radio"}
+  if {[info exists tb__display_id]} {set presentation_type "fitb"}
+  if {[info exists ta__display_id]} {set presentation_type "textarea"}
 
   set notanswered 1
   set maxscore $itemmaxscore
@@ -110,7 +108,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   if {[string compare $presentation_type "textarea"] == 0} {  
       set text_answer {}
       #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =)        
-      db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_tax WHERE item_id=:item_display_id"
+      db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
       set html_options "[lindex $abs_size 0]=[lindex $abs_size 1] [lindex $abs_size 2]=[lindex $abs_size 3]"
       #get the user response
       db_0or1row shortanswer {} 
@@ -134,7 +132,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
     if {[string length "$choice_id_answer"]} {set notanswered 0}
     set choice_correct 0
     #for fill in the blank item
-    if {[info exists as_item_display_tbx__item_id]} {
+    if {[info exists tb__display_id]} {
         foreach text_value $choice_title {
             if {[empty_string_p $text_answer]} { } else {
 	        #if the user response is equal to stored answer (no case sensitive) the user response is correct
@@ -160,7 +158,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
     }
     
     #for fill in the blank item
-    if {[info exists as_item_display_tbx__item_id]} {
+    if {[info exists tb__display_id]} {
         if {$choice_correct} {
 	    #replace <textbox> by readonly <input>
             regsub -all -line -nocase -- "<textbox.as_item_choice_id=$choice_id" $title "<input value=\"$text_answer\" readonly disabled" title
@@ -189,7 +187,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   if {$item_correct} { set score $itemmaxscore }
   # total points
   set session_score [expr $session_score+$score]
-  if {[info exists as_item_display_tbx__item_id]} { append choice_html $title }
+  if {[info exists tb__display_id]} { append choice_html $title }
   append choice_html {</table>}
 }
 

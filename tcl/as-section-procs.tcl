@@ -91,9 +91,8 @@ ad_proc -public as::section::new_revision {
     Creates a new revision of a section with all items
 } {
     # edit as_section in the CR
-    db_1row section_data {}
-
     db_transaction {
+	db_1row section_data {}
 	set new_section_id [content::revision::new \
 				-item_id $section_item_id \
 				-content_type {as_sections} \
@@ -107,6 +106,43 @@ ad_proc -public as::section::new_revision {
 						 [list section_display_type_id $section_display_type_id] ] ]
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
+	as::assessment::copy_categories -from_id $section_id -to_id $new_section_id
+    }
+
+    return $new_section_id
+}
+
+ad_proc -public as::section::copy {
+    {-section_id:required}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-11-07
+
+    Copies a section with all items
+} {
+    # edit as_section in the CR
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    db_transaction {
+	db_1row section_data {}
+	append title "[_ assessment.copy_appendix]"
+
+	set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name [exec uuidgen] -title $title -description $description ]
+	set new_section_id [content::revision::new \
+				-item_id $section_item_id \
+				-content_type {as_sections} \
+				-title $title \
+				-description $description \
+				-attributes [list [list definition $definition] \
+						 [list instructions $instructions] \
+						 [list feedback_text $feedback_text] \
+						 [list max_time_to_complete $max_time_to_complete] \
+						 [list required_p $required_p] \
+						 [list section_display_type_id $section_display_type_id] ] ]
+
+	copy_items -section_id $section_id -new_section_id $new_section_id
+	as::assessment::copy_categories -from_id $section_id -to_id $new_section_id
     }
 
     return $new_section_id

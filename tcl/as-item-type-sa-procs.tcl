@@ -32,3 +32,51 @@ ad_proc -public as::item_type_sa::new {
 
     return $as_item_type_sa_id
 }
+
+ad_proc -public as::item_type_sa::edit {
+    -as_item_type_id:required
+    {-title ""}
+    {-increasing_p ""}
+    {-allow_negative_p ""}    
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Edit Short Answer Answers item to the data database
+} {
+    # Update as_item_type_sa in the CR (and as_item_type_sa table) getting the revision_id (as_item_type_id)
+    db_transaction {
+	set type_item_id [db_string type_item_id {}]
+        set new_item_type_id [content::revision::new \
+				  -item_id $type_item_id \
+				  -content_type {as_item_type_sa} \
+				  -title $title \
+				  -attributes [list [list increasing_p $increasing_p] \
+						   [list allow_negative_p $allow_negative_p] ] ]
+    }
+
+    return $new_item_type_id
+}
+
+ad_proc -public as::item_type_sa::copy {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Copy a Short Answer Type
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_type_sa in the CR (and as_item_type_sa table) getting the revision_id (as_item_type_id)
+    db_transaction {
+	db_1row item_type_data {}
+
+	set new_item_type_id [new -title $title \
+				  -increasing_p $increasing_p \
+				  -allow_negative_p $allow_negative_p]
+    }
+
+    return $new_item_type_id
+}

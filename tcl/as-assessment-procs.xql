@@ -33,4 +33,15 @@
 </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::copy_categories.copy_categories">
+<querytext>
+
+	insert into category_object_map
+	(select category_id, :to_id as object_id
+	 from category_object_map
+	 where object_id = :from_id)
+
+</querytext>
+</fullquery>
+
 </queryset>

@@ -20,29 +20,28 @@ db_dml session_finished {}
 
 foreach response_to_item_name [array names response_to_item] {
     #reset variables
-    set as_item_display_rbx__item_id {}
-    unset as_item_display_rbx__item_id
-    set as_item_display_tbx__item_id {}
-    unset as_item_display_tbx__item_id
-    set as_item_display_tax__item_id {}
-    unset as_item_display_tax__item_id
+    set rb__display_id {}
+    unset rb__display_id
+    set tb__display_id {}
+    unset tb__display_id
+    set ta__display_id {}
+    unset ta__display_id
     #get the choice identifier from response_to_item array
     regsub -all -line -nocase -- {.*_} $response_to_item_name {} response_to_item_choice_id
     #get the item identifier from response_to_item array
-    regsub -all -line -nocase -- {_.*} $response_to_item_name {} response_to_item_id 
-    set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:response_to_item_id"]
-    set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
-    db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
-    db_0or1row as_item_display_tbx "SELECT item_id AS as_item_display_tbx__item_id FROM as_item_display_tbx WHERE item_id=:item_display_id"
-    db_0or1row as_item_display_tax "SELECT item_id AS as_item_display_tax__item_id FROM as_item_display_tax WHERE item_id=:item_display_id"
+    regsub -all -line -nocase -- {_.*} $response_to_item_name {} response_to_item_id
+    set item_display_id [as::item_rels::get_target -item_rev_id $response_to_item_id -type as_item_display_rel]
+    db_0or1row as_item_display_rbx "SELECT as_item_display_id AS rb__display_id FROM as_item_display_rb WHERE as_item_display_id=:item_display_id"
+    db_0or1row as_item_display_tbx "SELECT as_item_display_id AS tb__display_id FROM as_item_display_tb WHERE as_item_display_id=:item_display_id"
+    db_0or1row as_item_display_tax "SELECT as_item_display_id AS ta__display_id FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
     set presentation_type "checkbox" ;# DEFAULT
     #set the presentation type
-    if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radio"}
-    if {[info exists as_item_display_tbx__item_id]} {set presentation_type "fitb"}
-    if {[info exists as_item_display_tax__item_id]} {set presentation_type "textarea"}
+    if {[info exists rb__display_id]} {set presentation_type "radio"}
+    if {[info exists tb__display_id]} {set presentation_type "fitb"}
+    if {[info exists ta__display_id]} {set presentation_type "textarea"}
 
     # the presentation type is textbox (fill in the blank item)
-    if {[info exists as_item_display_tbx__item_id]} {
+    if {[info exists tb__display_id]} {
         db_foreach session_responses_to_item {SELECT as_item_datax.item_id FROM as_item_datax WHERE as_item_datax.as_item_id=:response_to_item_id AND as_item_datax.choice_id_answer=:response_to_item_choice_id AND as_item_datax.session_id=:as_session_id} {
             content::item::delete -item_id $item_id
         }
@@ -52,7 +51,7 @@ foreach response_to_item_name [array names response_to_item] {
         }
     } else {
         #the presentation type is textarea (short answer item)
-        if {[info exists as_item_display_tax__item_id]} {
+        if {[info exists ta__display_id]} {
             db_foreach session_responses_to_item {SELECT as_item_datax.item_id FROM as_item_datax WHERE as_item_datax.as_item_id=:response_to_item_id AND as_item_datax.session_id=:as_session_id} {
         content::item::delete -item_id $item_id
         }

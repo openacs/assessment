@@ -197,6 +197,7 @@ ad_proc -public as::assessment::new_revision {
 					     [list section_navigation $a(section_navigation)] ] ]
 	
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
+	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
     }
 
     return $new_rev_id
@@ -212,4 +213,16 @@ ad_proc as::assessment::copy_sections {
     Copies all sections from assessment_id to new_assessment_id
 } {
     db_dml copy_sections {}
+}
+
+ad_proc as::assessment::copy_categories {
+    {-from_id:required}
+    {-to_id:required}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Copies all categories from one object to new object
+} {
+    db_dml copy_categories {}
 }

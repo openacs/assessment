@@ -32,3 +32,51 @@ ad_proc -public as::item_display_tb::new {
 
     return $as_item_display_tb_id
 }
+
+ad_proc -public as::item_display_tb::edit {
+    -as_item_display_id:required
+    {-html_display_options ""}
+    {-abs_size ""}
+    {-item_answer_alignment ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Edit Item Display TextBox Type to the database
+} {
+    # Update as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)
+    db_transaction {
+	set display_item_id [db_string display_item_id {}]
+        set new_item_display_id [content::revision::new \
+				     -item_id $display_item_id \
+				     -content_type {as_item_display_tb} \
+				     -attributes [list [list html_display_options $html_display_options] \
+						      [list abs_size $abs_size] \
+						      [list item_answer_alignment $item_answer_alignment] ] ]
+    }
+
+    return $new_item_display_id
+}
+
+ad_proc -public as::item_display_tb::copy {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Copy an Item Display TextBox Type
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)
+    db_transaction {
+	db_1row display_item_data {}
+
+	set new_item_display_it [new -html_display_options $html_display_options \
+				     -abs_size $abs_size \
+				     -item_answer_alignment $item_answer_alignment]
+    }
+
+    return $new_item_display_id
+}

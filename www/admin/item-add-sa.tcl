@@ -23,7 +23,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set page_title [_ assessment.add_new_question]
+set page_title [_ assessment.add_item_type_sa]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
@@ -52,7 +52,7 @@ ad_form -name item_add_sa -action item-add-sa -export { assessment_id section_id
 				 -increasing_p $increasing_p \
 				 -allow_negative_p $negative_p]
 	
-	content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
+	as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
     }
 } -after_submit {
     # now go to display-type specific form (i.e. textbox)

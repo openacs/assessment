@@ -31,8 +31,8 @@ ad_form -name section_delete_confirm -action section-delete -export { assessment
     {section_title:text(inform) {label "[_ assessment.remove_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
     {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
-} -select_query_name {section_title} -on_submit {
-} -on_submit {
+} -select_query_name {section_title} \
+-on_submit {
     if {$confirmation} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]

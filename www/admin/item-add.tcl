@@ -22,7 +22,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set page_title [_ assessment.add_new_question]
+set page_title [_ assessment.add_item]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 set package_id [ad_conn package_id]
 
@@ -77,6 +77,7 @@ ad_form -extend -name item_add -form {
     db_transaction {
 	set as_item_id [as::item::new \
 			    -title $title \
+			    -description $description \
 			    -subtext $subtext \
 			    -field_code $field_code \
 			    -definition $definition \

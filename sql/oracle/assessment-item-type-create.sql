@@ -71,10 +71,27 @@ create table as_item_display_cb (
 	choice_orientation	varchar(20),
 	-- how shall the label be positioned in relation to the choice (top, left, right, buttom).
 	choice_label_orientation varchar(20),
-	-- if it is allowed to select multiple values
-	allow_multiple_p	char(1) default 'f'
-				constraint as_item_type_cb_multiple_p_ck
-				check (allow_multiple_p in ('t','f')),
+	-- order in which the choices will appear (numerical, alphabetic, randomized or by order of entry)
+	sort_order_type		varchar(20),
+	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
+	item_answer_alignment	varchar(20)
+);
+
+-- Selectbox Display Type
+create table as_item_display_sb (
+	as_item_display_id	integer
+				constraint as_item_display_sb_displ_id_pk
+				primary key
+				constraint as_item_display_sb_displ_id_fk
+				references cr_revisions(revision_id),
+	-- field to specify other stuff like textarea dimensions 
+	html_display_options	varchar(50),
+	-- if multiple answers are allowed
+	multiple_p		char(1) default 'f'
+				constraint as_item_type_sb_multiple_p_ck
+				check (multiple_p in ('t','f')),
+	-- how shall the label be positioned in relation to the choice (top, left, right, buttom).
+	choice_label_orientation varchar(20),
 	-- order in which the choices will appear (numerical, alphabetic, randomized or by order of entry)
 	sort_order_type		varchar(20),
 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)

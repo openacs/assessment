@@ -1,5 +1,5 @@
 ad_page_contract {
-    Form to add an item with selectbox display.
+    Form to add an item with shortanswer display.
 
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
@@ -23,7 +23,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set page_title [_ assessment.add_new_question]
+set page_title [_ assessment.add_item_display_sa]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 
@@ -49,7 +49,7 @@ ad_form -name item_add_display_sa -action item-add-display-sa -export { assessme
 				    -abs_size $abs_size \
 				    -box_orientation $box_orientation]
 	
-	content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
+	as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set new_section_id [as::section::new_revision -section_id $section_id]

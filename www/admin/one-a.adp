@@ -95,6 +95,8 @@
 
 <td><a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
 
+<a href="section-copy?section_id=@sections.section_id@&assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Copy#</a>
+
 <a href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
 
 <a href="section-add-existing?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_existing_section#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">

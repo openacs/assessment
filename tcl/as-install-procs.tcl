@@ -24,6 +24,7 @@ content::type::create_type -content_type {as_item_type_oq} -supertype {content_r
 content::type::create_type -content_type {as_item_type_sa} -supertype {content_revision} -pretty_name {Assessment Item Type Short Answer} -pretty_plural {Assessment Item Type Short Answer} -table_name {as_item_type_sa} -id_column {as_item_type_id}
 content::type::create_type -content_type {as_item_display_rb} -supertype {content_revision} -pretty_name {Assessment Item Display Radio Button} -pretty_plural {Assessment Item Display Radio Button} -table_name {as_item_display_rb} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_item_display_cb} -supertype {content_revision} -pretty_name {Assessment Item Display CheckBox} -pretty_plural {Assessment Item Display CheckBox} -table_name {as_item_display_cb} -id_column {as_item_display_id}
+content::type::create_type -content_type {as_item_display_sb} -supertype {content_revision} -pretty_name {Assessment Item Display SelectBox} -pretty_plural {Assessment Item Display SelectBox} -table_name {as_item_display_sb} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_item_display_tb} -supertype {content_revision} -pretty_name {Assessment Item Display TextBox} -pretty_plural {Assessment Item Display TextBox} -table_name {as_item_display_tb} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_item_display_sa} -supertype {content_revision} -pretty_name {Assessment Item Display Short Answer} -pretty_plural {Assessment Item Display Short Answer} -table_name {as_item_display_sa} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_item_display_ta} -supertype {content_revision} -pretty_name {Assessment Item Display TextArea} -pretty_plural {Assessment Item Display TextArea} -table_name {as_item_display_ta} -id_column {as_item_display_id}
@@ -46,9 +47,15 @@ content::type::create_attribute -content_type {as_item_display_rb} -attribute_na
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {choice_orientation} -datatype {string}    -pretty_name {Choice Orientation} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
-content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {allow_multiple_p} -datatype {string}    -pretty_name {Allow Multiple} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
+
+# Selectbox display type
+content::type::create_attribute -content_type {as_item_display_sb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
+content::type::create_attribute -content_type {as_item_display_sb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_item_display_sb} -attribute_name {multiple_p} -datatype {string}    -pretty_name {Allow Multiple} -column_spec {char(1)}
+content::type::create_attribute -content_type {as_item_display_sb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_item_display_sb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 
 # Textbox display type
 content::type::create_attribute -content_type {as_item_display_tb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -176,17 +183,6 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {te
 content::type::create_attribute -content_type {as_item_data} -attribute_name {timestamp_answer}    -datatype {number}  -pretty_name {TimeStamp Answer}    -column_spec {timestamptz}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
-
-# create relation between tables
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_mc} -relation_tag {as_item_type_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_sa} -relation_tag {as_item_type_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_oq} -relation_tag {as_item_type_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_rb} -relation_tag {as_item_display_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_cb} -relation_tag {as_item_display_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_tb} -relation_tag {as_item_display_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_sa} -relation_tag {as_item_display_rel}
-content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_ta} -relation_tag {as_item_display_rel}
-
 }
 
 ad_proc -public as::install::package_instantiate {
@@ -205,6 +201,7 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_oq} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_rb} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_cb} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_sb} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_tb} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_sa} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_ta} -include_subtypes t

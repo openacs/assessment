@@ -25,7 +25,7 @@
 
 <if @items.enabled_p@ eq "f"><span style="color: #f00;">#assessment.disabled#</span></if>
 
-<a href="item-copy?as_item_id=@items.as_item_id@&sort_order=@items.sort_order@">#assessment.Copy#</a>
+<a href="item-copy?section_id=@section_id@&assessment_id=@assessment_id@&as_item_id=@items.as_item_id@&after=@items.sort_order@">#assessment.Copy#</a>
 
 <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
 

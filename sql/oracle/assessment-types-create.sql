@@ -23,7 +23,7 @@ values ('mc', 'rb');
 insert into as_item_types_map (item_type, display_type)
 values ('mc', 'cb');
 insert into as_item_types_map (item_type, display_type)
-values ('mc', 'sa');
+values ('mc', 'sb');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('ca', 'tb');
 -- insert into as_item_types_map (item_type, display_type)
@@ -31,10 +31,25 @@ values ('mc', 'sa');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('dq', 'cb');
 -- insert into as_item_types_map (item_type, display_type)
--- values ('dq', 'sa');
+-- values ('dq', 'sb');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('dq', 'tb');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('dq', 'ta');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('dq', 'file');
+
+
+-- this table maps items to item types and display types
+
+create table as_item_rels (
+	item_rev_id	integer
+			constraint as_item_rels_item_fk
+			references acs_objects,
+	target_rev_id	integer
+			constraint as_item_rels_target_fk
+			references acs_objects,
+	rel_type	varchar(20),
+	constraint as_item_rels_pk
+	primary key (item_rev_id, rel_type, target_rev_id)
+);

@@ -265,10 +265,10 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 				}
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
 				set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
-				# set the relation between as_items and as_item_type tables
-				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
+			        # set the relation between as_items and as_item_type tables
+			        as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 				# set the relation between as_items and as_item_display tables
-				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
+			        as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
 			} else {
 				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
@@ -292,9 +292,9 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
 				set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
 				# set the relation between as_items and as_item_type tables
-				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
+			        as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 				# set the relation between as_items and as_item_display tables
-				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
+			        as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
 				# <response_label> (each choice)
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {

@@ -26,7 +26,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set page_title [_ assessment.add_new_question]
+set page_title [_ assessment.add_item_type_mc]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
@@ -89,10 +89,10 @@ ad_form -extend -name item_add_mc -edit_request {
 		       -num_correct_answers $num_correct_answers \
 		       -num_answers $num_answers]
 	
-	content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:mc_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
+	as::item_rels::new -item_rev_id $as_item_id -target_rev_id $mc_id -type as_item_type_rel
 
 	set count 0
-	foreach i [array names choice] {
+	foreach i [lsort -integer [array names choice]] {
 	    if {![empty_string_p $choice($i)]} {
 	    incr count
 	    set choice_id [as::item_choice::new -mc_id $mc_id \
@@ -110,7 +110,7 @@ ad_form -extend -name item_add_mc -edit_request {
     }
 } -after_submit {
     # now go to form to enter choice-specific data
-    ad_returnredirect [export_vars -base "item-add-mc-choices" {assessment_id section_id as_item_id after mc_id display_type choice:array correct:array}]
+    ad_returnredirect [export_vars -base "item-add-mc-choices" {assessment_id section_id as_item_id after mc_id display_type}]
     ad_script_abort
 }
 

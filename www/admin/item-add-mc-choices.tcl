@@ -28,7 +28,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set page_title [_ assessment.add_new_question]
+set page_title [_ assessment.add_item_type_mc_choices]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set selected_options [list [list "[_ assessment.yes]" t]]

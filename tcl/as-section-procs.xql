@@ -24,6 +24,19 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::section::copy.section_data">
+      <querytext>
+
+	select cr.title, cr.description,
+	       s.definition, s.instructions, s.feedback_text, s.max_time_to_complete,
+	       s.required_p, s.section_display_type_id
+	from cr_revisions cr, as_sections s
+	where cr.revision_id = :section_id
+	and s.section_id = cr.revision_id
+
+      </querytext>
+</fullquery>
+
 <fullquery name="as::section::copy_items.copy_items">
       <querytext>
 

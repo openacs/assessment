@@ -23,7 +23,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set page_title [_ assessment.add_new_question]
+set page_title [_ assessment.add_item_display_rb]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 
@@ -59,7 +59,7 @@ ad_form -name item_add_display_rb -action item-add-display-rb -export { assessme
     set choice_orientation "vertical"
     set label_orientation "top"
     set order_type "order_of_entry"
-    set answer_alignment "beside-right"
+    set answer_alignment "besideright"
 } -edit_data {
     db_transaction {
 	set as_item_display_id [as::item_display_rb::new \
@@ -69,7 +69,7 @@ ad_form -name item_add_display_rb -action item-add-display-rb -export { assessme
 				    -sort_order_type $order_type \
 				    -item_answer_alignment $answer_alignment]
 	
-	content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
+	as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set new_section_id [as::section::new_revision -section_id $section_id]

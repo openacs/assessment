@@ -32,3 +32,51 @@ ad_proc -public as::item_type_oq::new {
 
     return $as_item_type_oq_id
 }
+
+ad_proc -public as::item_type_oq::edit {
+    -as_item_type_id:required
+    {-title ""}
+    {-default_value ""}
+    {-feedback_text ""}    
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Edit Open Question item to the data database
+} {
+    # Update as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
+    db_transaction {
+	set type_item_id [db_string type_item_id {}]
+        set new_item_type_id [content::revision::new \
+				  -item_id $type_item_id \
+				  -content_type {as_item_type_oq} \
+				  -title $title \
+				  -attributes [list [list default_value $default_value] \
+						   [list feedback_text $feedback_text] ] ]
+    }
+
+    return $new_item_type_id
+}
+
+ad_proc -public as::item_type_oq::copy {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Copy an Open Question Type
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
+    db_transaction {
+	db_1row item_type_data {}
+
+	set new_item_type_id [new -title $title \
+				  -default_value $default_value \
+				  -feedback_text $feedback_text]
+    }
+
+    return $new_item_type_id
+}
