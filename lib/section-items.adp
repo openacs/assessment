@@ -38,7 +38,7 @@
 
 <if @items.mc_type@ ne "nmc">
 <a
-href="../admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
+href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a> <a href="../asm-admin/checks-admin?section_id=@items.section_id@&assessment_id=@assessment_id@">@items.checks_related@</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
 </if>
 
 <if @items.rownum@ lt @items:rowcount@>

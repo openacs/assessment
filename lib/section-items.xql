@@ -31,4 +31,13 @@
 </querytext>
 </fullquery>
 
+<fullquery name="checks_related">
+<querytext>
+	
+	select check_sql from as_inter_item_checks where assessment_id=:assessment_id and section_id_from=:section_id
+
+</querytext>
+</fullquery>
+
+
 </queryset>
