@@ -19,7 +19,7 @@
 
 <multiple name="items">
     <table border="0">
-        <tr bgcolor="#d0d0d0"><td><b> @items.section_title@ </b></td></tr>
+        <tr bgcolor="#d0d0d0"><td><b>#assessment.section#: @items.section_title@ </b></td></tr>
 	<tr><td><i> @items.section_description@ </i><br></td></tr>
     </table>
 

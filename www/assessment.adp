@@ -4,6 +4,7 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3">@assessment_name@</th></tr>
+<tr><td><i><font size="1">@assessment_instruction@</font></i></td></tr>
 <!--for future data of assessment-->
 <tr>
 <td colspan="3"><hr></td>

@@ -30,6 +30,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				set as_assessments__name [$assessment getAttribute {ident}]
 				set nodesList [$assessment childNodes]
 				set as_assessments__definition ""
+				set as_assessments__instructions ""
 				foreach node $nodesList {
 					set nodeName [$node nodeName]
 					if {$nodeName == "qticomment"} {
@@ -44,10 +45,16 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 							set definition [lindex $definitionNodes 0]
 							set as_assessments__definition [$definition nodeValue]
 						}
+					} elseif {$nodeName == "rubric"} {
+						set instructionNodes [$assessment selectNodes {rubric/material/mattext/text()}]
+						if {[llength $instructionNodes] != 0} {
+							set instruction [lindex $instructionNodes 0]
+							set as_assessments__instructions [$instruction nodeValue]
+						}
 					}
 				}
 				# Insert assessment in the CR (and as_assessments table) getting the revision_id (assessment_id)
-				set as_assessments__assessment_id [as::assessment::new -name $as_assessments__name -title $as_assessments__title -description $as_assessments__definition]
+				set as_assessments__assessment_id [as::assessment::new -name $as_assessments__name -title $as_assessments__title -description $as_assessments__definition -instructions $as_assessments__instructions]
 				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
@@ -65,7 +72,13 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 								set definition [lindex $definitionNodes 0]
 								set as_sections__definition [$definition nodeValue]
 							}
-						}
+						} elseif {$nodeName == "objectives"} {
+						    set definitionNodes [$section selectNodes {objectives/material/mattext/text()}]
+						    if {[llength $definitionNodes] != 0} {
+							set definition [lindex $definitionNodes 0]
+							set as_sections__definition [$definition nodeValue]
+						    }						    
+					        }
 					}
 					# Insert section in the CR (the and the as_sections table) getting the revision_id (section_id)
 					set as_sections__section_id [as::section::new -name $as_sections__name -title $as_sections__title -description $as_sections__definition]

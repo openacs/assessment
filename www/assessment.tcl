@@ -18,6 +18,13 @@ set assessment_name [db_string assessment_name {
     WHERE assessment_id = :assessment_id
 }]
 
+set assessment_instruction [db_string assessment_instruction {
+    SELECT instructions
+    FROM as_assessmentsx
+    WHERE assessment_id = :assessment_id
+}]
+
+
 db_dml session_start {
     UPDATE as_sessions
     SET creation_datetime = NOW()
