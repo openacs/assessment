@@ -1,5 +1,5 @@
 ad_page_contract {
-    @author eperez@it.uc3m.es
+    @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
     @creation-date 2004-09-13
 } -query {
   assessment_id:notnull
