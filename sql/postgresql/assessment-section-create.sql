@@ -44,6 +44,8 @@ create table as_sections (
 			references as_section_display_types (display_type_id),
 	-- text displayed on user pages
 	instructions	text,
+	-- number of items displayed
+	num_items	integer,
 	-- number of points for section; might be used for defining difficulty levels
 	points		integer,
 	-- preset text to show user
