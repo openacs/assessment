@@ -25,7 +25,7 @@
 
 		     <group column="section_title">
 			<tr>
-				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
+				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b><if @items.presentation_type@ ne tb>@items.title;noquote@</if></b></td></tr>
 				<tr><td colspan="4">
 					<blockquote>
 						<if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
@@ -35,7 +35,7 @@
 								<br/>
 							</formgroup>
 						</if>
-						<elseif @items.presentation_type@ eq fitb>
+						<elseif @items.presentation_type@ eq tb>
 							@items.html;noquote@
 						</elseif>
 						<else>
