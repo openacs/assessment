@@ -35,13 +35,13 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	}
 
 	"textarea" {
-	    db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_tax WHERE item_id=:item_display_id"	   
+	    db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_tax WHERE item_id=:item_display_id"	   
 	    template::element::create $form $element_name \
 		-datatype text \
 		-widget textarea \
 		-label $title \
 		-value $user_value \
-		-html $abs_size \
+		-html $html_display_options \
 		-nospell \
 		-required_p $required_p
 	}
@@ -50,7 +50,8 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set widget "text(radio)"
 	    set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:item_id"]
 	    set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
-	    set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
+	    set mc_id [db_string item_to_rev "SELECT latest_revision FROM cr_items WHERE item_id=:item_mc_id"]
+	    ## set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
 	        #for multiple choice item with multimedia
@@ -75,7 +76,8 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	"checkbox" {
 	    set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:item_id"]
 	    set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
-	    set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
+	    set mc_id [db_string item_to_rev "SELECT latest_revision FROM cr_items WHERE item_id=:item_mc_id"]
+	    ## set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
 	    set choices [list]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {

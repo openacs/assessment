@@ -5,7 +5,7 @@
 <if @items:rowcount@ eq 0>
   <tr class="odd">
   <td></td><td>
-    <a href="item-form?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_New#</a>
+    <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_New#</a>
     <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_Existing#</a>
   </td></tr>
 </if>
@@ -21,13 +21,13 @@
 
 <td valign="top">@items.rownum@.<if @items.required_p@ eq t> <font color=red>*</font> </if></td>
 
-<td><a href="item-form?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
+<td><a href="item-edit?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
 
 <if @items.enabled_p@ eq "f"><span style="color: #f00;">#assessment.disabled#</span></if>
 
 <a href="item-copy?as_item_id=@items.as_item_id@&sort_order=@items.sort_order@">#assessment.Copy#</a>
 
-<a href="item-form?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
+<a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
 
 <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_Existing#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
 
@@ -73,7 +73,7 @@
     <tr class="odd">
   </else>
   <td></td><td>
-    <a href="item-form?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_New#</a>
+    <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_New#</a>
     <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_Existing#</a>
   </td></tr>
 </if>

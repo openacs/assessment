@@ -129,7 +129,7 @@ ad_proc -public as::assessment::edit {
 	copy_sections -assessment_id $assessment_rev_id -new_assessment_id $new_rev_id
     }
 
-    return $assessment_rev_id
+    return $new_rev_id
 }
 
 ad_proc -public as::assessment::data {

@@ -12,10 +12,10 @@ ad_proc -public as::item_choice::new {
     {-data_type ""}
     {-numeric_value ""}
     {-text_value ""}
-    {-boolean_value:boolean ""}
+    {-boolean_value ""}
     {-content_value ""}
     {-feedback_text ""}
-    {-selected_p:boolean ""}
+    {-selected_p ""}
     {-correct_answer_p ""}
     {-sort_order ""}
     {-percent_score ""}
