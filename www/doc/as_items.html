@@ -268,14 +268,16 @@ easier. It
 is
 debatable if we should allow n:m relationships between choices and
 as_item_types (thereby allowing the same choice been reused). In my
-opinion this is not necessary, therefore we have the parent_id.
+opinion this is not necessary, therefore we relate this using the
+    parent_id (which will be treated as a relationship in
+    cr_child_rels by the content repository internally).
 Following the Lars Skinny Table approach of conflating all the
 different potential data types into one table, we provide columns to
 hold values of the different types and another field to determine which
 of them is used. as_item Choices have these attributes:
     <ul>
       <li> choice_id </li>
-      <li> parent_id (belonging to an as_item_type_mc
+      <li> cr::parent_id (belonging to an as_item_type_mc
 object).</li>
       <li> cr::name - Identifier<br>
       </li>
@@ -339,7 +341,7 @@ cr_revision_id of the image, references cr_revisions<br>
     </font></b></span></span></span></span></li>
   <ul>
     <li>choice_id </li>
-    <li> parent_id (belonging to an as_as_item_type_im
+    <li> cr::parent_id (belonging to an as_as_item_type_im
 object).</li>
     <li> cr::name - Identifier<br>
     </li>
