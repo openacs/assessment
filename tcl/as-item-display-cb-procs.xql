@@ -23,4 +23,15 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_display_cb::render.display_item_data">
+      <querytext>
+
+	select html_display_options, choice_orientation, choice_label_orientation,
+	       sort_order_type, item_answer_alignment
+	from as_item_display_cb
+	where as_item_display_id = :type_id
+
+      </querytext>
+</fullquery>
+
 </queryset>

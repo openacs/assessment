@@ -87,6 +87,50 @@ ad_proc -public as::item_display_sb::copy {
 				     -sort_order_type $sort_order_type \
 				     -item_answer_alignment $item_answer_alignment]
     }
-
+    
     return $new_item_display_id
+}
+
+ad_proc -public as::item_display_sb::render {
+    -form:required
+    -element:required
+    -type_id:required
+    {-datatype ""}
+    {-title ""}
+    {-subtext ""}
+    {-required_p ""}
+    {-default_value ""}
+    {-data ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-10
+
+    Render an Item Display SelectBox Type
+} {
+    db_1row display_item_data {}
+    if {[empty_string_p $required_p]} {
+	set required_p f
+    }
+    set widget select
+    if {$multiple_p == "t"} {
+	set widget multiselect
+    }
+
+    # multiple_p
+    # numerical alphabetical randomized order_of_entry
+    switch -exact $sort_order_type {
+	numerical {
+	    set data [lsort -real -index 1 $data]
+	}
+	alphabetical {
+	    set data [lsort -dictionary -index 1 $data]
+	}
+	randomized {
+	    set data [util::randomize_list $data]
+	}
+    }
+    
+    set options {-datatype text -widget $widget -label $title -help_text $subtext -values $default_value -required_p $required_p -html $html_display_options -options $data}
+
+    eval template::element::create $form $element $options
 }

@@ -80,3 +80,35 @@ ad_proc -public as::item_display_sa::copy {
 
     return $new_item_display_id
 }
+
+ad_proc -public as::item_display_sa::render {
+    -form:required
+    -element:required
+    -type_id:required
+    {-datatype ""}
+    {-title ""}
+    {-subtext ""}
+    {-required_p ""}
+    {-default_value ""}
+    {-data ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-10
+
+    Render an Item Display ShortAnswer Type
+} {
+    db_1row display_item_data {}
+    if {![empty_string_p $abs_size]} {
+	set maxlength_option {-maxlength $abs_size}
+    }
+    if {[empty_string_p $required_p]} {
+	set required_p f
+    }
+    if {[empty_string_p $datatype]} {
+	set datatype text
+    }
+
+    set options {-datatype $datatype -widget text -label $title -help_text $subtext -value $default_value -required_p $required_p -html $html_display_options}
+
+    eval template::element::create $form $element $options $maxlength_option
+}

@@ -129,3 +129,60 @@ ad_proc -public as::item_type_mc::copy {
 
     return $new_item_type_id
 }
+
+ad_proc -public as::item_type_mc::render {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-10
+
+    Render a Multiple Choice Type
+} {
+    db_1row item_type_data {}
+
+    set defaults ""
+    set display_choices [list]
+    set correct_choices [list]
+    set wrong_choices [list]
+    set choices [db_list_of_lists get_choices {}]
+    set choices [db_list_of_lists foobar {
+	    select c.choice_id, r.title, c.correct_answer_p, c.selected_p
+	    from as_item_choices c, cr_revisions r
+	    where c.mc_id = :type_id
+	    and r.revision_id = c.choice_id
+	    order by c.sort_order
+    }]
+
+    foreach one_choice $choices {
+	util_unlist $one_choice choice_id title correct_answer_p selected_p
+	lappend display_choices [list $title $choice_id]
+	if {$selected_p == "t"} {
+	    lappend defaults $choice_id
+	}
+	if {$correct_answer_p == "t"} {
+	    lappend correct_choices [list $title $choice_id]
+	} else {
+	    lappend wrong_choices [list $title $choice_id]
+	}
+    }
+    
+    if {![empty_string_p $num_answers] && $num_answers < [llength $choices]} {
+	# display fewer choices, select random
+	set correct_choices [util::randomize_list $correct_choices]
+	set wrong_choices [util::randomize_list $wrong_choices]
+
+	if {![empty_string_p $num_correct_answers] && $num_correct_answers > 0 && $num_correct_answers < [llength $correct_choices]} {
+	    # display fewer correct answers than there are
+	    set display_choices [lrange $correct_choices 1 $num_correct_answers]
+	} else {
+	    # display all correct answers
+	    set display_choices $correct_choices
+	}
+
+	# now fill up with wrong answers
+	set display_choices [concat $display_choices [lrange $wrong_choices 0 [expr $num_answers - [llength $display_choices] -1]]]
+	set display_choices [util::randomize_list $display_choices]
+    }
+    
+    return [list $defaults $display_choices]
+}

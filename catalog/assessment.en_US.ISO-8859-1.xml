@@ -72,9 +72,8 @@
   <msg key="data_type_boolean">Boolean</msg>
   <msg key="data_type_content_type">File</msg>
   <msg key="data_type_date">Date</msg>
-  <msg key="data_type_exponential">Exponential</msg>
+  <msg key="data_type_float">Float</msg>
   <msg key="data_type_integer">Integer</msg>
-  <msg key="data_type_numeric">Numerical</msg>
   <msg key="data_type_text">Text</msg>
   <msg key="data_type_timestamp">Time</msg>
   <msg key="data_type_varchar">Short Text</msg>

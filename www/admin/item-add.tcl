@@ -29,7 +29,7 @@ set package_id [ad_conn package_id]
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 
 set data_types [list]
-foreach data_type [list varchar text integer numeric exponential date timestamp boolean content_type] {
+foreach data_type [list varchar text integer float date timestamp boolean content_type] {
     lappend data_types [list "[_ assessment.data_type_$data_type]" $data_type]
 }
 

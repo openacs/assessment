@@ -80,3 +80,16 @@ ad_proc -public as::item_type_oq::copy {
 
     return $new_item_type_id
 }
+
+ad_proc -public as::item_type_oq::render {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-10
+
+    Render an Open Question Type
+} {
+    db_1row item_type_data {}
+
+    return [list $default_value ""]
+}

@@ -25,22 +25,28 @@
 
 		     <group column="section_title">
 			<tr>
-				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b><if @items.presentation_type@ not in fitb>@items.title@</if></b></td></tr>
+				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
 				<tr><td colspan="4">
 					<blockquote>
-						<if @items.presentation_type@ in radio checkbox>
+						<if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
 							<formgroup id="response_to_item.@items.as_item_id@">
 								@formgroup.widget;noquote@
 								@formgroup.label;noquote@
 								<br/>
 							</formgroup>
 						</if>
-						<elseif @items.presentation_type@ in fitb>
+						<elseif @items.presentation_type@ eq fitb>
 							@items.html;noquote@
 						</elseif>
 						<else>
 							<formwidget id="response_to_item.@items.as_item_id@">
 						</else>
+					<if @items.subtext@ not nil>
+						<div class="form-help-text">
+						<img src="/shared/images/info.gif" width="12" height="9" alt="[i]" title="Help text" border="0">
+						<noparse>@items.subtext@</noparse>
+						</div>
+					</if>
 					</blockquote>
 					<hr>
 				</td>

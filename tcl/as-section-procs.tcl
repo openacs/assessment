@@ -102,7 +102,6 @@ ad_proc -public as::section::new_revision {
 				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
-						 [list required_p $required_p] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
 

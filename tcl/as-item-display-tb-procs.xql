@@ -22,4 +22,14 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_display_tb::render.display_item_data">
+      <querytext>
+
+	select html_display_options, abs_size, item_answer_alignment
+	from as_item_display_tb
+	where as_item_display_id = :type_id
+
+      </querytext>
+</fullquery>
+
 </queryset>

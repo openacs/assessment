@@ -4,7 +4,7 @@
 
 	<fullquery name="query_all_items">
 		<querytext>
-			SELECT i.as_item_id, i.name, i.title, s.section_id as section_id, s.title as section_title, s.description as section_description
+			SELECT i.as_item_id, i.name, i.title, i.subtext, s.section_id as section_id, s.title as section_title, s.description as section_description
 			FROM as_sectionsx s, as_assessmentsx a, as_item_section_map ism,
 			     as_itemsx i
 			WHERE a.assessment_id = :assessment_id

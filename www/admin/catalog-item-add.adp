@@ -34,7 +34,7 @@
 <td>
   <blockquote>
     <if @items.presentation_type@ ne fitb>@items.title;noquote@<br></if>
-    <if @items.presentation_type@ eq radio or @items.presentation_type@ eq checkbox>
+    <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
       <formgroup id="response_to_item.@items.as_item_id@">
         @formgroup.widget;noquote@ @formgroup.label;noquote@<br>
       </formgroup>
@@ -45,6 +45,12 @@
     <else>
       <formwidget id="response_to_item.@items.as_item_id@">
     </else>
+    <if @items.subtext@ not nil>
+      <div class="form-help-text">
+      <img src="/shared/images/info.gif" width="12" height="9" alt="[i]" title="Help text" border="0">
+      <noparse>@items.subtext@</noparse>
+      </div>
+    </if>
   </blockquote>
 </td></tr>
 

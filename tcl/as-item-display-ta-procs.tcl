@@ -85,3 +85,36 @@ ad_proc -public as::item_display_ta::copy {
 
     return $new_item_display_id
 }
+
+ad_proc -public as::item_display_ta::render {
+    -form:required
+    -element:required
+    -type_id:required
+    {-datatype ""}
+    {-title ""}
+    {-subtext ""}
+    {-required_p ""}
+    {-default_value ""}
+    {-data ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-10
+
+    Render an Item Display TextArea Type
+} {
+    db_1row display_item_data {}
+    set maxlength_option ""
+    if {![empty_string_p $abs_size]} {
+	set maxlength_option {-maxlength $abs_size}
+    }
+    if {[empty_string_p $required_p]} {
+	set required_p f
+    }
+    if {[empty_string_p $datatype]} {
+	set datatype text
+    }
+
+    set options {-datatype $datatype -widget textarea -label $title -help_text $subtext -value $default_value -required_p $required_p -nospell -html $html_display_options}
+
+    eval template::element::create $form $element $options $maxlength_option
+}

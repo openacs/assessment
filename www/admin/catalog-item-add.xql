@@ -14,7 +14,7 @@
 <fullquery name="items">
       <querytext>
       
-    select i.as_item_id, cr.title, ci.name, i.required_p,
+    select i.as_item_id, i.subtext, cr.title, ci.name, i.required_p,
            i.max_time_to_complete, i.points
     from as_items i, cr_revisions cr, cr_items ci
     where ci.item_id = cr.item_id
