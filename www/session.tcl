@@ -81,6 +81,14 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   }
   
   db_foreach choices {} {
+      set choice_id_answer ""
+      set text_answer ""
+      db_0or1row answer_info {
+          select aid.text_answer, aid.choice_id_answer
+	  from as_item_data aid
+	  where aid.choice_id_answer=:choice_id
+	  and (aid.session_id = :session_id or aid.session_id is null)
+    }
     if {[string length "$choice_id_answer"]} {set notanswered 0}
     set choice_correct 0
     #for fill in the blank item

@@ -15,10 +15,10 @@
 	<fullquery name="choices">
 		<querytext>
                 SELECT
-                as_item_choicesx.choice_id, as_item_choicesx.title AS choice_title, as_item_choicesx.correct_answer_p, as_item_choicesx.percent_score, as_item_choicesx.text_value, as_item_choicesx.content_value, as_item_datax.text_answer, as_item_datax.choice_id_answer
-                FROM as_item_choicesx LEFT JOIN (as_item_datax INNER JOIN as_sessionsx ON as_sessionsx.session_id = as_item_datax.session_id) ON as_item_datax.choice_id_answer=as_item_choicesx.choice_id
+                as_item_choicesx.choice_id, as_item_choicesx.title AS choice_title, as_item_choicesx.correct_answer_p, as_item_choicesx.percent_score, as_item_choicesx.text_value, as_item_choicesx.content_value
+                FROM as_item_choicesx
                 WHERE
-                as_item_choicesx.mc_id=:mc_id AND (as_sessionsx.session_id = :session_id OR as_sessionsx.session_id IS NULL)
+                as_item_choicesx.mc_id=:mc_id
                 ORDER BY
                 as_item_choicesx.sort_order
 		</querytext>
