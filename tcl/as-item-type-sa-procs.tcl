@@ -91,3 +91,19 @@ ad_proc -public as::item_type_sa::render {
 } {
     return [list "" ""]
 }
+
+ad_proc -public as::item_type_sa::process {
+    -type_id:required
+    -session_id:required
+    -as_item_id:required
+    -subject_id:required
+    {-staff_id ""}
+    {-response ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-11
+
+    Process a Response to a Short Answer Type
+} {
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -text_answer $response -points ""
+}

@@ -181,7 +181,6 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {su
 content::type::create_attribute -content_type {as_item_data} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {as_item_id}     -datatype {number}  -pretty_name {Item ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {is_unknown_p} -datatype {boolean}  -pretty_name {Is Unknown} -column_spec {char(1)}
-content::type::create_attribute -content_type {as_item_data} -attribute_name {choice_id_answer}     -datatype {number}  -pretty_name {Choice ID Answer}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {boolean_answer} -datatype {boolean} -pretty_name {Boolean Answer} -column_spec {boolean}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {clob_answer} -datatype {string} -pretty_name {Clob Answer} -column_spec {text}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {numeric_answer} -datatype {number}  -pretty_name {Numeric Answer} -column_spec {numeric}
@@ -190,6 +189,7 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {te
 content::type::create_attribute -content_type {as_item_data} -attribute_name {timestamp_answer}    -datatype {number}  -pretty_name {TimeStamp Answer}    -column_spec {timestamptz}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {integer}
 }
 
 ad_proc -public as::install::package_instantiate {

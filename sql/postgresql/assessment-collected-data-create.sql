@@ -88,10 +88,6 @@ create table as_item_data (
 	is_unknown_p char(1) default 'f'
 		constraint as_item_data_is_unknown_p_ck
 		check (is_unknown_p in ('t','f')),
-	-- references as_item_choices
-	choice_id_answer integer
-		constraint as_item_data_choice_id_answer_fk
-		references as_item_choices(choice_id),
 	boolean_answer boolean,
 	clob_answer text,
 	numeric_answer numeric,
@@ -104,9 +100,21 @@ create table as_item_data (
 		constraint as_item_data_content_answer_fk
 		references cr_revisions,
 	-- This field stores the signed entered data
-	signed_data varchar(500)
-	--percent_score integer
-	-- constraint as_item_data_percent_score_ck
-	--check (percent_score <=100)
+	signed_data varchar(500),
+	points integer
 	-- to do: figure out how attachment answers should be supported; the Attachment package is still in need of considerable help. Can we rely on it here?
+);
+
+
+-- here the selected choices are stored
+create table as_item_data_choices (
+	item_data_id	integer
+			constraint as_item_data_choices_data_id_fk
+			references as_item_data,
+	-- references as_item_choices
+	choice_id	integer
+			constraint as_item_data_choices_choice_id_fk
+			references as_item_choices,
+	constraint as_item_data_choices_pk
+	primary key (item_data_id, choice_id)
 );

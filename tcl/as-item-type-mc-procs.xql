@@ -65,7 +65,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_type_mc::render.get_choices">
+<fullquery name="as::item_type_mc::render.choices">
       <querytext>
 
 	    select c.choice_id, r.title, c.correct_answer_p, c.selected_p
@@ -73,6 +73,26 @@
 	    where c.mc_id = :type_id
 	    and r.revision_id = c.choice_id
 	    order by c.sort_order
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::process.item_type_data">
+      <querytext>
+
+	select increasing_p, allow_negative_p
+	from as_item_type_mc
+	where as_item_type_id = :type_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::process.check_choices">
+      <querytext>
+
+	    select choice_id, correct_answer_p, percent_score
+	    from as_item_choices
+	    where mc_id = :type_id
 
       </querytext>
 </fullquery>
