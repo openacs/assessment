@@ -59,6 +59,8 @@
   <msg key="Answer_Alignment">Answer Alignment</msg>
   <msg key="Answer_Alignment_help">Alignment of the answer in relation to the question.</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
+  <msg key="Answer_Value">Answer Value</msg>
+  <msg key="Answer_Value_help">Value of the answer</msg>
   <msg key="Applet">Assessment Applet</msg>
   <msg key="approve">Approve</msg>
   <msg key="approve_actions">Approve Actions</msg>
@@ -87,6 +89,7 @@ each question be shown to the subject.</msg>
   <msg key="as_parameter_help">Name of the variable that you going to call on the tcl code (ie. student_id) without &quot;$&quot;</msg>
   <msg key="as_parameter_query_help">Just put the query that retrive the info desired (Syntax: select name,id from table_name where condition)</msg>
   <msg key="as_parameter_type_help">Select the type of variable you spect to use. It it is a query you have to put your query below</msg>
+  <msg key="as_password_help"></msg>
   <msg key="as_Return_Url_help">URL to go to after the assessment has been finished by a subject</msg>
   <msg key="as_Reuse_Responses_help">If yes, the system will look for previous responses to the the questions and prefill the last answer the respondee has given in the assessment form of the respondee</msg>
   <msg key="as_Secure_Access_help">Is https:// method required to access this assessment?</msg>
@@ -127,9 +130,11 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
   <msg key="Choice">Choice</msg>
   <msg key="choice_Content">Upload File</msg>
+  <msg key="choice_Content_help">Upload a file containing the content</msg>
   <msg key="choice_Delete_Content">Delete File</msg>
   <msg key="choice_display_Content">Choice File</msg>
   <msg key="choice_Feedback_help">Feedback text given with this choice (in addition to the feedback given with the question itself)</msg>
+  <msg key="choice_Fixed_Position_help">Fixed order</msg>
   <msg key="Choice_help">Description of the choice</msg>
   <msg key="Choice_Orientation">Choice Orientation</msg>
   <msg key="Choice_Orientation_help">Which orientation shall the choices have</msg>
@@ -240,6 +245,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Instructions">Instructions</msg>
   <msg key="ip_mask">IP Mask</msg>
   <msg key="item_Content">Upload File</msg>
+  <msg key="item_Content_help">Upload a File containing the question text</msg>
   <msg key="item_counter">Questions %section.cur_first_item% - %section.cur_last_item% out of %section.num_items%</msg>
   <msg key="item_Definition_help">REDUNDANT, Description should be enough</msg>
   <msg key="item_Delete_Content">Delete File</msg>
@@ -325,6 +331,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="num_Correct_Answer">Number of displayed Correct Choices</msg>
   <msg key="num_Correct_help">Number of correct answers that have to be displayed</msg>
   <msg key="num_items">Number of Items displayed</msg>
+  <msg key="num_items_help">Number of Items displayed<msg>
   <msg key="Number_of_Tries">Number of Tries allowed</msg>
   <msg key="numerical">Numerical</msg>
   <msg key="on_creation_date">, on %creation_date%</msg>
