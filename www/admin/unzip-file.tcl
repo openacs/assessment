@@ -20,11 +20,9 @@ file mkdir $tmpdirectory
 # UNZIP the zip file in the temporary directory
 catch { exec unzip ${zipfile.tmpfile} -d $tmpdirectory } outMsg
 
-set qti_items_imported_number 0
 # Read the content of the temporary directory
 foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
-	set items [llength [parse_qti_xml $file_i]]
-	set qti_items_imported_number [expr [llength items]  + $qti_items_imported_number]	
+	parse_qti_xml $file_i
 }
 
 # Delete the temporary directory
