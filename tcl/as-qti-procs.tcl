@@ -36,6 +36,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				set nodesList [$assessment childNodes]
 				set as_assessments__definition ""
 				set as_assessments__instructions ""
+				set as_assessments__duration ""
 				#for each assessment's child
 				foreach node $nodesList {
 					set nodeName [$node nodeName]
@@ -59,8 +60,85 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 							set instruction [lindex $instructionNodes 0]
 							set as_assessments__instructions [$instruction nodeValue]
 						}
-					}
+					#as_assessments.time_for_response = <duration>	
+					} elseif {$nodeName == "duration"} {
+					        set durationNodes [$assessment selectNodes {duration/text()}]
+						if {[llength $durationNodes] != 0} {
+							set duration [lindex $durationNodes 0]
+							set as_assessments__duration [$duration nodeValue]
+						}
+					} 
 				}
+				set qtimetadataNodes [$assessment selectNodes {qtimetadata}]
+				set as_assessments__run_mode ""
+				set as_assessments__anonymous_p f
+				set as_assessments__secure_access_p f
+				set as_assessments__reuse_responses_p f
+				set as_assessments__show_item_name_p f
+				set as_assessments__consent_page ""
+				set as_assessments__return_url ""
+				set as_assessments__start_time ""
+				set as_assessments__end_time ""
+				set as_assessments__number_tries ""
+				set as_assessments__wait_between_tries ""
+				set as_assessments__ip_mask ""
+				set as_assessments__show_feedback "none"
+				set as_assessments__section_navigation "default path"
+				
+				if {[llength $qtimetadataNodes] > 0} {
+				    #nodes qtimetadatafield
+				    set qtimetadatafieldNodes [$qtimetadataNodes selectNodes {qtimetadatafield}]
+				    foreach qtimetadatafieldnode $qtimetadatafieldNodes {
+				         set label [$qtimetadatafieldnode selectNodes {fieldlabel/text()}]
+					 set label [$label nodeValue]
+				         set value [$qtimetadatafieldnode selectNodes {fieldentry/text()}]
+					 set value [$value nodeValue]
+					 					 
+					 switch -exact -- $label {
+					     run_mode {
+					         set as_assessments__run_mode $value					 
+					     }
+					     anonymous_p {
+					         set as_assessments__anonymous_p $value					 
+					     }
+					     secure_access_p {
+					         set as_assessments__secure_access_p $value				 
+					     }
+					     reuse_responses_p {
+					         set as_assessments__reuse_responses_p $value				 
+					     }
+					     show_item_name_p {
+					         set as_assessments__show_item_name_p $value				 
+					     }
+					     consent_page {
+					         set as_assessments__consent_page $value				 
+					     }
+					     start_time {
+					         set as_assessments__start_time $value					 
+					     }
+					     end_time {
+					         set as_assessments__end_time $value					 
+					     }
+					     number_tries {
+					         set as_assessments__number_tries $value				 
+					     }
+					     wait_between_tries {
+					         set as_assessments__wait_between_tries $value				 
+					     }
+					     ip_mask {
+					        set as_assessments__ip_mask $value
+					     }
+					     show_feedback {
+					        set as_assessments__show_feedback $value
+					     }
+					     section_navigation {
+					        set as_assessments__section_navigation $value
+					     }
+					 }
+					 
+				    }				    
+				}
+				
 				set show_feedback "all"
 				set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
 				set as_assessments__survey_p {f}				
@@ -70,7 +148,26 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				     set show_feedback "none"				     
 				}				
 				# Insert assessment in the CR (and as_assessments table) getting the revision_id (assessment_id)
-				set as_assessments__assessment_id [as::assessment::new -title $as_assessments__title -description $as_assessments__definition -instructions $as_assessments__instructions -survey_p $as_assessments__survey_p -show_feedback $show_feedback]
+				set as_assessments__assessment_id [as::assessment::new \
+				                                   -title $as_assessments__title \
+								   -description $as_assessments__definition \
+								   -instructions $as_assessments__instructions \
+								   -run_mode $as_assessments__run_mode \
+								   -anonymous_p $as_assessments__anonymous_p \
+								   -secure_access_p $as_assessments__secure_access_p \
+								   -reuse_responses_p $as_assessments__reuse_responses_p \
+								   -show_item_name_p $as_assessments__show_item_name_p \
+								   -consent_page $as_assessments__consent_page \
+								   -return_url $as_assessments__return_url \
+								   -start_time $as_assessments__start_time \
+								   -end_time $as_assessments__end_time \
+								   -number_tries $as_assessments__number_tries \
+								   -wait_between_tries $as_assessments__wait_between_tries \
+								   -time_for_response $as_assessments__duration \
+								   -ip_mask $as_assessments__ip_mask \
+								   -show_feedback $show_feedback \
+								   -section_navigation $as_assessments__section_navigation \
+								   -survey_p $as_assessments__survey_p ]			
 				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
@@ -83,6 +180,9 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					#section)
 					set nodesList [$section childNodes]
 					set as_sections__definition ""
+					set as_sections__instructions ""
+					set as_sections__duration ""
+					set as_sections__sectionfeedback ""
 					#for each section's child
 					foreach node $nodesList {
 						set nodeName [$node nodeName]
@@ -98,14 +198,104 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						    if {[llength $definitionNodes] != 0} {
 							set definition [lindex $definitionNodes 0]
 							set as_sections__definition [$definition nodeValue]
-						    }						    
-					        }
+						    }		
+						#as_sections.max_time_to_complete = <duration>    				    
+					        } elseif {$nodeName == "duration"} {
+						    set section_durationNodes [$section selectNodes {duration/text()}]
+						    if {[llength $section_durationNodes] != 0} {
+							set section_duration [lindex $section_durationNodes 0]
+							set as_sections__duration [$section_duration nodeValue]
+						    }				
+						#as_sections.instructions = <rubric>    		    
+					        } elseif {$nodeName == "rubric"} {
+						    set section_instructionNodes [$section selectNodes {rubric/material/mattext/text()}]
+						    if {[llength $section_instructionNodes] != 0} {
+							set section_instruction [lindex $section_instructionNodes 0]
+							set as_sections__instructions [$section_instruction nodeValue]
+						    }				
+						#as_sections.feedback_text = <sectionfeedback>    		        
+					        } elseif {$nodeName == "sectionfeedback"} {
+						    set sectionfeedbackNodes [$section selectNodes {sectionfeedback/material/mattext/text()}]
+						    if {[llength $sectionfeedbackNodes] != 0} {
+							set sectionfeedback [lindex $sectionfeedbackNodes 0]
+							set as_sections__sectionfeedback [$sectionfeedback nodeValue]
+						    }				
+					        } 							
 					}
-					# Insert section in the CR (and in the as_sections table) getting the revision_id (section_id)
-					set as_sections__section_id [as::section::new -title $as_sections__title -description $as_sections__definition]
 					
+					set qtimetadataNodes [$section selectNodes {qtimetadata}]
+					set as_sections__num_items ""
 					set as_sections__points ""
+					set asdt__display_type none
+					set asdt__s_num_items ""
+					set asdt__adp_chunk ""
+				        set asdt__branched_p f
+					set asdt__back_button_p t
+					set asdt__submit_answer_p f
+					set asdt__sort_order_type order_of_entry
 					
+					if {[llength $qtimetadataNodes] > 0} {
+				    	    #nodes qtimetadatafield
+				            set qtimetadatafieldNodes [$qtimetadataNodes selectNodes {qtimetadatafield}]
+				            foreach qtimetadatafieldnode $qtimetadatafieldNodes {
+				                set label [$qtimetadatafieldnode selectNodes {fieldlabel/text()}]
+					  	set label [$label nodeValue]
+				         	set value [$qtimetadatafieldnode selectNodes {fieldentry/text()}]
+					 	set value [$value nodeValue]
+					 						 
+					 	switch -exact -- $label {
+					     	    num_items {
+					                set as_sections__num_items $value			
+						    }
+					     	    points {
+					                set as_sections__points $value
+						    }
+					            display_type {
+					                set asdt__display_type $value
+						    }
+					     	    s_num_items {
+					                set asdt__s_num_items $value 
+					     	    }
+						    adp_chunk {
+					                set asdt__adp_chunk $value 
+					     	    }	
+						    branched_p {
+						        set asdt__branched_p $value				
+						    }
+						    back_button_p {
+						        set asdt__back_button_p $value
+						    }
+						    submit_answer_p {
+						        set asdt__submit_answer_p $value
+						    }
+						    sort_order_type {
+						        set asdt__sort_order_type $value
+						    }				     
+						 }   
+					     }					 
+				        }	
+					
+					# Insert section in the CR (and in the as_sections table) getting the revision_id (section_id)
+					set as_sections__section_id [as::section::new \
+					                             -title $as_sections__title \
+								     -description $as_sections__definition \
+								     -instructions $as_sections__instructions \
+								     -feedback_text $as_sections__sectionfeedback \
+								     -max_time_to_complete $as_sections__duration \
+								     -num_items $as_sections__num_items \
+								     -points $as_sections__points]
+					#section display type
+					set display_id [as::section_display::new \
+			                                   -title $asdt__display_type \
+							   -num_items $asdt__s_num_items \
+							   -adp_chunk $asdt__adp_chunk \
+							   -branched_p $asdt__branched_p \
+							   -back_button_p $asdt__back_button_p \
+							   -submit_answer_p $asdt__submit_answer_p \
+							   -sort_order_type $asdt__sort_order_type]
+					# now update section and map display type					
+					db_dml add_display_to_section {}
+									
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
 					incr as_assessment_section_map__sort_order
@@ -128,9 +318,121 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 
 ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items from a XML QTI file } {
     set as_item_section_map__sort_order 0
+    set as_items__description ""
+    set as_items__subtext ""
+    set as_items__field_code ""
+    set as_items__required_p t
+    set as_items__data_type "varchar"	
+    set as_items__duration ""
+    set aitmc__increasing_p f
+    set aitmc__allow_negative_p f
+    set aitmc__num_correct_answers ""
+    set aitmc__num_answers ""
+    set aitoq__default_value ""
+    set aitoq__feedback_text ""
+    set aidrb__html_options ""
+    set aidrb__choice_orientation "vertical"
+    set aidrb__label_orientation "top"
+    set aidrb__order_type "order_of_entry"
+    set aidrb__answer_alignment "besideright"
+    set aidta__abs_size 1000
+    set aidtb__abs_size 20
+    
     #get all <item> elements
     set itemNodes [$qtiNode selectNodes {item}]
     foreach item $itemNodes {
+        #item's child
+        set nodesList [$item childNodes]	
+	#for each item's child
+	foreach node $nodesList {
+	    set nodeName [$node nodeName]
+	    #as_items.max_time_to_complete = <duration> 
+	    if {$nodeName == "duration"} {
+	        set durationNodes [$item selectNodes {duration/text()}]
+		if {[llength $durationNodes] != 0} {
+		    set duration [lindex $durationNodes 0]
+		    set as_items__duration [$duration nodeValue]
+		}
+	    #as_items.description = <qticomment> 	
+	    } elseif {$nodeName == "qticomment"} {
+	        set qticommentNodes [$item selectNodes {qticomment/text()}]
+		if {[llength $qticommentNodes] != 0} {
+		    set qticomment [lindex $qticommentNodes 0]
+		    set as_items__description [$qticomment nodeValue]
+		}
+	    #as_items.subtext = <rubric>
+	    } elseif {$nodeName == "rubric"} {
+		set instructionNodes [$item selectNodes {rubric/material/mattext/text()}]
+		if {[llength $instructionNodes] != 0} {
+		    set instruction [lindex $instructionNodes 0]
+		    set as_items__subtext [$instruction nodeValue]
+		}
+	    }		 	    
+	}   
+	
+	set qtimetadataNodes [$item selectNodes {qtimetadata}]
+	if {[llength $qtimetadataNodes] > 0} {
+	    #nodes qtimetadatafield
+	    set qtimetadatafieldNodes [$qtimetadataNodes selectNodes {qtimetadatafield}]
+	    foreach qtimetadatafieldnode $qtimetadatafieldNodes {
+                set label [$qtimetadatafieldnode selectNodes {fieldlabel/text()}]
+	  	set label [$label nodeValue]
+         	set value [$qtimetadatafieldnode selectNodes {fieldentry/text()}]
+	 	set value [$value nodeValue]		
+					 
+		switch -exact -- $label {
+		    field_code {
+		        set as_items__field_code $value			
+		    }
+		    required_p {
+			set as_items__required_p $value
+		    }
+		    data_type {
+			set as_items__data_type $value 
+		    }
+		    increasing_p {
+		        set aitmc__increasing_p $value
+		    }
+		    allow_negative_p {
+		        set aitmc__allow_negative_p $value
+		    }
+		    num_correct_answers {
+		        set aitmc__num_correct_answers $value
+		    }		
+		    num_answers {
+		        set aitmc__num_answers $value
+		    }	
+		    default_value {
+		        set aitoq__default_value $value
+		    }
+		    feedback_text {
+		        set aitoq__feedback_text $value
+		    }
+		    html_display_options {
+		        set aidrb__html_options $value
+		    }
+		    choice_orientation {
+		        set aidrb__choice_orientation $value
+		    }
+		    choice_label_orientation {
+		        set aidrb__label_orientation $value
+		    }
+		    sort_order_type {
+		        set aidrb__order_type $value
+		    }
+		    item_answer_alignment {
+		        set aidrb__answer_alignment $value
+		    }	
+		    abs_size {
+		        set aidta__abs_size $value
+		    }	
+		    tb_abs_size {
+		        set aidtb__abs_size $value
+		    }    				     
+		}   
+	    }					 
+	}   
+	 	
 	# Order of the item_choices
 	set sort_order 0
 	set as_items__title [$item getAttribute {title} {Item}]
@@ -138,8 +440,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 	array set as_item_choices__score {}
 	set as_items__points 0
 	set as_items__feedback_right {}
-	set as_items__feedback_wrong {}
-	set as_items__description {}
+	set as_items__feedback_wrong {}	
 	# <objectives> 
 	set objectivesNodes [$item selectNodes {objectives}]
 	foreach objectives $objectivesNodes {
@@ -148,7 +449,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		set as_items__description [$mattext nodeValue]
 	    }
 	}
-
+	
 	# <resprocessing>
 	set resprocessingNodes [$item selectNodes {resprocessing}]
 	foreach resprocessing $resprocessingNodes {
@@ -207,7 +508,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 	    if {[$material nodeName] == {material}} {
 		set mattextNodes [$material selectNodes {mattext/text()}]
 		set mattext [lindex $mattextNodes 0]
-		set as_items__title [$mattext nodeValue]
+		set as_items__title [$mattext nodeValue]		
 	    }
 	    # <render_fib>
 	    set render_fibNodes [$presentation selectNodes {.//render_fib}]
@@ -226,7 +527,10 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    # we need the size of textarea (values of rows and cols)
 		    set html "rows $rows cols $cols"
 		    # insert as_item_display_ta in the CR (and in the as_item_display_ta table) getting the revision_id (item_display_id)					
-		    set as_item_display_id [as::item_display_ta::new -html_display_options $html]
+		    set as_item_display_id [as::item_display_ta::new \
+		                            -html_display_options $html \
+					    -abs_size $aidta__abs_size \
+					    -item_answer_alignment $aidrb__answer_alignment]
 		    foreach node $presentationChildNodes {
 			# get the title of item
 			if {[$node nodeName] == {material}} {
@@ -238,11 +542,15 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 			}
 		    }
 		    # insert as_item_type_oq (shortanswer)
-		    set as_item_type_id [as::item_type_oq::new]
+		    set as_item_type_id [as::item_type_oq::new \
+		                        -default_value $aitoq__default_value \
+				        -feedback_text $aitoq__feedback_text]					 
 		    # if render_fib element has not the attribute rows then it's a fill in blank item
 		} else {
 		    # textbox
-		    set as_item_display_id [as::item_display_tb::new]
+		    set as_item_display_id [as::item_display_tb::new \
+		                           -abs_size $aidtb__abs_size \
+					   -item_answer_alignment $aidrb__answer_alignment]
 
 		    # multiple choice
 		    set as_item_type_id [as::item_type_mc::new]
@@ -272,7 +580,17 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    }	
 		}
 		# Insert as_item
-		set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong -points $as_items__points]
+		set as_item_id [as::item::new \
+		               -title $as_items__title \
+			       -description $as_items__description \
+			       -subtext $as_items__subtext \
+			       -field_code $as_items__field_code \
+			       -required_p $as_items__required_p \
+			       -data_type $as_items__data_type \
+			       -feedback_right $as_items__feedback_right \
+			       -feedback_wrong $as_items__feedback_wrong \
+			       -max_time_to_complete $as_items__duration \
+			       -points $as_items__points]
 		# set the relation between as_items and as_item_type tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
@@ -289,19 +607,42 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		if {$as_items__rcardinality == {Multiple}} {
 		    # multiple response (checkbox) either text (remember it can be internationalized or changed), images, sounds, videos
 		    # insert as_item_display_cb
-		    set as_item_display_id [as::item_display_cb::new]
+		    set as_item_display_id [as::item_display_cb::new \
+		                           -html_display_options $aidrb__html_options \
+					   -choice_orientation $aidrb__choice_orientation \
+					   -choice_label_orientation $aidrb__label_orientation \
+					   -sort_order_type $aidrb__order_type \
+					   -item_answer_alignment $aidrb__answer_alignment]
 		} else {
 		    # multiple choice (radiobutton)
 		    # insert as_item_display_rb
-		    set as_item_display_id [as::item_display_rb::new]
+		    set as_item_display_id [as::item_display_rb::new \
+		                           -html_display_options $aidrb__html_options \
+					   -choice_orientation $aidrb__choice_orientation \
+					   -choice_label_orientation $aidrb__label_orientation \
+					   -sort_order_type $aidrb__order_type \
+					   -item_answer_alignment $aidrb__answer_alignment]
 		}
-
+		
 		# insert as_item_type_mc
-		set as_item_type_id [as::item_type_mc::new]
-
+		set as_item_type_id [as::item_type_mc::new \
+		 		   -increasing_p $aitmc__increasing_p \
+		 		   -allow_negative_p $aitmc__allow_negative_p \
+				   -num_correct_answers $aitmc__num_correct_answers \
+			   	   -num_answers $aitmc__num_answers]		           
+				   
 		# Insert as_item
-		set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong -points $as_items__points]
-
+		set as_item_id [as::item::new \
+		               -title $as_items__title \
+			       -description $as_items__description \
+			       -subtext $as_items__subtext \
+			       -field_code $as_items__field_code \
+			       -required_p $as_items__required_p \
+			       -data_type $as_items__data_type \
+			       -feedback_right $as_items__feedback_right \
+			       -feedback_wrong $as_items__feedback_wrong \
+			       -max_time_to_complete $as_items__duration \
+			       -points $as_items__points]		
 		# set the relation between as_items and as_item_type tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
@@ -339,6 +680,16 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    incr sort_order
 		}
 	    }
+	    #import an image as title of item
+	    set matmediaNodes [$presentation selectNodes {material/matimage[@uri]}]
+		if {[llength $matmediaNodes]>0} {  				    
+		    set mediabasepath $basepath
+		    append mediabasepath {/}
+		    append mediabasepath [$matmediaNodes getAttribute {uri}]
+		    # insert as_file in the CR (and in the as_file table) getting the content value
+		    set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
+		    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_choices__content_value -type as_item_content_rel
+		}     
 	}
 	# Relation between as_items and as_sections
 	if {$section_id != 0} {

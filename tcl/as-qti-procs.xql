@@ -3,17 +3,25 @@
 
 	<fullquery name="as::qti::parse_qti_xml.as_assessment_section_map_insert">
 		<querytext>
-			INSERT INTO as_assessment_section_map (assessment_id, section_id, sort_order, points) 
-			VALUES (:as_assessments__assessment_id, :as_sections__section_id, :as_assessment_section_map__sort_order, :as_sections__points)
+			INSERT INTO as_assessment_section_map (assessment_id, section_id, max_time_to_complete, sort_order, points) 
+			VALUES (:as_assessments__assessment_id, :as_sections__section_id, :as_sections__duration, :as_assessment_section_map__sort_order, :as_sections__points)
 		</querytext>
 	</fullquery>
 
 	<fullquery name="as::qti::parse_item.as_item_section_map_insert">
 		<querytext>
-			INSERT INTO as_item_section_map (as_item_id, section_id, sort_order, points) 
-			VALUES (:as_item_id, :section_id, :as_item_section_map__sort_order, :as_items__points)
+			INSERT INTO as_item_section_map (as_item_id, section_id, max_time_to_complete, sort_order, points) 
+			VALUES (:as_item_id, :section_id, :as_items__duration, :as_item_section_map__sort_order, :as_items__points)
 		</querytext>
 	</fullquery>
+	
+	<fullquery name="as::qti::parse_qti_xml.add_display_to_section">
+            <querytext>
+	        update as_sections
+	        set display_type_id = :display_id
+	        where section_id = :as_sections__section_id
+            </querytext>
+        </fullquery>
 	
 	<fullquery name="as::qti::parse_qti_xml.get_section_points">
             <querytext>
