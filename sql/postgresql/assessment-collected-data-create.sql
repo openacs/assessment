@@ -5,7 +5,7 @@
 -- @creation-date 2004-08-05
 --
 
--- Assessment Sessions
+-- Assessment Sessions: provides the central definition of a given subject's performance of an Assessment.
 create table as_sessions (
 	session_id integer
 		constraint as_sessions_session_id_pk
@@ -15,26 +15,34 @@ create table as_sessions (
 	assessment_id integer
 		constraint as_sessions_assessment_id_fk
 		references as_assessments(assessment_id),
+	-- References a Subjects entity that we don't define in this package.
 	-- if subjects can't be "persons" then Assessment will have to define an as_subjects table for its own use.
 	subject_id integer
 		constraint as_sessions_subject_id_fk
 		references persons(person_id),
+	-- references Users if someone is doing the Assessment as a proxy for the real subject
 	staff_id integer
 		constraint as_sessions_staff_id_fk
 		references users(user_id),
+	-- when the subject should do the Assessment
 	target_datetime timestamptz,
+	-- when the subject initiated the Assessment
 	creation_datetime timestamptz,
+	-- when the subject first sent something back in
 	first_mod_datetime timestamptz,
+	-- the most recent submission
 	last_mod_datetime timestamptz,
+	-- when the final submission produced a complete Assessment
 	completed_datetime timestamptz,
 	session_status varchar(20),
 	assessment_status varchar(20),
+	-- current percentage of the subject achieved so far
 	percent_score integer
 		constraint as_sessions_percent_score_ck
 		check (percent_score <= 100)
 );
 
---Assessment Section Data
+--Assessment Section Data: tracks the state of each Section in the Assessment.
 create table as_section_data (
 	section_data_id integer
 		constraint as_section_data_section_data_id_pk
@@ -56,7 +64,7 @@ create table as_section_data (
 		references users(user_id)
 );
 
--- Assessment Item
+-- Assessment Item Data: is the "long skinny table" where all the primary data go
 create table as_item_data (
 	item_data_id integer
 		constraint as_item_data_item_data_id_pk
@@ -88,6 +96,7 @@ create table as_item_data (
 	clob_answer text,
 	numeric_answer numeric,
 	integer_answer integer,
+	-- presumably can store both varchar and text datatypes 
 	text_answer varchar(500),
 	timestamp_answer timestamptz,
 	-- references cr_revisions

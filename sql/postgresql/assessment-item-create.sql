@@ -5,6 +5,7 @@
 -- @creation-date 2004-07-20
 --
 
+-- stores the common attributes of all "questions" that constitute the atomic focus of the Assessment package
 create table as_items (
 	as_item_id	integer
 			constraint as_items_item_id_pk
@@ -21,16 +22,19 @@ create table as_items (
 	required_p	char(1) default 'f'
 			constraint as_items_required_p_ck
 			check (required_p in ('t','f')),
+	-- the expected data type of the answer (integer, numeric, exponential, varchar, text, date, boolean, timestamp, content_type)
 	data_type	varchar(50),
 	-- optional max number of seconds to perform Item
 	max_time_to_complete	integer,
 	-- a denormalization to cache the generated "widget" for the Item (NB: when any change is made to an as_item_choice related to an as_item, this will have to be updated!)
 	adp_chunk	varchar(500),
-	-- feedback 
+	-- right feedback  
 	feedback_right	text,
+	-- wrong feedback
 	feedback_wrong	text
 );
 
+-- contains additional information for all multiple choices (radiobutton, checkbox)
 create table as_item_choices (
 	choice_id       integer
                         constraint as_item_choices_id_pk
@@ -40,6 +44,7 @@ create table as_item_choices (
 	mc_id		integer
 			constraint as_item_choices_parent_id_fk
 			references as_item_type_mc(as_item_type_id),
+	-- which of the value columns has the information this Choice conveys
 	data_type	varchar(20),
 	-- we can stuff both integers and real numbers here
         numeric_value   numeric,
@@ -51,12 +56,15 @@ create table as_item_choices (
                         references cr_revisions,
 	-- where optionally some preset feedback can be specified by the author
 	feedback_text	varchar(500),	
+	-- when the item is presented to the user this choice is selected by default
 	selected_p	char(1) default 'f'
 			constraint as_item_choices_selected_p_ck
 			check (selected_p in ('t','f')),
+	-- this choice is the correct answer
 	correct_answer_p	char(1) default 'f'
 			constraint as_item_choices_correct_answer_ck
 			check (correct_answer_p in ('t','f')),
+	-- the order this choice will appear with regards to the MC item.
 	sort_order	integer,
 	-- this is where points are stored
 	percent_score		integer
@@ -64,6 +72,7 @@ create table as_item_choices (
 			check (percent_score <= 100)	
 );
 
+-- Short Answer Answers
 create table as_item_sa_answers (
 	choice_id       integer
                         constraint as_item_sa_answers_id_pk
@@ -73,7 +82,9 @@ create table as_item_sa_answers (
 	answer_id	integer
 			constraint as_item_sa_answers_parent_id_fk
 			references as_item_type_sa(as_item_type_id),
+	-- integer vs. real number vs. text
 	data_type	varchar(20),
+	-- shall the match be case sensitive
 	case_sensitive_p	char(1) default 't'
 			constraint as_item_sa_answers_case_sensitive_p_ck
 			check (case_sensitive_p in ('t','f')),
@@ -81,14 +92,16 @@ create table as_item_sa_answers (
 	percent_score		integer
 			constraint as_item_sa_answers_percent_score_ck
 			check (percent_score <= 100),
+	-- how is the comparison done (equal, contains, regexp)
 	compare_by	varchar(20),
+	-- contains the actual regexp if compare_by is a regexp
 	regexp_text	varchar(20), 
 	-- list with all answerbox ids (1 2 3 ... n) whose response will be tried to match against this answer. An empty field indicates the
 	-- answer will be tried to match against all answers.
         allowed_answerbox_list	varchar(20)
 );
 
-
+-- Messages: abstracts out help messages (and other types of messages) for use in the Assessment package.
 create table as_messages (
 	message_id	integer
 			constraint as_messages_message_id_pk
@@ -96,6 +109,7 @@ create table as_messages (
 	message		varchar(500)
 );
 
+-- relationship between item and help
 create table as_item_help_map (
 	as_item_id		integer
 		constraint as_item_help_map_as_item_id_fk
@@ -103,5 +117,6 @@ create table as_item_help_map (
 	message_id	integer
 		constraint as_item_help_map_message_id_fk
 		references as_messages (message_id),
+	-- order in which the messages appear
 	sort_order	integer
 );

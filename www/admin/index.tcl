@@ -1,4 +1,10 @@
 ad_page_contract {
+
+    Presents a form to upload a QTI ZIP file,
+    lists all assessments and shows a link to 
+    assessment editor and another to assessment
+    catalog.
+    
     @author eperez@it.uc3m.es
     @creation-date 2004-09-21
 } {
@@ -10,6 +16,7 @@ ad_page_contract {
 set title "[_ assessment.Administration]"
 set context {}
 
+#form to upload a QTI ZIP file
 ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/form-data}  -form {
     {zipfile:file {label "[_ assessment.Import_QTI_ZIP_File]"}}
 }
@@ -20,8 +27,10 @@ if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
     lappend actions "[_ assessment.Admin_catalog]" "catalog/" "[_ assessment.Admin_catalog]"
 }
 
+#get all assessments order by title
 db_multirow assessments get_all_assessments {}
 
+#list all assessments
 list::create \
     -name assessments \
     -key assessment_id \

@@ -17,11 +17,12 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
     db_0or1row as_item_display_tbx "SELECT item_id AS as_item_display_tbx__item_id FROM as_item_display_tbx WHERE item_id=:item_display_id"
     db_0or1row as_item_display_tax "SELECT item_id AS as_item_display_tax__item_id FROM as_item_display_tax WHERE item_id=:item_display_id"
     set presentation_type "checkbox" ;# DEFAULT
+    #get the presentation type
     if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radio"}
     if {[info exists as_item_display_tbx__item_id]} {set presentation_type "fitb"}
     if {[info exists as_item_display_tax__item_id]} {set presentation_type "textarea"}
 
-    #Add the items depending on the type (as_item_display_types)
+    #Add the items depending on the presentation type (as_item_display_types)
     switch -- $presentation_type {
 	"textbox" {
 	    template::element::create $form $element_name \
@@ -52,6 +53,7 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
+	        #for multiple choice item with multimedia
 	        if {![empty_string_p $content_value]} {
 		    lappend optionlist [list "$title<img src=\"view/?revision_id=$content_value\">" $choice_id]
 		} else {
@@ -75,6 +77,7 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set choices [list]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
+	        #for multiple choice item with multimedia
 	        if {![empty_string_p $content_value]} {
 		    lappend optionlist [list "$title<img src=\"view/?revision_id=$content_value\">" $choice_id]
 		} else {

@@ -1,4 +1,7 @@
 ad_page_contract {
+
+	Lists all the assessments that can be taken and their sessions.
+
 	@author Eduardo Pérez Ureta (eperez@it.uc3m.es)
 	@creation-date 2004-09-03
 } {
@@ -11,6 +14,7 @@ set context [list "[_ assessment.Show_Assessments]"]
 
 set package_id [ad_conn package_id]
 
+# create a list with all assessments and their sessions
 template::list::create \
     -name assessments \
     -multirow assessments \
@@ -31,6 +35,7 @@ template::list::create \
         narrow
     }
 
+# get the information of all assessments store in the database
 db_multirow -extend { session } assessments asssessment_id_name_definition {} {
     set session {Sessions}
 }

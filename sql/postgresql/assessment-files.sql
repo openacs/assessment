@@ -4,6 +4,7 @@
 -- @author eperez@it.uc3m.es
 -- @creation-date 2004-10-25
 --
+-- Tables for saving files in content-repository
 
 create table as_files (
 	file_id		integer

@@ -33,12 +33,14 @@ content::type::create_type -content_type {as_sessions} -supertype {content_revis
 content::type::create_type -content_type {as_section_data} -supertype {content_revision} -pretty_name {Assessment Section Data} -pretty_plural {Assessment Sections Data} -table_name {as_section_data} -id_column {section_data_id}
 content::type::create_type -content_type {as_item_data} -supertype {content_revision} -pretty_name {Assessment Item Data} -pretty_plural {Assessment Items Data} -table_name {as_item_data} -id_column {item_data_id}
 
+# Radiobutton display type
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {choice_orientation} -datatype {string}    -pretty_name {Choice Orientation} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 
+# Checkbox display type
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {choice_orientation} -datatype {string}    -pretty_name {Choice Orientation} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
@@ -46,24 +48,29 @@ content::type::create_attribute -content_type {as_item_display_cb} -attribute_na
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_cb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 
+# Textbox display type
 content::type::create_attribute -content_type {as_item_display_tb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_tb} -attribute_name {abs_size} -datatype {string}    -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_tb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 
+# ShortAnswer display type
 content::type::create_attribute -content_type {as_item_display_sa} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_sa} -attribute_name {abs_size} -datatype {string}    -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_sa} -attribute_name {box_orientation} -datatype {string}    -pretty_name {Box Orientation} -column_spec {varchar(20)}
 
+# Textarea display type
 content::type::create_attribute -content_type {as_item_display_ta} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_ta} -attribute_name {abs_size} -datatype {string}    -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_ta} -attribute_name {acs_widget} -datatype {string}    -pretty_name {ACS Templating Widget} -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_display_ta} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 
+# Item type multiple choice 
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {increasing_p}  -datatype {boolean}  -pretty_name {Increasing} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {allow_negative_p} -datatype {boolean}  -pretty_name {Allow Negative} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {num_correct_answers} -datatype {number}  -pretty_name {Number of Correct Answers} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {num_answers} -datatype {number}    -pretty_name {Number of Answers} -column_spec {integer}
 
+# Item choices
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {mc_id}     -datatype {number}  -pretty_name {Parent ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {data_type}     -datatype {string}  -pretty_name {Data Type}     -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {numeric_value} -datatype {number}  -pretty_name {Numeric Value} -column_spec {numeric}
@@ -76,9 +83,11 @@ content::type::create_attribute -content_type {as_item_choices} -attribute_name 
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {percent_score}         -datatype {number}  -pretty_name {Percent Score} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {sort_order}    -datatype {number}  -pretty_name {Sort Order} -column_spec {integer}
 
+# Item type short answer
 content::type::create_attribute -content_type {as_item_type_sa} -attribute_name {increasing_p}  -datatype {boolean}  -pretty_name {Increasing} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_item_type_sa} -attribute_name {allow_negative_p} -datatype {boolean}  -pretty_name {Allow Negative} -column_spec {char(1)}
 
+# Item answers
 content::type::create_attribute -content_type {as_item_sa_answers} -attribute_name {answer_id}     -datatype {number}  -pretty_name {Parent ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_sa_answers} -attribute_name {data_type}     -datatype {string}  -pretty_name {Data Type}     -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_sa_answers} -attribute_name {case_sensitive_p} -datatype {boolean}  -pretty_name {Case Sensitive} -column_spec {char(1)}
@@ -87,10 +96,11 @@ content::type::create_attribute -content_type {as_item_sa_answers} -attribute_na
 content::type::create_attribute -content_type {as_item_sa_answers} -attribute_name {regexp_text}    -datatype {string}  -pretty_name {Regexp}    -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_sa_answers} -attribute_name {allowed_answerbox_list}    -datatype {string}  -pretty_name {Allowed Answerbox List}    -column_spec {varchar(20)}
 
+# Item type open question
 content::type::create_attribute -content_type {as_item_type_oq} -attribute_name {default_value}    -datatype {string}  -pretty_name {Default Value}    -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_item_type_oq} -attribute_name {feedback_text}    -datatype {string} -pretty_name {Feedback Text} -column_spec {varchar(500)}
 
-
+# Items
 content::type::create_attribute -content_type {as_items} -attribute_name {subtext}              -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {field_code}           -datatype {string}  -pretty_name {Item Field Code} -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {definition}    -datatype {string} -pretty_name {Item Definition} -column_spec {varchar(500)}
@@ -101,7 +111,7 @@ content::type::create_attribute -content_type {as_items} -attribute_name {adp_ch
 content::type::create_attribute -content_type {as_items} -attribute_name {feedback_wrong}    -datatype {string} -pretty_name {Item Right Feedback} -column_spec {text}
 content::type::create_attribute -content_type {as_items} -attribute_name {feedback_right}    -datatype {string} -pretty_name {Item Wrong Feedback} -column_spec {text}
 
-
+# Sections
 content::type::create_attribute -content_type {as_sections} -attribute_name {section_display_type_id}      -datatype {number}  -pretty_name {Section Display Type}  -column_spec {integer}
 content::type::create_attribute -content_type {as_sections} -attribute_name {instructions}      -datatype {string}  -pretty_name {Section Instructions}  -column_spec {text}
 content::type::create_attribute -content_type {as_sections} -attribute_name {definition}      -datatype {string}  -pretty_name {Section Definition}  -column_spec {text}
@@ -109,7 +119,7 @@ content::type::create_attribute -content_type {as_sections} -attribute_name {req
 content::type::create_attribute -content_type {as_sections} -attribute_name {feedback_text}      -datatype {string}  -pretty_name {Section Feedback}  -column_spec {text}
 content::type::create_attribute -content_type {as_sections} -attribute_name {max_time_to_complete}      -datatype {number}  -pretty_name {Section Max Time to Complete}  -column_spec {integer}
 
-
+# Assessments
 content::type::create_attribute -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
@@ -130,6 +140,7 @@ content::type::create_attribute -content_type {as_assessments} -attribute_name {
 content::type::create_attribute -content_type {as_assessments} -attribute_name {show_feedback}            -datatype {string}  -pretty_name {Assessment Show comments to the user}  -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {section_navigation}            -datatype {string}  -pretty_name {Assessment Navigation of sections}  -column_spec {varchar(50)}
 
+# Sessions
 content::type::create_attribute -content_type {as_sessions} -attribute_name {assessment_id}            -datatype {number}  -pretty_name {Assessment ID}  -column_spec {integer}
 content::type::create_attribute -content_type {as_sessions} -attribute_name {subject_id}     -datatype {number}  -pretty_name {Subject ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_sessions} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
@@ -142,11 +153,13 @@ content::type::create_attribute -content_type {as_sessions} -attribute_name {ses
 content::type::create_attribute -content_type {as_sessions} -attribute_name {assessment_status}            -datatype {string}  -pretty_name {Assessment Status}  -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_sessions} -attribute_name {percent_score}            -datatype {number}  -pretty_name {Percent Score}  -column_spec {integer}
 
+# Section data
 content::type::create_attribute -content_type {as_section_data} -attribute_name {session_id}            -datatype {number}  -pretty_name {Session ID}  -column_spec {integer}
 content::type::create_attribute -content_type {as_section_data} -attribute_name {section_id}            -datatype {number}  -pretty_name {Section ID}  -column_spec {integer}
 content::type::create_attribute -content_type {as_section_data} -attribute_name {subject_id}            -datatype {number}  -pretty_name {Subject ID}  -column_spec {integer}
 content::type::create_attribute -content_type {as_section_data} -attribute_name {staff_id}            -datatype {number}  -pretty_name {Staff ID}  -column_spec {integer}
 
+# Item data
 content::type::create_attribute -content_type {as_item_data} -attribute_name {session_id}     -datatype {number}  -pretty_name {Session ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {subject_id}     -datatype {number}  -pretty_name {Subject ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
@@ -162,6 +175,7 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {ti
 content::type::create_attribute -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 
+# create relation between tables
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_mc} -relation_tag {as_item_type_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_sa} -relation_tag {as_item_type_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_oq} -relation_tag {as_item_type_rel}
@@ -179,8 +193,9 @@ ad_proc -public as::install::package_instantiate {
     Define folders
     
 } {
-
+    # create a content folder
     set folder_id [content::folder::new -name "assessment_$package_id" -package_id $package_id ]
+    # register the allowed content types for a folder
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_mc} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_sa_answers} -include_subtypes t
