@@ -25,28 +25,48 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			# There are assessments
 			foreach assessment $assessmentNodes {
 				set as_assessments__name [$assessment getAttribute {title}]
-				set definitionNodes [$assessment selectNodes {qticomment/text()}]
-				set definition [lindex $definitionNodes 0]
-				set as_assessments__definition [$definition nodeValue]
+				set nodesList [$assessment childNodes]
+				foreach node $nodesList {
+					set nodeName [$node nodeName]
+					if {$nodeName == "qticomment"} {
+						debug_print 1 "nodo:" $nodeName
+						set definitionNodes [$assessment selectNodes {qticomment/text()}]
+						set definition [lindex $definitionNodes 0]
+						set as_assessments__definition [$definition nodeValue]
+						debug_print 1 "as_assessments__definition" $as_assessments__definition
+					} elseif {$nodeName == "objectives"} {
+						debug_print 1 "nodo:" $nodeName
+						set definitionNodes [$assessment selectNodes {objectives/material/mattext/text()}]
+						set definition [lindex $definitionNodes 0]
+						set as_assessments__definition [$definition nodeValue]
+						debug_print 1 "as_assessments__definition" $as_assessments__definition
+					}
+				}
 				# assessment_id
 				set as_assessments__assessment_id [expr [db_exec_plsql as_assessments_assessment_id {}] + 1]
 				# Insert assessment in the as_assessments table
 				db_dml as_assessments_insert {}
-				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
 				foreach section $sectionNodes {
 					set as_sections__name [$section getAttribute {title}]
-					set definitionNodes [$section selectNodes {qticomment/text()}]
-					set definition [lindex $definitionNodes 0]
-					set as_sections__definition [$definition nodeValue]
-					
+					set nodesList [$section childNodes]
+					set as_sections__definition "N"
+					foreach node $nodesList {
+						set nodeName [$node nodeName]
+						if {$nodeName == "qticomment"} {
+							debug_print 1 "nodo:" $nodeName
+							set definitionNodes [$section selectNodes {qticomment/text()}]
+							set definition [lindex $definitionNodes 0]
+							set as_sections__definition [$definition nodeValue]
+							debug_print 1 "as_sections__definition" $as_sections__definition
+						}
+					}
 					set as_sections__section_id [expr [db_exec_plsql as_sections_section_id {}] + 1]
 					# Insert section in the as_sections table
 					db_dml as_sections_insert {}
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
-					
 					# Process the items
 					parse_item $section $as_sections__section_id
 				}
