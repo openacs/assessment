@@ -249,7 +249,7 @@ ad_proc -public as::assessment::check::action_exec {
     set failed_p "t"
     set failed [catch $tcl_code errorMsg]
     
-
+   ns_log notice "error $errorMsg" 
     if { $failed > 0 } {
 	set failed_p "f"
     }
@@ -388,9 +388,10 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 } {
 
     set assessment_rev_id [db_string get_assessment_id {}]
-    
+    	    ns_log notice "-------------------------------> ENTRA 1"
 	set checks [db_list_of_lists section_checks {}]
 	foreach check_id $checks {
+	    ns_log notice "-------------------------------> ENTRA 2"
 	    set info [db_0or1row check_info {}]
 	    set perform [db_string check_sql $check_sql]
 	    if {$action_p == "t"} {
