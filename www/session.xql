@@ -24,10 +24,11 @@
 
 <fullquery name="session_attempt">
       <querytext>
-    SELECT COUNT(*)
-    FROM as_sessions s
-    WHERE s.subject_id = :subject_id
-    AND s.assessment_id = :assessment_rev_id
+    select count(*)
+    from as_sessions s, cr_revisions r
+    where s.subject_id = :subject_id
+    and s.assessment_id = r.revision_id
+    and r.item_id = :assessment_id
       </querytext>
 </fullquery>
 

@@ -163,6 +163,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Finish_Time">Finish Time</msg>
   <msg key="Finished">Finished</msg>
   <msg key="Fixed_Position">Fixed Order Position</msg>
+  <msg key="form_element_required">This is required</msg>
   <msg key="from">From:</msg>
   <msg key="hide_item_name">Question name hidden</msg>
   <msg key="horizontal">Horizontal</msg>
