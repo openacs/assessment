@@ -16,7 +16,7 @@ set users_list "("
 
 for {set i 0} {$i < [llength  $action_log_id]} {incr i} {
     set action_id [lindex $action_log_id $i]
-    set subject_id [db_string subject {select subject_id from as_sessions where session_id=(select session_id from as_actions_log where action_log_id=:action_id)}]
+    set subject_id [db_string subject {}]
     append users_list "$subject_id,"
 }
 
@@ -86,15 +86,16 @@ element create spam_message send_date \
 if {[form is_valid spam_message]} {
     form get_values spam_message \
 	subject message send_date format d_date d_state d_assessment action_log_id d_interval
-    ns_log notice "antes del bulk-mail"        
+
+    set admin_id [as::actions::get_admin_user_id]
+    acs_user::get -user_id $admin_id -array user_info
     set id [bulk_mail::new \
-		-from_addr annyflores@viaro.net\
+		-from_addr $user_info(email)\
 		-send_date $send_date\
 		-date_format "YYYY MM DD HH24 MI SS" \
 		-subject "$subject" \
 		-message $message \
 		-query $query]
-    ns_log notice "despues del bulk-mail $id"    
     ad_returnredirect "admin-request?assessment=$d_assessment&state=$d_state&interval=$d_interval&date=$d_date"
 }
 
