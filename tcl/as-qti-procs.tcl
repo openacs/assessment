@@ -279,17 +279,8 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					     }					 
 				        }	
 					
-					# Insert section in the CR (and in the as_sections table) getting the revision_id (section_id)
-					set as_sections__section_id [as::section::new \
-					                             -title $as_sections__title \
-								     -description $as_sections__definition \
-								     -instructions $as_sections__instructions \
-								     -feedback_text $as_sections__sectionfeedback \
-								     -max_time_to_complete $as_sections__duration \
-								     -num_items $as_sections__num_items \
-								     -points $as_sections__points]
 					#section display type
-					set display_id [as::section_display::new \
+					set display_type_id [as::section_display::new \
 			                                   -title $asdt__display_type \
 							   -num_items $asdt__s_num_items \
 							   -adp_chunk $asdt__adp_chunk \
@@ -297,14 +288,28 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 							   -back_button_p $asdt__back_button_p \
 							   -submit_answer_p $asdt__submit_answer_p \
 							   -sort_order_type $asdt__sort_order_type]
-					# now update section and map display type					
-					db_dml add_display_to_section {}
+					# Insert section in the CR (and in the as_sections table) getting the revision_id (section_id)
+					set section_id [as::section::new \
+					                             -title $as_sections__title \
+								     -description $as_sections__definition \
+								     -instructions $as_sections__instructions \
+								     -feedback_text $as_sections__sectionfeedback \
+								     -max_time_to_complete $as_sections__duration \
+								     -num_items $as_sections__num_items \
+								     -points $as_sections__points \
+								     -display_type_id $display_type_id]
 									
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
 					incr as_assessment_section_map__sort_order
+					set as_item_section_map__sort_order 0
 					# Process the items
-					as::qti::parse_item $section $as_sections__section_id [file dirname $xmlfile]
+					set as_items [as::qti::parse_item $section [file dirname $xmlfile]]
+					# Relation between as_items and as_sections
+					foreach as_item_id $as_items {
+					    db_dml as_item_section_map_insert {}
+					    incr as_item_section_map__sort_order
+					}
 					
 					#get points from a section
 					db_0or1row get_section_points {}
@@ -314,14 +319,13 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			}
 		} else {
 			# Just items (no assessments)
-			as::qti::parse_item $questestinterop 0
+			as::qti::parse_item $questestinterop [file dirname $xmlfile]]
 		}
 	}
 	return $as_assessments__assessment_id
 }
 
-ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items from a XML QTI file } {
-    set as_item_section_map__sort_order 0
+ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML QTI file } {
     set as_items__description ""
     set as_items__subtext ""
     set as_items__field_code ""
@@ -599,6 +603,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
+		lappend as_items $as_item_id
 	    } else {
 		set response_lidNodes [$presentation selectNodes {.//response_lid}]
 		# The first node of the list. It may not be a good idea if it doesn't exist
@@ -651,6 +656,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
+		lappend as_items $as_item_id
 		# <response_label> (each choice)
 		set response_labelNodes [$presentation selectNodes {.//response_label}]
 		foreach response_label $response_labelNodes {
@@ -703,11 +709,6 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_choices__content_value -type as_item_content_rel
 		}     
 	}
-	# Relation between as_items and as_sections
-	if {$section_id != 0} {
-	    db_dml as_item_section_map_insert {}
-	    incr as_item_section_map__sort_order
-	}
     }
-    return 1
+    return $as_items
 }
