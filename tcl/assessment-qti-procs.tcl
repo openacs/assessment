@@ -10,6 +10,7 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 	set file_id [open $xmlfile r]
 	set file_string [read $file_id]
 	close $file_id
+	set numItems 0
 	
 	# Parser
 	# XML => DOM document
@@ -69,14 +70,15 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
 					# Process the items
-					parse_item $section $as_sections__section_id
+					set numItems [parse_item $section $as_sections__section_id]
 				}
 			}
 		} else {
 			# Just items (no assessments)
-			parse_item $questestinterop 0
+			set numItems [parse_item $questestinterop 0]
 		}
 	}
+	return $numItems
 }
 
 ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
@@ -162,4 +164,5 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 			db_dml as_item_section_map_insert {}
 		}
 	}
+	return [llength $itemNodes]
 }
