@@ -157,6 +157,9 @@ ad_proc -public as::section::copy {
 	append title "[_ assessment.copy_appendix]"
 
 	set section_item_id [db_nextval acs_object_id_seq]
+	if {[empty_string_p $required_p]} {
+	    set required_p 0
+	}	
 	if {[empty_string_p $name]} {
 	    set name "SEC_$section_item_id"
 	}

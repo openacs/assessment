@@ -163,7 +163,7 @@ ad_form -extend -name assessment_form -form {
 	}
 
 	if {![empty_string_p $start_time]} {
-	    db_dml update_end_time {}
+	    db_dml update_start_time {}
 	}
 	if {![empty_string_p $end_time]} {
 	    db_dml update_end_time {}
@@ -200,7 +200,7 @@ ad_form -extend -name assessment_form -form {
 	}
 
 	if {![empty_string_p $start_time]} {
-	    db_dml update_end_time {}
+	    db_dml update_start_time {}
 	}
 	if {![empty_string_p $end_time]} {
 	    db_dml update_end_time {}
