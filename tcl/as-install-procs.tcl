@@ -350,5 +350,7 @@ ad_proc -public as::install::after_upgrade {
 		as::actions::update_checks_after_upgrade
 	    }
 	}
-    
+    0.10d9 0.10d10 {
+	as::actions::update_checks_after_upgrade
+    }
 }
