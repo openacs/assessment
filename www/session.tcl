@@ -22,6 +22,8 @@ set itemmaxscore [expr $assessment_score/$assessment_items] ;# FIXME total_point
 
 set session_score 0
 db_multirow -extend [list choice_html score maxscore notanswered item_correct] items query_all_items {} {
+  set as_item_display_rbx__item_id {}
+  unset as_item_display_rbx__item_id
   set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"]
   set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
   set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
