@@ -5,6 +5,6 @@
 -- @creation-date 2004-07-20
 --
 
-\i assessment-item-create.sql
 \i assessment-item-type-create.sql
+\i assessment-item-create.sql
 \i assessment-section-create.sql
