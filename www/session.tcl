@@ -25,26 +25,32 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct] i
   set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"]
   set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
   set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
+  set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
+  db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
+  set presentation_type "checkbox" ;# DEFAULT
+  if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radio"}
+
   set notanswered 1
   set maxscore $itemmaxscore
   set score 0
   set item_correct 1
-  set choice_html "<table cellspacing=\"0\" cellpadding=\"3\" border=\"1\" width=\"80%\"><tr><th scope=\"col\" nowrap>[_ assessment.Student_Response]</th><th scope=\"col\" nowrap>[_ assessment.Correct_Answer]</th><th scope=\"col\" colspan=\"2\" valign=\"top\">[_ assessment.Answer_Choices]</th></tr>"
+  set choice_html "<table cellspacing=\"0\" cellpadding=\"3\" border=\"0\">"
   db_foreach choices {} {
     if {[string length "$choice_id_answer"]} {set notanswered 0}
     if {$correct_answer_p == {t}} { set correct_answer_bool 1 } else { set correct_answer_bool 0 }
-    set item_correct [expr $item_correct && ($correct_answer_bool == ("$choice_id_answer" == $choice_id))]
-    if {$correct_answer_p == {t}} {
-    set correct_answer {<img src="graphics/correct.gif">}
+    set choice_correct [expr $correct_answer_bool == ("$choice_id_answer" == $choice_id)]
+    set item_correct [expr $item_correct && $choice_correct]
+    if {$choice_correct} {
+    set correct_answer {}
     } else {
-    set correct_answer {<img src="graphics/wrong.gif">}
+    set correct_answer {<font color="#ff0000">Error</font>}
     }
     if {$choice_id_answer == $choice_id } {
-      set choice_answer {<img src="graphics/right.gif">}
+      set choice_answer "<input type=\"$presentation_type\" readonly disabled checked>"
     } else {
-      set choice_answer {}
+      set choice_answer "<input type=\"$presentation_type\" readonly disabled>"
     }
-    append choice_html "<tr><td align=\"center\">$choice_answer</td><td align=\"center\">$correct_answer</td><td>[ad_quotehtml $choice_title]</td></tr>"
+    append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]</td></tr>"
   }
   if {$item_correct} { set score $itemmaxscore }
   set session_score [expr $session_score+$score]

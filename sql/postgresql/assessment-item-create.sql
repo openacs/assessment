@@ -27,7 +27,8 @@ create table as_items (
 	-- a denormalization to cache the generated "widget" for the Item (NB: when any change is made to an as_item_choice related to an as_item, this will have to be updated!)
 	adp_chunk	varchar(500),
 	-- feedback 
-	feedback_text text
+	feedback_right	text,
+	feedback_wrong	text
 );
 
 create table as_item_choices (
