@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="0.02d" url="http://openacs.org/repository/download/apm/assessment-0.02d.apm">
+    <version name="0.03d" url="http://openacs.org/repository/download/apm/assessment-0.03d.apm">
     <database-support>
         <database>oracle</database>
         <database>postgresql</database>
@@ -20,7 +20,7 @@
 	<maturity>0</maturity>
         <vendor url="http://www.e-lane.org/">E-LANE</vendor>
         <description format="text/plain">Create assessments and evalueate.</description>
-        <provides url="assessment" version="0.02d"/>
+        <provides url="assessment" version="0.03d"/>
         <requires url="acs-kernel" version="5.0d13"/>
         <requires url="acs-templating" version="4.1.2"/>
         <requires url="acs-content-repository" version="5.2.0d8"/>

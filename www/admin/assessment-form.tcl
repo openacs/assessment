@@ -40,7 +40,7 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 
 ad_form -extend -name assessment_form -form {
     {instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Instructions_help]"}}
-    {mode:text,optional {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
+    {run_mode:text,optional {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
     {anonymous_p:text(select) {label "[_ assessment.Anonymous_Responses]"} {options $boolean_options} {help_text "[_ assessment.as_Anonymous_help]"}}
     {secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
     {reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}
@@ -60,7 +60,7 @@ ad_form -extend -name assessment_form -form {
     set title ""
     set description ""
     set instructions ""
-    set mode ""
+    set run_mode ""
     set anonymous_p f
     set secure_access_p f
     set reuse_responses_p f
@@ -99,7 +99,7 @@ ad_form -extend -name assessment_form -form {
 				   -title $title \
 				   -description $description \
 				   -instructions $instructions \
-				   -mode $mode \
+				   -run_mode $run_mode \
 				   -anonymous_p $anonymous_p \
 				   -secure_access_p $secure_access_p \
 				   -reuse_responses_p $reuse_responses_p \
@@ -129,7 +129,7 @@ ad_form -extend -name assessment_form -form {
 				   -title $title \
 				   -description $description \
 				   -instructions $instructions \
-				   -mode $mode \
+				   -run_mode $run_mode \
 				   -anonymous_p $anonymous_p \
 				   -secure_access_p $secure_access_p \
 				   -reuse_responses_p $reuse_responses_p \

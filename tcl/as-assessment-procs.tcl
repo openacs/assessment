@@ -11,7 +11,7 @@ ad_proc -public as::assessment::new {
     {-creator_id ""}
     {-description ""}
     {-instructions ""}
-    {-mode ""}
+    {-run_mode ""}
     {-anonymous_p ""}
     {-secure_access_p ""}
     {-reuse_responses_p ""}
@@ -48,7 +48,7 @@ ad_proc -public as::assessment::new {
 				  -description $description \
 				  -attributes [list [list creator_id $creator_id] \
 						   [list instructions $instructions] \
-						   [list mode $mode] \
+						   [list run_mode $run_mode] \
 						   [list anonymous_p $anonymous_p] \
 						   [list secure_access_p $secure_access_p] \
 						   [list reuse_responses_p $reuse_responses_p] \
@@ -76,7 +76,7 @@ ad_proc -public as::assessment::edit {
     {-creator_id ""}
     {-description ""}
     {-instructions ""}
-    {-mode ""}
+    {-run_mode ""}
     {-anonymous_p ""}
     {-secure_access_p ""}
     {-reuse_responses_p ""}
@@ -109,7 +109,7 @@ ad_proc -public as::assessment::edit {
 			    -description $description \
 			    -attributes [list [list creator_id $creator_id] \
 					     [list instructions $instructions] \
-					     [list mode $mode] \
+					     [list run_mode $run_mode] \
 					     [list anonymous_p $anonymous_p] \
 					     [list secure_access_p $secure_access_p] \
 					     [list reuse_responses_p $reuse_responses_p] \
@@ -179,7 +179,7 @@ ad_proc -public as::assessment::new_revision {
 			    -description $a(description) \
 			    -attributes [list [list creator_id $a(creator_id)] \
 					     [list instructions $a(instructions)] \
-					     [list mode $a(mode)] \
+					     [list run_mode $a(run_mode)] \
 					     [list anonymous_p $a(anonymous_p)] \
 					     [list secure_access_p $a(secure_access_p)] \
 					     [list reuse_responses_p $a(reuse_responses_p)] \

@@ -81,7 +81,7 @@ create table as_assessments (
 	-- text that explains any specific steps the subject needs to follow
 	instructions	text,
 	-- whether this is a standalone assessment (like current surveys), or if it provides an "assessment service" to another OpenACS app, or a "web service" via SOAP, etc
-	mode	varchar(25),
+	run_mode	varchar(25),
 	-- whether the creator of the assessment will have the possibility to see the personal details of the respondee or not 
 	anonymous_p	char(1) default 'f'
 			constraint as_assessments_anonymous_p_ck
