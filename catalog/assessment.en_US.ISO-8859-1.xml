@@ -102,6 +102,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Copy">Copy</msg>
   <msg key="copy_1">Copy:</msg>
   <msg key="copy_appendix"> (Copy)</msg>
+  <msg key="copy_assessment">Copy Assessment</msg>
   <msg key="copy_item">Copy Question</msg>
   <msg key="copy_section">Copy Section</msg>
   <msg key="Copy_this_assess">Copy this assessment</msg>
@@ -276,6 +277,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="reg_users_required">Registrated respondents required</msg>
   <msg key="regarding_this_assess">regarding this survey</msg>
   <msg key="remove_1">Remove:</msg>
+  <msg key="remove_assessment">Remove Assessment</msg>
   <msg key="remove_choice">Remove Choice</msg>
   <msg key="remove_item">Remove Question</msg>
   <msg key="remove_section">Remove Section</msg>
