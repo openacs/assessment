@@ -11,6 +11,7 @@ ad_library {
 
 namespace eval as::install {}
 
+
 ad_proc -public as::install::assessment_create_install {  
 } { 
     Creates the content type and adds in attributes.
@@ -32,6 +33,7 @@ content::type::create_type -content_type {as_assessments}  -supertype {content_r
 content::type::create_type -content_type {as_sessions} -supertype {content_revision} -pretty_name {Assessment Session} -pretty_plural {Assessment Sessions} -table_name {as_sessions} -id_column {session_id}
 content::type::create_type -content_type {as_section_data} -supertype {content_revision} -pretty_name {Assessment Section Data} -pretty_plural {Assessment Sections Data} -table_name {as_section_data} -id_column {section_data_id}
 content::type::create_type -content_type {as_item_data} -supertype {content_revision} -pretty_name {Assessment Item Data} -pretty_plural {Assessment Items Data} -table_name {as_item_data} -id_column {item_data_id}
+content::type::create_type -content_type {as_files} -supertype {content_revision} -pretty_name {Assessment File} -pretty_plural {Assessment Files} -table_name {as_files} -id_column {file_id}
 
 # Radiobutton display type
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -122,7 +124,7 @@ content::type::create_attribute -content_type {as_sections} -attribute_name {max
 # Assessments
 content::type::create_attribute -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
+content::type::create_attribute -content_type {as_assessments} -attribute_name {run_mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {anonymous_p}         -datatype {boolean} -pretty_name {Assessment Anonymous} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {secure_access_p}         -datatype {boolean} -pretty_name {Assessment Secure Access} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {reuse_responses_p}         -datatype {boolean} -pretty_name {Assessment Reuse Responses} -column_spec {char(1)}
@@ -214,4 +216,6 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_data} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_files} -include_subtypes t
 
+    set temp_id [content::template::new -name {as_files_default} -text {@text;noquote@} -is_live {t} -package_id $package_id]
+    content::type::register_template -content_type {as_files} -template_id $temp_id -use_context {public} -is_default {t}
 }
