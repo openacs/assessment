@@ -21,6 +21,7 @@ set user_id [ad_conn user_id]
 set page_title "[_ assessment.Show_Items]"
 set context_bar [ad_context_bar $page_title]
 set section_to ""
+set item_to ""
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 
@@ -277,6 +278,7 @@ foreach one_item $item_list {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
                    ns_log \"--------------> branch check\"
+                  
                    set section_to_tmp \[as::assessment::checks::branch_checks -item_id \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
@@ -323,7 +325,8 @@ if {$display(submit_answer_p) != "t"} {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
                    ns_log notice \"--------------> branch check \$response_item_id \"
-                   set section_to_tmp \[as::assessment::check::branch_checks -item_id \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
+                   set item_to \$response_item_id
+                   set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$item_to -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
                     }
