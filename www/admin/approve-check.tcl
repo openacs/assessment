@@ -4,6 +4,11 @@ ad_page_contract {
     @date 2005-01-17
 } {
     action_log_id:multiple
+    d_assessment
+    d_state
+    d_interval
+    d_date
+
   }
 
 set count [llength $action_log_id]
@@ -16,4 +21,4 @@ for { set i 0} { $i< $count } {incr i} {
 
     as::assessment::check::manual_action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id -action_log_id $log_id
 }
-ad_returnredirect "admin-request"
+ad_returnredirect "admin-request?assessment=$d_assessment&state=$d_state&interval=$d_interval&date=$d_date"

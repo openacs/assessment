@@ -36,7 +36,7 @@ set state_query ""
 if {[exists_and_not_null assessment] && $assessment!="all"} {
     as::assessment::data -assessment_id $assessment
     set d_assessment $assessment
-    set new_assessment_revision $assessment_data(assessment_id)
+    set new_assessment_revision $assessment_data(assessment_rev_id)
     
     set assessment_query "and c.section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm  where ci.item_id = cr.item_id  and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id = :new_assessment_revision)"
 } 
@@ -58,7 +58,7 @@ if {[exists_and_not_null date]} {
 }
 
 if { $d_state == "ae"} {
-    set state_query "and al.failed_p='f' and al.approved_p='t'"
+    set state_query "and al.failed_p= 'f' and al.approved_p='t'"
 } elseif {$d_state =="f"} {
     set state_query "and al.approved_p='f'"
 } elseif {$d_state == "t"} {
@@ -121,6 +121,7 @@ ad_form -name  specific_date  -form {
 set query "select al.failed_p,c.inter_item_check_id,c.name,al.action_log_id,a.name as action_name,a.action_id,(select p.first_names || ' ' || p.last_name as name from persons p where p.person_id = (select subject_id from as_sessions where session_id=al.session_id))as user_name,al.session_id,c.description,al.date_requested from as_actions a, as_actions_log al, as_inter_item_checks c where al.inter_item_check_id=c.inter_item_check_id $assessment_query and c.action_p='t' $state_query  and a.action_id=al.action_id $interval_query $date_query"
 
 db_multirow actions_log actions_log $query
+
 template::list::create \
     -name actions_log \
     -multirow actions_log \
@@ -131,6 +132,10 @@ template::list::create \
     -bulk_action_method post \
     -bulk_action_export_vars {
 	action_log_id
+        d_assessment
+	d_state
+	d_interval
+	d_date
     }\
     -row_pretty_plural "[_ assessment.action_log]"\
     -elements {
