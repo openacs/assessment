@@ -175,8 +175,8 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
-				foreach section $sectionNodes {
-					set as_assessment_section_map__sort_order 0
+				set as_assessment_section_map__sort_order 0
+				foreach section $sectionNodes {					
 					set as_sections__title [$section getAttribute {title} {Section}]
 					#get section's children (qticomment, duration, qtimetadata, objectives, sectioncontrol, 
 					#sectionprecondition, sectionpostcondition, rubric, presentation_material, outcomes_processing,
