@@ -267,7 +267,7 @@ db_multirow sections query_all_sections {} {
 	    }
 	 } 
 	 
-	 if { $assessment_data(survey_p) == "f" && ![info exists ta__display_id] } {
+	 if { $assessment_data(survey_p) != "t" && ![info exists ta__display_id] } {
 	    #<resprocessing>
 	    set resprocessing [$doc createElement resprocessing]
 	    $item appendChild $resprocessing
