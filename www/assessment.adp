@@ -12,10 +12,17 @@
 
 <formtemplate id="show_item_form">
     <input type="hidden" name="as_session_id" value="@as_session_id@">
+    <multiple name="items">
+        <table border="0">
+	   <tr bgcolor="#d0d0d0"><td><b>SECCIÓN: @items.section_title@ </b></td></tr>
+	   <tr><td><i> @items.section_description@ </i><br></td></tr>
+	</table>
+
+	<br>&nbsp;&nbsp;
+	<b>#assessment.Items#</b><br><br>
 	<table border="0">
-		<br>&nbsp;&nbsp;
-		<b>#assessment.Items#</b><br><br>
-		<multiple name="items">
+
+		     <group column="section_title">
 			<tr>
 				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b><if @items.presentation_type@ not in fitb>@items.title@</if></b></td></tr>
 				<tr><td colspan="4">
@@ -37,8 +44,10 @@
 					<hr>
 				</td>
 			</tr>
-		</multiple>
+		     </group>
+
 	</table>
+    </multiple>
 <table align="center"><tr><td><input type=submit value="#assessment.Submit#"></td></tr></table>
 </formtemplate>
 
