@@ -37,13 +37,14 @@ create table as_inter_item_checks (
 	name			varchar(200),
 	description		varchar(200),
 	postcheck_p		boolean not null,
-	item_id			integer
+	item_id			integer,
+	assessment_id		integer
 );
 
 
 
 
-create or replace function as_inter_item_check__new (integer,boolean,integer,integer,varchar,varchar,varchar,boolean,integer,integer,integer)
+create or replace function as_inter_item_check__new (integer,boolean,integer,integer,varchar,varchar,varchar,boolean,integer,integer,integer,integer)
 returns integer as '
 declare 
 	new__inter_item_check_id     alias for $1;
@@ -56,7 +57,8 @@ declare
         new__postcheck_p	     alias for $8;
         new__item_id                 alias for $9;
 	new__creation_user           alias for $10; 
-	new__context_id              alias for $11; 
+	new__context_id              alias for $11;
+	new__assessment_id	     alias for $12; 
 	v_inter_item_check_id	     integer;
 begin
 	v_inter_item_check_id := acs_object__new (
@@ -68,8 +70,8 @@ begin
 		new__context_id
 	);
 	insert into as_inter_item_checks 
-	(inter_item_check_id,action_p,section_id_from,section_id_to,check_sql,name,description,postcheck_p,item_id)
-        values (v_inter_item_check_id,new__action_p,new__section_id_from,new__section_id_to,new__check_sql,new__name,new__description,new__postcheck_p,new__item_id);
+	(inter_item_check_id,action_p,section_id_from,section_id_to,check_sql,name,description,postcheck_p,item_id,assessment_id)
+        values (v_inter_item_check_id,new__action_p,new__section_id_from,new__section_id_to,new__check_sql,new__name,new__description,new__postcheck_p,new__item_id,new__assessment_id);
 
          return v_inter_item_check_id;
 end;' language 'plpgsql';
