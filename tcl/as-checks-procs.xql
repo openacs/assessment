@@ -177,7 +177,7 @@
 
 <fullquery name="as::assessment::check::action_exec.select_tcl">
       <querytext>
-      select a.tcl_code from as_actions a,as_action_map am where am.action_id = a.action_id and am.inter_item_check_id = :inter_item_check_id
+      select a.tcl_code,am.user_message,a.name as action_name from as_actions a,as_action_map am where am.action_id = a.action_id and am.inter_item_check_id = :inter_item_check_id
       </querytext>
 </fullquery>
 
@@ -201,7 +201,7 @@
 
 <fullquery name="as::assessment::check::manual_action_exec.select_tcl">
       <querytext>
-      select a.tcl_code from as_actions a,as_action_map am where am.action_id = a.action_id and inter_item_check_id = :inter_item_check_id
+      select a.tcl_code, am.name as action_name,am.user_message from as_actions a,as_action_map am where am.action_id = a.action_id and inter_item_check_id = :inter_item_check_id
       </querytext>
 </fullquery>
 

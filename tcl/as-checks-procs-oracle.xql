@@ -64,13 +64,13 @@
 
 <fullquery name="as::assessment::check::action_log.insert_action">
       <querytext>	
-      insert into as_actions_log (action_log_id,inter_item_check_id,action_id,date_requested,date_processed,approved_p,failed_p,finally_executed_by,session_id) values (:log_id,:check_id,:action_id,(select sysdate from dual),(select sysdate from dual),'t',:failed,:user_id,:session_id)
+      insert into as_actions_log (action_log_id,inter_item_check_id,action_id,date_requested,date_processed,approved_p,failed_p,finally_executed_by,session_id,error_txt) values (:log_id,:check_id,:action_id,(select sysdate from dual),(select sysdate from dual),'t',:failed,:user_id,:session_id,:message)
       </querytext>
 </fullquery>
 
 <fullquery name="as::assessment::check::manual_action_log.insert_action">
       <querytext>
-       insert into as_actions_log (action_log_id,inter_item_check_id,action_id,date_requested,date_processed,approved_p,failed_p,finally_executed_by,session_id) values (:log_id,:check_id,:action_id,(select sysdate from dual),null,'f','f',null,:session_id)
+       insert into as_actions_log (action_log_id,inter_item_check_id,action_id,date_requested,date_processed,approved_p,failed_p,finally_executed_by,session_id,error_txt) values (:log_id,:check_id,:action_id,(select sysdate from dual),null,'f','f',null,:session_id,:message)
       </querytext>
 </fullquery>
 

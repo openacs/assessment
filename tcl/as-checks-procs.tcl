@@ -178,10 +178,14 @@ ad_proc -public as::assessment::check::action_log {
     set user_id [ad_conn user_id]
     set log_id [db_string get_next_val {}]
     set action_id [db_string action_id {}]
-    
-    db_transaction {
-	db_dml insert_action {}
+    set message " "
+    if { $failed == "f" } {
+	set message "This action failed."
     }
+    db_transaction {
+	    db_dml insert_action {}
+    }
+    
 }
 
 ad_proc -public as::assessment::check::manual_action_log {
@@ -194,7 +198,8 @@ ad_proc -public as::assessment::check::manual_action_log {
     set user_id [ad_conn user_id]
     set log_id [db_string get_next_val {}]
     set action_id [db_string action_id {}]
-    
+    set message " "
+
     db_transaction {
 	db_dml insert_action {}
 	
@@ -208,6 +213,8 @@ ad_proc -public as::assessment::check::action_exec {
 } { 
     
 } {
+    set error_txt ""
+
     db_foreach get_check_params { } {
 	set parameter_name [db_1row select_name {}]
 	
@@ -239,8 +246,13 @@ ad_proc -public as::assessment::check::action_exec {
 
     if { $failed > 0 } {
 	set failed_p "f"
+	set error_txt "This action failed"
     }
+    
+    notification::new -type_id [notification::type::get_type_id -short_name as_inter_item_checks_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message $error_txt"
+    
     as::assessment::check::action_log -session_id $session_id -check_id $inter_item_check_id -failed $failed_p
+    
 }
 
 
@@ -286,6 +298,9 @@ ad_proc -public as::assessment::check::manual_action_exec {
     
     set user_id [ad_conn user_id]
     db_dml update_actions_log {}
+    
+    notification::new -type_id [notification::type::get_type_id -short_name as_inter_item_checks_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message"
+    
     
 }
 
