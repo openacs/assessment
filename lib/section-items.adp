@@ -4,7 +4,10 @@
 <table cellspacing=0>
 <if @items:rowcount@ eq 0>
   <tr class="odd">
-  <td></td><td><a href="item-add?section_id=@section_id@">#assessment.Add_New#</a></tr></tr>
+  <td></td><td>
+    <a href="item-form?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_New#</a>
+    <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_Existing#</a>
+  </td></tr>
 </if>
 
 <multiple name="items">
@@ -69,7 +72,10 @@
   <else>
     <tr class="odd">
   </else>
-  <td></td><td><a href="item-add?section_id=@section_id@">#assessment.Add_New#</a></tr></tr>
+  <td></td><td>
+    <a href="item-form?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_New#</a>
+    <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_Existing#</a>
+  </td></tr>
 </if>
 </multiple>
 </table>      
