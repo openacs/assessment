@@ -298,6 +298,12 @@
 	select action_id,order_by,user_message,action_perform from as_action_map where inter_item_check_id=:inter_item_check_id
       </querytext>
 </fullquery>
+<fullquery name="as::assessment::check::copy_item_checks.get_action_map">
+      <querytext>
+	select action_id,order_by,user_message,action_perform from as_action_map where inter_item_check_id=:inter_item_check_id
+      </querytext>
+</fullquery>
+
 
 <fullquery name="as::assessment::check::copy_checks.insert_action_map">
       <querytext>
@@ -306,18 +312,41 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::assessment::check::copy_checks.parameters">
+<fullquery name="as::assessment::check::copy_item_checks.insert_action_map">
+      <querytext>
+	insert into as_action_map (inter_item_check_id,action_id,order_by,user_message,action_perform) values  
+        (:insert_p,:action_id,:order_by,:user_message,:action_perform)
+      </querytext>
+</fullquery>
+
+
+<fullquery name="as::assessment::check::copy_item_checks.parameters">
+      <querytext>
+	select parameter_id,value,item_id from as_param_map 
+	where inter_item_check_id=:inter_item_check_id and action_id=:action_id
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::copy_item_checks.parameters">
       <querytext>
 	select parameter_id,value,item_id from as_param_map 
 	where inter_item_check_id=:inter_item_check_id
       </querytext>
 </fullquery>
 
+
 <fullquery name="as::assessment::check::copy_checks.copy_parameter">
       <querytext>
 	insert into as_param_map (parameter_id,value,item_id,inter_item_check_id) values (:parameter_id,:value,:item_id,:insert_p)
       </querytext>
 </fullquery>
+
+<fullquery name="as::assessment::check::copy_item_checks.copy_parameter">
+      <querytext>
+	insert into as_param_map (parameter_id,value,item_id,inter_item_check_id) values (:parameter_id,:value,:item_id,:insert_p)
+      </querytext>
+</fullquery>
+
 
 <fullquery name="as::assessment::check::update_checks.checks">
       <querytext>
@@ -344,5 +373,14 @@
 
       </querytext>
 </fullquery>
+
+<fullquery name="as::assessment::check::copy_item_checks.related_checks">
+      <querytext>
+
+	select inter_item_check_id,check_sql,section_id_from,section_id_to,name,description,action_p,item_id, postcheck_p from as_inter_item_checks where assessment_id=:assessment_id and section_id_from=:section_id
+
+      </querytext>
+</fullquery>
+
 
 </queryset>

@@ -561,3 +561,53 @@ ad_proc -public as::assessment::check::delete_item_checks {
 	}
     }
 }
+
+ad_proc -public as::assessment::check::copy_item_checks {
+    {-assessment_id:required}
+    {-section_id}
+    {-as_item_id}
+    {-new_item_id}
+} {
+    
+} {
+    set checks [db_list_of_lists related_checks {}]
+    set user_id [ad_conn user_id]
+    foreach check $checks {
+
+	
+	set cond_list  [split [lindex $check 1] "="]
+	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	set condition [lindex [split [lindex $cond_list 1] " "] 0]
+
+	if {$item_id == $as_item_id} {
+	    set inter_item_check_id [lindex $check 0]
+	    set action_p [lindex $check 6]
+	    set postcheck_p [lindex $check 8]
+	    set section_id_from $section_id
+	    set section_id_to [lindex $check 3]
+	    set item_id [lindex $check 7]
+	    set name [lindex $check 4]
+	    set check_sql [as::assessment::check::get_sql -item_id $new_item_id  -condition $condition]
+	    set description [lindex $check 5]
+	    
+	    set insert_p [db_exec_plsql copy_check {}]
+	    if { $action_p == "t"} {
+		set exist_p [db_0or1row get_action_map { }]
+		if {$exist_p == 1} {
+		    
+		    db_dml insert_action_map {}
+		    # copy parameters
+		    set parameters [db_list_of_lists parameters { }]
+		    foreach parameter $parameters {
+			set parameter_id [lindex $parameter 0]
+			set value [lindex $parameter 1]
+			set item_id [lindex $parameter 2]
+			
+			db_dml copy_parameter {}
+		    }
+
+		}
+	    }
+	}
+    }
+}
