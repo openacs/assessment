@@ -35,6 +35,14 @@ as::assessment::data -assessment_id $assessment_id
 
 set assessment_id1 $assessment_data(assessment_rev_id)
 
+# publish the object to the file system
+set in_path [ns_tmpnam]
+file mkdir $in_path
+
+
+# create a temp dir to put the archive in
+set out_path [ns_tmpnam]
+file mkdir $out_path
 
 # First create our top-level document
 #set doc [dom createDocument questestinterop]
@@ -253,6 +261,12 @@ db_multirow sections query_all_sections {} {
 		as::export::element_qtimetadatafield -root $doc -father $qtimetadata -label abs_size -value $abs_size
 		#item_answer_alignment
 		as::export::element_qtimetadatafield -root $doc -father $qtimetadata -label item_answer_alignment -value $item_answer_alignment		    
+	    } elseif {[info exists tb__display_id]} {
+	        db_0or1row item_display_tb_data {}
+		#abs_size
+		as::export::element_qtimetadatafield -root $doc -father $qtimetadata -label tb_abs_size -value $tb_abs_size
+		#item_answer_alignment
+		as::export::element_qtimetadatafield -root $doc -father $qtimetadata -label item_answer_alignment -value $item_answer_alignment		   
 	    }	    
 		
 	    # open question item
@@ -272,20 +286,34 @@ db_multirow sections query_all_sections {} {
 	
 	#<presentation>
 	set presentation [$doc createElement presentation]
-	$item appendChild $presentation
-	#<flow>
-	set flow [$doc createElement flow]
-	$presentation appendChild $flow
+	$item appendChild $presentation	
 	
 	if {![info exists tb__display_id]} {
 	    #<material>
 	    set material [$doc createElement material]
-	    $flow appendChild $material
+	    $presentation appendChild $material
 	    #<mattext> 
 	    set mattext [$doc createElement mattext]	    
 	    $material appendChild $mattext 
 	    set text [$doc createCDATASection $item_title]
 	    $mattext appendChild $text
+	    
+	    #content_type: imagen	   
+	    set content_type ""
+	    	    	    
+	    db_0or1row get_content_type_items {}
+	    if {$content_type == "image"} {	        
+		#<matimage>
+		set matimage [$doc createElement matimage]
+		$material appendChild $matimage
+		$matimage setAttribute uri $content_filename	        
+		if {![empty_string_p $mime_type]} {
+		    $matimage setAttribute imagtype $mime_type
+		}		        
+		
+                set cr_path [cr_fs_path $storage_area_key]
+		file copy -force -- "${cr_path}${cr_file_name}" [file join ${in_path} $content_filename]      		
+	    }	
 	}    
 		
 	
@@ -302,8 +330,8 @@ db_multirow sections query_all_sections {} {
 	    set response_lid [$doc createElement response_lid]
 	    $response_lid setAttribute ident $item_name
 	    $response_lid setAttribute rcardinality $rcardinality
-	    $response_lid setAttribute rtiming "No"
-	    $flow appendChild $response_lid
+	    $response_lid setAttribute rtiming "No"	    
+	    $presentation appendChild $response_lid
 	    #<render_choice>
 	    set render_choice [$doc createElement render_choice]
 	    $response_lid appendChild $render_choice
@@ -319,11 +347,29 @@ db_multirow sections query_all_sections {} {
 		#<material>
 	        set material [$doc createElement material]
 	        $response_label appendChild $material
-	        #<mattext> 
-	        set mattext [$doc createElement mattext]	        
-	        $material appendChild $mattext 
-	        set text [$doc createCDATASection $choice_title]
-	        $mattext appendChild $text
+		
+		#content_type: imagen	        
+	        set content_type ""	        
+	        db_0or1row get_content_type_choices {} 	
+	
+	        if {$content_type == "image"} {	        
+		    #<matimage>
+		    set matimage [$doc createElement matimage]
+		    $material appendChild $matimage
+		    $matimage setAttribute uri $content_filename	     
+		    if {![empty_string_p $mime_type]} {
+		        $matimage setAttribute imagtype $mime_type
+		    }   		    		    
+		    set cr_path [cr_fs_path $storage_area_key]
+                    file copy -force -- "${cr_path}${cr_file_name}" [file join ${in_path} $content_filename] 
+		    
+	        } else {	
+		    #<mattext> 
+	            set mattext [$doc createElement mattext]	        
+	            $material appendChild $mattext 
+	            set text [$doc createCDATASection $choice_title]
+	            $mattext appendChild $text
+		}
 	    }
 	} else {
 	    #short answer
@@ -332,8 +378,8 @@ db_multirow sections query_all_sections {} {
 	        set response_str [$doc createElement response_str]
 	        $response_str setAttribute ident $item_name
 	        $response_str setAttribute rcardinality "Single"
-	        $response_str setAttribute rtiming "No"
-	        $flow appendChild $response_str	    
+	        $response_str setAttribute rtiming "No"	        
+		$presentation appendChild $response_str	    
 	        #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =) 
                 db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
                 if {![empty_string_p $html_display_options]} {
@@ -367,8 +413,8 @@ db_multirow sections query_all_sections {} {
 		for {set i 0} {$i<[llength $item_title1]-1} {incr i 2} {
 		    set item_title [lindex $item_title1 $i]
 	            #<material>
-	            set material [$doc createElement material]
-	            $flow appendChild $material
+	            set material [$doc createElement material]	            
+		    $presentation appendChild $material
 	            #<mattext> 
 	            set mattext [$doc createElement mattext]	            
 	            $material appendChild $mattext 
@@ -378,8 +424,8 @@ db_multirow sections query_all_sections {} {
 	            set response_str [$doc createElement response_str]
 		    $response_str setAttribute ident $item_name$i		    
 	            $response_str setAttribute rcardinality "Single"
-	            $response_str setAttribute rtiming "No"
-	            $flow appendChild $response_str	    
+	            $response_str setAttribute rtiming "No"	            
+		    $presentation appendChild $response_str	    
 		    #<render_fib>
 		    set render_fib [$doc createElement render_fib]
 		    $render_fib setAttribute fibtype "String"
@@ -639,22 +685,14 @@ set outfd "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
 append outfd "<!DOCTYPE questestinterop SYSTEM \"http://www.imsglobal.org/question/qtiv1p2p1/XMLSchemav1p2p1/xmla/ims_qtiasiv1p2p1schema/dtds/qtiasifullncdtd/ims_qtiasiv1p2p1.dtd\">"
 append outfd [$root asXML]
 
-# publish the object to the file system
-set in_path [ns_tmpnam]
-file mkdir $in_path
-
 # store the tree xml into a file
 set file_name "$in_path/$assessment_data(title).xml"
 set file [open $file_name w 0600]
 puts $file $outfd
 close $file
 
-# create a temp dir to put the archive in
-set out_path [ns_tmpnam]
-file mkdir $out_path
-
 set out_file [file join ${out_path} ${download_name}]
-
+ 
 # get the archive command
 # TODO SECURITY DONT USE GLOBBING
 set cmd "zip -r -9 -X '$out_file' *"

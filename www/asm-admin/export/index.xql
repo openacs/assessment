@@ -71,6 +71,14 @@
 </querytext>
 </fullquery>
 
+<fullquery name="item_display_tb_data">
+<querytext>
+        SELECT html_display_options, abs_size as tb_abs_size, item_answer_alignment
+	FROM as_item_display_tb
+	WHERE as_item_display_id=:item_display_id
+</querytext>
+</fullquery>
+
 <fullquery name="item_type_data">
 <querytext>
 
@@ -84,6 +92,35 @@
 
 </querytext>
 </fullquery>
+
+<fullquery name="get_content_type_items">
+<querytext>
+        select r2.revision_id as content_rev_id, r2.title as content_filename, r2.content as cr_file_name, r2.mime_type, i.content_type, i.storage_area_key
+	        from cr_revisions r2, cr_items i 
+                where i.item_id = r2.item_id                
+		and i.latest_revision = r2.revision_id
+                and r2.revision_id IN (
+		    select target_rev_id 
+		    from as_item_rels 
+		    where rel_type = 'as_item_content_rel' 
+		    and item_rev_id = :as_item_id
+		)
+</querytext>
+</fullquery>
+
+<fullquery name="get_content_type_choices">
+<querytext>
+        select r2.revision_id as content_rev_id, r2.title as content_filename, r2.mime_type, r2.content as cr_file_name, i.content_type, i.storage_area_key
+		from cr_revisions r2, cr_items i
+		where i.item_id = r2.item_id
+		and i.latest_revision = r2.revision_id
+		and r2.revision_id IN ( 
+		    select aic.content_value 
+		    from as_item_choices aic
+		    where aic.choice_id = :choice_id )
+</querytext>
+</fullquery>
+
 
 <fullquery name="as_item_oq">
 <querytext>
