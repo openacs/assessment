@@ -21,7 +21,7 @@ ad_proc -public as::item_display_tb::new {
 
     # Insert as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)
     db_transaction {
-        set item_item_display_tb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_tb} -name [ad_generate_random_string]]
+        set item_item_display_tb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_tb} -name [exec uuidgen]]
         set as_item_display_tb_id [content::revision::new \
 				-item_id $item_item_display_tb_id \
 				-content_type {as_item_display_tb} \

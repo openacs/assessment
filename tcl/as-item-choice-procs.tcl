@@ -31,7 +31,7 @@ ad_proc -public as::item_choice::new {
 
     # Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     db_transaction {
-        set item_choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [ad_generate_random_string] -title $title ]
+        set item_choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [exec uuidgen] -title $title ]
         set as_item_choice_id [content::revision::new \
 				-item_id $item_choice_id \
 				-content_type {as_item_choices} \

@@ -26,7 +26,7 @@ ad_proc -public as::section::new {
 
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
     db_transaction {
-	set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name [ad_generate_random_string] -title $title -description $description ]
+	set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name [exec uuidgen] -title $title -description $description ]
 
 	set as_section_id [content::revision::new \
 			       -item_id $section_item_id \

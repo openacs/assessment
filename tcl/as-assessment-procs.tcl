@@ -40,7 +40,7 @@ ad_proc -public as::assessment::new {
 
     # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
     db_transaction {
-	set assessment_item_id [content::item::new -parent_id $folder_id -content_type {as_assessments} -name [ad_generate_random_string] -title $title ]
+	set assessment_item_id [content::item::new -parent_id $folder_id -content_type {as_assessments} -name [exec uuidgen] -title $title ]
 
 	set as_assessment_id [content::revision::new \
 				  -item_id $assessment_item_id \

@@ -27,7 +27,7 @@ ad_proc -public as::item::new {
 
     # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     db_transaction {
-        set item_item_id [content::item::new -parent_id $folder_id -content_type {as_items} -name [ad_generate_random_string] -title $title ]
+        set item_item_id [content::item::new -parent_id $folder_id -content_type {as_items} -name [exec uuidgen] -title $title ]
         set as_item_id [content::revision::new -item_id $item_item_id \
 				-content_type {as_items} \
 				-title $title \
