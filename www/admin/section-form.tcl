@@ -124,7 +124,8 @@ ad_form -extend -name section_form -form {
 				-max_time_to_complete $max_time_to_complete \
 				-num_items $num_items \
 				-points $points \
-				-display_type_id $display_type_id]
+				-display_type_id $display_type_id\
+				-assessment_id $assessment_id]
 
 	db_dml update_section_of_assessment {}
 
