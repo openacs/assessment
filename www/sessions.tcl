@@ -12,6 +12,8 @@ set context [list "Show Sessions"]
 
 set package_id [ad_conn package_id]
 
+set subject_id [ad_conn user_id]
+
 template::list::create \
     -name sessions \
     -multirow sessions \
