@@ -8,7 +8,7 @@ ad_page_contract {
 	assessment_info:multirow
 }
 
-set context [list "Show Sessions"]
+set context [list "[_ assessment.Show_Sessions]"]
 
 set package_id [ad_conn package_id]
 

@@ -8,7 +8,7 @@ ad_page_contract {
     context:onevalue
 }
 
-set context [list "Show Items"]
+set context [list "[_ assessment.Show_Items]"]
 
 set as_session_id [as_session_new -assessment_id $assessment_id -subject_id [ad_conn user_id]]
 set assessment_name [db_string assessment_name {SELECT as_assessmentsx.title FROM as_assessmentsx WHERE as_assessmentsx.assessment_id=:assessment_id}]

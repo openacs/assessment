@@ -6,7 +6,7 @@ ad_page_contract {
     context:onevalue
 }
 
-set context [list "Show Items"]
+set context [list "[_ assessment.Show_Items]"]
 
 ad_form -name show_item_form  -html {enctype multipart/form-data} -form {
     { assessment_id:text {value 1} }

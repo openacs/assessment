@@ -5,7 +5,7 @@
 <formtemplate id="show_item_form">
 	<table border="1">
 		<br>&nbsp;&nbsp;
-		<b>Items</b>
+		<b>#assessment.Items#</b>
 		<multiple name="items">
 			<tr>
 				<td valign="top">@items.rownum@.-</td>	
@@ -31,5 +31,5 @@
 </formtemplate>
 
 <br>
-<a href="upload-file">Upload files</a>
+<a href="upload-file">#assessment.Upload_files#</a>
 </master>

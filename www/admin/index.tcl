@@ -11,7 +11,7 @@ set title "[_ assessment.Administration]"
 set context {}
 
 ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/form-data}  -form {
-    {zipfile:file {label "Import QTI ZIP File:"}}
+    {zipfile:file {label "[_ assessment.Import_QTI_ZIP_File]"}}
 }
 
 ad_return_template

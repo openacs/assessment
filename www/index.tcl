@@ -7,7 +7,7 @@ ad_page_contract {
 	assessment_info:multirow
 }
 
-set context [list "Show Assessments"]
+set context [list "[_ assessment.Show_Assessments]"]
 
 set package_id [ad_conn package_id]
 
@@ -23,7 +23,7 @@ template::list::create \
 
         }
         session {
-            label {Sessions}
+            label {[_ assessment.Sessions]}
             link_url_eval {[export_vars -base "sessions" {assessment_id}]}
         }
     } \

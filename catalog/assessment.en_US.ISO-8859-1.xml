@@ -9,6 +9,8 @@
   <msg key="Feedback">Feedback</msg>
   <msg key="Finish_Time">Finish Time</msg>
   <msg key="Finished">Finished</msg>
+  <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
+  <msg key="Import_Results">Import Results</msg>
   <msg key="Items">Items</msg>
   <msg key="Out_of">Out of</msg>
   <msg key="points">points</msg>
@@ -18,6 +20,10 @@
   <msg key="Review_Asessment">Review Assessment</msg>
   <msg key="Score">Score</msg>
   <msg key="Session">Session</msg>
+  <msg key="Sessions">Sessions</msg>
+  <msg key="Show_Assessments">Show Assessments</msg>
+  <msg key="Show_Items">Show Items</msg>
+  <msg key="Show_Sessions">Show Sessions</msg>
   <msg key="Started">Started</msg>
   <msg key="Student_Response">Student Response</msg>
   <msg key="Subject_Name">Subject Name</msg>
@@ -26,5 +32,6 @@
   <msg key="Total_score">Total score</msg>
   <msg key="Upload_files">Upload files</msg>
   <msg key="User_ID">User ID</msg>
+  <msg key="View_Results">View Results</msg>
   <msg key="View_results">View results</msg>
 </message_catalog>

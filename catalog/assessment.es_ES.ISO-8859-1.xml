@@ -9,6 +9,8 @@
   <msg key="Feedback">Feedback</msg>
   <msg key="Finish_Time">Hora de finalización</msg>
   <msg key="Finished">Hora de finalización</msg>
+  <msg key="Import_QTI_ZIP_File">Importar un fichero QTI ZIP</msg>
+  <msg key="Import_Results">Resultados de la importación</msg>
   <msg key="Items">Preguntas</msg>
   <msg key="Out_of">Máxima puntuación</msg>
   <msg key="points">puntos</msg>
@@ -18,6 +20,10 @@
   <msg key="Review_Asessment">Revisión del Examen</msg>
   <msg key="Score">Puntuación</msg>
   <msg key="Session">Sesión</msg>
+  <msg key="Sessions">Sesiones</msg>
+  <msg key="Show_Assessments">Ver Assessments</msg>
+  <msg key="Show_Items">Ver Preguntas</msg>
+  <msg key="Show_Sessions">Ver sesiones</msg>
   <msg key="Started">Hora de comienzo</msg>
   <msg key="Student_Response">Respuesta del estudiante</msg>
   <msg key="Subject_Name">Estudiante</msg>
@@ -26,5 +32,6 @@
   <msg key="Total_score">Puntuación total</msg>
   <msg key="Upload_files">Subir ficheros</msg>
   <msg key="User_ID">Usuario</msg>
+  <msg key="View_Results">Ver Resultados</msg>
   <msg key="View_results">Ver resultados</msg>
 </message_catalog>
