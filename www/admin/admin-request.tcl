@@ -34,15 +34,16 @@ set assessment_query ""
 set state_query ""
 
 if {[exists_and_not_null assessment] && $assessment!="all"} {
+    as::assessment::data -assessment_id $assessment
     set d_assessment $assessment
-    set new_assessment_revision [db_string get_assessment_id {}]
+    set new_assessment_revision $assessment_data(assessment_id)
     
     set assessment_query "and c.section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm  where ci.item_id = cr.item_id  and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id = :new_assessment_revision)"
 } 
 
 if {[exists_and_not_null state]} {
     set d_state $state 
-    ns_log notice "----------------->state $state"
+
 } 
 if {[exists_and_not_null interval] && $interval!="all"} {
     set d_interval $interval
