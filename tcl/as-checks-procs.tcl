@@ -255,21 +255,38 @@ ad_proc -public as::assessment::check::manual_action_exec {
 } { 
     
 } {
-    db_foreach get_check_params {} {
+    db_foreach get_check_params { } {
 	set parameter_name [db_1row select_name {}]
 	
 	set $varname ""
 	
-	if {$value == " "} {
-	    set $varname [db_string get_item_choice {}]
-	    
+	if {$value == ""} {
+    	    set choice [db_0or1row get_item_choice {}]
+	    set answer [db_0or1row get_answer {}] 
+	    if {[exists_and_not_null choice_id]} {
+		set $varname "$choice_id"
+	    } else {
+		append $varname $boolean_answer
+		append $varname $numeric_answer
+		append $varname $integer_answer
+		append $varname $text_answer
+		append $varname $clob_answer
+		append $varname $content_answer
+	    }
 	} else {
 	    set $varname $value
 	}
+	ns_log notice "--------------------------parameter $varname [set $varname]"
+
     }
     
-    set tcl_code [db_1row select_tcl {}]
-    set failed_p [catch {eval $tcl_code}]
+    set tcl_code_p [db_1row select_tcl {}]
+    set failed_p "t"
+    set failed [catch $tcl_code]
+    ns_log notice "--------------------------TCL $tcl_code"
+    if { $failed > 0 } {
+	set failed_p "f"
+    }
     
     set user_id [ad_conn user_id]
     db_dml update_actions_log {}

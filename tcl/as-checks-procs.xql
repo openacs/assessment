@@ -182,6 +182,16 @@
       and as_item_id = :item_id
       </querytext>
 </fullquery>
+<fullquery name="as::assessment::check::manual_action_exec.get_answer">
+      <querytext>
+      select item_data_id, boolean_answer, clob_answer, numeric_answer,
+      integer_answer, text_answer, timestamp_answer, content_answer
+      from as_item_data
+      where session_id = :session_id
+      and as_item_id = :item_id
+      </querytext>
+</fullquery>
+
 <fullquery name="as::assessment::check::action_exec.get_item_choice">
       <querytext>
       select idc.choice_id from as_item_data_choices idc,as_item_data id where id.as_item_id=:item_id and id.item_data_id=idc.item_data_id and id.session_id=:session_id
