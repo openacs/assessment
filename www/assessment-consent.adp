@@ -9,5 +9,6 @@
 <form action="assessment" method="get">
   <input type="hidden" name="assessment_id" value="@assessment_id@">
   <input type="hidden" name="session_id" value="@session_id@">
+  <input type="hidden" name="password" value="@password@">
   <input type="submit" name="ok" value="       OK       ">
 </form>

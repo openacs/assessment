@@ -51,13 +51,13 @@ db_transaction {
 		# set the time when the subject initiated the Assessment
 		db_dml session_start {}
 	    } else {
-		set consent_url [export_vars -base assessment-consent {assessment_id session_id}]
+		set consent_url [export_vars -base assessment-consent {assessment_id session_id password}]
 	    }
 	} else {
 	    # pick up old session
 	    db_1row unfinished_section_order {}
 	    if {[empty_string_p $section_order]} {
-		set consent_url [export_vars -base assessment-consent {assessment_id session_id}]
+		set consent_url [export_vars -base assessment-consent {assessment_id session_id password}]
 	    } else {
 		db_1row unfinished_section_id {}
 		db_1row unfinished_item_order {}
