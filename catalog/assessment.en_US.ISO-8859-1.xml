@@ -3,10 +3,6 @@
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
-  <msg key="Add_Existing">Add existing question</msg>
-  <msg key="Add_Existing_1">Add existing question to section &quot;%section_title%&quot;</msg>
-  <msg key="add_existing_section">Add existing section</msg>
-  <msg key="add_existing_section_1">Add existing section to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="add_item">Add new question</msg>
   <msg key="add_item_display_cb">Add new question: Checkbox Display</msg>
   <msg key="add_item_display_rb">Add new question: Radiobutton Display</msg>
@@ -18,8 +14,10 @@
   <msg key="add_item_type_mc_choices">Add new question: Multiple Choices</msg>
   <msg key="add_item_type_sa">Add new question: Short Answer</msg>
   <msg key="add_item_type_oq">Add new question: Open Question</msg>
+  <msg key="Add_Items">Add items to section</msg>
   <msg key="Add_New">Add new question</msg>
   <msg key="add_new_section">Add new section</msg>
+  <msg key="Add_Sections">Add sections to assessment</msg>
   <msg key="Add_to_assessment">Add to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="Add_to_section">Add to section &quot;%section_title%&quot;</msg>
   <msg key="Admin_catalog">Question Catalog Administration</msg>
@@ -30,6 +28,7 @@
   <msg key="Allow_Negative">Allow Negative</msg>
   <msg key="allow_tries">allow %assessment_data.number_tries%</msg>
   <msg key="alphabetical">Alphabetical</msg>
+  <msg key="and">AND</msg>
   <msg key="Anonymous_Responses">Anonymous Responses</msg>
   <msg key="anonymous_users_allow">Anonymous respondents allowed</msg>
   <msg key="Answer_Alignment">Answer Alignment</msg>
@@ -39,6 +38,7 @@
   <msg key="Assessment_Imported_Correctly">Assessment Imported Correctly</msg>
   <msg key="Assessment_Title">Title</msg>
   <msg key="Attempt">Attempt</msg>
+  <msg key="Author">Author</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
@@ -46,10 +46,16 @@
   <msg key="Box_Orientation">Box Orientation</msg>
   <msg key="By_user">By user</msg>
   <msg key="cancel_and_return">Cancel and Return to Assessment</msg>
+  <msg key="Categories_combine">Combine categories by</msg>
+  <msg key="Categories_select_help">To deselect or select multiple categories use the Control-Key on your keyboard.</msg>
+  <msg key="Categorization">Categorization</msg>
+  <msg key="Categorization_exact">Exact</msg>
+  <msg key="Categorization_sub">Include Subcategories</msg>
   <msg key="Choice">Choice</msg>
   <msg key="Choice_Orientation">Choice Orientation</msg>
   <msg key="Consent_Page">Consent Page</msg>
   <msg key="continue_with_copy">Continue with Copy</msg>
+  <msg key="continue_with_insert">Continue with Insert</msg>
   <msg key="continue_with_remove">Continue with Remove</msg>
   <msg key="Copy">Copy</msg>
   <msg key="copy_1">Copy:</msg>
@@ -121,7 +127,7 @@
   <msg key="item_display_sb">Selectbox</msg>
   <msg key="item_display_ta">Textarea</msg>
   <msg key="item_display_tb">Textbox</msg>
-  <msg key="Item_Type">Item Type</msg>
+  <msg key="Item_Type">Question Type</msg>
   <msg key="item_type_dq">Database Question</msg>
   <msg key="item_type_file">File</msg>
   <msg key="item_type_mc">Multiple Choice</msg>
@@ -129,9 +135,13 @@
   <msg key="item_type_sa">Short Answer</msg>
   <msg key="Instructions">Instructions</msg>
   <msg key="Items">Items</msg>
+  <msg key="Keywords">Search Keywords</msg>
   <msg key="Label_Orientation">Label Orientation</msg>
   <msg key="left">Left</msg>
   <msg key="Lets_you_use_this_a">- Lets you use this assessment as a template to create a new assessment.</msg>
+  <msg key="Letter">First Letter</msg>
+  <msg key="Letter_all">All</msg>
+  <msg key="Letter_other">Other</msg>
   <msg key="limited_tries">Only %assessment_data.number_tries% tries allowed</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
@@ -163,6 +173,7 @@
   <msg key="One_Assessment_data">One Assessment: %assessment_data.title%</msg>
   <msg key="Only_correct">Only correct Responses</msg>
   <msg key="Only_incorrect">Only incorrect Responses</msg>
+  <msg key="or">OR</msg>
   <msg key="order_of_entry">Order of Entry</msg>
   <msg key="Order_Type">Order Type</msg>
   <msg key="Out_of">Out of</msg>
@@ -191,10 +202,17 @@
   <msg key="right">Right</msg>
   <msg key="Rulebased_branching">Rule-based Branching</msg>
   <msg key="Score">Score</msg>
+  <msg key="Search">Search</msg>
+  <msg key="Search_Item">Search and add questions</msg>
+  <msg key="Search_Item_1">Search and add questions to section &quot;%section_title%&quot;</msg>
+  <msg key="Search_Section">Search and add sections</msg>
+  <msg key="Search_Section_1">Search and add sections to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="section">SECTION</msg>
   <msg key="Section_Navigation">Section Navigation</msg>
+  <msg key="Sections">Sections</msg>
   <msg key="Secure_Access_1">Secure Access Required</msg>
   <msg key="secure_access_require">Secure access required</msg>
+  <msg key="Selected_Sections">Selected Sections</msg>
   <msg key="Send_bulkmail">Send bulk mail</msg>
   <msg key="Session">Session</msg>
   <msg key="Sessions">Sessions</msg>

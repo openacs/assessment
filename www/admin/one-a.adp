@@ -87,7 +87,7 @@
 
 <multiple name="sections">
 
-<h3>Sections</h3>
+<h3>#assessment.Sections#</h3>
 
 <table cellspacing=0>
 <tr class="odd">
@@ -99,7 +99,7 @@
 
 <a href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
 
-<a href="section-add-existing?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_existing_section#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
+<a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
 
 <if @sections.rownum@ lt @sections:rowcount@>
   <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
@@ -131,12 +131,12 @@
 
 </multiple>
 
-<h3>Sections</h3>
+<h3>#assessment.Sections#</h3>
 
 <table cellspacing=0>
   <tr class="odd">
   <td></td><td>
     <a href="section-form?assessment_id=@assessment_id@&after=@sections:rowcount@">#assessment.add_new_section#</a>
-    <a href="section-add-existing?assessment_id=@assessment_id@&after=@sections:rowcount@">#assessment.add_existing_section#</a>
+    <a href="catalog-search?assessment_id=@assessment_id@&after=@sections:rowcount@">#assessment.Search_Section#</a>
   </td></tr>
 </table>

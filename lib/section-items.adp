@@ -6,7 +6,7 @@
   <tr class="odd">
   <td></td><td>
     <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_New#</a>
-    <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_Existing#</a>
+    <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Search_Item#</a>
   </td></tr>
 </if>
 
@@ -29,7 +29,7 @@
 
 <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
 
-<a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_Existing#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
+<a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Search_Item#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
 
 <if @items.rownum@ lt @items:rowcount@>
   <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=down"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
@@ -39,7 +39,7 @@
 </if>
 <a href="item-delete?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@"><img src="../graphics/delete.gif" border="0" alt="#assessment.remove_item#"></a>
 
-<if @items.max_time_to_complete@ not nil> (max. time allowed: @items.max_time_to_complete@) </if>
+<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
 </td></tr>
 
   <if @items.rownum@ odd>
@@ -74,7 +74,7 @@
   </else>
   <td></td><td>
     <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_New#</a>
-    <a href="item-add-existing?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_Existing#</a>
+    <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Search_Item#</a>
   </td></tr>
 </if>
 </multiple>

@@ -53,4 +53,3 @@ db_multirow sections assessment_sections {} {
 }
 
 ad_return_template
-return
