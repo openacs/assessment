@@ -10,3 +10,4 @@
 \i assessment-section-create.sql
 \i assessment-collected-data-create.sql
 \i assessment-files.sql
+\i assessment-types-create.sql
