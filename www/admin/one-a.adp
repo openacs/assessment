@@ -12,7 +12,8 @@
 
 <tr class="odd">
 	<td valign="top">#assessment.Assessment_Title#:<p>#assessment.Description#:<p>#assessment.Instructions#: </td>
-	<td valign="top"><a href="assessment-preview?assessment_id=@assessment_id@">#assessment.Preview#</a>
+	<td valign="top"> 
+	<!-- <a href="assessment-preview?assessment_id=@assessment_id@">#assessment.Preview#</a> -->
 	<a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a>
 	@assessment_data.title@
         <p><if @assessment_data.description@ nil>#assessment.None#</if><else>@assessment_data.description;noquote@</else>
