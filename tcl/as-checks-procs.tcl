@@ -302,11 +302,14 @@ ad_proc -public as::assessment::check::eval_i_checks {
     
 } {
     
-    db_foreach section_checks {} {
+    set section_checks [db_list_of_lists section_checks { }]
+    ns_log notice "$section_checks"
+    foreach check $section_checks  {
+	set check_sql [lindex $check 1]
 	set perform [db_string check_sql $check_sql]
-	if {$action_p == "t"} {
+	if {[lindex $check 2] == "t"} {
 	    if {$perform == 1} {
-		as::assessment::check::action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id
+		as::assessment::check::action_exec -inter_item_check_id [lindex $check 0] -session_id $session_id
 	    }
 	}
     }
@@ -451,4 +454,13 @@ ad_proc -public as::assessment::check::confirm_display {
     
     set display_info $action
     return $display_info
+}
+
+ad_proc -public as::assessment::check::copy_checks{
+    {-section_id:required}
+    {-new_section_id:required}
+} {
+    
+} {
+
 }

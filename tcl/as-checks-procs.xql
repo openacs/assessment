@@ -237,7 +237,7 @@
 
 <fullquery name="as::assessment::check::eval_i_checks.section_checks">
       <querytext>
-        select * from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='i' and  section_id_from=:section_id order by am.order_by
+        select c.inter_item_check_id,c.check_sql,action_p from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='i' and  section_id_from=:section_id order by am.order_by
       </querytext>
 </fullquery>
 
