@@ -15,20 +15,13 @@ create table as_items (
 	subtext	varchar(500),
 	-- a short label for use in data output header rows, etc
 	field_code	varchar(500),
-	-- whether Item is released for actual use
-	enabled_p	char(1) default 'f'
-			constraint as_item_enabled_p_ck
-			check (enabled_p in ('t','f')),
 	-- whether Item must be answered (default value, can be overriden)
 	required_p	char(1) default 'f'
 			constraint as_item_required_p_ck
 			check (required_p in ('t','f')),
-	-- NOTE Is this correct?
-	-- optional field that sets what the Item will display when first output (eg text in a textbox; eg the defaults that ad_dateentrywidget expects: "" for "no date", "0" for "today", or else some specific date set by the author; see  this example)
-	item_default	varchar(500),
+	data_type	varchar(50),
 	-- optional max number of seconds to perform Item
 	max_time_to_complete	integer,
-	-- NOTE Is this correct?
 	-- a denormalization to cache the generated "widget" for the Item (NB: when any change is made to an as_item_choice related to an as_item, this will have to be updated!)
 	adp_chunk	varchar(500)
 );

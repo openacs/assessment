@@ -87,7 +87,9 @@ ad_proc -public as_item_new {
     {-title:required}
     {-description ""}
     {-type ""}
+    {-type_attributes ""}
     {-display ""}
+    {-display_attributes ""}
     {-subtext ""}
     {-field_code ""}
     {-required_p ""}
@@ -104,6 +106,18 @@ ad_proc -public as_item_new {
     # Insert as_item in the CR (and as_assessments table) getting the revision_id (as_item_id)
     set item_item_id [content::item::new -parent_id $folder_id -content_type {as_items} -name $name -title $title ]
     set as_item_id [content::revision::new -item_id $item_item_id -content_type {as_items} -title $title -attributes [list [list subtext $subtext] [list field_code $field_code] [list required_p $required_p] [list max_time_to_complete $max_time_to_complete] ] ]
+
+    if {$type == {mc}} {
+        set as_item_type_id [as_item_type_mc_new $type_attributes]
+    }
+
+    if {$display == {rb}} {
+        set as_item_display_id [as_item_display_rb_new $display_attributes]
+    }
+
+    # rel display and type to the item
+    content::item::relate -item_id $as_item_id -object_id $as_item_type_id -relation_tag {as_item_type_rel}
+    content::item::relate -item_id $as_item_id -object_id $as_item_display_id -relation_tag {as_item_display_rel}
 
     return $as_item_id
 }
