@@ -179,8 +179,10 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
     if {[empty_string_p $content_value]} {
         append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]</td></tr>"
     #multiple choice or multiple response (text)
-    } else {
+    } elseif {[db_string mime_type {SELECT mime_type LIKE 'image%' FROM cr_revisions WHERE revision_id = :content_value}]} {
         append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]<img src=\"view/?revision_id=$content_value\"></td></tr>"
+    } else {
+        append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]<embed src=\"view/?revision_id=$content_value\"></td></tr>"
     }   
     }
   }

@@ -54,10 +54,12 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
 	        #for multiple choice item with multimedia
-	        if {![empty_string_p $content_value]} {
+	        if {[empty_string_p $content_value]} {
+		    lappend optionlist [list $title $choice_id]
+		} elseif {[db_string mime_type {SELECT mime_type LIKE 'image%' FROM cr_revisions WHERE revision_id = :content_value}]} {
 		    lappend optionlist [list "$title<img src=\"view/?revision_id=$content_value\">" $choice_id]
 		} else {
-		    lappend optionlist [list $title $choice_id]
+		    lappend optionlist [list "$title<embed src=\"view/?revision_id=$content_value\">" $choice_id]
 		}
 	    }
 	    set options $optionlist
@@ -78,10 +80,12 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
 	        #for multiple choice item with multimedia
-	        if {![empty_string_p $content_value]} {
+	        if {[empty_string_p $content_value]} {
+		    lappend optionlist [list $title $choice_id]
+		} elseif {[db_string mime_type {SELECT mime_type LIKE 'image%' FROM cr_revisions WHERE revision_id = :content_value}]} {
 		    lappend optionlist [list "$title<img src=\"view/?revision_id=$content_value\">" $choice_id]
 		} else {
-		    lappend optionlist [list $title $choice_id]
+		    lappend optionlist [list "$title<embed src=\"view/?revision_id=$content_value\">" $choice_id]
 		}    
 	    }
 	    set options $optionlist
