@@ -52,7 +52,7 @@ if { [template::form is_valid item-add] } {
       db_transaction {
        #add the item
         #Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-	set as_item_id [as::item::new -name $as_items_name -title $as_items_title -definition $as_items_definition -required_p $as_items_required_p -data_type $as_items_data_type -max_time_to_complete $as_items_max_time_to_complete]
+	set as_item_id [as::item::new -title $as_items_title -definition $as_items_definition -required_p $as_items_required_p -data_type $as_items_data_type -max_time_to_complete $as_items_max_time_to_complete]
     }
     
     #redirect back to display-create-type

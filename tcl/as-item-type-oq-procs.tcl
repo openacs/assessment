@@ -7,7 +7,6 @@ ad_library {
 namespace eval as::item_type_oq {}
 
 ad_proc -public as::item_type_oq::new {
-    {-name:required}
     {-title ""}
     {-default_value ""}
     {-feedback_text ""}    
@@ -21,8 +20,15 @@ ad_proc -public as::item_type_oq::new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
-    set item_item_type_oq_id [content::item::new -parent_id $folder_id -content_type {as_item_type_oq} -name $name -title $title ]
-    set as_item_type_oq_id [content::revision::new -item_id $item_item_type_oq_id -content_type {as_item_type_oq} -title $title -attributes [list [list default_value $default_value] [list feedback_text $feedback_text] ] ]
+    db_transaction {
+        set item_item_type_oq_id [content::item::new -parent_id $folder_id -content_type {as_item_type_oq} -name [ad_generate_random_string] -title $title ]
+        set as_item_type_oq_id [content::revision::new \
+				-item_id $item_item_type_oq_id \
+				-content_type {as_item_type_oq} \
+				-title $title \
+				-attributes [list [list default_value $default_value] \
+						[list feedback_text $feedback_text] ] ]
+    }
 
     return $as_item_type_oq_id
 }

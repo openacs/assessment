@@ -8,7 +8,6 @@ namespace eval as::item_answer {}
 
 ad_proc -public as::item_answer::new {
     {-answer_id:required}
-    {-name:required}
     {-title:required}
     {-data_type ""}
     {-case_sensitive_p ""}
@@ -26,9 +25,22 @@ ad_proc -public as::item_answer::new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_item_answer in the CR (and as_item_sa_answers table) getting the revision_id (as_item_answer_id)
-    set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $name -title $title ]
-    set as_item_answer_id [content::revision::new -item_id $item_answer_id -content_type {as_item_answers} -title $title -attributes [list [list answer_id $answer_id ] [list data_type $data_type ] [list case_sensitive_p $case_sensitive_p ] [list percent_score $percent_score] [list compare_by $compare_by] [list regexp_text $regexp_text] [list allowed_answerbox_list $allowed_answerbox_list] ] ]
+    db_transaction {
+        set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [ad_generate_random_string] -title $title ]
+        set as_item_answer_id [content::revision::new \
+				-item_id $item_answer_id \
+				-content_type {as_item_answers} \
+				-title $title \
+				-attributes [list [list answer_id $answer_id ] \
+						[list data_type $data_type ] \
+						[list case_sensitive_p $case_sensitive_p ] \
+						[list percent_score $percent_score] \
+						[list compare_by $compare_by] \
+						[list regexp_text $regexp_text] \
+						[list allowed_answerbox_list $allowed_answerbox_list] ] ]
     # FIXME too much code repetition here
     # maybe there are more efficient ways to to it (maybe using hashes to pass the values between functions)
+    }
+
     return $as_item_answer_id
 }

@@ -7,7 +7,6 @@ ad_library {
 namespace eval as::item_display_rb {}
 
 ad_proc -public as::item_display_rb::new {
-    {-name:required}
     {-html_display_options ""}
     {-choice_orientation ""}
     {-choice_label_orientation ""}
@@ -24,8 +23,17 @@ ad_proc -public as::item_display_rb::new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_item_display_rb in the CR (and as_item_display_rb table) getting the revision_id (as_item_display_id)
-    set item_item_display_rb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_rb} -name $name]
-    set as_item_display_rb_id [content::revision::new -item_id $item_item_display_rb_id -content_type {as_item_display_rb} -attributes [list [list html_display_options $html_display_options] [list choice_orientation $choice_orientation] [list choice_label_orientation $choice_label_orientation] [list sort_order_type $sort_order_type] [list item_answer_alignment $item_answer_alignment] ] ]
+    db_transaction {
+        set item_item_display_rb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_rb} -name [ad_generate_random_string]]
+        set as_item_display_rb_id [content::revision::new \
+			-item_id $item_item_display_rb_id \
+			-content_type {as_item_display_rb} \
+			-attributes [list [list html_display_options $html_display_options] \
+					[list choice_orientation $choice_orientation] \
+					[list choice_label_orientation $choice_label_orientation] \
+					[list sort_order_type $sort_order_type] \
+					[list item_answer_alignment $item_answer_alignment] ] ]	
+    }
 
     return $as_item_display_rb_id
 }

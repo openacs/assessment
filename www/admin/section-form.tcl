@@ -56,7 +56,6 @@ ad_form -extend -name section_form -form {
     {section_display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options}}
 } -new_request {
-    set name ""
     set title ""
     set description ""
     set definition ""
@@ -72,7 +71,6 @@ ad_form -extend -name section_form -form {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 
 	set section_id [as::section::new \
-			    -name $name \
 			    -title $title \
 			    -description $description \
 			    -definition $definition \

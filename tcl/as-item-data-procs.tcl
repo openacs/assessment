@@ -31,8 +31,27 @@ ad_proc -public as::item_data::new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_item_data in the CR (and as_item_data table) getting the revision_id (item_data_id)
-    set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$session_id-$choice_id_answer" -title "$as_item_id-$session_id-$choice_id_answer" ]
-    set as_item_data_id [content::revision::new -item_id $item_data_id -content_type {as_item_data} -title "$as_item_id-$session_id-$choice_id_answer" -attributes [list [list session_id $session_id] [list event_id $event_id] [list subject_id $subject_id] [list staff_id $staff_id] [list as_item_id $as_item_id] [list choice_id_answer $choice_id_answer] [list boolean_answer $boolean_answer] [list numeric_answer $numeric_answer] [list integer_answer $integer_answer] [list text_answer $text_answer] [list timestamp_answer $timestamp_answer] [list content_answer $content_answer] [list signed_data $signed_data] [list percent_score $percent_score] ] ]
+    db_transaction {
+        set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$session_id-$choice_id_answer" -title "$as_item_id-$session_id-$choice_id_answer" ]
+        set as_item_data_id [content::revision::new \
+				-item_id $item_data_id \
+				-content_type {as_item_data} \
+				-title "$as_item_id-$session_id-$choice_id_answer" \
+				-attributes [list [list session_id $session_id] \
+						[list event_id $event_id] \
+						[list subject_id $subject_id] \
+						[list staff_id $staff_id] \
+						[list as_item_id $as_item_id] \
+						[list choice_id_answer $choice_id_answer] \
+						[list boolean_answer $boolean_answer] \
+						[list numeric_answer $numeric_answer] \
+						[list integer_answer $integer_answer] \
+						[list text_answer $text_answer] \
+						[list timestamp_answer $timestamp_answer] \
+						[list content_answer $content_answer] \
+						[list signed_data $signed_data] \
+						[list percent_score $percent_score] ] ]
+    }
 
     return $as_item_data_id
 }

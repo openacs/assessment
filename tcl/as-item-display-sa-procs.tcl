@@ -7,7 +7,6 @@ ad_library {
 namespace eval as::item_display_sa {}
 
 ad_proc -public as::item_display_sa::new {
-    {-name:required}
     {-html_display_options ""}
     {-abs_size ""}
     {-box_orientation ""}    
@@ -21,8 +20,15 @@ ad_proc -public as::item_display_sa::new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_item_display_sa in the CR (and as_item_display_sa table) getting the revision_id (as_item_display_id)
-    set item_item_display_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_display_sa} -name $name]
-    set as_item_display_sa_id [content::revision::new -item_id $item_item_display_sa_id -content_type {as_item_display_sa} -attributes [list [list html_display_options $html_display_options] [list abs_size $abs_size] [list box_orientation $box_orientation] ] ]
+    db_transaction {
+        set item_item_display_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_display_sa} -name [ad_generate_random_string]]
+        set as_item_display_sa_id [content::revision::new \
+				-item_id $item_item_display_sa_id \
+				-content_type {as_item_display_sa} \
+				-attributes [list [list html_display_options $html_display_options] \
+						[list abs_size $abs_size] \
+						[list box_orientation $box_orientation] ] ]
+    }
 
     return $as_item_display_sa_id
 }

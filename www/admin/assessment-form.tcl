@@ -57,7 +57,6 @@ ad_form -extend -name assessment_form -form {
     {show_feedback:text(select),optional {label "[_ assessment.Show_Feedback]"} {options $feedback_options}}
     {section_navigation:text(select),optional {label "[_ assessment.Section_Navigation]"} {options $navigation_options}}
 } -new_request {
-    set name ""
     set title ""
     set description ""
     set instructions ""
@@ -96,7 +95,6 @@ ad_form -extend -name assessment_form -form {
     }
 } -new_data {
     set assessment_rev_id [as::assessment::new \
-			       -name $name \
 			       -title $title \
 			       -description $description \
 			       -instructions $instructions \
