@@ -74,7 +74,7 @@ ad_form -name item_edit_display_sb -action item-edit-display-sb -export { assess
 
 	if {$as_item_display_id} {
 	    # edit existing display type
-	    set new_item_display_id [as::item_display_cb::edit \
+	    set new_item_display_id [as::item_display_sb::edit \
 					 -as_item_display_id $as_item_display_id \
 					 -html_display_options $html_display_options \
 					 -multiple_p $multiple_p \
@@ -83,7 +83,7 @@ ad_form -name item_edit_display_sb -action item-edit-display-sb -export { assess
 					 -item_answer_alignment $item_answer_alignment]
 	} else {
 	    # create new display type
-	    set new_item_display_id [as::item_display_cb::new \
+	    set new_item_display_id [as::item_display_sb::new \
 					 -html_display_options $html_display_options \
 					 -multiple_p $multiple_p \
 					 -choice_label_orientation $choice_label_orientation \
