@@ -25,7 +25,7 @@ append users_list ")"
 
 set query "select email from cc_users where object_id in $users_list"
 
-set spam_name [bulk_mail::parameter -parameter PrettyName -default [_ dotlrn.Spam_]]
+set spam_name [bulk_mail::parameter -parameter PrettyName -default [_ assessment.Spam_]]
 
 set sender_id [ad_conn user_id]
 set context_bar ""
@@ -37,13 +37,13 @@ set users [db_list_of_lists get_users $query]
 form create spam_message
 
 element create spam_message subject \
-    -label [_ dotlrn.Subject] \
+    -label [_ assessment.Subject] \
     -datatype text \
     -widget text \
     -html {size 60}
 
 element create spam_message message \
-    -label [_ dotlrn.Message] \
+    -label [_ assessment.Message] \
     -datatype text \
     -widget textarea \
     -html {rows 10 cols 80 wrap soft}
@@ -77,7 +77,7 @@ element create spam_message action_log_id \
     -value $action_log_id
     
 element create spam_message send_date \
-    -label [_ dotlrn.Send_Date] \
+    -label [_ assessment.Send_Date] \
     -datatype date \
     -widget date \
     -format {MONTH DD YYYY HH12 MI AM} \

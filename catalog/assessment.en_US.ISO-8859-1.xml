@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d9" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d10" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -295,6 +295,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="manually">Manually</msg>
   <msg key="max_time">max. time allowed:</msg>
   <msg key="mc_Title_help">A name for this set of choices (for reusability)</msg>
+  <msg key="Message">Message</msg>
   <msg key="message">Message</msg>
   <msg key="Message_Subject">Message Subject</msg>
   <msg key="message_to_display_to">Message to display to the user when the action is executed (ie. You have joined &quot;My Community&quot;)</msg>
@@ -432,6 +433,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="secure_access_require">Secure access required</msg>
   <msg key="Selected_Sections">Selected Sections</msg>
   <msg key="Send_bulkmail">Send bulk mail</msg>
+  <msg key="Send_Date">Send Date</msg>
   <msg key="Send_Mail">Send Mail</msg>
   <msg key="Send_mail_to">Send mail to</msg>
   <msg key="Session">Session</msg>
@@ -443,6 +445,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Show_Item_Name_1">Show Question Name</msg>
   <msg key="Show_Items">Show Items</msg>
   <msg key="Show_Sessions">Show Sessions</msg>
+  <msg key="Spam">Spam</msg>
   <msg key="specific_date">Specific Date</msg>
   <msg key="Start_Time">Start Time</msg>
   <msg key="Started">Started</msg>
