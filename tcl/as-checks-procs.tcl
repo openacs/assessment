@@ -560,6 +560,7 @@ ad_proc -public as::assessment::check::delete_item_checks {
 	    db_exec_plsql delete_check {}
 	}
     }
+
 }
 
 ad_proc -public as::assessment::check::copy_item_checks {

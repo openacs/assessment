@@ -374,6 +374,7 @@
       </querytext>
 </fullquery>
 
+
 <fullquery name="as::assessment::check::copy_item_checks.related_checks">
       <querytext>
 
@@ -381,6 +382,7 @@
 
       </querytext>
 </fullquery>
+
 
 
 </queryset>

@@ -41,6 +41,13 @@
 
       </querytext>
 </fullquery>
+<fullquery name="as::assessment::check::copy_item_checks.copy_check">
+      <querytext>
+
+ 	select as_inter_item_check__new (null,:action_p,:section_id_from,null,:check_sql,:name,:description,:postcheck_p,null,:user_id,null,:assessment_id)	
+
+      </querytext>
+</fullquery>
 
 <fullquery name="as::assessment::check::delete_assessment_checks.delete_checks">
       <querytext>
