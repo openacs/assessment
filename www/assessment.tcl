@@ -224,7 +224,7 @@ set required_count 0
 
 foreach one_item $item_list {
     util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type
-
+    
     if {$required_p == "t"} {
 	# make sure that mandatory items are answered
 	lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
@@ -239,7 +239,7 @@ foreach one_item $item_list {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
-
+	
     } else {
 	# submit each item seperately
 	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id]
@@ -259,14 +259,14 @@ foreach one_item $item_list {
 	    }
 	    lappend unsubmitted_list $as_item_id
 	}
-
+	
 	# create seperate submit form for each item
 	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
 	    {session_id:text(hidden) {value $session_id}}
 	    {item_id:text(hidden) {value $as_item_id}}
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form_$as_item_id -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
-
+	
 	# process single submit
 	set on_submit "{
 	    db_transaction {
@@ -295,11 +295,11 @@ foreach one_item $item_list {
 	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
 	    ad_script_abort
 	}"
-
+	
 	eval ad_form -extend -name show_item_form_$as_item_id -validate "{$validate_list}" -on_submit $on_submit -after_submit $after_submit
 	set validate_list [list]
     }
-
+    
     # Fill in the blank item. Replace all <textbox> that appear in the title by an <input> of type="text"
     if {$presentation_type == {tb}} {
 	regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
