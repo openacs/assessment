@@ -65,15 +65,9 @@ items. In addition to supporting automated validation/grading, this
 item type differs from "Open Questions" in that only textboxes are
 supported -- meaning short answers, no text area essays. </p>
     <ul>
-      <li>Number of Answerboxes: Integer Selectbox. This will control
-how many answer boxes the respondee will see. I
-don't agree here; there needs to be one answer box per Item; if a
-"question" involves more than one answer box, it is actually a group
-of Items that needs to be implemented as a Section of Items. So this
-selector needs to be in the section-edit UI, not item-edit. </li>
-      <li>Upper/Lowercase: Radio boolean. This will control, whether we
-treat the response case sensitive when comparing it to the correct
-answers or not. </li>
+      <li>Intro_label: textarea. This contains the leading text that
+will be presented before the first answerbox.</li>
+      <li>Extro_label: textarea. This contains the trailing text.</li>
       <li>The questioneer has the option to define multiple possible
 correct answers that will be matched with the response of the user in
 various ways. For each of the possible answers the following fields are
@@ -81,7 +75,12 @@ given (among others):
         <ul>
           <li> Answer: short_text. This contains the answer string that
 will be matched against the response </li>
-          <li> Data type: integer vs real number </li>
+          <li> Data type: integer vs real number vs. text<br>
+          </li>
+          <li>Upper/Lowercase: Radio boolean. This will control,
+whether we
+treat the response case sensitive when comparing it to the correct
+answers or not.</li>
           <li> Value in %: short integer: How many percentage points a
 match will awarded. </li>
           <li>Size: Integer Select: size of the input box (small,
@@ -89,8 +88,10 @@ medium, large) </li>
           <li>Compare
 by: Select (equal, contains, regexp). This defines how the comparison
 between the answer string and the response shall happen. </li>
-          <li> Optional Lower bound value; lower bound comparator </li>
-          <li> Optional upper bound value; upper bound comparator </li>
+          <li>Regexp: Textarea. If the compare by is a "regexp", this
+field contains the actual regexp.</li>
+          <li>sort_order<br>
+          </li>
           <li>Allow in answerbox: (multiple select box with "All" and
 the
 numbers from 1 to x where x is the number of answerboxes from above.
