@@ -1,0 +1,85 @@
+ad_page_contract {
+
+} {
+  inter_item_check_id:integer,notnull
+  assessment_id
+  section_id
+}
+
+form create notify
+set type "as_inter_item_checks_notif"
+set type_id [notification::type::get_type_id -short_name $type]
+set intervals [notification::get_intervals -type_id $type_id]
+set delivery_methods [notification::get_delivery_methods -type_id $type_id]
+
+
+element create notify assessment_id\
+    -widget hidden\
+    -value $assessment_id
+element create notify section_id\
+    -widget hidden\
+    -value $section_id
+element create notify inter_item_check_id\
+    -widget hidden\
+    -value $inter_item_check_id
+element create notify party_id \
+    -widget party_search \
+    -datatype party_search \
+    -label User
+element create notify interval_id\
+    -widget select\
+    -datatype text\
+    -label  "[_ notifications.lt_Notification_Interval]"\
+    -options $intervals
+
+element create notify delivery_method_id\
+    -datatype integer \
+    -widget select\
+    -label  "[_ notifications.Delivery_Method]"\
+    -options $delivery_methods\
+    -value [lindex [lindex $delivery_methods 0] 1]
+
+
+if {[template::form is_valid notify]} {
+    template::form get_values notify party_id interval_id assessment_id section_id delivery_method_id
+ # Add the subscribe
+    notification::request::new \
+            -type_id $type_id \
+            -user_id $party_id \
+            -object_id $inter_item_check_id \
+            -interval_id $interval_id \
+            -delivery_method_id $delivery_method_id
+
+
+
+    ad_returnredirect "request-notification?assessment_id=$assessment_id&section_id=$section_id&inter_item_check_id=$inter_item_check_id"
+}
+
+template::list::create -name notify_users\
+-multirow notify_users\
+-key request_id\
+-bulk_actions\
+    {
+      "Unsubscribe" "unsubscribe" "Unsubscribe user to this rule"
+    }\
+    -bulk_action_method post -bulk_action_export_vars {
+	inter_item_check_id
+	type_id
+	assessment_id
+	section_id
+    }\
+    -no_data "There are no users to notify"\
+    -row_pretty_plural "notify_users"\
+    -elements {
+	name {
+	    label "UserName"
+	}
+	interval_name {
+	    label "Interval"
+	    
+	}
+	delivery_name {
+	    label "Delivery Method"
+	}
+    }
+db_multirow notify_users notify_users { *SQL* }
