@@ -94,4 +94,24 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_type_mc::results.get_results">
+      <querytext>
+
+	select d.session_id, d.item_data_id, c.text_value, rc.title
+	from as_item_data d, as_session_item_map m, cr_revisions ri, cr_revisions rs,
+	     as_item_data_choices dc, as_item_choices c, cr_revisions rc
+	where d.session_id in ([join $sessions ,])
+	and d.as_item_id = ri.revision_id
+	and ri.item_id = :as_item_item_id
+	and d.section_id = rs.revision_id
+	and rs.item_id = :section_item_id
+	and m.session_id = d.session_id
+	and m.item_data_id = d.item_data_id
+	and dc.item_data_id = d.item_data_id
+	and c.choice_id = dc.choice_id
+	and c.choice_id = rc.revision_id
+
+      </querytext>
+</fullquery>
+
 </queryset>

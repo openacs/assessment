@@ -122,3 +122,25 @@ ad_proc -public as::item_type_oq::process {
 } {
     as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -clob_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p
 }
+
+ad_proc -public as::item_type_oq::results {
+    -as_item_item_id:required
+    -section_item_id:required
+    -data_type:required
+    -sessions:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-26
+
+    Return the results of a given item in a given list of sessions as an array
+} {
+    db_foreach get_results {} {
+	set results($session_id) $clob_answer
+    }
+
+    if {[array exists results]} {
+	return [array get results]
+    } else {
+	return
+    }
+}

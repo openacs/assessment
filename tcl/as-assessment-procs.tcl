@@ -485,6 +485,18 @@ ad_proc as::assessment::display_content {
     }
 }
 
+ad_proc -private as::assessment::quote_export {
+    -text:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-26
+
+    Quotes a string for csv export
+} {
+    regsub -all {;} $text {,,} text
+    return $text
+}
+
 ad_proc -private as::assessment::compare_numbers {a b} {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-18

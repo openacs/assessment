@@ -321,3 +321,33 @@ ad_proc -public as::item_type_mc::process {
 
     as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p
 }
+
+ad_proc -public as::item_type_mc::results {
+    -as_item_item_id:required
+    -section_item_id:required
+    -data_type:required
+    -sessions:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-26
+
+    Return the results of a given item in a given list of sessions as an array
+} {
+    db_foreach get_results {} {
+	if {[empty_string_p $text_value]} {
+	    lappend results($session_id) [as::assessment::quote_export -text $title]
+	} else {
+	    lappend results($session_id) [as::assessment::quote_export -text $text_value]
+	}
+    }
+
+    foreach session_id [array names results] {
+	set results($session_id) [join $results($session_id) ","]
+    }
+
+    if {[array exists results]} {
+	return [array get results]
+    } else {
+	return
+    }
+}

@@ -144,6 +144,10 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Correct_Answer_Choice">Correct Answer Choice</msg>
   <msg key="Correct_Answer_help">Is this the correct answer?</msg>
   <msg key="Created_by">Created by</msg>
+  <msg key="csv_export">CSV Export</msg>
+  <msg key="csv_export_format">CSV Export Format</msg>
+  <msg key="csv_export_name">Question Identifier</msg>
+  <msg key="csv_export_title">Question Text</msg>
   <msg key="CSV_file">CSV file</msg>
   <msg key="Data_Type">Data Type</msg>
   <msg key="data_type_boolean">Boolean</msg>
