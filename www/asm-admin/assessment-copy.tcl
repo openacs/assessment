@@ -11,6 +11,8 @@ ad_page_contract {
 }
 
 set package_id [ad_conn package_id]
+set user_id [ad_conn untrusted_user_id]
+
 permission::require_permission -object_id $package_id -privilege create
 
 permission::require_permission -object_id $assessment_id -privilege admin
@@ -41,6 +43,7 @@ ad_form -name assessment_copy_confirm -action assessment-copy -form {
     if {$confirmation} {
 	set assessment_id [as::assessment::copy -assessment_id $assessment_id -name $name]
     }
+    permission::grant -party_id $user_id -object_id $assessment_id -privilege admin
 } -after_submit {
     ad_returnredirect [export_vars -base one-a {assessment_id}]
     ad_script_abort
