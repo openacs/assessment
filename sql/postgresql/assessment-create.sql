@@ -8,3 +8,4 @@
 \i assessment-item-type-create.sql
 \i assessment-item-create.sql
 \i assessment-section-create.sql
+\i assessment-collected-data-create.sql
