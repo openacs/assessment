@@ -23,7 +23,7 @@ ad_proc -public as::file::new {
         set file_name $file_pathname
     }
     # TODO make the CR name be a SHA1 of the file to prevent too much files repeated
-    set filename [template::util::file::get_property filename $file_pathname]
+    set filename [file tail [template::util::file::get_property filename $file_pathname]]
     set file_mimetype [cr_filename_to_mime_type -create $filename]
     set content_length [file size $file_pathname]
     set content_rev_id [cr_import_content -title $file_name $folder_id $file_pathname $content_length $file_mimetype [exec uuidgen]]
