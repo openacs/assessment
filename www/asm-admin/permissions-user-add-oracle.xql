@@ -9,7 +9,7 @@
           begin
               acs_permission.grant_permission(
                   object_id => :object_id, 
-                  grantee_id => :one_user_id,
+                  grantee_id => :party_id,
                   privilege => 'read'
               );
           end;
