@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>AS_Items</title>
+</head>
+<body>
+<span class="context"><span class="reg">
+<h2>Overview</h2>
+<p>
+The Item and Section catalogues are central parts of the assessment
+system. These repositories support reuse of Assessment components by
+storing of the various Items (or questions if you like) and groups of
+Items (ie Sections) that can be used in an assessment. You are able to
+add/edit/delete an item of a certain type to a certain scope.
+Furthermore it allows you to search and browse for questions for
+inclusion in your assesment as well as import and export multiple
+questions using various formats.
+</p>
+<p>In this description here we will only discuss the design
+implications for Items. Green colored tables have to be
+internationlized.
+</p>
+<p>Each Item consists of a specific Item Type like "Multiple Choice
+Question" or "Free Text". Each <a href="item_types.html">Item Type</a>
+adds additional Attributes to the Item, thereby making it pretty
+flexible. Additionally each item has a related <a
+ href="display_types.html">display type</a>
+storing information on how to display this item. This way we can create
+an adp-snippet which we can include to display a certain item (the
+snippet is stored de-normalized in the as_items table and update on
+every change to the item or the item_type).
+</p>
+<p>Categorization and internationalization will make it into
+OpenACS 5.2, therefore we are not dealing with it in Assessment
+seperately but use the (to be) built in functionality of OpenACS 5.2</p>
+<p>
+Additionally we have support functionality for an item. This includes
+the help functionality. To give Assessment authors flexibility in
+adapting Item defaults, help messages, etc for use in different
+Assessments, we abstract out a number of attributes from as_items into
+mapping tables where "override" values for these attributes can
+optionally be set by authors. If they choose not to set overrides, then
+the values originally created in the Item supercede.
+</p>
+<p>Seperately we will deal with Checks on Items. These will allow
+us to make checks on the input (is the value given by the user actually
+a valid value??), branches (if we display this item, which responses
+have to have been given) and post-input checks (how many points does
+this answer give).
+</p>
+<p>Here is the graphical schema for the Item-related subsystems,
+including the Item Display subsystem described <a
+ style="font-family: monospace;" href="display_types.html">here</a>.<br>
+</p>
+<p></p>
+<center><a
+ href="http://openacs.org/storage/download/assessment-itemfocus.graffle?version_id=187545"></a>
+<p><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg"
+ style="width: 752px; height: 1121px;"></p>
+</center>
+<p>
+</p>
+<h2>Specific Entities: Core Functions</h2>
+<p>
+Here are the components of the Item model in Assessment:
+</p>
+<p></p>
+<ul>
+  <li> <b>Items (as_items)</b> are the "questions" that constitute the
+atomic focus of the Assessment package. Each item is of a certain type,
+that can give the item additional attributes, making it really
+flexible. The following attributes are common to all item types.
+    <p></p>
+    <ul>
+      <li> item_id
+      </li>
+      <li> name - some phrase used in admin UIs
+      </li>
+      <li> item_text - the primary "label" attached to an Item's
+display
+      </li>
+      <li> item_subtext - a secondary label, needed for many kinds of
+questions
+      </li>
+      <li> field_code - a short label for use in data output header
+rows, etc
+      </li>
+      <li> definition - some descriptive text
+      </li>
+      <li> enabled_p - whether Item is released for actual use
+      </li>
+      <li> required_p - whether Item must be answered (default value,
+can be overriden)
+      </li>
+      <li> item_default - optional field that sets what the Item will
+display when first output (eg text in a textbox; eg the defaults that
+ad_dateentrywidget expects: "" for "no date", "0" for "today", or else
+some specific date set by the author; see <a
+ href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
+this example</a>)
+      </li>
+      <li> data_type - This is the expected data_type of the answer.
+Previously "abstract_data_type" but omitting the superfluous "abstract"
+term; selected from the data types supported in the RDBMS:
+        <p></p>
+        <ol>
+          <li> integer
+          </li>
+          <li> numeric
+          </li>
+          <li> exponential - stored in the db as a varchar; of form
+9.999e99
+          </li>
+          <li> varchar
+          </li>
+          <li> text
+          </li>
+          <li> date
+          </li>
+          <li> boolean (char(1) 't' 'f' in Oracle)
+          </li>
+          <li> timestamp (should work for all coarser granularities
+like date etc)
+          </li>
+          <li> content_type -- a derived type: something in the CR
+(instead of a blob type since we use the CR for such things now)
+          </li>
+        </ol>
+        <font color="red">This value was previously stored with each
+as_item_type. For retrieval purposes it makes more sense thought to
+store it with the item itself, as this prevents us to follow each
+relationship to the as_item_type objects if we want to retrieve the
+answer.</font>
+        <p></p>
+      </li>
+      <li> max_time_to_complete - optional max number of seconds to
+perform Item
+      </li>
+      <li> adp_chunk - a denormalization to cache the generated
+"widget"
+for the Item (NB: when any change is made to an as_item_choice related
+to an as_item, this will have to be updated!)
+      </li>
+    </ul>
+    <p>
+    <i>Permissions / Scope</i>: Items need a clearly defined scope, in
+which they can be reused. Instead of defining a special scope variable
+we will use the acs permission system to grant access rights to an
+item.
+    </p>
+    <ul>
+      <li>Read: An assessment author (who is granted this permission)
+can
+reuse this item in one of his sections. (NB: Usually the original
+author has admin priviledges.)
+      </li>
+      <li>Write: Author can reuse and change this item.
+      </li>
+      <li>Admin: Author can reuse, change and give permission on this
+item
+      </li>
+    </ul>
+  </li>
+  <li> <b><font color="green">Item Types (as_item_types)</font></b>
+define types of items like "Open Question", "Calculation" and others.
+The item type will also define in what format the answer should be
+stored. For each item type a cr_item_type will be generated. Each
+object of this type is linked to the primary object of the item (see
+above) using relationships. This has the benefit that we split the core
+attributes of an item from the type specific ones and the display ones
+(see down below). Using cr_item_type usage allows us to create and
+reuse standard items (e.g. for the likert scale), by linking different
+questions with the answer possibilities (and the same attributes) to
+one as_item_type object. If we have objects that are linked this way,
+we can generate the matrix for them.
+    <p>Alternatively we could make the as_item_type object a child of
+the
+as_item and therefore prevent storing all the relations. In that case
+we'd loose the ability described before, but it might be a considerable
+performance gain.
+    </p>
+    <p>Common attributes for *all* item_types:
+    </p>
+    <ul>
+      <li>item_type_id
+      </li>
+      <li>item_type_name - name like "Question Type"
+      </li>
+      <li>item_type_description
+      </li>
+    </ul>
+    <p>
+A list of all item types and their attributes can be found in the <a
+ href="http://openacs.org/projects/openacs/packages/assessment/requirements/item_types">requirements
+section</a>
+    </p>
+    <p></p>
+  </li>
+  <li> <b><font color="green">Item Choices (as_item_choices)</font></b>
+contain additional information for all multiple choice item_types.
+Obvious examples are radiobutton and checkbox Items, but pop-up_date,
+typed_date and image_map Items also are constructed via Item Choices.
+Each choice is a child to an as_item_type Object. Note the difference.
+A choice does not belong to an item, but to the instance of the
+item_type! This way we can reuse multiple choice answers easier. It is
+debatable if we should allow n:m relationships between choices and
+item_types (thereby allowing the same choice been reused). In my
+opinion this is not necessary, therefore we have the parent_id.
+Following the Lars Skinny Table approach of conflating all the
+different potential data types into one table, we provide columns to
+hold values of the different types and another field to determine which
+of them is used. Item Choices have these attributes:
+    <p></p>
+    <ul>
+      <li> choice_id
+      </li>
+      <li> parent_id (belonging to to an as_item_<b>type</b> object).
+      </li>
+      <li> name
+      </li>
+      <li> choice_text - what is displayed in the choice's "label"
+      </li>
+      <li> data_type - which of the value columns has the information
+this Choice conveys
+      </li>
+      <li> numeric_value - we can stuff both integers and real numbers
+here - this is where "points" could be stored for each Choice
+      </li>
+      <li> text_value </li>
+      <li> boolean_value
+      </li>
+      <li> content_value - references an item in the CR -- for an
+image, audio file, or video file
+      </li>
+      <li> shareable_p - whether Choice is shareable; defaults to 't'
+since this is the whole intent of this "repository" approach, but
+authors' should have option to prevent reuse
+      </li>
+      <li> feedback_text - where optionally some preset feedback can be
+specified by the author
+      </li>
+    </ul>
+    <p>NB: In earlier versions (surveys/questionnaire), each Choice
+definition carried with it any range-checking or text-filtering
+criteria; these are now abstracted to the Item-Checks and Inter-Item
+Checks.
+    </p>
+    <p></p>
+  </li>
+</ul>
+<h2>Help System</h2>
+The help system should allow a small "?" appear
+next to an object's title that has a help text identified with it. Help
+texts are to be displayed in the nice bar that Lars created for OpenACS
+in the header. Each object can have multiple help texts associated with
+it (which will be displayed in sort order with each hit to the "?".)
+and we can reuse the help text, making this an n:m relationship (using
+cr_rels). E.g. you might want to have a default help text for certain
+cr_item_types, that's why I was thinking about reuse...
+<p>Relationship attributes:
+</p>
+<ul>
+  <li> item_id
+  </li>
+  <li> message_id - references as_messages
+  </li>
+  <li> sort_order (in which order do the messages appear)
+  </li>
+</ul>
+<p>
+<b>Messages (as_messages)</b> abstracts out help messages (and other
+types of messages) for use in this package. Attributes include:
+</p>
+<ul>
+  <li> message_id
+  </li>
+  <li> message
+  </li>
+  <li> locale (Actually I hope the i18n system Joel proposed makes this
+obsolete).
+  </li>
+</ul>
+</span></span>
+</body>
+</html>

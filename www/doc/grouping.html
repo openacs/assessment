@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Assessment</title>
+</head>
+<body>
+<p>Here is a graphical overview of the subsystem in the Assessment
+package
+that organizes Items into Sections and whole Assessments:<br>
+</p>
+<p></p>
+<center><a
+ href="http://openacs.org/storage/download/assessment-groupingfocus.graffle?version_id=187548"></a>
+<p><img alt="Data modell graphic"
+ src="images/assessment-groupingfocus.jpg"
+ style="width: 797px; height: 565px;">
+</p>
+</center>
+<p>
+</p>
+<h2>Review of Specific Entities</h2>
+<p>
+</p>
+<ul>
+  <li> Assessments (as_assessments) are the highest-level
+container in the hierarchical structure. They define the key by which
+all other entities are assembled into meaningful order during display,
+processing, retrieval and display of Assessment information.
+    <p>The primary key assessment_id is a revision_id inherited from
+cr_revisions. Note, the CR provides two main types of entities --
+cr_items and cr_revisions. The latter are where sequential versions of
+the former go, while cr_items is where the "current" version of an
+entity can be stored, where unchanging elements of an entity are kept,
+or where data can be cached. This is particularly useful if the system
+needs a single "live" version, but it isn't appropriate in situations
+where all versions potentially are equally-important siblings. In the
+case of the Assessment package, it seems likely that in some
+applications, users would indeed want to designate a single "live"
+version, while in many others, they wouldn't. However, a given revision
+can be chosen many easy ways other than looking at cr_items, while
+being forced to create and maintain appropriate state in cr_items when
+an application doesn't want it would be a major complication. Thus,
+using the cr_revisions part of the CR alone seems to be the most useful
+approach here. This decision pertains to all entities using the CR, but
+it is particularly important with Assessments since they are the key to
+all the rest of the entity hierarchies.
+    </p>
+    <p>Attributes of Assessments will include those previously included
+in Surveys plus some others:
+    </p>
+    <p></p>
+    <ul>
+      <li> assessment_id
+      </li>
+      <li> name - a formal title to use in page layouts etc
+      </li>
+      <li> short_name - a curt name appropriate for urls
+      </li>
+      <li> author
+      </li>
+      <li> definition - text that can appear in introductory web pages
+      </li>
+      <li> instructions - text that explains any specific steps the
+subject needs to follow
+      </li>
+      <li> scaled_p - whether some kind of scoring algorithm is defined
+(ie "grading" or other schemes)
+      </li>
+      <li> mode - whether this is a standalone assessment (like current
+surveys), or if it provides an "assessment service" to another OpenACS
+app, or a "web service" via SOAP etc
+      </li>
+      <li> validated_p - whether this is a formal "instrument" like an
+eponymous test (eg "Seattle Angina Questionnaire" or "MMPI" etc; this
+means that alterations to this Assessment are not allowed since changes
+would invalidate the Assessment
+      </li>
+      <li> enabled_p - released for actual use?
+      </li>
+      <li> editable_p - can anyone alter it further?
+      </li>
+      <li> template - references as_templates - ?not entirely clear
+how/why we want to use this
+      </li>
+    </ul>
+    <p>
+Permissions / Scope: Control of reuse previously was through a
+shareable_p boolean. As with Items and Sections, we instead will use
+the acs permission system:
+    </p>
+    <ul>
+      <li>Read: An assessment author (who is granted this permission)
+can
+reuse this assessment (NB: Usually the original author has admin
+priviledges.)
+      </li>
+      <li>Write: Author can reuse and change this assessment.
+      </li>
+      <li>Admin: Author can reuse, change and give permission on this
+assessment
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> Sections (as_sections) represent logically-grouped
+set of Items that always need to be present or absent together in the
+Assessment. Sections thus divide at logical branch points. These branch
+points are configured during Assessment creation to determine movement
+among Sections based on one of various mechanisms: pre-set criteria
+specified by the Assessment author, or criteria based on user-submitted
+data up to the point of branching. Note that Items within a single
+Section may be presented one-by-one in different pages; pagination is
+thus related but not equivalent to Section definitions and in fact is
+an attribute of a Section. Well, more accurately, of a Section Display
+Type (see below). Attributes of Sections themselves include:
+    <p></p>
+    <ul>
+      <li> section_id
+      </li>
+      <li> section_display_type_id - references
+as_section_display_types
+      </li>
+      <li> name - used for page display
+      </li>
+      <li> definition - text used for identification and selection in
+admin pages, not for end-user pages
+      </li>
+      <li> instructions - text displayed on user pages
+      </li>
+      <li> enabled_p - good to go?
+      </li>
+      <li> required_p - probably not as useful as per-Item required_p
+but maybe worth having here; what should it mean, though? All Items in
+a required section need to be required? At least one? Maybe this isn't
+really useful.
+      </li>
+      <li> content_value - references cr_revisions: for an image, audio
+file or video file
+      </li>
+      <li> numeric_value - optional "number of points" for section
+      </li>
+      <li> feedback_text - optional preset text to show user
+      </li>
+      <li> max_time_to_complete - optional max number of seconds to
+perform Section
+      </li>
+    </ul>
+    <p>
+Permissions / Scope: Control of reuse previously was through a
+shareable_p boolean. As with Items and Assessments, we instead will use
+the acs permission system:
+    </p>
+    <ul>
+      <li>Read: A section author (who is granted this permission) can
+reuse
+this section (NB: Usually the original author has admin priviledges.)
+      </li>
+      <li>Write: Author can reuse and change this section.
+      </li>
+      <li>Admin: Author can reuse, change and give permission on this
+section
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> Section Display Types (as_section_display_types)
+define types of display for an groups of Items. Examples are a
+"compound question" such as "What is your height" where the response
+needs to include a textbox for "feet" and one for "inches". Other
+examples are "grids" of radiobutton multiple-choice Items in which each
+row is another Item and each column is a shared radiobutton, with the
+labels for the radiobutton options only displayed at the top of the
+grid (see <a href="http://www.epimetrics.com/demos">the SAQ</a> for an
+illustration of this).
+    <p>This entity is directly analogous in purpose and design to
+as_item_display_types.
+    </p>
+    <p></p>
+    <ul>
+      <li> section_display_type_id
+      </li>
+      <li> section_type_name - name like "Vertical Column" or
+"Depth-first Grid" or "Combo Box"
+      </li>
+      <li> pagination_style - all-items; one-item-per-page; variable
+(get item groups from mapping table)
+      </li>
+      <li> branched_p - whether this Section defines a branch point (so
+that the navigation procs should look for the next step) or whether
+this Section simply transitions to the next Section in the sort_order
+(it may be better not to use this denormalization and instead always
+look into the Sequencing mechanism for navigation -- we're still fuzzy
+on this)
+      </li>
+      <li> item_orientation - the pattern by which 2..n Items are laid
+out when displayed. Note that this isn't a purely stylistic issue
+better left to the .adp templates or css; the patterns have semantic
+implications that the Assessment author appropriately should control
+here.
+        <p></p>
+        <ol>
+          <li> horizontal - all Items are in one line
+          </li>
+          <li> vertical - all Items are in one column
+          </li>
+          <li> matrix_col-row - Items are laid out in matrix, filling
+first col then row
+          </li>
+          <li> matrix_row-col -Items are laid out in matrix, filling
+first row then col
+          </li>
+        </ol>
+        <p>
+        </p>
+      </li>
+      <li> item_labels_as headers_p - whether to display labels of
+the Items; if not, a "grid of radiobuttons" gets displayed. See
+discussion of Items and Item Choices <a
+ href="http://openacs.org/projects/openacs/packages/assessment/design/as_items">here</a>.
+There are contexts where a Section of Items all share the same Choices
+and should be laid out with the Items' item_subtexts as row headers and
+the radiobuttons (or checkboxes) only -- without their labels --
+displayed in a grid (see <a
+ href="http://www.cvoutcomes.org/questionnaires/one-questionnaire?questionnaire_id=5">this
+example</a>).
+        <p></p>
+      </li>
+      <li> presentation_type - may actually be superfluous...gotta
+think more about this, but there's at least one example:
+        <p></p>
+        <ol>
+          <li> ranking - a set of alternatives each need to be assigned
+an
+exclusive rank ("Indicate the order of US Presidents from bad to
+worse"). Is this one Item with multiple Item Choices? Actually, not,
+since each alternative has a value that must be separately stored (the
+tester would want to know that the testee ranked GWB last, for
+instance).
+          </li>
+          <li> what others?
+          </li>
+        </ol>
+        <p>
+        </p>
+      </li>
+      <li> item_alignment - the orientation between the "section
+description part" of the Section (if any) and the group of Items.
+Alternatives accommodate L-&gt;R and R-&gt;L alphabets (or is this
+handled automagically be Internationalization?) and include:
+        <p></p>
+        <ol>
+          <li> beside_left - the Items are left of the "heading"
+          </li>
+          <li> beside_right - the Items are right of the "heading"
+          </li>
+          <li> below - the Items are below the "heading"
+          </li>
+          <li> above - the Items are above the "heading"
+          </li>
+        </ol>
+        <p>
+        </p>
+      </li>
+      <li> display_options - field to specify other stuff like the grid
+dimensions ("rows=10 cols=50" eg)
+      </li>
+    </ul>
+    <p>
+    </p>
+    <p></p>
+  </li>
+  <li> Item Section map (as_item_section_map) defines 1..n Items to a
+Section, caches display code, and contains optional overrides for
+Section and Item attributes:
+    <ul>
+      <li> item_id
+      </li>
+      <li> section_id
+      </li>
+      <li> enabled_p
+      </li>
+      <li> required_p - whether Item must be answered
+      </li>
+      <li> item_default
+      </li>
+      <li> content_value - references CR
+      </li>
+      <li> numeric_value - where optionally the "points" for the Item
+can be stored
+      </li>
+      <li> feedback_text
+      </li>
+      <li> max_time_to_complete
+      </li>
+      <li> adp_chunk - display code
+      </li>
+      <li> sort_order
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> Section Assessment Map (as_assessment_section_map) basically is
+a standard map, though we can override a few Section attributes here if
+desired:
+    <p></p>
+    <ul>
+      <li> assessment_id
+      </li>
+      <li> section_id
+      </li>
+      <li> feedback_text
+      </li>
+      <li> max_time_to_complete
+      </li>
+      <li> sort_order
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

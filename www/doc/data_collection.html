@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Data Collection</title>
+</head>
+<body>
+<h2>Overview</h2>
+<p>
+The schema for the entities that actually collect, store and retrieve
+Assesment data parallels the hierarchical structure of the <a
+ href="data-modell.html">Metadata Data Model</a>. In the antecedent
+"complex survey" and "questionnaire" systems, this schema was simple
+two-level structure:
+</p>
+<p></p>
+<ul>
+  <li> <b>survey_responses</b> which capture information about which
+survey was completed, by whom, when, etc
+  </li>
+  <li> <b>survey_question_responses</b> which capture the actual user
+data in a "long skinny table" mechanism
+  </li>
+</ul>
+<p>
+This suffices for one-shot surveys but doesn't support the fine
+granularity of user-action tracking, "save&amp;resume" capabilities,
+and other requirements identified for the enhanced Assessment package.
+Consequently, we use a more extended hierarchy:
+</p>
+<p></p>
+<ul>
+  <li> <b>Assessment Session</b> which captures information about
+which Assessment, which Subject, when, etc
+  </li>
+  <li> <b>Assessment Data</b> which holds information about the status
+of the entire Assessment (rolled up from the constituent parts)
+  </li>
+  <li> <b>Section Data</b> which holds information about the status of
+each Section
+  </li>
+  <li> <b>Item Data</b> which holds the actual data extracted from the
+Assessment's html forms; this is the "long skinny table"
+  </li>
+</ul>
+<p>To support user modification of submitted data (of which
+"store&amp;resume" is a special case), we base all these entities in
+the CR. In fact, we use both cr_items and cr_revisions in our schema,
+since for any given user's Assessment submission, there indeed is a
+"final" or "live" version. (In contrast, recall that for any Assessment
+itself, different authors may be using different versions of the
+Assessment. While this situation may be unusual, the fact that it must
+be supported means that the semantics of cr_items don't fit the
+Assessment itself. They <i>do</i> fit the semantics of a given user's
+Assessment "session" however.)
+</p>
+<p>Note that all these entities derive from the CR, they are also all
+acs_objects and thus automagically have the standard creation_user,
+creation_date etc attributes. We don't mention them separately here.
+</p>
+<p>Also, while this doesn't impact the datamodel structure per se,
+we add an important innovation to Assessment that wasn't used in
+"complex survey" or questionnaire. When a user initiates an Assessment
+Session, an entire set of Assessment objects are created (literally,
+rows are inserted in all the relevant tables as defined by the
+structure of the Assessment). Then when the user submits a form with
+one or more Items "completed", all database actions from there on
+consist of updates in the CR, not insertions. (In contrast, the systems
+to date all wait to insert into "survey_question_responses", for
+example, until the user submits the html form.) The big advantage of
+this is that determining the status of any given Item, Section or the
+entire Assessment is now trivial. We don't have to see whether an Item
+Data row for this particular Assessment Session is already there and
+then insert it or else update it; we know that it's there and we just
+update it. More importantly, all of our reporting UIs that show
+Assessment admins the current status of users' progress through the
+Assessment are straightforward.
+</p>
+<p>We distinguish here between "subjects" which are users whose
+information is the primary source of the Assessment's responses, and
+"users" which are real OpenACS users who can log into the system.
+Subjects may be completing the Assessment themselves or may have
+completed some paper form that is being transcribed by staff people who
+are users. We thus account for both the "real" and one or more "proxy"
+respondents via this mechanism.
+</p>
+<p>Note that we assume that there is only <i>one</i> "real"
+respondent. Only one student can take a test for a grade. Even if
+multiple clinical staff enter data about a patient, all those values
+still pertain to that single patient.&nbsp;<font color="red"></font>
+</p>
+<p>One final note: we denormalize several attributes in these entities
+--
+event_id, subject_id and staff_id. The reason for putting these foreign
+keys in each row of the "data" is to produce a "star topology" of fact
+tables and dimension tables. This will facilitate data retrieval and
+analysis. (Are there other dimension keys that we should include
+besides these?)
+</p>
+<p></p>
+<h2>Synopsis of Data-Collection Datamodel</h2>
+<p>
+Here's the schema for this subsystem:<br>
+</p>
+<p></p>
+<center><a
+ href="http://openacs.org/storage/download/assessment-datafocus.graffle?version_id=168043"></a>
+<p><img alt="Data Modell" src="images/assessment-datafocus.jpg"
+ style="width: 1022px; height: 680px;">
+</p>
+</center>
+<p>
+</p>
+<h2>Specific Entities</h2>
+<p>This section addresses the attributes the most important entities
+have in the data-collection data model -- principally the various
+design issues and choices we've made. We omit here literal SQL snippets
+since that's what the web interface to CVS is for. ;-)
+</p>
+<p></p>
+<ul>
+  <li> <b>Assessment Sessions (as_sessions)</b> are the top of the
+data-collection entity hierarchy. They provide the central definition
+of a given subject's performance of an Assessment. Attributes include:
+    <p></p>
+    <ul>
+      <li> session_id
+      </li>
+      <li> assessment_id (note that this is actually a revision_id)
+      </li>
+      <li> subject_id - references a Subjects entity that we don't
+define in this package; presumably a table derived from Persons since
+we need to be able to deploy Assessments to individuals who aren't
+OpenACS users
+      </li>
+      <li> staff_id - references Users if someone is doing the
+Assessment as a proxy for the real subject
+      </li>
+      <li> event_id
+      </li>
+      <li> target_datetime - when the subject should do the Assessment
+      </li>
+      <li> creation_datetime - when the subject initiated the
+Assessment
+      </li>
+      <li> first_mod_datetime - when the subject first sent something
+back in
+      </li>
+      <li> last_mod_datetime - the most recent submission
+      </li>
+      <li> completed_datetime - when the final submission produced a
+complete Assessment
+      </li>
+      <li> signature_id - references optionial digital signature in
+as_signatures
+      </li>
+      <li> session_status - tracks FSM
+      </li>
+      <li> ip_address
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> <b>Assessment Data (as_assessment_data)</b> captures
+information about the Assessment (NB this may overlap with
+as_sessions). Attributes include:
+    <p></p>
+    <ul>
+      <li> assessment_data_id
+      </li>
+      <li> session_id
+      </li>
+      <li> subject_id
+      </li>
+      <li> staff_id
+      </li>
+      <li> event_id
+      </li>
+      <li> assessment_id
+      </li>
+      <li> signature_id
+      </li>
+      <li> assessment_status
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> <b>Assessment Section Data (as_section_data)</b> tracks the
+state of each Section in the Assessment. Attributes include:
+    <p></p>
+    <ul>
+      <li> section_data_id
+      </li>
+      <li> session_id
+      </li>
+      <li> event_id
+      </li>
+      <li> subject_id
+      </li>
+      <li> staff_id
+      </li>
+      <li> section_id
+      </li>
+      <li> signature_id
+      </li>
+      <li> section_status
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> <b>Assessment Item Data (as_item_data)</b> is the heart
+of the data collection piece. This is the "long skinny table" where all
+the primary data go -- everything other than "scale" data ie calculated
+scoring results derived from these primary responses from subjects.
+Attributes include:
+    <p></p>
+    <ul>
+      <li> item_data_id
+      </li>
+      <li> session_id
+      </li>
+      <li> event_id
+      </li>
+      <li> subject_id
+      </li>
+      <li> staff_id
+      </li>
+      <li> item_id
+      </li>
+      <li> signature_id
+      </li>
+      <li> item_status
+      </li>
+      <li> is_unknown_p - defaults to "f" - important to clearly
+distinguish an Item value that is unanswered from a value that means
+"We've looked for this answer and it doesn't exist" or "I don't know
+the answer to this". Put another way, if none of the other "value"
+attributes in this table have values, did the subject just decline to
+answer it? Or is the "answer" actually this: "there is no answer". This
+attribute toggles that clearly when set to "t".
+      </li>
+      <li> choice_id_answer - references as_item_choices
+      </li>
+      <li> boolean_answer
+      </li>
+      <li> clob_answer
+      </li>
+      <li> numeric_answer
+      </li>
+      <li> integer_answer
+      </li>
+      <li> varchar_answer
+      </li>
+      <li> text_answer
+      </li>
+      <li> timestamp_answer
+      </li>
+      <li> content_answer - references cr_revisions
+      </li>
+      <li> attachment_answer - may be redundant with content_answer (?)
+      </li>
+      <li> attachment_file_type
+      </li>
+      <li> attachment_file_extension
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> <b>Assessment Scale Data (as_scale_data)</b> captures derived
+data calculated from subjects' raw responses. Attributes include:
+    <p></p>
+    <ul>
+      <li> scale_data_id
+      </li>
+      <li> session_id
+      </li>
+      <li> event_id
+      </li>
+      <li> subject_id
+      </li>
+      <li> staff_id
+      </li>
+      <li> scale_id
+      </li>
+      <li> assessment_id
+      </li>
+      <li> signature_id
+      </li>
+      <li> scale_score_status
+      </li>
+      <li> is_unknown_p
+      </li>
+      <li> numeric_value
+      </li>
+      <li> varchar_value - optional nominal or ordinal value
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> <b>Assessment Annotations (as_annotations)</b> provides a
+flexible way to handle a variety of ways that we need to be able to
+"mark up" an Assessment. Subjects may modify a response they've already
+made and need to provide a reason for making that change. Teachers may
+want to attach a reply to a student's answer to a specific Item or make
+a global comment about the entire Assessment. This mechanism provides
+that flexibility, and is designed like the old general_comments system.
+An argument could be made to use a generic OpenACS Comments system but
+such doesn't exist now, and probably our uses here are specific enough
+that it makes sense to have our own. Attributes include:
+    <p></p>
+    <ul>
+      <li> annotation_id
+      </li>
+      <li> on_what_table
+      </li>
+      <li> on_what_id
+      </li>
+      <li> title
+      </li>
+      <li> text
+      </li>
+      <li> content_id - references cr_revisions
+      </li>
+      <li> signature_id
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li> <b>Assessment Signatures (as_signatures)</b>: abstracts the
+digital signatures mechanism from the data tables themselves.
+Attributes include:
+    <p></p>
+    <ul>
+      <li> signature_id
+      </li>
+      <li> subject_id
+      </li>
+      <li> staff_id
+      </li>
+      <li> on_what_table
+      </li>
+      <li> on_what_id
+      </li>
+      <li> reason
+      </li>
+      <li> signature - a hash of the primary datum encrypted with the
+user's passcode
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>As_Item Display Types</title>
+</head>
+<body>
+<span class="context"><span class="reg">
+<h2>Overview</h2>
+Displaying items to users has a couple of challanges. First of all the
+display of a single item can be different for each item_type (and even
+within a type). Second of all, the display of items within a section
+can be different from assessment to assessment. Last but not least, the
+whole assessment might be displayed differently depending on attributes
+and the type of assessment we are talking about.
+<p><b><i>Note: please refer to the discussion of Items <a
+ href="as_items.html">here</a>.
+That discussion complements the discussion here, and the data model
+graphic pertaining to the Item Display Types system is available there
+also.</i></b>
+</p>
+<p></p>
+<h2>Item Display Types</h2>
+Each item has an item_display_type object associated with it, that
+defines how to display the item. Each item_display_type has a couple of
+attributes, that can be passed to the formbuilder for the creation of
+the widget. Each widget has at least one item_display_type associated
+with it. In the long run I think this system has the potential to
+become a part of OpenACS itself (storing additional display information
+for each acs_object), but we are not there yet :). Obviouslly we are
+talking cr_item_types here as well.
+<p>Each item_display_type has a couple of attributes in common.
+</p>
+<ul>
+  <li>item_display_type_id
+  </li>
+  <li>item_type_name - name like "Select box, aligned right"
+  </li>
+  <li> presentation_type - the type of "widget" displayed when the
+Item is output in html. There are many types we should support beyond
+the stock html types.
+  </li>
+  <li> item_answer_alignment - the orientation between the
+"question part" of the Item (the item_text/item_subtext) and the
+"answer part" -- the native Item widget (eg the textbox) or the 1..n
+choices. Alternatives accommodate L-&gt;R and R-&gt;L alphabets (or is
+this handled automagically be Internationalization?) and include:
+    <ol>
+      <li> beside_left - the "answers" are left of the "question"
+      </li>
+      <li> beside_right - the "answers" are right of the "question"
+      </li>
+      <li> below - the "answers" are below the "question"
+      </li>
+      <li> above - the "answers" are above the "question"
+      </li>
+    </ol>
+  </li>
+  <li> html_display_options - field to specify other stuff like
+textarea dimensions ("rows=10 cols=50" eg) </li>
+</ul>
+<p>
+Depending on the presentation_types <font color="red">additonal
+attributes (presentation_type attributes)</font>
+come into play (are added as attributes to the CR item type) (mark:
+this is not feature complete. It really is up to the coder to decide
+what attributes each widget should have, down here are only
+*suggestions*). Additionally we're not mentioning all HTML
+possibilities associated with each type (e.g. a textarea has width and
+heigth..).
+</p>
+<ul>
+  <li> textbox - single-line typed entry
+    <ul>
+      <li> abs_size - An abstraction of the real size value in
+"small","medium","large". Up to the developer how this translates.
+      </li>
+    </ul>
+  </li>
+  <li> text area - multiple-line typed entry
+    <ul>
+      <li> abs_size - An abstraction of the real size value in
+"small","medium","large". Up to the developer how this translates.
+      </li>
+    </ul>
+  </li>
+  <li> radiobutton - single-choice multiple-option
+    <ul>
+      <li> choice_orientation - the pattern by which 2..n Item Choices
+are
+laid out when displayed. Note that this isn't a purely stylistic issue
+better left to the .adp templates or css; the patterns have semantic
+implications that the Assessment author appropriately should control
+here. Note also that Items with no Choices (eg a simple textbox Item)
+has no choice_orientation, but handles the location of that textbox
+relative to the Item label by the item_alignment option (discussed
+below).
+        <ol>
+          <li> horizontal - all Choices are in one line
+          </li>
+          <li> vertical - all Choices are in one column
+          </li>
+          <li> matrix_col-row - Choices are laid out in matrix, filling
+first col then row
+          </li>
+          <li> matrix_row-col -Choices are laid out in matrix, filling
+first row then col
+          </li>
+        </ol>
+      </li>
+      <li> Button type - type of button to use
+      </li>
+    </ul>
+  </li>
+  <li> checkbox - multiple-choice multiple-option
+    <ul>
+      <li> choice_orientation (see above)
+      </li>
+    </ul>
+  </li>
+  <li> select - single-choice multiple-option displayed in "popup menu"
+  </li>
+  <li> multiple-choice-other: Consider, for instance, a combo box
+that consists of a radiobutton plus a textbox -- used for instance when
+you need a check "other" and then fill in what that "other" datum is.
+In effect this is a single Item but it has two different forms: a
+radiobutton and a textbox.
+    <ul>
+      <li> other_size: size of the other text field.
+      </li>
+      <li> other_label: label (instead of "other").
+      </li>
+      <li> display_type: What display type should be used for the
+multiple-choice-part ?
+      </li>
+    </ul>
+  </li>
+  <li> pop-up_date - a widget with month-day-year select elements
+that resets the day element based on year and month (ie include Feb 29
+during leap years -- via Javascript) and tests for valid dates
+  </li>
+  <li> typed_date - similar to pop-up_date but month-day-year
+elements are textboxes for all-keyboard entry; needs no resetting
+scripts but does need date validity check
+  </li>
+  <li> image_map - requires a linked image; the image map coordinates
+are handled as Item Choices
+  </li>
+  <li> file_upload - present a File box (browse button, file_name
+textbox, and submit button together) so user can upload a file
+  </li>
+  <li> <font color="red">many more</font>
+  </li>
+</ul>
+<p>
+In addition, there are some potential presentation_types that actually
+seem to be better modeled as a Section of separate Items:
+</p>
+<p></p>
+<ul>
+  <li> ranking - a set of alternatives each need to be assigned an
+exclusive rank ("Indicate the order of US Presidents from bad to
+worse"). Is this one Item with multiple Item Choices? Actually, not,
+since each alternative has a value that must be separately stored (the
+tester would want to know that the testee ranked GWB last, for
+instance).
+  </li>
+  <li> <font color="red">...</font>
+  </li>
+</ul>
+<h2>Section display</h2>
+A section can be seen as a form with all the
+items within this section making up the form. Depending on the type of
+assessment we are talking about, the section can be displayed in
+various ways (examples):
+<ul>
+  <li>Normal survey view, with a description on top.
+  </li>
+  <li>Test view, which has certain restrictions on the display (e.g.
+not allowed to use the back button)
+  </li>
+  <li>Portlet view, only displaying the items of the section with a
+submit button
+  </li>
+</ul>
+Additionally each section has certain parameters that
+determine the look and feel of the section itself. Luckily it is not
+necessary to have differing attributes for the sections, therefore all
+these display attributes can be found with the <a href="grouping.html">section
+and assessment specification</a> </span></span>
+</body>
+</html>
