@@ -8,7 +8,7 @@
 	       a.anonymous_p, a.secure_access_p, a.reuse_responses_p, a.show_item_name_p,
 	       a.entry_page, a.exit_page, a.consent_page, a.return_url, a.number_tries,
 	       a.wait_between_tries, a.time_for_response, a.show_feedback, a.section_navigation,
-	       to_char(a.start_time, :format) as start_time, to_char(a.end_time, :format) as end_time
+	       to_char(a.start_time, :sql_format) as start_time, to_char(a.end_time, :sql_format) as end_time
 	from as_assessments a, cr_revisions cr, cr_items ci
 	where ci.item_id = :assessment_id
 	and cr.revision_id = ci.latest_revision
@@ -33,6 +33,17 @@
 	select latest_revision as _assessment_id
 	from cr_items
 	where item_id = :assessment_id
+
+</querytext>
+</fullquery>
+
+<fullquery name="update_time">
+<querytext>
+
+	    update as_assessments
+	    set start_time = $start_time,
+	        end_time = $end_time
+	    where assessment_id = :assessment_rev_id
 
 </querytext>
 </fullquery>

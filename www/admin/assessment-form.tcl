@@ -21,8 +21,9 @@ if {![info exists assessment_id] || $__new_p} {
 }
 
 set context_bar [ad_context_bar $page_title]
-set format "YYYY-MM-DD HH24:MI"
 set package_id [ad_conn package_id]
+set sql_format "YYYY-MM-DD HH24:MI:SS"
+set form_format "[lc_get formbuilder_date_format] [lc_get formbuilder_time_format]"
 
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
@@ -40,12 +41,12 @@ if {[info exists assessment_id]} {
     }
 } else {
     ad_form -extend -name assessment_form -form {
-	{name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
+	{name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
     }
 }
 
 ad_form -extend -name assessment_form -form {
-    {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.as_Title_help]"}}
+    {title:text,nospell {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.as_Title_help]"}}
     {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Description_help]"}}
 }
 
@@ -55,20 +56,20 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 
 ad_form -extend -name assessment_form -form {
     {instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Instructions_help]"}}
-    {run_mode:text,optional {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
+    {run_mode:text,optional,nospell {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
     {anonymous_p:text(select) {label "[_ assessment.Anonymous_Responses]"} {options $boolean_options} {help_text "[_ assessment.as_Anonymous_help]"}}
     {secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
     {reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}
     {show_item_name_p:text(select) {label "[_ assessment.Show_Item_Name_1]"} {options $boolean_options} {help_text "[_ assessment.as_Show_Item_Name_help]"}}
-    {entry_page:text,optional {label "[_ assessment.Entry_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Entry_Page_help]"}}
-    {exit_page:text,optional {label "[_ assessment.Exit_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Exit_Page_help]"}}
-    {consent_page:text(textarea),optional {label "[_ assessment.Consent_Page]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Consent_Page_help]"}}
-    {return_url:text,optional {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}
-    {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
-    {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {format $format} {help} {help_text "[_ assessment.as_End_Time_help]"}}
-    {number_tries:integer,optional {label "[_ assessment.Number_of_Tries]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Number_Tries_help]"}}
-    {wait_between_tries:integer,optional {label "[_ assessment.Minutes_for_Retry]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Minutes_Retry_help]"}}
-    {time_for_response:integer,optional {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_time_help]"}}
+    {entry_page:text,optional,nospell {label "[_ assessment.Entry_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Entry_Page_help]"}}
+    {exit_page:text,optional,nospell {label "[_ assessment.Exit_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Exit_Page_help]"}}
+    {consent_page:text(textarea),optional,nospell {label "[_ assessment.Consent_Page]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Consent_Page_help]"}}
+    {return_url:text,optional,nospell {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}
+    {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
+    {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_End_Time_help]"}}
+    {number_tries:integer,optional,nospell {label "[_ assessment.Number_of_Tries]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Number_Tries_help]"}}
+    {wait_between_tries:integer,optional,nospell {label "[_ assessment.Minutes_for_Retry]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Minutes_Retry_help]"}}
+    {time_for_response:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_time_help]"}}
     {show_feedback:text(select),optional {label "[_ assessment.Show_Feedback]"} {options $feedback_options} {help_text "[_ assessment.as_Feedback_help]"}}
     {section_navigation:text(select),optional {label "[_ assessment.Section_Navigation]"} {options $navigation_options} {help_text "[_ assessment.as_Navigation_help]"}}
 } -new_request {
@@ -96,10 +97,10 @@ ad_form -extend -name assessment_form -form {
     db_1row assessment_data {}
 
     if {![empty_string_p $start_time]} {
-	set start_time [util::date::acquire clock [clock scan $start_time]]
+	set start_time [util::date::acquire ansi $start_time]
     }
     if {![empty_string_p $end_time]} {
-	set end_time [util::date::acquire clock [clock scan $end_time]]
+	set end_time [util::date::acquire ansi $end_time]
     }
 } -validate {
     {name {[as::assessment::unique_name -name $name -new_p $__new_p]} "[_ assessment.name_used]"}
@@ -110,6 +111,11 @@ ad_form -extend -name assessment_form -form {
     if {$end_time == "NULL"} {
 	set end_time ""
     }
+    if {[db_type] == "postgresql"} {
+	regsub -all -- {to_date} $start_time {to_timestamp} start_time
+	regsub -all -- {to_date} $end_time {to_timestamp} end_time
+    }
+
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
 } -new_data {
     db_transaction {
@@ -127,8 +133,8 @@ ad_form -extend -name assessment_form -form {
 				   -exit_page $exit_page \
 				   -consent_page $consent_page \
 				   -return_url $return_url \
-				   -start_time $start_time \
-				   -end_time $end_time \
+				   -start_time "" \
+				   -end_time "" \
 				   -number_tries $number_tries \
 				   -wait_between_tries $wait_between_tries \
 				   -time_for_response $time_for_response \
@@ -140,6 +146,8 @@ ad_form -extend -name assessment_form -form {
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $assessment_rev_id $category_ids
 	}
+
+	db_dml update_time {}
     }
 } -edit_data {
     db_transaction {
@@ -157,8 +165,8 @@ ad_form -extend -name assessment_form -form {
 				   -exit_page $exit_page \
 				   -consent_page $consent_page \
 				   -return_url $return_url \
-				   -start_time $start_time \
-				   -end_time $end_time \
+				   -start_time "" \
+				   -end_time "" \
 				   -number_tries $number_tries \
 				   -wait_between_tries $wait_between_tries \
 				   -time_for_response $time_for_response \
@@ -168,6 +176,8 @@ ad_form -extend -name assessment_form -form {
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $assessment_rev_id $category_ids
 	}
+
+	db_dml update_time {}
     }
 } -after_submit {
     ad_returnredirect [export_vars -base one-a {assessment_id}]
