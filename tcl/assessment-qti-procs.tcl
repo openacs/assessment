@@ -93,11 +93,19 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 		set as_items__name [$item getAttribute {ident}]
 		array set as_item_choices__correct_answer_p {}
 		array set as_item_choices__score {}
+		set as_items__feedback_text {}
 		set objectivesNodes [$item selectNodes {objectives}]
 		foreach objectives $objectivesNodes {
 			set mattextNodes [$objectives selectNodes {material/mattext/text()}]
 			foreach mattext $mattextNodes {
 				set as_items__name [$mattext nodeValue]
+			}
+		}
+		set itemfeedbackNodes [$item selectNodes {itemfeedback}]
+		foreach itemfeedback $itemfeedbackNodes {
+			if {[regexp displayWrong [$itemfeedback getAttribute {ident} {}]]} {
+				set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
+				set as_items__feedback_text [[lindex $feedback_textNodes 0] nodeValue]
 			}
 		}
 		set resprocessingNodes [$item selectNodes {resprocessing}]
@@ -151,7 +159,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 					set as_item__display_type_id 1
 				}
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
+				set as_item_id [as_item_new -name $as_items__name -title $as_items__title -feedback_text $as_items__feedback_text]
 				lappend items $as_item_id
 				foreach node $nodeNodes {
 					if {[$node nodeName] == {material}} {
@@ -182,7 +190,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				}
 				set as_item_type_id [as_item_type_mc_new -name $as_item_type__name]
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
+				set as_item_id [as_item_new -name $as_items__name -title $as_items__title -feedback_text $as_items__feedback_text]
 				lappend items $as_item_id
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}

@@ -64,6 +64,8 @@ content::type::create_attribute -content_type {as_items} -attribute_name {requir
 content::type::create_attribute -content_type {as_items} -attribute_name {data_type}            -datatype {string}  -pretty_name {Item Data Type}  -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_items} -attribute_name {max_time_to_complete} -datatype {number}  -pretty_name {Item Max Time to Complete} -column_spec {integer}
 content::type::create_attribute -content_type {as_items} -attribute_name {adp_chunk}            -datatype {string}  -pretty_name {Item Adp Chunk}  -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_items} -attribute_name {feedback_text}    -datatype {string} -pretty_name {Item Wrong Feedback} -column_spec {text}
+
 
 
 content::type::create_attribute -content_type {as_sections} -attribute_name {instructions}      -datatype {string}  -pretty_name {Section Instructions}  -column_spec {text}
