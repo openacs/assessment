@@ -87,7 +87,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 								
 				set itemfeedbacknodes [$root selectNodes {/questestinterop/assessment/section/item/itemfeedback}]
 				if { [llength $itemfeedbacknodes] >0} {
-				    as_assessments__show_feedback "all"
+				    set as_assessments__show_feedback "all"
 				}
 				set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
 				set as_assessments__survey_p {f}				
