@@ -33,6 +33,4 @@
 </formtemplate>
 
 <br>
-<a href="show_assessments">Show assessments</a>
-<a href="upload_file">Upload files</a>
 </master>
