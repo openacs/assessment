@@ -47,7 +47,7 @@ ad_form -name catalog_item_add -action catalog-item-add -export { assessment_id 
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
-	    set new_section_id [as::section::new_revision -section_id $section_id]
+	    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
 
 	    set item_count [llength $item_ids]
 	    db_dml update_section_in_assessment {}
