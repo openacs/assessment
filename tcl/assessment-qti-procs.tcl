@@ -6,15 +6,15 @@ ad_library {
 }
 
 ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
-	# Open, read and close the XML file
-	set file_id [open $xmlfile r]
-	set file_string [read $file_id]
-	close $file_id
-	set numItems 0
+	set items [list]
+	# set utf-8 system encoding
+	encoding system utf-8
 	
 	# Parser
 	# XML => DOM document
-	dom parse $file_string document
+	set file_id [open $xmlfile r]
+	dom parse -channel $file_id document
+	close $file_id
 	# DOM document => DOM root
 	$document documentElement root
 	# XPath v1.0
@@ -71,18 +71,19 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
 					# Process the items
-					set numItems [parse_item $section $as_sections__section_id]
+					parse_item $section $as_sections__section_id
 				}
 			}
 		} else {
 			# Just items (no assessments)
-			set numItems [parse_item $questestinterop 0]
+			set items [parse_item $questestinterop 0]
 		}
 	}
-	return $numItems
+	return $items
 }
 
 ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
+	set items [list]
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
 		# Order of the item_choices
@@ -122,6 +123,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				}
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
 				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
+				lappend items $as_item_id
 				foreach node $nodeNodes {
 					if {[$node nodeName] == {material}} {
 						set mattextNodes [$node selectNodes {mattext/text()}]
@@ -150,6 +152,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set as_item_type_id [as_item_type_mc_new -name $as_item_type__name]
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
 				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
+				lappend items $as_item_id
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
@@ -171,5 +174,5 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 			db_dml as_item_section_map_insert {}
 		}
 	}
-	return [llength $itemNodes]
+	return $items
 }
