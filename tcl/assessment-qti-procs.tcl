@@ -51,6 +51,7 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
 				foreach section $sectionNodes {
+					set as_assessment_section_map__sort_order 0
 					set as_sections__title [$section getAttribute {title}]
 					set as_sections__name [$section getAttribute {ident}]
 					set nodesList [$section childNodes]
@@ -70,6 +71,7 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
+					incr as_assessment_section_map__sort_order
 					# Process the items
 					parse_item $section $as_sections__section_id
 				}
@@ -83,6 +85,7 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 }
 
 ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
+	set as_item_section_map__sort_order 0
 	set items [list]
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
@@ -90,6 +93,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 		set sort_order 0
 		set as_items__title [$item getAttribute {title}]
 		set as_items__name [$item getAttribute {ident}]
+		array set as_item_choices__correct_answer_p {}
 		set objectivesNodes [$item selectNodes {objectives}]
 		foreach objectives $objectivesNodes {
 			set mattextNodes [$objectives selectNodes {material/mattext/text()}]
@@ -97,11 +101,24 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set as_items__name [$mattext nodeValue]
 			}
 		}
+		set resprocessingNodes [$item selectNodes {resprocessing}]
+		foreach resprocessing $resprocessingNodes {
+			set respconditionNodes [$resprocessing selectNodes {respcondition}]
+			foreach respcondition $respconditionNodes {
+				set title [$respcondition getAttribute {title} {}]
+				if {$title == {Correct}} {
+					set correctNodes [$respcondition selectNodes {conditionvar/and/varequal/text()}]
+					foreach correct $correctNodes {
+						set as_item_choices__correct_answer_p([string trim [$correct nodeValue]]) {t}
+					}
+				}
+			}
+		}
 		set presentationNodes [$item selectNodes {presentation}]
 		foreach presentation $presentationNodes {
 			set nodeNodes [$presentation selectNodes {.//material}]
 			set node [lindex $nodeNodes 0]
-			# Initialize in case it doen't exist
+			# Initialize in case it doesn't exist
 			set as_items__title {}
 			if {[$node nodeName] == {material}} {
 				set mattextNodes [$node selectNodes {mattext/text()}]
@@ -163,7 +180,8 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 						set as_item_choices__choice_text [$mattext nodeValue]
 					}
 					# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
-					as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order
+					set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
+					as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident)
 					# order of the item_choices
 					incr sort_order
 				}
@@ -172,6 +190,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 		# Relation between as_items and as_sections
 		if {$section_id != 0} {
 			db_dml as_item_section_map_insert {}
+			incr as_item_section_map__sort_order
 		}
 	}
 	return $items
