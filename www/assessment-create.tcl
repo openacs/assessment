@@ -6,12 +6,10 @@ ad_page_contract {
     context:onevalue
 }
 
-if {0} {
 #set package_id [ad_conn package_id]
 #set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 #content::folder::delete -folder_id $folder_id -cascade_p {t}
 
-if {0} {
 content::type::create_type -content_type {as_item_choices} -supertype {content_revision} -pretty_name {Assessment Item Choice} -pretty_plural {Assessment Item Choices} -table_name {as_item_choices} -id_column {choice_id}
 content::type::create_type -content_type {as_item_type_mc} -supertype {content_revision} -pretty_name {Assessment Item Type Multiple Choice} -pretty_plural {Assessment Item Type Multiple Choice} -table_name {as_item_type_mc} -id_column {as_item_type_id}
 content::type::create_type -content_type {as_item_display_rb} -supertype {content_revision} -pretty_name {Assessment Item Display Radio Button} -pretty_plural {Assessment Item Display Radio Button} -table_name {as_item_display_rb} -id_column {as_item_display_id}
@@ -21,8 +19,6 @@ content::type::create_type -content_type {as_assessments}  -supertype {content_r
 content::type::create_type -content_type {as_sessions} -supertype {content_revision} -pretty_name {Assessment Session} -pretty_plural {Assessment Sessions} -table_name {as_sessions} -id_column {session_id}
 content::type::create_type -content_type {as_section_data} -supertype {content_revision} -pretty_name {Assessment Section Data} -pretty_plural {Assessment Sections Data} -table_name {as_section_data} -id_column {section_data_id}
 content::type::create_type -content_type {as_item_data} -supertype {content_revision} -pretty_name {Assessment Item Data} -pretty_plural {Assessment Items Data} -table_name {as_item_data} -id_column {item_data_id}
-
-}
 
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {choice_orientation} -datatype {string}    -pretty_name {Choice Orientation} -column_spec {varchar(20)}
@@ -35,7 +31,7 @@ content::type::create_attribute -content_type {as_item_type_mc} -attribute_name 
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {num_correct_answers} -datatype {number}  -pretty_name {Number of Correct Answers} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_type_mc} -attribute_name {num_answers} -datatype {number}    -pretty_name {Number of Answers} -column_spec {integer}
 
-content::type::create_attribute -content_type {as_item_choices} -attribute_name {parent_id}     -datatype {number}  -pretty_name {Parent ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_choices} -attribute_name {mc_id}     -datatype {number}  -pretty_name {Parent ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {data_type}     -datatype {string}  -pretty_name {Data Type}     -column_spec {varchar(20)}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {numeric_value} -datatype {number}  -pretty_name {Numeric Value} -column_spec {numeric}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {text_value}    -datatype {string}  -pretty_name {Text Value}    -column_spec {varchar(500)}
@@ -49,7 +45,7 @@ content::type::create_attribute -content_type {as_item_choices} -attribute_name 
 
 content::type::create_attribute -content_type {as_items} -attribute_name {subtext}              -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {field_code}           -datatype {string}  -pretty_name {Item Field Code} -column_spec {varchar(500)}
-content::type::create_attribute -content_type {as_items} -attribute_name {definition}    -datatype {string} -pretty_name {Item Definition -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_items} -attribute_name {definition}    -datatype {string} -pretty_name {Item Definition} -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {required_p}           -datatype {boolean} -pretty_name {Item Required}   -column_spec {char(1)}
 content::type::create_attribute -content_type {as_items} -attribute_name {data_type}            -datatype {string}  -pretty_name {Item Data Type}  -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_items} -attribute_name {max_time_to_complete} -datatype {number}  -pretty_name {Item Max Time to Complete} -column_spec {integer}
@@ -100,7 +96,7 @@ content::type::create_attribute -content_type {as_section_data} -attribute_name 
 content::type::create_attribute -content_type {as_item_data} -attribute_name {session_id}     -datatype {number}  -pretty_name {Session ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {subject_id}     -datatype {number}  -pretty_name {Subject ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
-content::type::create_attribute -content_type {as_item_data} -attribute_name {item_id}     -datatype {number}  -pretty_name {Item ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {as_item_id}     -datatype {number}  -pretty_name {Item ID}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {is_unknown_p} -datatype {boolean}  -pretty_name {Is Unknown} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {choice_id_answer}     -datatype {number}  -pretty_name {Choice ID Answer}     -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {boolean_answer} -datatype {boolean} -pretty_name {Boolean Answer} -column_spec {boolean}
@@ -112,18 +108,14 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {ti
 content::type::create_attribute -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 
-}
-
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_mc} -relation_tag {as_item_type_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_rb} -relation_tag {as_item_display_rel}
 
-if {0} {
 set folder_id [content::folder::new -name {as_items} -package_id [ad_conn package_id] ]
 content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
 content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
 content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
 content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
-}
 
 set context [list]
 

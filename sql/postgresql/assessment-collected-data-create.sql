@@ -74,7 +74,7 @@ create table as_item_data (
 	staff_id integer
 		constraint as_item_data_staff_id_fk
 		references users(user_id),
-	item_id integer
+	as_item_id integer
 		constraint as_item_data_item_id
 		references as_items(as_item_id),
 	is_unknown_p char(1) default 'f'

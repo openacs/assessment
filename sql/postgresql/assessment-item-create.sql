@@ -34,7 +34,7 @@ create table as_item_choices (
                         primary key
 			constraint as_item_choices_id_fk
 			references cr_revisions(revision_id),
-	parent_id	integer
+	mc_id		integer
 			constraint as_item_choices_parent_id_fk
 			references as_item_type_mc(as_item_type_id),
 	data_type	varchar(20),
