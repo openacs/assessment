@@ -82,10 +82,6 @@ create table as_assessments (
 	instructions	text,
 	-- whether this is a standalone assessment (like current surveys), or if it provides an "assessment service" to another OpenACS app, or a "web service" via SOAP, etc
 	mode	varchar(25),
-	-- whether the response to the assessment is editable once an item has been responded to by the user
-	editable_p	char(1) default 'f'
-			constraint as_assessments_editable_p_ck
-			check (editable_p in ('t','f')),
 	-- whether the creator of the assessment will have the possibility to see the personal details of the respondee or not 
 	anonymous_p	char(1) default 'f'
 			constraint as_assessments_anonymous_p_ck
