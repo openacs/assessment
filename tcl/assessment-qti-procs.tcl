@@ -78,7 +78,6 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 					# shortanswer (textarea)
 					set as_item__display_type_id 1
 				}
-				#db_dml as_item_insert {insert into as_items (item_id, item_display_type_id, name, item_text) values (:item_id, :as_item__display_type_id, :as_items__name, :as_items__item_text)}
 				db_dml as_item_insert {}
 				foreach node $nodeNodes {
 					if {[$node nodeName] == {material}} {
@@ -86,9 +85,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 						set mattext [lindex $mattextNodes 0]
 						set as_item_choices__choice_text [$mattext nodeValue]
 						set choice_id [db_nextval acs_object_id_seq]
-						#db_dml as_item_choice_insert {insert into as_item_choices (choice_id, name, choice_text) values (:choice_id, :as_item_choices__choice_text, :as_item_choices__choice_text)}
 						db_dml as_item_choice_insert {}
-						#db_dml as_item_choice_map_insert {insert into as_item_choice_map (item_id, choice_id, sort_order) values (:item_id, :choice_id, :sort_order)}
 						db_dml as_item_choice_map_insert {}
 						# order of the item_choices
 						incr sort_order
@@ -106,7 +103,6 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 					# multiple response either text (remember it can be internationalized or changed), images, sounds, videos
 					set as_item__display_type_id 3
 				}
-				#db_dml as_item_insert {insert into as_items (item_id, item_display_type_id, name, item_text) values (:item_id, :as_item__display_type_id, :as_items__name, :as_items__item_text)}
 				db_dml as_item_insert {}
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
@@ -115,9 +111,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 						set as_item_choices__choice_text [$mattext nodeValue]
 					}
 					set choice_id [db_nextval acs_object_id_seq]
-					#db_dml as_item_choice_insert {insert into as_item_choices (choice_id, name, choice_text) values (:choice_id, :as_item_choices__choice_text, :as_item_choices__choice_text)}
 					db_dml as_item_choice_insert {}
-					#db_dml as_item_choice_map_insert {insert into as_item_choice_map (item_id, choice_id, sort_order) values (:item_id, :choice_id, :sort_order)}
 					db_dml as_item_choice_map_insert {}
 					# order of the item_choices
 					incr sort_order
