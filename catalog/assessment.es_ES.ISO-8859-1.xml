@@ -176,6 +176,7 @@
   <msg key="or">O</msg>
   <msg key="order_of_entry">Orden de entrada</msg>
   <msg key="Order_Type">Tipo de orden</msg>
+  <msg key="Other_Sessions">Otras Sesiones</msg>
   <msg key="Out_of">Máxima puntuación</msg>
   <msg key="Percent_Score">Puntuación (en porcentaje)</msg>
   <msg key="points">puntos</msg>
@@ -254,6 +255,7 @@
   <msg key="Users_may_edit_their_">Los usuarios pueden editar sus respuestas</msg>
   <msg key="Users_may_not_edit_th">Los usuarios no pueden editar sus respuestas</msg>
   <msg key="vertical">Vertical</msg>
+  <msg key="View_Other_Sessions">Ver otras sesiones</msg>
   <msg key="View_Responses">Ver Respuestas: </msg>
   <msg key="View_Results">Ver Resultados</msg>
   <msg key="View_results">Ver resultados</msg>

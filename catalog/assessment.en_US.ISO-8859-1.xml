@@ -177,6 +177,7 @@
   <msg key="or">OR</msg>
   <msg key="order_of_entry">Order of Entry</msg>
   <msg key="Order_Type">Order Type</msg>
+  <msg key="Other_Sessions">Other Sessions</msg>
   <msg key="Out_of">Out of</msg>
   <msg key="Percent_Score">Percent Score</msg>
   <msg key="points">points</msg>
@@ -256,6 +257,7 @@
   <msg key="Users_may_edit_their_">Users may edit their responses</msg>
   <msg key="Users_may_not_edit_th">Users may not edit their responses</msg>
   <msg key="vertical">Vertical</msg>
+  <msg key="View_Other_Sessions">View Other Sessions</msg>
   <msg key="View_Responses">View Responses:</msg>
   <msg key="View_Results">View Results</msg>
   <msg key="View_results">View results</msg>
