@@ -13,7 +13,7 @@
 
 <fullquery name="action_select">
 <querytext>
-    select a.action_id, a.name,a.description from as_actions a where (select package_id from acs_objects
+    select a.action_id, a.name,a.description from as_actions a where (select context_id from acs_objects
     where object_id=a.action_id)=:package_id
 
 

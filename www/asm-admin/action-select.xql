@@ -3,7 +3,7 @@
 
 <fullquery name="get_actions">
 <querytext>
-	select a.name, a.action_id from as_actions a where (select package_id from 
+	select a.name, a.action_id from as_actions a where (select context_id from 
 	acs_objects where object_id=a.action_id)=:package_id
 </querytext>
 </fullquery>
