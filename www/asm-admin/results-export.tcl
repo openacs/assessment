@@ -85,10 +85,7 @@ ad_form -name assessment_export -action results-export -form {
 	append csv_text "[join $csv($session_id) ";"]\r\n"
     }
 } -after_submit {
-    ReturnHeaders "text/comma-separated-values"
-    ns_write $csv_text
-    ns_conn close
-    ad_script_abort
-}
+     ns_set put [ad_conn outputheaders] Content-Disposition "attachment;filename=results.csv"
+     ns_return 200 "text/plain" "$csv_text"}
 
 ad_return_template
