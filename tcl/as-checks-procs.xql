@@ -247,7 +247,7 @@
 
 <fullquery name="as::assessment::check::eval_aa_checks.section_checks">
       <querytext>
-        select c.inter_item_check_id as check from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='aa' and  c.assessment_id=:assessment_id
+        select c.inter_item_check_id from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='aa' and  c.assessment_id=:assessment_id
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::eval_aa_checks.check_info">
@@ -336,4 +336,13 @@
         select inter_item_check_id from as_inter_item_checks where section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm where ci.item_id = cr.item_id and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id =:assessment_id)
       </querytext>
 </fullquery>
+
+<fullquery name="as::assessment::check::delete_item_checks.related_checks">
+      <querytext>
+
+	select inter_item_check_id,check_sql from as_inter_item_checks where assessment_id=:assessment_id and section_id_from=:section_id
+
+      </querytext>
+</fullquery>
+
 </queryset>

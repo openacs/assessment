@@ -58,5 +58,11 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::check::delete_item_checks.delete_checks">
+      <querytext>
+	select as_inter_item_check__delete (:check_id)
+      </querytext>
+</fullquery>
+
 
 </queryset>

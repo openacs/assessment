@@ -33,8 +33,8 @@
 		assessment_id		=>	:assessment_id,
 		creation_user		=>	:user_id,
 		context_id		=>	null,
-		object_type		=>	'as_inter_item_checks',
-		creation_date		=>	:date
+		object_type		=>	'as_inter_item_check',
+		creation_date		=>	null
 		);
 	end;
       </querytext>
@@ -73,6 +73,15 @@
        insert into as_actions_log (action_log_id,inter_item_check_id,action_id,date_requested,date_processed,approved_p,failed_p,finally_executed_by,session_id,error_txt) values (:log_id,:check_id,:action_id,(select sysdate from dual),null,'f','f',null,:session_id,:message)
       </querytext>
 </fullquery>
+
+<fullquery name="as::assessment::check::delete_item_checks.delete_check">
+      <querytext>
+	begin
+	 as_inter_item_check.delete(:check_id);
+	end;
+      </querytext>
+</fullquery>
+
 
 
 </queryset>

@@ -446,7 +446,7 @@ ad_proc -public as::assessment::check::confirm_display {
     }
     
     set action ""
-    
+    set parameter_list ""
     if { $action_p=="t"} {
 	set info [db_0or1row get_check_info_a {}]
 	
@@ -541,5 +541,22 @@ ad_proc -public as::assessment::check::delete_assessment_checks {
     set checks [db_list_of_lists assessment_checks {}]
     foreach check_id $checks {
 	set delete_p [db_exec_plsql delete_checks {}]
+    }
+}
+ad_proc -public as::assessment::check::delete_item_checks {
+    {-assessment_id:required}
+    {-section_id}
+    {-as_item_id}
+} {
+    
+} {
+    set checks [db_list_of_lists related_checks {}]
+    foreach check $checks {
+	set cond_list  [split [lindex $check 1] "="]
+	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	if {$item_id == $as_item_id} {
+	    set check_id [lindex $check 0]
+	    db_exec_plsql delete_check {}
+	}
     }
 }

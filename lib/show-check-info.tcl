@@ -11,7 +11,7 @@ ad_page_contract {
     type_check
 }
 
-set checks_list $inter_item_check_id
+set inter_item_check_id [split $inter_item_check_id " "]
 set count [llength $inter_item_check_id]
 set display_info ""
 
