@@ -15,9 +15,14 @@
 <tr>
 <td colspan="3"></td>
 </tr>
+
 </table>
 <p>
 
+
+<table>
+<tr>
+<td>
 <multiple name="sections">
 
 <table cellspacing=0>
@@ -35,7 +40,12 @@
 </blockquote>
 
 </multiple>
-
+</td>
+<td>
+<include src=actions-results>
+</td>
+</tr>
+</table>
 <hr>
 <if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none ><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 </master>
