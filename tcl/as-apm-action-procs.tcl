@@ -16,4 +16,10 @@ ad_proc -public as::actions::insert_actions {
     db_exec_plsql insert_default {}
 }
 
+ad_proc -public as::actions::insert_actions_after_upgrade {
+
+} {
+} { 
+    db_exec_plsql after_upgrade {}
+}
 

@@ -351,38 +351,25 @@ ad_proc -public as::assessment::check::branch_checks {
     {-session_id}
     {-section_id}
     {-assessment_id}
-    {-response}
-    {-item_id_to:required}
 } {
     
 } {
     set order "f"
     set perform 0
-
-    db_foreach section_checks {} {
+    set checks [db_list_of_lists section_checks {}]
+    
+    foreach check $checks {
 	as::assessment::data -assessment_id $assessment_id
 	set new_assessment_revision $assessment_data(assessment_rev_id)
+	set section_id_to [lindex $check 2]
+	set perform [db_string check_sql "[lindex $check 0]" -default 0]
 	
-	#parse condition_sql to get item_id
-	set cond_list  [split $check_sql "="]
-	set as_item_id [lindex [split [lindex $cond_list 2] " "] 0]
-
-
-	#parse condition_sql to get choice_id
-	set cond_list  [split $check_sql "="]
-	set condition [lindex [split [lindex $cond_list 1] " "] 0]	
-
-
-	if { $condition == $response && $as_item_id == $item_id_to} {
-	    set perform 1
-
-	}
 	if {$perform == 1} {
 	    set order [db_string get_order { }]
 	}
 	
     }
-
+    
     if {$order == "f"} {
 	return $order
     } {

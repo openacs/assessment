@@ -290,6 +290,11 @@ ad_proc -public as::install::after_upgrade {
 			where short_name = 'email'
 		    }
 		}
-            }
+	    }
+	    
+	    0.10d6 0.10d7 {
+		as::actions::insert_actions_after_upgrade
+	    }
 	}
+    
 }

@@ -231,7 +231,7 @@
 
 <fullquery name="as::assessment::check::branch_checks.section_checks">
       <querytext>
-      select * from as_inter_item_checks where action_p = 'f' and section_id_from=:section_id 
+      select check_sql,inter_item_check_id,section_id_to from as_inter_item_checks where action_p = 'f' and section_id_from=:section_id 
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::branch_checks.get_order">
