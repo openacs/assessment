@@ -9,7 +9,6 @@ ad_page_contract {
     @cvs-id $Id: 
 } {
     assessment_id:integer
-    {section_id:integer ""}
 }
 
 ad_require_permission $assessment_id admin
@@ -45,7 +44,6 @@ set notification_chunk [notification::display::request_widget \
     -url [ad_conn url]?assessment_id=$assessment_id \
 ]
 
-set sort_order 1
 db_multirow sections assessment_sections {} {
     if {![empty_string_p $max_time_to_complete]} {
 	set max_min [expr $max_time_to_complete / 60]
