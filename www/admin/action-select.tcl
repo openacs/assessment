@@ -74,7 +74,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
 		db_dml edit_action {}
 
 	    } else {
-		ns_log notice "----------------------- no es igual $perform $action_perform"
+
 		#re-order the other group
 		as::assessment::check::re_order_actions -check_id $inter_item_check_id -section_id $section_id -action_perform $perform
 		set order [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
@@ -91,7 +91,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     
     
 } -on_submit {
-    ns_log notice "----------------------- $action_perform"
+
     set url "action-params?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&action_id=$action_id&section_id=$section_id"
     ad_returnredirect "${url}$return_url"
 }
