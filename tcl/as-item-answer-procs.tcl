@@ -26,7 +26,7 @@ ad_proc -public as::item_answer::new {
 
     # Insert as_item_answer in the CR (and as_item_sa_answers table) getting the revision_id (as_item_answer_id)
     db_transaction {
-        set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [exec uuidgen] -title $title ]
+        set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [exec uuidgen]]
         set as_item_answer_id [content::revision::new \
 				-item_id $item_answer_id \
 				-content_type {as_item_answers} \

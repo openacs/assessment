@@ -31,7 +31,7 @@ ad_proc -public as::section::new {
 	if {[empty_string_p $name]} {
 	    set name "SEC_$section_item_id"
 	}
-	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
+	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name]
 
 	set as_section_id [content::revision::new \
 			       -item_id $section_item_id \
@@ -154,7 +154,7 @@ ad_proc -public as::section::copy {
 	if {[empty_string_p $name]} {
 	    set name "SEC_$section_item_id"
 	}
-	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
+	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name]
 	set new_section_id [content::revision::new \
 				-item_id $section_item_id \
 				-content_type {as_sections} \

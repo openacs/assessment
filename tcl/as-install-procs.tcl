@@ -182,6 +182,7 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {sess
 content::type::attribute::new -content_type {as_item_data} -attribute_name {subject_id}     -datatype {number}  -pretty_name {Subject ID}     -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {as_item_id}     -datatype {number}  -pretty_name {Item ID}     -column_spec {integer}
+content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id}     -datatype {number}  -pretty_name {Section ID}     -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {is_unknown_p} -datatype {boolean}  -pretty_name {Is Unknown} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {boolean_answer} -datatype {boolean} -pretty_name {Boolean Answer} -column_spec {boolean}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {clob_answer} -datatype {string} -pretty_name {Clob Answer} -column_spec {text}
@@ -248,6 +249,9 @@ ad_proc -public as::install::after_upgrade {
             }
             0.09d1 0.10d1 {
 		content::type::attribute::new -content_type {as_section_data} -attribute_name {points} -datatype {number} -pretty_name {Points Awarded} -column_spec {integer}
+            }
+            0.10d1 0.10d2 {
+		content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id} -datatype {number} -pretty_name {Section ID} -column_spec {integer}
             }
 	}
 }

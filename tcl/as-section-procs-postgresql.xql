@@ -53,8 +53,11 @@
 	and asm.section_id = :section_id
 	and not exists (select 1
 			from as_session_items i
-			left outer join as_item_data d on (d.as_item_id = i.as_item_id
-							and d.session_id = i.session_id)
+			left outer join as_item_data d on (d.section_id = i.section_id
+							and d.session_id = i.session_id
+							and d.as_item_id = i.as_item_id)
+			left outer join as_session_item_map m on (m.session_id = d.session_id
+							and m.item_data_id = d.item_data_id)
 			where i.session_id = :session_id
 			and i.section_id = :section_id
 			and d.points is null)

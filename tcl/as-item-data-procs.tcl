@@ -11,6 +11,7 @@ ad_proc -public as::item_data::new {
     {-subject_id ""}
     {-staff_id ""}
     {-as_item_id:required}
+    {-section_id:required}
     {-choice_answer ""}
     {-boolean_answer ""}
     {-clob_answer ""}
@@ -21,6 +22,7 @@ ad_proc -public as::item_data::new {
     {-content_answer ""}
     {-signed_data ""}
     {-points ""}
+    {-allow_overwrite_p t}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-12
@@ -29,18 +31,29 @@ ad_proc -public as::item_data::new {
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
+    set name "$as_item_id-$section_id-$session_id"
+    set new_p 1
 
     # Insert as_item_data in the CR (and as_item_data table) getting the revision_id (item_data_id)
     db_transaction {
-        set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$session_id" -title "$as_item_id-$session_id" ]
+	if {[db_0or1row old_item_id {}]} {
+	    if {$allow_overwrite_p == "f"} {
+		return
+	    }
+	    set new_p 0
+	} else {
+	    set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name $name]
+	}
+
         set as_item_data_id [content::revision::new \
 				 -item_id $item_data_id \
 				 -content_type {as_item_data} \
-				 -title "$as_item_id-$session_id" \
+				 -title $name \
 				 -attributes [list [list session_id $session_id] \
 						  [list subject_id $subject_id] \
 						  [list staff_id $staff_id] \
 						  [list as_item_id $as_item_id] \
+						  [list section_id $section_id] \
 						  [list boolean_answer $boolean_answer] \
 						  [list clob_answer $clob_answer] \
 						  [list numeric_answer $numeric_answer] \
@@ -53,6 +66,12 @@ ad_proc -public as::item_data::new {
 
 	foreach choice_id $choice_answer {
 	    db_dml save_choice_answer {}
+	}
+
+	if {$new_p} {
+	    db_dml insert_session_map {}
+	} else {
+	    db_dml update_session_map {}
 	}
     }
 
@@ -70,7 +89,9 @@ ad_proc -public as::item_data::get {
     Get as_item_data from the database
 } {
     if {[empty_string_p $session_id]} {
-	db_1row last_session {}
+	set last_sessions [db_list_of_lists last_sessions {}]
+	set session_id [lindex [lindex $last_sessions 0] 0]
+	set as_item_id [lindex [lindex $last_sessions 0] 1]
     }
 
     if {![empty_string_p $session_id] && [db_0or1row response {} -column_array response]} {

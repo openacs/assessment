@@ -55,10 +55,13 @@
 	where asm.assessment_id = :assessment_id
 	and asm.section_id = :section_id
 	and not exists (select 1
-			from as_item_data d, as_session_items i
-			where i.session_id = :session_id
-			and d.as_item_id(+) = i.as_item_id
-			and d.session_id(+) = i.session_id
+			from as_session_items i, as_item_data d, as_session_item_map m
+			where d.section_id (+) = i.section_id
+			and d.session_id (+) = i.session_id
+			and d.as_item_id (+) = i.as_item_id
+			and m.session_id (+) = d.session_id
+			and m.item_data_id (+) = d.item_data_id
+			and i.session_id = :session_id
 			and i.section_id = :section_id
 			and d.points is null)
 

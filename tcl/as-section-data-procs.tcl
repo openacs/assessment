@@ -27,7 +27,7 @@ ad_proc -public as::section_data::new {
 
     # Insert as_section_data in the CR (and as_section_data table) getting the revision_id (section_data_id)
     db_transaction {
-        set section_data_id [content::item::new -parent_id $folder_id -content_type {as_section_data} -name "$section_id-$session_id" -title "$section_id-$session_id" ]
+        set section_data_id [content::item::new -parent_id $folder_id -content_type {as_section_data} -name "$section_id-$session_id"]
         set as_section_data_id [content::revision::new \
 				    -item_id $section_data_id \
 				    -content_type {as_section_data} \

@@ -21,7 +21,7 @@ ad_proc -public as::item_type_sa::new {
 
     # Insert as_item_type_sa in the CR (and as_item_type_sa table) getting the revision_id (as_item_type_id)
     db_transaction {
-        set item_item_type_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_type_sa} -name [exec uuidgen] -title $title ]
+        set item_item_type_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_type_sa} -name [exec uuidgen]]
         set as_item_type_sa_id [content::revision::new \
 				-item_id $item_item_type_sa_id \
 				-content_type {as_item_type_sa} \
@@ -108,15 +108,17 @@ ad_proc -public as::item_type_sa::process {
     -type_id:required
     -session_id:required
     -as_item_id:required
+    -section_id:required
     -subject_id:required
     {-staff_id ""}
     {-response ""}
     {-max_points 0}
+    {-allow_overwrite_p t}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
 
     Process a Response to a Short Answer Type
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -text_answer [lindex $response 0] -points ""
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p
 }

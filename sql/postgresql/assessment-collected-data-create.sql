@@ -83,9 +83,12 @@ create table as_item_data (
 	staff_id integer
 		constraint as_item_data_staff_id_fk
 		references users(user_id),
-	as_item_id integer
+ 	as_item_id integer
 		constraint as_item_data_item_id
 		references as_items(as_item_id),
+ 	section_id integer
+		constraint as_item_data_section_id
+		references as_sections(section_id),
 	is_unknown_p char(1) default 'f'
 		constraint as_item_data_is_unknown_p_ck
 		check (is_unknown_p in ('t','f')),
@@ -167,4 +170,16 @@ create table as_session_choices (
 	sort_order	integer,
 	constraint as_session_choices_pk
 	primary key (session_id, section_id, as_item_id, choice_id)
+);
+
+-- here all references to answers of a session are stored
+create table as_session_item_map (
+	session_id	integer
+			constraint as_session_item_map_session_fk
+			references as_sessions,
+	item_data_id	integer
+			constraint as_session_item_map_item_data_fk
+			references as_item_data,
+	constraint as_session_item_map_pk
+	primary key (session_id, item_data_id)
 );

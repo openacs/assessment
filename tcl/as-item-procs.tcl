@@ -36,7 +36,7 @@ ad_proc -public as::item::new {
 	if {[empty_string_p $name]} {
 	    set name "QUE_$item_item_id"
 	}
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -title $title ]
+        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name]
         set as_item_id [content::revision::new -item_id $item_item_id \
 			    -content_type {as_items} \
 			    -title $title \
@@ -164,7 +164,7 @@ ad_proc -public as::item::copy {
 	if {[empty_string_p $name]} {
 	    set name "QUE_$item_item_id"
 	}
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -title $title ]
+        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name]
         set new_item_id [content::revision::new \
 			     -item_id $item_item_id \
 			     -content_type {as_items} \

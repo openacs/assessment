@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
 <queryset>
 
+<fullquery name="as::item_data::new.old_item_id">
+      <querytext>
+
+	select item_id as item_data_id, latest_revision
+	from cr_items
+	where name = :name
+	and parent_id = :folder_id
+
+      </querytext>
+</fullquery>
+
 <fullquery name="as::item_data::new.save_choice_answer">
       <querytext>
 
@@ -10,13 +21,36 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_data::get.last_session">
+<fullquery name="as::item_data::new.insert_session_map">
       <querytext>
 
-	select max(session_id) as session_id
-	from as_item_data
-	where subject_id = :subject_id
-	and as_item_id = :as_item_id
+	insert into as_session_item_map (session_id, item_data_id)
+	values (:session_id, :as_item_data_id)
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_data::new.update_session_map">
+      <querytext>
+
+	update as_session_item_map
+	set item_data_id = :as_item_data_id
+	where session_id = :session_id
+	and item_data_id = :latest_revision
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_data::get.last_sessions">
+      <querytext>
+
+	select d.session_id, d.as_item_id
+	from as_item_data d, cr_revisions r, cr_revisions r2
+	where d.subject_id = :subject_id
+	and d.as_item_id = r.revision_id
+	and r2.revision_id = :as_item_id
+	and r.item_id = r2.item_id
+	order by d.session_id decr
 
       </querytext>
 </fullquery>
@@ -24,13 +58,15 @@
 <fullquery name="as::item_data::get.response">
       <querytext>
 
-	select item_data_id, boolean_answer, clob_answer, numeric_answer,
-	       integer_answer, text_answer, timestamp_answer, content_answer,
-	       points
-	from as_item_data
-	where session_id = :session_id
-	and subject_id = :subject_id
-	and as_item_id = :as_item_id
+	select d.item_data_id, d.boolean_answer, d.clob_answer, d.numeric_answer,
+	       d.integer_answer, d.text_answer, d.timestamp_answer, d.content_answer,
+	       d.points
+	from as_item_data d, as_session_item_map m
+	where d.session_id = :session_id
+	and d.subject_id = :subject_id
+	and d.as_item_id = :as_item_id
+	and m.session_id = d.session_id
+	and m.item_data_id = d.item_data_id
 
       </querytext>
 </fullquery>

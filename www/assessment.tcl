@@ -169,7 +169,7 @@ foreach one_item $item_list {
 		}
 		
 		set points [ad_decode $points "" 0 $points]
-		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -subject_id $user_id -response $response_to_item($as_item_id) -max_points $points
+		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -section_id $section_id -subject_id $user_id -response $response_to_item($as_item_id) -max_points $points -allow_overwrite_p $display(back_button_p)
 
 		if {$section_order != $new_section_order} {
 		    as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
@@ -213,7 +213,7 @@ if {$display(submit_answer_p) != "t"} {
 		set item_type [string range $item_type end-1 end]
 
 		set points [ad_decode $points "" 0 $points]
-		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -subject_id $user_id -response $response_to_item($response_item_id) -max_points $points
+		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -section_id $section_id -subject_id $user_id -response $response_to_item($response_item_id) -max_points $points -allow_overwrite_p $display(back_button_p)
 	    }
 
 	    if {$section_order != $new_section_order} {

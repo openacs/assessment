@@ -75,10 +75,13 @@
 	<querytext>
 
 	select sum(m.points) as item_max_points, sum(d.points) as item_points
-	from as_item_data d, as_item_section_map m
+	from as_item_data d, as_item_section_map m, as_session_item_map sm
 	where m.section_id = :section_id
+	and d.section_id = m.section_id
 	and d.as_item_id = m.as_item_id
 	and d.session_id = :session_id
+	and sm.session_id = d.session_id
+	and sm.item_data_id = d.item_data_id
 
 	</querytext>
 </fullquery>
