@@ -306,7 +306,7 @@ ad_proc -public as::assessment::check::manual_action_exec {
     set user_id [ad_conn user_id]
     db_dml update_actions_log {}
     
-    notification::new -type_id [notification::type::get_type_id -short_name as_inter_item_checks_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message"
+    notification::new -type_id [notification::type::get_type_id -short_name as_inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message"
     
     
 }
