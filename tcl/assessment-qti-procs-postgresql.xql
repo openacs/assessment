@@ -3,22 +3,10 @@
 	
 	<rdbms><type>postgresql</type><version>7.1</version></rdbms>
 	
-	<fullquery name="parse_qti_xml.as_assessments_assessment_id">
-		<querytext>
-			SELECT MAX(assessment_id) FROM as_assessments
-		</querytext>
-	</fullquery>
-	
 	<fullquery name="parse_qti_xml.as_assessments_insert">
 		<querytext>
 			INSERT INTO as_assessments (assessment_id, name, definition) 
 			VALUES (:as_assessments__assessment_id, :as_assessments__name, :as_assessments__definition)
-		</querytext>
-	</fullquery>
-	
-	<fullquery name="parse_qti_xml.as_sections_section_id">
-		<querytext>
-			SELECT MAX(section_id) FROM as_sections
 		</querytext>
 	</fullquery>
 	
