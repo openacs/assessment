@@ -15,6 +15,7 @@ set context [list "[_ assessment.Show_Assessments]"]
 set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 
+
 # create a list with all assessments and their sessions
 template::list::create \
     -name assessments \
