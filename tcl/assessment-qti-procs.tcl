@@ -124,6 +124,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
 					set mattextNodes [$response_label selectNodes {material/mattext/text()}]
+					set as_item_choices__choice_text [db_null]
 					foreach mattext $mattextNodes {
 						set as_item_choices__choice_text [$mattext nodeValue]
 					}
