@@ -127,7 +127,7 @@ db_transaction {
 	    # show next items on section page
 	    if {![empty_string_p $display(num_items)]} {
 		# make sure to display correct section page
-		set item_order [expr $item_order - (($item_order+1) % $display(num_items))]
+		set item_order [expr $item_order - ($item_order % $display(num_items))]
 	    } elseif {$display(submit_answer_p) == "t"} {
 		# show whole section when picking up a seperate submit section
 		set item_order 0
