@@ -69,7 +69,7 @@ ad_form -name show_items -form {
 }
 
 db_multirow -extend { presentation_type html } items items {} {
-    set presentation_type [as::item_form::add_item_to_form show_items "" $section_id $as_item_id]
+    set presentation_type [as::item_form::add_item_to_form -name show_items -section_id $section_id -item_id $as_item_id]
     if {$presentation_type == "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }

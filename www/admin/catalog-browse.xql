@@ -97,6 +97,8 @@
 	and i.as_item_id not in (select m.as_item_id
 				 from as_item_section_map m
 				 where m.section_id = :section_id)
+        and exists (select 1 from as_item_rels ir where item_rev_id =
+	cr.revision_id and ir.rel_type = 'as_item_display_rel')
 	and ao.object_id = cr.revision_id
 	and p.person_id = ao.creation_user
 	and ir.item_rev_id = cr.revision_id
