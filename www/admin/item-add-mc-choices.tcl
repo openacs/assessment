@@ -80,8 +80,6 @@ ad_form -extend -name item_add_mc_choices -edit_request {
 	    set feedback_text $feedback($choice_id)
 	    set selected_p [ad_decode [info exists selected($choice_id)] 0 f t]
 	    set choice_id [string range $choice_id 0 3]
-	    # ad_return_complaint 1 "[array get percent] $c_id"
-	    # ad_scipt_abort 
 	    set percent_score $percent($choice_id)
 	    set fixed_position $fixed_pos($choice_id)
 	    set answer_value $answer_val($choice_id)
