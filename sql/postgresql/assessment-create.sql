@@ -88,10 +88,6 @@ create table as_items (
 	field_code	varchar(500),
 	-- some descriptive text
 	definition	varchar(500),
-	-- whether Item is shareable; defaults to 't' since this is the whole intent of this "repository" approach, but authors should have option to prevent reuse
-	shareable_p	char(1) default 't'
-			constraint as_item_shareable_p_ck
-			check (shareable_p in ('t','f')),
 	-- whether Item is released for actual use
 	enabled_p	char(1) default 'f'
 			constraint as_item_enabled_p_ck
@@ -166,10 +162,6 @@ create table as_item_choices (
 	content_value	integer
 			constraint as_item_choice_content_value_fk
                         references cr_revisions,
-	-- whether Choice is shareable; defaults to 't' since this is the whole intent of this "repository" approach, but authors should have option to prevent reuse
-	shareable_p	char(1) default 't'
-			constraint as_item_choice_shareable_p_ck
-			check (shareable_p in ('t','f')),
 	-- where optionally some preset feedback can be specified by the author
 	feedback_text	varchar(500)
 );
@@ -234,10 +226,7 @@ create table as_sections (
 	content_value	integer,
 	numeric_value	integer,
 	feedback_text	text,
-	max_time_tp_complete	integer,
-	shareable_p	char(1) default 't'
-			constraint as_sections_shareable_p_ck
-			check (shareable_p in ('t','f'))
+	max_time_tp_complete	integer
 );
 
 -- Are the highest-level container in the hierarchical structure
@@ -260,9 +249,6 @@ create table as_assessments (
 	validate_p	char(1) default 'f'
 			constraint as_assessments_validate_p_ck
 			check (validate_p in ('t','f')),
-	shareable_p	char(1) default 't'
-	  		constraint as_assessments_shareable_p_ck
-			check (shareable_p in ('t','f')),
 	enable_p	char(1) default 'f'
 			constraint as_assessments_enable_p_ck
 			check (enable_p in ('t','f')),
