@@ -286,6 +286,11 @@ ad_proc -public as::assessment::calculate {
     }
 
     db_1row sum_of_section_points {}
+
+    if {![exists_and_not_null section_max_points]||$section_max_points==0} {
+	set section_max_points 1
+    }
+
     set percent_score [expr round(100 * $section_points / $section_max_points)]
     db_dml update_assessment_percent {}
 }
