@@ -42,7 +42,7 @@ foreach response_to_item_name [array names response_to_item] {
 
     # the presentation type is textbox (fill in the blank item)
     if {[info exists tb__display_id]} {
-        db_foreach session_responses_to_item {SELECT as_item_datax.item_id FROM as_item_datax WHERE as_item_datax.as_item_id=:response_to_item_id AND as_item_datax.choice_id_answer=:response_to_item_choice_id AND as_item_datax.session_id=:as_session_id} {
+        db_foreach session_responses_to_item {SELECT as_item_datax.item_id FROM as_item_datax WHERE as_item_datax.as_item_id=:response_to_item_id AND as_item_datax.choice_answer=:response_to_item_choice_id AND as_item_datax.session_id=:as_session_id} {
             content::item::delete -item_id $item_id
         }
 	#insert the answered responses by user in the CR (and as_item_data table) 
