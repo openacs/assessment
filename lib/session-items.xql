@@ -4,9 +4,9 @@
 <fullquery name="session_items">
       <querytext>
       
-    select i.as_item_id, i.subtext, cr.title, ci.name, ism.required_p,
-           ism.section_id, ism.sort_order, i.feedback_right, i.feedback_wrong,
-           ism.max_time_to_complete, ism.points
+    select i.as_item_id, i.subtext, cr.title, cr.description, ci.name,
+	   ism.required_p, ism.section_id, ism.sort_order, i.feedback_right,
+	   i.feedback_wrong, ism.max_time_to_complete, ism.points
     from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism,
          as_session_items si
     where ci.item_id = cr.item_id
@@ -21,4 +21,16 @@
       </querytext>
 </fullquery>
 
+<fullquery name="choice_orientation">
+	<querytext>
+
+	    select d.choice_orientation
+	    from as_item_rels r, as_item_display_$presentation_type d
+	    where r.item_rev_id = :as_item_id
+	    and r.rel_type = 'as_item_display_rel'
+	    and r.target_rev_id = d.as_item_display_id
+
+	</querytext>
+</fullquery>
+	
 </queryset>

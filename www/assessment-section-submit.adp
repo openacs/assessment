@@ -43,12 +43,14 @@
       </else>
 <group column=title>
           <tr class="form-widget">
-          <if @items.title@ eq @items.next_title@ and @items.groupnum@ eq 1>
-            <td></td>
-            <formgroup id="response_to_item.@items.as_item_id@">
-              <td align=center>@formgroup.label;noquote@</td>
-            </formgroup>
-            </tr><tr class="form-widget">
+          <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
+            <if @items.title@ eq @items.next_title@ and @items.groupnum@ eq 1>
+              <td></td>
+              <formgroup id="response_to_item.@items.as_item_id@">
+                <td align=center>@formgroup.label;noquote@</td>
+              </formgroup>
+              </tr><tr class="form-widget">
+            </if>
           </if>
           <td valign=top>@items.description@</td>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
@@ -86,7 +88,7 @@
 
           <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
 </td></tr>
-</group></td></tr></table>
+</group></table>
 
         </blockquote>
         </td></tr>
