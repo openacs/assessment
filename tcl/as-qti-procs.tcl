@@ -26,10 +26,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 		if { [llength $assessmentNodes] > 0 } {
 			# There are assessments
 			foreach assessment $assessmentNodes {
-			        set as_assessments__title "Assessment"
-				if {[$assessment hasAttribute {title}]} {
-				    set as_assessments__title [$assessment getAttribute {title}]
-				}
+				set as_assessments__title [$assessment getAttribute {title} {Assessment}]
 				set as_assessments__name [$assessment getAttribute {ident}]
 				set nodesList [$assessment childNodes]
 				set as_assessments__definition ""
@@ -56,10 +53,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				set sectionNodes [$assessment selectNodes {section}]
 				foreach section $sectionNodes {
 					set as_assessment_section_map__sort_order 0
-					set as_sections__title "Section"
-					if {[$section hasAttribute {title}]} {
-				    		set as_sections__title [$section getAttribute {title}]
-					}
+					set as_sections__title [$section getAttribute {title} {Section}]
 					set as_sections__name [$section getAttribute {ident}]
 					set nodesList [$section childNodes]
 					set as_sections__definition ""
@@ -97,11 +91,7 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 	foreach item $itemNodes {
 		# Order of the item_choices
 		set sort_order 0
-		#isn't used
-		set as_items__title "Item"
-		if {[$item hasAttribute {title}]} {
-			set as_items__title [$item getAttribute {title}]
-		}
+		set as_items__title [$item getAttribute {title} {Item}]
 		set as_items__name [$item getAttribute {ident}]
 		array set as_item_choices__correct_answer_p {}
 		array set as_item_choices__score {}
@@ -130,10 +120,7 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 		foreach resprocessing $resprocessingNodes {
 			set respconditionNodes [$resprocessing selectNodes {respcondition}]
 			foreach respcondition $respconditionNodes {
-			        set title "Correct"
-				if {[$respcondition hasAttribute {title}]} {
-				    set title [$respcondition getAttribute {title} {}]
-				}				
+				set title [$respcondition getAttribute {title} {Correct}]
 				if {$title == {Correct}} {
 					set correctNodes [$respcondition selectNodes {conditionvar/and/varequal/text()}]
 					foreach correct $correctNodes {
@@ -220,10 +207,7 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 				# The first node of the list. It may not be a good idea if it doesn't exist
 				set response_lid [lindex $response_lidNodes 0]
 				set as_item_type__name [$response_lid getAttribute {ident}]
-				set as_items__rcardinality "Single"
-				if {[$response_lid hasAttribute {rcardinality}]} {
-				    set as_items__rcardinality [$response_lid getAttribute {rcardinality} {}]
-				}
+				set as_items__rcardinality [$response_lid getAttribute {rcardinality} {Single}]
 				
 				# multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
 				# this is the default
