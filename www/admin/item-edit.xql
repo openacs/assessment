@@ -17,7 +17,7 @@
 <fullquery name="item_type">
       <querytext>
 
-    select o.object_type
+    select max(o.object_type)
     from acs_objects o, as_item_rels r
     where r.item_rev_id = :as_item_id
     and r.rel_type = 'as_item_type_rel'

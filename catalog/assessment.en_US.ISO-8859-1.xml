@@ -3,6 +3,7 @@
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
+  <msg key="Absolute_Size_help">Number of characters a user can enter in the text field for his answer.</msg>
   <msg key="add_item">Add new question</msg>
   <msg key="add_item_display_cb">Add new question: Checkbox Display</msg>
   <msg key="add_item_display_rb">Add new question: Radiobutton Display</msg>
@@ -84,6 +85,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Choice_help">Description of the choice</msg>
   <msg key="Choice_Orientation">Choice Orientation</msg>
   <msg key="Choice_Orientation_help">Which orientation shall the choices have</msg>
+  <msg key="choice_set">Title</msg>
+  <msg key="choice_set_title">Title</msg>
   <msg key="Consent_Page">Consent Page</msg>
   <msg key="continue_with_copy">Continue with Copy</msg>
   <msg key="continue_with_insert">Continue with Insert</msg>
@@ -146,9 +149,10 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Feedback_right">Feedback right</msg>
   <msg key="Feedback_right_help">Feedback given to the user if he correctly answered this question.</msg>
   <msg key="Feedback_wrong">Feedback wrong</msg>
-  <msg key="Feedback_wrong_help">Feedback given to the user if the feedback was wrong.</msg>
+  <msg key="Feedback_wrong_help">Feedback given to the user if his answer was wrong</msg>
   <msg key="Field_Code">Field Code</msg>
-  <msg key="Field_Code_help">A short label for use in data output header rows, etc</msg>
+  <msg key="Field_Code_help">A short label used when exporting question (e.g. for column or row names in a spreadsheet)
+</msg>
   <msg key="Finish_Time">Finish Time</msg>
   <msg key="Finished">Finished</msg>
   <msg key="from">From:</msg>
@@ -163,7 +167,7 @@ in addition to the question itself when taking the survey.</msg>
 Increasing (false) will either give 100%, if all correct answers are given, or 0% else. </msg>
   <msg key="Instructions">Instructions</msg>
   <msg key="item_Definition_help">REDUNDANT, Description should be enough</msg>
-  <msg key="item_Description_help">Additional description of the question</msg>
+  <msg key="item_Description_help">Additional searchable description for the question catalog</msg>
   <msg key="item_display_cb">Checkboxes</msg>
   <msg key="item_display_rb">Radiobuttons</msg>
   <msg key="item_display_sa">Short Answer</msg>
@@ -174,6 +178,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="item_Required_help">Does this item have to be answered (when displayed)?</msg>
   <msg key="item_Subtext_help">A secondary label, needed for many kinds of questions</msg>
   <msg key="item_time_help">Seconds allowed for completing this question</msg>
+  <msg key="item_Title">Question</msg>
   <msg key="item_Title_help">The question itself</msg>
   <msg key="Item_Type">Question Type</msg>
   <msg key="item_type_dq">Database Question</msg>
@@ -205,7 +210,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="make_show_item_name">Show item name</msg>
   <msg key="make_unsecure">Allow unsecure connection</msg>
   <msg key="max_time">max. time allowed:</msg>
-  <msg key="mc_Title_help">A name for this set of choices for reusability</msg>
+  <msg key="mc_Title_help">A name for this set of choices (for reusability)</msg>
   <msg key="Minutes_for_Retry">Minutes required for Retry</msg>
   <msg key="Mode">Mode</msg>
   <msg key="Move_Down">Move Down</msg>
@@ -240,7 +245,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Percent_Score_help">Percentage of the points of  the question this choice gives. May be larger than 100 and lower than -100.</msg>
   <msg key="points">points</msg>
   <msg key="points_item">Points for Question</msg>
-  <msg key="points_item_help">How many points in the whole assessment is this section worth.</msg>
+  <msg key="points_item_help">How many points is this question worth in a section. This is a measurement for relative difficulty.</msg>
   <msg key="points_section">Points for Section</msg>
   <msg key="Preview">Preview</msg>
   <msg key="Question">Question</msg>
@@ -265,6 +270,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Review_Asessment">Review Assessment</msg>
   <msg key="right">Right</msg>
   <msg key="Rulebased_branching">Rule-based Branching</msg>
+  <msg key="sa_Title_help">A title for this short answer feature set so it can be reused in the future.</msg>
   <msg key="Score">Score</msg>
   <msg key="Search">Search</msg>
   <msg key="Search_Item">Search and add questions</msg>

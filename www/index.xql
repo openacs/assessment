@@ -7,6 +7,8 @@
 			from as_assessments a, cr_revisions cr, cr_items ci
 			where a.assessment_id = cr.revision_id
 			and cr.revision_id = ci.latest_revision
+			and exists (select 1 from as_assessment_section_map asm
+		where asm.assessment_id = a.assessment_id)
 		</querytext>
 	</fullquery>
 	

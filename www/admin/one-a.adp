@@ -55,7 +55,7 @@
 
 <tr class="odd">
 	<td><if @assessment_data.number_tries@ not nil> #assessment.limited_tries#</if><else>#assessment.unlimited_tries#</else> -
-	[ <a href="assesment-form?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
+	[ <a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
 </tr>
 
 <tr class="odd">
