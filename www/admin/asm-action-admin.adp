@@ -1,6 +1,6 @@
 <master>
 <property name="title">#assessment.action_admin#</property>
-<property name="context_bar">@context_bar;noquote@</property>
+<property name="context">@context;noquote@</property>
 
 <blockquote>
 <listtemplate name="actions"></listtemplate><br>

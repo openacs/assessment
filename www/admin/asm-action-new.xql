@@ -10,14 +10,6 @@
 </querytext>
 </fullquery>
 
-<fullquery name="insert_action">
-<querytext>
-	insert into as_actions (action_id,name,description,tcl_code) 
-			 values(:action_id,:name,:description,:tcl_code)
-
-</querytext>
-</fullquery>
-
 <fullquery name="edit_action">
 <querytext>
 	update as_actions set

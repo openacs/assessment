@@ -7,6 +7,10 @@ ad_page_contract {
     action_id:optional
 }
 
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
+set node_id [ad_conn node_id]
+
 if { ![ad_form_new_p -key action_id] } {
     set page_title [_ assessment.Edit_Assessment]
       set parameter_exist "y"
@@ -43,10 +47,10 @@ ad_form -name action_admin -form {
 	where action_id = :action_id
 
 } -new_data {
-    db_dml insert_action {}
+    db_exec_plsql insert_action {}
 } -edit_data {
     db_dml edit_action {}
-} -on_submit {
+} -after_submit {
   ad_returnredirect "asm-action-new?action_id=$action_id"
 }
 

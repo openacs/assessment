@@ -39,7 +39,7 @@
     where ci.item_id = cr.item_id
     and cr.revision_id = s.section_id
     and s.section_id = asm.section_id 
-    and asm.assessment_id = :new_assessment_revision 
+    and asm.assessment_id = :new_assessment_revision
     order by asm.sort_order)
 
 </querytext>

@@ -6,8 +6,8 @@ ad_page_contract {
 } {
    
 }
-set context_bar [ ad_context_bar Actions]
-
+set context [list Actions]
+set package_id [ad_conn package_id]
 #See the params we already have
 template::list::create \
     -name actions \
