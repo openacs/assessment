@@ -11,7 +11,7 @@ set context [list "View Results"]
 
 set assessment_name [db_string assessment_name {SELECT as_assessmentsx.title FROM as_assessmentsx INNER JOIN as_sessionsx ON as_assessmentsx.assessment_id = as_sessionsx.assessment_id WHERE as_sessionsx.session_id=:session_id}]
 db_1row session_user_id {SELECT persons.first_names, persons.last_name, assessment_id FROM as_sessionsx INNER JOIN persons ON as_sessionsx.subject_id = persons.person_id WHERE as_sessionsx.session_id=:session_id}
-set assessment_url [export_vars -base "assessment" {session_id}]
+set assessment_url [export_vars -base "assessment" {assessment_id}]
 set session_user_name "$first_names $last_name"
 db_1row session_data {SELECT subject_id, creation_datetime AS session_start, completed_datetime AS session_finish, completed_datetime-creation_datetime AS session_time FROM as_sessionsx WHERE as_sessionsx.session_id = :session_id}
 set session_user_url [acs_community_member_url -user_id $subject_id]
