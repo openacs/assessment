@@ -108,28 +108,27 @@ db_multirow sections query_all_sections {} {
     $selection_ordering appendChild $order
     
     db_foreach query_all_items {} {
-	set as_item_display_cbx__item_id {}
-  	unset as_item_display_cbx__item_id
-	set as_item_display_rbx__item_id {}
-  	unset as_item_display_rbx__item_id
-  	set as_item_display_tbx__item_id {}
-        unset as_item_display_tbx__item_id
-        set as_item_display_tax__item_id {}
-        unset as_item_display_tax__item_id        
-	set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"]
-        set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
-        set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
-        set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
-        set items_as_item_id [db_string items_items_as_item_id "SELECT as_itemsx.as_item_id FROM as_itemsx WHERE as_itemsx.item_id = :item_item_id"]
-	#checkbox
-	db_0or1row as_item_display_cbx "SELECT item_id AS as_item_display_cbx__item_id FROM as_item_display_cbx WHERE item_id=:item_display_id"
+	#reset variables
+	set cb__display_id {}
+        unset cb__display_id
+        set rb__display_id {}
+        unset rb__display_id
+        set tb__display_id {}
+        unset tb__display_id
+        set ta__display_id {}
+        unset ta__display_id
+        set mc_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_type_rel]
+        set item_display_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_display_rel]
+        set items_as_item_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :as_item_id"]        
+	#checkbox	
+        db_0or1row as_item_display_cbx "SELECT as_item_display_id AS cb__display_id FROM as_item_display_cb WHERE as_item_display_id=:item_display_id"
 	#radiobutton
-        db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
+        db_0or1row as_item_display_rbx "SELECT as_item_display_id AS rb__display_id FROM as_item_display_rb WHERE as_item_display_id=:item_display_id"
 	#textbox (fill-in-the-blank)
-        db_0or1row as_item_display_tbx "SELECT item_id AS as_item_display_tbx__item_id FROM as_item_display_tbx WHERE item_id=:item_display_id"
+        db_0or1row as_item_display_tbx "SELECT as_item_display_id AS tb__display_id FROM as_item_display_tb WHERE as_item_display_id=:item_display_id"
 	#textarea (short answer)
-        db_0or1row as_item_display_tax "SELECT item_id AS as_item_display_tax__item_id FROM as_item_display_tax WHERE item_id=:item_display_id"                
-                
+        db_0or1row as_item_display_tax "SELECT as_item_display_id AS ta__display_id FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
+                  
 	#<item>
 	set item [$doc createElement item]
 	$item setAttribute ident $item_name
@@ -155,7 +154,7 @@ db_multirow sections query_all_sections {} {
 	set flow [$doc createElement flow]
 	$presentation appendChild $flow
 	
-	if {![info exists as_item_display_tbx__item_id]} {
+	if {![info exists tb__display_id]} {
 	    #<material>
 	    set material [$doc createElement material]
 	    $flow appendChild $material
@@ -168,8 +167,8 @@ db_multirow sections query_all_sections {} {
 		
 	
 	#find out the item type (multiple choice or multiple response)
-	if {[info exists as_item_display_cbx__item_id] || [info exists as_item_display_rbx__item_id]} {
-	    if {[info exists as_item_display_cbx__item_id]} {
+	if {[info exists cb__display_id] || [info exists rb__display_id]} {
+	    if {[info exists cb__display_id]} {
 	        # checkbox
 	        set rcardinality "Multiple"					
 	    } else {
@@ -205,7 +204,7 @@ db_multirow sections query_all_sections {} {
 	    }
 	} else {
 	    #short answer
-	    if {[info exists as_item_display_tax__item_id]} {
+	    if {[info exists ta__display_id]} {
 	        #<response_str>
 	        set response_str [$doc createElement response_str]
 	        $response_str setAttribute ident $item_name
@@ -213,7 +212,7 @@ db_multirow sections query_all_sections {} {
 	        $response_str setAttribute rtiming "No"
 	        $flow appendChild $response_str	    
 	        #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =) 
-                db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_tax WHERE item_id=:item_display_id"
+                db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
                 set rows "[lindex $html_display_options 1]"
 		set columns "[lindex $html_display_options 3]"
 		#<render_fib>
@@ -268,7 +267,7 @@ db_multirow sections query_all_sections {} {
 	    }
 	 } 
 	 
-	 if { $assessment_data(survey_p) == "f" && ![info exists as_item_display_tax__item_id] } {
+	 if { $assessment_data(survey_p) == "f" && ![info exists ta__display_id] } {
 	    #<resprocessing>
 	    set resprocessing [$doc createElement resprocessing]
 	    $item appendChild $resprocessing
@@ -280,7 +279,7 @@ db_multirow sections query_all_sections {} {
 	    $respcondition appendChild $conditionvar
 	    
 	    #fill-in-blank
-	    if {[info exists as_item_display_tbx__item_id]} {
+	    if {[info exists tb__display_id]} {
 	       set i 0
 	       db_foreach query_all_choices {} { 
 	           #<or>
@@ -351,7 +350,7 @@ db_multirow sections query_all_sections {} {
 	    $respcondition appendChild $conditionvar
 	    
 	    #fill-in-blank
-	    if {[info exists as_item_display_tbx__item_id]} {
+	    if {[info exists tb__display_id]} {
 	       set i 0
 	       #<not>
 	       set not [$doc createElement not]
@@ -420,12 +419,12 @@ db_multirow sections query_all_sections {} {
 	
 	db_foreach query_all_choices {} {
 	    set i 0
-	    # [info exists as_item_display_tbx__item_id] because for fib item choice_correct_answer_p is null
-	    if { $choice_correct_answer_p == "t" || [info exists as_item_display_tbx__item_id] } {
+	    # [info exists tb__display_id] because for fib item choice_correct_answer_p is null
+	    if { $choice_correct_answer_p == "t" || [info exists tb__display_id] } {
 	        set list_choice_title $choice_title
 		set length_list_choice_title [llength $list_choice_title]
 		
-		if {![info exists as_item_display_tbx__item_id]} {
+		if {![info exists tb__display_id]} {
 		    set length_list_choice_title 1
 		}
 				
@@ -439,13 +438,13 @@ db_multirow sections query_all_sections {} {
 		    $respcondition appendChild $conditionvar
 		    #<varequal>
 		    set varequal [$doc createElement varequal]
-		    if {[info exists as_item_display_tbx__item_id]} {
+		    if {[info exists tb__display_id]} {
 		        $varequal setAttribute respident $item_name$i
 		    } else {    
 		        $varequal setAttribute respident $item_name
 		    }
 		    $conditionvar appendChild $varequal
-		    if {[info exists as_item_display_tbx__item_id]} {
+		    if {[info exists tb__display_id]} {
 		        set text [$doc createCDATASection [lindex $list_choice_title $j]]
 		    } else {
 		        set text [$doc createCDATASection $choice_name]

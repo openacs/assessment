@@ -3,7 +3,7 @@
 
 <fullquery name="query_all_sections">
 <querytext>
-	SELECT s.section_id, s.name as section_name, s.title as section_title, s.description as section_description, s.definition as section_definition, s.instructions as section_instructions, s.required_p as section_required_p, s.content_value as section_content_value, s.numeric_value as section_numeric_value, s.feedback_text as section_feedback_text, s.max_time_to_complete as section_max_time_to_complete
+	SELECT s.section_id, s.name as section_name, s.title as section_title, s.description as section_description, s.instructions as section_instructions, s.feedback_text as section_feedback_text, s.max_time_to_complete as section_max_time_to_complete
 	FROM as_sectionsx s, as_assessment_section_map asm, as_assessmentsx a
 	WHERE s.section_id = asm.section_id
 	     AND asm.assessment_id = a.assessment_id
@@ -14,7 +14,7 @@
 
 <fullquery name="query_all_items">
 <querytext>
-	SELECT i.as_item_id, i.title as item_title, i.name as item_name, i.description as item_description, i.subtext as item_subtext, i.field_code as item_field_code, i.definition as item_definition, i.required_p as item_required_p, i.data_type as item_data_type, i.max_time_to_complete as item_max_time_to_complete, i.feedback_right as item_feedback_right, i.feedback_wrong as item_feedback_wrong
+	SELECT i.as_item_id, i.title as item_title, i.name as item_name, i.description as item_description, i.subtext as item_subtext, i.field_code as item_field_code, i.required_p as item_required_p, i.data_type as item_data_type, i.max_time_to_complete as item_max_time_to_complete, i.feedback_right as item_feedback_right, i.feedback_wrong as item_feedback_wrong
 	FROM as_itemsx i, as_item_section_map ism
 	WHERE i.as_item_id = ism.as_item_id AND ism.section_id = :section_id
 	ORDER BY ism.sort_order
