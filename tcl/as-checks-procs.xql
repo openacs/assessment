@@ -320,10 +320,10 @@
 </fullquery>
 
 
-<fullquery name="as::assessment::check::copy_item_checks.parameters">
+<fullquery name="as::assessment::check::copy_checks.parameters">
       <querytext>
 	select parameter_id,value,item_id from as_param_map 
-	where inter_item_check_id=:inter_item_check_id and action_id=:action_id
+	where inter_item_check_id=:inter_item_check_id 
       </querytext>
 </fullquery>
 
