@@ -9,7 +9,8 @@ ad_page_contract {
     by_item_p
     item_id:optional
   }
-set inter_item_check_id [split $inter_item_check_id " "]
+set inter_item_check_id [split [lindex $inter_item_check_id 0] " "]
+
 set count [llength $inter_item_check_id]
 
 for { set i 0} { $i< $count } {incr i} {
