@@ -102,7 +102,7 @@ create table as_assessments (
 	-- how many minutes has the respondee to finish the assessment
 	time_for_response integer,
 	-- the feedback type which will be displayed to the respondee (all, none, correct, incorrect)
-	show_feedback varchar(50) default 'none'
+	show_feedback varchar(50) default 'all'
 			constraint as_assessments_show_feedback_ck
 			check (show_feedback in ('none', 'all', 'incorrect', 'correct')),
 	-- how shall the navigation happen (default path, randomized, rule-based branching)
