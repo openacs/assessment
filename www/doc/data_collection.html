@@ -107,7 +107,8 @@ assessment with regards to the subject) </li>
       <li> ip_address - IP Address of the entry<br>
       </li>
       <li>percent_score - Current percentage of the subject achieved so
-far<br>
+far</li>
+      <li>consent_timestamp - Time when the consent has been given.<br>
       </li>
     </ul>
     <p> </p>
@@ -138,13 +139,15 @@ Attributes include:
       <li> item_id</li>
       <li> choice_id_answer - references as_item_choices </li>
       <li> boolean_answer </li>
-      <li> clob_answer </li>
       <li> numeric_answer </li>
       <li> integer_answer </li>
-      <li> varchar_answer </li>
-      <li> text_answer </li>
+      <li>text_answer </li>
       <li> timestamp_answer </li>
-      <li> content_answer - references cr_revisions </li>
+      <li> content_answer - references cr_revisions</li>
+      <li>signed_data - This field stores the signed entered data, see
+below for explanation</li>
+      <li>percent_score<br>
+      </li>
       <li>Possible Extension: item_status - Status of the answer. This
 might be
 "unanswered, delayed, answered, final". This can be put together with <span
