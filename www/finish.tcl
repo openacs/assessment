@@ -7,12 +7,20 @@ ad_page_contract {
 } {
     session_id:integer,notnull
     assessment_id:integer,notnull
+    return_url:optional
 } -properties {
     context_bar:onevalue
     page_title:onevalue
 }
 
+
+if {[info exists return_url]} {
+    if { $return_url != ""} {
+    ad_returnredirect "$return_url"
+    }
+}
 set page_title "[_ assessment.Response_Submitted]"
 set context_bar [ad_context_bar $page_title]
+
 
 ad_return_template
