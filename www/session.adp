@@ -26,11 +26,18 @@
 			</td></tr>
 			<tr><td colspan="2">
 			@items.choice_html;noquote@</td></tr>
+			<if @items.presentation_type@ in textarea>
+			   <tr><td nowrap></td><td><span><i>#assessment.This_question_will_be_corrected_by_the_teacher#.</i></span></td></tr>
+			   <tr><td></td><td></td></tr>
+			   <tr><td><br></td></tr>
+			</if>
+			<else>
 			<tr><td nowrap>
 			#assessment.Score#</td><td><span>@items.score@ / @items.maxscore@</span>
 			<if @items.notanswered@>(<i>#assessment.Question_not_answered#.</i>)</if></td></tr>
 			<tr><td></td><td><b>#assessment.Feedback#:</b> <if @items.item_correct@>@items.feedback_right@</if><if @items.item_correct@ false>@items.feedback_wrong@</if></td></tr>
 			<tr><td><br></td></tr>
+			</else>
 		</multiple>
 	</table>
 </table>

@@ -25,22 +25,37 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   set as_item_display_rbx__item_id {}
   unset as_item_display_rbx__item_id
   set as_item_display_tbx__item_id {}
-  unset as_item_display_tbx__item_id  
+  unset as_item_display_tbx__item_id
+  set as_item_display_tax__item_id {}
+  unset as_item_display_tax__item_id
   set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"]
   set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
   set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
   set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
+  set items_as_item_id [db_string items_items_as_item_id "SELECT as_itemsx.as_item_id FROM as_itemsx WHERE as_itemsx.item_id = :item_item_id"]
   db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
   db_0or1row as_item_display_tbx "SELECT item_id AS as_item_display_tbx__item_id FROM as_item_display_tbx WHERE item_id=:item_display_id"
+  db_0or1row as_item_display_tax "SELECT item_id AS as_item_display_tax__item_id FROM as_item_display_tax WHERE item_id=:item_display_id"
   set presentation_type "checkbox" ;# DEFAULT
   if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radio"}
   if {[info exists as_item_display_tbx__item_id]} {set presentation_type "fitb"}
+  if {[info exists as_item_display_tax__item_id]} {set presentation_type "textarea"}
 
   set notanswered 1
   set maxscore $itemmaxscore
   set score 0
   set item_correct 1
   set choice_html "<table cellspacing=\"0\" cellpadding=\"3\" border=\"0\">"
+  
+  if {[string compare $presentation_type "textarea"] == 0} {  
+      set text_answer {}       
+      db_0or1row shortanswer {} 
+      set choice_answer "<textarea rows=\"15\" cols=\"55\" readonly disabled>$text_answer</textarea>"
+      set correct_answer {}
+      append choice_html "<tr><td>$correct_answer</td><td>$choice_answer </td></tr>"	 
+      set item_correct 0
+  }
+  
   db_foreach choices {} {
     if {[string length "$choice_id_answer"]} {set notanswered 0}
     set choice_correct 0

@@ -23,5 +23,13 @@
                 as_item_choicesx.sort_order
 		</querytext>
 	</fullquery>
+	
+	<fullquery name="shortanswer">
+		<querytext>
+                SELECT as_item_datax.text_answer
+                FROM as_item_datax, as_sessionsx
+		WHERE as_sessionsx.session_id = as_item_datax.session_id AND as_sessionsx.session_id = :session_id  AND as_item_datax.choice_id_answer IS NULL AND as_item_datax.as_item_id = :items_as_item_id
+ 		</querytext>
+ 	</fullquery>
 
 </queryset>
