@@ -53,7 +53,7 @@ ad_proc -public as_item_mc_new {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
-    # Insert as_item_type_mc in the CR (and as_assessments table) getting the revision_id (as_item_id)
+    # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     set item_item_type_mc_id [content::item::new -parent_id $folder_id -content_type {as_item_type_mc} -name $as_items__name -title $as_items__title ]
     set as_item_type_mc_id [content::revision::new -item_id $item_item_id -content_type {as_item_type_mc} -title $as_items__title -attributes [list [list increasing_p $increasing_p] [list allow_negative_p $allow_negative_p] [list num_correct_answers $num_correct_answers] [list num_answers $num_answers] ] ]
 
@@ -71,7 +71,6 @@ ad_proc -public as_item_new {
     {-required_p ""}
     {-item_default ""}
     {-max_time_to_complete ""}
-    {-adp_chunk ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26

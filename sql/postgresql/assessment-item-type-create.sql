@@ -30,13 +30,31 @@ create table as_item_type_oq (
 	default_value		varchar(500)
 );
 
-create table as_item_display_mc (
+create table as_item_display_rb (
 	as_item_display_id	integer
 				constraint as_item_display_mc_as_item_display_id_pk
 				primary key
 				constraint as_item_display_mc_as_item_display_id_fk
 				references cr_revisions(revision_id),
+	html_display_options	varchar(50),
+	choice_orientation	varchar(20),
+	choice_label_orientation varchar(20),
+	sort_order_type		varchar(20),
+	item_answer_alignment	varchar(20)
+);
+
+create table as_item_display_cb (
+	as_item_display_id	integer
+				constraint as_item_display_mc_as_item_display_id_pk
+				primary key
+				constraint as_item_display_mc_as_item_display_id_fk
+				references cr_revisions(revision_id),
+	html_display_options	varchar(50),
+	choice_orientation	varchar(20),
+	choice_label_orientation varchar(20),
 	allow_multiple_p	char(1) default 'f'
 				constraint as_item_type_mc_allow_multiple_p_ck
 				check (allow_multiple_p in ('t','f')),
+	sort_order_type		varchar(20),
+	item_answer_alignment	varchar(20)
 );
