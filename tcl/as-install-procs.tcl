@@ -118,21 +118,21 @@ content::type::attribute::new -content_type {as_items} -attribute_name {field_co
 content::type::attribute::new -content_type {as_items} -attribute_name {required_p}           -datatype {boolean} -pretty_name {Item Required}   -column_spec {char(1)}
 content::type::attribute::new -content_type {as_items} -attribute_name {data_type}            -datatype {string}  -pretty_name {Item Data Type}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_items} -attribute_name {max_time_to_complete} -datatype {number}  -pretty_name {Item Max Time to Complete} -column_spec {integer}
-content::type::attribute::new -content_type {as_items} -attribute_name {feedback_wrong}    -datatype {string} -pretty_name {Item Right Feedback} -column_spec {text}
-content::type::attribute::new -content_type {as_items} -attribute_name {feedback_right}    -datatype {string} -pretty_name {Item Wrong Feedback} -column_spec {text}
+content::type::attribute::new -content_type {as_items} -attribute_name {feedback_wrong}    -datatype {text} -pretty_name {Item Right Feedback} -column_spec {text}
+content::type::attribute::new -content_type {as_items} -attribute_name {feedback_right}    -datatype {text} -pretty_name {Item Wrong Feedback} -column_spec {text}
 content::type::attribute::new -content_type {as_items} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this item} -column_spec {integer}
 
 # Sections
 content::type::attribute::new -content_type {as_sections} -attribute_name {display_type_id}      -datatype {number}  -pretty_name {Section Display Type}  -column_spec {integer}
-content::type::attribute::new -content_type {as_sections} -attribute_name {instructions}      -datatype {string}  -pretty_name {Section Instructions}  -column_spec {text}
+content::type::attribute::new -content_type {as_sections} -attribute_name {instructions}      -datatype {text}  -pretty_name {Section Instructions}  -column_spec {text}
 content::type::attribute::new -content_type {as_sections} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed in this section}  -column_spec {integer}
-content::type::attribute::new -content_type {as_sections} -attribute_name {feedback_text}      -datatype {string}  -pretty_name {Section Feedback}  -column_spec {text}
+content::type::attribute::new -content_type {as_sections} -attribute_name {feedback_text}      -datatype {text}  -pretty_name {Section Feedback}  -column_spec {text}
 content::type::attribute::new -content_type {as_sections} -attribute_name {max_time_to_complete}      -datatype {number}  -pretty_name {Section Max Time to Complete}  -column_spec {integer}
 content::type::attribute::new -content_type {as_sections} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this section} -column_spec {integer}
 
 # Section Display Types
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed per page}  -column_spec {integer}
-content::type::attribute::new -content_type {as_section_display_types} -attribute_name {adp_chunk}      -datatype {string}  -pretty_name {Section Display Template}  -column_spec {text}
+content::type::attribute::new -content_type {as_section_display_types} -attribute_name {adp_chunk}      -datatype {text}  -pretty_name {Section Display Template}  -column_spec {text}
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {branched_p}      -datatype {boolean}  -pretty_name {Section Branched}  -column_spec {char(1)}
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {back_button_p}      -datatype {boolean}  -pretty_name {Back button allowed}  -column_spec {char(1)}
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {submit_answer_p}      -datatype {boolean}  -pretty_name {Seperate submit for each answer}  -column_spec {char(1)}
@@ -140,7 +140,7 @@ content::type::attribute::new -content_type {as_section_display_types} -attribut
 
 # Assessments
 content::type::attribute::new -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
-content::type::attribute::new -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {instructions}            -datatype {text}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {run_mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {anonymous_p}         -datatype {boolean} -pretty_name {Assessment Anonymous} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {secure_access_p}         -datatype {boolean} -pretty_name {Assessment Secure Access} -column_spec {char(1)}
@@ -148,7 +148,7 @@ content::type::attribute::new -content_type {as_assessments} -attribute_name {re
 content::type::attribute::new -content_type {as_assessments} -attribute_name {show_item_name_p}         -datatype {boolean} -pretty_name {Assessment Show question titles} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {entry_page}            -datatype {string}  -pretty_name {Assessment Customizable Entry page}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {exit_page}            -datatype {string}  -pretty_name {Assessment Customizable Thank/Exit page}  -column_spec {varchar(50)}
-content::type::attribute::new -content_type {as_assessments} -attribute_name {consent_page}            -datatype {string}  -pretty_name {Assessment Consent Pages}  -column_spec {text}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {consent_page}            -datatype {text}  -pretty_name {Assessment Consent Pages}  -column_spec {text}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {return_url}            -datatype {string}  -pretty_name {Assessment Return URL}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {start_time}            -datatype {number}  -pretty_name {Assessment Start Time}  -column_spec {timestamptz}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {end_time}            -datatype {number}  -pretty_name {Assessment End Time}  -column_spec {timestamptz}
@@ -190,7 +190,7 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {as_i
 content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id}     -datatype {number}  -pretty_name {Section ID}     -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {is_unknown_p} -datatype {boolean}  -pretty_name {Is Unknown} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {boolean_answer} -datatype {boolean} -pretty_name {Boolean Answer} -column_spec {boolean}
-content::type::attribute::new -content_type {as_item_data} -attribute_name {clob_answer} -datatype {string} -pretty_name {Clob Answer} -column_spec {text}
+content::type::attribute::new -content_type {as_item_data} -attribute_name {clob_answer} -datatype {text} -pretty_name {Clob Answer} -column_spec {text}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {numeric_answer} -datatype {number}  -pretty_name {Numeric Answer} -column_spec {numeric}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {integer_answer} -datatype {number}  -pretty_name {Integer Answer} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {text_answer}    -datatype {string}  -pretty_name {Text Answer}    -column_spec {varchar(500)}
