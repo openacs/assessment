@@ -118,5 +118,5 @@ ad_proc -public as::item_type_sa::process {
 
     Process a Response to a Short Answer Type
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -text_answer $response -points ""
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -text_answer [lindex $response 0] -points ""
 }

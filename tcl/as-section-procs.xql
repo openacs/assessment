@@ -52,12 +52,15 @@
 <fullquery name="as::section::items.get_sorted_items">
 	<querytext>
 
-	select s.as_item_id, r.title, r.description, i.subtext, m.required_p, m.max_time_to_complete
-	from as_session_items s, as_items i, as_item_section_map m, cr_revisions r
+	select s.as_item_id, ci.name, r.title, r.description, i.subtext, m.required_p,
+	       m.max_time_to_complete
+	from as_session_items s, as_items i, as_item_section_map m, cr_revisions r,
+	     cr_items ci
 	where s.session_id = :session_id
 	and s.section_id = :section_id
 	and i.as_item_id = s.as_item_id
 	and r.revision_id = i.as_item_id
+	and ci.item_id = r.item_id
 	and m.as_item_id = s.as_item_id
 	and m.section_id = s.section_id
 	order by s.sort_order

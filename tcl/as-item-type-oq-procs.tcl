@@ -118,5 +118,5 @@ ad_proc -public as::item_type_oq::process {
 
     Process a Response to an Open Question Type
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -clob_answer $response -points ""
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -clob_answer [lindex $response 0] -points ""
 }

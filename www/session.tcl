@@ -33,7 +33,6 @@ set session_attempt [db_string session_attempt {}]
 if {[empty_string_p $assessment_data(show_feedback)]} {
     set assessment_data(show_feedback) "all"
 }
-    set assessment_data(show_feedback) "all"
 
 # show_feedback: none, all, incorrect, correct
 

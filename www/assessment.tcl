@@ -63,6 +63,8 @@ db_transaction {
 	# show next items on section page
 	set item_list [lreplace $item_list 0 [expr $item_order-1]]
     }
+    set old_item_order $item_order
+    set old_section_order $section_order
     if {![empty_string_p $display(num_items)]} {
 	if {[llength $item_list] > $display(num_items)} {
 	    # next page: more items of this section
@@ -92,19 +94,40 @@ db_transaction {
 	{ session_id:text {value $session_id} }
     }
 
-    multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html
+    multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p
 
     foreach one_item $item_list {
 	util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete
 
-	if {$assessment_data(reuse_reponses_p) == "t"} {
-	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
+	set default_value ""
+	set submitted_p f
+	if {$display(submit_answer_p) != "t"} {
+	    # no seperate submit of each item
+	    if {$assessment_data(reuse_responses_p) == "t"} {
+		set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
+	    }
+	    set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value]
 	} else {
-	    set default_value ""
+	    # submit each item seperately
+	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id]
+	    if {![empty_string_p $default_value]} {
+		# value already submitted
+		set submitted_p t
+		set mode display
+	    } else {
+		# value not submitted yet. get older submitted value if necessary
+		set mode edit
+		if {$assessment_data(reuse_responses_p) == "t"} {
+		    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
+		}
+	    }
+	    ad_form -name show_item_form_$as_item_id -mode $mode -action process-response -html {enctype multipart/form-data} -export {assessment_id section_id} -form {
+		{ session_id:text {value $session_id} }
+		{ section_order:text {value $old_section_order} }
+		{ item_order:text {value $old_item_order} }
+	    }
+	    set presentation_type [as::item_form::add_item_to_form -name show_item_form_$as_item_id -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value]
 	}
-
-	# todo: pass required_p
-	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value]
 
 	# Fill in the blank item. Replace all <textbox> that appear in the title by an <input> of type="text"
 	if {$presentation_type == {tb}} {
@@ -112,7 +135,7 @@ db_transaction {
 	}
 	set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 
-	multirow append items $as_item_id $name $title $description $subtext $required_p $max_time_to_complete $presentation_type ""
+	multirow append items $as_item_id $name $title $description $subtext $required_p $max_time_to_complete $presentation_type "" $submitted_p
     }
 }
 

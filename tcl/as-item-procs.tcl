@@ -31,7 +31,7 @@ ad_proc -public as::item::new {
     db_transaction {
 	set item_item_id [db_nextval acs_object_id_seq]
 	if {[empty_string_p $name]} {
-	    set name "ITE_$item_item_id"
+	    set name "QUE_$item_item_id"
 	}
         set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -title $title ]
         set as_item_id [content::revision::new -item_id $item_item_id \
@@ -143,7 +143,7 @@ ad_proc -public as::item::copy {
 
 	set item_item_id [db_nextval acs_object_id_seq]
 	if {[empty_string_p $name]} {
-	    set name "ITE_$item_item_id"
+	    set name "QUE_$item_item_id"
 	}
         set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -title $title ]
         set new_item_id [content::revision::new \
