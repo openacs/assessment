@@ -18,6 +18,7 @@
   <msg key="Anonymous_Responses">Anonymous Responses</msg>
   <msg key="anonymous_users_allow">Anonymous respondents allowed</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
+  <msg key="Assessment">Assessment</msg>
   <msg key="Assessment_Administration">Assessment Administration</msg>
   <msg key="Assessment_Imported_Correctly">Assessment Imported Correctly</msg>
   <msg key="Assessment_Title">Title</msg>
@@ -108,6 +109,7 @@
   <msg key="Review_Asessment">Review Assessment</msg>
   <msg key="Rulebased_branching">Rule-based Branching</msg>
   <msg key="Score">Score</msg>
+  <msg key="section">SECTION</msg>
   <msg key="Secure_Access_1">Secure Access Required</msg>
   <msg key="secure_access_require">Secure access required</msg>
   <msg key="Send_bulkmail">Send bulk mail</msg>
@@ -128,6 +130,7 @@
   <msg key="Summary">Summary</msg>
   <msg key="time_for_completion">Seconds allowed for completion</msg>
   <msg key="time_response">%assessment_data.time_for_response% seconds maximum response time</msg>
+  <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
   <msg key="Time_spent">Time spent</msg>
   <msg key="time_to_wait">Retry allowed after %assessment_data.wait_between_tries% minutes</msg>
   <msg key="Title">Title</msg>

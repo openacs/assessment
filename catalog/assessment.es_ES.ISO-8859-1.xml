@@ -18,6 +18,7 @@
   <msg key="Anonymous_Responses">Respuestas anónimas</msg>
   <msg key="anonymous_users_allow">Permitir que sea respuesto por anónimos</msg>
   <msg key="Answer_Choices">Respuestas</msg>
+  <msg key="Assessment">Assessment</msg>
   <msg key="Assessment_Administration">Administración de Assessment</msg>
   <msg key="Assessment_Imported_Correctly">Assessment importado correctamente</msg>
   <msg key="Assessment_Title">Título</msg>
@@ -108,6 +109,7 @@
   <msg key="Review_Asessment">Revisión del Examen</msg>
   <msg key="Rulebased_branching">Branching según una regla</msg>
   <msg key="Score">Puntuación</msg>
+  <msg key="section">SECCIÓN</msg>
   <msg key="Section_Navigation">Sección de Navegación</msg>
   <msg key="Secure_Access_1">Requiere Acceso Seguro</msg>
   <msg key="secure_access_require">Requiere acceso seguro</msg>
@@ -128,6 +130,7 @@
   <msg key="Summary">Resumen</msg>
   <msg key="time_for_completion">Segundos permitidos para realizar el examen</msg>
   <msg key="time_response">Número máximo de segundos en responder una pregunta</msg>
+  <msg key="This_question_will_be_corrected_by_the_teacher">Esta pregunta será corregida por el profesor</msg>
   <msg key="Time_spent">Tiempo de realización</msg>
   <msg key="time_to_wait">Minutos a esperar entre intentos</msg>
   <msg key="Title">Título</msg>
