@@ -27,10 +27,14 @@ db_multirow -extend { presentation_type html result_points feedback answered_p }
 	set answered_p t
 
 	if {$result_points < $points} {
-	    set feedback "<font color=red>$feedback_wrong</font>"
+	    if {$show_feedback != "correct"} {
+	        set feedback "<font color=red>$feedback_wrong</font>"
+	    }	
 	} else {
-	    set feedback "<font color=green>$feedback_right</font>"
-	}
+	    if {$show_feedback != "incorrect"} {
+	        set feedback "<font color=green>$feedback_right</font>"
+	    }
+	}	
     } else {
 	set result_points ""
 	set feedback ""

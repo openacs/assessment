@@ -32,7 +32,7 @@
 </td></tr>
 
 <tr><td><i> @sections.description@ </i><br></td></tr>
-<tr><td>@sections.feedback_text@</td></tr>
+<tr><td><if @assessment_data.show_feedback@ ne none>@sections.feedback_text@</if></td></tr>
 </table>      
 
 <blockquote>
