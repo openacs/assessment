@@ -82,7 +82,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			as::qti::parse_item $questestinterop 0
 		}
 	}
-	return 1
+	return $as_assessments__assessment_id
 }
 
 ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items from a XML QTI file } {
