@@ -7,7 +7,7 @@ ad_library {
 namespace eval as::section {}
 
 ad_proc -public as::section::new {
-    {-name:required}
+    {-name ""}
     {-title:required}
     {-description ""}
     {-instructions ""}
@@ -114,7 +114,7 @@ ad_proc -public as::section::new_revision {
 
 ad_proc -public as::section::copy {
     {-section_id:required}
-    {-name:required}
+    {-name ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07

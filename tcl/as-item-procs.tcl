@@ -7,7 +7,7 @@ ad_library {
 namespace eval as::item {}
 
 ad_proc -public as::item::new {
-    {-name:required}
+    {-name ""}
     {-title:required}
     {-description ""}
     {-subtext ""}
@@ -125,8 +125,8 @@ ad_proc -public as::item::new_revision {
 }
 
 ad_proc -public as::item::copy {
-    -as_item_id:required
-    -name:required
+    {-as_item_id:required}
+    {-name ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
