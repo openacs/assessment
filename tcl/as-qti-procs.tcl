@@ -8,6 +8,8 @@ ad_library {
 namespace eval as::qti {}
 
 ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
+	set as_assessments__assessment_id {}
+
 	# set utf-8 system encoding
 	encoding system utf-8
 	
