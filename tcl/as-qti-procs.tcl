@@ -672,9 +672,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		    set matmediaNodes [$response_label selectNodes {material/matimage[@uri]}]
 		    set as_item_choices__content_value [db_null]
 		    foreach matmedia $matmediaNodes {
-			set mediabasepath $basepath
-			append mediabasepath {/}
-			append mediabasepath [$matmedia getAttribute {uri}]
+			set mediabasepath [file join $basepath [$matmedia getAttribute {uri}]]
 			# insert as_file in the CR (and in the as_file table) getting the content value
 			set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
 		    }
@@ -701,9 +699,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	    #import an image as title of item
 	    set matmediaNodes [$presentation selectNodes {material/matimage[@uri]}]
 		if {[llength $matmediaNodes]>0} {  				    
-		    set mediabasepath $basepath
-		    append mediabasepath {/}
-		    append mediabasepath [$matmediaNodes getAttribute {uri}]
+		    set mediabasepath [file join $basepath [$matmediaNodes getAttribute {uri}]]
 		    # insert as_file in the CR (and in the as_file table) getting the content value
 		    set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
 		    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_choices__content_value -type as_item_content_rel
