@@ -29,17 +29,13 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				foreach node $nodesList {
 					set nodeName [$node nodeName]
 					if {$nodeName == "qticomment"} {
-						debug_print 1 "nodo:" $nodeName
 						set definitionNodes [$assessment selectNodes {qticomment/text()}]
 						set definition [lindex $definitionNodes 0]
 						set as_assessments__definition [$definition nodeValue]
-						debug_print 1 "as_assessments__definition" $as_assessments__definition
 					} elseif {$nodeName == "objectives"} {
-						debug_print 1 "nodo:" $nodeName
 						set definitionNodes [$assessment selectNodes {objectives/material/mattext/text()}]
 						set definition [lindex $definitionNodes 0]
 						set as_assessments__definition [$definition nodeValue]
-						debug_print 1 "as_assessments__definition" $as_assessments__definition
 					}
 				}
 				# assessment_id
@@ -55,11 +51,9 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					foreach node $nodesList {
 						set nodeName [$node nodeName]
 						if {$nodeName == "qticomment"} {
-							debug_print 1 "nodo:" $nodeName
 							set definitionNodes [$section selectNodes {qticomment/text()}]
 							set definition [lindex $definitionNodes 0]
 							set as_sections__definition [$definition nodeValue]
-							debug_print 1 "as_sections__definition" $as_sections__definition
 						}
 					}
 					set as_sections__section_id [expr [db_exec_plsql as_sections_section_id {}] + 1]
