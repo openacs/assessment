@@ -10,17 +10,14 @@ ad_page_contract {
     assessment_id:notnull
     {subject_id:integer,optional ""}
 } -properties {
-    context:onevalue
-    assessment_info:multirow
+    context_bar:onevalue
+    page_title:onevalue
 }
 
-set context [list "[_ assessment.Show_Sessions]"]
-set package_id [ad_conn package_id]
+set page_title "[_ assessment.Show_Sessions]"
+set context_bar [ad_context_bar $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
-
-if {[empty_string_p $subject_id]} {
-    set subject_id [ad_conn user_id]
-}
+set user_id [ad_conn user_id]
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
@@ -31,6 +28,18 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
+set admin_p [ad_permission_p $assessment_id admin]
+
+#if the user is admin he will display all sessions from all subjects
+if {$admin_p && [empty_string_p $subject_id]} {
+    set query "sessions_of_assessment_of_subject"
+} else {
+    set query "sessions_of_assessment"
+}
+
+if {[empty_string_p $subject_id] || !$admin_p} {
+    set subject_id $user_id
+}
 
 if {$assessment_data(survey_p) == "t"} {
     # Lists the identifier of sessions, the name of subjects that took this assessment,
@@ -48,8 +57,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    subject_name {
 		label {[_ assessment.Subject_Name]}
-		link_url_eval {[acs_community_member_url -user_id $subject_id]}
-
+		display_template {<if @sessions.subject_url@ not nil><a href="@sessions.subject_url@">@sessions.subject_name@</a></if><else>@sessions.subject_name@</else>}
 	    }
 	    assessment_name {
 		label {Assessment}
@@ -74,8 +82,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    subject_name {
 		label {[_ assessment.Subject_Name]}
-		link_url_eval {[acs_community_member_url -user_id $subject_id]}
-
+		display_template {<if @sessions.subject_url@ not nil><a href="@sessions.subject_url@">@sessions.subject_name@</a></if><else>@sessions.subject_name@</else>}
 	    }
 	    assessment_name {
 		label {Assessment}
@@ -87,7 +94,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    percent_score {
 		label {[_ assessment.Percent_Score]}
-		html {nowrap}
+		html {align right nowrap}
 	    }
 	} -main_class {
 	    narrow
@@ -95,21 +102,18 @@ if {$assessment_data(survey_p) == "t"} {
 }
 
 
-
-#if the user is admin he will display all sessions from all subjects
-if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
-    set query "sessions_of_assessment_of_subject"
-} else {
-    set query "sessions_of_assessment"
-}
-
-db_multirow -extend { item_url assessment_url } sessions $query {
+db_multirow -extend { subject_url assessment_url } sessions $query {
 } {
-    set item_url [export_vars -base "session" {session_id}]
     if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
 	set assessment_url [export_vars -base "assessment" {assessment_id}]
     } else {
 	set assessment_url ""
+    }
+    if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
+	set subject_name "[_ assessment.anonymous_name]"
+	set subject_url ""
+    } else {
+	set subject_url [acs_community_member_url -user_id $subject_id]
     }
 }
 

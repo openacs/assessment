@@ -1,17 +1,18 @@
 ad_page_contract {
 
-    Insert user response into database.
-    This page receives an input for each item named
-    response_to_item.$item_id
+    Thank user for completing assessment and provide link to results
 
-    @author  eperez@it.uc3m.es
-    @date    2004-09-12
+    @author Timo Hentschel (timo@timohentschel.de)
+    @date   2005-01-20
 } {
     session_id:integer,notnull
     assessment_id:integer,notnull
+} -properties {
+    context_bar:onevalue
+    page_title:onevalue
 }
 
-set context_bar [list]
-set user_id [ad_conn user_id]
+set page_title "[_ assessment.Response_Submitted]"
+set context_bar [ad_context_bar $page_title]
 
 ad_return_template

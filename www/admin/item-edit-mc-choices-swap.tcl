@@ -18,7 +18,7 @@ ad_page_contract {
     direction:notnull
 }
 
-permission::permission_p -object_id $assessment_id -privilege admin
+permission::require_permission -object_id $assessment_id -privilege admin
 
 if { $direction=="up" } {
      set next_sort_order [expr { $sort_order - 1 }]

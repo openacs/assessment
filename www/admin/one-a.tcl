@@ -11,7 +11,7 @@ ad_page_contract {
     assessment_id:integer
 }
 
-permission::permission_p -object_id $assessment_id -privilege admin
+permission::require_permission -object_id $assessment_id -privilege admin
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
@@ -38,11 +38,10 @@ set target "[export_vars -base one-a {assessment_id}]"
 set context_bar [ad_context_bar $assessment_data(title)]
 
 set notification_chunk [notification::display::request_widget \
-    -type assessment_response_notif \
-    -object_id $assessment_id \
-    -pretty_name $assessment_data(title) \
-    -url [ad_conn url]?assessment_id=$assessment_id \
-]
+			    -type assessment_response_notif \
+			    -object_id $assessment_id \
+			    -pretty_name $assessment_data(title) \
+			    -url [export_vars -base one-a {assessment_id}] ]
 
 db_multirow sections assessment_sections {} {
     if {[empty_string_p $points]} {

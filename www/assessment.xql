@@ -14,10 +14,12 @@
 
 <fullquery name="unfinished_session_id">
 	<querytext>
+
 	select max(session_id) as session_id
         from as_sessions 
-        where completed_datetime is null 
+        where completed_datetime is null
         and assessment_id = :assessment_rev_id
+
 	</querytext>
 </fullquery>
 	

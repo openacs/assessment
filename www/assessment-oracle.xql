@@ -30,28 +30,35 @@
 	</querytext>
 </fullquery>
 	
-	<fullquery name="session_start">
-		<querytext>
-    UPDATE as_sessions
-    SET creation_datetime = sysdate
-    WHERE session_id = :session_id
-		</querytext>
-	</fullquery>
+<fullquery name="session_start">
+	<querytext>
 
-	<fullquery name="session_updated">
-		<querytext>
+	update as_sessions
+	set creation_datetime = sysdate
+	where session_id = :session_id
+	and creation_datetime is null
+
+	</querytext>
+</fullquery>
+
+<fullquery name="session_updated">
+	<querytext>
+
 	UPDATE as_sessions
 	SET last_mod_datetime = sysdate
 	WHERE session_id = :session_id
-		</querytext>
-	</fullquery>
 
-	<fullquery name="session_finished">
-		<querytext>
+	</querytext>
+</fullquery>
+
+<fullquery name="session_finished">
+	<querytext>
+
 	UPDATE as_sessions
 	SET completed_datetime = sysdate
 	WHERE session_id = :session_id
-		</querytext>
-	</fullquery>
+
+	</querytext>
+</fullquery>
 
 </queryset>

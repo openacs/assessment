@@ -7,10 +7,10 @@ ad_page_contract {
     @cvs-id $Id: 
 } {
     session_id:integer
+} -properties {
+    context_bar:onevalue
+    page_title:onevalue
 }
-
-set context [list "[_ assessment.View_Results]"]
-set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 
 db_1row find_assessment {}
 
@@ -22,6 +22,14 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
+set user_id [ad_conn user_id]
+if {$subject_id != $user_id} {
+    permission::require_permission -object_id $assessment_id -privilege admin
+}
+
+set page_title "[_ assessment.View_Results]"
+set context_bar [ad_context_bar [list [export_vars -base sessions {assessment_id}] "[_ assessment.Show_Sessions]"] $page_title]
+set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 set session_user_url [acs_community_member_url -user_id $subject_id]
 
 # get start and end times
@@ -29,6 +37,12 @@ db_1row session_data {}
 
 # get the number of attempts
 set session_attempt [db_string session_attempt {}]
+
+set show_username_p 1
+# only admins are allowed to see responses of other users
+if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
+    set show_username_p 0
+}
 
 if {[empty_string_p $assessment_data(show_feedback)]} {
     set assessment_data(show_feedback) "all"

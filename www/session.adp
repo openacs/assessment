@@ -1,11 +1,11 @@
 <master>
-<property name="title">Assessment</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@page_title;noquote@</property>
+<property name="context_bar">@context_bar;noquote@</property>
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr>
 <th colspan="3" align=left>#assessment.Assessment#: <a href="assessment?assessment_id=@assessment_id@">@assessment_data.title@</a></th></tr>
-<tr><td nowrap><b>#assessment.User_ID#:</b> <span><a href="@session_user_url@">@first_names@ @last_name@</a></span></td>
+<tr><td nowrap><b>#assessment.User_ID#:</b> <span><if @show_username_p@><a href="@session_user_url@">@first_names@ @last_name@</a></if><else>#assessment.anonymous_name#</else></span></td>
 <td nowrap><b>#assessment.Attempt#:</b> <span><a href="sessions?assessment_id=@assessment_id@">@session_attempt@</a> / Unlimited</span></td>
 <td nowrap><if @assessment_data.survey_p@ in f><b>#assessment.Out_of#:</b> <span>@assessment_score@</span></if></td></tr>
 

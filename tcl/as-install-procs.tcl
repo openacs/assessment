@@ -196,6 +196,28 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {time
 content::type::attribute::new -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {integer}
+
+# notification init
+set impl_id [acs_sc::impl::new -contract_name NotificationType -name assessment_response_notif_type -owner assessment]
+acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation GetURL -alias as::notification::get_url -language TCL
+acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation ProcessReply -alias as::notification::process_reply -language TCL
+acs_sc::impl::binding::new -contract_name NotificationType -impl_name assessment_response_notif_type
+set type_id [notification::type::new -sc_impl_id $impl_id -short_name assessment_response_notif -pretty_name "Survey Response Notification" -description "Notifications for Assessment"]
+
+db_dml insert_intervals {
+    insert into notification_types_intervals
+    (type_id, interval_id)
+    select :type_id as type_id, interval_id
+    from notification_intervals
+    where name in ('instant','hourly','daily')
+}
+db_dml insert_delivery_method {
+    insert into notification_types_del_methods
+    (type_id, delivery_method_id)
+    select :type_id as type_id, delivery_method_id
+    from notification_delivery_methods
+    where short_name = 'email'
+}
 }
 
 ad_proc -public as::install::package_instantiate {
@@ -257,9 +279,36 @@ ad_proc -public as::install::after_upgrade {
 		content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id} -datatype {number} -pretty_name {Section ID} -column_spec {integer}
             }
             0.10d2 0.10d3 {
-		content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime} -datatype {number} -pretty_name {Creation Date Time} -column_spec {timestamptz}
-		content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime} -datatype {number} -pretty_name {Final Submission} -column_spec {timestamptz}
-		content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask} -datatype {string} -pretty_name {IP Mask} -column_spec {varchar(100)}
+		db_transaction {
+		    content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime} -datatype {number} -pretty_name {Creation Date Time} -column_spec {timestamptz}
+		    content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime} -datatype {number} -pretty_name {Final Submission} -column_spec {timestamptz}
+		    content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask} -datatype {string} -pretty_name {IP Mask} -column_spec {varchar(100)}
+		}
 	    }
+            0.10d3 0.10d4 {
+		db_transaction {
+		    set impl_id [acs_sc::impl::new -contract_name NotificationType -name assessment_response_notif_type -owner assessment]
+		    acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation GetURL -alias as::notification::get_url -language TCL
+		    acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation ProcessReply -alias as::notification::process_reply -language TCL
+		    acs_sc::impl::binding::new -contract_name NotificationType -impl_name assessment_response_notif_type
+
+		    set type_id [notification::type::new -sc_impl_id $impl_id -short_name assessment_response_notif -pretty_name "Survey Response Notification" -description "Notifications for Assessment"]
+
+		    db_dml insert_intervals {
+			insert into notification_types_intervals
+			(type_id, interval_id)
+			select :type_id as type_id, interval_id
+			from notification_intervals
+			where name in ('instant','hourly','daily')
+		    }
+		    db_dml insert_delivery_method {
+			insert into notification_types_del_methods
+			(type_id, delivery_method_id)
+			select :type_id as type_id, delivery_method_id
+			from notification_delivery_methods
+			where short_name = 'email'
+		    }
+		}
+            }
 	}
 }

@@ -32,6 +32,7 @@
   <msg key="allow_tries">allow %assessment_data.number_tries%</msg>
   <msg key="alphabetical">Alphabetical</msg>
   <msg key="and">AND</msg>
+  <msg key="anonymous_name">Anonymous</msg>
   <msg key="Anonymous_Responses">Anonymous Responses</msg>
   <msg key="anonymous_users_allow">Anonymous respondents allowed</msg>
   <msg key="Answer_Alignment">Answer Alignment</msg>
@@ -95,6 +96,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Choice_Orientation_help">Which orientation shall the choices have</msg>
   <msg key="choice_set">Title</msg>
   <msg key="choice_set_title">Title</msg>
+  <msg key="Confirm_Consent">Confirmation</msg>
   <msg key="Consent_Page">Consent Page</msg>
   <msg key="continue_with_copy">Continue with Copy</msg>
   <msg key="continue_with_insert">Continue with Insert</msg>
@@ -108,7 +110,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Copy_this_assess">Copy this assessment</msg>
   <msg key="Correct_Answer_Choice">Correct Answer Choice</msg>
   <msg key="Correct_Answer_help">Is this the correct answer?</msg>
-  <msg key="Created_by">- Created by</msg>
+  <msg key="Created_by">Created by</msg>
   <msg key="CSV_file">CSV file</msg>
   <msg key="Data_Type">Data Type</msg>
   <msg key="data_type_boolean">Boolean</msg>
@@ -150,6 +152,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Editable">Editable</msg>
   <msg key="Email_Options">Email Options:</msg>
   <msg key="End_Time">End Time</msg>
+  <msg key="Enter_Message">Enter Message</msg>
   <msg key="Entry_Page">Entry Page</msg>
   <msg key="error_html_options">Need to be pairs of \"key value\".</msg>
   <msg key="Exit_Page">Exit Page</msg>
@@ -218,6 +221,9 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Letter_help">First letter to limit the search to.</msg>
   <msg key="Letter_other">Other</msg>
   <msg key="limited_tries">Only %assessment_data.number_tries% tries allowed</msg>
+  <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
+  <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
+  <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
   <msg key="make_hide_item_name">Hide item name</msg>
@@ -230,6 +236,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="make_unsecure">Allow unsecure connection</msg>
   <msg key="max_time">max. time allowed:</msg>
   <msg key="mc_Title_help">A name for this set of choices (for reusability)</msg>
+  <msg key="Message_Subject">Message Subject</msg>
   <msg key="Minutes_for_Retry">Minutes required for Retry</msg>
   <msg key="Mode">Mode</msg>
   <msg key="Move_Down">Move Down</msg>
@@ -286,6 +293,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Required">Required</msg>
   <msg key="Response_Options">Response Options:</msg>
   <msg key="Response_Submitted">Response Submitted</msg>
+  <msg key="Results_by_user">Assessment results by user</msg>
   <msg key="Return_Url">Return URL</msg>
   <msg key="reuse_responses">Old responses displayed</msg>
   <msg key="Reuse_Responses_1">Reuse Responses</msg>
@@ -329,6 +337,8 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="secure_access_require">Secure access required</msg>
   <msg key="Selected_Sections">Selected Sections</msg>
   <msg key="Send_bulkmail">Send bulk mail</msg>
+  <msg key="Send_Mail">Send Mail</msg>
+  <msg key="Send_mail_to">Send mail to</msg>
   <msg key="Session">Session</msg>
   <msg key="session_time_remaining">Remaining session time: %assessment_data.pretty_remaining_time%</msg>
   <msg key="Sessions">Sessions</msg>
@@ -351,7 +361,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
   <msg key="time_for_completion">Seconds allowed for completion</msg>
   <msg key="time_for_response">Minutes allowed for completion</msg>
-  <msg key="time_response">%assessment_data.time_for_response% seconds maximum response time</msg>
+  <msg key="time_response">%assessment_data.time_for_response% minutes maximum response time</msg>
   <msg key="Time_spent">Time spent</msg>
   <msg key="time_to_wait">Retry allowed after %assessment_data.wait_between_tries% minutes</msg>
   <msg key="Title">Title</msg>
@@ -361,10 +371,11 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="unlimited_tries">Unlimited number of tries allowed</msg>
   <msg key="unsecure_access_allow">Unsecure access allowed</msg>
   <msg key="Upload_files">Upload files</msg>
-  <msg key="User_ID">User ID</msg>
+  <msg key="User_ID">User</msg>
   <msg key="Users_may_edit_their_">Users may edit their responses</msg>
   <msg key="Users_may_not_edit_th">Users may not edit their responses</msg>
   <msg key="vertical">Vertical</msg>
+  <msg key="View_all_responses">All responses</msg>
   <msg key="View_Other_Sessions">View Other Sessions</msg>
   <msg key="View_Responses">View Responses:</msg>
   <msg key="View_Results">View Results</msg>

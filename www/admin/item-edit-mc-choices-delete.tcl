@@ -15,7 +15,7 @@ ad_page_contract {
     choice_id:integer,notnull
 }
 
-permission::permission_p -object_id $assessment_id -privilege admin
+permission::require_permission -object_id $assessment_id -privilege admin
 
 db_transaction {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]

@@ -2,9 +2,7 @@
 <property name="title">#assessment.One_Assessment_data#</property>
 <property name="context_bar">@context_bar;noquote@</property>
 
-<p><a href=".">#assessment.Assessment_Administration#</a></p>
-
-<font size=+1><b>@assessment_data.title@</b></font> #assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date#</h2>
+#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date#</h2>
 
 
 <p>
@@ -20,12 +18,11 @@
         <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else></td>
 </tr>
 
-<tr class="even"><td>#assessment.View_Responses# </td><td >
+<tr class="even"><td>#assessment.View_Responses# </td><td>
 	<a href="../sessions?assessment_id=@assessment_id@">#assessment.All#</a> |
-<!--	<a href="respondents?assessment_id=@assessment_id@">#assessment.By_user#</a> |
-	<a href="responses?assessment_id=@assessment_id@">#assessment.Summary#</a> |
-	<a href="responses-export?assessment_id=@assessment_id@"> #assessment.CSV_file#</a></td>
--->
+	<a href="results-users?assessment_id=@assessment_id@">#assessment.By_user#</a> |
+<!--	<a href="results-summary?assessment_id=@assessment_id@">#assessment.Summary#</a> | -->
+	<if @assessment_data.anonymous_p@>#assessment.CSV_file#</if><else><a href="results-export?assessment_id=@assessment_id@">#assessment.CSV_file#</a></else></td>
 </tr>
 
 <tr class="odd">

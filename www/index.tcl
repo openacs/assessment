@@ -6,12 +6,12 @@ ad_page_contract {
 	@creation-date 2004-09-03
 } {
 } -properties {
-	context:onevalue
-	assessment_info:multirow
+    context_bar:onevalue
+    page_title:onevalue
 }
 
-set context [list "[_ assessment.Show_Assessments]"]
-
+set page_title "[_ assessment.Show_Assessments]"
+set context_bar [ad_context_bar]
 set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 
