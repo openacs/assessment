@@ -98,8 +98,6 @@
 
 <td><a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
 
-<a href="section-copy?section_id=@sections.section_id@&assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Copy#</a>
-
 <a href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
 
 <a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
