@@ -4,7 +4,7 @@
 
 	<fullquery name="query_all_items">
 		<querytext>
-			SELECT as_itemsx.as_item_id, as_itemsx.name, as_itemsx.title, 'radiobutton' AS presentation_type
+			SELECT as_itemsx.as_item_id, as_itemsx.name, as_itemsx.title
 			FROM as_itemsx
 		</querytext>
 	</fullquery>

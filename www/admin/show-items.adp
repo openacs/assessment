@@ -11,7 +11,7 @@
 				<td valign="top">@items.rownum@.-</td>	
 				<td colspan="3">
 					<blockquote>@items.title@
-						<if @items.presentation_type@ in radiobutton checkbox>
+						<if @items.presentation_type@ in radio checkbox>
 							<br/>
 							<br/>
 							<formgroup id="response_to_item.@items.as_item_id@">

@@ -20,7 +20,7 @@
 				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b>@items.title@</b></td></tr>
 				<tr><td colspan="4">
 					<blockquote>
-						<if @items.presentation_type@ in radiobutton checkbox>
+						<if @items.presentation_type@ in radio checkbox>
 							<formgroup id="response_to_item.@items.as_item_id@">
 								@formgroup.widget;noquote@
 								@formgroup.label;noquote@
