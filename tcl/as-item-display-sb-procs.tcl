@@ -119,14 +119,14 @@ ad_proc -public as::item_display_sb::render {
     # multiple_p
     # numerical alphabetical randomized order_of_entry
     switch -exact $sort_order_type {
-	numerical {
-	    set data [lsort -command as::assessment::compare_numbers $data]
-	}
 	alphabetical {
 	    set data [lsort -dictionary -index 0 $data]
 	}
 	randomized {
 	    set data [util::randomize_list $data]
+	}
+	default {
+	    set data [lsort -dictionary -index 0 $data]
 	}
     }
     

@@ -288,8 +288,14 @@ ad_proc -public as::section::calculate {
     }
 
     db_1row sum_of_item_points {}
+
+    # Make sure we have valid points for the calculation
     if ![exists_and_not_null section_max_points] {
 	set section_max_points 0
+    }
+
+    if ![exists_and_not_null item_points] {
+	set item_points 0
     }
 
     if {![exists_and_not_null item_max_points]||$item_max_points==0} {

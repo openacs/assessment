@@ -50,7 +50,7 @@
 	and d.as_item_id = r.revision_id
 	and r2.revision_id = :as_item_id
 	and r.item_id = r2.item_id
-	order by d.session_id decr
+	order by d.session_id desc
 
       </querytext>
 </fullquery>
