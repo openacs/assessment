@@ -16,6 +16,8 @@ ad_page_contract {
 }
 
 set context [list "[_ assessment.View_Results]"]
+#get survey_p in order to find out whether it's an assessment or a survey
+set survey_p [db_string survey_p {SELECT as_assessmentsx.survey_p FROM as_assessmentsx INNER JOIN as_sessionsx ON as_assessmentsx.assessment_id = as_sessionsx.assessment_id WHERE as_sessionsx.session_id=:session_id}]
 
 set assessment_name [db_string assessment_name {SELECT as_assessmentsx.title FROM as_assessmentsx INNER JOIN as_sessionsx ON as_assessmentsx.assessment_id = as_sessionsx.assessment_id WHERE as_sessionsx.session_id=:session_id}]
 #get the user takes a session
@@ -101,6 +103,12 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
         #if the user response is wrong, the word "Error" will be displayed in red color
         set correct_answer {<font color="#ff0000">Error</font>}
     }
+    
+    #if it's a survey we show the selected answer with out the word Error
+    if {$survey_p == {t}} {
+        set correct_answer {}
+    }
+    
     #for fill in the blank item
     if {[info exists as_item_display_tbx__item_id]} {
         if {$choice_correct} {

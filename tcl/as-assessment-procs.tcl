@@ -28,6 +28,7 @@ ad_proc -public as::assessment::new {
     {-time_for_response ""}
     {-show_feedback ""}
     {-section_navigation ""}
+    {-survey_p ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -64,7 +65,8 @@ ad_proc -public as::assessment::new {
 						   [list wait_between_tries $wait_between_tries] \
 						   [list time_for_response $time_for_response] \
 						   [list show_feedback $show_feedback] \
-						   [list section_navigation $section_navigation] ] ]
+						   [list section_navigation $section_navigation] \
+						   [list survey_p $survey_p]] ]
     }
 
     return $as_assessment_id

@@ -126,7 +126,11 @@ create table as_assessments (
 	-- how shall the navigation happen (default path, randomized, rule-based branching)
 	section_navigation varchar(50) default 'default path'
 			constraint as_assessments_section_navigation_ck
-			check (section_navigation in ('default path', 'randomized', 'rule-based branching'))
+			check (section_navigation in ('default path', 'randomized', 'rule-based branching')),
+	-- differenciate between an assessment and a survey
+	survey_p 	char(1) default 'f'
+			constraint as_assessments_survey_p_ck
+			check (survey_p in ('t', 'f'))
 );
 
 -- Style Options 
