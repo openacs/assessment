@@ -29,7 +29,7 @@ ad_proc -public as::item_answer::new {
         set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [exec uuidgen]]
         set as_item_answer_id [content::revision::new \
 				-item_id $item_answer_id \
-				-content_type {as_item_answers} \
+				-content_type {as_item_sa_answers} \
 				-title $title \
 				-attributes [list [list answer_id $answer_id ] \
 						[list data_type $data_type ] \
