@@ -23,12 +23,8 @@ create table as_actions(
 ------------------------------------------------
 
 create table as_action_map (
-	inter_item_check_id	integer
-				constraint as_action_map_check_id_fk
-				references as_inter_item_checks(inter_item_check_id),
-	action_id		integer
-				constraint as_action_map_action_id_fk 
-				references as_actions(action_id),
+	inter_item_check_id	integer,
+	action_id		integer,
 	order_by		integer,
 	user_message		varchar(200),
 	action_perform		varchar(2)
@@ -89,3 +85,4 @@ create table as_actions_log (
 );
 
 create sequence as_actions_log_action_log_id;	
+create sequence as_actions_params_parameter_id;
