@@ -62,7 +62,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
     if {[info exists as_item_display_tbx__item_id]} {
         foreach text_value $choice_title {
             if {[empty_string_p $text_answer]} { } else {
-                if {$text_answer == $text_value} { set choice_correct 1 }
+                if {[string toupper $text_answer] == [string toupper $text_value]} { set choice_correct 1 }
             }
         }
     } else {
