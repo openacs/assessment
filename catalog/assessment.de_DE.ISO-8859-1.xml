@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="assessment" package_version="0.01d" locale="de_DE" charset="ISO-8859-1">
+
+  <msg key="above">Über</msg>
+  <msg key="Absolute_Size">Absolute Größe</msg>
+  <msg key="Anonymous_Responses">Anonyme Antworten</msg>
+  <msg key="Assessment_Title">Titel</msg>
+  <msg key="Copy">Kopieren</msg>
+  <msg key="Description">Beschreibung</msg>
+  <msg key="Edit">Ändern</msg>
+  <msg key="Instructions">Anleitung</msg>
+  <msg key="Mode">Modus</msg>
+  <msg key="no">Nein</msg>
+  <msg key="Preview">Vorschau</msg>
+  <msg key="Title">Titel</msg>
+  <msg key="yes">Ja</msg>
+</message_catalog>
