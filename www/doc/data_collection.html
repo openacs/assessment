@@ -109,38 +109,25 @@
         procedurally sign all as_item_data at once if the assessment author requires only a section-level or assessment-level
         signature.</p>
     </li>
+    <li> <b>"Events" related to assessments</b> In some applications (like clinical trials), it is important to define
+      a series of "named" assessment events (like "baseline" "one month" "six months" etc) at which time assessments
+      are to be performed. Earlier we included an "event_id" attribute in data collection entities (notably as_item_data)
+      to make mapping of these events to their data easy. This denormalization makes some sense for efficiency considerations,
+      but it doesn't prove to be generally applicable enough to most contexts, so we've removed it. Instead, any 
+      client package using Assessment in this fashion should implement its own relationships (presumably with acs_rels).</li><p></p>
+    <li> <b>"Status" of data collection entities</b> An assessment author may specify different allowable steps
+      for her assessment -- such as whether a user can "save&amp;resume" between sessions, whether a second user needs
+      to "review&amp;confirm" entered data before it becomes "final", etc etc. Rather than try to anticipate these kinds
+      of workflow options (and considering that many uses of Assessment won't want to track any such status), we've 
+      decided to move this out of the data model for Assessment per se and into Workflow. Assessment authors will have
+      a UI through which they can configure an applicable workflow (defining states, roles, actions) for the assessment.</li>
     </ul>
-    <p>While this doesn't impact the datamodel structure of this data collection subsystem per se, we do add an
-      important innovation to Assessment that wasn't used in "complex survey" or
-      questionnaire. When a user initiates an Assessment Session (either by requesting the assessment form
-      to complete herself -- such as in an online survey -- or by an admin user "assigning" the assessment to be
-      performed by -- or about -- a subject at some point in the future), an entire set of
-      Assessment data collection objects is created (literally, rows are inserted into all the
-      relevant tables -- as_section_data, as_item_data). Since these are CR-based entities, this means that
-      a cr_item and the initial cr_revision record are created for each of these entities. Then when
-      the user submits a form containing responses to one or more items in the assessment, the database
-      action consists of updates in the CR, not insertions. This contrasts to the existing "survey" packages, 
-      in which "survey_response" or "survey_question_response" rows are only inserted once the user submits
-      the html form.</p>
-    <p> Why is this a good idea? Here's the use case: for an educational course, a teacher plans a set of six
-      exams that the students can complete at their own rate. The teacher wants Assessment to tell her at any
-      moment the status -- at the individual item level -- the status of each student's progress through the exam
-      series. In fact, the UI to do this should create a grid consisting of columns corresponding to the exams (and 
-      the individual exam questions in a drill-down) and rows consisting of each student. Each cell in this grid
-      will be colored red if the item is unanswered, yellow if answered but not "confirmed" (ie the student has "saved&amp;resumed"
-      the exam and wants to revise it further), and green if "confirmed" ie "handed in".</p>
-    <p>If the data collection subsystem doesn't create a set of "empty" records, the only way that procedurally this
-      kind of report can be generated is by repeatedly looping through the assessment's metadata and looking for the 
-      existence or nonexistence of corresponding records in the data collection entities for each of the students. This
-      is the way the current survey and questionnaire packages have had to do it; it is ugly, error prone, and inefficient.
-      We need to do it differently in Assessment!</p>
     <h2>Synopsis of Data-Collection Datamodel</h2>
     <p>
       Here's the schema for this subsystem:<br>
     </p>
     <p></p>
-    <center><a
-        href="http://openacs.org/storage/download/assessment-datafocus.graffle?version_id=197118">Source Graffle file</a>
+    <center>
       <p><img alt="Data Model" src="images/assessment-datafocus.jpg"
           style="width: 923px; height: 651px;"></p>
     </center>
@@ -173,8 +160,6 @@
               style="color: rgb(255, 0, 0);"></span> </li>
           <li> staff_id - references Users if someone is doing the
             Assessment as a proxy for the real subject </li>
-          <li> event_id - this is a foreign key to the "event" during which this assessment is
-            being performed -- eg "second term final" or "six-month follow-up visit" or "Q3 report".</li>
           <li> target_datetime - when the subject should do the Assessment </li>
           <li> creation_datetime - when the subject initiated the
             Assessment </li>
@@ -183,8 +168,6 @@
           <li> last_mod_datetime - the most recent submission </li>
           <li> completed_datetime - when the final submission produced a
             complete Assessment </li>
-          <li> session_status - Status of the session (and therefore of the
-            assessment with regards to the subject) </li>
           <li> ip_address - IP Address of the entry<br>
           </li>
           <li>percent_score - Current percentage of the subject achieved so
@@ -210,9 +193,6 @@
           <li> section_id </li>
           <li> subject_id </li>
           <li> staff_id </li>
-          <li> event_id - this is a foreign key to the "event" during which this assessment is
-            being performed -- eg "second term final" or "six-month follow-up visit" or "Q3 report".</li>
-          <li>section_status </li>
         </ul>
         <p> </p>
       </li>
@@ -233,17 +213,6 @@
           <li> subject_id </li>
           <li> staff_id </li>
           <li> item_id</li>
-          <li> item_status - Status of the answer; defaults to "unanswered". Other options could include
-            "submitted, deferred, confirmed, final, is_unknown" -- but this shouldn't be hard-wired into the sql but
-            rather be something that can be configured via categories. Note that this single field
-            can replace the previous "is_unknown_p" field which we previously added.
-            This field is important to clearly
-            distinguish an Item value that is unanswered from a value that means
-            "We've looked for this answer and it doesn't exist" or "I don't know
-            the answer to this". Put another way, if none of the other "value"
-            attributes in this table have values, did the subject just decline to
-            answer it? Or is the "answer" actually this: "there is no answer". This
-            attribute toggles that clearly when set to "is_unknown".</li>
           <li> choice_id_answer - references as_item_choices </li>
           <li> boolean_answer </li>
           <li> numeric_answer </li>
