@@ -24,7 +24,8 @@
         <requires url="acs-templating" version="4.1.2"/>
 	
 	 <callbacks>
-            <callback type="after-install"  proc="assessment::install::assessment_create_install"/>            
+            <callback type="after-install"  proc="assessment::install::assessment_create_install"/>
+	    <callback type="after-instantiate"  proc="assessment::install::package_instantiate"/>
         </callbacks>
 
         <parameters>

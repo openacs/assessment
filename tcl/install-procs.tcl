@@ -115,14 +115,23 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {si
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_mc} -relation_tag {as_item_type_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_rb} -relation_tag {as_item_display_rel}
 
-set folder_id [content::folder::new -name {as_items} -package_id [ad_conn package_id] ]
-content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_mc} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_rb} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_section_data} -include_subtypes t
-content::folder::register_content_type -folder_id $folder_id -content_type {as_item_data} -include_subtypes t
+}
+
+ad_proc -public assessment::install::package_instantiate {
+    
+    Define folders
+    
+} {
+
+    set folder_id [content::folder::new -name {as_items} -package_id [ad_conn package_id] ]
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_mc} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_rb} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_section_data} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_data} -include_subtypes t
+
 }
