@@ -27,7 +27,8 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			# There are assessments
 			foreach assessment $assessmentNodes {
 				set as_assessments__title [$assessment getAttribute {title} {Assessment}]
-				set as_assessments__name [$assessment getAttribute {ident}]
+				#set as_assessments__name [$assessment getAttribute {ident}]
+				set as_assessments__name [ad_generate_random_string]
 				set nodesList [$assessment childNodes]
 				set as_assessments__definition ""
 				set as_assessments__instructions ""
@@ -61,7 +62,8 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				foreach section $sectionNodes {
 					set as_assessment_section_map__sort_order 0
 					set as_sections__title [$section getAttribute {title} {Section}]
-					set as_sections__name [$section getAttribute {ident}]
+					#set as_sections__name [$section getAttribute {ident}]
+					set as_sections__name [ad_generate_random_string]
 					set nodesList [$section childNodes]
 					set as_sections__definition ""
 					foreach node $nodesList {
@@ -105,7 +107,8 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		# Order of the item_choices
 		set sort_order 0
 		set as_items__title [$item getAttribute {title} {Item}]
-		set as_items__name [$item getAttribute {ident}]
+		#set as_items__name [$item getAttribute {ident}]
+		set as_items__name [ad_generate_random_string]
 		array set as_item_choices__correct_answer_p {}
 		array set as_item_choices__score {}
 		set as_items__feedback_right {}
@@ -203,7 +206,8 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 							append as_items__title " "
 						}
 					} elseif {[$node nodeName] == {response_str} || [$node nodeName] == {response_num} } {
-						set as_item_choices__ident [$node getAttribute {ident}]
+						#set as_item_choices__ident [$node getAttribute {ident}]
+						set as_item_choices__ident [ad_generate_random_string]
 						# get the correct response
 						set as_item_choices__choice_text_nodes [$node selectNodes "//conditionvar/or/varequal\[@respident='$as_item_choices__ident'\]/text()"]
 						set as_item_choices__choice_text {}
@@ -226,7 +230,8 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
 				set response_lid [lindex $response_lidNodes 0]
-				set as_item_type__name [$response_lid getAttribute {ident}]
+				#set as_item_type__name [$response_lid getAttribute {ident}]
+				set as_item_type__name [ad_generate_random_string]
 				set as_items__rcardinality [$response_lid getAttribute {rcardinality} {Single}]
 				
 				# multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
@@ -245,7 +250,8 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
-					set as_item_choices__ident [$response_label getAttribute {ident}]
+					#set as_item_choices__ident [$response_label getAttribute {ident}]
+					set as_item_choices__ident [ad_generate_random_string]
 					set mattextNodes [$response_label selectNodes {material/mattext/text()}]
 					set as_item_choices__choice_text [db_null]
 					foreach mattext $mattextNodes {
