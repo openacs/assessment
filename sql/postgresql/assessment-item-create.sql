@@ -64,6 +64,8 @@ create table as_item_choices (
 			check (correct_answer_p in ('t','f')),
 	-- the order this choice will appear with regards to the MC item.
 	sort_order	integer,
+	-- fixed position in display. 0 for default, negative values relative to end
+	fixed_position	integer,
 	-- this is where points are stored
 	percent_score		integer
 			constraint as_item_choices_percent_score_ck
