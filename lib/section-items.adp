@@ -36,6 +36,11 @@
 
 <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Search_Item#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
 
+<if @items.mc_type@ ne "nmc">
+<a
+href="../admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">Add Trigger</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
+</if>
+
 <if @items.rownum@ lt @items:rowcount@>
   <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=down"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
 </if>
@@ -67,6 +72,7 @@
     </elseif>
     <else>
       <formwidget id="response_to_item.@items.as_item_id@">
+
     </else>
     <if @items.subtext@ not nil>
       <div class="form-help-text">
