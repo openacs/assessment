@@ -199,6 +199,8 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# calculate session points at end of session
 	as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	db_dml session_finished {}
+	as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+        as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {[empty_string_p $assessment_data(return_url)]} {
 	    ad_returnredirect [export_vars -base finish {session_id assessment_id}]
 	} else {
@@ -278,7 +280,6 @@ foreach one_item $item_list {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
                    ns_log \"--------------> branch check\"
-                  
                    set section_to_tmp \[as::assessment::checks::branch_checks -item_id \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
@@ -325,6 +326,7 @@ if {$display(submit_answer_p) != "t"} {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
                    ns_log notice \"--------------> branch check \$response_item_id \"
+                   
                    set item_to \$response_item_id
                    set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$item_to -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
@@ -336,11 +338,13 @@ if {$display(submit_answer_p) != "t"} {
 
 		set points \[ad_decode \$points \"\" 0 \$points\]
 		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response_to_item(\$response_item_id) -max_points \$points -allow_overwrite_p \$display(back_button_p)
+
 	    }
 
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
+                as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	    }
 	}
     }"
@@ -359,6 +363,8 @@ if {$display(submit_answer_p) != "t"} {
 	    # calculate session points at end of session
 	    as::assessment::calculate -session_id \$session_id -assessment_id \$assessment_rev_id
 	    db_dml session_finished {}
+            as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+            as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {\[empty_string_p \$assessment_data(return_url)\]} {
 		ad_returnredirect \[export_vars -base finish {session_id assessment_id}\]
 	    } else {
@@ -401,6 +407,8 @@ if {$display(submit_answer_p) != "t"} {
 	    # calculate session points at end of session
 	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	    db_dml session_finished {}
+	    as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+            as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {[empty_string_p $assessment_data(return_url)]} {
 		ad_returnredirect [export_vars -base finish {session_id assessment_id}]
 	    } else {
