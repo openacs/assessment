@@ -10,6 +10,8 @@ ad_page_contract {
     section_id:integer
     check_id:optional
     edit_check:optional
+    by_item_p:optional
+    item_id:optional
 }
 
 permission::require_permission -object_id $assessment_id -privilege admin
@@ -31,8 +33,17 @@ set return_url ""
 if {[info exists edit_check]} {
     set return_url "&check_id=$check_id&edit_check=t"
   
-} 
-ad_form -name get_action -export {edit_p action_perform_value action_value return_url} -form {
+}
+if {[info exists by_item_p]} {
+    if { $by_item_p == 1} {
+	append return_url "&by_item_p=$by_item_p&item_id=$item_id"
+    } else {
+	append return_url "&by_item_p=$by_item_p"
+    }
+}
+
+ 
+ad_form -name get_action -export {edit_p action_perform_value action_value return_url by_item_p item_id} -form {
     check_id:key
     {inter_item_check_id:text(hidden)
 	{value $inter_item_check_id}}

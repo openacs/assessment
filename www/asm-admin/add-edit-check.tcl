@@ -11,6 +11,8 @@ ad_page_contract {
     inter_item_check_id:optional
     edit_check:optional
     type:optional
+    by_item_p:optional
+    item_id:optional
 }
 
 permission::require_permission -object_id $assessment_id -privilege admin
@@ -51,7 +53,14 @@ if {[exists_and_not_null edit_check]} {
     if { ![exists_and_not_null type]} {
     set return_url "&check_id=$inter_item_check_id&edit_check=t"
     } 
-   
+    
+}
+if {[exists_and_not_null by_item_p]} {
+    if {$by_item_p==1} {
+	    append return_url "&item_id=$item_id&by_item_p=$by_item_p"
+	} else  {
+	    append return_url "&by_item_p=$by_item_p"
+	}
 }
 ad_form -name new_check -export {assessment_id return_url} -form {
     
@@ -110,6 +119,8 @@ ad_form -name new_check -export {assessment_id return_url} -form {
     set check_sql [as::assessment::check::get_sql -condition $condition -item_id $item_id]
     db_dml update_check {}
 } -after_submit {
+    
+    
     set url [as::assessment::check::add_check_return_url $action_p]
     ad_returnredirect "${url}?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&section_id=$section_id_from$return_url"
 

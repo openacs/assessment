@@ -11,6 +11,8 @@ ad_page_contract {
     action_id:integer
     check_id:optional
     edit_check:optional
+    item_id:optional
+    by_item_p:optional
 }
 
 permission::require_permission -object_id $assessment_id -privilege admin
@@ -20,12 +22,23 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
 }
+
+set return_url "one-a?assessment_id=$assessment_id"
 set title $assessment_data(title)
 set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "[_ assessment.action_params]" ]
 
-set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
-	
-set new_section_revision [db_string get_section_id {select max(revision_id) from cr_revisions where item_id=:section_id}]
+set new_assessment_revision $assessment_data(assessment_rev_id)
+
+if {[exists_and_not_null by_item_p]} {
+    set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
+    
+    if {$by_item_p == 1} {
+	append return_url "&by_item_p=$by_item_p&item_id=$item_id"
+    } else {
+	append return_url "&by_item_p=$by_item_p"
+    }
+}
+
 
 set has_params_p [db_string has_params {} -default 0]
 
@@ -36,7 +49,7 @@ if {$has_params_p == 0} {
 set action_perform [db_string get_perform {} -default " "]
 set title "[_ assessment.action_params]"
 
-ad_form -name get_params -export { assessment_id section_id action_perform} -form {
+ad_form -name get_params -export { assessment_id section_id action_perform by_item_p item_id} -form {
     
     check_id:key
     {inter_item_check_id:text(hidden)
@@ -91,6 +104,6 @@ ad_form -extend -name get_params -new_data {
     }
     
 } -on_submit {
-    ad_returnredirect "one-a?assessment_id=$assessment_id"
+    ad_returnredirect $return_url 
 }
 

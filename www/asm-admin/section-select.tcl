@@ -8,23 +8,38 @@ ad_page_contract {
     assessment_id:integer
     inter_item_check_id:integer
     section_id:integer
+    by_item_p:optional
+    item_id:optional
 }
+
 permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
+
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
 }
-set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
-set new_section_revision [db_string get_section_id {select max(revision_id) from cr_revisions where item_id=:section_id}]
 
+set return_url "one-a?assessment_id=$assessment_id"
+
+if { [exists_and_not_null  by_item_p] } {
+    if { $by_item_p == 1} {
+	set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id&item_id=$item_id"
+    } else {
+	set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
+    }
+}
+
+
+
+set new_assessment_revision $assessment_data(assessment_rev_id)
 set sections_list [db_list_of_lists get_sections {}]
 
 set title $assessment_data(title)
 set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
 
 set title "[_ assessment.section_select]"
-ad_form -name get_section -form {
+ad_form -name get_section -export {by_item_p item_id} -form {
     inter_item_check_id:key
     {assessment_id:text(hidden)
 	{value $assessment_id}}
@@ -44,8 +59,9 @@ ad_form -name get_section -form {
 } -edit_request {
     db_1row get_section {}
 } -edit_data {
-	db_dml update_check {}
-
+    db_dml update_check {}
+    
 } -on_submit {
-    ad_returnredirect "one-a?assessment_id=$assessment_id"
+    ad_returnredirect $return_url 
+    
 }

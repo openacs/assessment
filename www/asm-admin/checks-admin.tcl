@@ -7,11 +7,41 @@ ad_page_contract {
 } {
     assessment_id:integer
     section_id
+    item_id:optional
+    
 }
 
 permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 set new_assessment_revision $assessment_data(assessment_rev_id)
+set check_list ""
+set show_p 1
+set by_item_p 0
+set item_p ""
+
+if {[exists_and_not_null item_id]} {
+    set show_p 0
+    set by_item_p 1
+    set item_p "&item_id=$item_id"
+    set check_list "and c.inter_item_check_id in ("
+    set checks [db_list_of_lists get_all_checks { }]
+    
+    foreach check $checks {
+	set cond_list  [split [lindex $check 1] "="]
+	set as_item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	if { $item_id == $as_item_id} {
+	    append check_list "[lindex $check 0],"
+	}
+	
+    } 
+    set check_list [string range $check_list 0 [expr [string length $check_list] -2]]
+    append  check_list ")"
+} 
+
+db_multirow aa_checks get_aa_checks {} 
+db_multirow i_checks  get_i_checks {}    
+db_multirow branches  get_branches {}
+db_multirow m_checks  get_m_checks {}
 
 
 if {![info exists assessment_data(assessment_id)]} {
@@ -22,7 +52,7 @@ if {![info exists assessment_data(assessment_id)]} {
 set title "$assessment_data(title)"
 set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title [_ assessment.Administration]"]
 
-db_multirow aa_checks get_aa_checks {} 
+
 
 template::list::create \
     -name aa_checks \
@@ -43,7 +73,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@aa_checks.inter_item_check_id@&edit_check=t><img border=0 src=images/Edit16.gif></a>  @aa_checks.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@aa_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @aa_checks.name@
 	    }
 	}
 	action_name {
@@ -51,11 +81,13 @@ template::list::create \
 	}
 	counter {
 	    display_template {    
+		<if $show_p eq 1>
 		<if @aa_checks.order_by@ lt @aa_checks:rowcount@>
 		<a href="swap-actions?assessment_id=$assessment_id&check_id=@aa_checks.inter_item_check_id@&order_by=@aa_checks.order_by@&section_id=@aa_checks.section_id_from@&action_perform=@aa_checks.action_perform@&direction=d"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
 		</if>
 		<if @aa_checks.order_by@ gt 1>
 		<a href="swap-actions?assessment_id=$assessment_id&check_id=@aa_checks.inter_item_check_id@&order_by=@aa_checks.order_by@&section_id=@aa_checks.section_id_from@&action_perform=@aa_checks.action_perform@&direction=u"><img src="../graphics/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+		</if>
 		</if>
 		<a href=request-notification?assessment_id=$assessment_id&inter_item_check_id=@aa_checks.inter_item_check_id@&section_id=$section_id>#assessment.notify_user#</a>
 		
@@ -65,7 +97,7 @@ template::list::create \
     }
 
 
-db_multirow i_checks  get_i_checks {}
+
 template::list::create \
     -name i_checks \
     -multirow i_checks \
@@ -85,19 +117,21 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@i_checks.inter_item_check_id@&edit_check=t><img border=0 src=images/Edit16.gif></a>  @i_checks.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@i_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @i_checks.name@
 	    }
 	}
 	action_name {
 	    label "[_ assessment.action_to_perform]"
 	}
 	inter_item_check_id {
-	    display_template {    
+	    display_template {   
+		<if $show_p eq 1>
 		<if @i_checks.order_by@ lt @i_checks:rowcount@>
 		<a href="swap-actions?assessment_id=$assessment_id&check_id=@i_checks.inter_item_check_id@&order_by=@i_checks.order_by@&section_id=@i_checks.section_id_from@&action_perform=@i_checks.action_perform@&direction=d"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
 		</if>
 		<if @i_checks.order_by@ gt 1>
 		    <a href="swap-actions?assessment_id=$assessment_id&check_id=@i_checks.inter_item_check_id@&order_by=@i_checks.order_by@&section_id=@i_checks.section_id_from@&action_perform=@i_checks.action_perform@&direction=u"><img src="../graphics/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+		</if>
 		</if>
 		<a href=request-notification?assessment_id=$assessment_id&inter_item_check_id=@i_checks.inter_item_check_id@&section_id=$section_id>#assessment.notify_user#</a>
 	    }
@@ -106,7 +140,7 @@ template::list::create \
 
 
 
-db_multirow m_checks  get_m_checks {}
+
 template::list::create \
     -name m_checks \
     -multirow m_checks \
@@ -126,7 +160,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@m_checks.inter_item_check_id@&edit_check=t><img border=0 src=images/Edit16.gif></a>  @m_checks.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@m_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @m_checks.name@
 	    }
 	}
 	action_name {
@@ -139,7 +173,7 @@ template::list::create \
 	}
     }
 
-db_multirow branches  get_branches {}
+
 template::list::create \
     -name branches \
     -multirow branches \
@@ -159,7 +193,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@branches.inter_item_check_id@&edit_check=t&type=b><img border=0 src=images/Edit16.gif></a>  @branches.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@branches.inter_item_check_id@&edit_check=t&type=b&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @branches.name@
 	    }
 	}
 	section_id_to {
