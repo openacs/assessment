@@ -26,16 +26,21 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			foreach assessment $assessmentNodes {
 				set as_assessments__name [$assessment getAttribute {title}]
 				set nodesList [$assessment childNodes]
+				set as_assessments__definition "NULL"
 				foreach node $nodesList {
 					set nodeName [$node nodeName]
 					if {$nodeName == "qticomment"} {
 						set definitionNodes [$assessment selectNodes {qticomment/text()}]
-						set definition [lindex $definitionNodes 0]
-						set as_assessments__definition [$definition nodeValue]
+						if {[llength $definitionNodes] != 0} {
+							set definition [lindex $definitionNodes 0]
+							set as_assessments__definition [$definition nodeValue]
+						}
 					} elseif {$nodeName == "objectives"} {
 						set definitionNodes [$assessment selectNodes {objectives/material/mattext/text()}]
-						set definition [lindex $definitionNodes 0]
-						set as_assessments__definition [$definition nodeValue]
+						if {[llength $definitionNodes] != 0} {
+							set definition [lindex $definitionNodes 0]
+							set as_assessments__definition [$definition nodeValue]
+						}
 					}
 				}
 				# assessment_id
@@ -47,13 +52,15 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				foreach section $sectionNodes {
 					set as_sections__name [$section getAttribute {title}]
 					set nodesList [$section childNodes]
-					set as_sections__definition "N"
+					set as_sections__definition "NULL"
 					foreach node $nodesList {
 						set nodeName [$node nodeName]
 						if {$nodeName == "qticomment"} {
 							set definitionNodes [$section selectNodes {qticomment/text()}]
-							set definition [lindex $definitionNodes 0]
-							set as_sections__definition [$definition nodeValue]
+							if {[llength $definitionNodes] != 0} {
+								set definition [lindex $definitionNodes 0]
+								set as_sections__definition [$definition nodeValue]
+							}
 						}
 					}
 					set as_sections__section_id [expr [db_exec_plsql as_sections_section_id {}] + 1]
