@@ -25,8 +25,8 @@
 <querytext>
 
 	insert into as_assessment_section_map
-	(select :new_assessment_id as assessment_id, section_id, feedback_text,
-	        max_time_to_complete, sort_order
+	(select :new_assessment_id as assessment_id, section_id,
+	        max_time_to_complete, sort_order, points
 	 from as_assessment_section_map
 	 where assessment_id = :assessment_id)
 

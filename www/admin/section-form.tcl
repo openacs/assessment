@@ -34,13 +34,24 @@ set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] 
 set package_id [ad_conn package_id]
 
 set display_types [db_list_of_lists section_display_types {}]
-set display_types [concat [list [list "" ""]] $display_types]
+set display_types [concat [list [list "[_ assessment.section_new_display]" ""]] $display_types]
 
-
-set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 
 ad_form -name section_form -action section-form -export { assessment_id after } -form {
     {section_id:key}
+}
+
+if {[info exists section_id]} {
+    ad_form -extend -name section_form -form {
+	{name:text(inform) {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Name_help]"}}
+    }
+} else {
+    ad_form -extend -name section_form -form {
+	{name:text {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Name_help]"}}
+    }
+}
+
+ad_form -extend -name section_form -form {
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Description_help]"}}
 }
@@ -50,21 +61,20 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 }
 
 ad_form -extend -name section_form -form {
-    {definition:text(textarea),optional {label "[_ assessment.Definition]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Definition_help]"}}
     {instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Instructions_help]"}}
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Feedback_help]"}}
     {max_time_to_complete:integer,optional {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.section_time_help]"}}
-    {section_display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.section_Display_Type_help]"}}
-    {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.section_Required_help]"}}
+    {points:integer,optional {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+    {display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.section_Display_Type_help]"}}
 } -new_request {
+    set name ""
     set title ""
     set description ""
-    set definition ""
     set instructions ""
     set feedback_text ""
     set max_time_to_complete ""
-    set section_display_type_id ""
-    set required_p t
+    set points ""
+    set display_type_id ""
 } -edit_request {
     db_1row section_data {}
 } -on_submit {
@@ -74,14 +84,14 @@ ad_form -extend -name section_form -form {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 
 	set section_id [as::section::new \
+			    -name $name \
 			    -title $title \
 			    -description $description \
-			    -definition $definition \
 			    -instructions $instructions \
 			    -feedback_text $feedback_text \
 			    -max_time_to_complete $max_time_to_complete \
-			    -required_p $required_p \
-			    -section_display_type_id $section_display_type_id]
+			    -points $points_p \
+			    -display_type_id $display_type_id]
 
 	db_dml move_down_sections {}
 	set sort_order [expr $after + 1]
@@ -99,12 +109,11 @@ ad_form -extend -name section_form -form {
 				-section_id $section_id \
 				-title $title \
 				-description $description \
-				-definition $definition \
 				-instructions $instructions \
 				-feedback_text $feedback_text \
 				-max_time_to_complete $max_time_to_complete \
-				-required_p $required_p \
-				-section_display_type_id $section_display_type_id]
+				-points $points \
+				-display_type_id $display_type_id]
 
 	db_dml update_section_of_assessment {}
 
@@ -113,8 +122,14 @@ ad_form -extend -name section_form -form {
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
-    ad_script_abort
+    if {[empty_string_p $display_type_id]} {
+	set section_id $new_section_id
+	ad_returnredirect [export_vars -base section-display-form {assessment_id section_id}]
+	ad_script_abort
+    } else {
+	ad_returnredirect [export_vars -base one-a {assessment_id}]
+	ad_script_abort
+    }
 }
 
 ad_return_template

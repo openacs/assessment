@@ -13,11 +13,9 @@ create table as_items (
 			constraint as_items_item_id_fk
 			references cr_revisions(revision_id),
 	-- a secondary label, needed for many kinds of questions
-	subtext	varchar(500),
-	-- a short label for use in data output header rows, etc
+	subtext		varchar(500),
+	-- a short label for use in data output header rows; default = cr_items.name
 	field_code	varchar(500),
-	-- some descriptive text
-	definition text,
 	-- whether Item must be answered (default value, can be overriden)
 	required_p	char(1) default 'f'
 			constraint as_items_required_p_ck
@@ -26,12 +24,12 @@ create table as_items (
 	data_type	varchar(50),
 	-- optional max number of seconds to perform Item
 	max_time_to_complete	integer,
-	-- a denormalization to cache the generated "widget" for the Item (NB: when any change is made to an as_item_choice related to an as_item, this will have to be updated!)
-	adp_chunk	varchar(500),
 	-- right feedback  
 	feedback_right	text,
 	-- wrong feedback
-	feedback_wrong	text
+	feedback_wrong	text,
+	-- number of points for item; might be used for defining difficulty levels
+	points		integer
 );
 
 -- contains additional information for all multiple choices (radiobutton, checkbox)

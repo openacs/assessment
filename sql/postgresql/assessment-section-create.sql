@@ -7,35 +7,29 @@
 
 --Section Display Types: define types of display for an groups of Items.
 create table as_section_display_types (
-	section_display_type_id	integer
+	display_type_id		integer
 				constraint as_section_display_types_id_pk
-				primary key,
-	-- name
-	section_type_name	varchar(25),
-	-- all-items; one-item-per-page; variable (get item groups from mapping table)
-	pagination_style	varchar(25)
-				constraint as_section_display_types_pagination_style_nn
-				not null,
+				primary key
+				constraint as_section_display_types_id_fk
+				references cr_revisions(revision_id),
+	-- number of items displayed per page
+	num_items		integer,
+	-- adp template
+	adp_chunk		text,
 	-- whether this Section defines a branch point or whether this Section simply transitions to the next Section
 	branched_p		char(1) default 'f'
 				constraint as_section_display_types_branched_p_ck
 				check (branched_p in ('t','f')),
-	-- the pattern by which 2..n Items are laid out when displayed (horizontal, vertical, matrix_col-row, matrix_row-col)
-	item_orientation	varchar(25) default 'horizontal'
-				constraint as_section_display_types_item_orientation_ck
-				check (item_orientation in ('horizontal','vertical','matrix_col-row','matrix_row-col')),
-	-- whether to display labels of the Items
-	item_labels_as_headers_p char(1) default 't'
-				 constraint as_section_display_types_item_labels_as_headers_p_ck
-				 check (item_labels_as_headers_p in ('t','f')),
-	-- May actually be superfluous
-	presentation_type	varchar(25),
-	-- the orientation between the "section description part" of the Section and the group of Items (beside-left, beside-right, bellow, above)
-	item_aligment		varchar(25)
-				constraint as_section_display_types_item_alignment_ck
-				check (item_aligment in ('beside_left','beside_right','below','above')),
-	-- other stuff like the grid dimensions
-	display_options		varchar(25)
+	-- whether the back button is not allowed to work
+	back_button_p		char(1) default 't'
+				constraint as_section_display_types_back_button_p_ck
+				check (back_button_p in ('t','f')),
+	-- whether each answer has to be submitted via a seperate button
+	submit_answer_p		char(1) default 'f'
+				constraint as_section_display_types_submit_answer_p_ck
+				check (submit_answer_p in ('t','f')),
+	-- order in which the items will appear (randomized, alphabetical, order_of_entry)
+	sort_order_type		varchar(20)
 );
 
 -- Sections: represents logically-grouped set of items 
@@ -45,21 +39,13 @@ create table as_sections (
 			primary key
 			constraint as_sections_section_id_fk
 			references cr_revisions(revision_id),
-	section_display_type_id	integer
-				constraint as_sections_section_display_type_id_fk
-				references as_section_display_types (section_display_type_id),
-	-- text used for identification and selection in admin pages, not for end-user pages
-	definition	text,
+	display_type_id	integer
+			constraint as_sections_display_type_id_fk
+			references as_section_display_types (display_type_id),
 	-- text displayed on user pages
 	instructions	text,
-	-- Maybe this isnt really useful
-	required_p	char(1) default 't'
-			constraint as_sections_required_p_ck
-			check (required_p in ('t','f')), 
-	-- References an item in the CR (for an image, audio file or video file)
-	content_value	integer,
-	-- number of points for section
-	numeric_value	integer,
+	-- number of points for section; might be used for defining difficulty levels
+	points		integer,
 	-- preset text to show user
 	feedback_text	text,
 	-- max number of seconds to perform Section
@@ -156,42 +142,32 @@ create table as_assessment_section_map (
 	section_id	integer
 			constraint as_assessment_section_map_section_id_fk
 			references as_sections (section_id),
-	-- feedback
-	feedback_text	text,
 	-- maximum time to complete a section
 	max_time_to_complete	integer,
 	-- order in which a section will be displayed
-	sort_order	integer
+	sort_order	integer,
+	-- this is the relative weight of a section in an assessment
+	points		integer
 );
 
 -- Item Section Map: defines the items of a section
 create table as_item_section_map (
 	as_item_id	integer
-		constraint as_item_section_map_item_id_fk
-		references as_items (as_item_id),
+			constraint as_item_section_map_item_id_fk
+			references as_items (as_item_id),
 	section_id	integer
 			constraint as_item_section_map_section_id_fk
 			references as_sections (section_id),
-	enabled_p	char(1) default 't'
-			constraint as_item_section_map_enabled_p_ck
-			check (enabled_p in ('t','f')),
 	-- whether Item must be answered
 	required_p	char(1) default 'f'
 			constraint as_item_section_map_required_p_ck
 			check (required_p in ('t','f')),
-	item_default	integer,
-	-- references CR
-	content_value	integer
-			constraint as_item_section_map_content_value_fk
-                        references cr_revisions,
-	-- points for the item
-	numeric_value	integer,
-	-- feedback for the item
-	feedback_text	text,
 	-- maximum time to answer the item
 	max_time_to_complete	integer,
-	-- display code
-	adp_chunk	varchar(25),
 	-- order in which items appear in a section
-	sort_order	integer
+	sort_order	integer,
+	-- fixed position in display. 0 for default, negative values relative to section end
+	fixed_position	integer,
+	-- this is the relative weight of an item in a section
+	points		integer
 );

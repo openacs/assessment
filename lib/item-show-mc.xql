@@ -18,8 +18,8 @@
 <fullquery name="get_choices">
       <querytext>
 
-    select c.choice_id, r.title, c.correct_answer_p, c.feedback_text, c.selected_p,
-           c.correct_answer_p, c.percent_score
+    select c.choice_id, r.title, c.correct_answer_p, c.feedback_text,
+           c.selected_p, c.percent_score, c.sort_order
     from as_item_choices c, cr_revisions r
     where r.revision_id = c.choice_id
     and c.mc_id = :as_item_type_id

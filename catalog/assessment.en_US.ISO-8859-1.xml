@@ -17,6 +17,7 @@
   <msg key="Add_Items">Add items to section</msg>
   <msg key="Add_New">Add new question</msg>
   <msg key="add_new_section">Add new section</msg>
+  <msg key="add_new_section_display">Add new section display</msg>
   <msg key="Add_Sections">Add sections to assessment</msg>
   <msg key="Add_to_assessment">Add to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="Add_to_section">Add to section &quot;%section_title%&quot;</msg>
@@ -39,6 +40,7 @@
   <msg key="Assessment_Title">Title</msg>
   <msg key="Attempt">Attempt</msg>
   <msg key="Author">Author</msg>
+  <msg key="Back_Button">Back button allowed</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
@@ -100,6 +102,7 @@
   <msg key="edit_item_type_sa">Edit Question: Short Answer</msg>
   <msg key="edit_item_type_oq">Edit Question: Open Question</msg>
   <msg key="edit_section">Edit Section</msg>
+  <msg key="edit_section_display">Edit Display</msg>
   <msg key="Editable">Editable</msg>
   <msg key="Email_Options">Email Options:</msg>
   <msg key="End_Time">End Time</msg>
@@ -179,6 +182,8 @@
   <msg key="Out_of">Out of</msg>
   <msg key="Percent_Score">Percent Score</msg>
   <msg key="points">points</msg>
+  <msg key="points_item">Points for Question</msg>
+  <msg key="points_section">Points for Section</msg>
   <msg key="Preview">Preview</msg>
   <msg key="Question">Question</msg>
   <msg key="Question_not_answered">Question not answered</msg>
@@ -188,6 +193,7 @@
   <msg key="reg_users_required">Registrated respondents required</msg>
   <msg key="regarding_this_assess">regarding this survey</msg>
   <msg key="remove_1">Remove:</msg>
+  <msg key="remove_choice">Remove Choice</msg>
   <msg key="remove_item">Remove Question</msg>
   <msg key="remove_section">Remove Section</msg>
   <msg key="Removes_all_questio">- Removes all questions and responses</msg>
@@ -208,7 +214,12 @@
   <msg key="Search_Section">Search and add sections</msg>
   <msg key="Search_Section_1">Search and add sections to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="section">SECTION</msg>
+  <msg key="section_Branched">Branched section</msg>
   <msg key="Section_Navigation">Section Navigation</msg>
+  <msg key="section_new_display"> -- New -- </msg>
+  <msg key="section_num_Items">Number of questions per page</msg>
+  <msg key="Section_Order">Order of questions</msg>
+  <msg key="Section_Template">Section Template</msg>
   <msg key="Sections">Sections</msg>
   <msg key="Secure_Access_1">Secure Access Required</msg>
   <msg key="secure_access_require">Secure access required</msg>
@@ -228,6 +239,7 @@
   <msg key="Subject">Subject</msg>
   <msg key="Subject_Name">Subject Name</msg>
   <msg key="Submit">Submit</msg>
+  <msg key="Submit_Answer">Seperate submit for each question</msg>
   <msg key="Subtext">Subtext</msg>
   <msg key="Summary">Summary</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>

@@ -41,6 +41,7 @@ foreach item_type [db_list item_types {}] {
 
 ad_form -name item_add -action item-add -export { assessment_id section_id after } -form {
     {as_item_id:key}
+    {name:text {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 }
@@ -57,18 +58,20 @@ ad_form -extend -name item_add -form {
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
     {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
     {max_time_to_complete:integer,optional {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
+    {points:integer,optional {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
     {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}
     {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
 } -new_request {
+    set name ""
     set title ""
     set description ""
     set subtext ""
     set field_code ""
-    set definition ""
     set required_p t
     set feedback_right ""
     set feedback_wrong ""
     set max_time_to_complete ""
+    set points ""
     set data_type "varchar"
     set item_type "sa"
 } -on_submit {
@@ -76,16 +79,17 @@ ad_form -extend -name item_add -form {
 } -new_data {
     db_transaction {
 	set as_item_id [as::item::new \
+			    -name $name \
 			    -title $title \
 			    -description $description \
 			    -subtext $subtext \
 			    -field_code $field_code \
-			    -definition $definition \
 			    -required_p $required_p \
 			    -data_type $data_type \
 			    -feedback_right $feedback_right \
 			    -feedback_wrong $feedback_wrong \
-			    -max_time_to_complete $max_time_to_complete]
+			    -max_time_to_complete $max_time_to_complete \
+			    -points $points]
 
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $as_item_id $category_ids

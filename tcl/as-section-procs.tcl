@@ -7,14 +7,14 @@ ad_library {
 namespace eval as::section {}
 
 ad_proc -public as::section::new {
+    {-name:required}
     {-title:required}
     {-description ""}
-    {-definition ""}
     {-instructions ""}
     {-feedback_text ""}
     {-max_time_to_complete ""}
-    {-required_p t}
-    {-section_display_type_id ""}
+    {-display_type_id ""}
+    {-points ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -26,19 +26,22 @@ ad_proc -public as::section::new {
 
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
     db_transaction {
-	set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name [exec uuidgen] -title $title -description $description ]
+	set section_item_id [db_nextval acs_object_id_seq]
+	if {[empty_string_p $name]} {
+	    set name "SEC_$section_item_id"
+	}
+	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
 
 	set as_section_id [content::revision::new \
 			       -item_id $section_item_id \
 			       -content_type {as_sections} \
 			       -title $title \
 			       -description $description \
-			       -attributes [list [list definition $definition] \
-						[list instructions $instructions] \
+			       -attributes [list [list instructions $instructions] \
 						[list feedback_text $feedback_text] \
 						[list max_time_to_complete $max_time_to_complete] \
-						[list required_p $required_p] \
-						[list section_display_type_id $section_display_type_id] ] ]
+						[list display_type_id $display_type_id] \
+						[list points $points] ] ]
     }
 
     return $as_section_id
@@ -48,12 +51,11 @@ ad_proc -public as::section::edit {
     {-section_id:required}
     {-title:required}
     {-description ""}
-    {-definition ""}
     {-instructions ""}
     {-feedback_text ""}
     {-max_time_to_complete ""}
-    {-required_p t}
-    {-section_display_type_id ""}
+    {-display_type_id ""}
+    {-points ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-10-26
@@ -69,12 +71,11 @@ ad_proc -public as::section::edit {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list definition $definition] \
-						 [list instructions $instructions] \
+				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
-						 [list required_p $required_p] \
-						 [list section_display_type_id $section_display_type_id] ] ]
+						 [list display_type_id $display_type_id] \
+						 [list points $points] ] ]
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
     }
@@ -98,12 +99,12 @@ ad_proc -public as::section::new_revision {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list definition $definition] \
-						 [list instructions $instructions] \
+				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list required_p $required_p] \
-						 [list section_display_type_id $section_display_type_id] ] ]
+						 [list display_type_id $display_type_id] \
+						 [list points $points] ] ]
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::copy_categories -from_id $section_id -to_id $new_section_id
@@ -114,6 +115,7 @@ ad_proc -public as::section::new_revision {
 
 ad_proc -public as::section::copy {
     {-section_id:required}
+    {-name:required}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
@@ -128,18 +130,22 @@ ad_proc -public as::section::copy {
 	db_1row section_data {}
 	append title "[_ assessment.copy_appendix]"
 
-	set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name [exec uuidgen] -title $title -description $description ]
+	set section_item_id [db_nextval acs_object_id_seq]
+	if {[empty_string_p $name]} {
+	    set name "SEC_$section_item_id"
+	}
+	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
 	set new_section_id [content::revision::new \
 				-item_id $section_item_id \
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list definition $definition] \
-						 [list instructions $instructions] \
+				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list required_p $required_p] \
-						 [list section_display_type_id $section_display_type_id] ] ]
+						 [list display_type_id $display_type_id] \
+						 [list points $points] ] ]
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::copy_categories -from_id $section_id -to_id $new_section_id

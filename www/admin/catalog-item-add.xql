@@ -14,9 +14,11 @@
 <fullquery name="items">
       <querytext>
       
-    select i.as_item_id, cr.title, i.definition
-    from as_items i, cr_revisions cr
-    where cr.revision_id = i.as_item_id
+    select i.as_item_id, cr.title, ci.name, i.required_p,
+           i.max_time_to_complete, i.points
+    from as_items i, cr_revisions cr, cr_items ci
+    where ci.item_id = cr.item_id
+    and cr.revision_id = i.as_item_id
     and i.as_item_id in ([join $as_item_id ,])
     order by i.as_item_id
     
@@ -48,8 +50,14 @@
 <fullquery name="add_item_to_section">
       <querytext>
 
-	    insert into as_item_section_map (as_item_id, section_id, sort_order)
-	    values (:as_item_id, :new_section_id, :after)
+	    insert into as_item_section_map
+		(as_item_id, section_id, required_p, sort_order, max_time_to_complete,
+		 fixed_position, points)
+	    (select :as_item_id as as_item_id, :new_section_id as section_id,
+		    required_p, :after as sort_order, max_time_to_complete,
+		    0 as fixed_position, points
+	     from as_items
+	     where as_item_id = :as_item_id)
 
       </querytext>
 </fullquery>

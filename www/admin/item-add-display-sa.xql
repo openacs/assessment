@@ -27,8 +27,13 @@
       <querytext>
 
 	    insert into as_item_section_map
-		(as_item_id, section_id, enabled_p, required_p, sort_order)
-	    values (:as_item_id, :new_section_id, 't', 'f', :after)
+		(as_item_id, section_id, required_p, sort_order, max_time_to_complete,
+		 fixed_position, points)
+	    (select :as_item_id as as_item_id, :new_section_id as section_id,
+		    required_p, :after as sort_order, max_time_to_complete,
+		    0 as fixed_position, points
+	     from as_items
+	     where as_item_id = :as_item_id)
 
       </querytext>
 </fullquery>

@@ -68,6 +68,38 @@ ad_proc -public as::item_type_mc::edit {
     return $new_item_type_id
 }
 
+ad_proc -public as::item_type_mc::new_revision {
+    -as_item_type_id:required
+    {-with_choices_p "t"}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-07
+
+    Create new revision of Multiple Choice item in the data database
+} {
+    # Update as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
+    db_transaction {
+	db_1row item_type_data {}
+        set new_item_type_id [content::revision::new \
+				  -item_id $type_item_id \
+				  -content_type {as_item_type_mc} \
+				  -title $title \
+				  -attributes [list [list increasing_p $increasing_p] \
+						   [list allow_negative_p $allow_negative_p] \
+						   [list num_correct_answers $num_correct_answers] \
+						   [list num_answers $num_answers] ] ]
+
+	if {$with_choices_p == "t"} {
+	    set choices [db_list get_choices {}]
+	    foreach choice_id $choices {
+		set new_choice_id [as::item_choice::new_revision -choice_id $choice_id -mc_id $new_item_type_id]
+	    }
+	}
+    }
+
+    return $new_item_type_id
+}
+
 ad_proc -public as::item_type_mc::copy {
     -type_id:required
 } {

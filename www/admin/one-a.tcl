@@ -45,6 +45,9 @@ set notification_chunk [notification::display::request_widget \
 ]
 
 db_multirow sections assessment_sections {} {
+    if {[empty_string_p $points]} {
+	set points 0
+    }
     if {![empty_string_p $max_time_to_complete]} {
 	set max_min [expr $max_time_to_complete / 60]
 	set max_sec [expr $max_time_to_complete - ($max_min * 60)]

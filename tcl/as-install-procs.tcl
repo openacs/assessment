@@ -29,6 +29,7 @@ content::type::create_type -content_type {as_item_display_tb} -supertype {conten
 content::type::create_type -content_type {as_item_display_sa} -supertype {content_revision} -pretty_name {Assessment Item Display Short Answer} -pretty_plural {Assessment Item Display Short Answer} -table_name {as_item_display_sa} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_item_display_ta} -supertype {content_revision} -pretty_name {Assessment Item Display TextArea} -pretty_plural {Assessment Item Display TextArea} -table_name {as_item_display_ta} -id_column {as_item_display_id}
 content::type::create_type -content_type {as_items} -supertype {content_revision} -pretty_name {Assessment Item} -pretty_plural {Assessment Items} -table_name {as_items} -id_column {as_item_id}
+content::type::create_type -content_type {as_section_display_types} -supertype {content_revision} -pretty_name {Assessment Section Display Type} -pretty_plural {Assessment Section Display Types} -table_name {as_section_display_types} -id_column {display_type_id}
 content::type::create_type -content_type {as_sections} -supertype {content_revision} -pretty_name {Assessment Section} -pretty_plural {Assessment Sections} -table_name {as_sections} -id_column {section_id}
 content::type::create_type -content_type {as_assessments}  -supertype {content_revision} -pretty_name {Assessment Assessment} -pretty_plural {Assessment Assessments} -table_name {as_assessments} -id_column {assessment_id}
 content::type::create_type -content_type {as_sessions} -supertype {content_revision} -pretty_name {Assessment Session} -pretty_plural {Assessment Sessions} -table_name {as_sessions} -id_column {session_id}
@@ -112,21 +113,27 @@ content::type::create_attribute -content_type {as_item_type_oq} -attribute_name 
 # Items
 content::type::create_attribute -content_type {as_items} -attribute_name {subtext}              -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {field_code}           -datatype {string}  -pretty_name {Item Field Code} -column_spec {varchar(500)}
-content::type::create_attribute -content_type {as_items} -attribute_name {definition}    -datatype {string} -pretty_name {Item Definition} -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {required_p}           -datatype {boolean} -pretty_name {Item Required}   -column_spec {char(1)}
 content::type::create_attribute -content_type {as_items} -attribute_name {data_type}            -datatype {string}  -pretty_name {Item Data Type}  -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_items} -attribute_name {max_time_to_complete} -datatype {number}  -pretty_name {Item Max Time to Complete} -column_spec {integer}
-content::type::create_attribute -content_type {as_items} -attribute_name {adp_chunk}            -datatype {string}  -pretty_name {Item Adp Chunk}  -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {feedback_wrong}    -datatype {string} -pretty_name {Item Right Feedback} -column_spec {text}
 content::type::create_attribute -content_type {as_items} -attribute_name {feedback_right}    -datatype {string} -pretty_name {Item Wrong Feedback} -column_spec {text}
+content::type::create_attribute -content_type {as_items} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this item} -column_spec {integer}
 
 # Sections
-content::type::create_attribute -content_type {as_sections} -attribute_name {section_display_type_id}      -datatype {number}  -pretty_name {Section Display Type}  -column_spec {integer}
+content::type::create_attribute -content_type {as_sections} -attribute_name {display_type_id}      -datatype {number}  -pretty_name {Section Display Type}  -column_spec {integer}
 content::type::create_attribute -content_type {as_sections} -attribute_name {instructions}      -datatype {string}  -pretty_name {Section Instructions}  -column_spec {text}
-content::type::create_attribute -content_type {as_sections} -attribute_name {definition}      -datatype {string}  -pretty_name {Section Definition}  -column_spec {text}
-content::type::create_attribute -content_type {as_sections} -attribute_name {required_p}      -datatype {boolean}  -pretty_name {Section Required}  -column_spec {char(1)}
 content::type::create_attribute -content_type {as_sections} -attribute_name {feedback_text}      -datatype {string}  -pretty_name {Section Feedback}  -column_spec {text}
 content::type::create_attribute -content_type {as_sections} -attribute_name {max_time_to_complete}      -datatype {number}  -pretty_name {Section Max Time to Complete}  -column_spec {integer}
+content::type::create_attribute -content_type {as_sections} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this section} -column_spec {integer}
+
+# Section Display Types
+content::type::create_attribute -content_type {as_section_display_types} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed per page}  -column_spec {integer}
+content::type::create_attribute -content_type {as_section_display_types} -attribute_name {adp_chunk}      -datatype {string}  -pretty_name {Section Display Template}  -column_spec {text}
+content::type::create_attribute -content_type {as_section_display_types} -attribute_name {branched_p}      -datatype {boolean}  -pretty_name {Section Branched}  -column_spec {char(1)}
+content::type::create_attribute -content_type {as_section_display_types} -attribute_name {back_button_p}      -datatype {boolean}  -pretty_name {Back button allowed}  -column_spec {char(1)}
+content::type::create_attribute -content_type {as_section_display_types} -attribute_name {submit_answer_p}      -datatype {boolean}  -pretty_name {Seperate submit for each answer}  -column_spec {char(1)}
+content::type::create_attribute -content_type {as_section_display_types} -attribute_name {sort_order_type}      -datatype {string}  -pretty_name {Item sort order type}  -column_spec {varchar(20)}
 
 # Assessments
 content::type::create_attribute -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
@@ -206,6 +213,7 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_sa} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_ta} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_section_display_types} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t

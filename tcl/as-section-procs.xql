@@ -15,8 +15,8 @@
       <querytext>
 
 	select cr.item_id as section_item_id, cr.title, cr.description,
-	       s.definition, s.instructions, s.feedback_text, s.max_time_to_complete,
-	       s.required_p, s.section_display_type_id
+	       s.instructions, s.feedback_text, s.max_time_to_complete,
+	       s.display_type_id, s.points
 	from cr_revisions cr, as_sections s
 	where cr.revision_id = :section_id
 	and s.section_id = cr.revision_id
@@ -28,8 +28,8 @@
       <querytext>
 
 	select cr.title, cr.description,
-	       s.definition, s.instructions, s.feedback_text, s.max_time_to_complete,
-	       s.required_p, s.section_display_type_id
+	       s.instructions, s.feedback_text, s.max_time_to_complete,
+	       s.display_type_id, s.points
 	from cr_revisions cr, as_sections s
 	where cr.revision_id = :section_id
 	and s.section_id = cr.revision_id
@@ -41,9 +41,8 @@
       <querytext>
 
 	insert into as_item_section_map
-	(select as_item_id, :new_section_id, enabled_p, required_p, item_default,
-	        content_value, numeric_value, feedback_text, max_time_to_complete,
-	        adp_chunk, sort_order
+	(select as_item_id, :new_section_id, required_p, max_time_to_complete,
+	        sort_order, fixed_position, points
 	 from as_item_section_map
 	 where section_id = :section_id)
 

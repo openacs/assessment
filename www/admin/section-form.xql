@@ -4,8 +4,12 @@
 <fullquery name="section_display_types">
       <querytext>
 
-    select section_display_type_id, pagination_style
-    from as_section_display_types
+    select cr.title, d.display_type_id
+    from as_section_display_types d, cr_revisions cr, cr_items ci, cr_folders cf
+    where cr.revision_id = d.display_type_id
+    and ci.latest_revision = cr.revision_id
+    and cf.folder_id = ci.parent_id
+    and cf.package_id = :package_id
 
       </querytext>
 </fullquery>
@@ -13,8 +17,8 @@
 <fullquery name="section_data">
       <querytext>
 
-	select ci.name, cr.title, cr.description, s.definition, s.instructions,
-	       s.required_p, s.feedback_text, s.max_time_to_complete
+	select ci.name, cr.title, cr.description, s.instructions, s.display_type_id,
+	       s.feedback_text, s.max_time_to_complete, s.points
 	from as_sections s, cr_revisions cr, cr_items ci
 	where cr.revision_id = s.section_id
 	and ci.item_id = cr.item_id
@@ -37,8 +41,8 @@
 <fullquery name="add_section_to_assessment">
       <querytext>
 
-	    insert into as_assessment_section_map (assessment_id, section_id, feedback_text, max_time_to_complete, sort_order)
-	    values (:new_assessment_rev_id, :section_id, :feedback_text, :max_time_to_complete, :sort_order)
+	    insert into as_assessment_section_map (assessment_id, section_id, max_time_to_complete, sort_order, points)
+	    values (:new_assessment_rev_id, :new_section_id, :max_time_to_complete, :sort_order, :points)
 
       </querytext>
 </fullquery>
@@ -47,9 +51,9 @@
       <querytext>
 
 	    update as_assessment_section_map
-	    set feedback_text = :feedback_text,
-	    max_time_to_complete = :max_time_to_complete,
-	    section_id = :new_section_id
+	    set max_time_to_complete = :max_time_to_complete,
+	        points = :points,
+	        section_id = :new_section_id
 	    where assessment_id = :new_assessment_rev_id
 	    and section_id = :section_id
 

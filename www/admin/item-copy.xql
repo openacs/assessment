@@ -36,10 +36,10 @@
 <fullquery name="insert_new_item">
       <querytext>
 
-	    insert into as_item_section_map
+	    insert into as_item_section_map (as_item_id, section_id, required_p, max_time_to_complete,
+	           sort_order, fixed_position, points)
 	    (select :new_item_id as as_item_id, :new_section_id as section_id,
-	            enabled_p, required_p, item_default, content_value, numeric_value,
-	            feedback_text, max_time_to_complete, adp_chunk, :after as sort_order
+	            required_p, max_time_to_complete, :after as sort_order, fixed_position, points
 	     from as_item_section_map
 	     where as_item_id = :as_item_id
 	     and section_id = :section_id)

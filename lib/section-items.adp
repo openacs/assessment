@@ -19,11 +19,16 @@
     <tr class="even">
   </else>
 
-<td valign="top">@items.rownum@.<if @items.required_p@ eq t> <font color=red>*</font> </if></td>
+  <td valign="top">@items.rownum@. @items.name@<if @items.required_p@ eq t> <font color=red>*</font> </if></td></tr>
+
+  <if @items.rownum@ odd>
+    <tr class="odd">
+  </if>
+  <else>
+    <tr class="even">
+  </else>
 
 <td><a href="item-edit?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
-
-<if @items.enabled_p@ eq "f"><span style="color: #f00;">#assessment.disabled#</span></if>
 
 <a href="item-copy?section_id=@section_id@&assessment_id=@assessment_id@&as_item_id=@items.as_item_id@&after=@items.sort_order@">#assessment.Copy#</a>
 
@@ -40,6 +45,7 @@
 <a href="item-delete?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@"><img src="../graphics/delete.gif" border="0" alt="#assessment.remove_item#"></a>
 
 <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
+(@items.points@ #assessment.points#)
 </td></tr>
 
   <if @items.rownum@ odd>
@@ -48,7 +54,7 @@
   <else>
     <tr class="even">
   </else>
-<td colspan="3">
+<td>
   <blockquote>
     <if @items.presentation_type@ ne fitb>@items.title;noquote@<br></if>
     <if @items.presentation_type@ eq radio or @items.presentation_type@ eq checkbox>
@@ -72,7 +78,7 @@
   <else>
     <tr class="odd">
   </else>
-  <td></td><td>
+  <td>
     <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_New#</a>
     <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Search_Item#</a>
   </td></tr>

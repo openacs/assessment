@@ -32,13 +32,17 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
     {as_item_id:key}
     {item_title:text(inform) {label "[_ assessment.copy_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
+    {name:text,optional {label "[_ assessment.Name]"} {help_text "[_ assessment.Name_help]"}}
     {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
-} -select_query_name {item_title} -on_submit {
+} -edit_request {
+    db_1row item_title {}
+    set name ""
+} -on_submit {
     if {$confirmation} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	    set new_section_id [as::section::new_revision -section_id $section_id]
-	    set new_item_id [as::item::copy -as_item_id $as_item_id]
+	    set new_item_id [as::item::copy -as_item_id $as_item_id -name $name]
 
 	    db_dml update_section_in_assessment {}
 	    db_dml move_down_items {}

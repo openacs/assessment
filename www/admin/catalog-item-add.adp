@@ -19,9 +19,19 @@
     <tr class="even">
   </else>
 
-<td valign="top">@items.rownum@.</td>
+<td valign="top">@items.rownum@. @items.name@<if @items.required_p@ eq t> <font color=red>*</font> </if>
+<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
+(@items.points@ #assessment.points#)
+</td></tr>
 
-<td colspan="3">
+  <if @items.rownum@ odd>
+    <tr class="odd">
+  </if>
+  <else>
+    <tr class="even">
+  </else>
+
+<td>
   <blockquote>
     <if @items.presentation_type@ ne fitb>@items.title;noquote@<br></if>
     <if @items.presentation_type@ eq radio or @items.presentation_type@ eq checkbox>

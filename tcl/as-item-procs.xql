@@ -15,8 +15,8 @@
       <querytext>
 
 	select cr.item_id as item_item_id, cr.title, cr.description, i.subtext, i.field_code,
-	       i.definition, i.required_p, i.data_type, i.max_time_to_complete,
-	       i.feedback_right, i.feedback_wrong
+	       i.required_p, i.data_type, i.max_time_to_complete,
+	       i.feedback_right, i.feedback_wrong, i.points
 	from cr_revisions cr, as_items i
 	where cr.revision_id = :as_item_id
 	and i.as_item_id = cr.revision_id
@@ -28,8 +28,8 @@
       <querytext>
 
 	select cr.title, cr.description, i.subtext, i.field_code,
-	       i.definition, i.required_p, i.data_type, i.max_time_to_complete,
-	       i.feedback_right, i.feedback_wrong
+	       i.required_p, i.data_type, i.max_time_to_complete,
+	       i.feedback_right, i.feedback_wrong, i.points
 	from cr_revisions cr, as_items i
 	where cr.revision_id = :as_item_id
 	and i.as_item_id = cr.revision_id

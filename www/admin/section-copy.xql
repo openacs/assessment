@@ -25,9 +25,9 @@
 <fullquery name="add_section_to_assessment">
       <querytext>
 
-	    insert into as_assessment_section_map (assessment_id, section_id, feedback_text, max_time_to_complete, sort_order)
+	    insert into as_assessment_section_map (assessment_id, section_id, max_time_to_complete, sort_order, points)
 	    (select :new_assessment_rev_id as assessment_id, :new_section_id as section_id,
-                    feedback_text, max_time_to_complete, :sort_order as sort_order
+                    max_time_to_complete, :sort_order as sort_order, points
              from as_assessment_section_map
              where assessment_id = :new_assessment_rev_id
              and section_id = :section_id)

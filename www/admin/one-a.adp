@@ -91,7 +91,8 @@
 
 <table cellspacing=0>
 <tr class="odd">
-<td valign="top">@sections.rownum@.<if @sections.required_p@ eq t> <font color=red>*</font> </if></td>
+<td valign="top">@sections.rownum@. @sections.name@</td></tr>
+<tr class="odd">
 
 <td><a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
 
@@ -99,7 +100,11 @@
 
 <a href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
 
-<a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
+<a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
+
+<if @sections.display_type_id@ not nil><a href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
+
+<img src="../graphics/spacer.gif" border="0" alt="" width="10">
 
 <if @sections.rownum@ lt @sections:rowcount@>
   <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
@@ -110,6 +115,7 @@
 <a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="../graphics/delete.gif" border="0" alt="#assessment.remove_section#"></a>
 
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
+(@sections.points@ #assessment.points#)
 </td></tr>
 
   <if @sections.rownum@ odd>

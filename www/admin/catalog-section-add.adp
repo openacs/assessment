@@ -9,8 +9,9 @@
 
 <table cellspacing=0>
 <tr class="odd">
-<td valign="top">@sections.rownum@.<if @sections.required_p@ eq t> <font color=red>*</font> </if>
+<td valign="top">@sections.rownum@. @sections.name@
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
+(@sections.points@ #assessment.points#)
 </td></tr>
 
   <if @sections.rownum@ odd>
@@ -19,7 +20,7 @@
   <else>
     <tr class="even">
   </else>
-<td colspan="3">
+<td>
   <blockquote>
     @sections.title@
   </blockquote>

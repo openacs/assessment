@@ -8,6 +8,9 @@ db_multirow -extend { presentation_type html } items section_items {} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
 
+    if {[empty_string_p $points]} {
+	set points 0
+    }
     if {![empty_string_p $max_time_to_complete]} {
 	set max_min [expr $max_time_to_complete / 60]
 	set max_sec [expr $max_time_to_complete - ($max_min * 60)]
