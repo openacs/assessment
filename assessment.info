@@ -22,6 +22,7 @@
         <provides url="assessment" version="0.01d"/>
         <requires url="acs-kernel" version="5.0d13"/>
         <requires url="acs-templating" version="4.1.2"/>
+        <requires url="acs-content-repository" version="5.2.0d8"/>
 	
 	 <callbacks>
             <callback type="after-install"  proc="assessment::install::assessment_create_install"/>
