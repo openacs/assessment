@@ -164,7 +164,10 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 				set as_item_display_id {}
 				if {[$render_fib hasAttribute {rows}]} {
 					# shortanswer (textarea)
-					set as_item_display_id [as::item_display_ta::new -name [ad_generate_random_string]]
+					set rows [$render_fib getAttribute {rows} {15}]
+					set cols [$render_fib getAttribute {columns} {55}]
+					set html "rows $rows cols $cols"					
+					set as_item_display_id [as::item_display_ta::new -name [ad_generate_random_string] -abs_size $html]
 					foreach node $presentationChildNodes {
 					if {[$node nodeName] == {material}} {
 						set mattextNodes [$node selectNodes {mattext/text()}]

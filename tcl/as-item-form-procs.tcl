@@ -34,13 +34,13 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	}
 
 	"textarea" {
-	    set html {rows 15 cols 55}
+	    db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_tax WHERE item_id=:item_display_id"	   
 	    template::element::create $form $element_name \
 		-datatype text \
 		-widget textarea \
 		-label $title \
 		-value $user_value \
-		-html $html \
+		-html $abs_size \
 		-nospell \
 		-required_p $required_p
 	}

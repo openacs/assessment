@@ -49,8 +49,10 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   
   if {[string compare $presentation_type "textarea"] == 0} {  
       set text_answer {}       
+      db_0or1row html_rows_cols "SELECT abs_size FROM as_item_display_tax WHERE item_id=:item_display_id"
+      set html_options "[lindex $abs_size 0]=[lindex $abs_size 1] [lindex $abs_size 2]=[lindex $abs_size 3]"
       db_0or1row shortanswer {} 
-      set choice_answer "<textarea rows=\"15\" cols=\"55\" readonly disabled>$text_answer</textarea>"
+      set choice_answer "<textarea $html_options readonly disabled>$text_answer</textarea>"
       set correct_answer {}
       append choice_html "<tr><td>$correct_answer</td><td>$choice_answer </td></tr>"	 
       set item_correct 0
