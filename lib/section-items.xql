@@ -4,8 +4,8 @@
 <fullquery name="section_items">
       <querytext>
       
-    select i.as_item_id, i.subtext, cr.title, ci.name, ism.required_p,
-           ism.section_id, ism.sort_order,
+    select i.as_item_id, i.subtext, cr.title, cr.description, ci.name,
+            ism.required_p, ism.section_id, ism.sort_order,
            ism.max_time_to_complete, ism.points
     from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism
     where ci.item_id = cr.item_id

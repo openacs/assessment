@@ -4,7 +4,7 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3">@assessment_data.title@</th></tr>
-<tr><td><i><font size="1">@assessment_data.instructions@</font></i></td></tr>
+<tr><td><i><font size="1">@assessment_data.instructions;noquote@</font></i></td></tr>
 <tr><td align=right>
 #assessment.section_counter#
 <br>#assessment.item_counter#
@@ -30,12 +30,12 @@
 
       <multiple name="items">
       <tr>
-      <tr><td bgcolor="#e4eaef" colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td>
-        <td bgcolor="#e4eaef"><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b>
+      <tr><if @assessment_data.show_item_name_p@ eq t><td bgcolor="#e4eaef" colspan="2" nowrap><b>@items.name@:</b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td></if>
+        <td bgcolor="#e4eaef"><b><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></if></b>
       <if @items.content@ not nil><tr><td bgcolor="#e4eaef" colspan="4"><br>@items.content;noquote@</if>
       <if @items.title@ ne @items.next_title@>
         </td></tr>
-        <tr class="form-widget"><td colspan=4>
+        <tr class="form-widget"><if @assessment_data.show_item_name_p@ eq t><td colspan=4></if><else><td colspan=3></else>
           <blockquote><table>
       </if>
       <else>
@@ -52,7 +52,7 @@
               </tr><tr class="form-widget">
             </if>
           </if>
-          <td valign=top>@items.description@</td>
+          <td valign=top>@items.description;noquote@</td>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
             <if @items.choice_orientation@ ne horizontal>
               <td><formgroup id="response_to_item.@items.as_item_id@">

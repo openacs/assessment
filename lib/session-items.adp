@@ -13,8 +13,8 @@
     <tr class="even">
   </else>
 
-  <td valign="top"><b><if @show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b>
-  <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if></td><td>&nbsp;</td></tr>
+  <td valign="top"><if @show_item_name_p@ eq t><b>@items.name@:</b></if></td>
+  <td>&nbsp;</td></tr>
 
   <if @items.num@ odd>
     <tr class="odd">
@@ -25,6 +25,7 @@
 
 <td>
 <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
+  <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
   <if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#
     <if @show_feedback@ ne none>
       <if @items.feedback@ not nil>: @items.feedback;noquote@</if>
@@ -62,7 +63,7 @@
   </if>
   <blockquote><table>
     <group column=title>
-      <td valign=top>@items.description@
+      <td valign=top>@items.description;noquote@
         <if @survey_p@ ne t>
           <if @items.title@ eq @items.next_title@ or @items.groupnum@ gt 1>
             <if @items.result_points@ not nil><br><b>@items.result_points@ / @items.points@ #assessment.points#

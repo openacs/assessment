@@ -72,6 +72,9 @@ for {set i 1} {$i <= $num_choices} {incr i} {
     lappend validate_list "correct.$i {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
 }
 append ad_form_code "\}"
+if {[exists_and_not_null mc_id]} {
+    set count_correct 1
+}
 eval ad_form -extend -name item_add_mc $ad_form_code
 
 

@@ -61,7 +61,7 @@ href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@sect
   </else>
 <td>
   <blockquote>
-    <if @items.presentation_type@ ne fitb>@items.title;noquote@<br></if>
+    <if @items.presentation_type@ ne fitb>@items.title;noquote@<br><if @items.description@ not nil>@items.description;noquote@<br></if></if>
     <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
       <if @items.choice_orientation@ ne horizontal>
         <formgroup id="response_to_item.@items.as_item_id@">
