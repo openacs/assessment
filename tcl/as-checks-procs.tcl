@@ -195,12 +195,13 @@ ad_proc -public as::assessment::check::manual_action_log {
 } {
     
 } {
-    
+
     db_transaction {
 	set user_id [ad_conn user_id]
 	set log_id [db_string get_next_val {}]
 	set action_id [db_string action_id {}]
 	db_dml insert_action {}
+        ns_log notice "inserta en mannually"
     }
 }
 
@@ -346,7 +347,7 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 } {
     
 } {
-
+    ns_log notice "entra a eval_aa_checks"
     set assessment_rev_id [db_string get_assessment_id {}]
     
     set section_list [db_list_of_lists sections {}]
@@ -371,13 +372,15 @@ ad_proc -public as::assessment::check::eval_m_checks {
 } {
     
 } {
-    
+    ns_log notice "entra a mannually"
     set assessment_rev_id [db_string get_assessment_id {}]
     
     db_foreach sections {} { 
 	db_foreach section_checks {} {
-	    set perform [db_string check_sql $check_sql]
 	    if {$action_p == "t"} {
+	    set perform [db_string check_sql $check_sql]
+	    ns_log notice "-------------manual perform $perform"
+	    
 		if {$perform == 1} {
 		    set failed ""
 		    as::assessment::check::manual_action_log -check_id $inter_item_check_id -session_id $session_id 
