@@ -4,4 +4,4 @@
 
 <listtemplate name="sessions"></listtemplate>
 
-</master>
+
