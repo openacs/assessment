@@ -74,7 +74,7 @@ db_foreach get_params {} {
 	set choices [db_list_of_lists choices_param $query]
     }    
     
-    set parameter [list [list param_$parameter_id:text(select),optional [list label $varname] [list options $choices] ]]
+    set parameter [list [list param_$parameter_id:text(select),optional [list label $varname] [list options $choices] [list help_text $description]]]
     ad_form -extend -name get_params  -form $parameter
 }
 
