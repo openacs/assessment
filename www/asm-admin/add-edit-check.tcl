@@ -83,6 +83,7 @@ ad_form -name new_check -export {assessment_id return_url} -form {
     {postcheck_p:boolean(radio)
 	{label "[_ assessment.post_check]"}
 	{options { {"[_ assessment.yes]" t} {"[_ assessment.no]" f}}}
+	{help_text "[_ assessment.help_postcheck_p]"}
     }
     {description:text(textarea)
 	{label "[_ assessment.action_description]"}

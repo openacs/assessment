@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d6" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d9" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -32,6 +32,7 @@
   <msg key="add_new_section">Add a new section</msg>
   <msg key="add_new_section_display">Add new section display</msg>
   <msg key="add_parameter">Add parameter</msg>
+  <msg key="add_section_first">To add a question, add a section first.</msg>
   <msg key="Add_Sections">Add sections to assessment</msg>
   <msg key="Add_to_assessment">Add to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="Add_to_section">Add to section &quot;%section_title%&quot;</msg>
@@ -380,7 +381,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Response_Options">Response Options:</msg>
   <msg key="Response_Submitted">Response Submitted</msg>
   <msg key="Results_by_user">Assessment results by user</msg>
-  <msg key="Results_change_display">(on %results.create_date% by &lt;a href="%results.user_url%"&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
+  <msg key="Results_change_display">(on %results.create_date% by &lt;a href=&amp;quot;%results.user_url%&amp;quot;&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
   <msg key="Results_edit">Edit assessment result</msg>
   <msg key="Results_edit_Description">Change explanation</msg>
   <msg key="return">Return</msg>

@@ -84,10 +84,11 @@
 </table>
 <br>
 
-
+<if @sections:rowcount@ eq 0>
+<font color=red><b>#assessment.add_section_first#</b></font>
+</if>
 
 <multiple name="sections">
-
 <h3>#assessment.Sections#</h3>
 
 <table cellspacing=0>
