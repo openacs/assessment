@@ -73,6 +73,9 @@ ad_form -extend -name item_edit_general -form {
     set display_type [string range [db_string get_display_type {}] end-1 end]
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
+    if {[empty_string_p $points]} {
+	set points 0
+    }
 } -edit_data {
     db_transaction {
 	set old_display_type [string range [db_string get_display_type {}] end-1 end]

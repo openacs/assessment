@@ -84,6 +84,9 @@ ad_form -extend -name section_form -form {
     {name {[as::assessment::unique_name -name $name -new_p $__new_p]} "[_ assessment.name_used]"}
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
+    if {[empty_string_p $points]} {
+	set points 0
+    }
 } -new_data {
     db_transaction {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
