@@ -7,7 +7,7 @@ ad_page_contract {
 } {
     session_id:integer,notnull
     assessment_id:integer,notnull
-    {password ""}
+    {password:optional ""}
 } -properties {
     context_bar:onevalue
     page_title:onevalue

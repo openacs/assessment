@@ -125,9 +125,6 @@ ad_proc -public as::item_display_sb::render {
 	randomized {
 	    set data [util::randomize_list $data]
 	}
-	default {
-	    set data [lsort -dictionary -index 0 $data]
-	}
     }
     
     set optional ""
