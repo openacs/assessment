@@ -24,8 +24,8 @@ ad_proc -public as::item_display_sb::new {
     # Insert as_item_display_sb in the CR (and as_item_display_sb table) getting the revision_id (as_item_display_id)
     db_transaction {
         set item_item_display_sb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_sb} -name [exec uuidgen]]
-	set as_item_display_cb_id [content::revision::new \
-				-item_id $item_item_display_cb_id \
+	set as_item_display_sb_id [content::revision::new \
+				-item_id $item_item_display_sb_id \
 				-content_type {as_item_display_sb} \
 				-attributes [list [list html_display_options $html_display_options] \
 						[list mulitple_p $multiple_p] \
