@@ -25,7 +25,11 @@
 
 <fullquery name="as::assessment::check::copy_item_checks.get_checks">
       <querytext>
+
+
 	select inter_item_check_id,action_p,check_sql,postcheck_p,section_id_from,section_id_to,item_id,name,description,assessment_id from as_inter_item_checks where section_id_from=:section_id and assessment_id=:assessment_id
+
+
       </querytext>
 </fullquery>
 
