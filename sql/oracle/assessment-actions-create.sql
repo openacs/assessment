@@ -84,7 +84,7 @@ create table as_actions_log (
 --   SEQUENCE FOR PRIMARY KEY
 --------------------------------------------------------
 
-        create sequence action_log_id
+        create sequence action_log_id_seq
         minvalue 1
         maxvalue 999999999
         start with 1
