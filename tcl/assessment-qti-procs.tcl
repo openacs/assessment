@@ -25,23 +25,40 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			# There are assessments
 			foreach assessment $assessmentNodes {
 				set as_assessments__name [$assessment getAttribute {title}]
-				set definitionNodes [$assessment selectNodes {qticomment}]
-				set as_assessments__definition [$definitionNodes nodeValue]
+				set definitionNodes [$assessment selectNodes {qticomment/text()}]
+				set definition [lindex $definitionNodes 0]
+				set as_assessments__definition [$definition nodeValue]
+				# assessment_id
+				set as_assessments__assessment_id [expr [db_exec_plsql as_assessments_assessment_id {}] + 1]
+				# Insert assessment in the as_assessments table
+				db_dml as_assessments_insert {}
+				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
 				foreach section $sectionNodes {
 					set as_sections__name [$section getAttribute {title}]
+					set definitionNodes [$section selectNodes {qticomment/text()}]
+					set definition [lindex $definitionNodes 0]
+					set as_sections__definition [$definition nodeValue]
+					
+					set as_sections__section_id [expr [db_exec_plsql as_sections_section_id {}] + 1]
+					# Insert section in the as_sections table
+					db_dml as_sections_insert {}
+					# Relation between as_sections and as_assessments
+					db_dml as_assessment_section_map_insert {}
+					
 					# Process the items
+					parse_item $section $as_sections__section_id
 				}
 			}
 		} else {
 			# Just items (no assessments)
-			parse_item $questestinterop
+			parse_item $questestinterop 0
 		}
 	}
 }
 
-ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
+ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
 		# items are OACS objects
@@ -91,7 +108,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 						incr sort_order
 					}
 				}
-			} else {   
+			} else {
 				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
 				set response_lid [lindex $response_lidNodes 0]
@@ -117,6 +134,10 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 					incr sort_order
 				}
 			}
+		}
+		# Relation between as_items and as_sections
+		if {$section_id != 0} {
+			db_dml as_item_section_map_insert {}
 		}
 	}
 }
