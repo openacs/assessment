@@ -18,11 +18,11 @@ template::list::create \
     -key sessions_id \
     -elements {
         session_id {
-	    label {Session}
+	    label {[_ assessment.Session]}
 	    link_url_eval {[export_vars -base "session" {session_id}]}
 	}
         subject_name {
-	    label {Subject Name}
+	    label {[_ assessment.Subject_Name]}
             link_url_eval {[acs_community_member_url -user_id $subject_id]}
 
         }
@@ -31,7 +31,7 @@ template::list::create \
 	    link_url_eval {[export_vars -base "assessment" {assessment_id}]}
 	}
 	completed_datetime {
-	    label {Finnish Time}
+	    label {[_ assessment.Finish_Time]}
 	    html {nowrap}
 	}
     } \

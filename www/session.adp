@@ -20,21 +20,21 @@
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
 	<table border="0">
 		<multiple name="items">
-			<tr bgcolor="#e4eaef"><td colspan="2"><b>Question @items.rownum@</b>&nbsp;&nbsp;(@items.maxscore@ points)</td></tr>
+			<tr bgcolor="#e4eaef"><td colspan="2"><b>#assessment.Question# @items.rownum@</b>&nbsp;&nbsp;(@items.maxscore@ #assessment.points#)</td></tr>
 			<tr><td colspan="2">
 			<b>@items.title@</b>
 			</td></tr>
 			<tr><td valign="top" nowrap>
-			Student response:</td><td>
+			#assessment.Student_response#:</td><td>
 			@items.choice_html;noquote@</td></tr>
 			<tr><td nowrap>
-			Score:</td><td><span>@items.score@ / @items.maxscore@</span>
-			<if @items.notanswered@>(<i>Question not answered.</i>)</if></td></tr>
-			<tr><td></td><td><if @items.item_correct@ false><b>Feedback:</b> @items.feedback_text@</if></td></tr>
+			#assessment.Score#</td><td><span>@items.score@ / @items.maxscore@</span>
+			<if @items.notanswered@>(<i>#assessment.Question_not_answered#.</i>)</if></td></tr>
+			<tr><td></td><td><if @items.item_correct@ false><b>#assessment.Feedback#:</b> @items.feedback_text@</if></td></tr>
 			<tr><td><br></td></tr>
 		</multiple>
 	</table>
 </table>
 <hr>
-<b>Total score:</b> @session_score@ / @assessment_score@
+<b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@
 </master>

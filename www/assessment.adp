@@ -14,7 +14,7 @@
     <input type="hidden" name="as_session_id" value="@as_session_id@">
 	<table border="0">
 		<br>&nbsp;&nbsp;
-		<b>Items</b><br><br>
+		<b>#assessment.Items#</b><br><br>
 		<multiple name="items">
 			<tr>
 				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b>@items.title@</b></td></tr>
@@ -36,7 +36,7 @@
 			</tr>
 		</multiple>
 	</table>
-<table align="center"><tr><td><input type=submit value="Submit"></td></tr></table>
+<table align="center"><tr><td><input type=submit value="#assessment.Submit#"></td></tr></table>
 </formtemplate>
 
 <br>

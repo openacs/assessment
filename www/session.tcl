@@ -29,7 +29,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct] i
   set maxscore $itemmaxscore
   set score 0
   set item_correct 1
-  set choice_html {<table cellspacing="0" cellpadding="3" border="1" width="80%"><tr><th scope="col" nowrap>Student Response</th><th scope="col" nowrap>Correct Answer</th><th scope="col" colspan="2" valign="top">Answer Choices</th></tr>}
+  set choice_html "<table cellspacing=\"0\" cellpadding=\"3\" border=\"1\" width=\"80%\"><tr><th scope=\"col\" nowrap>[_ assessment.Student_Response]</th><th scope=\"col\" nowrap>[_ assessment.Correct_Answer]</th><th scope=\"col\" colspan=\"2\" valign=\"top\">[_ assessment.Answer_Choices]</th></tr>"
   db_foreach choices {} {
     if {[string length "$choice_id_answer"]} {set notanswered 0}
     if {$correct_answer_p == {t}} { set correct_answer_bool 1 } else { set correct_answer_bool 0 }
