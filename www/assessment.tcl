@@ -178,7 +178,13 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	    as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
 	    #immediate checks execution
 	    as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
+	    set section_to_tmp [as::assessment::check::branch_checks -session_id $session_id -assessment_id $assessment_id -section_id $section_id]
+	    if { $section_to_tmp != "f" && $section_to_tmp != "f"} {
+		set section_to $section_to_tmp
+	    }
 	}
+	
+    
     } else {
 	# skip entire session
 	set new_section_order ""
@@ -189,6 +195,11 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	    as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
 	    # immediate checks execution
 	    as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
+	    set section_to_tmp [as::assessment::check::branch_checks -session_id $session_id -assessment_id $assessment_id -section_id $section_id]
+	    if { $section_to_tmp != "f" && $section_to_tmp != "f"} {
+		set section_to $section_to_tmp
+	    }
+
 
 	    set section_list [lreplace $section_list 0 [expr $section_order]]
 	    foreach section_id $section_list {
@@ -289,7 +300,7 @@ foreach one_item $item_list {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
 
-                   set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
+                   set section_to_tmp \[as::assessment::check::branch_checks -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
                     }
@@ -335,7 +346,7 @@ if {$display(submit_answer_p) != "t"} {
 		} else {
 
                    set item_to \$response_item_id
-                   set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$item_to -response \$response_to_item(\$response_item_id) -session_id \$session_id -assessment_id \$assessment_id -section_id \$section_id\]
+                   set section_to_tmp \[as::assessment::check::branch_checks  -session_id \$session_id -assessment_id \$assessment_id -section_id \$section_id\]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
                     }
@@ -350,6 +361,12 @@ if {$display(submit_answer_p) != "t"} {
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
 		# immediate checks execution
 		as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
+                set section_to_tmp \[as::assessment::check::branch_checks -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
+                   if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
+                           set section_to \$section_to_tmp
+                    }
+
+
 	    }
 	}
     }"
