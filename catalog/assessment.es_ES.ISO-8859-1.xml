@@ -15,13 +15,11 @@
   <msg key="Question">Pregunta</msg>
   <msg key="Question_not_answered">Pregunta no contestada</msg>
   <msg key="Response_Submitted">Respuesta Enviada</msg>
-  <msg key="Response_submitted_Correctly">Respuesta enviada correctamente</msg>
   <msg key="Review_Asessment">Revisión del Examen</msg>
   <msg key="Score">Puntuación</msg>
   <msg key="Session">Sesión</msg>
   <msg key="Started">Hora de comienzo</msg>
   <msg key="Student_Response">Respuesta del estudiante</msg>
-  <msg key="Student_response">Respuesta del estudiante</msg>
   <msg key="Subject_Name">Estudiante</msg>
   <msg key="Submit">Enviar</msg>
   <msg key="Time_spent">Tiempo de realización</msg>
