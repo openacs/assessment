@@ -16,6 +16,8 @@ ad_proc -public as::install::assessment_create_install {
 } { 
     Creates the content type and adds in attributes.
 } { 
+
+inter_item_checks::apm_callback::package_install
     
 content::type::new -content_type {as_item_choices} -supertype {content_revision} -pretty_name {Assessment Item Choice} -pretty_plural {Assessment Item Choices} -table_name {as_item_choices} -id_column {choice_id}
 content::type::new -content_type {as_item_sa_answers} -supertype {content_revision} -pretty_name {Assessment Item Answer} -pretty_plural {Assessment Item Answer} -table_name {as_item_sa_answers} -id_column {choice_id}
@@ -197,27 +199,6 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {cont
 content::type::attribute::new -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {integer}
 
-# notification init
-set impl_id [acs_sc::impl::new -contract_name NotificationType -name assessment_response_notif_type -owner assessment]
-acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation GetURL -alias as::notification::get_url -language TCL
-acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation ProcessReply -alias as::notification::process_reply -language TCL
-acs_sc::impl::binding::new -contract_name NotificationType -impl_name assessment_response_notif_type
-set type_id [notification::type::new -sc_impl_id $impl_id -short_name assessment_response_notif -pretty_name "Survey Response Notification" -description "Notifications for Assessment"]
-
-db_dml insert_intervals {
-    insert into notification_types_intervals
-    (type_id, interval_id)
-    select :type_id as type_id, interval_id
-    from notification_intervals
-    where name in ('instant','hourly','daily')
-}
-db_dml insert_delivery_method {
-    insert into notification_types_del_methods
-    (type_id, delivery_method_id)
-    select :type_id as type_id, delivery_method_id
-    from notification_delivery_methods
-    where short_name = 'email'
-}
 }
 
 ad_proc -public as::install::package_instantiate {
