@@ -13,7 +13,7 @@
 	<td valign="top"> 
 	<!-- <a href="assessment-preview?assessment_id=@assessment_id@">#assessment.Preview#</a> -->
 	<a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a>
-	@assessment_data.title@
+	@assessment_data.title@ <div align=center><font color=red>@reg_p@</font></div>
         <p><if @assessment_data.description@ nil>#assessment.None#</if><else>@assessment_data.description;noquote@</else>
         <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else></td>
 </tr>

@@ -10,13 +10,20 @@ ad_page_contract {
 } {
     assessment_id:integer
 }
-
+set reg_p ""
 set package_id [ad_conn package_id]
+
+
 permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
+set value [parameter::get_from_package_key -parameter AsmForRegisterId -package_key "acs-subsite"]
+
+if { [string eq $assessment_id $value] } {
+    set reg_p "[_ assessment.reg_asm]"
+}
 
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
