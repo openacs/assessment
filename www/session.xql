@@ -6,7 +6,7 @@
 		<querytext>
 			SELECT i.as_item_id, i.name, i.title, i.feedback_right, i.feedback_wrong,
 			       s.section_id, s.title as section_title, s.description as section_description
-			FROM as_sectionsx s, as_assessment_section_map asm, as_itemsx i,
+			FROM as_assessmentsx a, as_sectionsx s, as_assessment_section_map asm, as_itemsx i,
 			     as_item_section_map ism, as_sessionsx ss
 			WHERE a.assessment_id = asm.assessment_id
 			AND s.section_id = asm.section_id
