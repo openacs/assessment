@@ -8,3 +8,4 @@
 --
 
 alter table as_inter_item_checks add column assessment_id integer;
+\i ../assessment-actions-insert.sql

@@ -12,4 +12,4 @@
 \i assessment-types-create.sql
 \i assessment-checks-create.sql
 \i assessment-actions-create.sql
-
+\i assessment-actions-insert.sql

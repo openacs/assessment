@@ -13,3 +13,4 @@
 @ assessment-checks-create.sql
 @ assessment-actions-create.sql
 @ assessment-checks-package-create.sql
+@ assessment-actions-insert.sql
