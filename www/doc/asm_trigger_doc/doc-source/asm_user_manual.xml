@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+<book>
+  <title>Triggers and Action Execution in Assessment</title>
+
+  <chapter>
+    <title>Design</title>
+
+    <section>
+      <title>Data Model</title>
+
+      <para>It was necessary to add several tables to support the trigger and
+      action execution.<screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/asm_dm.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para><figure>
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/as_inter_item_checks.JPG" />
+              </imageobject>
+            </mediaobject>
+          </screenshot>
+        </figure><screenshot>
+          <screeninfo></screeninfo>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/as_actions.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot><screenshot>
+          <screeninfo></screeninfo>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/as_action_map.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot><screenshot>
+          <screeninfo></screeninfo>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/as_action_params.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot><screenshot>
+          <screeninfo></screeninfo>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/as_param_map.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot><screenshot>
+          <screeninfo></screeninfo>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/as_actions_log.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>User Manual</title>
+
+    <para>Here are some statements to create triggers to branch between
+    sections or execute actions:</para>
+
+    <section>
+      <title>Manage Permissions</title>
+
+      <para>To create an assessment is necessary to have create permissions
+      over the assessment instance. This permission can be inherit or can be
+      granted by a site wide administrator. This permissions can be managed by
+      the site wide administrator following the Permissions link in the
+      assessment admin page.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/create_permissions.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <para>To create triggers is necessary to have admin permissions over an
+      assessment. The admin permission is inherit to the user that creates an
+      assessment and also can be granted by the assessment administrator. This
+      permissions can be managed folloging the Permission link that appears in
+      the list of assessments.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/asm_admin_permissions.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <para>Both links will lead the user to a page where the necesary
+      permissions can be set.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/manage_permissions.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <para>Also the user can search for another user to manage his
+      permissions:</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/search_user.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <para>After clicking OK, the user will appear in the list an the
+      permissions can be set properly.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/user_permissions.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </section>
+
+    <section>
+      <title>Actions Administration</title>
+
+      <para>To be able to administrate actions the user must have site wide
+      admin privileges. To admin actions the user must follow the link "Action
+      Administration" in the assessment admin page.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/admin_actions.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <orderedlist>
+        <listitem>
+          <para>Register User: create a new user account in the system.</para>
+        </listitem>
+
+        <listitem>
+          <para>Event Registration: register the user to an event.</para>
+        </listitem>
+
+        <listitem>
+          <para>Add to Community: register the user to dotlrn and also to a
+          dotlrn class/community.</para>
+        </listitem>
+      </orderedlist>
+
+      <para>Actions can be also created, following the link "Add new
+      action":</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/add_action.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>The action is formed mainlly by four things:</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Name: the desire name that gives an idea of what the action
+          do.</para>
+        </listitem>
+
+        <listitem>
+          <para>Description: short explaination of what the action do, and how
+          its done.</para>
+        </listitem>
+
+        <listitem>
+          <para>Tcl code: the code that its executed to performe the
+          action.</para>
+        </listitem>
+
+        <listitem>
+          <para>Parameter: this are the variables needed in the tcl code, that
+          depends of the user.</para>
+        </listitem>
+      </orderedlist>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/create_action.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <para>After the action is created, a link to add the parameters is
+      shown.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/add_params.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot>When the link is followed, then a form to create the
+      parameter is shown, there are two types of parameters:</para>
+
+      <para><orderedlist>
+          <listitem>
+            <para>Name: this will take the value from a response given by the
+            user to an item of the assessment.</para>
+          </listitem>
+
+          <listitem>
+            <para>Query: for this type of parameter, the field query is used,
+            and the parameter will take the value or values that the query
+            returns.</para>
+          </listitem>
+        </orderedlist><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/create_param.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>To delete an action the link "delete" in the action administration
+      page must be followed:</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/delete_action.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot>Before deleting an action, a confirm message will be
+      displayed, the action will not be deleted if there is some reference to
+      this action (i.e. a trigger that wil execute this action).<screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/action_del_confirm.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+    </section>
+
+    <section>
+      <title>Trigger Definition</title>
+
+      <para>After the assessment is created, the triggers can be defined for
+      questions with multiple choice responses.</para>
+
+      <para>There are two type of triggers:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Branch: This trigger will make that the secuence of sections
+          in the assessment change, depending on the answer that a user gives
+          to the question related to the trigger when the assessment is being
+          responded.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <listitem>
+          <para>Action: This trigger will execute the action related, also
+          depending on the answer that the user gives to the question related
+          to the trigger, when the assessment is being responded.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The link to create a trigger appears in the action bar of the
+      items with multiple choice responses of the assessment.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/add_trigger.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </section>
+
+    <section>
+      <title>Branch Triggers</title>
+
+      <para>To define a Branch Trigger, the field "Type" in the form must be
+      checked as branch. Is necessary that at least one section is created
+      after the one that is being evaluated.</para>
+
+      <para>The condition field shows the question and its possible answers,
+      this means that if a user that respond the assessment choose that
+      response the trigger will be activated, and the section secuence will
+      change.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/branch_trigger.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>After the trigger is defined as branch, the section that will be
+      displayed next must be chosen:</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/select_section.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+    </section>
+
+    <section>
+      <title>Action Triggers</title>
+
+      <para>To define an Action Trigger, the field "Type" in the form must be
+      checked as "Action".</para>
+
+      <para>The condition field shows the question and its possible anwers, it
+      means that when the user is responding the assessment, if this answer is
+      given for this question, the action will be executed.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/action_trigger.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>After the trigger is created, the action related must be chosen,
+      also the time when the action will be executed, and the message shown to
+      the user when the action is executed.</para>
+
+      <para>The actions can be executed in three different times:</para>
+
+      <para><orderedlist>
+          <listitem>
+            <para>Immediately: it means that the action will be executed after
+            the user finish to respond the current section.</para>
+          </listitem>
+
+          <listitem>
+            <para>At the end of this Assessment: it means that the action will
+            be executed when the user finish to respond all the sections of
+            the assessment.</para>
+          </listitem>
+
+          <listitem>
+            <para>Manually:this means that the action will be executed by an
+            administrator (i.e. in case that the request needs
+            approval).</para>
+          </listitem>
+        </orderedlist></para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/select_action.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>After select the action related to the trigger, the parameters for
+      the action must be set, the select boxes display the options depending
+      on the type of the parameter.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Query: display the values returned by the query defined for
+          the parameter.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <listitem>
+          <para>Name: the options displayed depends on the time of
+          execution:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Immediately: display all the questions defined in previuos
+              sections.</para>
+            </listitem>
+          </itemizedlist>
+
+          <itemizedlist>
+            <listitem>
+              <para>At the end of the assessment and Manually: display all the
+              questions defined in the assessment.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/set_params.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+    </section>
+
+    <section>
+      <title>Trigger Administration</title>
+
+      <para>The trigger administration page can be reached from two different
+      links, the link "Administer Triggers" in the action bar of each section,
+      or from the link that show the number of triggers related to an
+      item.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/checks_admin.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>If the trigger administration page is reached from thi link of the
+      section, all the triggers related to the items of the section will be
+      display, this allowst to manage the order of the execution of the
+      actions when they are executed immediately or at the end or the
+      assessment. When the arrorws that appear beside each trigger is clicked,
+      then the order of execution will change.</para>
+
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/section_triggers.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+
+      <para>If the trigger administration page is reached through the link
+      that show the number of triggers of each item, then the row will not be
+      shown. Through this interface, the trigger can be edited, deleted or can
+      be managed its notifications.</para>
+
+      <para>When a trigger is deleted, a confirm message will be display
+      showing all the information related to it.<screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/delete_triggers.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>The link "Notify User" leads to a page a user can request
+      notifications when this trigger is executed. It also allowst to search
+      and register another users to the notifications.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/notifications.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+    </section>
+
+    <section>
+      <title>Request Administration</title>
+
+      <para>The request Administration page can be reached following the link
+      in the action bar for a site wide administrator or following the link
+      show in the list of assessments that belong to a user.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/request_admin.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>The Request Administration interface shows all the requests
+      (action triggers executions) that has been approved, approved with
+      errors and the ones that are waiting to be executed (i.e. Manually
+      executed triggers).</para>
+
+      <para>This interface will display those requests related to the
+      assessments that the user owns, if the user is site wide administrator,
+      all the requests related to all the assessments will be display.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/show_requests.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>An administrator can select requests that want to approve and
+      click in the button "Approve", and also can send mail to several users
+      that requested the action. Through this interface the notifications can
+      also be managed.</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/request_actions.JPG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Registration Assessment</title>
+
+    <para>To be able to select an assessment that will be related to the
+    registration process is necessary that the user has site wide admin
+    privileges, because the interface can only be reached through the Main
+    Site Administration Page. This link only will appear if the Assessment
+    Package is installed and mounted.</para>
+
+    <para><screenshot>
+        <screeninfo></screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/register_asm.JPG" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>If the Assessment Package is installed and mounted, the
+    link can be follow and will lead to a page that shows all the assessment
+    that can be responded for anonymous users created in all of the diferent
+    instances of the assessment package that could exist. If the option "None"
+    is selected, it means that the registration process will be the same as
+    always has been, if any other option is selected, the assessment will be
+    diplayed when a user creates a new account.</para>
+
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/none_asm.JPG" />
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/select_asm.JPG" />
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+  </chapter>
+
+  <chapter>
+    <title>Authors</title>
+
+    <para>Viaro Networks (www.viaro.net)</para>
+
+    <orderedlist>
+      <listitem>
+        <para>Rocael Hernandez -- roc@viaro.net</para>
+
+        <para>Design</para>
+      </listitem>
+
+      <listitem>
+        <para>Vivian Aguilar -- vivian@viaro.net</para>
+
+        <para>Desing and Development</para>
+      </listitem>
+
+      <listitem>
+        <para>Anny Flores -- annyflores@viaro.net</para>
+
+        <para>Development and Documentation</para>
+      </listitem>
+    </orderedlist>
+  </chapter>
+</book>
