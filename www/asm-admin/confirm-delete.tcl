@@ -6,19 +6,24 @@ ad_page_contract {
     inter_item_check_id:multiple
     section_id
     assessment_id
+    by_item_p:integer
+    item_id_check:optional
 }
+
 
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 set title "$assessment_data(title)"
+
 set context [list [list "one-a?assessment_id=$assessment_id" $title] [list "checks-admin?assessment_id=$assessment_id&section_id=$section_id" "$title [_ assessment.Administration]"] "[_ assessment.trigger_delete]"]
+
 
 set title "[_ assessment.trigger_delete]"
 
-ad_form -name delete_checks -form {
-
+ad_form -name delete_checks -export {by_item_p item_id_check} -form {
+    
     {inter_item_check_id:text(hidden) 
 	{value $inter_item_check_id}
     }
@@ -28,6 +33,13 @@ ad_form -name delete_checks -form {
     {assessment_id:text(hidden) 
 	{value $assessment_id}
     }
-} -on_submit {
-    ad_returnredirect "checks-delete?section_id=$section_id&inter_item_check_id=$inter_item_check_id&assessment_id=$assessment_id"
+}  -after_submit {
+    
+    if {$by_item_p == 1} {
+	ad_returnredirect "checks-delete?section_id=$section_id&inter_item_check_id=$inter_item_check_id&assessment_id=$assessment_id&by_item_p=$by_item_p&item_id=$item_id_check"
+    } else {
+	ad_returnredirect "checks-delete?section_id=$section_id&inter_item_check_id=$inter_item_check_id&assessment_id=$assessment_id&by_item_p=$by_item_p"
+    }
+    
+    
 }

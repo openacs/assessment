@@ -8,7 +8,7 @@ ad_page_contract {
     assessment_id:integer
     section_id
     item_id:optional
-    
+      
 }
 
 set package_id [ad_conn package_id]
@@ -20,30 +20,36 @@ set check_list ""
 set show_p 1
 set by_item_p 0
 set item_p ""
+set item_id_check ""
 
 if {[exists_and_not_null item_id]} {
-    set show_p 0
     set by_item_p 1
     set item_p "&item_id=$item_id"
+    set item_id_check $item_id
     set check_list "and c.inter_item_check_id in ("
     set checks [db_list_of_lists get_all_checks { }]
+    set count  0
     
     foreach check $checks {
 	set cond_list  [split [lindex $check 1] "="]
 	set as_item_id [lindex [split [lindex $cond_list 2] " "] 0]
 	if { $item_id == $as_item_id} {
+	    incr count
 	    append check_list "[lindex $check 0],"
 	}
 	
     } 
+    if {$count == 0} {
+	append check_list "0,"
+    }
     set check_list [string range $check_list 0 [expr [string length $check_list] -2]]
     append  check_list ")"
 } 
 
-db_multirow aa_checks get_aa_checks {} 
-db_multirow i_checks  get_i_checks {}    
-db_multirow branches  get_branches {}
-db_multirow m_checks  get_m_checks {}
+db_multirow  aa_checks get_aa_checks {}  
+db_multirow  i_checks  get_i_checks {}  
+db_multirow  branches  get_branches {} 
+db_multirow  m_checks  get_m_checks {} 
 
 
 if {![info exists assessment_data(assessment_id)]} {
@@ -65,10 +71,11 @@ template::list::create \
     }\
     -bulk_action_method post \
     -bulk_action_export_vars {
-	inter_item_check_id
 	assessment_id
 	section_id
 	{type_check t}
+	item_id_check
+	by_item_p
     }\
     -row_pretty_plural "[_ assessment.Assessment] [_ assessment.triggers]" \
     -elements {
@@ -109,10 +116,12 @@ template::list::create \
     }\
     -bulk_action_method post \
     -bulk_action_export_vars {
-	inter_item_check_id
 	assessment_id
 	section_id
 	{type_check t}
+	item_id_check
+	by_item_p
+
     }\
     -row_pretty_plural "[_ assessment.Assessment] [_ assessment.triggers]" \
     -elements {
@@ -152,10 +161,12 @@ template::list::create \
     }\
     -bulk_action_method post \
     -bulk_action_export_vars {
-	inter_item_check_id
 	assessment_id
 	section_id
 	{type_check t}
+	item_id_check
+	by_item_p
+	
     }\
     -row_pretty_plural "[_ assessment.Assessment] [_ assessment.triggers]" \
     -elements {
@@ -185,10 +196,12 @@ template::list::create \
     }\
     -bulk_action_method post \
     -bulk_action_export_vars {
-	inter_item_check_id
 	assessment_id
 	section_id
 	{type_check f}
+	item_id_check
+	by_item_p
+
     }\
     -row_pretty_plural "[_ assessment.Assessment] [_ assessment.triggers]" \
     -elements {

@@ -6,6 +6,8 @@ ad_page_contract {
     inter_item_check_id:multiple
     section_id
     assessment_id
+    by_item_p
+    item_id:optional
   }
 set count [llength $inter_item_check_id]
 
@@ -15,4 +17,8 @@ for { set i 0} { $i< $count } {incr i} {
 	db_exec_plsql delete_check {}
     }
 }
-ad_returnredirect "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
+if {$by_item_p == 1} {
+    ad_returnredirect "checks-admin?section_id=$section_id&assessment_id=$assessment_id&by_item_p=$by_item_p&item_id=$item_id"
+} else {
+    ad_returnredirect "checks-admin?section_id=$section_id&assessment_id=$assessment_id&by_item_p=$by_item_p"
+}
