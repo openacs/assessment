@@ -45,6 +45,10 @@ create table as_item_choices (
                         primary key
 			constraint as_item_choice_id_fk
 			references cr_revisions(revision_id),
+	parent_id	integer
+			constraint as_item_choices_parent_id_fk
+			references as_item_type_mc(as_item_type_id),
+	data_type	varchar(20),
 	-- we can stuff both integers and real numbers here
         numeric_value   numeric,
 	text_value	varchar(500),
@@ -58,10 +62,14 @@ create table as_item_choices (
 	correct_answer_p	char(1) default 'f'
 				constraint as_item_choice_correct_answer_p_ck
 				check (correct_answer_p in ('t','f')),
+	selected_p	char(1) default 'f'
+			constraint as_item_choice_correct_answer_p_ck
+			check (correct_answer_p in ('t','f')),
 	-- this is where points are stored
-	percentage_value		integer
+	score		integer
 			constraint as_item_choice_value_ck
-			check (value <= 100)
+			check (value <= 100),
+	sort_order	integer
 );
 
 create table as_item_help_map (
