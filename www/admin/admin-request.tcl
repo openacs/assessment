@@ -41,6 +41,7 @@ if {[exists_and_not_null assessment] && $assessment!="all"} {
 
 if {[exists_and_not_null state]} {
     set d_state $state 
+    ns_log notice "----------------->state $state"
 } 
 if {[exists_and_not_null interval] && $interval!="all"} {
     set d_interval $interval
@@ -56,8 +57,10 @@ if {[exists_and_not_null date]} {
 
 if { $d_state == "ae"} {
     set state_query "and al.failed_p='f' and al.approved_p='t'"
-} else {
-    set state_query "and al.failed_p='t'and al.approved_p=:d_state"
+} elseif {$d_state =="f"} {
+    set state_query "and al.approved_p='f'"
+} elseif {$d_state == "t"} {
+    set state_query "and al.failed_p='t' and al.approved_p='t'"
 }
 
 ad_form -name assessments -form {
