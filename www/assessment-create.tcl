@@ -30,7 +30,7 @@ content::type::create_attribute -content_type {as_item_choices} -attribute_name 
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {score}         -datatype {number}  -pretty_name {Score} -column_spec {integer}
 content::type::create_attribute -content_type {as_item_choices} -attribute_name {sort_order}    -datatype {number}  -pretty_name {Sort Order} -column_spec {integer}
 
-content::type::create_attribute -content_type {as_items} -attribute_name {item_subtext}         -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_items} -attribute_name {subtext}              -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {field_code}           -datatype {string}  -pretty_name {Item Field Code} -column_spec {varchar(500)}
 content::type::create_attribute -content_type {as_items} -attribute_name {enabled_p}            -datatype {boolean} -pretty_name {Item Enabled}    -column_spec {char(1)}
 content::type::create_attribute -content_type {as_items} -attribute_name {required_p}           -datatype {boolean} -pretty_name {Item Required}   -column_spec {char(1)}

@@ -11,14 +11,8 @@ create table as_items (
                         primary key
 			constraint as_item_item_id_fk
 			references cr_revisions(revision_id),
-        item_type_id    integer
-			constraint as_item_item_type_id_fk
-                        references as_item_types (item_type_id),
-	item_display_type_id integer
-			constraint as_item_item_display_type_id_fk
-			references as_item_display_types (item_display_type_id),
 	-- a secondary label, needed for many kinds of questions
-	item_subtext	varchar(500),
+	subtext	varchar(500),
 	-- a short label for use in data output header rows, etc
 	field_code	varchar(500),
 	-- whether Item is released for actual use
