@@ -10,8 +10,8 @@
 
 	<fullquery name="as::qti::parse_qti_xml.as_item_section_map_insert">
 		<querytext>
-			INSERT INTO as_item_section_map (as_item_id, section_id, sort_order) 
-			VALUES (:as_item_id, :section_id, :as_item_section_map__sort_order)
+			INSERT INTO as_item_section_map (as_item_id, section_id, sort_order, points, max_time_to_complete) 
+			VALUES (:as_item_id, :section_id, :as_item_section_map__sort_order, :as_item__points, :as_item__duration)
             </querytext>
         </fullquery>
 	

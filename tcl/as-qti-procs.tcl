@@ -306,7 +306,11 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					# Process the items
 					set as_items [as::qti::parse_item $section [file dirname $xmlfile]]
 					# Relation between as_items and as_sections
-					foreach as_item_id $as_items {
+					foreach as_item_list $as_items {
+					    array set as_item $as_item_list
+					    set as_item_id $as_item(as_item_id)
+					    set as_item__duration $as_item(duration)
+					    set as_item__points $as_item(points)
 					    db_dml as_item_section_map_insert {}
 					    incr as_item_section_map__sort_order
 					}
@@ -603,7 +607,10 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
-		lappend as_items $as_item_id
+		set as_item(as_item_id) $as_item_id
+		set as_item(points) $as_items__points
+		set as_item(duration) $as_items__duration
+		lappend as_items [array get as_item]
 	    } else {
 		set response_lidNodes [$presentation selectNodes {.//response_lid}]
 		# The first node of the list. It may not be a good idea if it doesn't exist
@@ -656,7 +663,10 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
-		lappend as_items $as_item_id
+		set as_item(as_item_id) $as_item_id
+		set as_item(points) $as_items__points
+		set as_item(duration) $as_items__duration
+		lappend as_items [array get as_item]
 		# <response_label> (each choice)
 		set response_labelNodes [$presentation selectNodes {.//response_label}]
 		foreach response_label $response_labelNodes {
