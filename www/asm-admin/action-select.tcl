@@ -75,7 +75,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     }
     
 } -new_data {
-    set order [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
+    set order_value [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
     db_dml select_action {}
     
 } -edit_request {
@@ -92,14 +92,14 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
 
 		#re-order the other group
 		as::assessment::check::re_order_actions -check_id $inter_item_check_id -section_id $section_id -action_perform $perform
-		set order [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
+		set order_value [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
 		db_dml edit_action_order_by {}
 	    }
 	} else {
 	    db_dml delete_action_map {}
 	    db_dml delete_param_map {}
 		
-	    set order [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
+	    set order_value [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
 	    db_dml select_action {}
 	}
     } 

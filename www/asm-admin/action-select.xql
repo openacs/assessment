@@ -20,7 +20,7 @@
 <querytext>
 	insert into as_action_map
 	(inter_item_check_id,action_id,order_by,user_message,action_perform)
-	values (:inter_item_check_id,:action_id,:order,:user_message,:action_perform)
+	values (:inter_item_check_id,:action_id,:order_value,:user_message,:action_perform)
 </querytext>
 </fullquery>
 
@@ -57,7 +57,7 @@
 
 <fullquery name="edit_action_order_by">
 <querytext>
-	update as_action_map set action_perform=:action_perform, action_id=:action_id, user_message=:user_message,order_by=:order where inter_item_check_id=:inter_item_check_id
+	update as_action_map set action_perform=:action_perform, action_id=:action_id, user_message=:user_message,order_by=:order_value where inter_item_check_id=:inter_item_check_id
 </querytext>
 </fullquery>
 

@@ -89,22 +89,33 @@ ad_form -name new_check -export {assessment_id return_url} -form {
 	{html {cols 40} {rows 20}}
 	{help_text "[_ assessment.description_trigger]"}
     }
-    {action_p:boolean(radio)
-	{label "[_ assessment.parameter_type]"}
-	{options [as::assessment::check::get_types]}
-	{help_text "[_ assessment.type_of_trigger]"}
-    }
     {condition:text(radio)
 	{label "[_ assessment.condition]"}
 	{options $choices}
 	{after_html $question_text}
 	{help_text "[_ assessment.the_condition_to]"}
     }
-    
-} -new_data {
+
+}
+
+if {![exists_and_not_null inter_item_check_id]} {
+    ad_form -extend -name new_check -form {
+	{action_p:boolean(radio)
+	    {label "[_ assessment.parameter_type]"}
+	    {options [as::assessment::check::get_types]}
+	    {help_text "[_ assessment.type_of_trigger]"}
+	}
+    } 
+} else {
+    ad_form -extend -name new_check -form {
+	{action_p:text(hidden)}
+    }
+}
+
+ad_form -extend -name new_check  -new_data {
     set user_id [ad_conn user_id]
     set check_sql [as::assessment::check::get_sql -condition $condition -item_id $item_id]
-#   set check_sql "check_sql"
+    #   set check_sql "check_sql"
     db_transaction {
 	set date [db_string get_date {select sysdate from dual}]
 	db_exec_plsql new_check {}
@@ -117,7 +128,7 @@ ad_form -name new_check -export {assessment_id return_url} -form {
     set cond_list  [split $condition_sql "="]
     #set condition [string range [lindex $cond_list 1] 0 3]
     set condition [lindex [split [lindex $cond_list 1] " "] 0]
-
+    
 } -edit_data {
     set check_sql [as::assessment::check::get_sql -condition $condition -item_id $item_id]
     db_dml update_check {}
