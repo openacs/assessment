@@ -7,7 +7,7 @@
 		<querytext>
 			SELECT s.session_id, s.name, s.title, s.completed_datetime, s.percent_score,
 			       p.first_names || ' ' || p.last_name AS subject_name,
-			       a.title AS assessment_name, s.subject_id
+			       a.title AS assessment_name, s.subject_id, a.survey_p
 			FROM as_sessionsx s, as_assessmentsx a, persons p
 			WHERE s.assessment_id = a.assessment_id
 			AND s.subject_id = p.person_id
@@ -27,7 +27,7 @@
 		<querytext>
 			SELECT s.session_id, s.name, s.title, s.completed_datetime, s.percent_score,
 			       p.first_names || ' ' || p.last_name AS subject_name,
-			       a.title AS assessment_name, s.subject_id
+			       a.title AS assessment_name, s.subject_id, a.survey_p
 			FROM as_sessionsx s, as_assessmentsx a, persons p
 			WHERE s.assessment_id = a.assessment_id
 			AND s.subject_id = p.person_id
