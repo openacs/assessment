@@ -18,6 +18,10 @@ content::type::create_type -content_type {as_item_display_rb} -supertype {conten
 content::type::create_type -content_type {as_items} -supertype {content_revision} -pretty_name {Assessment Item} -pretty_plural {Assessment Items} -table_name {as_items} -id_column {as_item_id}
 content::type::create_type -content_type {as_sections} -supertype {content_revision} -pretty_name {Assessment Section} -pretty_plural {Assessment Sections} -table_name {as_sections} -id_column {section_id}
 content::type::create_type -content_type {as_assessments}  -supertype {content_revision} -pretty_name {Assessment Assessment} -pretty_plural {Assessment Assessments} -table_name {as_assessments} -id_column {assessment_id}
+content::type::create_type -content_type {as_sessions} -supertype {content_revision} -pretty_name {Assessment Session} -pretty_plural {Assessment Sessions} -table_name {as_sessions} -id_column {session_id}
+content::type::create_type -content_type {as_section_data} -supertype {content_revision} -pretty_name {Assessment Section Data} -pretty_plural {Assessment Sections Data} -table_name {as_section_data} -id_column {section_data_id}
+content::type::create_type -content_type {as_item_data} -supertype {content_revision} -pretty_name {Assessment Item Data} -pretty_plural {Assessment Items Data} -table_name {as_item_data} -id_column {item_data_id}
+
 }
 
 content::type::create_attribute -content_type {as_item_display_rb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -76,6 +80,37 @@ content::type::create_attribute -content_type {as_assessments} -attribute_name {
 content::type::create_attribute -content_type {as_assessments} -attribute_name {show_feedback}            -datatype {string}  -pretty_name {Assessment Show comments to the user}  -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {section_navigation}            -datatype {string}  -pretty_name {Assessment Navigation of sections}  -column_spec {varchar(50)}
 
+content::type::create_attribute -content_type {as_sessions} -attribute_name {assessment_id}            -datatype {number}  -pretty_name {Assessment ID}  -column_spec {integer}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {subject_id}     -datatype {number}  -pretty_name {Subject ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {target_datetime}     -datatype {number}  -pretty_name {Target Date Time}     -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {creation_datetime}     -datatype {number}  -pretty_name {Creation Date Time}     -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {first_mod_datetime}     -datatype {number}  -pretty_name {First Submission}     -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {last_mod_datetime}     -datatype {number}  -pretty_name {Most Recent Submission}     -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {completed_datetime}     -datatype {number}  -pretty_name {Final Submission}     -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {session_status}            -datatype {string}  -pretty_name {Session Status}  -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {assessment_status}            -datatype {string}  -pretty_name {Assessment Status}  -column_spec {varchar(20)}
+content::type::create_attribute -content_type {as_sessions} -attribute_name {percent_score}            -datatype {number}  -pretty_name {Percent Score}  -column_spec {integer}
+
+content::type::create_attribute -content_type {as_section_data} -attribute_name {session_id}            -datatype {number}  -pretty_name {Session ID}  -column_spec {integer}
+content::type::create_attribute -content_type {as_section_data} -attribute_name {section_id}            -datatype {number}  -pretty_name {Section ID}  -column_spec {integer}
+content::type::create_attribute -content_type {as_section_data} -attribute_name {subject_id}            -datatype {number}  -pretty_name {Subject ID}  -column_spec {integer}
+content::type::create_attribute -content_type {as_section_data} -attribute_name {staff_id}            -datatype {number}  -pretty_name {Staff ID}  -column_spec {integer}
+
+content::type::create_attribute -content_type {as_item_data} -attribute_name {session_id}     -datatype {number}  -pretty_name {Session ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {subject_id}     -datatype {number}  -pretty_name {Subject ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {staff_id}     -datatype {number}  -pretty_name {Staff ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {item_id}     -datatype {number}  -pretty_name {Item ID}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {is_unknown_p} -datatype {boolean}  -pretty_name {Is Unknown} -column_spec {char(1)}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {choice_id_answer}     -datatype {number}  -pretty_name {Choice ID Answer}     -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {boolean_answer} -datatype {boolean} -pretty_name {Boolean Answer} -column_spec {boolean}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {clob_answer} -datatype {string} -pretty_name {Clob Answer} -column_spec {text}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {numeric_answer} -datatype {number}  -pretty_name {Numeric Answer} -column_spec {numeric}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {integer_answer} -datatype {number}  -pretty_name {Integer Answer} -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {text_answer}    -datatype {string}  -pretty_name {Text Answer}    -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {timestamp_answer}    -datatype {number}  -pretty_name {TimeStamp Answer}    -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
+content::type::create_attribute -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 
 }
 

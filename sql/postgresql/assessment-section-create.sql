@@ -96,8 +96,26 @@ create table as_assessments (
 	number_tries integer,
 	wait_between_tries integer,
 	time_for_response integer,
-	show_feedback varchar(50),
-	section_navigation varchar(50)
+	show_feedback varchar(50) default 'none'
+			constraint as_assessments_show_feedback_ck
+			check (show_feedback in ('none', 'all', 'incorrect', 'correct')),
+	section_navigation varchar(50) default 'default path'
+			constraint as_assessments_section_navigation_ck
+			check (section_navigation in ('default path', 'randomized', 'rule-based branching'))
+);
+
+-- Style Options 
+-- Each assessment has a special style associated with it. As styles can be reused.
+create table as_assessment_styles (
+       custom_header	varchar(500), 
+       custom_footer	varchar(500), 
+       form_template	varchar(500),
+       progress_bar 	varchar(20) default 'no'       
+			constraint as_assessment_styles_progress_bar_ck
+			check (progress_bar in ('no','blue','red','green', 'yellow')),
+       presentation_style 	varchar(20) default 'all'
+       			constraint as_assessment_styles_presentation_style_ck
+			check (presentation_style in ('all', 'one', 'sectioned')) 
 );
 
 create table as_assessment_section_map (
