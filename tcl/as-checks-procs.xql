@@ -293,57 +293,17 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::assessment::check::copy_checks.get_action_map">
-      <querytext>
-	select action_id,order_by,user_message,action_perform from as_action_map where inter_item_check_id=:inter_item_check_id
-      </querytext>
-</fullquery>
-<fullquery name="as::assessment::check::copy_item_checks.get_action_map">
-      <querytext>
-	select action_id,order_by,user_message,action_perform from as_action_map where inter_item_check_id=:inter_item_check_id
+
+
+<fullquery name="as::assessment::check::copy_checks.update_checks">
+      <querytext>	
+	update as_inter_item_checks set section_id_from=:new_section_id where inter_item_check_id=:inter_item_check_id
       </querytext>
 </fullquery>
 
-
-<fullquery name="as::assessment::check::copy_checks.insert_action_map">
+<fullquery name="as::assessment::check::copy_item_checks.update_checks">
       <querytext>
-	insert into as_action_map (inter_item_check_id,action_id,order_by,user_message,action_perform) values  
-        (:insert_p,:action_id,:order_by,:user_message,:action_perform)
-      </querytext>
-</fullquery>
-
-<fullquery name="as::assessment::check::copy_item_checks.insert_action_map">
-      <querytext>
-	insert into as_action_map (inter_item_check_id,action_id,order_by,user_message,action_perform) values  
-        (:insert_p,:action_id,:order_by,:user_message,:action_perform)
-      </querytext>
-</fullquery>
-
-
-<fullquery name="as::assessment::check::copy_checks.parameters">
-      <querytext>
-	select parameter_id,value,item_id from as_param_map 
-	where inter_item_check_id=:inter_item_check_id 
-      </querytext>
-</fullquery>
-
-<fullquery name="as::assessment::check::copy_item_checks.parameters">
-      <querytext>
-	select parameter_id,value,item_id from as_param_map 
-	where inter_item_check_id=:inter_item_check_id
-      </querytext>
-</fullquery>
-
-
-<fullquery name="as::assessment::check::copy_checks.copy_parameter">
-      <querytext>
-	insert into as_param_map (parameter_id,value,item_id,inter_item_check_id) values (:parameter_id,:value,:item_id,:insert_p)
-      </querytext>
-</fullquery>
-
-<fullquery name="as::assessment::check::copy_item_checks.copy_parameter">
-      <querytext>
-	insert into as_param_map (parameter_id,value,item_id,inter_item_check_id) values (:parameter_id,:value,:item_id,:insert_p)
+	update as_inter_item_checks set check_sql=:check_sql where inter_item_check_id=:inter_item_check_id
       </querytext>
 </fullquery>
 

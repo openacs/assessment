@@ -13,10 +13,15 @@ ad_page_contract {
     page_title:onevalue
 }
 
+set user_id [ad_conn user_id]
+
+if { $user_id != 0} {
+    db_dml update_session {update as_sessions set subject_id=:user_id where session_id=:session_id}
+}
 
 if {[info exists return_url]} {
     if { $return_url != ""} {
-    ad_returnredirect "$return_url"
+	ad_returnredirect "$return_url"
     }
 }
 set page_title "[_ assessment.Response_Submitted]"

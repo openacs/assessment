@@ -21,5 +21,26 @@ ad_proc -public as::actions::insert_actions_after_upgrade {
 } {
 } { 
     db_exec_plsql after_upgrade {}
+    
+}
+ad_proc -public as::actions::update_checks_after_upgrade {
+    
+} {
+} {
+    set checks [db_list_of_lists get_all_checks {}] 
+
+    foreach check $checks {
+	set inter_item_check_id [lindex $check 0]
+	set check_sql [lindex $check 1]
+	set cond_list  [split  $check_sql "="]
+	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	set condition [lindex [split [lindex $cond_list 1] " "] 0]
+	
+	set append_sql " and id.item_data_id = (select max(item_data_id) from as_item_data where as_item_id=$item_id and session_id=:session_id)"
+	append check_sql $append_sql
+	
+	db_dml update_checks {}
+	
+    }
 }
 

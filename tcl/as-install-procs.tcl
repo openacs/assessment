@@ -346,6 +346,9 @@ ad_proc -public as::install::after_upgrade {
 		    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {keywords} -datatype {string} -pretty_name {Keywords} -column_spec {varchar(4000)}
 		}
 	    }
+	    0.10d9 0.10d10 {
+		as::actions::update_checks_after_upgrade
+	    }
 	}
     
 }
