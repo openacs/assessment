@@ -71,52 +71,76 @@
         package, which is based on the CR and thus can support multiple comments attached to a given
         revision of a data element. The integration between Assessment and GC thus will need to
         be at the UI level, not the data model level. Using GC will support post-test "discussions" between
-      student and teacher, for example, about inidividual items, sections or sessions.</li>
-      <li> <b>Scoring-grading</b>: This has been a rather controversial area because of the
-        wide range of needs for derived calculations/evaluations that different applications need
-        to perform on the raw submitted data. In many cases, no calculations are needed at all; only
-        frequency reports ("74% of responders chose this option") are needed. In other cases, a given
-        item response may itself have some measure of "correctness" ("Your answer was 35% right.") or
-        a section may be the relevant scope of scoring ("You got six of ten items correct -- 60%.). At the
-        other extreme, complex scoring algorithms may be defined to include multiple scales consisting
-        of arbitrary combinations of items among different sections or even consisting of arithmetic means
-        of already calculated scale scores.
-        <p>Because of this variability as well as the recognition that Assessment should be primarily
-          a data <i>collection</i> package, we've decided to abstract all scoring-grading functions to one
-          or more additional packages. A grading package 
-          (<a href="http://openacs.org/viewcvs/openacs-4/packages/evaluation/">evaluation</a>) 
-          is under development now by part of our group, but no documentation is yet available about it.
-          <i>How such client packages will interface with Assessment has not yet been worked out, but this
-            is a crucial issue to work through. Presumably something to do with service contracts.</i>
+        student and teacher, for example, about inidividual items, sections or sessions.</li><p></p>
+    <li> <b>Scoring-grading</b>: This has been a rather controversial area because of the
+      wide range of needs for derived calculations/evaluations that different applications need
+      to perform on the raw submitted data. In many cases, no calculations are needed at all; only
+      frequency reports ("74% of responders chose this option") are needed. In other cases, a given
+      item response may itself have some measure of "correctness" ("Your answer was 35% right.") or
+      a section may be the relevant scope of scoring ("You got six of ten items correct -- 60%.). At the
+      other extreme, complex scoring algorithms may be defined to include multiple scales consisting
+      of arbitrary combinations of items among different sections or even consisting of arithmetic means
+      of already calculated scale scores.
+      <p>Because of this variability as well as the recognition that Assessment should be primarily
+        a data <i>collection</i> package, we've decided to abstract all scoring-grading functions to one
+        or more additional packages. A grading package 
+        (<a href="http://openacs.org/viewcvs/openacs-4/packages/evaluation/">evaluation</a>) 
+        is under development now by part of our group, but no documentation is yet available about it.
+        <i>How such client packages will interface with Assessment has not yet been worked out, but this
+          is a crucial issue to work through. Presumably something to do with service contracts.</i>
         Such a package will need to interact both with Assessment metadata (to define what items are to be
         "scored" and how they are to be scored -- and with Assessment collected data (to do the actual
         calculations and mappings-to-grades.</p></li>
-      <li> <b>Signatures</b>: The purpose of this is to provide identification and nonreputability during
-        data submission. An assessment should optionally be configurable to require a pass-phrase from the user
-        at the individual item level, the section level, or the session level. This pass-phrase would be used
-        to generate a hash of the data that, along with the system-generated timestamp when the data return to
-        the server, would uniquely mark the data and prevent subsequent revisions. For most simple applications
-        of Assessment, all this is overkill. But for certification exams (for instance) or for clinical data or
-        financial applications, this kind of auditing is essential.
-        <p>We previously used a separate table for this since probably most assessments won't use this (at least,
-          that is the opinion of most of the educational folks here). However, since we're generating separate
-          revisions of each of these collected data types, we decided it would be far simpler and more appropriate
-          to include the <b>signed_data</b> field directly in the as_item_data table. Note that for complex
-          applications, the need to "sign the entire form" or "sign the section" could be performed by concatenating
-          all the items contained by the section or assessment and storing that in a "signed_data" field in as_section_data
-          or as_sessions. However, this would presumably result in duplicate hashing of the data -- once for the
-          individual items and then collectively. Instead, we'll only "sign" the data at the atomic, as_item level, and
-          procedurally sign all as_item_data at once if the assessment author requires only a section-level or assessment-level
-          signature.</p>
-      </li>
+    <li> <b>Signatures</b>: The purpose of this is to provide identification and nonreputability during
+      data submission. An assessment should optionally be configurable to require a pass-phrase from the user
+      at the individual item level, the section level, or the session level. This pass-phrase would be used
+      to generate a hash of the data that, along with the system-generated timestamp when the data return to
+      the server, would uniquely mark the data and prevent subsequent revisions. For most simple applications
+      of Assessment, all this is overkill. But for certification exams (for instance) or for clinical data or
+      financial applications, this kind of auditing is essential.
+      <p>We previously used a separate table for this since probably most assessments won't use this (at least,
+        that is the opinion of most of the educational folks here). However, since we're generating separate
+        revisions of each of these collected data types, we decided it would be far simpler and more appropriate
+        to include the <b>signed_data</b> field directly in the as_item_data table. Note that for complex
+        applications, the need to "sign the entire form" or "sign the section" could be performed by concatenating
+        all the items contained by the section or assessment and storing that in a "signed_data" field in as_section_data
+        or as_sessions. However, this would presumably result in duplicate hashing of the data -- once for the
+        individual items and then collectively. Instead, we'll only "sign" the data at the atomic, as_item level, and
+        procedurally sign all as_item_data at once if the assessment author requires only a section-level or assessment-level
+        signature.</p>
+    </li>
     </ul>
+    <p>While this doesn't impact the datamodel structure of this data collection subsystem per se, we do add an
+      important innovation to Assessment that wasn't used in "complex survey" or
+      questionnaire. When a user initiates an Assessment Session (either by requesting the assessment form
+      to complete herself -- such as in an online survey -- or by an admin user "assigning" the assessment to be
+      performed by -- or about -- a subject at some point in the future), an entire set of
+      Assessment data collection objects is created (literally, rows are inserted into all the
+      relevant tables -- as_section_data, as_item_data). Since these are CR-based entities, this means that
+      a cr_item and the initial cr_revision record are created for each of these entities. Then when
+      the user submits a form containing responses to one or more items in the assessment, the database
+      action consists of updates in the CR, not insertions. This contrasts to the existing "survey" packages, 
+      in which "survey_response" or "survey_question_response" rows are only inserted once the user submits
+      the html form.</p>
+    <p> Why is this a good idea? Here's the use case: for an educational course, a teacher plans a set of six
+      exams that the students can complete at their own rate. The teacher wants Assessment to tell her at any
+      moment the status -- at the individual item level -- the status of each student's progress through the exam
+      series. In fact, the UI to do this should create a grid consisting of columns corresponding to the exams (and 
+      the individual exam questions in a drill-down) and rows consisting of each student. Each cell in this grid
+      will be colored red if the item is unanswered, yellow if answered but not "confirmed" (ie the student has "saved&amp;resumed"
+      the exam and wants to revise it further), and green if "confirmed" ie "handed in".</p>
+    <p>If the data collection subsystem doesn't create a set of "empty" records, the only way that procedurally this
+      kind of report can be generated is by repeatedly looping through the assessment's metadata and looking for the 
+      existence or nonexistence of corresponding records in the data collection entities for each of the students. This
+      is the way the current survey and questionnaire packages have had to do it; it is ugly, error prone, and inefficient.
+      We need to do it differently in Assessment!</p>
     <h2>Synopsis of Data-Collection Datamodel</h2>
     <p>
       Here's the schema for this subsystem:<br>
     </p>
     <p></p>
     <center><a
-        href="http://openacs.org/storage/download/assessment-datafocus.graffle?version_id=196912">Source Graffle file</a>
+        href="http://openacs.org/storage/download/assessment-datafocus.graffle?version_id=197118">Source Graffle file</a>
       <p><img alt="Data Model" src="images/assessment-datafocus.jpg"
           style="width: 923px; height: 651px;"></p>
     </center>
@@ -186,6 +210,8 @@
           <li> section_id </li>
           <li> subject_id </li>
           <li> staff_id </li>
+          <li> event_id - this is a foreign key to the "event" during which this assessment is
+            being performed -- eg "second term final" or "six-month follow-up visit" or "Q3 report".</li>
           <li>section_status </li>
         </ul>
         <p> </p>
@@ -207,17 +233,17 @@
           <li> subject_id </li>
           <li> staff_id </li>
           <li> item_id</li>
-          <li>Possible Extension (nope, this is a definite, IMHO -- SK): item_status - Status of the answer. This
-            might be
-            "unanswered, delayed, answered, final". This can be put together with <span
-              style="font-weight: bold;"> is_unknown_p</span> - defaults to "f" -
-            important to clearly
+          <li> item_status - Status of the answer; defaults to "unanswered". Other options could include
+            "submitted, deferred, confirmed, final, is_unknown" -- but this shouldn't be hard-wired into the sql but
+            rather be something that can be configured via categories. Note that this single field
+            can replace the previous "is_unknown_p" field which we previously added.
+            This field is important to clearly
             distinguish an Item value that is unanswered from a value that means
             "We've looked for this answer and it doesn't exist" or "I don't know
             the answer to this". Put another way, if none of the other "value"
             attributes in this table have values, did the subject just decline to
             answer it? Or is the "answer" actually this: "there is no answer". This
-            attribute toggles that clearly when set to "t".</li>
+            attribute toggles that clearly when set to "is_unknown".</li>
           <li> choice_id_answer - references as_item_choices </li>
           <li> boolean_answer </li>
           <li> numeric_answer </li>
