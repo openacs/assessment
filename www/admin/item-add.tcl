@@ -41,7 +41,7 @@ foreach item_type [db_list item_types {}] {
 
 ad_form -name item_add -action item-add -export { assessment_id section_id after } -form {
     {as_item_id:key}
-    {name:text {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
+    {name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 }
@@ -53,7 +53,6 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 ad_form -extend -name item_add -form {
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
     {field_code:text,optional {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
-    {definition:text(textarea),optional {label "[_ assessment.Definition]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Definition_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
     {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}

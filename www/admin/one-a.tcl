@@ -48,11 +48,7 @@ db_multirow sections assessment_sections {} {
     if {[empty_string_p $points]} {
 	set points 0
     }
-    if {![empty_string_p $max_time_to_complete]} {
-	set max_min [expr $max_time_to_complete / 60]
-	set max_sec [expr $max_time_to_complete - ($max_min * 60)]
-	set max_time_to_complete "$max_min\:$max_sec min"
-    }
+    set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 }
 
 ad_return_template

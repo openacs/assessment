@@ -63,7 +63,8 @@
       <querytext>
 
 		update as_item_section_map
-		set as_item_id = :new_item_id
+		set as_item_id = :new_item_id,
+		    points = :points
 		where section_id = :new_section_id
 		and as_item_id = :as_item_id
 

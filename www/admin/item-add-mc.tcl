@@ -43,7 +43,7 @@ ad_form -name item_add_mc -action item-add-mc -export { assessment_id section_id
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options}  {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
-    {num_correct_answers:text {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
+    {num_correct_answers:text,optional {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
     {num_answers:text,optional {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 }
@@ -70,7 +70,7 @@ ad_form -extend -name item_add_mc -edit_request {
     set title ""
     set increasing_p f
     set negative_p f
-    set num_correct_answers "1"
+    set num_correct_answers ""
     set num_answers ""
     set display_type "sa"
 } -on_submit {

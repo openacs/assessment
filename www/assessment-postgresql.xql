@@ -9,7 +9,7 @@
 			INNER JOIN as_assessmentsx a USING (assessment_id)
 			INNER JOIN as_item_section_map ism ON s.section_id = ism.section_id
 			INNER JOIN as_itemsx i USING (as_item_id)
-			WHERE a.assessment_id = :assessment_id
+			WHERE a.assessment_id = :assessment_rev_id
 			ORDER BY s.section_id, ism.sort_order
 		</querytext>
 	</fullquery>
@@ -18,7 +18,7 @@
 		<querytext>
     UPDATE as_sessions
     SET creation_datetime = NOW()
-    WHERE session_id = :as_session_id
+    WHERE session_id = :session_id
 		</querytext>
 	</fullquery>
 

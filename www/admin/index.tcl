@@ -26,7 +26,7 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
 set actions [list "[_ assessment.New_Assessment]" assessment-form "[_ assessment.New_Assessment2]"]
 
 if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
-    lappend actions "[_ assessment.Admin_catalog]" "catalog/" "[_ assessment.Admin_catalog]"
+    # lappend actions "[_ assessment.Admin_catalog]" "catalog/" "[_ assessment.Admin_catalog]"
 }
 
 #get all assessments order by title

@@ -47,7 +47,7 @@ if {[info exists section_id]} {
     }
 } else {
     ad_form -extend -name section_form -form {
-	{name:text {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Name_help]"}}
+	{name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Name_help]"}}
     }
 }
 
@@ -83,22 +83,22 @@ ad_form -extend -name section_form -form {
     db_transaction {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 
-	set section_id [as::section::new \
-			    -name $name \
-			    -title $title \
-			    -description $description \
-			    -instructions $instructions \
-			    -feedback_text $feedback_text \
-			    -max_time_to_complete $max_time_to_complete \
-			    -points $points_p \
-			    -display_type_id $display_type_id]
+	set new_section_id [as::section::new \
+				-name $name \
+				-title $title \
+				-description $description \
+				-instructions $instructions \
+				-feedback_text $feedback_text \
+				-max_time_to_complete $max_time_to_complete \
+				-points $points \
+				-display_type_id $display_type_id]
 
 	db_dml move_down_sections {}
 	set sort_order [expr $after + 1]
 	db_dml add_section_to_assessment {}
 
 	if {[exists_and_not_null category_ids]} {
-	    category::map_object -object_id $section_id $category_ids
+	    category::map_object -object_id $new_section_id $category_ids
 	}
     }
 } -edit_data {

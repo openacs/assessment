@@ -44,4 +44,36 @@
 </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::sections.get_sorted_sections">
+<querytext>
+
+	select section_id
+	from as_session_sections
+	where session_id = :session_id
+	order by sort_order
+
+</querytext>
+</fullquery>
+
+<fullquery name="as::assessment::sections.assessment_sections">
+<querytext>
+
+	select m.section_id, r.title
+	from as_assessment_section_map m, cr_revisions r
+	where m.assessment_id = :assessment_id
+	and r.revision_id = m.section_id
+	order by m.sort_order
+
+</querytext>
+</fullquery>
+
+<fullquery name="as::assessment::sections.save_order">
+	<querytext>
+
+	    insert into as_session_sections (session_id, section_id, sort_order)
+	    values (:session_id, :section_id, :count)
+
+	</querytext>
+</fullquery>
+	
 </queryset>

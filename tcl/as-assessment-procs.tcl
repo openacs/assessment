@@ -226,3 +226,60 @@ ad_proc as::assessment::copy_categories {
 } {
     db_dml copy_categories {}
 }
+
+ad_proc as::assessment::sections {
+    {-assessment_id:required}
+    {-session_id:required}
+    {-sort_order_type ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-14
+
+    Returns all sections of an assessment in the correct order.
+    may vary from session to session
+} {
+    set section_list [db_list get_sorted_sections {}]
+
+    if {[llength $section_list] > 0} {
+	return $section_list
+    }
+
+    # get all sections of assessment
+    set all_sections [db_list_of_lists assessment_sections {}]
+
+    # sort section positions
+    switch -exact $sort_order_type {
+	randomized {
+	    set all_sections [util::randomize_list $all_sections]
+	}
+    }
+
+    # save section order
+    set section_list ""
+    set count 0
+    foreach one_section $all_sections {
+	incr count
+	util_unlist $one_section section_id title
+	lappend section_list $section_id
+	db_dml save_order {}
+    }
+
+    return $section_list
+}
+
+ad_proc as::assessment::pretty_time {
+    {-seconds}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-14
+
+    Returns a pretty string of min:sec
+} {
+    set time ""
+    if {![empty_string_p $seconds]} {
+	set time_min [expr $seconds / 60]
+	set time_sec [expr $seconds - ($time_min * 60)]
+	set time "$time_min\:$time_sec min"
+    }
+    return $time
+}

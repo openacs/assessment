@@ -83,6 +83,11 @@ ad_proc -public as::item_type_sa::copy {
 
 ad_proc -public as::item_type_sa::render {
     -type_id:required
+    -section_id:required
+    -as_item_id:required
+    -default_provided:boolean
+    {-default_value ""}
+    {-session_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
@@ -99,6 +104,7 @@ ad_proc -public as::item_type_sa::process {
     -subject_id:required
     {-staff_id ""}
     {-response ""}
+    {-max_points 0}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11

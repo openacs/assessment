@@ -77,6 +77,28 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_type_mc::render.get_sorted_choices">
+      <querytext>
+
+	select r.title, c.choice_id
+	from as_session_choices c, cr_revisions r
+	where c.session_id = :session_id
+	and c.section_id = :section_id
+	and c.as_item_id = :as_item_id
+	and r.revision_id = c.choice_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::render.save_order">
+	<querytext>
+
+	    insert into as_session_choices (session_id, section_id, as_item_id, choice_id, sort_order)
+	    values (:session_id, :section_id, :as_item_id, :choice_id, :count)
+
+	</querytext>
+</fullquery>
+	
 <fullquery name="as::item_type_mc::process.item_type_data">
       <querytext>
 

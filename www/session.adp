@@ -4,7 +4,7 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr>
-<th colspan="3">#assessment.Review_Asessment# <a href="@assessment_url@">@assessment_name@</a></th></tr>
+<th colspan="3">#assessment.Review_Asessment# <a href="@assessment_url@">@assessment_data.title@</a></th></tr>
 <tr><td nowrap><b>#assessment.User_ID#:</b> <span><a href="@session_user_url@">@session_user_name@</a></span></td>
 <td nowrap><b>#assessment.Attempt#:</b> <span>@session_attempt@ / Unlimited</span></td>
 <td nowrap><if @survey_p@ in f><b>#assessment.Out_of#:</b> <span>@assessment_score@</span></if></td></tr>

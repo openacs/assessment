@@ -12,7 +12,8 @@ ad_page_contract {
 
 if {[info exists assessment_id]} {
     set page_title [_ assessment.Edit_Assessment]
-    set _assessment_id [db_string rev_id_from_item_id {}]
+    set _assessment_id 0
+    db_0or1row rev_id_from_item_id {}
 } else {
     set page_title [_ assessment.New_Assessment2]
     set _assessment_id 0

@@ -3,8 +3,10 @@
 
 	<fullquery name="asssessment_id_name_definition">
 		<querytext>
-			SELECT assessment_id, name, title, description
-			FROM as_assessmentsx
+			select cr.item_id as assessment_id, cr.title, cr.description
+			from as_assessments a, cr_revisions cr, cr_items ci
+			where a.assessment_id = cr.revision_id
+			and cr.revision_id = ci.latest_revision
 		</querytext>
 	</fullquery>
 	

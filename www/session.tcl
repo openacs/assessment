@@ -10,36 +10,31 @@ ad_page_contract {
     @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
     @creation-date 2004-09-13
 } -query {
-  session_id:notnull
+    session_id:notnull
 } -properties {
     context:onevalue
 }
 
 set context [list "[_ assessment.View_Results]"]
 
-#get survey_p in order to find out whether it's an assessment or a survey
-set survey_p [db_string survey_p {
-    SELECT a.survey_p
-    FROM as_assessmentsx a, as_sessionsx ss
-    WHERE a.assessment_id = ss.assessment_id
-    AND ss.session_id = :session_id
-}]
+db_1row find_assessment {
+    select r.item_id as assessment_id
+    from as_sessions s, cr_revisions r
+    where s.session_id = :session_id
+    and r.revision_id = s.assessment_id
+}
 
-set assessment_name [db_string assessment_name {
-    SELECT a.title
-    FROM as_assessmentsx a, as_sessionsx ss
-    WHERE a.assessment_id = ss.assessment_id
-    AND ss.session_id = :session_id
-}]
+# Get the assessment data
+as::assessment::data -assessment_id $assessment_id
 
-set assessment_show_feedback [db_string assessment_show_feedback {
-    SELECT a.show_feedback
-    FROM as_assessmentsx a, as_sessionsx ss
-    WHERE a.assessment_id = ss.assessment_id
-    AND ss.session_id = :session_id
-}]
+if {![info exists assessment_data(assessment_id)]} {
+    ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
+    ad_script_abort
+}
 
-if {[empty_string_p $assessment_show_feedback]} {
+set assessment_rev_id $assessment_data(assessment_rev_id)
+
+if {[empty_string_p $assessment_data(show_feedback)]} {
     set assessment_show_feedback "all"
 }
 
@@ -69,7 +64,7 @@ set session_attempt [db_string session_attempt {
     SELECT COUNT(*)
     FROM as_sessionsx ss
     WHERE ss.subject_id = :subject_id
-    AND ss.assessment_id = :assessment_id
+    AND ss.assessment_id = :assessment_rev_id
 }]
 
 set assessment_score 100 ;# FIXME
@@ -82,7 +77,7 @@ set assessment_items [db_string assessment_items {
     AND s.section_id = asm.section_id
     AND i.as_item_id = ism.as_item_id
     AND s.section_id = ism.section_id
-    AND a.assessment_id = :assessment_id
+    AND a.assessment_id = :assessment_rev_id
 }]
 
 #set maximum score by each item

@@ -132,6 +132,11 @@ ad_proc -public as::item_type_mc::copy {
 
 ad_proc -public as::item_type_mc::render {
     -type_id:required
+    -section_id:required
+    -as_item_id:required
+    -default_provided:boolean
+    {-default_value ""}
+    {-session_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
@@ -157,7 +162,19 @@ ad_proc -public as::item_type_mc::render {
 	    lappend wrong_choices [list $title $choice_id]
 	}
     }
-    
+
+    if {$default_provided_p} {
+	set defaults $default_value
+    }
+
+    if {![empty_string_p $session_id]} {
+	set choice_list [db_list get_sorted_choices {}]
+	
+	if {[llength $choice_list] > 0} {
+	    return [list $defaults $choice_list]
+	}
+    }
+
     if {![empty_string_p $num_answers] && $num_answers < $total} {
 	# display fewer choices, select random
 	set correct_choices [util::randomize_list $correct_choices]
@@ -176,10 +193,20 @@ ad_proc -public as::item_type_mc::render {
 	set display_choices [util::randomize_list $display_choices]
     }
     
+    # save choice order
+    if {![empty_string_p $session_id]} {
+	set count 0
+	foreach one_choice $display_choices {
+	    util_unlist $one_choice title choice_id
+	    incr count
+	    db_dml save_order {}
+	}
+    }
+
     return [list $defaults $display_choices]
 }
 
-ad_proc -public as::item_type_sa::process {
+ad_proc -public as::item_type_mc::process {
     -type_id:required
     -session_id:required
     -as_item_id:required
@@ -250,6 +277,7 @@ ad_proc -public as::item_type_sa::process {
 	}
     }
 
-    set points [expr round($max_points * percent / 100)]
+    set points [expr round($max_points * $percent / 100)]
+
     as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -choice_answer $response -points $points
 }

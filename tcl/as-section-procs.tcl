@@ -164,3 +164,84 @@ ad_proc as::section::copy_items {
 } {
     db_dml copy_items {}
 }
+
+ad_proc as::section::items {
+    {-section_id:required}
+    {-session_id:required}
+    {-sort_order_type ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-14
+
+    Returns all items of a section in the correct order.
+    may vary from session to session
+} {
+    set item_list [db_list_of_lists get_sorted_items {}]
+
+    if {[llength $item_list] > 0} {
+	return $item_list
+    }
+
+    # get all items of section
+    set open_positions ""
+    set max_pos 0
+    db_foreach section_items {} {
+	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete]
+	if {![empty_string_p $fixed_position] && $fixed_position != "0"} {
+	    set fixed_positions($fixed_position) $as_item_id
+	    if {$max_pos < $fixed_position} {
+		set max_pos $fixed_position
+	    }
+	} else {
+	    lappend open_positions [list $as_item_id $title]
+	}
+    }
+    if {$max_pos < [array size section_items]} {
+	set max_pos [array size section_items]
+    }
+
+    # sort item positions that are not fixed
+    switch -exact $sort_order_type {
+	alphabetical {
+	    set open_positions [lsort -dictionary -index 1 $open_positions]
+	}
+	randomized {
+	    set open_positions [util::randomize_list $open_positions]
+	}
+    }
+
+    # generate list of sorted items
+    set sorted_items ""
+    for {set position 1} {$position <= $max_pos} {incr position} {
+	if {[info exists fixed_position($position)]} {
+	    lappend sorted_items $fixed_position($position)
+	    array unset fixed_position $position
+	} elseif {[llength $open_positions] > 0} {
+	    lappend sorted_items [lindex [lindex $open_positions 0] 0]
+	    set open_positions [lreplace $open_positions 0 0]
+	}
+    }
+    # set negative fixed positions relative to the end of the item list
+    if {[array exists fixed_position]} {
+	foreach position [lsort -integer [array names fixed_positions]] {
+	    if {$position < 0} {
+		lappend sorted_items $fixed_positions($position)
+	    }
+	}
+    }
+
+    # save item order
+    set count 0
+    foreach as_item_id $sorted_items {
+	incr count
+	db_dml save_order {}
+    }
+
+    # generate returned item-list
+    set item_list ""
+    foreach as_item_id $sorted_items {
+	lappend item_list [concat $as_item_id $section_items($as_item_id)]
+    }
+
+    return $item_list
+}
