@@ -299,20 +299,37 @@ ad_proc -public as::assessment::check::branch_checks {
     {-session_id}
     {-section_id}
     {-assessment_id}
+    {-response}
+    {-item_id_to:required}
 } {
     
 } {
     set order "f"
-    
+    set perform 0
+    ns_log notice "-----------> entra a branch"
     db_foreach section_checks {} {
 	set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
 	
-	set perform [db_string check_sql $check_sql]
+	#parse condition_sql to get item_id
+	set cond_list  [split $check_sql "="]
+	set as_item_id [lindex [split [lindex $cond_list 2] " "] 0]
+
+
+	#parse condition_sql to get choice_id
+	set cond_list  [split $check_sql "="]
+	set condition [lindex [split [lindex $cond_list 1] " "] 0]	
+
+	ns_log notice "$condition  $response  $as_item_id  item_id $item_id_to"
+	if { $condition == $response && $as_item_id == $item_id_to} {
+	    set perform 1
+	    ns_log notice "----------------> perform $perform rev $new_assessment_revision sec $section_id_to"
+	}
 	if {$perform == 1} {
 	    set order [db_string get_order { }]
 	}
 	
     }
+    ns_log notice "$order"    
     if {$order == "f"} {
 	return $order
     } {
