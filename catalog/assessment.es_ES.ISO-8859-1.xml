@@ -48,6 +48,7 @@
   <msg key="End_Time">Hora de Finalización</msg>
   <msg key="Entry_Page">Página de Entrada</msg>
   <msg key="Exit_Page">Página de Salida</msg>
+  <msg key="Export">Exportar</msg>
   <msg key="Extreme_Actions">Acciones Extremas:</msg>
   <msg key="Feedback">Feedback</msg>
   <msg key="Finish_Time">Hora de finalización</msg>
@@ -125,12 +126,13 @@
   <msg key="Start_Time">Hora de comienzo</msg>
   <msg key="Started">Hora de comienzo</msg>
   <msg key="Student_Response">Respuesta del estudiante</msg>
+  <msg key="Subject">Asignatura</msg>
   <msg key="Subject_Name">Estudiante</msg>
   <msg key="Submit">Enviar</msg>
   <msg key="Summary">Resumen</msg>
+  <msg key="This_question_will_be_corrected_by_the_teacher">Esta pregunta será corregida por el profesor</msg>
   <msg key="time_for_completion">Segundos permitidos para realizar el examen</msg>
   <msg key="time_response">Número máximo de segundos en responder una pregunta</msg>
-  <msg key="This_question_will_be_corrected_by_the_teacher">Esta pregunta será corregida por el profesor</msg>
   <msg key="Time_spent">Tiempo de realización</msg>
   <msg key="time_to_wait">Minutos a esperar entre intentos</msg>
   <msg key="Title">Título</msg>
