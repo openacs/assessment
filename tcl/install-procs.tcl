@@ -157,8 +157,13 @@ content::type::create_attribute -content_type {as_item_data} -attribute_name {co
 content::type::create_attribute -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_mc} -relation_tag {as_item_type_rel}
+content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_sa} -relation_tag {as_item_type_rel}
+content::type::register_relation_type -content_type {as_items} -target_type {as_item_type_oq} -relation_tag {as_item_type_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_rb} -relation_tag {as_item_display_rel}
 content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_cb} -relation_tag {as_item_display_rel}
+content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_tb} -relation_tag {as_item_display_rel}
+content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_sa} -relation_tag {as_item_display_rel}
+content::type::register_relation_type -content_type {as_items} -target_type {as_item_display_ta} -relation_tag {as_item_display_rel}
 
 }
 
