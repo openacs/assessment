@@ -28,7 +28,7 @@ template::list::create \
         }
 	assessment_name {
 	    label {Assessment}
-	    link_url_eval {[export_vars -base "assessment" {session_id}]}
+	    link_url_eval {[export_vars -base "assessment" {assessment_id}]}
 	}
 	completed_datetime {
 	    label {Finnish Time}
@@ -41,15 +41,18 @@ template::list::create \
 
 set admin_p [ad_permission_p $package_id admin]
 
+set assessment_id_multi $assessment_id
 if { $admin_p } {
-db_multirow -extend { item_url } sessions sessions_of_assessment {
+db_multirow -extend { item_url assessment_id } sessions sessions_of_assessment {
 } {
     set item_url [export_vars -base "session" {session_id}]
+    set assessment_id $assessment_id_multi
 }
 } else {
-db_multirow -extend { item_url } sessions sessions_of_assessment_of_subject {
+db_multirow -extend { item_url assessment_id } sessions sessions_of_assessment_of_subject {
 } {
     set item_url [export_vars -base "session" {session_id}]
+    set assessment_id $assessment_id_multi
 }
 }
 
