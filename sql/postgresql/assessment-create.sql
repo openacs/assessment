@@ -88,7 +88,7 @@ create table as_items (
 	field_code	varchar(500),
 	-- some descriptive text
 	definition	varchar(500),
-	-- whether Item is shareable; defaults to 't' since this is the whole intent of this "repository" approach, but authors' should have option to prevent reuse
+	-- whether Item is shareable; defaults to 't' since this is the whole intent of this "repository" approach, but authors should have option to prevent reuse
 	shareable_p	char(1) default 't'
 			constraint as_item_shareable_p_ck
 			check (shareable_p in ('t','f')),
@@ -152,7 +152,7 @@ create table as_item_choices (
                         constraint as_item_choice_id_pk
                         primary key,
         name            varchar(500),
-	-- what is displayed in the choice's "label"
+	-- what is displayed in the choices "label"
         choice_text     varchar(500),
 	-- NOTE Is this correct?
 	-- which of the value columns has the information this Choice conveys
