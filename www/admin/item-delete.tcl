@@ -36,8 +36,10 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
     if {$confirmation} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	    
 	    set new_section_id [as::section::new_revision -section_id $section_id]
+	    set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 
 	    db_dml update_section_in_assessment {}
 	    db_1row get_sort_order_to_be_removed {}

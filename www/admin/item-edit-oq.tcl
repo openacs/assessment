@@ -29,7 +29,7 @@ set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] 
 ad_form -name item_edit_oq -action item-edit-oq -export { assessment_id section_id } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.oq_Title_help]"}}
-    {default_value:text(textarea),optional {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Deafult_Value_help]"}}
+    {default_value:text(textarea),optional,nospell {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Deafult_Value_help]"}}
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_help]"}}
 } -edit_request {
     db_1row item_type_data {}
@@ -44,7 +44,9 @@ ad_form -name item_edit_oq -action item-edit-oq -export { assessment_id section_
 				  -feedback_text $feedback_text]
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id]
+	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	db_dml update_section_in_assessment {}
 	db_dml update_item_in_section {}
 	db_dml update_item_type {}

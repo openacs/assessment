@@ -303,16 +303,38 @@ ad_proc as::assessment::folder_id {
 ad_proc as::assessment::unique_name {
     {-name ""}
     {-new_p 1}
+    {-item_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-05
 
-    Checks if a name string is unique or empty
+    Checks if a name string is unique or empty, excluding a given item
 } {
-    if {$new_p && ![empty_string_p $name] && [db_string check_unique {}] > 0} {
-	return 0
-    } else {
+    if {$new_p && ![empty_string_p $name]} {
+	if {[empty_string_p $item_id]} {
+	    set count [db_string check_unique {}]
+	} else {
+	    set count [db_string check_unique_excluding_item {}]
+	}
+	if {$count > 0} {
+	    return 0
+	}
+    }
+    return 1
+}
+
+ad_proc as::assessment::check_html_options {
+    -options:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-11
+
+    Checks if list contains only key value pairs
+} {
+    if {[llength $options] % 2 == 0} {
 	return 1
+    } else {
+	return 0
     }
 }
 

@@ -36,6 +36,7 @@ ad_form -name section_delete_confirm -action section-delete -export { assessment
     if {$confirmation} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	    
 	    db_1row get_sort_order_to_be_removed {}
 	    db_dml remove_section_from_assessment {}

@@ -50,17 +50,17 @@ db_foreach get_choices {} {
 	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=../graphics/wrong.gif>\"\}\}\n"
     }
     append ad_form_code "\{selected.$choice_id:text(checkbox),optional \{label \"[_ assessment.Default_Selected]\"\} \{options \$selected_options\} \{help_text \"[_ assessment.Default_Selected_help]\"\}\}\n"
-    append ad_form_code "\{fixed_pos.$choice_id:text,optional \{label \"[_ assessment.Fixed_Position]\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.choice_Fixed_Position_help]\"\}\}\n"
-    append ad_form_code "\{answer_val.$choice_id:text,optional \{label \"[_ assessment.Answer_Value]\"\} \{html \{size 80 maxlength 500\}\} \{help_text \"[_ assessment.Answer_Value_help]\"\}\}\n"
+    append ad_form_code "\{fixed_pos.$choice_id:text,optional,nospell \{label \"[_ assessment.Fixed_Position]\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.choice_Fixed_Position_help]\"\}\}\n"
+    append ad_form_code "\{answer_val.$choice_id:text,optional,nospell \{label \"[_ assessment.Answer_Value]\"\} \{html \{size 80 maxlength 500\}\} \{help_text \"[_ assessment.Answer_Value_help]\"\}\}\n"
     append ad_form_code "\{content_$choice_id:file,optional \{label \"[_ assessment.choice_Content]\"\} \{help_text \"[_ assessment.choice_Content_help]\"\}\}\n"
-    append ad_form_code "\{feedback.$choice_id:text(textarea),optional \{label \"[_ assessment.Feedback]\"\} \{html \{rows 8 cols 80\}\} \{help_text \"[_ assessment.choice_Feedback_help]\"\}\}\n"
+    append ad_form_code "\{feedback.$choice_id:text(textarea),optional,nospell \{label \"[_ assessment.Feedback]\"\} \{html \{rows 8 cols 80\}\} \{help_text \"[_ assessment.choice_Feedback_help]\"\}\}\n"
     if {$correct_answer_p == "t"} {
 	set default_percent "\$percentage"
 	incr count_correct
     } else {
 	set default_percent 0
     }
-    append ad_form_code "\{percent.$choice_id:text \{label \"[_ assessment.Percent_Score]\"\} \{value \"$default_percent\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.Percent_Score_help]\"\}\}\n"
+    append ad_form_code "\{percent.$choice_id:text,nospell \{label \"[_ assessment.Percent_Score]\"\} \{value \"$default_percent\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.Percent_Score_help]\"\}\}\n"
 }
 append ad_form_code "\}"
 set percentage [expr 100 / $count_correct]

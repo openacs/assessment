@@ -57,7 +57,11 @@
 		    required_p, :after as sort_order, max_time_to_complete,
 		    0 as fixed_position, points
 	     from as_items
-	     where as_item_id = :as_item_id)
+	     where as_item_id = :as_item_id
+	     and not exists (select 1
+			    from as_item_section_map
+			    where as_item_id = :as_item_id
+			    and section_id = :new_section_id))
 
       </querytext>
 </fullquery>

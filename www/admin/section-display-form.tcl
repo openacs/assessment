@@ -43,8 +43,8 @@ ad_form -name section_display_form -action section-display-form -export { assess
     {display_type_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.sect_disp_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.sect_disp_Description_help]"}}
-    {num_items:integer,optional {label "[_ assessment.section_num_Items]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.sect_num_items_help]"}}
-    {adp_chunk:text(textarea),optional {label "[_ assessment.Section_Template]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_template_help]"}}
+    {num_items:integer,optional,nospell {label "[_ assessment.section_num_Items]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.sect_num_items_help]"}}
+    {adp_chunk:text(textarea),optional,nospell {label "[_ assessment.Section_Template]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_template_help]"}}
     {branched_p:text(select) {label "[_ assessment.section_Branched]"} {options $boolean_options} {help_text "[_ assessment.section_branched_help]"}}
     {back_button_p:text(select) {label "[_ assessment.Back_Button]"} {options $boolean_options} {help_text "[_ assessment.back_button_help]"}}
     {submit_answer_p:text(select) {label "[_ assessment.Submit_Answer]"} {options $boolean_options} {help_text "[_ assessment.submit_answer_help]"}}
@@ -60,6 +60,8 @@ ad_form -name section_display_form -action section-display-form -export { assess
     set sort_order_type order_of_entry
 } -edit_request {
     db_1row section_display_data {}
+} -on_submit {
+    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $assessment_data(assessment_rev_id)]
 } -new_data {
     db_transaction {
 	set display_id [as::section_display::new \

@@ -41,7 +41,7 @@ foreach item_type [db_list item_types {}] {
 
 ad_form -name item_add -action item-add -export { assessment_id section_id after } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
+    {name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
     {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 }
@@ -53,12 +53,12 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 ad_form -extend -name item_add -form {
     {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
-    {field_code:text,optional {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
+    {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
     {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
-    {max_time_to_complete:integer,optional {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
-    {points:integer,optional {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+    {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
+    {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
     {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}
     {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
 } -new_request {
@@ -75,23 +75,45 @@ ad_form -extend -name item_add -form {
     set data_type "varchar"
     set item_type "sa"
 } -validate {
-    {name {[as::assessment::unique_name -name $name -new_p 1]} "[_ assessment.name_used]"}
+    {name {[as::assessment::unique_name -name $name -new_p 1 -item_id $as_item_id]} "[_ assessment.name_used]"}
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
 } -new_data {
     db_transaction {
-	set as_item_id [as::item::new \
-			    -name $name \
-			    -title $title \
-			    -description $description \
-			    -subtext $subtext \
-			    -field_code $field_code \
-			    -required_p $required_p \
-			    -data_type $data_type \
-			    -feedback_right $feedback_right \
-			    -feedback_wrong $feedback_wrong \
-			    -max_time_to_complete $max_time_to_complete \
-			    -points $points]
+	if {![db_0or1row item_exists {}]} {
+	    set as_item_id [as::item::new \
+				-item_item_id $as_item_id \
+				-name $name \
+				-title $title \
+				-description $description \
+				-subtext $subtext \
+				-field_code $field_code \
+				-required_p $required_p \
+				-data_type $data_type \
+				-feedback_right $feedback_right \
+				-feedback_wrong $feedback_wrong \
+				-max_time_to_complete $max_time_to_complete \
+				-points $points]
+	} else {
+	    set as_item_id [as::item::edit \
+				-as_item_id $as_item_id \
+				-title $title \
+				-description $description \
+				-subtext $subtext \
+				-field_code $field_code \
+				-required_p $required_p \
+				-data_type $data_type \
+				-feedback_right $feedback_right \
+				-feedback_wrong $feedback_wrong \
+				-max_time_to_complete $max_time_to_complete \
+				-points $points]
+
+	    db_dml delete_files {}
+
+	    if {![empty_string_p $name]} {
+		db_dml update_name {}
+	    }
+	}
 
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $as_item_id $category_ids

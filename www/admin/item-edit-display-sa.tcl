@@ -33,8 +33,8 @@ foreach orientation_type [list horizontal vertical] {
 
 ad_form -name item_edit_display_sa -action item-edit-display-sa -export { assessment_id section_id } -form {
     {as_item_id:key}
-    {html_display_options:text,optional {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
-    {abs_size:text {label "[_ assessment.Absolute_Size]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.Absolute_Size_help]"}}
+    {html_display_options:text,optional,nospell {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
+    {abs_size:text,nospell {label "[_ assessment.Absolute_Size]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.Absolute_Size_help]"}}
     {box_orientation:text(select) {label "[_ assessment.Box_Orientation]"} {options $orientation_types} {help_text "[_ assessment.Box_Orientation_help]"}}
     {as_item_display_id:text(hidden)}
 } -edit_request {
@@ -48,6 +48,8 @@ ad_form -name item_edit_display_sa -action item-edit-display-sa -export { assess
 	set box_orientation "vertical"
 	set as_item_display_id 0
     }
+} -validate {
+    {html_options {[as::assessment::check_html_options -options $html_options]} "[_ assessment.error_html_options]"}
 } -edit_data {
     db_transaction {
 	set new_item_id [as::item::new_revision -as_item_id $as_item_id]
@@ -68,7 +70,9 @@ ad_form -name item_edit_display_sa -action item-edit-display-sa -export { assess
 	}
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id]
+	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	db_dml update_section_in_assessment {}
 	db_dml update_item_in_section {}
 	db_dml update_display_of_item {}

@@ -37,8 +37,8 @@ ad_form -name item_edit_mc -action item-edit-mc -export { assessment_id section_
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options}  {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
-    {num_correct_answers:text,optional {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
-    {num_answers:text,optional {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
+    {num_correct_answers:text,optional,nospell {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
+    {num_answers:text,optional,nospell {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
 }
 
 # add form entries for existing choices
@@ -55,7 +55,7 @@ foreach one_choice $choices {
 	    set correct($choice_id) t
 	}
     }
-    append ad_form_code "\{choice.$choice_id:text,optional \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($choice_id)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+    append ad_form_code "\{choice.$choice_id:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($choice_id)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
 
     if {[info exists correct($choice_id)]} {
 	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
@@ -68,9 +68,9 @@ foreach one_choice $choices {
 for {set i 1} {$i <= $num_choices} {incr i} {
     incr count
     if {[info exists choice(-$i)]} {
-	append ad_form_code "\{choice.-$i:text,optional \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(-$i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice.-$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(-$i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     } else {
-	append ad_form_code "\{choice.-$i:text,optional \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice.-$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     }
     if {[info exists correct(-$i)]} {
 	append ad_form_code "\{correct.-$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
@@ -104,7 +104,9 @@ ad_form -extend -name item_edit_mc -edit_request {
 				  -num_answers $num_answers]
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id]
+	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	db_dml update_section_in_assessment {}
 	db_dml update_item_in_section {}
 	db_dml update_item_type {}

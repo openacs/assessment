@@ -146,6 +146,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Email_Options">Email Options:</msg>
   <msg key="End_Time">End Time</msg>
   <msg key="Entry_Page">Entry Page</msg>
+  <msg key="error_html_options">Need to be pairs of \"key value\".</msg>
   <msg key="Exit_Page">Exit Page</msg>
   <msg key="Export">Export</msg>
   <msg key="Extreme_Actions">Extreme Actions:</msg>

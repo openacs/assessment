@@ -47,12 +47,31 @@ ad_form -name item_add_sa -action item-add-sa -export { assessment_id section_id
     set display_type "tb"
 } -edit_data {
     db_transaction {
-	set as_item_type_id [as::item_type_sa::new \
-				 -title $title \
-				 -increasing_p $increasing_p \
-				 -allow_negative_p $negative_p]
+	if {![db_0or1row item_type {}] || $object_type != "as_item_type_sa"} {
+	    set as_item_type_id [as::item_type_sa::new \
+				     -title $title \
+				     -increasing_p $increasing_p \
+				     -allow_negative_p $negative_p]
 	
-	as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
+	    if {![info exists object_type]} {
+		# first item type mapped
+		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
+	    } else {
+		# old item type existing
+		set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+		db_dml update_item_type {}
+	    }
+	} else {
+	    # old sa item type existing
+	    set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+	    set as_item_type_id [as::item_type_sa::edit \
+				     -as_item_type_id $as_item_type_id \
+				     -title $title \
+				     -increasing_p $increasing_p \
+				     -allow_negative_p $allow_negative_p]
+	    
+	    db_dml update_item_type {}
+	}
     }
 } -after_submit {
     # now go to display-type specific form (i.e. textbox)

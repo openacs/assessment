@@ -54,7 +54,7 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 }
 
 ad_form -extend -name catalog_search -form {
-    {keywords:text,optional {label "[_ assessment.Keywords]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Keywords_help]"}}
+    {keywords:text,optional,nospell {label "[_ assessment.Keywords]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Keywords_help]"}}
     {letter:text(select),optional {label "[_ assessment.Letter]"} {options $letter_options} {help_text "[_ assessment.Letter_help]"}}
 }
 

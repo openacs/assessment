@@ -28,5 +28,5 @@ ad_proc -public as::item_rels::get_target {
 
     Get target object of given relationship type
 } {
-    return [db_string target_object {}]
+    return [db_string target_object {} -default ""]
 }

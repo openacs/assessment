@@ -48,7 +48,7 @@ foreach alignment_type [list besideleft besideright below above] {
 
 ad_form -name item_edit_display_cb -action item-edit-display-cb -export { assessment_id section_id } -form {
     {as_item_id:key}
-    {html_display_options:text,optional {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
+    {html_display_options:text,optional,nospell {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
     {choice_orientation:text(select) {label "[_ assessment.Choice_Orientation]"} {options $choice_or_types} {help_text "[_ assessment.Choice_Orientation_help]"}}
     {choice_label_orientation:text(select) {label "[_ assessment.Label_Orientation]"} {options $label_or_types} {help_text "[_ assessment.Label_Orientation_help]"}}
     {sort_order_type:text(select) {label "[_ assessment.Order_Type]"} {options $order_types} {help_text "[_ assessment.Order_Type_help]"}}
@@ -67,6 +67,8 @@ ad_form -name item_edit_display_cb -action item-edit-display-cb -export { assess
 	set item_answer_alignment "besideright"
 	set as_item_display_id 0
     }
+} -validate {
+    {html_options {[as::assessment::check_html_options -options $html_options]} "[_ assessment.error_html_options]"}
 } -edit_data {
     db_transaction {
 	set new_item_id [as::item::new_revision -as_item_id $as_item_id]
@@ -91,7 +93,9 @@ ad_form -name item_edit_display_cb -action item-edit-display-cb -export { assess
 	}
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id]
+	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	db_dml update_section_in_assessment {}
 	db_dml update_item_in_section {}
 	db_dml update_display_of_item {}

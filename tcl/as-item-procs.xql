@@ -24,6 +24,19 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item::latest.get_latest_item_id">
+      <querytext>
+
+	select m.as_item_id
+	from as_item_section_map m, cr_revisions r, cr_revisions i
+	where m.section_id = :section_id
+	and m.as_item_id = r.revision_id
+	and i.revision_id = :as_item_id
+	and i.item_id = r.item_id
+
+      </querytext>
+</fullquery>
+
 <fullquery name="as::item::copy.item_data">
       <querytext>
 

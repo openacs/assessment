@@ -40,6 +40,7 @@ ad_form -name section_copy_confirm -action section-copy -export { assessment_id 
     if {$confirmation} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	    set new_section_id [as::section::copy -section_id $section_id -name $name]
 
 	    db_dml move_down_sections {}

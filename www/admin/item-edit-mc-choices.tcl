@@ -55,21 +55,21 @@ foreach one_choice $choices {
     } else {
 	append ad_form_code "\{selected.$choice_id:text(checkbox),optional \{label \"[_ assessment.Default_Selected]\"\} \{options \$selected_options\} \{help_text \"[_ assessment.Default_Selected_help]\"\}\}\n"
     }
-    append ad_form_code "\{fixed_pos.$choice_id:text,optional \{label \"[_ assessment.Fixed_Position]\"\} \{html \{size 5 maxlength 5\}\} \{value \"$fixed_position\"\} \{help_text \"[_ assessment.choice_Fixed_Position_help]\"\}\}\n"
-    append ad_form_code "\{answer_val.$choice_id:text,optional \{label \"[_ assessment.Answer_Value]\"\} \{html \{size 80 maxlength 500\}\} \{value \"$answer_value\"\} \{help_text \"[_ assessment.Answer_Value_help]\"\}\}\n"
+    append ad_form_code "\{fixed_pos.$choice_id:text,optional,nospell \{label \"[_ assessment.Fixed_Position]\"\} \{html \{size 5 maxlength 5\}\} \{value \"$fixed_position\"\} \{help_text \"[_ assessment.choice_Fixed_Position_help]\"\}\}\n"
+    append ad_form_code "\{answer_val.$choice_id:text,optional,nospell \{label \"[_ assessment.Answer_Value]\"\} \{html \{size 80 maxlength 500\}\} \{value \"$answer_value\"\} \{help_text \"[_ assessment.Answer_Value_help]\"\}\}\n"
 
     if {![empty_string_p $content_rev_id]} {
 	append ad_form_code "\{delete_content.$choice_id:text(checkbox),optional \{label \"[_ assessment.choice_Delete_Content]\"\} \{options \{\{\{<a href=\"../view/$content_filename?revision_id=$content_rev_id\" target=view>$content_name</a>\} t\}\} \}\}\n"
     }
     append ad_form_code "\{content_$choice_id:file,optional \{label \"[_ assessment.choice_Content]\"\} \{help_text \"[_ assessment.choice_Content_help]\"\}\}\n"
-    append ad_form_code "\{feedback.$choice_id:text(textarea),optional \{label \"[_ assessment.Feedback]\"\} \{html \{rows 8 cols 80\}\} \{value \{$feedback_text\}\} \{help_text \"[_ assessment.choice_Feedback_help]\"\}\}\n"
+    append ad_form_code "\{feedback.$choice_id:text(textarea),optional,nospell \{label \"[_ assessment.Feedback]\"\} \{html \{rows 8 cols 80\}\} \{value \{$feedback_text\}\} \{help_text \"[_ assessment.choice_Feedback_help]\"\}\}\n"
     if {$correct_answer_p == "t"} {
 	set default_percent "\$percentage"
 	incr count_correct
     } else {
 	set default_percent $percent_score
     }
-    append ad_form_code "\{percent.$choice_id:text \{label \"[_ assessment.Percent_Score]\"\} \{value \"$default_percent\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.Percent_Score_help]\"\}\}\n"
+    append ad_form_code "\{percent.$choice_id:text,nospell \{label \"[_ assessment.Percent_Score]\"\} \{value \"$default_percent\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.Percent_Score_help]\"\}\}\n"
 }
 append ad_form_code "\}"
 set percentage [expr 100 / $count_correct]

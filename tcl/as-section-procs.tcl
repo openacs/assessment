@@ -117,6 +117,22 @@ ad_proc -public as::section::new_revision {
     return $new_section_id
 }
 
+ad_proc -public as::section::latest {
+    -section_id:required
+    -assessment_rev_id:required
+    {-default ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-13
+
+    Returns the latest revision of a section
+} {
+    if {![db_0or1row get_latest_section_id {}] && ![empty_string_p $default]} {
+	return $default
+    }
+    return $section_id
+}
+
 ad_proc -public as::section::copy {
     {-section_id:required}
     {-name ""}

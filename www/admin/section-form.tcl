@@ -48,7 +48,7 @@ if {[info exists section_id]} {
     }
 } else {
     ad_form -extend -name section_form -form {
-	{name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Name_help]"}}
+	{name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Name_help]"}}
     }
 }
 
@@ -64,9 +64,9 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 ad_form -extend -name section_form -form {
     {instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Instructions_help]"}}
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Feedback_help]"}}
-    {max_time_to_complete:integer,optional {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.section_time_help]"}}
-    {num_items:integer,optional {label "[_ assessment.num_items]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_items_help]"}}
-    {points:integer,optional {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+    {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.section_time_help]"}}
+    {num_items:integer,optional,nospell {label "[_ assessment.num_items]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_items_help]"}}
+    {points:integer,optional,nospell {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
     {display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.section_Display_Type_help]"}}
 } -new_request {
     set name ""
@@ -110,6 +110,7 @@ ad_form -extend -name section_form -form {
 } -edit_data {
     db_transaction {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 
 	set new_section_id [as::section::edit \
 				-section_id $section_id \

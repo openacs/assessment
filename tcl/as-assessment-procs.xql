@@ -86,4 +86,15 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::assessment::unique_name.check_unique_excluding_item">
+	<querytext>
+
+	select count(*)
+	from cr_items
+	where name = :name
+	and item_id <> :item_id
+
+	</querytext>
+</fullquery>
+	
 </queryset>

@@ -32,7 +32,11 @@
 	    (select :new_assessment_rev_id as assessment_id, :section_id as section_id,
 		    :after as sort_order, max_time_to_complete, points
 	     from as_sections
-	     where section_id = :section_id)
+	     where section_id = :section_id
+	     and not exists (select 1
+			    from as_assessment_section_map
+			    where assessment_id = :new_assessment_rev_id
+			    and section_id = :section_id))
 
       </querytext>
 </fullquery>

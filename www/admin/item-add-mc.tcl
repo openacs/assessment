@@ -43,8 +43,8 @@ ad_form -name item_add_mc -action item-add-mc -export { assessment_id section_id
     {title:text {label "[_ assessment.choice_set_title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options}  {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
-    {num_correct_answers:text,optional {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
-    {num_answers:text,optional {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
+    {num_correct_answers:text,optional,nospell {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
+    {num_answers:text,optional,nospell {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 }
 
@@ -52,9 +52,9 @@ ad_form -name item_add_mc -action item-add-mc -export { assessment_id section_id
 set ad_form_code "-form \{\n"
 for {set i 1} {$i <= $num_choices} {incr i} {
     if {[info exists choice($i)]} {
-	append ad_form_code "\{choice.$i:text,optional \{label \"[_ assessment.Choice] $i\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice.$i:text,optional,nospell \{label \"[_ assessment.Choice] $i\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     } else {
-	append ad_form_code "\{choice.$i:text,optional \{label \"[_ assessment.Choice] $i\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice.$i:text,optional,nospell \{label \"[_ assessment.Choice] $i\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     }
     if {[info exists correct($i)]} {
 	append ad_form_code "\{correct.$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $i\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
@@ -82,29 +82,50 @@ ad_form -extend -name item_add_mc -edit_request {
     }
 } -edit_data {
     db_transaction {
-	set mc_id [as::item_type_mc::new \
-		       -title $title \
-		       -increasing_p $increasing_p \
-		       -allow_negative_p $negative_p \
-		       -num_correct_answers $num_correct_answers \
-		       -num_answers $num_answers]
+	if {![db_0or1row item_type {}] || $object_type != "as_item_type_mc"} {
+	    set mc_id [as::item_type_mc::new \
+			   -title $title \
+			   -increasing_p $increasing_p \
+			   -allow_negative_p $negative_p \
+			   -num_correct_answers $num_correct_answers \
+			   -num_answers $num_answers]
+	    
+	    if {![info exists object_type]} {
+		# first item type mapped
+		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $mc_id -type as_item_type_rel
+	    } else {
+		# old item type existing
+		set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+		db_dml update_item_type {}
+	    }
+	} else {
+	    # old mc item type existing
+	    set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+	    set mc_id [as::item_type_mc::edit \
+			   -as_item_type_id $as_item_type_id \
+			   -title $title \
+			   -increasing_p $increasing_p \
+			   -allow_negative_p $negative_p \
+			   -num_correct_answers $num_correct_answers \
+			   -num_answers $num_answers]
+	    
+	    db_dml update_item_type {}
+	}
 	
-	as::item_rels::new -item_rev_id $as_item_id -target_rev_id $mc_id -type as_item_type_rel
-
 	set count 0
 	foreach i [lsort -integer [array names choice]] {
 	    if {![empty_string_p $choice($i)]} {
-	    incr count
-	    set choice_id [as::item_choice::new -mc_id $mc_id \
-			       -title "$choice($i)" \
-			       -numeric_value "" \
-			       -text_value "" \
-			       -content_value "" \
-			       -feedback_text "" \
-			       -selected_p "" \
-			       -correct_answer_p "[ad_decode [info exists correct($i)] 0 f t]" \
-			       -sort_order "$count" \
-			       -percent_score ""]
+		incr count
+		set choice_id [as::item_choice::new -mc_id $mc_id \
+				   -title "$choice($i)" \
+				   -numeric_value "" \
+				   -text_value "" \
+				   -content_value "" \
+				   -feedback_text "" \
+				   -selected_p "" \
+				   -correct_answer_p "[ad_decode [info exists correct($i)] 0 f t]" \
+				   -sort_order "$count" \
+				   -percent_score ""]
 	    }
 	}
     }

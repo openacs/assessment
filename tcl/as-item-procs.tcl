@@ -7,6 +7,7 @@ ad_library {
 namespace eval as::item {}
 
 ad_proc -public as::item::new {
+    {-item_item_id ""}
     {-name ""}
     {-title:required}
     {-description ""}
@@ -29,7 +30,9 @@ ad_proc -public as::item::new {
 
     # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     db_transaction {
-	set item_item_id [db_nextval acs_object_id_seq]
+	if {[empty_string_p $item_item_id]} {
+	    set item_item_id [db_nextval acs_object_id_seq]
+	}
 	if {[empty_string_p $name]} {
 	    set name "QUE_$item_item_id"
 	}
@@ -122,6 +125,22 @@ ad_proc -public as::item::new_revision {
     }
 
     return $new_item_id
+}
+
+ad_proc -public as::item::latest {
+    -as_item_id:required
+    -section_id:required
+    {-default ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-13
+
+    Returns the latest revision of an item
+} {
+    if {![db_0or1row get_latest_item_id {}] && ![empty_string_p $default]} {
+	return $default
+    }
+    return $as_item_id
 }
 
 ad_proc -public as::item::copy {
