@@ -98,7 +98,7 @@ ad_form -extend -name item_add_mc_choices -edit_request {
 		    ad_return_complaint 1 "[_ assessment.file_zero_size]"
 		    return
 		}
-		set content_rev_id [cr_import_content -package_id $package_id -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
+		set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
 	    } else {
 		set content_rev_id ""
 	    }

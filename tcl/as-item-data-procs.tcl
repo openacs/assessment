@@ -32,11 +32,11 @@ ad_proc -public as::item_data::new {
 
     # Insert as_item_data in the CR (and as_item_data table) getting the revision_id (item_data_id)
     db_transaction {
-        set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$session_id-$choice_answer" -title "$as_item_id-$session_id-$choice_answer" ]
+        set item_data_id [content::item::new -parent_id $folder_id -content_type {as_item_data} -name "$as_item_id-$session_id" -title "$as_item_id-$session_id" ]
         set as_item_data_id [content::revision::new \
 				 -item_id $item_data_id \
 				 -content_type {as_item_data} \
-				 -title "$as_item_id-$session_id-$choice_answer" \
+				 -title "$as_item_id-$session_id" \
 				 -attributes [list [list session_id $session_id] \
 						  [list subject_id $subject_id] \
 						  [list staff_id $staff_id] \

@@ -90,6 +90,7 @@ content::type::attribute::new -content_type {as_item_choices} -attribute_name {c
 content::type::attribute::new -content_type {as_item_choices} -attribute_name {feedback_text} -datatype {string}  -pretty_name {Feedback Text} -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_item_choices} -attribute_name {correct_answer_p} -datatype {boolean} -pretty_name {Correct Answer} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_choices} -attribute_name {selected_p}    -datatype {boolean} -pretty_name {Selected} -column_spec {char(1)}
+content::type::attribute::new -content_type {as_item_choices} -attribute_name {fixed_position}         -datatype {number}  -pretty_name {Fixed Position} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_choices} -attribute_name {percent_score}         -datatype {number}  -pretty_name {Percent Score} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_choices} -attribute_name {sort_order}    -datatype {number}  -pretty_name {Sort Order} -column_spec {integer}
 
@@ -123,6 +124,7 @@ content::type::attribute::new -content_type {as_items} -attribute_name {points} 
 # Sections
 content::type::attribute::new -content_type {as_sections} -attribute_name {display_type_id}      -datatype {number}  -pretty_name {Section Display Type}  -column_spec {integer}
 content::type::attribute::new -content_type {as_sections} -attribute_name {instructions}      -datatype {string}  -pretty_name {Section Instructions}  -column_spec {text}
+content::type::attribute::new -content_type {as_sections} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed in this section}  -column_spec {integer}
 content::type::attribute::new -content_type {as_sections} -attribute_name {feedback_text}      -datatype {string}  -pretty_name {Section Feedback}  -column_spec {text}
 content::type::attribute::new -content_type {as_sections} -attribute_name {max_time_to_complete}      -datatype {number}  -pretty_name {Section Max Time to Complete}  -column_spec {integer}
 content::type::attribute::new -content_type {as_sections} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this section} -column_spec {integer}
@@ -225,4 +227,28 @@ ad_proc -public as::install::package_instantiate {
 
 #    set temp_id [content::template::new -name {as_files_default} -text {@text;noquote@} -is_live {t} -package_id $package_id]
 #    content::type::register_template -content_type {as_files} -template_id $temp_id -use_context {public} -is_default {t}
+}
+
+
+ad_proc -public as::install::after_upgrade {
+    {-from_version_name:required}
+    {-to_version_name:required}
+} {
+    apm_upgrade_logic \
+        -from_version_name $from_version_name \
+        -to_version_name $to_version_name \
+        -spec {
+            0.08d 0.09d1 {
+                db_transaction {
+		    content::type::attribute::new -content_type {as_sections} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed in this section}  -column_spec {integer}
+		    content::type::attribute::new -content_type {as_item_choices} -attribute_name {fixed_position}         -datatype {number}  -pretty_name {Fixed Position} -column_spec {integer}
+		    set packages [db_list packages {select package_id from apm_packages where package_key = 'assessment'}]
+		    foreach package_id $packages {
+			set folder_id [as::assessment::folder_id -package_id $package_id]
+			content::folder::register_content_type -folder_id $folder_id -content_type {image} -include_subtypes t
+			content::folder::register_content_type -folder_id $folder_id -content_type {content_revision} -include_subtypes t
+		    }
+                }
+            }
+	}
 }

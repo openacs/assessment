@@ -118,7 +118,7 @@ ad_form -extend -name item_edit_mc_choices -edit_request {
 		    ad_return_complaint 1 "[_ assessment.file_zero_size]"
 		    return
 		}
-		set content_rev_id [cr_import_content -package_id $package_id -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
+		set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
 		db_dml update_choice_content {}
 	    } elseif {[info exists delete_content($choice_id)]} {
 		db_dml delete_choice_content {}
