@@ -19,11 +19,9 @@ set context {}
 set package_id [ad_conn package_id]
 set categories_url [db_string get_category_url {}]
 set user_id [ad_conn user_id]
-set admin_p [ad_permission_p $package_id admin]
-set package_admin [permission::permission_p -party_id $user_id -object_id $package_id -privilege "admin"]
-set m_name ""
+set package_admin_p [permission::permission_p -party_id $user_id -object_id $package_id -privilege "admin"]
 
-if { $package_admin == 0} {
+if { $package_admin_p == 0} {
     set m_name "get_all_assessments_admin"
 } else {
     set m_name "get_all_assessments"
