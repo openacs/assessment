@@ -112,7 +112,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
 				set response_lid [lindex $response_lidNodes 0]
-				set as_items__rcardinality [$response_lid getAttribute {rcardinality}]
+				set as_items__rcardinality [$response_lid getAttribute {rcardinality} {}]
 				# multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
 				# this is the default
 				set as_item__display_type_id 2
