@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.01d" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.06d" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -12,8 +12,8 @@
   <msg key="add_item_display_tb">Add new question: Textbox Display</msg>
   <msg key="add_item_type_mc">Add new question: Multiple Choice</msg>
   <msg key="add_item_type_mc_choices">Add new question: Multiple Choices</msg>
-  <msg key="add_item_type_sa">Add new question: Short Answer</msg>
   <msg key="add_item_type_oq">Add new question: Open Question</msg>
+  <msg key="add_item_type_sa">Add new question: Short Answer</msg>
   <msg key="Add_Items">Add items to section</msg>
   <msg key="Add_New">Add new question</msg>
   <msg key="add_new_section">Add new section</msg>
@@ -98,8 +98,8 @@
   <msg key="edit_item_display_tb">Edit Question: Textbox Display</msg>
   <msg key="edit_item_type_mc">Edit Question: Multiple Choice</msg>
   <msg key="edit_item_type_mc_choices">Edit Question: Multiple Choices</msg>
-  <msg key="edit_item_type_sa">Edit Question: Short Answer</msg>
   <msg key="edit_item_type_oq">Edit Question: Open Question</msg>
+  <msg key="edit_item_type_sa">Edit Question: Short Answer</msg>
   <msg key="edit_section">Edit Section</msg>
   <msg key="edit_section_display">Edit Display</msg>
   <msg key="Editable">Editable</msg>
@@ -121,8 +121,8 @@
   <msg key="Html_Options">HTML Options</msg>
   <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
   <msg key="Import_Results">Import Results</msg>
-  <msg key="Instructions">Instructions</msg>
   <msg key="Increasing">Increasing</msg>
+  <msg key="Instructions">Instructions</msg>
   <msg key="item_display_cb">Checkboxes</msg>
   <msg key="item_display_rb">Radiobuttons</msg>
   <msg key="item_display_sa">Short Answer</msg>
@@ -135,7 +135,6 @@
   <msg key="item_type_mc">Multiple Choice</msg>
   <msg key="item_type_oq">Open Question</msg>
   <msg key="item_type_sa">Short Answer</msg>
-  <msg key="Instructions">Instructions</msg>
   <msg key="Items">Items</msg>
   <msg key="Keywords">Search Keywords</msg>
   <msg key="Label_Orientation">Label Orientation</msg>
