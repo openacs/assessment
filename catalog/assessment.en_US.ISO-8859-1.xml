@@ -112,6 +112,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Box_Orientation">Box Orientation</msg>
   <msg key="branch">Branch</msg>
   <msg key="branches">Branches</msg>
+  <msg key="bulk_mail_send">Bulk Mail</msg>
   <msg key="By_user">By user</msg>
   <msg key="cancel_and_return">Cancel and Return to Assessment</msg>
   <msg key="Categories_combine">Combine categories by</msg>
@@ -309,6 +310,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="not_approved">Not Approved</msg>
   <msg key="not_yet_reviewed">not yet reviewed</msg>
   <msg key="Notification">Notification</msg>
+  <msg key="notified_users">Notified Users</msg>
   <msg key="notify_user">Notify User</msg>
   <msg key="num_Answers">Total Number of displayed Choices</msg>
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>
