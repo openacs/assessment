@@ -32,6 +32,17 @@ set assessment_name [db_string assessment_name {
     AND ss.session_id = :session_id
 }]
 
+set assessment_show_feedback [db_string assessment_show_feedback {
+    SELECT a.show_feedback
+    FROM as_assessmentsx a, as_sessionsx ss
+    WHERE a.assessment_id = ss.assessment_id
+    AND ss.session_id = :session_id
+}]
+
+if {[empty_string_p $assessment_show_feedback]} {
+    set assessment_show_feedback "all"
+}
+
 #get the user takes a session
 db_1row session_user_id {
     SELECT p.first_names, p.last_name, ss.assessment_id
@@ -153,7 +164,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
     }
     
     #if it's a survey we show the selected answer with out the word Error
-    if {$survey_p == {t}} {
+    if {$survey_p == {t} || $assessment_show_feedback == {none}} {
         set correct_answer {}
     }
     

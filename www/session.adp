@@ -33,16 +33,19 @@
 			<tr><td colspan="2">
 			@items.choice_html;noquote@</td></tr>
 			<if @items.presentation_type@ in textarea>
-			   <tr><td nowrap></td><td><if @survey_p@ in f><span><i>#assessment.This_question_will_be_corrected_by_the_teacher#.</i></span></if></td></tr>
+			   <tr><td nowrap></td><td><if @survey_p@ eq f and @assessment_show_feedback@ ne none><span><i>#assessment.This_question_will_be_corrected_by_the_teacher#.</i></span></if></td></tr>
 			   <tr><td></td><td></td></tr>
 			   <tr><td><br></td></tr>
 			</if>
 			<else>
-			<if @survey_p@ in f>
+			<if @survey_p@ eq f and @assessment_show_feedback@ ne none >
 			<tr><td nowrap>
 			#assessment.Score#</td><td><span>@items.score@ / @items.maxscore@</span>
 			<if @items.notanswered@>(<i>#assessment.Question_not_answered#.</i>)</if></td></tr>
-			<tr><td></td><td><b>#assessment.Feedback#:</b> <if @items.item_correct@>@items.feedback_right@</if><if @items.item_correct@ false>@items.feedback_wrong@</if></td></tr>
+			<tr><td></td> <if @assessment_show_feedback@ eq all or @assessment_show_feedback@ eq correct>
+			<if @items.item_correct@><td><b>#assessment.Feedback#:</b> @items.feedback_right@</if></if>
+			<if @assessment_show_feedback@ eq all or @assessment_show_feedback@ eq incorrect>
+			<if @items.item_correct@ false><td><b>#assessment.Feedback#:</b> @items.feedback_wrong@</if></if></td></tr>
 			</if>
 			<tr><td><br></td></tr>
 			</else>
@@ -51,5 +54,5 @@
     </table>
 </multiple>
 <hr>
-<if @survey_p@ in f><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@</if>
+<if @survey_p@ eq f and @assessment_show_feedback@ ne none ><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@</if>
 </master>
