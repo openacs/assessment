@@ -64,6 +64,31 @@ create table as_item_choices (
 			check (percent_score <= 100)	
 );
 
+create table as_item_sa_answers (
+	choice_id       integer
+                        constraint as_item_sa_answers_id_pk
+                        primary key
+			constraint as_item_sa_answers_id_fk
+			references cr_revisions(revision_id),
+	answer_id	integer
+			constraint as_item_sa_answers_parent_id_fk
+			references as_item_type_sa(as_item_type_id),
+	data_type	varchar(20),
+	case_sensitive_p	char(1) default 't'
+			constraint as_item_sa_answers_case_sensitive_p_ck
+			check (case_sensitive_p in ('t','f')),
+	-- this is where points are stored
+	percent_score		integer
+			constraint as_item_sa_answers_percent_score_ck
+			check (percent_score <= 100),
+	compare_by	varchar(20),
+	regexp_text	varchar(20), 
+	-- list with all answerbox ids (1 2 3 ... n) whose response will be tried to match against this answer. An empty field indicates the
+	-- answer will be tried to match against all answers.
+        allowed_answerbox_list	varchar(20)
+);
+
+
 create table as_messages (
 	message_id	integer
 			constraint as_messages_message_id_pk
