@@ -23,9 +23,12 @@
 
 <fullquery name="query_all_choices">
 <querytext>
-	SELECT aic.object_id as choice_id, aic.title as choice_title, aic.item_id as choice_item_id, aic.name as choice_name, aic.description as choice_description, aic.choice_id, aic.mc_id, aic.data_type as choice_data_type, aic.numeric_value as choice_numeric_value, aic.text_value as choice_text_value, aic.boolean_value as choice_boolean_value, aic.content_value as choice_content_value, aic.feedback_text as choice_feedback_text, aic.selected_p as choice_selected_p, aic.correct_answer_p as choice_correct_answer_p, aic.sort_order as choice_sort_order, aic.percent_score as choice_percent_score
-	FROM as_item_choicesx aic
-	WHERE aic.mc_id=:mc_id
+	SELECT aic.object_id as choice_id, aic.title as choice_title, aic.item_id as choice_item_id, aic.name as choice_name, aic.description as choice_description, aic.choice_id, aic.mc_id, aic.data_type as choice_data_type, aic.numeric_value as choice_numeric_value, aic.text_value as choice_text_value, aic.boolean_value as choice_boolean_value, aic.content_value as choice_content_value, aic.feedback_text as choice_feedback_text, aic.selected_p as choice_selected_p, aic.correct_answer_p as choice_correct_answer_p, aic.sort_order as choice_sort_order, aic.percent_score as choice_percent_score, r2.revision_id as content_rev_id, r2.title as content_filename, r2.mime_type, r2.content as cr_file_name, i.content_type, i.storage_area_key
+	FROM cr_revisions r, as_item_choicesx aic
+	left outer join cr_revisions r2 on (r2.revision_id = aic.content_value)
+	left outer join cr_items i on (i.item_id = r2.item_id)
+	WHERE aic.mc_id= :mc_id
+	and r.revision_id = aic.choice_id	
 	ORDER BY aic.sort_order
 </querytext>
 </fullquery>
@@ -107,20 +110,6 @@
 		)
 </querytext>
 </fullquery>
-
-<fullquery name="get_content_type_choices">
-<querytext>
-        select r2.revision_id as content_rev_id, r2.title as content_filename, r2.mime_type, r2.content as cr_file_name, i.content_type, i.storage_area_key
-		from cr_revisions r2, cr_items i
-		where i.item_id = r2.item_id
-		and i.latest_revision = r2.revision_id
-		and r2.revision_id IN ( 
-		    select aic.content_value 
-		    from as_item_choices aic
-		    where aic.choice_id = :choice_id )
-</querytext>
-</fullquery>
-
 
 <fullquery name="as_item_oq">
 <querytext>

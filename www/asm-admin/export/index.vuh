@@ -349,11 +349,8 @@ db_multirow sections query_all_sections {} {
 	        $response_label appendChild $material
 		
 		#content_type: imagen	        
-	        set content_type ""	        
-	        db_0or1row get_content_type_choices {} 	
-	
 	        if {$content_type == "image"} {	        
-		    #<matimage>
+		    #<matimage>		
 		    set matimage [$doc createElement matimage]
 		    $material appendChild $matimage
 		    $matimage setAttribute uri $content_filename	     
