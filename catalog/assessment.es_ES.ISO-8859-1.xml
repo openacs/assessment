@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="assessment" package_version="0.01d" locale="es_ES" charset="ISO-8859-1">
+
+  <msg key="Answer_Choices">Respuestas</msg>
+  <msg key="Attempt">Número de intentos</msg>
+  <msg key="Correct_Answer">Respuesta correcta</msg>
+  <msg key="Feedback">Feedback</msg>
+  <msg key="Finish_Time">Hora de finalización</msg>
+  <msg key="Finished">Hora de finalización</msg>
+  <msg key="Items">Preguntas</msg>
+  <msg key="Out_of">Máxima puntuación</msg>
+  <msg key="points">puntos</msg>
+  <msg key="Question">Pregunta</msg>
+  <msg key="Question_not_answered">Pregunta no contestada</msg>
+  <msg key="Review_Asessment">Revisión del Examen</msg>
+  <msg key="Score">Puntuación</msg>
+  <msg key="Session">Sesión</msg>
+  <msg key="Started">Hora de comienzo</msg>
+  <msg key="Student_Response">Respuesta del estudiante</msg>
+  <msg key="Student_response">Respuesta del estudiante</msg>
+  <msg key="Subject_Name">Estudiante</msg>
+  <msg key="Submit">Enviar</msg>
+  <msg key="Time_spent">Tiempo de realización</msg>
+  <msg key="Total_score">Puntuación total</msg>
+  <msg key="User_ID">Usuario</msg>
+</message_catalog>
