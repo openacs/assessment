@@ -108,7 +108,7 @@ ad_proc -public as::item_type_oq::render {
 	array set values $default_value
 	set default $values(clob_answer)
     } else {
-	db_1row item_type_data {}
+	set default [db_string item_type_data {}]
     }
 
     return [list $default ""]
@@ -136,7 +136,7 @@ ad_proc -public as::item_type_oq::process {
     if {[llength $keywords] > 0} {
 	set points 0
 	foreach keyword $keywords {
-	    if {[regexp $keyword $response]} {
+	    if {[regexp -nocase [string tolower $keyword] $response]} {
 		incr points
 	    }
 	}

@@ -2,7 +2,7 @@
 # author Timo Hentschel (timo@timohentschel.de)
 
 db_1row item_type_data {}
-set keywords [join $keywords "\n"]
+set keywords [join $keywords ", "]
 
 ad_form -name item_show_oq -mode display -action item-edit-oq -export { assessment_id section_id as_item_id } -form {
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {value $title} {help_text "[_ assessment.oq_Title_help]"}}
