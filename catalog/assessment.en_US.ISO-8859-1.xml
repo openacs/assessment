@@ -2,10 +2,14 @@
 <message_catalog package_key="assessment" package_version="0.01d" locale="en_US" charset="ISO-8859-1">
 
   <msg key="Add_Existing">Add existing question</msg>
+  <msg key="Add_Existing_1">Add existing question to section "%section_title%"</msg>
   <msg key="add_existing_section">Add existing section</msg>
+  <msg key="add_existing_section_1">Add existing section to assessment "%assessment_data.title%"</msg>
   <msg key="Add_New">Add new question</msg>
   <msg key="add_new_question">Add new question</msg>
   <msg key="add_new_section">Add new section</msg>
+  <msg key="Add_to_assessment">Add to assessment "%assessment_data.title%"</msg>
+  <msg key="Add_to_section">Add to section "%section_title%"</msg>
   <msg key="Admin_catalog">Question Catalog Administration</msg>
   <msg key="Administration">Administration</msg>
   <msg key="All">All</msg>
