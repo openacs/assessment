@@ -16,7 +16,7 @@ if { ![ad_form_new_p -key action_id] } {
        set parameter_exist "n"
 }
 
-set page_title "Add new Action"
+set page_title "[_ assessment.add_new_action]"
 set context_bar [ad_context_bar [list [export_vars -base asm-action-admin ] [_ assessment.action_admin]] $page_title]
 
 ad_form -name action_admin -form {

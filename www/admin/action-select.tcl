@@ -20,10 +20,10 @@ if {![info exists assessment_data(assessment_id)]} {
 set edit_p [ db_string exist_check {}]
 
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] [ list "add-edit-check?assessment_id=$assessment_id&section_id=$section_id" "$title Triggers"] "Action Select"]
+set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] [ list "add-edit-check?assessment_id=$assessment_id&section_id=$section_id" "$title Triggers"] [_ assessment.action_select]]
 
-set title "Action Select"
-set options [list [list "Immediately" "i"] [list "At the end of this assessment" "aa"] [list "Manually" "m"]]
+set title "[_ assessment.action_select]" 
+set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"]]
 set actions_list [db_list_of_lists get_actions {} ]
 set return_url ""
 
@@ -41,21 +41,21 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     {section_id:text(hidden)
 	{value $section_id}}
     {action_id:text(select)
-	{label "Choose the action to perform"}
+	{label "[_ assessment.choose_action]"}
 	{options $actions_list}
-	{help_text "The action that will be executed."}
+	{help_text "[_ assessment.action_that_will]"}
 	{$action_value}
     }
 	{action_perform:text(select)
-	    {label "When this will be executed"}
+	    {label "[_ assessment.when_this_will]"}
 	    {options $options}
-	    {help_text "When this action will be executed (ie. At the end of this section)"}
+	    {help_text "[_ assessment.when_this_action]"}
 	    {$action_perform_value}
 	}
     {user_message:text(textarea),optional
-	{label "Message"}
+	{label "[_ assessment.message]"}
 	{html {cols 50} {rows 15}}
-	{help_text "Message to display to the user when the action is executed (ie. You have joined \"My Community\")"}
+	{help_text "[_ assessment.message_to_display_to]"}
 	{$user_message}
     }
     

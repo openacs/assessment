@@ -13,23 +13,23 @@ template::list::create \
     -name parameter_list \
     -elements {
 	varname {
-	    label "Name"
+	    label "[_ assessment.Name]"
 	}	    
 	description {
-	    label "Description"
+	    label "[_ assessment.action_description]"
 	}
 	type {
-	    label "Type"
+	    label "[_ assessment.parameter_type]"
 	}
 
 	query {
-	    label "Query"
+	    label "[_ assessment.parameter_query]"
 	}
 
 	edit_url {
 	    label {[_ assessment.action_edit]}
 	    display_template {
-		<a href=asm-action-param-admin?parameter_id=@parameter_list.parameter_id@&action_id=@parameter_list.action_id@>Edit</a> | <a href=asm-action-param-delete?parameter_id=@parameter_list.parameter_id@&action_id=@parameter_list.action_id@ >Delete</a>
+		<a href=asm-action-param-admin?parameter_id=@parameter_list.parameter_id@&action_id=@parameter_list.action_id@>[_ assessment.Edit]</a> | <a href=asm-action-param-delete?parameter_id=@parameter_list.parameter_id@&action_id=@parameter_list.action_id@ >[_ assessment.Delete]</a>
 	    }
 	}
 	

@@ -9,4 +9,4 @@
 
 <include src=asm-action-param-list action_id=@action_id@> &nbsp;
 
-<a href=/assessment/admin> Return </a>
+<a href=/assessment/admin>#assessment.return#</a>

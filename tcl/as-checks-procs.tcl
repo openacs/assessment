@@ -10,7 +10,7 @@ ad_proc -public as::assessment::check::get_types {
 } {
     Return the checks types
 } {
-    set types [list [list "Action" "t"] [list "Branch" "f"]]
+    set types [list [list "\#assessment.action\#" "t"] [list "\#assessment.branch\#" "f"]]
     return $types
 }
 
@@ -19,7 +19,7 @@ ad_proc -public as::assessment::check::get_assessments {
     
 } {
     set package_id [ad_conn package_id]
-    set assessment_list [list [list "All" "all"]]
+    set assessment_list [list [list "[_ assessment.all]" "all"]]
     db_foreach  assessment {} {
 	lappend assessment_list [list $title $assessment_id]
     }
@@ -31,7 +31,7 @@ ad_proc -public as::assessment::check::state_options {
 } {
     
 } {
-    set approved_options [list  {"Approved" "t"} {"Approved with errors" "ae"} {"Not Approved" "f"} ]
+    set approved_options [list  [list "[_ assessment.approved]" "t"] [list "[_ assessment.approved_with]" "ae"] [list "[_ assessment.not_approved]" "f"] ]
     return $approved_options
 }
 
@@ -46,7 +46,7 @@ ad_proc -public as::assessment::check::intervals {
     set last_week [db_string last_week {}]
     set last_month [db_string last_month  {}]
     
-    set intervals [list [list "All" "all"] [list "Today" $today]  [list "Yesterday" $yesterday] [list "Two days ago" $two_days] [list "Last Week" $last_week] [list "Last Month" $last_month]]
+    set intervals [list [list "[_ assessment.all]" "all"] [list "[_ assessment.today]" $today]  [list "[_ assessment.yesterday]" $yesterday] [list "[_ assessment.two_days]" $two_days] [list "[_ assessment.last_week]" $last_week] [list "[_ assessment.last_month]" $last_month]]
     
 }
 
@@ -201,7 +201,7 @@ ad_proc -public as::assessment::check::manual_action_log {
 	set log_id [db_string get_next_val {}]
 	set action_id [db_string action_id {}]
 	db_dml insert_action {}
-        ns_log notice "inserta en mannually"
+
     }
 }
 
@@ -233,14 +233,14 @@ ad_proc -public as::assessment::check::action_exec {
 	} else {
 	    set $varname $value
 	}
-	ns_log notice "--------------------------parameter $varname [set $varname]"
+
 
     }
     
     set tcl_code_p [db_1row select_tcl {}]
     set failed_p "t"
     set failed [catch $tcl_code]
-    ns_log notice "--------------------------TCL $tcl_code"
+
     if { $failed > 0 } {
 	set failed_p "f"
     }
@@ -276,14 +276,14 @@ ad_proc -public as::assessment::check::manual_action_exec {
 	} else {
 	    set $varname $value
 	}
-	ns_log notice "--------------------------parameter $varname [set $varname]"
+
 
     }
     
     set tcl_code_p [db_1row select_tcl {}]
     set failed_p "t"
     set failed [catch $tcl_code]
-    ns_log notice "--------------------------TCL $tcl_code"
+
     if { $failed > 0 } {
 	set failed_p "f"
     }
@@ -324,7 +324,7 @@ ad_proc -public as::assessment::check::branch_checks {
 } {
     set order "f"
     set perform 0
-    ns_log notice "-----------> entra a branch"
+
     db_foreach section_checks {} {
 	set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
 	
@@ -337,17 +337,17 @@ ad_proc -public as::assessment::check::branch_checks {
 	set cond_list  [split $check_sql "="]
 	set condition [lindex [split [lindex $cond_list 1] " "] 0]	
 
-	ns_log notice "$condition  $response  $as_item_id  item_id $item_id_to"
+
 	if { $condition == $response && $as_item_id == $item_id_to} {
 	    set perform 1
-	    ns_log notice "----------------> perform $perform rev $new_assessment_revision sec $section_id_to"
+
 	}
 	if {$perform == 1} {
 	    set order [db_string get_order { }]
 	}
 	
     }
-    ns_log notice "$order"    
+
     if {$order == "f"} {
 	return $order
     } {
@@ -364,7 +364,7 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 } {
     
 } {
-    ns_log notice "entra a eval_aa_checks"
+
     set assessment_rev_id [db_string get_assessment_id {}]
     
     set section_list [db_list_of_lists sections {}]
@@ -389,14 +389,14 @@ ad_proc -public as::assessment::check::eval_m_checks {
 } {
     
 } {
-    ns_log notice "entra a mannually"
+
     set assessment_rev_id [db_string get_assessment_id {}]
     
     db_foreach sections {} { 
 	db_foreach section_checks {} {
 	    if {$action_p == "t"} {
 	    set perform [db_string check_sql $check_sql]
-	    ns_log notice "-------------manual perform $perform"
+
 	    
 		if {$perform == 1} {
 		    set failed ""

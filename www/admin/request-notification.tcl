@@ -8,6 +8,8 @@ ad_page_contract {
   assessment_id
   section_id
 }
+set check_name [db_string get_name {}]
+set title "[_ assessment.request_notif] $check_name"
 
 form create notify
 set type "as_inter_item_checks_notif"
@@ -63,7 +65,7 @@ template::list::create -name notify_users\
 -key request_id\
 -bulk_actions\
     {
-      "Unsubscribe" "unsubscribe" "Unsubscribe user to this rule"
+	"\#assessment.unsubscribe\#" "unsubscribe" "\#assessment.unsubscribe_user\#"
     }\
     -bulk_action_method post -bulk_action_export_vars {
 	inter_item_check_id
@@ -71,18 +73,17 @@ template::list::create -name notify_users\
 	assessment_id
 	section_id
     }\
-    -no_data "There are no users to notify"\
+    -no_data "\#assessment.there_are_no_users\#"\
     -row_pretty_plural "notify_users"\
     -elements {
 	name {
-	    label "UserName"
+	    label "[_ assessment.User_ID] [_ assessment.Name]"
 	}
 	interval_name {
-	    label "Interval"
-	    
+	    label "[_ notifications.lt_Notification_Interval]"
 	}
 	delivery_name {
-	    label "Delivery Method"
+	    label "[_ notifications.Delivery_Method]"
 	}
     }
 db_multirow notify_users notify_users { *SQL* }

@@ -15,5 +15,12 @@
         </querytext>
     </fullquery>
 
+    <fullquery name="get_name">
+        <querytext>
+	  select name from as_inter_item_checks where inter_item_check_id=:inter_item_check_id
+        </querytext>
+    </fullquery>
+
+
 
 </queryset>

@@ -62,10 +62,11 @@ if { $d_state == "ae"} {
 } elseif {$d_state == "t"} {
     set state_query "and al.failed_p='t' and al.approved_p='t'"
 }
-
+# ad_return_complaint 1 "$approved_options"
+# ad_script_abort
 ad_form -name assessments -form {
     {assessment:text(select)
-	{label "Assessment"}
+	{label "[_ assessment.Assessment]"}
 	{options $assessment_list}
 	{html { onChange "get_assessment()"}}
 	{value $d_assessment}
@@ -73,7 +74,7 @@ ad_form -name assessments -form {
     
     {state:text(select)
 	{label ""}
-	{options $approved_options}
+	{options "$approved_options"}
 	{html { onChange "get_state()"}}
 	{value $d_state}
     }
@@ -83,7 +84,7 @@ ad_form -name assessments -form {
 
 ad_form -name interval  -form {
     {date:text(select)
-	{label "Date request since ..."}
+	{label "[_ assessment.date_request]"}
 	{options $intervals}
 	{value $d_interval}
 	{html { onChange "get_interval()"}}
@@ -108,7 +109,7 @@ ad_form -name  specific_date  -form {
     }
     
     {submit:text(submit)
-	{label "Specific Date"}
+	{label "[_ assessment.specific_date]"}
     }
 } -on_submit {
     ad_returnredirect "admin-request?state=$state&assessment=$assessment&date=$specific_date"
@@ -123,35 +124,35 @@ template::list::create \
     -multirow actions_log \
     -key action_log_id\
     -bulk_actions {
-	"Approve" "approve-check" "Approve Actions"
+	"\#assessment.approve\#" "approve-check" "\#assessment.approve_actions\#"
     }\
     -bulk_action_method post \
     -bulk_action_export_vars {
 	action_log_id
     }\
-    -row_pretty_plural "actions log" \
+    -row_pretty_plural "[_ assessment.action_log]"\
     -elements {
 	inter_item_check_id {
-	    label "Trigger"
+	    label "[_ assessment.trigger]"
 	    display_col name
 	    
 	}
 	action_id {
-	    label "Action"
+	    label "[_ assessment.action]"
 	    display_col action_name
 	}
 	description {
-	    label "Description"
+	    label "[_ assessment.Description]"
 	}
 	
 	user_name {
-	    label "User"
+	    label "[_ assessment.User_ID]"
 	}
 	date_requested {
-	    label "Date"
+	    label "[_ assessment.data_type_date]"
 	}
 	failed_p {
-	    label "Performed"
+	    label "[_ assessment.performed]"
 	}
 
 	

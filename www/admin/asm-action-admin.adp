@@ -4,5 +4,5 @@
 
 <blockquote>
 <listtemplate name="actions"></listtemplate><br>
-<a href=asm-action-new> Add new Action </a>
+<a href=asm-action-new>#assessment.add_new_action#</a>
 </blockquote>

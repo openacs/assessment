@@ -1,5 +1,4 @@
 ad_page_contract {
- 
     
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @date 2005-01-07
@@ -24,7 +23,7 @@ set sections_list [db_list_of_lists get_sections {}]
 set title $assessment_data(title)
 set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
 
-set title "Section Select"
+set title "[_ assessment.section_select]"
 ad_form -name get_section -form {
     inter_item_check_id:key
     {assessment_id:text(hidden)
@@ -33,9 +32,9 @@ ad_form -name get_section -form {
 	{value $section_id}}
     
     {section_id_to:text(select)
-	{label "Choose a section to branch"}
+	{label "[_ assessment.section_to_branch]"}
 	{options $sections_list}
-	{help_text "The section where the condition will lead you."}
+	{help_text "[_ assessment.lead_you]"}
     }
     
 } -new_data {

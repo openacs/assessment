@@ -1,17 +1,17 @@
 <master>
-<property name="title">@title@ Administration</property>
+<property name="title">@title@ #assessment.Administration#</property>
 <br>
-<b>After this Assessment:</b>
+<b>#assessment.after_this_asm#</b>
 <br>
 <listtemplate name="aa_checks"></listtemplate>
 <br>
-<b>Immediately</b>
+<b>#assessment.immediately#</b>
 <listtemplate name="i_checks"></listtemplate>
 <br>
-<b>Manually</b>
+<b>#assessment.manually#</b>
 <listtemplate name="m_checks"></listtemplate>
 <br>
 
-<b>Branches</b>
+<b>#assessment.branches#</b>
 <listtemplate name="branches"></listtemplate>
 <br>

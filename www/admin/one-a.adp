@@ -82,6 +82,7 @@
 	<a href="assessment-copy?assessment_id=@assessment_id@">#assessment.Copy_this_assess#</a> #assessment.Lets_you_use_this_a#</td>
 </tr>
 
+
 </table>
 <br>
 
@@ -105,6 +106,9 @@
 <a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
 
 <if @sections.display_type_id@ not nil><a href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
+
+<a
+href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
 
 <img src="../graphics/spacer.gif" border="0" alt="" width="10">
 

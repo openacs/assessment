@@ -64,28 +64,28 @@ ad_form -name new_check -export {assessment_id return_url} -form {
 	{value $section_id_from}
     } 
     {name:text(text)
-	{label "Name"}
-	{help_text "The name of the trigger."}
+	{label "[_ assessment.Name]"}
+	{help_text "[_ assessment.name_of_trigger]"}
     }
     {postcheck_p:boolean(radio)
-	{label "Post Check"}
-	{options { {Yes t} {No f}}}
+	{label "[_ assessment.post_check]"}
+	{options { {"[_ assessment.yes]" t} {"[_ assessment.no]" f}}}
     }
     {description:text(textarea)
-	{label "Description"}
+	{label "[_ assessment.action_description]"}
 	{html {cols 40} {rows 20}}
-	{help_text "Description of the trigger.(ie. What action will perform?)"}
+	{help_text "[_ assessment.description_trigger]"}
     }
     {action_p:boolean(radio)
-	{label "Type"}
+	{label "[_ assessment.parameter_type]"}
 	{options [as::assessment::check::get_types]}
-	{help_text "Type of the trigger"}
+	{help_text "[_ assessment.type_of_trigger]"}
     }
     {condition:text(radio)
-	{label "Condition"}
+	{label "[_ assessment.condition]"}
 	{options $choices}
 	{after_html $question_text}
-	{help_text "The condition to branch or execute the action"}
+	{help_text "[_ assessment.the_condition_to]"}
     }
     
 } -new_data {
