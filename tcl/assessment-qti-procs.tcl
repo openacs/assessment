@@ -58,7 +58,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 		}
 		set presentationNodes [$item selectNodes {presentation}]
 		foreach presentation $presentationNodes {
-			set nodeNodes [$presentation selectNodes {*//material}]
+			set nodeNodes [$presentation selectNodes {.//material}]
 			set node [lindex $nodeNodes 0]
 			# Initialize in case it doen't exist
 			set as_items__item_text {}
@@ -67,7 +67,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 				set mattext [lindex $mattextNodes 0]
 				set as_items__item_text [$mattext nodeValue]
 			}
-			set render_fibNodes [$presentation selectNodes {*//render_fib}]
+			set render_fibNodes [$presentation selectNodes {.//render_fib}]
 			if {[llength $render_fibNodes] > 0} {
 				# fillinblank or shortanswer
 				set render_fib [lindex $render_fibNodes 0]
@@ -95,7 +95,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 					}
 				}
 			} else {   
-				set response_lidNodes [$presentation selectNodes {*//response_lid}]
+				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
 				set response_lid [lindex $response_lidNodes 0]
 				set as_items__rcardinality [$response_lid getAttribute {rcardinality}]
@@ -108,7 +108,7 @@ ad_proc -private parse_item { qtiNode } { Parse items from a XML QTI file } {
 				}
 				#db_dml as_item_insert {insert into as_items (item_id, item_display_type_id, name, item_text) values (:item_id, :as_item__display_type_id, :as_items__name, :as_items__item_text)}
 				db_dml as_item_insert {}
-				set response_labelNodes [$presentation selectNodes {*//response_label}]
+				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
 					set mattextNodes [$response_label selectNodes {material/mattext/text()}]
 					foreach mattext $mattextNodes {
