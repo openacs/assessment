@@ -311,5 +311,48 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::check::copy_checks.get_action_map">
+      <querytext>
+	select action_id,order_by,user_message,action_perform from as_action_map where inter_item_check_id=:inter_item_check_id
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::copy_checks.insert_action_map">
+      <querytext>
+	insert into as_action_map (inter_item_check_id,action_id,order_by,user_message,action_perform) values  
+        (:insert_p,:action_id,:order_by,:user_message,:action_perform)
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::copy_checks.parameters">
+      <querytext>
+	select parameter_id,value,item_id from as_param_map 
+	where inter_item_check_id=:inter_item_check_id
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::copy_checks.copy_parameter">
+      <querytext>
+	insert into as_param_map (parameter_id,value,item_id,inter_item_check_id) values (:parameter_id,:value,:item_id,:insert_p)
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::update_checks.checks">
+      <querytext>
+	select inter_item_check_id from as_inter_item_checks where section_id_to =:section_id
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::update_checks.update_check">
+      <querytext>
+	update as_inter_item_checks set section_id_to=:new_section_id where inter_item_check_id=:check_id
+      </querytext>
+</fullquery>
+
+<fullquery name="as::assessment::check::delete_assessment_checks.assessment_checks">
+      <querytext>
+        select inter_item_check_id from as_inter_item_checks where section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm where ci.item_id = cr.item_id and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id =:assessment_rev_id)
+      </querytext>
+</fullquery>
 
 </queryset>

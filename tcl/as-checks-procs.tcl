@@ -456,11 +456,74 @@ ad_proc -public as::assessment::check::confirm_display {
     return $display_info
 }
 
-ad_proc -public as::assessment::check::copy_checks{
+ad_proc -public as::assessment::check::copy_checks {
     {-section_id:required}
     {-new_section_id:required}
 } {
     
 } {
+    set user_id [ad_conn user_id]
+    set checks [db_list_of_lists get_checks {}]
+    foreach check $checks {
 
+	set inter_item_check_id [lindex $check 0]
+	set action_p [lindex $check 1]
+	set check_sql [lindex $check 2]
+	set postcheck_p [lindex $check 3]
+	set section_id_from $new_section_id
+	set section_id_to [lindex $check 5]
+	set item_id [lindex $check 6]
+	set name [lindex $check 7]
+	set description [lindex $check 8]
+	
+	set insert_p [db_exec_plsql copy_check {}]
+	
+	# copy action map
+	
+	if { $action_p == "t"} {
+	    set exist_p [db_0or1row get_action_map { }]
+	    if {$exist_p == 1} {
+		db_dml insert_action_map {}
+		# copy parameters
+		
+		set parameters [db_list_of_lists parameters { }]
+		
+		foreach parameter $parameters {
+		    set parameter_id [lindex $parameter 0]
+		    set value [lindex $parameter 1]
+		    set item_id [lindex $parameter 2]
+		    
+		    db_dml copy_parameter {}
+		}
+		
+	    } 
+	    
+	} 
+	
+    }
+    #update other checks
+    update_checks -section_id $section_id -new_section_id $new_section_id
+}
+
+ad_proc -public as::assessment::check::update_checks {
+    {-section_id:required}
+    {-new_section_id:required}
+} {
+    
+} {
+    set checks [db_list_of_lists checks {}]
+    foreach check_id $checks {
+	db_dml update_check {}
+    }
+}
+
+ad_proc -public as::assessment::check::delete_assessment_checks {
+    {-assessment_rev_id:required}
+} {
+    
+} {
+    set checks [db_list_of_lists assessment_checks {}]
+    foreach check_id $checks {
+	set delete_p [db_exec_plsql delete_checks {}]
+    }
 }
