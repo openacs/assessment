@@ -37,6 +37,7 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
 } -select_query_name {item_title} -on_submit {
     if {$confirmation} {
 	db_transaction {
+	    as::assessment::check::delete_item_checks -assessment_id $assessment_id -as_item_id $as_item_id -section_id $section_id 
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	    
