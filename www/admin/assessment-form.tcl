@@ -147,7 +147,12 @@ ad_form -extend -name assessment_form -form {
 	    category::map_object -object_id $assessment_rev_id $category_ids
 	}
 
-	db_dml update_time {}
+	if {![empty_string_p $start_time]} {
+	    db_dml update_end_time {}
+	}
+	if {![empty_string_p $end_time]} {
+	    db_dml update_end_time {}
+	}
     }
 } -edit_data {
     db_transaction {
@@ -177,7 +182,12 @@ ad_form -extend -name assessment_form -form {
 	    category::map_object -object_id $assessment_rev_id $category_ids
 	}
 
-	db_dml update_time {}
+	if {![empty_string_p $start_time]} {
+	    db_dml update_end_time {}
+	}
+	if {![empty_string_p $end_time]} {
+	    db_dml update_end_time {}
+	}
     }
 } -after_submit {
     ad_returnredirect [export_vars -base one-a {assessment_id}]

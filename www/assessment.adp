@@ -103,7 +103,6 @@
     </formtemplate>
   </multiple>
   <formtemplate id="show_item_form">
-    <input type="hidden" name="session_id" value="@session_id@">
     <tr><td><input type=submit value="#assessment.Next#"></td></tr>
   </formtemplate>
   </table>

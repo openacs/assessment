@@ -175,6 +175,7 @@ content::type::attribute::new -content_type {as_section_data} -attribute_name {s
 content::type::attribute::new -content_type {as_section_data} -attribute_name {section_id}            -datatype {number}  -pretty_name {Section ID}  -column_spec {integer}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {subject_id}            -datatype {number}  -pretty_name {Subject ID}  -column_spec {integer}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {staff_id}            -datatype {number}  -pretty_name {Staff ID}  -column_spec {integer}
+content::type::attribute::new -content_type {as_section_data} -attribute_name {points}            -datatype {number}  -pretty_name {Points Awarded}  -column_spec {integer}
 
 # Item data
 content::type::attribute::new -content_type {as_item_data} -attribute_name {session_id}     -datatype {number}  -pretty_name {Session ID}     -column_spec {integer}
@@ -244,6 +245,9 @@ ad_proc -public as::install::after_upgrade {
 			content::folder::register_content_type -folder_id $folder_id -content_type {content_revision} -include_subtypes t
 		    }
                 }
+            }
+            0.09d1 0.10d1 {
+		content::type::attribute::new -content_type {as_section_data} -attribute_name {points} -datatype {number} -pretty_name {Points Awarded} -column_spec {integer}
             }
 	}
 }

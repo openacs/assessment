@@ -16,6 +16,7 @@
 	and sc.as_item_id = :as_item_id
 	and r.revision_id = sc.choice_id
 	and c.choice_id = sc.choice_id
+	order by sc.sort_order
 
       </querytext>
 </fullquery>
@@ -35,6 +36,7 @@
 	and sc.as_item_id = :as_item_id
 	and r.revision_id = sc.choice_id
 	and c.choice_id = sc.choice_id
+	order by sc.sort_order
 
       </querytext>
 </fullquery>

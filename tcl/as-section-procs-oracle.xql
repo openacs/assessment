@@ -47,4 +47,22 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::section::calculate.max_section_points">
+	<querytext>
+
+	select asm.points as section_max_points
+	from as_assessment_section_map asm
+	where asm.assessment_id = :assessment_id
+	and asm.section_id = :section_id
+	and not exists (select 1
+			from as_item_data d, as_session_items i
+			where i.session_id = :session_id
+			and d.as_item_id(+) = i.as_item_id
+			and d.session_id(+) = i.session_id
+			and i.section_id = :section_id
+			and d.points is null)
+
+	</querytext>
+</fullquery>
+	
 </queryset>

@@ -49,7 +49,7 @@ ad_form -name item_edit_display_ta -action item-edit-display-ta -export { assess
 	set as_item_display_id 0
     }
 } -validate {
-    {html_options {[as::assessment::check_html_options -options $html_options]} "[_ assessment.error_html_options]"}
+    {html_display_options {[as::assessment::check_html_options -options $html_display_options]} "[_ assessment.error_html_options]"}
 } -edit_data {
     db_transaction {
 	set new_item_id [as::item::new_revision -as_item_id $as_item_id]

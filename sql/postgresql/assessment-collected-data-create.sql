@@ -61,7 +61,8 @@ create table as_section_data (
 		references persons(person_id),
 	staff_id integer
 		constraint as_section_data_staff_id_fk
-		references users(user_id)
+		references users(user_id),
+	points integer
 );
 
 -- Assessment Item Data: is the "long skinny table" where all the primary data go

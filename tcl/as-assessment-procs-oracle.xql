@@ -20,4 +20,19 @@
 </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::calculate.check_sections_calculated">
+	<querytext>
+
+	select count(*)
+	from as_assessment_section_map m, as_session_sections s, as_section_data d
+	where d.section_id(+) = s.section_id
+	and d.session_id(+) = s.session_id
+	and s.session_id = :session_id
+	and m.section_id = s.section_id
+	and m.assessment_id = :assessment_id
+	and d.points is null
+
+	</querytext>
+</fullquery>
+	
 </queryset>

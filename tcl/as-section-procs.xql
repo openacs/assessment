@@ -71,4 +71,27 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::section::calculate.sum_of_item_points">
+	<querytext>
+
+	select sum(m.points) as item_max_points, sum(d.points) as item_points
+	from as_item_data d, as_item_section_map m
+	where m.section_id = :section_id
+	and d.as_item_id = m.as_item_id
+	and d.session_id = :session_id
+
+	</querytext>
+</fullquery>
+	
+<fullquery name="as::section::calculate.update_section_points">
+	<querytext>
+
+	update as_section_data
+	set points = :section_points
+	where session_id = :session_id
+	and section_id = :section_id
+
+	</querytext>
+</fullquery>
+	
 </queryset>

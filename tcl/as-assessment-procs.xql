@@ -76,6 +76,29 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::assessment::calculate.sum_of_section_points">
+	<querytext>
+
+	select sum(m.points) as section_max_points, sum(d.points) as section_points
+	from as_assessment_section_map m, as_section_data d
+	where m.assessment_id = :assessment_id
+	and m.section_id = d.section_id
+	and d.session_id = :session_id
+
+	</querytext>
+</fullquery>
+	
+<fullquery name="as::assessment::calculate.update_assessment_percent">
+	<querytext>
+
+	update as_sessions
+	set percent_score = :percent_score
+	where session_id = :session_id
+	and assessment_id = :assessment_id
+
+	</querytext>
+</fullquery>
+	
 <fullquery name="as::assessment::unique_name.check_unique">
 	<querytext>
 

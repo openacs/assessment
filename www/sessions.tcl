@@ -15,8 +15,8 @@ ad_page_contract {
 }
 
 set context [list "[_ assessment.Show_Sessions]"]
-
 set package_id [ad_conn package_id]
+set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 
 if {[empty_string_p $subject_id]} {
     set subject_id [ad_conn user_id]

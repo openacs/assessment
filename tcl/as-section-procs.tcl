@@ -272,3 +272,22 @@ ad_proc as::section::items {
 
     return $item_list
 }
+
+ad_proc -public as::section::calculate {
+    -section_id:required
+    -assessment_id:required
+    -session_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-14
+
+    Award points to this section if all items are filled out in this section
+} {
+    if {![db_0or1row max_section_points {}]} {
+	return
+    }
+
+    db_1row sum_of_item_points {}
+    set section_points [expr round($section_max_points * $item_points / $item_max_points)]
+    db_dml update_section_points {}
+}

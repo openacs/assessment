@@ -14,9 +14,9 @@
 
 <fullquery name="session_data">
       <querytext>
-    SELECT creation_datetime AS session_start,
-           completed_datetime AS session_finish,
-           completed_datetime-creation_datetime AS session_time
+    SELECT percent_score, to_char(creation_datetime, :format) AS session_start,
+           to_char(completed_datetime, :format) AS session_finish,
+           to_char(completed_datetime-creation_datetime, 'HH24:MI:SS') AS session_time
     FROM as_sessions s
     WHERE s.session_id = :session_id
       </querytext>
@@ -34,8 +34,8 @@
 <fullquery name="sections">
       <querytext>
     select s.section_id, cr.title, cr.description, ci.name, s.instructions,
-           s.feedback_text, m.max_time_to_complete, m.points
-    from as_assessment_section_map m, as_session_sections ss,
+           s.feedback_text, m.max_time_to_complete, m.points as max_points, d.points
+    from as_assessment_section_map m, as_session_sections ss, as_section_data d,
          as_sections s, cr_revisions cr, cr_items ci
     where ci.item_id = cr.item_id
     and cr.revision_id = s.section_id
@@ -43,6 +43,8 @@
     and m.assessment_id = :assessment_rev_id
     and m.section_id = ss.section_id
     and ss.session_id = :session_id
+    and d.session_id = ss.session_id
+    and d.section_id = ss.section_id
     order by ss.sort_order
       </querytext>
 </fullquery>

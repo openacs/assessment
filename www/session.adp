@@ -23,7 +23,7 @@
 <table cellspacing=0>
 <tr><td valign="top">#assessment.section# @sections.title@
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
-(0 / @sections.points@ #assessment.points#)
+(@sections.points@ / @sections.max_points@ #assessment.points#)
 </td></tr>
 
 <tr><td><i> @sections.description@ </i><br></td></tr>
@@ -37,5 +37,5 @@
 </multiple>
 
 <hr>
-<if @assessment_data.survey_p@ eq f and @assessment_data.show_feedback@ ne none ><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@</if>
+<if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none ><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 </master>

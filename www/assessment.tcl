@@ -65,6 +65,7 @@ db_transaction {
 
     # get all items of section in correct order
     set item_list [as::section::items -section_id $section_id -session_id $session_id -sort_order_type $display(sort_order_type) -num_items $section(num_items)]
+    as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id
 
     if {![empty_string_p $item_order]} {
 	# show next items on section page
@@ -74,10 +75,12 @@ db_transaction {
     if {![empty_string_p $display(num_items)]} {
 	if {[llength $item_list] > $display(num_items)} {
 	    # next page: more items of this section
+	    set new_item_order $item_order
+	    set new_section_order $section_order
 	    if {[empty_string_p $item_order]} {
 		set new_item_order 0
 	    }
-	    set new_item_order [expr $item_order + $display(num_items)]
+	    set new_item_order [expr $new_item_order + $display(num_items)]
 
 	    # show only a few items per page
 	    set item_list [lreplace $item_list $display(num_items) end]
@@ -89,6 +92,7 @@ db_transaction {
     } else {
 	# next page: next section
 	set new_section_order [expr $section_order + 1]
+	set new_item_order ""
     }
 
     if {$new_section_order == [llength $section_list]} {
@@ -98,8 +102,26 @@ db_transaction {
 
 
 # form for display an assessment with sections and items
-ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
-    { session_id:text(hidden) {value $session_id} }
+if {$display(submit_answer_p) != "t"} {
+    ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
+	{session_id:text(hidden) {value $session_id}}
+    }
+} else {
+    ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
+	{session_id:text(hidden) {value $session_id}}
+    } -after_submit {
+	if {![empty_string_p $new_section_order]} {
+	    set section_order $new_section_order
+	    set item_order $new_item_order
+	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
+	    ad_script_abort
+	} else {
+	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
+	    db_dml session_finished {}
+	    ad_returnredirect [export_vars -base finish {session_id assessment_id}]
+	    ad_script_abort
+	}
+    }
 }
 
 multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content
@@ -130,7 +152,7 @@ foreach one_item $item_list {
 	    }
 	}
 	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
-	    { session_id:text(hidden) {value $session_id} }
+	    {session_id:text(hidden) {value $session_id}}
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form_$as_item_id -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
 
@@ -148,12 +170,17 @@ foreach one_item $item_list {
 		
 		set points [ad_decode $points "" 0 $points]
 		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -subject_id $user_id -response $response_to_item($as_item_id) -max_points $points
+
+		if {$section_order != $new_section_order} {
+		    as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
+		}
 	    }
 	} -after_submit {
 	    if {![empty_string_p $section_order]} {
 		ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 		ad_script_abort
 	    } else {
+		as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 		db_dml session_finished {}
 		ad_returnredirect [export_vars -base finish {session_id assessment_id}]
 		ad_script_abort
@@ -176,7 +203,7 @@ if {$display(submit_answer_p) != "t"} {
 	append validate_list "\{response_to_item.$as_item_id \{\[exist_and_not_null \$response_to_item.$as_item_id\]\} \"Answer missing\"\}\n"
     }
     # process multiple submit
-    eval ad_form -extend -name show_item_form -validate "{$validate_list}"
+#    eval ad_form -extend -name show_item_form -validate "{$validate_list}"
     ad_form -extend -name show_item_form -on_submit {
 	db_transaction {
 	    db_dml session_updated {}
@@ -188,6 +215,10 @@ if {$display(submit_answer_p) != "t"} {
 		set points [ad_decode $points "" 0 $points]
 		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -subject_id $user_id -response $response_to_item($response_item_id) -max_points $points
 	    }
+
+	    if {$section_order != $new_section_order} {
+		as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
+	    }
 	}
     } -after_submit {
 	if {![empty_string_p $new_section_order]} {
@@ -196,6 +227,7 @@ if {$display(submit_answer_p) != "t"} {
 	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 	    ad_script_abort
 	} else {
+	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	    db_dml session_finished {}
 	    ad_returnredirect [export_vars -base finish {session_id assessment_id}]
 	    ad_script_abort

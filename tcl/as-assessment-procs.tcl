@@ -272,6 +272,24 @@ ad_proc as::assessment::sections {
     return $section_list
 }
 
+ad_proc -public as::assessment::calculate {
+    -assessment_id:required
+    -session_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-14
+
+    Award points to this assessment if all sections are filled out
+} {
+    if {[db_string check_sections_calculated {}] > 0} {
+	return
+    }
+
+    db_1row sum_of_section_points {}
+    set percent_score [expr round(100 * $section_points / $section_max_points)]
+    db_dml update_assessment_percent {}
+}
+
 ad_proc as::assessment::pretty_time {
     {-seconds}
 } {
@@ -356,5 +374,22 @@ ad_proc as::assessment::display_content {
 	return "<img src=\"view/$filename?revision_id=$content_id\" alt=\"$title\">"
     } else {
 	return "<a href=\"view/$filename?revision_id=$content_id\">$title</a>"
+    }
+}
+
+ad_proc -private as::assessment::compare_numbers {a b} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-18
+
+    Compares the first part of a pair of strings as numbers
+} {
+    set a0 [expr double([lindex [lindex $a 0] 0])]
+    set b0 [expr double([lindex [lindex $b 0] 0])]
+    if {$a0 > $b0} {
+	return 1
+    } elseif {$a0 == $b0} {
+	return 0
+    } else {
+	return -1
     }
 }

@@ -10,6 +10,7 @@ ad_page_contract {
 }
 
 set context [list "[_ assessment.View_Results]"]
+set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 
 db_1row find_assessment {}
 
@@ -36,15 +37,18 @@ if {[empty_string_p $assessment_data(show_feedback)]} {
 # show_feedback: none, all, incorrect, correct
 
 
+set session_score 0
+set assessment_score 0
 db_multirow sections sections {} {
     if {[empty_string_p $points]} {
 	set points 0
     }
+    if {[empty_string_p $max_points]} {
+	set max_points 0
+    }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
+    incr session_score $points
+    incr assessment_score $max_points
 }
-
-# todo: calculate result
-set session_score 0
-set assessment_score 0
 
 ad_return_template

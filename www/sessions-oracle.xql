@@ -5,7 +5,8 @@
 
 	<fullquery name="sessions_of_assessment">
 		<querytext>
-			SELECT s.session_id, s.completed_datetime, s.percent_score,
+			SELECT r.item_id as assessment_id, s.session_id, s.percent_score,
+			       to_char(s.completed_datetime, :format) as completed_datetime,
 			       p.first_names || ' ' || p.last_name AS subject_name,
 			       r.title AS assessment_name, s.subject_id
 			FROM as_sessions s, cr_revisions r, persons p
@@ -19,7 +20,8 @@
 
 	<fullquery name="sessions_of_assessment_of_subject">
 		<querytext>
-			SELECT s.session_id, s.completed_datetime, s.percent_score,
+			SELECT r.item_id as assessment_id, s.session_id, s.percent_score,
+			       to_char(s.completed_datetime, :format) as completed_datetime,
 			       p.first_names || ' ' || p.last_name AS subject_name,
 			       r.title AS assessment_name, s.subject_id
 			FROM as_sessions s, cr_revisions r, persons p

@@ -14,7 +14,7 @@
 <fullquery name="item_type">
       <querytext>
 
-	select r.target_rev_id, o.object_type
+	select r.target_rev_id as as_item_type_id, o.object_type
 	from as_item_rels r, acs_objects o
 	where r.item_rev_id = :as_item_id
 	and r.rel_type = 'as_item_type_rel'
