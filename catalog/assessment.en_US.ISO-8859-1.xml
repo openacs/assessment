@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <message_catalog package_key="assessment" package_version="0.10d6" locale="en_US" charset="ISO-8859-1">
+
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
   <msg key="Absolute_Size_help">Number of characters a user can enter in the text field for his answer.</msg>
@@ -449,8 +450,10 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="trigger">Trigger</msg>
   <msg key="trigger_delete">Delete Trigger</msg>
   <msg key="triggers">Trigger</msg>
+  <msg key="try_again">Try again</msg>
   <msg key="two_days">Two days ago</msg>
   <msg key="type_of_trigger">Type of the trigger</msg>
+  <msg key="unhappy_search">Unhappy with your search result?</msg>
   <msg key="unlimited_time">Unlimited time for response</msg>
   <msg key="unlimited_tries">Unlimited number of tries allowed</msg>
   <msg key="unsecure_access_allow">Unsecure access allowed</msg>
