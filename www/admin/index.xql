@@ -4,9 +4,11 @@
 <fullquery name="get_all_assessments">
       <querytext>
       
-    SELECT assessment_id, title
-    FROM as_assessmentsx
-    order by title
+    select ci.item_id as assessment_id, cr.title
+    from cr_items ci, cr_revisions cr, as_assessments a
+    where cr.revision_id = ci.latest_revision
+    and a.assessment_id = cr.revision_id
+    order by cr.title
     
       </querytext>
 </fullquery>

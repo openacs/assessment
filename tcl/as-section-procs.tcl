@@ -9,8 +9,13 @@ namespace eval as::section {}
 ad_proc -public as::section::new {
     {-name:required}
     {-title:required}
-    {-instructions ""}
     {-description ""}
+    {-definition ""}
+    {-instructions ""}
+    {-feedback_text ""}
+    {-max_time_to_complete ""}
+    {-required_p t}
+    {-section_display_type_id ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -21,8 +26,101 @@ ad_proc -public as::section::new {
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
-    set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
-    set as_section_id [content::revision::new -item_id $section_item_id -content_type {as_sections} -title $title -description $description -attributes [list [list instructions $instructions] ] ]
+    db_transaction {
+	set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
+
+	set as_section_id [content::revision::new \
+			       -item_id $section_item_id \
+			       -content_type {as_sections} \
+			       -title $title \
+			       -description $description \
+			       -attributes [list [list definition $definition] \
+						[list instructions $instructions] \
+						[list feedback_text $feedback_text] \
+						[list max_time_to_complete $max_time_to_complete] \
+						[list required_p $required_p] \
+						[list section_display_type_id $section_display_type_id] ] ]
+    }
 
     return $as_section_id
+}
+
+ad_proc -public as::section::edit {
+    {-section_id:required}
+    {-title:required}
+    {-description ""}
+    {-definition ""}
+    {-instructions ""}
+    {-feedback_text ""}
+    {-max_time_to_complete ""}
+    {-required_p t}
+    {-section_display_type_id ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-10-26
+
+    Edit section in the database
+} {
+    # edit as_section in the CR
+    set section_item_id [db_string section_item_id {}]
+
+    db_transaction {
+	set new_section_id [content::revision::new \
+				-item_id $section_item_id \
+				-content_type {as_sections} \
+				-title $title \
+				-description $description \
+				-attributes [list [list definition $definition] \
+						 [list instructions $instructions] \
+						 [list feedback_text $feedback_text] \
+						 [list max_time_to_complete $max_time_to_complete] \
+						 [list required_p $required_p] \
+						 [list section_display_type_id $section_display_type_id] ] ]
+
+	copy_items -section_id $section_id -new_section_id $new_section_id
+    }
+
+    return $new_section_id
+}
+
+ad_proc -public as::section::new_revision {
+    {-section_id:required}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-11-07
+
+    Creates a new revision of a section with all items
+} {
+    # edit as_section in the CR
+    db_1row section_data {}
+
+    db_transaction {
+	set new_section_id [content::revision::new \
+				-item_id $section_item_id \
+				-content_type {as_sections} \
+				-title $title \
+				-description $description \
+				-attributes [list [list definition $definition] \
+						 [list instructions $instructions] \
+						 [list feedback_text $feedback_text] \
+						 [list max_time_to_complete $max_time_to_complete] \
+						 [list required_p $required_p] \
+						 [list section_display_type_id $section_display_type_id] ] ]
+
+	copy_items -section_id $section_id -new_section_id $new_section_id
+    }
+
+    return $new_section_id
+}
+
+ad_proc as::section::copy_items {
+    {-section_id:required}
+    {-new_section_id:required}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-11-07
+
+    Copies all items from section_id to new_section_id
+} {
+    db_dml copy_items {}
 }
