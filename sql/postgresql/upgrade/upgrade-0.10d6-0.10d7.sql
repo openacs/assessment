@@ -2,92 +2,6 @@
 -- @author annyflores@viaro.net
 -- @creation-date 2005-01-06
 
-
-------------------------------------------------
--- 	table as_actions
-------------------------------------------------
-
-
-create table as_actions(
-	action_id	integer
-			constraint as_action_action_id_fk
-			references acs_objects(object_id)
-			on delete cascade
-			constraint as_actions_pk
-			primary key,
-	name		varchar(200),
-	description	varchar(200),
-	tcl_code	text
-			constraint as_actions_tcl_code_nn not null
-);
-
-------------------------------------------------
--- 	table as_action_map
-------------------------------------------------
-
-create table as_action_map (
-	inter_item_check_id	integer,
-	action_id		integer,
-	order_by		integer,
-	user_message		varchar(200),
-	action_perform		varchar(2)
-);
-
-
-------------------------------------------------
--- 	table as_action_params
-------------------------------------------------
-
-create table as_action_params (
-	parameter_id	integer 
-			constraint as_action_params_pk
-			primary key,
-	action_id	integer,
-	type		varchar(1) not null,
-	varname		varchar(50) not null,
-	description	varchar(200),
-	query		text
-);
-
-
-
-------------------------------------------------
--- 	table as_param_map
-------------------------------------------------
-
-create table as_param_map (
-	parameter_id	integer,
-	value		integer,
-
-	item_id		integer,
-	inter_item_check_id 	integer
-	
-);
-
-
-
------------------------------------------------
--- 	table as_actions_log
-------------------------------------------------
-
-create table as_actions_log (
-	action_log_id		integer
-				constraint as_actions_log_pk 
-				primary key,
-	inter_item_check_id	integer not null,
-	action_id		integer not null,
-	finally_executed_by	integer,
-	date_requested		date,
-	date_processed		date,
-	approved_p		boolean not null,
-	failed_p		boolean not null,
-	error_txt		varchar,
-	session_id		integer
-	
-
-);
-
-create sequence as_actions_log_action_log_id;	
 create sequence as_action_params_parameter_id;
 
 select acs_object_type__create_type (
@@ -147,7 +61,6 @@ begin
 	delete from as_action_params where action_id=del__action_id;
 	
 	delete from as_actions where action_id = del__action_id;
-
         PERFORM acs_object__delete (del__action_id);	
 	return del__action_id;	
 
@@ -236,3 +149,84 @@ insert into as_action_params (parameter_id, action_id,type, varname, description
 
 	return v_action_id;
 end;' language 'plpgsql';
+
+
+create table del_actions (
+	action_id integer,
+	tcl_code  text,
+	name	  varchar(200),
+	description varchar(200)
+);
+
+create table del_params (
+	parameter_id	integer, 
+	action_id	integer,
+	type		varchar(1),
+	varname		varchar(50),
+	description	varchar(200),
+	query		text
+);
+
+
+
+
+create or replace function as_action__create_action_object ()
+returns integer as '
+declare 
+	v_action_id	integer;
+	v_parameter_id	integer;
+	package		RECORD;
+	action		RECORD;
+	param		RECORD;
+	check		RECORD;
+	del_actions 	RECORD;
+begin
+	
+	FOR action IN SELECT * from as_actions LOOP
+		insert into del_actions (action_id,tcl_code,name,description) values (action.action_id,action.tcl_code,action.name,action.description);
+	end LOOP;
+
+	FOR param IN SELECT * from as_action_params LOOP
+		insert into del_params (parameter_id,type,query,description,varname,action_id) values (param.parameter_id,param.type,param.query,param.description,param.varname,param.action_id);
+	end LOOP;
+
+
+	delete from as_actions;
+	delete from as_action_params;
+
+	alter table as_actions add constraint as_actions_action_id_fk foreign key (action_id) references acs_objects(object_id);  
+
+	FOR package IN SELECT apm.package_id,o.context_id,o.creation_user from apm_packages apm, acs_objects o where o.object_id=apm.package_id and apm.package_key = ''assessment'' LOOP
+
+		FOR action IN SELECT * from del_actions LOOP
+	
+			v_action_id:= as_action__new (null,action.name,action.description,action.tcl_code,package.package_id,package.creation_user,package.package_id);
+
+			FOR param IN SELECT * from del_params where action_id=action.action_id LOOP
+			
+				v_parameter_id:=nextval(''as_action_params_parameter_id'');		
+				insert into as_action_params (parameter_id,type,query,description,varname,action_id) values (v_parameter_id,param.type,param.query,param.description,param.varname,v_action_id);
+
+
+	
+				FOR check IN SELECT * from as_inter_item_checks c, as_action_map am where c.assessment_id in (select object_id from acs_objects where package_id=package.package_id) and am.action_id=action.action_id and c.inter_item_check_id=c.inter_item_check_id LOOP
+				update as_action_map set action_id=v_action_id where inter_item_check_id=check.inter_item_check_id;
+				update as_param_map set parameter_id=v_parameter_id where parameter_id=param.parameter_id and inter_item_check_id=check.inter_item_check_id;
+
+				end LOOP;		
+
+					
+			end LOOP;
+
+		end LOOP;
+	
+	end LOOP;
+	
+
+	drop table del_actions;
+	drop table del_params;
+	return v_action_id;
+
+
+end;' language 'plpgsql';
+
