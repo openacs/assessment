@@ -11,6 +11,7 @@ ad_page_contract {
 set context [list "Show Items"]
 
 set as_session_id [as_session_new -assessment_id $assessment_id -subject_id [ad_conn user_id]]
+set assessment_name [db_string assessment_name {SELECT as_assessmentsx.title FROM as_assessmentsx WHERE as_assessmentsx.assessment_id=:assessment_id}]
 db_dml session_start {UPDATE as_sessions SET creation_datetime = NOW() WHERE session_id=:as_session_id}
 
 ad_form -name show_item_form -action process-response -html {enctype multipart/form-data} -form {

@@ -9,6 +9,12 @@ ad_proc -public add_item_to_form  { form item_id } { Add items to a form. The fo
     db_1row item_properties ""
     set user_value ""
 
+    set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:item_id"]
+    set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
+    db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
+    set presentation_type "checkbox" ;# DEFAULT
+    if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radiobutton"}
+
     #Add the items depending on the type (as_item_display_types)
     switch -- $presentation_type {
 	"textbox" {
@@ -35,7 +41,7 @@ ad_proc -public add_item_to_form  { form item_id } { Add items to a form. The fo
 	"radiobutton" {
 	    set widget "text(radio)"
 	    set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:item_id"]
-	    set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE item_id=:item_item_id"]
+	    set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
 	    set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
@@ -53,7 +59,7 @@ ad_proc -public add_item_to_form  { form item_id } { Add items to a form. The fo
 
 	"checkbox" {
 	    set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:item_id"]
-	    set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE item_id=:item_item_id"]
+	    set item_mc_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_type_rel' AND item_id=:item_item_id"]
 	    set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
 	    set choices [list]
 	    set optionlist [list]

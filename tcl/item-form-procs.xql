@@ -30,7 +30,7 @@
 <fullquery name="add_item_to_form.item_properties">
 	<querytext>
 		select
-		as_itemsx.title, as_itemsx.required_p, 'checkbox' AS presentation_type
+		as_itemsx.title, as_itemsx.required_p
 		from
 		as_itemsx
 		where

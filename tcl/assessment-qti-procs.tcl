@@ -173,16 +173,19 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set as_items__rcardinality [$response_lid getAttribute {rcardinality} {}]
 				# multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
 				# this is the default
-				set as_item__display_type_id 2
+				set as_item_display_id {}
 				if {$as_items__rcardinality == {Multiple}} {
 					# multiple response either text (remember it can be internationalized or changed), images, sounds, videos
-					set as_item__display_type_id 3
+					set as_item_display_id [as_item_display_cb_new -name [ad_generate_random_string]]
+				} else {
+					set as_item_display_id [as_item_display_rb_new -name [ad_generate_random_string]]
 				}
 				set as_item_type_id [as_item_type_mc_new -name $as_item_type__name]
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
 				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
 				lappend items $as_item_id
 				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
+				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
 					set as_item_choices__ident [$response_label getAttribute {ident}]

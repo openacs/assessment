@@ -17,6 +17,10 @@ template::list::create \
     -multirow sessions \
     -key sessions_id \
     -elements {
+        session_id {
+	    label {Session}
+	    link_url_eval {[export_vars -base "session" {session_id}]}
+	}
         subject_name {
 	    label {Subject Name}
             link_url_eval {[acs_community_member_url -user_id $subject_id]}
@@ -28,16 +32,25 @@ template::list::create \
 	}
 	completed_datetime {
 	    label {Finnish Time}
-	    link_url_eval {[export_vars -base "session" {session_id}]}
+	    html {nowrap}
 	}
     } \
     -main_class {
         narrow
     }
 
+set admin_p [ad_permission_p $package_id admin]
+
+if { $admin_p } {
 db_multirow -extend { item_url } sessions sessions_of_assessment {
 } {
     set item_url [export_vars -base "session" {session_id}]
+}
+} else {
+db_multirow -extend { item_url } sessions sessions_of_assessment_of_subject {
+} {
+    set item_url [export_vars -base "session" {session_id}]
+}
 }
 
 set admin_p [ad_permission_p $package_id admin]

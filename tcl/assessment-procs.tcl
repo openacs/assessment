@@ -72,7 +72,7 @@ ad_proc -public as_item_display_rb_new {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-07-26
 
-    New Item Display RadioButton Type to the data database
+    New Item Display RadioButton Type to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
@@ -82,6 +82,29 @@ ad_proc -public as_item_display_rb_new {
     set as_item_display_rb_id [content::revision::new -item_id $item_item_display_rb_id -content_type {as_item_display_rb} -attributes [list [list html_display_options $html_display_options] [list choice_orientation $choice_orientation] [list choice_label_orientation $choice_label_orientation] [list sort_order_type $sort_order_type] [list item_answer_alignment $item_answer_alignment] ] ]
 
     return $as_item_display_rb_id
+}
+
+ad_proc -public as_item_display_cb_new {
+    {-name:required}
+    {-html_display_options ""}
+    {-choice_orientation ""}
+    {-choice_label_orientation ""}
+    {-sort_order_type ""}
+    {-item_answer_alignment ""}
+} {
+    @author Eduardo Perez (eperez@it.uc3m.es)
+    @creation-date 2004-09-23
+
+    New Item Display CheckBox Type to the database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_display_cb in the CR (and as_item_display_cb table) getting the revision_id (as_item_display_id)
+    set item_item_display_cb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_cb} -name $name]
+    set as_item_display_cb_id [content::revision::new -item_id $item_item_display_cb_id -content_type {as_item_display_cb} -attributes [list [list html_display_options $html_display_options] [list choice_orientation $choice_orientation] [list choice_label_orientation $choice_label_orientation] [list sort_order_type $sort_order_type] [list item_answer_alignment $item_answer_alignment] ] ]
+
+    return $as_item_display_cb_id
 }
 
 ad_proc -public as_item_new {
@@ -189,13 +212,13 @@ ad_proc -public as_session_new {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
-    # Check to see if there's a session already to not submit another one
-    db_0or1row as_session_last {SELECT session_id AS as_session_id FROM as_sessionsx WHERE subject_id = :subject_id AND assessment_id = :assessment_id}
-    if { ! [info exists as_session_id] } {    
+#    # Check to see if there's a session already to not submit another one
+#    db_0or1row as_session_last {SELECT session_id AS as_session_id FROM as_sessionsx WHERE subject_id = :subject_id AND assessment_id = :assessment_id}
+#    if { ! [info exists as_session_id] } {    
     # Insert as_session in the CR (and as_sessions table) getting the revision_id (session_id)
-    set session_id [content::item::new -parent_id $folder_id -content_type {as_sessions} -name "$subject_id-$assessment_id" -title "$subject_id-$assessment_id" ]
-    set as_session_id [content::revision::new -item_id $session_id -content_type {as_sessions} -title "$subject_id-$assessment_id" -attributes [list [list assessment_id $assessment_id] [list subject_id $subject_id] [list staff_id $staff_id] [list target_datetime $target_datetime] [list creation_datetime $creation_datetime] [list first_mod_datetime $first_mod_datetime] [list last_mod_datetime $last_mod_datetime] [list completed_datetime $completed_datetime] [list percent_score $percent_score] [list consent_timestamp $consent_timestamp] ] ]
-    }
+    set session_id [content::item::new -parent_id $folder_id -content_type {as_sessions} -name "$subject_id-$assessment_id-[ad_generate_random_string]" -title "$subject_id-$assessment_id-[ad_generate_random_string]" ]
+    set as_session_id [content::revision::new -item_id $session_id -content_type {as_sessions} -title "$subject_id-$assessment_id-[ad_generate_random_string]" -attributes [list [list assessment_id $assessment_id] [list subject_id $subject_id] [list staff_id $staff_id] [list target_datetime $target_datetime] [list creation_datetime $creation_datetime] [list first_mod_datetime $first_mod_datetime] [list last_mod_datetime $last_mod_datetime] [list completed_datetime $completed_datetime] [list percent_score $percent_score] [list consent_timestamp $consent_timestamp] ] ]
+#    }
     return $as_session_id
 }
 
