@@ -8,33 +8,6 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::assessment::check::intervals.today">
-      <querytext>
-      select to_date(now(),'YYYY-MM-DD')
-      </querytext>
-</fullquery>
-
-<fullquery name="as::assessment::check::intervals.yesterday">
-      <querytext>
-      select to_date (to_date(now(),'YYYY-MM-DD')-1,'YYYY-MM-DD')
-      </querytext>
-</fullquery>
-
-<fullquery name="as::assessment::check::intervals.two_days">
-      <querytext>
-      select to_date (to_date(now(),'YYYY-MM-DD')-2,'YYYY-MM-DD')
-      </querytext>
-</fullquery>
-<fullquery name="as::assessment::check::intervals.last_week">
-      <querytext>
-      select to_date (to_date(now(),'YYYY-MM-DD')-7,'YYYY-MM-DD')
-      </querytext>
-</fullquery>
-<fullquery name="as::assessment::check::intervals.last_month">
-      <querytext>
-      select to_date (to_date(now(),'YYYY-MM-DD')-30,'YYYY-MM-DD')
-      </querytext>
-</fullquery>
 
 <fullquery name="as::assessment::check::get_max_order.get_max_order">
       <querytext>
@@ -62,6 +35,13 @@
 
       </querytext>
 </fullquery>
+<fullquery name="as::assessment::check::set_parameter_value.get_check_id">
+      <querytext>
+	select inter_item_check_id from as_param_map where parameter_id=:parameter_id and inter_item_check_id = :check_id
+
+      </querytext>
+</fullquery>
+
 <fullquery name="as::assessment::check::set_parameter_value.param_value_insert_n">
       <querytext>
       insert into  as_param_map (parameter_id,inter_item_check_id,value,item_id) values (:parameter_id,:check_id,null,:value)
@@ -256,25 +236,19 @@
         select max(revision_id) from cr_revisions where item_id=:assessment_id
       </querytext>
 </fullquery>
-<fullquery name="as::assessment::check::eval_aa_checks.sections">
-      <querytext>
-        select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm where ci.item_id = cr.item_id and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id =:assessment_rev_id order by asm.sort_order
-      </querytext>
-</fullquery>
+
 <fullquery name="as::assessment::check::eval_aa_checks.section_checks">
       <querytext>
-        select c.inter_item_check_id as check from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='aa' and  section_id_from=:section_id order by am.order_by
+        select c.inter_item_check_id as check from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='aa' and  c.assessment_id=:assessment_id
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::eval_aa_checks.check_info">
       <querytext>
         select * from as_inter_item_checks c,as_action_map am where
       c.inter_item_check_id=am.inter_item_check_id and am.action_perform='aa'
-      and  section_id_from=:section_id and c.inter_item_check_id=:check order by am.order_by 
+      and  c.assessment_id=:assessment_id and c.inter_item_check_id=:check order by am.order_by 
       </querytext>
 </fullquery>
-
-
 <fullquery name="as::assessment::check::eval_m_checks.get_assessment_id">
       <querytext>
       select max(revision_id) from cr_revisions where item_id=:assessment_id
@@ -285,9 +259,9 @@
         select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm where ci.item_id = cr.item_id and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id =:assessment_rev_id order by asm.sort_order
       </querytext>
 </fullquery>
-<fullquery name="as::assessment::check::eval_m_checks.section_checks">
+<fullquery name="as::assessment::check::eval_m_checks.assessment_checks">
       <querytext>
-      select * from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='m' and  section_id_from=:section_id order by am.order_by 
+      select * from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='m' and  c.assessment_id=:assessment_id order by am.order_by 
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::confirm_display.get_check_info">
@@ -351,8 +325,7 @@
 
 <fullquery name="as::assessment::check::delete_assessment_checks.assessment_checks">
       <querytext>
-        select inter_item_check_id from as_inter_item_checks where section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm where ci.item_id = cr.item_id and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id =:assessment_rev_id)
+        select inter_item_check_id from as_inter_item_checks where section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm where ci.item_id = cr.item_id and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id =:assessment_id)
       </querytext>
 </fullquery>
-
 </queryset>

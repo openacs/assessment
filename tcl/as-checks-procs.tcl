@@ -20,8 +20,9 @@ ad_proc -public as::assessment::check::get_assessments {
 } {
     set package_id [ad_conn package_id]
     set assessment_list [list [list "[_ assessment.all]" "all"]]
-    db_foreach  assessment {} {
-	lappend assessment_list [list $title $assessment_id]
+    set assessments [db_list_of_lists assessment {}]
+    foreach  assessment $assessments {
+	lappend assessment_list [list [lindex $assessment 0] [lindex $assessment 1]]
     }
     
     return $assessment_list
@@ -39,12 +40,7 @@ ad_proc -public as::assessment::check::intervals {
 } {
     Return the time intervals
 } {
-    
-    set today [db_string today {}]
-    set yesterday  [db_string yesterday {}]
-    set two_days [db_string two_days {}]
-    set last_week [db_string last_week {}]
-    set last_month [db_string last_month  {}]
+    db_1row intervals {}
     
     set intervals [list [list "[_ assessment.all]" "all"] [list "[_ assessment.today]" $today]  [list "[_ assessment.yesterday]" $yesterday] [list "[_ assessment.two_days]" $two_days] [list "[_ assessment.last_week]" $last_week] [list "[_ assessment.last_month]" $last_month]]
     
@@ -68,7 +64,7 @@ ad_proc -public as::assessment::check::get_max_order {
 } {
     Return the next value for order_by
 } {
-    set order [db_string get_max_order {}]
+    set order [db_string get_max_order {} -default 1]
     if { $order == ""} {
 	set order 1
     } else {
@@ -101,7 +97,7 @@ ad_proc -public as::assessment::check::set_parameter_value {
 } {
     
 } {
-    set exists_p [db_string get_check_id {select inter_item_check_id from as_param_map where parameter_id=:parameter_id and inter_item_check_id = :check_id } -default 0]
+    set exists_p [db_string get_check_id {} -default 0]
     
     if { $type == "n"} {
 	if {$exists_p != 0} {
@@ -179,11 +175,11 @@ ad_proc -public as::assessment::check::action_log {
 } {
     
 } {
+    set user_id [ad_conn user_id]
+    set log_id [db_string get_next_val {}]
+    set action_id [db_string action_id {}]
     
     db_transaction {
-	set user_id [ad_conn user_id]
-	set log_id [db_string get_next_val {}]
-	set action_id [db_string action_id {}]
 	db_dml insert_action {}
     }
 }
@@ -195,13 +191,13 @@ ad_proc -public as::assessment::check::manual_action_log {
 } {
     
 } {
-
+    set user_id [ad_conn user_id]
+    set log_id [db_string get_next_val {}]
+    set action_id [db_string action_id {}]
+    
     db_transaction {
-	set user_id [ad_conn user_id]
-	set log_id [db_string get_next_val {}]
-	set action_id [db_string action_id {}]
 	db_dml insert_action {}
-
+	
     }
 }
 
@@ -218,7 +214,7 @@ ad_proc -public as::assessment::check::action_exec {
 	set $varname ""
 	
 	if {$value == ""} {
-    	    set choice [db_0or1row get_item_choice {}]
+    	    set choice [db_list_of_lists get_item_choice {}]
 	    set answer [db_0or1row get_answer {}] 
 	    if {[exists_and_not_null choice_id]} {
 		set $varname "$choice_id"
@@ -261,7 +257,7 @@ ad_proc -public as::assessment::check::manual_action_exec {
 	set $varname ""
 	
 	if {$value == ""} {
-    	    set choice [db_0or1row get_item_choice {}]
+    	    set choice [db_list_of_lists get_item_choice {}]
 	    set answer [db_0or1row get_answer {}] 
 	    if {[exists_and_not_null choice_id]} {
 		set $varname "$choice_id"
@@ -303,10 +299,10 @@ ad_proc -public as::assessment::check::eval_i_checks {
 } {
     
     set section_checks [db_list_of_lists section_checks { }]
-    ns_log notice "$section_checks"
+
     foreach check $section_checks  {
 	set check_sql [lindex $check 1]
-	set perform [db_string check_sql $check_sql]
+	set perform [db_string check_sql $check_sql -default 0]
 	if {[lindex $check 2] == "t"} {
 	    if {$perform == 1} {
 		as::assessment::check::action_exec -inter_item_check_id [lindex $check 0] -session_id $session_id
@@ -329,7 +325,8 @@ ad_proc -public as::assessment::check::branch_checks {
     set perform 0
 
     db_foreach section_checks {} {
-	set new_assessment_revision [db_string get_assessment_id {select max(revision_id) from cr_revisions where item_id=:assessment_id}]
+	as::assessment::data -assessment_id $assessment_id
+	set new_assessment_revision $assessment_data(assessment_rev_id)
 	
 	#parse condition_sql to get item_id
 	set cond_list  [split $check_sql "="]
@@ -370,8 +367,6 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 
     set assessment_rev_id [db_string get_assessment_id {}]
     
-    set section_list [db_list_of_lists sections {}]
-    foreach section_id $section_list { 
 	set checks [db_list_of_lists section_checks {}]
 	foreach check $checks {
 	    set info [db_0or1row check_info {}]
@@ -382,7 +377,7 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 		}
 	    }
 	}
-    }
+    
 }
 
 
@@ -393,10 +388,7 @@ ad_proc -public as::assessment::check::eval_m_checks {
     
 } {
 
-    set assessment_rev_id [db_string get_assessment_id {}]
-    
-    db_foreach sections {} { 
-	db_foreach section_checks {} {
+	db_foreach assessment_checks {} {
 	    if {$action_p == "t"} {
 	    set perform [db_string check_sql $check_sql]
 
@@ -406,8 +398,8 @@ ad_proc -public as::assessment::check::eval_m_checks {
 		    as::assessment::check::manual_action_log -check_id $inter_item_check_id -session_id $session_id 
 		}
 	    }
+	
 	}
-    }
     
 }
 
@@ -459,6 +451,7 @@ ad_proc -public as::assessment::check::confirm_display {
 ad_proc -public as::assessment::check::copy_checks {
     {-section_id:required}
     {-new_section_id:required}
+    {-assessment_id:required}
 } {
     
 } {
@@ -475,6 +468,7 @@ ad_proc -public as::assessment::check::copy_checks {
 	set item_id [lindex $check 6]
 	set name [lindex $check 7]
 	set description [lindex $check 8]
+
 	
 	set insert_p [db_exec_plsql copy_check {}]
 	
@@ -518,7 +512,7 @@ ad_proc -public as::assessment::check::update_checks {
 }
 
 ad_proc -public as::assessment::check::delete_assessment_checks {
-    {-assessment_rev_id:required}
+    {-assessment_id:required}
 } {
     
 } {

@@ -16,6 +16,7 @@ ad_proc -public as::section::new {
     {-num_items ""}
     {-display_type_id ""}
     {-points ""}
+    
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -59,6 +60,7 @@ ad_proc -public as::section::edit {
     {-num_items ""}
     {-display_type_id ""}
     {-points ""}
+    {-assessment_id:required}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-10-26
@@ -82,6 +84,7 @@ ad_proc -public as::section::edit {
 						 [list points $points] ] ]
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
+	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }
 
     return $new_section_id
@@ -89,6 +92,7 @@ ad_proc -public as::section::edit {
 
 ad_proc -public as::section::new_revision {
     {-section_id:required}
+    {-assessment_id:required}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
@@ -112,6 +116,7 @@ ad_proc -public as::section::new_revision {
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::copy_categories -from_id $section_id -to_id $new_section_id
+	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }
 
     return $new_section_id
@@ -136,6 +141,7 @@ ad_proc -public as::section::latest {
 ad_proc -public as::section::copy {
     {-section_id:required}
     {-name ""}
+    {-assessment_id:required}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
@@ -170,6 +176,7 @@ ad_proc -public as::section::copy {
 
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::copy_categories -from_id $section_id -to_id $new_section_id
+	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }
 
     return $new_section_id
