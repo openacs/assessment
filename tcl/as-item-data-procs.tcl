@@ -58,3 +58,28 @@ ad_proc -public as::item_data::new {
 
     return $as_item_data_id
 }
+
+ad_proc -public as::item_data::get {
+    {-subject_id:required}
+    {-as_item_id:required}
+    {-session_id ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-24
+
+    Get as_item_data from the database
+} {
+    if {[empty_string_p $session_id]} {
+	db_1row last_session {}
+    }
+
+    if {![empty_string_p $session_id] && [db_0or1row response {} -column_array response]} {
+	# response found in session
+	set item_data_id $response(item_data_id)
+	set response(choice_answer) [db_list mc_response {}]
+	return [array get response]
+    } else {
+	# no response given in that session
+	return ""
+    }
+}

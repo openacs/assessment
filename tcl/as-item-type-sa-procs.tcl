@@ -85,7 +85,6 @@ ad_proc -public as::item_type_sa::render {
     -type_id:required
     -section_id:required
     -as_item_id:required
-    -default_provided:boolean
     {-default_value ""}
     {-session_id ""}
 } {

@@ -1,50 +1,50 @@
 <?xml version="1.0"?>
 <queryset>
-	<rdbms><type>postgresql</type><version>7.4</version></rdbms>
 
-	<fullquery name="query_all_items">
-		<querytext>
-			SELECT i.as_item_id, i.name, i.title, i.feedback_right, i.feedback_wrong,
-			       s.section_id, s.title as section_title, s.description as section_description
-			FROM as_assessmentsx a, as_sectionsx s, as_assessment_section_map asm, as_itemsx i,
-			     as_item_section_map ism, as_sessionsx ss
-			WHERE a.assessment_id = asm.assessment_id
-			AND s.section_id = asm.section_id
-			AND i.as_item_id = ism.as_item_id
-			AND s.section_id = ism.section_id
-			AND a.assessment_id = ss.assessment_id
-			AND ss.session_id = :session_id
-			ORDER BY s.section_id, ism.sort_order
-		</querytext>
-	</fullquery>
+<fullquery name="find_assessment">
+      <querytext>
+    select r.item_id as assessment_id, s.subject_id,
+           p.first_names, p.last_name
+    from as_sessions s, cr_revisions r, persons p
+    where s.session_id = :session_id
+    and r.revision_id = s.assessment_id
+    and s.subject_id = p.person_id
+      </querytext>
+</fullquery>
 
-	<fullquery name="choices">
-		<querytext>
-                SELECT
-                as_item_choicesx.choice_id, as_item_choicesx.title AS choice_title, as_item_choicesx.correct_answer_p, as_item_choicesx.percent_score, as_item_choicesx.text_value, as_item_choicesx.content_value
-                FROM as_item_choicesx
-                WHERE
-                as_item_choicesx.mc_id=:mc_id
-                ORDER BY
-                as_item_choicesx.sort_order
-		</querytext>
-	</fullquery>
-	
-	<fullquery name="shortanswer">
-		<querytext>
-                SELECT as_item_datax.text_answer
-                FROM as_item_datax
-		WHERE as_item_datax.session_id = :session_id 
-		AND as_item_datax.as_item_id = :items_as_item_id
- 		</querytext>
- 	</fullquery>
-	
-	<fullquery name="session_percent_score">
-	        <querytext>
-		UPDATE as_sessions
-	        SET percent_score = :session_score	
-	        WHERE session_id = :session_id
-		</querytext>
-	</fullquery>
+<fullquery name="session_data">
+      <querytext>
+    SELECT creation_datetime AS session_start,
+           completed_datetime AS session_finish,
+           completed_datetime-creation_datetime AS session_time
+    FROM as_sessions s
+    WHERE s.session_id = :session_id
+      </querytext>
+</fullquery>
+
+<fullquery name="session_attempt">
+      <querytext>
+    SELECT COUNT(*)
+    FROM as_sessions s
+    WHERE s.subject_id = :subject_id
+    AND s.assessment_id = :assessment_rev_id
+      </querytext>
+</fullquery>
+
+<fullquery name="sections">
+      <querytext>
+    select s.section_id, cr.title, cr.description, ci.name, s.instructions,
+           s.feedback_text, m.max_time_to_complete, m.points
+    from as_assessment_section_map m, as_session_sections ss,
+         as_sections s, cr_revisions cr, cr_items ci
+    where ci.item_id = cr.item_id
+    and cr.revision_id = s.section_id
+    and s.section_id = m.section_id
+    and m.assessment_id = :assessment_rev_id
+    and m.section_id = ss.section_id
+    and ss.session_id = :session_id
+    order by ss.sort_order
+      </querytext>
+</fullquery>
 
 </queryset>

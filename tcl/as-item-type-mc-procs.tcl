@@ -134,7 +134,6 @@ ad_proc -public as::item_type_mc::render {
     -type_id:required
     -section_id:required
     -as_item_id:required
-    -default_provided:boolean
     {-default_value ""}
     {-session_id ""}
 } {
@@ -143,6 +142,19 @@ ad_proc -public as::item_type_mc::render {
 
     Render a Multiple Choice Type
 } {
+    if {![empty_string_p $default_value]} {
+	array set values $default_value
+	set defaults $values(choice_answer)
+    }
+
+    if {![empty_string_p $session_id]} {
+	set choice_list [db_list_of_lists get_sorted_choices {}]
+	
+	if {[llength $choice_list] > 0} {
+	    return [list $defaults $choice_list]
+	}
+    }
+
     db_1row item_type_data {}
 
     set defaults ""
@@ -160,18 +172,6 @@ ad_proc -public as::item_type_mc::render {
 	    lappend correct_choices [list $title $choice_id]
 	} else {
 	    lappend wrong_choices [list $title $choice_id]
-	}
-    }
-
-    if {$default_provided_p} {
-	set defaults $default_value
-    }
-
-    if {![empty_string_p $session_id]} {
-	set choice_list [db_list get_sorted_choices {}]
-	
-	if {[llength $choice_list] > 0} {
-	    return [list $defaults $choice_list]
 	}
     }
 

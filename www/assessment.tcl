@@ -97,8 +97,15 @@ db_transaction {
     foreach one_item $item_list {
 	util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete
 
-	# todo: pass required_p, reuse_responses, mode:edit/display
-	set presentation_type [as::item_form::add_item_to_form show_item_form $session_id $section_id $as_item_id]
+	if {$assessment_data(reuse_reponses_p) == "t"} {
+	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
+	} else {
+	    set default_value ""
+	}
+
+	# todo: pass required_p
+	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value]
+
 	# Fill in the blank item. Replace all <textbox> that appear in the title by an <input> of type="text"
 	if {$presentation_type == {tb}} {
 	    regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html

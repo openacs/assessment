@@ -85,7 +85,6 @@ ad_proc -public as::item_type_oq::render {
     -type_id:required
     -section_id:required
     -as_item_id:required
-    -default_provided:boolean
     {-default_value ""}
     {-session_id ""}
 } {
@@ -96,7 +95,14 @@ ad_proc -public as::item_type_oq::render {
 } {
     db_1row item_type_data {}
 
-    return [list $default_value ""]
+    if {![empty_string_p $default_value]} {
+	array set values $default_value
+	set default $values(clob_answer)
+    } else {
+	set default ""
+    }
+
+    return [list $default ""]
 }
 
 ad_proc -public as::item_type_oq::process {

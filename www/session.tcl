@@ -1,28 +1,17 @@
 ad_page_contract {
 
-    Lists the results that an user obtains after answer an assessment.
-    In the results, users can view the started time and finished time
-    of assessment, the time spent in take the assessment, as well as
-    the number of attempts. The users also can view the obtained total
-    score, the obtained score by each item, their incorrect answers and
-    a right or wrong feedback. If an item isn't answered users are informed.
+    Show the result of a session.
 
-    @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
-    @creation-date 2004-09-13
-} -query {
-    session_id:notnull
-} -properties {
-    context:onevalue
+    @author timo@timohentschel.de
+    @date   2004-12-24
+    @cvs-id $Id: 
+} {
+    session_id:integer
 }
 
 set context [list "[_ assessment.View_Results]"]
 
-db_1row find_assessment {
-    select r.item_id as assessment_id
-    from as_sessions s, cr_revisions r
-    where s.session_id = :session_id
-    and r.revision_id = s.assessment_id
-}
+db_1row find_assessment {}
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
@@ -33,171 +22,30 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
+set session_user_url [acs_community_member_url -user_id $subject_id]
+
+# get start and end times
+db_1row session_data {}
+
+# get the number of attempts
+set session_attempt [db_string session_attempt {}]
 
 if {[empty_string_p $assessment_data(show_feedback)]} {
-    set assessment_show_feedback "all"
+    set assessment_data(show_feedback) "all"
 }
 
-#get the user takes a session
-db_1row session_user_id {
-    SELECT p.first_names, p.last_name, ss.assessment_id
-    FROM as_sessionsx ss, persons p
-    WHERE ss.subject_id = p.person_id
-    AND ss.session_id = :session_id
+# show_feedback: none, all, incorrect, correct
+
+
+db_multirow sections sections {} {
+    if {[empty_string_p $points]} {
+	set points 0
+    }
+    set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 }
 
-set assessment_url [export_vars -base "assessment" {assessment_id}]
-set session_user_name "$first_names $last_name"
-
-#get information of assessment as subject that took it, the started time and finished time of assessment
-db_1row session_data {
-    SELECT subject_id, creation_datetime AS session_start,
-           completed_datetime AS session_finish,
-           completed_datetime-creation_datetime AS session_time
-    FROM as_sessionsx ss
-    WHERE ss.session_id = :session_id
-}
-
-set session_user_url [acs_community_member_url -user_id $subject_id]
-#get the number of attempts
-set session_attempt [db_string session_attempt {
-    SELECT COUNT(*)
-    FROM as_sessionsx ss
-    WHERE ss.subject_id = :subject_id
-    AND ss.assessment_id = :assessment_rev_id
-}]
-
-set assessment_score 100 ;# FIXME
-#get the number of items of an assessment
-set assessment_items [db_string assessment_items {
-    SELECT COUNT(*)
-    FROM as_sectionsx s, as_assessmentsx a, as_assessment_section_map asm,
-         as_itemsx i, as_item_section_map ism
-    WHERE a.assessment_id = asm.assessment_id
-    AND s.section_id = asm.section_id
-    AND i.as_item_id = ism.as_item_id
-    AND s.section_id = ism.section_id
-    AND a.assessment_id = :assessment_rev_id
-}]
-
-#set maximum score by each item
-set itemmaxscore [expr $assessment_score/$assessment_items] ;# FIXME total_points/items_number
-
+# todo: calculate result
 set session_score 0
-db_multirow -extend [list choice_html score maxscore notanswered item_correct presentation_type] items query_all_items {} {
-  #reset variables
-  set rb__display_id {}
-  unset rb__display_id
-  set tb__display_id {}
-  unset tb__display_id
-  set ta__display_id {}
-  unset ta__display_id
-  set mc_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_type_rel]
-  set item_display_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_display_rel]
-  #set items_as_item_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :as_item_id"]
-  set items_as_item_id [db_string items_items_as_item_id "SELECT as_itemsx.as_item_id FROM as_itemsx WHERE as_itemsx.item_id IN (select item_id from cr_revisions where revision_id=:as_item_id)"]
-  db_0or1row as_item_display_rbx "SELECT as_item_display_id AS rb__display_id FROM as_item_display_rb WHERE as_item_display_id=:item_display_id"
-  db_0or1row as_item_display_tbx "SELECT as_item_display_id AS tb__display_id FROM as_item_display_tb WHERE as_item_display_id=:item_display_id"
-  db_0or1row as_item_display_tax "SELECT as_item_display_id AS ta__display_id FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
-  set presentation_type "checkbox" ;# DEFAULT
-  #get the presentation type
-  if {[info exists rb__display_id]} {set presentation_type "radio"}
-  if {[info exists tb__display_id]} {set presentation_type "fitb"}
-  if {[info exists ta__display_id]} {set presentation_type "textarea"}
-
-  set notanswered 1
-  set maxscore $itemmaxscore
-  set score 0
-  set item_correct 1
-  set choice_html "<table cellspacing=\"0\" cellpadding=\"3\" border=\"0\">"
-  
-  #for Short Answer item
-  if {[string compare $presentation_type "textarea"] == 0} {  
-      set text_answer {}
-      #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =)        
-      db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
-      set html_options "[lindex $html_display_options 0]=[lindex $html_display_options 1] [lindex $html_display_options 2]=[lindex $html_display_options 3]"
-      #get the user response
-      db_0or1row shortanswer {}
-      #paint a disabled textarea with the user response
-      set choice_answer "<textarea $html_options readonly disabled>$text_answer</textarea>"
-      set correct_answer {}
-      append choice_html "<tr><td>$correct_answer</td><td>$choice_answer </td></tr>"
-      #item_correct=0 because this item has to be corrected by a teacher
-      set item_correct 0
-  }
-  
-  db_foreach choices {} {
-      set choice_id_answer ""
-      set text_answer ""
-      db_0or1row answer_info {
-          select aid.text_answer, aidc.choice_id as choice_id_answer
-	  from as_item_data aid, as_item_data_choices aidc
-	  where aidc.choice_id=:choice_id
-	  and aidc.item_data_id = aid.item_data_id
-	  and (aid.session_id = :session_id or aid.session_id is null)
-    }
-    if {[string length "$choice_id_answer"]} {set notanswered 0}
-    set choice_correct 0
-    #for fill in the blank item
-    if {[info exists tb__display_id]} {
-        foreach text_value $choice_title {
-            if {[empty_string_p $text_answer]} { } else {
-	        #if the user response is equal to stored answer (no case sensitive) the user response is correct
-                if {[string toupper $text_answer] == [string toupper $text_value]} { set choice_correct 1 }
-            }
-        }
-    #for multiple choice and multiple response items
-    } else {
-        if {$correct_answer_p == {t}} { set correct_answer_bool 1 } else { set correct_answer_bool 0 }
-        set choice_correct [expr $correct_answer_bool == ("$choice_id_answer" == $choice_id)]
-    }
-    set item_correct [expr $item_correct && $choice_correct]
-    if {$choice_correct} {
-        set correct_answer {}
-    } else {
-        #if the user response is wrong, the word "Error" will be displayed in red color
-        set correct_answer {<font color="#ff0000">Error</font>}
-    }
-    
-    #if it's a survey we show the selected answer with out the word Error
-    if {$survey_p == {t} || $assessment_show_feedback == {none}} {
-        set correct_answer {}
-    }
-    
-    #for fill in the blank item
-    if {[info exists tb__display_id]} {
-        if {$choice_correct} {
-	    #replace <textbox> by readonly <input>
-            regsub -all -line -nocase -- "<textbox.as_item_choice_id=$choice_id" $title "<input value=\"$text_answer\" readonly disabled" title
-        } else {
-	    #replace <textbox> by readonly <input> and the text is written in red color because the user response is incorrect
-            regsub -all -line -nocase -- "<textbox.as_item_choice_id=$choice_id" $title "<input value=\"$text_answer\" readonly disabled style=\"color: #ff0000\"" title
-        }
-    #for multiple choice and multiple response items
-    } else {
-    if {$choice_id_answer == $choice_id } {
-      set choice_answer "<input type=\"$presentation_type\" readonly disabled checked>"
-    } else {
-      set choice_answer "<input type=\"$presentation_type\" readonly disabled>"
-    }
-    #if a item is a multiple choice or multiple response with multimedia (images, sounds, videos)
-    if {[empty_string_p $content_value]} {
-        append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]</td></tr>"
-    #multiple choice or multiple response (text)
-    } elseif {[db_string mime_type {SELECT mime_type LIKE 'image%' FROM cr_revisions WHERE revision_id = :content_value}]} {
-        append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]<img src=\"view/?revision_id=$content_value\"></td></tr>"
-    } else {
-        append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]<embed src=\"view/?revision_id=$content_value\"></td></tr>"
-    }   
-    }
-  }
-  if {$item_correct} { set score $itemmaxscore }
-  # total points
-  set session_score [expr $session_score+$score]
-  if {[info exists tb__display_id]} { append choice_html $title }
-  append choice_html {</table>}
-  db_dml session_percent_score {}  
-}
+set assessment_score 0
 
 ad_return_template

@@ -120,10 +120,10 @@ ad_proc -public as::item_display_sb::render {
     # numerical alphabetical randomized order_of_entry
     switch -exact $sort_order_type {
 	numerical {
-	    set data [lsort -real -index 1 $data]
+	    set data [lsort -real -index 0 $data]
 	}
 	alphabetical {
-	    set data [lsort -dictionary -index 1 $data]
+	    set data [lsort -dictionary -index 0 $data]
 	}
 	randomized {
 	    set data [util::randomize_list $data]
