@@ -9,7 +9,7 @@
 		name			=> 	:name,
 		action_p		=>	:action_p,
 		section_id_from 	=>	:section_id_from,
-		section_id_to		=>	:section_id_to,
+		section_id_to		=>	null,
 		check_sql		=>	:check_sql,
 		description		=>	:description,
 		postcheck_p		=>	:postcheck_p,
@@ -17,7 +17,7 @@
 		assessment_id		=>	:assessment_id,
 		creation_user		=>	:user_id,
 		context_id		=>	null,
-		object_type		=>	'as_inter_item_checks',
+		object_type		=>	'as_inter_item_check',
 		creation_date		=>	:date
 		);
 	end;
