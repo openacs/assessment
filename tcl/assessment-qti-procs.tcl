@@ -45,7 +45,7 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					}
 				}
 				# assessment_id
-				set as_assessments__assessment_id [expr [db_exec_plsql as_assessments_assessment_id {}] + 1]
+				set as_assessments__assessment_id [db_nextval acs_object_id_seq]
 				# Insert assessment in the as_assessments table
 				db_dml as_assessments_insert {}
 				# Section
@@ -64,7 +64,7 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 							}
 						}
 					}
-					set as_sections__section_id [expr [db_exec_plsql as_sections_section_id {}] + 1]
+					set as_sections__section_id [db_nextval acs_object_id_seq]
 					# Insert section in the as_sections table
 					db_dml as_sections_insert {}
 					# Relation between as_sections and as_assessments
