@@ -31,10 +31,13 @@ set assessment_rev_id $assessment_data(assessment_rev_id)
 
 db_transaction {
     if {[empty_string_p $session_id]} {
-	if {![db_0or1row unfinished_session_id {}]} {
-	    # todo: check if there's an old session that could be continued
-	    set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id]
+	
+	# Check if there is an unfinished session lying around
+	# todo: check if there's an old session that could be continued
 
+	set session_id [db_string unfinished_session_id {}]
+	if {[empty_string_p $session_id]} {
+	    set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id]
 	    # update the creation_datetime col of as_sessions table to set the time when the subject initiated the Assessment
 	    db_dml session_start {}
 	}
@@ -142,7 +145,8 @@ foreach one_item $item_list {
 		if {![info exists response_to_item($as_item_id)]} {
 		    set response_to_item($as_item_id) ""
 		}
-
+		
+		set points [ad_decode $points "" 0 $points]
 		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -subject_id $user_id -response $response_to_item($as_item_id) -max_points $points
 	    }
 	} -after_submit {
@@ -181,6 +185,7 @@ if {$display(submit_answer_p) != "t"} {
 		db_1row process_item_type {}
 		set item_type [string range $item_type end-1 end]
 
+		set points [ad_decode $points "" 0 $points]
 		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -subject_id $user_id -response $response_to_item($response_item_id) -max_points $points
 	    }
 	}
