@@ -5,7 +5,7 @@ ad_library {
 }
 
 ad_proc -public as_item_choice_new {
-    {-parent_id:required}
+    {-mc_id:required}
     {-name:required}
     {-title:required}
     {-data_type ""}
@@ -30,7 +30,7 @@ ad_proc -public as_item_choice_new {
 
     # Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     set item_choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $name -title $title ]
-    set as_item_choice_id [content::revision::new -item_id $item_choice_id -content_type {as_item_choices} -title $title -attributes [list [list parent_id $parent_id ] [list data_type $data_type ] [list numeric_value $numeric_value ] [list $text_value text_value] [list boolean_value $boolean_value] [list content_value $content_value] [list feedback_text $feedback_text] [list selected_p $selected_p] [list correct_answer_p $correct_answer_p] [list sort_order $sort_order] [list percent_score $percent_score] ] ]
+    set as_item_choice_id [content::revision::new -item_id $item_choice_id -content_type {as_item_choices} -title $title -attributes [list [list mc_id $mc_id ] [list data_type $data_type ] [list numeric_value $numeric_value ] [list $text_value text_value] [list boolean_value $boolean_value] [list content_value $content_value] [list feedback_text $feedback_text] [list selected_p $selected_p] [list correct_answer_p $correct_answer_p] [list sort_order $sort_order] [list percent_score $percent_score] ] ]
     # FIXME too much code repetition here
     # maybe there are more efficient ways to to it (maybe using hashes to pass the values between functions)
     return $as_item_choice_id
@@ -43,6 +43,7 @@ ad_proc -public as_item_type_mc_new {
     {-allow_negative_p ""}
     {-num_correct_answers ""}
     {-num_answers ""}
+    {-choices ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -55,6 +56,10 @@ ad_proc -public as_item_type_mc_new {
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     set item_item_type_mc_id [content::item::new -parent_id $folder_id -content_type {as_item_type_mc} -name $name -title $title ]
     set as_item_type_mc_id [content::revision::new -item_id $item_item_type_mc_id -content_type {as_item_type_mc} -title $title -attributes [list [list increasing_p $increasing_p] [list allow_negative_p $allow_negative_p] [list num_correct_answers $num_correct_answers] [list num_answers $num_answers] ] ]
+
+    foreach choice $choices {
+	as_item_choice_new -mc_id $as_item_type_mc_id $choice
+    }
 
     return $as_item_type_mc_id
 }
