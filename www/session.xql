@@ -33,9 +33,18 @@
 	<fullquery name="shortanswer">
 		<querytext>
                 SELECT as_item_datax.text_answer
-                FROM as_item_datax, as_sessionsx
-		WHERE as_sessionsx.session_id = as_item_datax.session_id AND as_sessionsx.session_id = :session_id  AND as_item_datax.choice_id_answer IS NULL AND as_item_datax.as_item_id = :items_as_item_id
+                FROM as_item_datax
+		WHERE as_item_datax.session_id = :session_id 
+		AND as_item_datax.as_item_id = :items_as_item_id
  		</querytext>
  	</fullquery>
+	
+	<fullquery name="session_percent_score">
+	        <querytext>
+		UPDATE as_sessions
+	        SET percent_score = :session_score	
+	        WHERE session_id = :session_id
+		</querytext>
+	</fullquery>
 
 </queryset>
