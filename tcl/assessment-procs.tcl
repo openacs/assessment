@@ -189,11 +189,14 @@ ad_proc -public as_session_new {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
+    # Check to see if there's a session already to not submit another one
+    set as_session_exists [db_string as_session_exists {SELECT COUNT(*) FROM as_sessionsx WHERE subject_id = :subject_id AND assessment_id = :assessment_id}]
+    if { ! $as_session_exists } {    
     # Insert as_session in the CR (and as_sessions table) getting the revision_id (session_id)
-    set session_id [content::item::new -parent_id $folder_id -content_type {as_sessions} -name "[ad_conn user_id]-$last_mod_datetime" -title "[ad_conn user_id]-$last_mod_datetime" ]
-    set as_session_id [content::revision::new -item_id $session_id -content_type {as_sessions} -title "[ad_conn user_id]-$last_mod_datetime" -attributes [list [list assessment_id $assessment_id] [list subject_id $subject_id] [list staff_id $staff_id] [list target_datetime $target_datetime] [list creation_datetime $creation_datetime] [list first_mod_datetime $first_mod_datetime] [list last_mod_datetime $last_mod_datetime] [list completed_datetime $completed_datetime] [list percent_score $percent_score] [list consent_timestamp $consent_timestamp] ] ]
-
+    set session_id [content::item::new -parent_id $folder_id -content_type {as_sessions} -name "$subject_id-$assessment_id" -title "$subject_id-$assessment_id" ]
+    set as_session_id [content::revision::new -item_id $session_id -content_type {as_sessions} -title "$subject_id-$assessment_id" -attributes [list [list assessment_id $assessment_id] [list subject_id $subject_id] [list staff_id $staff_id] [list target_datetime $target_datetime] [list creation_datetime $creation_datetime] [list first_mod_datetime $first_mod_datetime] [list last_mod_datetime $last_mod_datetime] [list completed_datetime $completed_datetime] [list percent_score $percent_score] [list consent_timestamp $consent_timestamp] ] ]
     return $as_session_id
+    }
 }
 
 ad_proc -public as_item_data_new {
