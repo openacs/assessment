@@ -28,7 +28,9 @@ if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
 }
 
 #get all assessments order by title
-db_multirow assessments get_all_assessments {}
+db_multirow -extend { export } assessments get_all_assessments {} {
+    set export "[_ assessment.Export]"
+}
 
 #list all assessments
 list::create \
@@ -39,6 +41,10 @@ list::create \
 	title {
 	    label "[_ assessment.Title]"
 	    link_url_eval "[export_vars -base one-a { assessment_id }]"
+	}
+	export {
+	    label "[_ assessment.Export]"
+	    link_url_eval "[export_vars -base export { assessment_id }]"
 	}
     } -actions $actions
 
