@@ -87,7 +87,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
     } else {
       set choice_answer "<input type=\"$presentation_type\" readonly disabled>"
     }
-    append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]</td></tr>"
+    append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]<img src=\"view/?revision_id=$content_value\"></td></tr>"
     }
   }
   if {$item_correct} { set score $itemmaxscore }

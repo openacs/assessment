@@ -52,7 +52,7 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
-		lappend optionlist [list $title $choice_id]
+		lappend optionlist [list "$title<img src=\"view/?revision_id=$content_value\">" $choice_id]
 	    }
 	    set options $optionlist
 	    template::element::create $form $element_name \
@@ -71,7 +71,7 @@ ad_proc -public as::item_form::add_item_to_form  { form item_id } { Add items to
 	    set choices [list]
 	    set optionlist [list]
 	    db_foreach item_choices_2 "" {
-		lappend optionlist [list $title $choice_id]
+		lappend optionlist [list "$title<img src=\"view/?revision_id=$content_value\">" $choice_id]
 	    }
 	    set options $optionlist
 	    template::element::create $form $element_name \

@@ -74,7 +74,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					db_dml as_assessment_section_map_insert {}
 					incr as_assessment_section_map__sort_order
 					# Process the items
-					as::qti::parse_item $section $as_sections__section_id
+					as::qti::parse_item $section $as_sections__section_id [file dirname $xmlfile]
 				}
 			}
 		} else {
@@ -85,7 +85,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 	return 1
 }
 
-ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
+ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items from a XML QTI file } {
 	set as_item_section_map__sort_order 0
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
@@ -235,12 +235,20 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 					foreach mattext $mattextNodes {
 						set as_item_choices__choice_text [$mattext nodeValue]
 					}
+					set matmediaNodes [$response_label selectNodes {material/matimage[@uri]}]
+					set as_item_choices__content_value [db_null]
+					foreach matmedia $matmediaNodes {
+						set mediabasepath $basepath
+						append mediabasepath {/}
+						append mediabasepath [$matmedia getAttribute {uri}]
+						set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
+					}
 					# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
 					set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
 					if {![info exists as_item_choices__score($as_item_choices__ident)]} {
 						set as_item_choices__score($as_item_choices__ident) 0
 					}
-					as::item_choice::new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) -percent_score $as_item_choices__score($as_item_choices__ident)
+					as::item_choice::new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) -percent_score $as_item_choices__score($as_item_choices__ident) -content_value $as_item_choices__content_value
 					# order of the item_choices
 					incr sort_order
 				}

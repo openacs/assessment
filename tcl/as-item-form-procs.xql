@@ -4,7 +4,7 @@
 <fullquery name="as::item_form::add_item_to_form.item_choices_2">
 	<querytext>
 		select
-		as_item_choicesx.choice_id, as_item_choicesx.title
+		as_item_choicesx.choice_id, as_item_choicesx.title, as_item_choicesx.content_value
 		from
 		as_item_choicesx
 		where
