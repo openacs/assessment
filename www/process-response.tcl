@@ -37,14 +37,14 @@ foreach response_to_item_name [array names response_to_item] {
             content::item::delete -item_id $item_id
         }
         foreach response $response_to_item($response_to_item_name) {
-            as_item_data_new -session_id $as_session_id -as_item_id $response_to_item_id -choice_id_answer $response_to_item_choice_id -text_answer $response
+            as::item_data::new -session_id $as_session_id -as_item_id $response_to_item_id -choice_id_answer $response_to_item_choice_id -text_answer $response
         }
     } else {
         db_foreach session_responses_to_item {SELECT as_item_datax.item_id FROM as_item_datax WHERE as_item_datax.as_item_id=:response_to_item_id AND as_item_datax.session_id=:as_session_id} {
         content::item::delete -item_id $item_id
         }
         foreach response $response_to_item($response_to_item_name) {
-            as_item_data_new -session_id $as_session_id -as_item_id $response_to_item_id -choice_id_answer $response
+            as::item_data::new -session_id $as_session_id -as_item_id $response_to_item_id -choice_id_answer $response
         }
     }
 }
