@@ -42,7 +42,7 @@ set confirm_options [list [list "[_ assessment.continue_with_insert]" t] [list "
 ad_form -name catalog_item_add -action catalog-item-add -export { assessment_id item_ids after } -form {
     {section_id:key}
     {to:text(inform) {label "[_ assessment.Add_Items]"} {value $section_title}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {confirmation:text(radio) {label " "} {options $confirm_options} {value t}}
 } -edit_request {
 } -on_submit {
     if {$confirmation} {

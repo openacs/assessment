@@ -58,6 +58,7 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 ad_form -extend -name catalog_search -form {
     {keywords:text,optional,nospell {label "[_ assessment.Keywords]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Keywords_help]"}}
     {letter:text(select),optional {label "[_ assessment.Letter]"} {options $letter_options} {help_text "[_ assessment.Letter_help]"}}
+    {search_again_url:text(hidden) {value "[ad_return_url]"}}
 }
 
 if {[info exists section_id]} {
@@ -80,7 +81,7 @@ ad_form -extend -name catalog_search -edit_request {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
 } -after_submit {
     # now go to item-type specific form (i.e. multiple choice)
-    ad_returnredirect [export_vars -base catalog-browse {assessment_id section_id after category_ids:multiple join subtree_p keywords letter itype}]
+    ad_returnredirect [export_vars -base catalog-browse {assessment_id section_id after category_ids:multiple join subtree_p keywords letter itype search_again_url}]
     ad_script_abort
 }
 

@@ -20,7 +20,9 @@ ad_page_contract {
     keywords:optional
     {orderby:optional "title,asc"}
     {page:optional 1}
+    search_again_url
 }
+
 
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create

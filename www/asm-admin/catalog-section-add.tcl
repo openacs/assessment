@@ -39,7 +39,7 @@ set confirm_options [list [list "[_ assessment.continue_with_insert]" t] [list "
 ad_form -name catalog_section_add -action catalog-section-add -export { section_ids after } -form {
     {assessment_id:key}
     {to:text(inform) {label "[_ assessment.Add_Sections]"} {value $assessment_data(title)}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {confirmation:text(radio) {label " "} {options $confirm_options} {value t}}
 } -edit_request {
 } -on_submit {
     if {$confirmation} {
