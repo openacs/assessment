@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d4" locale="en_US" charset="ISO-8859-1">
-
+<message_catalog package_key="assessment" package_version="0.10d6" locale="en_US" charset="ISO-8859-1">
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
   <msg key="Absolute_Size_help">Number of characters a user can enter in the text field for his answer.</msg>
@@ -75,6 +74,7 @@ The author of the assement will not see who gave the answer.</msg>
   <msg key="as_Feedback_help">Under which conditions should the feedback associated with &lt;br&gt;
 each question be shown to the subject.</msg>
   <msg key="as_Instructions_help">Instructions on how to use this assessment</msg>
+  <msg key="as_ip_mask_help">Network Mask defining which IP Addresses may participate in this assessment</msg>
   <msg key="as_Minutes_Retry_help">How many minutes have to pass between each retry.</msg>
   <msg key="as_Mode_help">is this a standalone assessment or does it provide an integrated assessment. Needs refinement, ignore for now</msg>
   <msg key="as_Navigation_help">How shall the navigation between sections happen in the assessment.</msg>
@@ -90,10 +90,11 @@ each question be shown to the subject.</msg>
 in addition to the question itself when taking the survey.</msg>
   <msg key="as_Start_Time_help">Start Time of the assessment</msg>
   <msg key="as_time_help">Once started, how many minutes does the user have to finish the assessment. empty for indefinite.</msg>
-  <msg key="as_Title_help">Helptext for Assessment Title</msg>
+  <msg key="as_Title_help">Title of the assessment that will be displayed</msg>
   <msg key="Assessment">Assessment</msg>
   <msg key="Assessment_Administration">Assessment Administration</msg>
   <msg key="Assessment_Imported_Correctly">Assessment Imported Correctly</msg>
+  <msg key="assessment_Name_help">This allows you to give a special unique identifier to your assessment, which might be a code.</msg>
   <msg key="assessment_not_public">Assessment is not public.</msg>
   <msg key="assessment_restricted_ips">Access restricted, wrong IP.</msg>
   <msg key="Assessment_Title">Title</msg>
