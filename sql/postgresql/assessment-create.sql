@@ -117,7 +117,7 @@ create table as_item_localized (
 	locale		varchar(30)
 			constraint as_item_localized_locale_nn
                         not null,
-	-- the primary "label" attached to an Item's display
+	-- the primary "label" attached to an Item display
 	item_text	varchar(500),
 	-- a secondary label, needed for many kinds of questions
 	item_subtext	varchar(500),
@@ -166,7 +166,7 @@ create table as_item_choices (
 	content_value	integer
 			constraint as_item_choice_content_value_fk
                         references cr_revisions,
-	-- whether Choice is shareable; defaults to 't' since this is the whole intent of this "repository" approach, but authors' should have option to prevent reuse
+	-- whether Choice is shareable; defaults to 't' since this is the whole intent of this "repository" approach, but authors should have option to prevent reuse
 	shareable_p	char(1) default 't'
 			constraint as_item_choice_shareable_p_ck
 			check (shareable_p in ('t','f')),
@@ -240,6 +240,9 @@ create table as_sections (
 			check (shareable_p in ('t','f'))
 );
 
+-- Are the highest-level container in the hierarchical structure
+-- They define the key by which all other entities are assembled into meaningful order during:
+-- display, processing and retrieval of Assessment information
 create table as_assessments (
 	-- A revision_id inherited from cr_revisions
 	assessment_id	integer
