@@ -12,7 +12,8 @@ ad_page_contract {
     zipfile
     context:onevalue
 }
-
+set package_id [ad_conn package_id]
+permission::require_permission -object_id $package_id -privilege create
 set title "[_ assessment.Administration]"
 set context {}
 set package_id [ad_conn package_id]

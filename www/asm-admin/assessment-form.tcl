@@ -20,6 +20,8 @@ if {![info exists assessment_id] || $__new_p} {
     set _assessment_id 0
     db_0or1row rev_id_from_item_id {}
 }
+set package_id [ad_conn package_id]
+permission::require_permission -object_id $package_id -privilege create
 
 set context_bar [ad_context_bar $page_title]
 set package_id [ad_conn package_id]

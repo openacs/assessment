@@ -22,6 +22,8 @@ ad_page_contract {
     {page:optional 1}
 }
 
+set package_id [ad_conn package_id]
+permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
 
 # Get the assessment data

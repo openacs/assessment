@@ -11,6 +11,8 @@ ad_page_contract {
     
 }
 
+set package_id [ad_conn package_id]
+permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 set new_assessment_revision $assessment_data(assessment_rev_id)
