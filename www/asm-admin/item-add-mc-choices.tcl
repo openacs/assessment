@@ -65,7 +65,16 @@ db_foreach get_choices {} {
     append ad_form_code "\{percent.$choice_id:text,nospell \{label \"[_ assessment.Percent_Score]\"\} \{value \"$default_percent\"\} \{html \{size 5 maxlength 5\}\} \{help_text \"[_ assessment.Percent_Score_help]\"\}\}\n"
 }
 append ad_form_code "\}"
-set percentage [expr 100 / $count_correct]
+
+# Check if we have at least one correct answer. If not set the percentage to 0
+# (apparently the author does not want the respondee to give a correct answer.
+ 
+if {$count_correct > 0} {
+    set percentage [expr 100 / $count_correct]
+} else {
+    set percentage 0
+}
+
 eval ad_form -extend -name item_add_mc_choices $ad_form_code
 
 
