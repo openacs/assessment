@@ -57,8 +57,7 @@
     and s.section_id = asm.section_id 
     and asm.assessment_id = :new_assessment_revision and asm.sort_order <
     (select sort_order from as_assessment_section_map where
-    section_id=:section_id and assessment_id=:new_assessment_revision)
-    order by asm.sort_order)
+    section_id=:section_id and assessment_id=:new_assessment_revision))
 
 </querytext>
 </fullquery>
