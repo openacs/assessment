@@ -6,9 +6,6 @@ ad_library {
 }
 
 ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
-	set package_id [ad_conn package_id]
-	set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
-
 	# Open, read and close the XML file
 	set file_id [open $xmlfile r]
 	set file_string [read $file_id]
@@ -28,9 +25,10 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 		if { [llength $assessmentNodes] > 0 } {
 			# There are assessments
 			foreach assessment $assessmentNodes {
-				set as_assessments__name [$assessment getAttribute {title}]
+				set as_assessments__title [$assessment getAttribute {title}]
+				set as_assessments__name [$assessment getAttribute {ident}]
 				set nodesList [$assessment childNodes]
-				set as_assessments__definition "NULL"
+				set as_assessments__definition ""
 				foreach node $nodesList {
 					set nodeName [$node nodeName]
 					if {$nodeName == "qticomment"} {
@@ -48,16 +46,15 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					}
 				}
 				# Insert assessment in the CR (and as_assessments table) getting the revision_id (assessment_id)
-				set assessment_item_id [content::item::new -parent_id $folder_id -content_type {as_assessments} -name $as_assessments__name -title $as_assessments__definition ]
-				set as_assessments__assessment_id [content::revision::new -item_id $assessment_item_id -content_type {as_assessments} -title $as_assessments__definition ]
-				
+				set as_assessments__assessment_id [as_assessment_new -name $as_assessments__name -title $as_assessments__title -description $as_assessments__definition]
 				
 				# Section
 				set sectionNodes [$assessment selectNodes {section}]
 				foreach section $sectionNodes {
-					set as_sections__name [$section getAttribute {title}]
+					set as_sections__title [$section getAttribute {title}]
+					set as_sections__name [$section getAttribute {ident}]
 					set nodesList [$section childNodes]
-					set as_sections__definition "NULL"
+					set as_sections__definition ""
 					foreach node $nodesList {
 						set nodeName [$node nodeName]
 						if {$nodeName == "qticomment"} {
@@ -69,8 +66,8 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						}
 					}
 					# Insert section in the CR (the and the as_sections table) getting the revision_id (section_id)
-					set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name $as_sections__name -title $as_sections__definition ]
-					set as_sections__section_id [content::revision::new -item_id $section_item_id -content_type {as_sections} -title $as_sections__definition ]
+					set as_sections__section_id [as_section_new -name $as_sections__name -title $as_sections__title -description $as_sections__definition]
+					
 					# Relation between as_sections and as_assessments
 					db_dml as_assessment_section_map_insert {}
 					# Process the items
@@ -86,14 +83,12 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 }
 
 ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
-	set package_id [ad_conn package_id]
-	set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
-
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
 		# Order of the item_choices
 		set sort_order 0
-		set as_items__name [$item getAttribute {title}]
+		set as_items__title [$item getAttribute {title}]
+		set as_items__name [$item getAttribute {ident}]
 		set objectivesNodes [$item selectNodes {objectives}]
 		foreach objectives $objectivesNodes {
 			set mattextNodes [$objectives selectNodes {material/mattext/text()}]
@@ -125,17 +120,15 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 					# shortanswer (textarea)
 					set as_item__display_type_id 1
 				}
-				# Insert as_item in the CR (and as_assessments table) getting the revision_id (as_item_id)
-				set item_item_id [content::item::new -parent_id $folder_id -content_type {as_items} -name $as_items__name -title $as_items__title ]
-				set as_item_id [content::revision::new -item_id $item_item_id -content_type {as_items} -title $as_items__title ]
+				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
+				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
 				foreach node $nodeNodes {
 					if {[$node nodeName] == {material}} {
 						set mattextNodes [$node selectNodes {mattext/text()}]
 						set mattext [lindex $mattextNodes 0]
 						set as_item_choices__choice_text [$mattext nodeValue]
 						# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
-						set as_items_choices__choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $as_item_choices__ident -title $as_item_choices__choice_text ]
-						set choice_id [content::revision::new -item_id $as_items_choices__choice_id -content_type {as_item_choices} -title $as_item_choices__choice_text ]
+						as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order
 						# order of the item_choices
 						incr sort_order
 					}
@@ -145,6 +138,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 				set response_lidNodes [$presentation selectNodes {.//response_lid}]
 				# The first node of the list. It may not be a good idea if it doesn't exist
 				set response_lid [lindex $response_lidNodes 0]
+				set as_item_type__name [$response_lid getAttribute {ident}]
 				set as_items__rcardinality [$response_lid getAttribute {rcardinality} {}]
 				# multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
 				# this is the default
@@ -153,9 +147,10 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 					# multiple response either text (remember it can be internationalized or changed), images, sounds, videos
 					set as_item__display_type_id 3
 				}
-				# Insert as_item in the CR (and as_assessments table) getting the revision_id (as_item_id)
-				set item_item_id [content::item::new -parent_id $folder_id -content_type {as_items} -name $as_items__name -title $as_items__title ]
-				set as_item_id [content::revision::new -item_id $item_item_id -content_type {as_items} -title $as_items__title ]
+				set as_item_type_id [as_item_type_mc_new -name $as_item_type__name]
+				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
+				set as_item_id [as_item_new -name $as_items__name -title $as_items__title]
+				content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
 				set response_labelNodes [$presentation selectNodes {.//response_label}]
 				foreach response_label $response_labelNodes {
 					set as_item_choices__ident [$response_label getAttribute {ident}]
@@ -165,8 +160,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 						set as_item_choices__choice_text [$mattext nodeValue]
 					}
 					# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
-					set as_items_choices__choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $as_item_choices__ident -title $as_item_choices__choice_text ]
-					set choice_id [content::revision::new -item_id $as_items_choices__choice_id -content_type {as_item_choices} -title $as_item_choices__choice_text ]
+					as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order
 					# order of the item_choices
 					incr sort_order
 				}

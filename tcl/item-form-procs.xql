@@ -4,37 +4,37 @@
 <fullquery name="add_item_to_form.item_choices_2">
 	<querytext>
 		select
-		as_item_choices.choice_id, as_item_choices.choice_text
+		as_item_choicesx.choice_id, as_item_choicesx.title
 		from
-		as_item_choices, as_item_choice_map, as_items
+		as_item_choicesx
 		where
-		as_item_choice_map.choice_id=as_item_choices.choice_id and as_items.item_id=as_item_choice_map.item_id and as_item_choice_map.item_id=:item_id
+		as_item_choicesx.mc_id=:mc_id
 		order by
-		as_item_choice_map.sort_order
+		as_item_choicesx.sort_order
 	</querytext>
 </fullquery>
 
 <fullquery name="add_item_to_form.item_choices_3">
 	<querytext>
 		select
-		as_item_choices.choice_id, as_item_choices.choice_text, as_item_choice_map.item_id, as_item_choices.numeric_value, as_item_choice_map.sort_order
+		as_item_choicesx.choice_id, as_item_choicesx.title, as_item_choices.numeric_value, as_item_choicesx.sort_order
 		from
-		as_item_choices, as_item_choice_map, as_items
+		as_item_choicesx
 		where
-		as_item_choice_map.choice_id=as_item_choices.choice_id and as_items.item_id=as_item_choice_map.item_id and as_item_choice_map.item_id=:item_id
+		as_item_choicesx.mc_id=:mc_id
 		order by
-		as_item_choice_map.sort_order
+		as_item_choicex.sort_order
 	</querytext>
 </fullquery>
 
 <fullquery name="add_item_to_form.item_properties">
 	<querytext>
 		select
-	                 as_items.item_text, as_items.required_p, as_item_display_types.presentation_type
+		as_itemsx.title, as_itemsx.required_p, 'radiobutton' AS presentation_type
 		from
-		   as_items, as_item_display_types
+		as_itemsx
 		where
-		   as_items.item_display_type_id=as_item_display_types.item_display_type_id and as_items.item_id=:item_id
+		as_itemsx.as_item_id=:item_id
 	</querytext>
 </fullquery>
 </queryset>

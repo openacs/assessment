@@ -38,7 +38,7 @@ ad_proc -public as_item_choice_new {
 
 ad_proc -public as_item_type_mc_new {
     {-name:required}
-    {-title:required}
+    {-title ""}
     {-increasing_p ""}
     {-allow_negative_p ""}
     {-num_correct_answers ""}
@@ -56,10 +56,6 @@ ad_proc -public as_item_type_mc_new {
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     set item_item_type_mc_id [content::item::new -parent_id $folder_id -content_type {as_item_type_mc} -name $name -title $title ]
     set as_item_type_mc_id [content::revision::new -item_id $item_item_type_mc_id -content_type {as_item_type_mc} -title $title -attributes [list [list increasing_p $increasing_p] [list allow_negative_p $allow_negative_p] [list num_correct_answers $num_correct_answers] [list num_answers $num_answers] ] ]
-
-    foreach choice $choices {
-	as_item_choice_new -mc_id $as_item_type_mc_id $choice
-    }
 
     return $as_item_type_mc_id
 }
@@ -91,10 +87,6 @@ ad_proc -public as_item_display_rb_new {
 ad_proc -public as_item_new {
     {-name:required}
     {-title:required}
-    {-type ""}
-    {-type_attributes ""}
-    {-display ""}
-    {-display_attributes ""}
     {-subtext ""}
     {-field_code ""}
     {-definition ""}
@@ -105,26 +97,73 @@ ad_proc -public as_item_new {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
 
-    New item to the data database
+    New item to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
-    # Insert as_item in the CR (and as_assessments table) getting the revision_id (as_item_id)
+    # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     set item_item_id [content::item::new -parent_id $folder_id -content_type {as_items} -name $name -title $title ]
     set as_item_id [content::revision::new -item_id $item_item_id -content_type {as_items} -title $title -attributes [list [list subtext $subtext] [list field_code $field_code] [list definition $definition] [list required_p $required_p] [list data_type $data_type] [list max_time_to_complete $max_time_to_complete] ] ]
 
-    if {$type == {mc}} {
-        set as_item_type_id [as_item_type_mc_new $type_attributes]
-    }
-
-    if {$display == {rb}} {
-        set as_item_display_id [as_item_display_rb_new $display_attributes]
-    }
-
-    # rel display and type to the item
-    content::item::relate -item_id $as_item_id -object_id $as_item_type_id -relation_tag {as_item_type_rel}
-    content::item::relate -item_id $as_item_id -object_id $as_item_display_id -relation_tag {as_item_display_rel}
-
     return $as_item_id
+}
+
+ad_proc -public as_section_new {
+    {-name:required}
+    {-title:required}
+    {-instructions ""}
+    {-description ""}
+} {
+    @author Eduardo Perez (eperez@it.uc3m.es)
+    @creation-date 2004-07-26
+
+    New section to the database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
+    set section_item_id [content::item::new -parent_id $folder_id -content_type {as_sections} -name $name -title $title -description $description ]
+    set as_section_id [content::revision::new -item_id $section_item_id -content_type {as_sections} -title $title -description $description -attributes [list [list instructions $instructions] ] ]
+
+    return $as_section_id
+}
+
+ad_proc -public as_assessment_new {
+    {-name:required}
+    {-title:required}
+    {-creator_id ""}
+    {-description ""}
+    {-instructions ""}
+    {-mode ""}
+    {-anonymous_p ""}
+    {-secure_access_p ""}
+    {-reuse_responses_p ""}
+    {-show_item_name_p ""}
+    {-entry_page ""}
+    {-exit_page ""}
+    {-consent_page ""}
+    {-return_url ""}
+    {-start_time ""}
+    {-end_time ""}
+    {-number_tries ""}
+    {-wait_between_tries ""}
+    {-time_for_response ""}
+    {-show_feedback ""}
+    {-section_navigation ""}
+} {
+    @author Eduardo Perez (eperez@it.uc3m.es)
+    @creation-date 2004-07-26
+
+    New assessment to the database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
+    set assessment_item_id [content::item::new -parent_id $folder_id -content_type {as_assessments} -name $name -title $title ]
+    set as_assessment_id [content::revision::new -item_id $assessment_item_id -content_type {as_assessments} -title $title -attributes [list [list creator_id $creator_id] [list instructions $instructions] [list mode $mode] [list anonymous_p $anonymous_p] [list secure_access_p $secure_access_p] [list reuse_responses_p $reuse_responses_p] [list show_item_name_p $show_item_name_p] [list entry_page $entry_page] [list exit_page $exit_page] [list consent_page $consent_page] [list return_url $return_url] [list start_time $start_time] [list end_time $end_time] [list number_tries $number_tries] [list wait_between_tries $wait_between_tries] [list time_for_response $time_for_response] [list show_feedback $show_feedback] [list section_navigation $section_navigation] ] ]
+
+    return $as_assessment_id
 }

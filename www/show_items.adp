@@ -10,18 +10,18 @@
 			<tr>
 				<td valign="top">@items.rownum@.-</td>	
 				<td colspan="3">
-					<blockquote>@items.item_text;noquote@
+					<blockquote>@items.title@
 						<if @items.presentation_type@ in radiobutton checkbox>
 							<br/>
 							<br/>
-							<formgroup id="response_to_item.@items.item_id@">
+							<formgroup id="response_to_item.@items.as_item_id@">
 								@formgroup.widget;noquote@
 								@formgroup.label;noquote@
 								<br/>
 							</formgroup>
 						</if>
 						<else>
-							<formwidget id="response_to_item.@items.item_id@">
+							<formwidget id="response_to_item.@items.as_item_id@">
 						</else>
 					</blockquote>
 				</td>

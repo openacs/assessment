@@ -44,9 +44,6 @@ create table as_sections (
 			constraint as_sections_definition_nn
 			not null,
 	instructions	text,
-	enabled_p	char(1) default 'f'
-			constraint as_sections_enable_p_ck
-			check (enabled_p in ('t','f')), 
 	-- Maybe this isnt really useful
 	required_p	char(1) default 't'
 			constraint as_sections_required_p_ck

@@ -17,8 +17,8 @@ ad_form -name show_item_form  -html {enctype multipart/form-data} -form {
 #For each item:
 db_multirow items query_all_items {} {
     #If there is an item 
-    if {![empty_string_p $item_id]} {
-	add_item_to_form show_item_form $item_id
+    if {![empty_string_p $as_item_id]} {
+	add_item_to_form show_item_form $as_item_id
     }
 }
 

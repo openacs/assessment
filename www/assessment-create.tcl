@@ -53,13 +53,11 @@ content::type::create_attribute -content_type {as_items} -attribute_name {adp_ch
 
 
 content::type::create_attribute -content_type {as_sections} -attribute_name {instructions}      -datatype {string}  -pretty_name {Section Instructions}  -column_spec {text}
-content::type::create_attribute -content_type {as_sections} -attribute_name {enabled_p}         -datatype {boolean} -pretty_name {Section Enabled} -column_spec {char(1)}
 
 
 content::type::create_attribute -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {enabled_p}         -datatype {boolean} -pretty_name {Assessment Enabled} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {anonymous_p}         -datatype {boolean} -pretty_name {Assessment Anonymous} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {secure_access_p}         -datatype {boolean} -pretty_name {Assessment Secure Access} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {reuse_responses_p}         -datatype {boolean} -pretty_name {Assessment Reuse Responses} -column_spec {char(1)}
@@ -113,9 +111,14 @@ content::type::register_relation_type -content_type {as_items} -target_type {as_
 
 set folder_id [content::folder::new -name {as_items} -package_id [ad_conn package_id] ]
 content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
+content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_mc} -include_subtypes t
+content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_rb} -include_subtypes t
 content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
 content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
 content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
+content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t
+content::folder::register_content_type -folder_id $folder_id -content_type {as_section_data} -include_subtypes t
+content::folder::register_content_type -folder_id $folder_id -content_type {as_item_data} -include_subtypes t
 
 set context [list]
 
