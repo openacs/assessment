@@ -127,6 +127,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 	set as_items__title [$item getAttribute {title} {Item}]
 	array set as_item_choices__correct_answer_p {}
 	array set as_item_choices__score {}
+	set as_items__points 0
 	set as_items__feedback_right {}
 	set as_items__feedback_wrong {}
 	set as_items__description {}
@@ -166,6 +167,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 			set score [string trim [$scorenode nodeValue]]
 		    }
 		    set as_item_choices__score($choice) $score
+		    incr as_items__points $score
 		}
 		#<displayfeedback>
 		set displayfeedbackNodes [$respcondition selectNodes {displayfeedback}]
@@ -267,7 +269,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    }	
 		}
 		# Insert as_item
-		set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong]
+		set as_item_id [as::item::new -title $as_items__title -feedback_right $as_items__feedback_right -feedback_wrong $as_items__feedback_wrong -points $as_items__points]
 		# set the relation between as_items and as_item_type tables
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
 		# set the relation between as_items and as_item_display tables
@@ -323,6 +325,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    }
 		    # Insert as_item_choice
 		    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
+		    set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score(as_item_choices__ident) / $as_items__points)]
 		    if {![info exists as_item_choices__score($as_item_choices__ident)]} {
 			set as_item_choices__score($as_item_choices__ident) 0
 		    }
