@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <message_catalog package_key="assessment" package_version="0.01d" locale="en_US" charset="ISO-8859-1">
 
+  <msg key="Administration">Administration</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
+  <msg key="Assessment_Imported_Correctly">Assessment Imported Correctly</msg>
   <msg key="Attempt">Attempt</msg>
   <msg key="Correct_Answer">Correct Answer</msg>
   <msg key="Feedback">Feedback</msg>
@@ -12,6 +14,8 @@
   <msg key="points">points</msg>
   <msg key="Question">Question</msg>
   <msg key="Question_not_answered">Question not answered</msg>
+  <msg key="Response_Submitted">Response Submitted</msg>
+  <msg key="Response_submitted_Correctly">Response submitted Correctly</msg>
   <msg key="Review_Asessment">Review Assessment</msg>
   <msg key="Score">Score</msg>
   <msg key="Session">Session</msg>
@@ -22,5 +26,7 @@
   <msg key="Submit">Submit</msg>
   <msg key="Time_spent">Time spent</msg>
   <msg key="Total_score">Total score</msg>
+  <msg key="Upload_files">Upload files</msg>
   <msg key="User_ID">User ID</msg>
+  <msg key="View_results">View results</msg>
 </message_catalog>
