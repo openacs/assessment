@@ -99,7 +99,8 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   unset ta__display_id
   set mc_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_type_rel]
   set item_display_id [as::item_rels::get_target -item_rev_id $as_item_id -type as_item_display_rel]
-  set items_as_item_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :as_item_id"]
+  #set items_as_item_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :as_item_id"]
+  set items_as_item_id [db_string items_items_as_item_id "SELECT as_itemsx.as_item_id FROM as_itemsx WHERE as_itemsx.item_id IN (select item_id from cr_revisions where revision_id=:as_item_id)"]
   db_0or1row as_item_display_rbx "SELECT as_item_display_id AS rb__display_id FROM as_item_display_rb WHERE as_item_display_id=:item_display_id"
   db_0or1row as_item_display_tbx "SELECT as_item_display_id AS tb__display_id FROM as_item_display_tb WHERE as_item_display_id=:item_display_id"
   db_0or1row as_item_display_tax "SELECT as_item_display_id AS ta__display_id FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
@@ -122,7 +123,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
       db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
       set html_options "[lindex $html_display_options 0]=[lindex $html_display_options 1] [lindex $html_display_options 2]=[lindex $html_display_options 3]"
       #get the user response
-      db_0or1row shortanswer {} 
+      db_0or1row shortanswer {}
       #paint a disabled textarea with the user response
       set choice_answer "<textarea $html_options readonly disabled>$text_answer</textarea>"
       set correct_answer {}
@@ -135,9 +136,10 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
       set choice_id_answer ""
       set text_answer ""
       db_0or1row answer_info {
-          select aid.text_answer, aid.choice_id_answer
-	  from as_item_data aid
-	  where aid.choice_id_answer=:choice_id
+          select aid.text_answer, aidc.choice_id as choice_id_answer
+	  from as_item_data aid, as_item_data_choices aidc
+	  where aidc.choice_id=:choice_id
+	  and aidc.item_data_id = aid.item_data_id
 	  and (aid.session_id = :session_id or aid.session_id is null)
     }
     if {[string length "$choice_id_answer"]} {set notanswered 0}
@@ -200,6 +202,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct pr
   set session_score [expr $session_score+$score]
   if {[info exists tb__display_id]} { append choice_html $title }
   append choice_html {</table>}
+  db_dml session_percent_score {}  
 }
 
 ad_return_template
