@@ -47,7 +47,7 @@ foreach response_to_item_name [array names response_to_item] {
         }
 	#insert the answered responses by user in the CR (and as_item_data table) 
         foreach response $response_to_item($response_to_item_name) {
-            as::item_data::new -session_id $as_session_id -as_item_id $response_to_item_id -choice_id_answer $response_to_item_choice_id -text_answer $response
+            as::item_data::new -session_id $as_session_id -as_item_id $response_to_item_id -choice_answer $response_to_item_choice_id -text_answer $response
         }
     } else {
         #the presentation type is textarea (short answer item)
@@ -66,7 +66,7 @@ foreach response_to_item_name [array names response_to_item] {
         }
 	#insert the answered responses by user in the CR (and as_item_data table)
         foreach response $response_to_item($response_to_item_name) {
-            as::item_data::new -session_id $as_session_id -as_item_id $response_to_item_id -choice_id_answer $response
+            as::item_data::new -session_id $as_session_id -as_item_id $response_to_item_id -choice_answer $response
         }
         }
     }
