@@ -151,9 +151,7 @@ create table as_item_choices (
 	choice_id       integer
                         constraint as_item_choice_id_pk
                         primary key,
-        name            varchar(500) 
-			constraint as_item_choice_name_nn
-                        not null,
+        name            varchar(500),
 	-- what is displayed in the choice's "label"
         choice_text     varchar(500),
 	-- NOTE Is this correct?
