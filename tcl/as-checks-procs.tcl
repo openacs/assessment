@@ -390,7 +390,7 @@ ad_proc -public as::assessment::check::eval_aa_checks {
     set assessment_rev_id [db_string get_assessment_id {}]
     
 	set checks [db_list_of_lists section_checks {}]
-	foreach check $checks {
+	foreach check_id $checks {
 	    set info [db_0or1row check_info {}]
 	    set perform [db_string check_sql $check_sql]
 	    if {$action_p == "t"} {

@@ -254,7 +254,7 @@
       <querytext>
         select * from as_inter_item_checks c,as_action_map am where
       c.inter_item_check_id=am.inter_item_check_id and am.action_perform='aa'
-      and  c.assessment_id=:assessment_id and c.inter_item_check_id=:check order by am.order_by 
+      and  c.assessment_id=:assessment_id and c.inter_item_check_id=:check_id order by am.order_by 
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::eval_m_checks.get_assessment_id">
