@@ -10,7 +10,7 @@ ad_page_contract {
     context:onevalue
 }
 
-set context [list "Import Resutlts"]
+set context [list "Import Results"]
 
 # Generate a random directory name
 set tmpdirectory [ns_tmpnam]
