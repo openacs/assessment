@@ -39,7 +39,7 @@ ad_form -name item_add_display_ta -action item-add-display-ta -export { assessme
     {as_item_id:key}
     {html_options:text,optional,nospell {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
     {abs_size:text,nospell {label "[_ assessment.Absolute_Size]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.Absolute_Size_help]"}}
-    {answer_alignment:text(select) {label "[_ assessment.Answer_Alignment]"} {options $alignment_types} {help_text "[_ assessment.Answer_Alignment_help]"}}
+    {answer_alignment:text(hidden)}
 } -edit_request {
     set html_options ""
     set abs_size 1000

@@ -53,9 +53,9 @@ ad_form -name item_add_display_rb -action item-add-display-rb -export { assessme
     {as_item_id:key}
     {html_options:text,optional,nospell {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
     {choice_orientation:text(select) {label "[_ assessment.Choice_Orientation]"} {options $choice_or_types} {help_text "[_ assessment.Choice_Orientation_help]"}}
-    {label_orientation:text(select) {label "[_ assessment.Label_Orientation]"} {options $label_or_types} {help_text "[_ assessment.Label_Orientation_help]"}}
+    {label_orientation:text(hidden)}
     {order_type:text(select) {label "[_ assessment.Order_Type]"} {options $order_types} {help_text "[_ assessment.Order_Type_help]"}}
-    {answer_alignment:text(select) {label "[_ assessment.Answer_Alignment]"} {options $alignment_types} {help_text "[_ assessment.Answer_Alignment_help]"}}
+    {answer_alignment:text(hidden)}
 } -edit_request {
     set html_options ""
     set choice_orientation "vertical"

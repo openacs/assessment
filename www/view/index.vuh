@@ -17,7 +17,7 @@ db_1row revision_info { *SQL* }
 set the_url $name
 set content_root [as::assessment::folder_id -package_id $package_id]
 
-set template_root ""
+set template_root [db_1row template_root {}]
 
 # Serve the page
 

@@ -24,6 +24,7 @@
   <msg key="add_item_display_tb">Add new question: Textbox Display</msg>
   <msg key="add_item_type_mc">Add new question: Multiple Choice</msg>
   <msg key="add_item_type_mc_choices">Add new question: Multiple Choices</msg>
+  <msg key="add_item_type_mc_existing">Add existing choice set</msg>
   <msg key="add_item_type_oq">Add new question: Open Question</msg>
   <msg key="add_item_type_sa">Add new question: Short Answer</msg>
   <msg key="Add_Items">Add items to section</msg>
@@ -416,6 +417,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="section_num_Items">Number of questions per page</msg>
   <msg key="Section_Order">Order of questions</msg>
   <msg key="section_order_help">In which order will the questions be displayed in this section.</msg>
+  <msg key="section_preview">Preview Section</msg>
   <msg key="section_Required_help">Is this section required in display?&lt;br&gt;
 Only useful if you display less than the total number of sections.</msg>
   <msg key="section_select">Section Select</msg>

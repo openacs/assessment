@@ -46,7 +46,11 @@ ad_form -name assessment_export -action results-export -form {
 	if {$column_format == "name"} {
 	    lappend csv_first_row [as::assessment::quote_export -text $name]
 	} else {
-	    lappend csv_first_row [as::assessment::quote_export -text $title]
+	    if {[empty_string_p $description]} {
+		lappend csv_first_row [as::assessment::quote_export -text $title]
+	    } else {
+		lappend csv_first_row [as::assessment::quote_export -text "$title / $description"]
+	    }
 	}
     }
     

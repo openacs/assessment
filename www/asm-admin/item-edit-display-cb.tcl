@@ -52,9 +52,9 @@ ad_form -name item_edit_display_cb -action item-edit-display-cb -export { assess
     {as_item_id:key}
     {html_display_options:text,optional,nospell {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
     {choice_orientation:text(select) {label "[_ assessment.Choice_Orientation]"} {options $choice_or_types} {help_text "[_ assessment.Choice_Orientation_help]"}}
-    {choice_label_orientation:text(select) {label "[_ assessment.Label_Orientation]"} {options $label_or_types} {help_text "[_ assessment.Label_Orientation_help]"}}
+    {choice_label_orientation:text(hidden)}
     {sort_order_type:text(select) {label "[_ assessment.Order_Type]"} {options $order_types} {help_text "[_ assessment.Order_Type_help]"}}
-    {item_answer_alignment:text(select) {label "[_ assessment.Answer_Alignment]"} {options $alignment_types} {help_text "[_ assessment.Answer_Alignment_help]"}}
+    {item_answer_alignment:text(hidden)}
     {as_item_display_id:text(hidden)}
 } -edit_request {
     db_1row last_used_display_type {}

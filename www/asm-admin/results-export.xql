@@ -4,8 +4,8 @@
 <fullquery name="all_items">
       <querytext>
 
-	select ci.name, cr.title, o.object_type, i.data_type, ci.item_id as as_item_item_id,
-	       rs.item_id as section_item_id
+	select ci.name, cr.title, cr.description, o.object_type, i.data_type,
+	       ci.item_id as as_item_item_id, rs.item_id as section_item_id
 	from as_assessment_section_map asm, as_item_section_map ism, cr_revisions cr,
 	     cr_items ci, as_items i, as_item_rels ir, acs_objects o, cr_revisions rs
 	where asm.assessment_id = :assessment_rev_id

@@ -22,7 +22,7 @@
 	<a href="../sessions?assessment_id=@assessment_id@">#assessment.All#</a> |
 	<a href="results-users?assessment_id=@assessment_id@">#assessment.By_user#</a> |
 <!--	<a href="results-summary?assessment_id=@assessment_id@">#assessment.Summary#</a> | -->
-	<if @assessment_data.anonymous_p@>#assessment.CSV_file#</if><else><a href="results-export?assessment_id=@assessment_id@">#assessment.CSV_file#</a></else></td>
+	<a href="results-export?assessment_id=@assessment_id@">#assessment.CSV_file#</a></td>
 </tr>
 <!--
 <tr class="odd">
@@ -106,8 +106,9 @@
 
 <if @sections.display_type_id@ not nil><a href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
 
-<a
-href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
+<a href="section-preview?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.section_preview#</a>
+
+<a href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
 
 <img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 

@@ -36,7 +36,7 @@ set display_type [string range [db_string display_type {}] end-1 end]
 
 ad_form -name item_edit -mode display -action item-edit-general -export { assessment_id section_id as_item_id } -form {
     {name:text {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {value $name} {help_text "[_ assessment.item_Name_help]"}}
-    {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {value $title} {help_text "[_ assessment.item_Title_help]"}}
+    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {value $title} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {value $description} {help_text "[_ assessment.item_Description_help]"}}
 }
 

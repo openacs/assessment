@@ -513,6 +513,7 @@ ad_proc -private as::assessment::quote_export {
     Quotes a string for csv export
 } {
     regsub -all {;} $text {,,} text
+    regsub -all "\n" $text {} text
     return $text
 }
 
