@@ -35,7 +35,6 @@ content::type::new -content_type {as_assessments}  -supertype {content_revision}
 content::type::new -content_type {as_sessions} -supertype {content_revision} -pretty_name {Assessment Session} -pretty_plural {Assessment Sessions} -table_name {as_sessions} -id_column {session_id}
 content::type::new -content_type {as_section_data} -supertype {content_revision} -pretty_name {Assessment Section Data} -pretty_plural {Assessment Sections Data} -table_name {as_section_data} -id_column {section_data_id}
 content::type::new -content_type {as_item_data} -supertype {content_revision} -pretty_name {Assessment Item Data} -pretty_plural {Assessment Items Data} -table_name {as_item_data} -id_column {item_data_id}
-#content::type::new -content_type {as_files} -supertype {content_revision} -pretty_name {Assessment File} -pretty_plural {Assessment Files} -table_name {as_files} -id_column {file_id}
 
 # Radiobutton display type
 content::type::attribute::new -content_type {as_item_display_rb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -223,10 +222,6 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_section_data} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_data} -include_subtypes t
-    content::folder::register_content_type -folder_id $folder_id -content_type {as_files} -include_subtypes t
-
-#    set temp_id [content::template::new -name {as_files_default} -text {@text;noquote@} -is_live {t} -package_id $package_id]
-#    content::type::register_template -content_type {as_files} -template_id $temp_id -use_context {public} -is_default {t}
 }
 
 

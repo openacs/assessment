@@ -12,10 +12,10 @@ ad_proc -public as::file::new {
     @author eperez@it.uc3m.es
     @creation-date 2004-10-25
 
-    New as_file to the CR
+    New file to the CR
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Get the filename part of the upload file
     if { ![regexp {[^//\\]+$} $file_pathname file_name] } {
@@ -23,13 +23,11 @@ ad_proc -public as::file::new {
         set file_name $file_pathname
     }
     # TODO make the CR name be a SHA1 of the file to prevent too much files repeated
-    set file_item_id [content::item::new -parent_id $folder_id -content_type {as_files} -name [exec uuidgen] -title $file_name]
-    set file_revision_id [content::revision::new -item_id $file_item_id -content_type {as_files} -title $file_name ]
-    set filename [cr_create_content_file $file_item_id $file_revision_id $file_pathname]
-    set title [template::util::file::get_property filename $file_pathname]
-    set mime_type [cr_filename_to_mime_type -create $title]
+    set filename [template::util::file::get_property filename $file_pathname]
+    set mime_type [cr_filename_to_mime_type -create $filename]
     set content_length [file size $file_pathname]
-    db_dml set_file_content { update cr_revisions set content = :filename, mime_type = :mime_type, content_length = :content_length where revision_id = :file_revision_id }
+    set content_rev_id [cr_import_content -title $filename $folder_id $file_pathname $content_length $file_mimetype [exec uuidgen]]
+    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
 
-    return $file_revision_id
+    return $content_rev_id
 }
