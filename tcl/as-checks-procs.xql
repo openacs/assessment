@@ -23,6 +23,23 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::check::action_exec.get_assessment_admin">
+      <querytext>
+	select grantee_id from acs_permissions where object_id=(select
+      assessment_id from as_inter_item_checks where
+      inter_item_check_id=:inter_item_check_id) and privilege='admin'
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::manual_action_exec.get_assessment_admin">
+      <querytext>
+	select grantee_id from acs_permissions where object_id=(select
+      assessment_id from as_inter_item_checks where
+      inter_item_check_id=:inter_item_check_id) and privilege='admin'
+      </querytext>
+</fullquery>
+
+
+
 <fullquery name="as::assessment::check::get_parameter_value.get_param_n">
       <querytext>
       select item_id from as_param_map where parameter_id=:parameter_id and inter_item_check_id=:check_id

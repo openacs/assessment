@@ -253,10 +253,17 @@ ad_proc -public as::assessment::check::action_exec {
     if { $failed > 0 } {
 	set failed_p "f"
     }
+    set admin [db_list_of_lists get_assessment_admin {}]
     
-    ns_log notice "-----------------------> error $errorMsg ---"
+    set to [list]
+    foreach notify_user $admin {
+	lappend to $notify_user
+    }
+    
+    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message $error_txt" -subset $to -force -action_id $inter_item_check_id
+    
 
-    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message $error_txt"
+    
     
     as::assessment::check::action_log -session_id $session_id -check_id $inter_item_check_id -failed $failed_p
     
@@ -305,9 +312,15 @@ ad_proc -public as::assessment::check::manual_action_exec {
     
     set user_id [ad_conn user_id]
     db_dml update_actions_log {}
+        set admin [db_list_of_lists get_assessment_admin {}]
     
-    notification::new -type_id [notification::type::get_type_id -short_name as_inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message"
+    set to [list]
+    foreach notify_user $admin {
+	lappend to $notify_user
+    }
     
+    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" -subset $to -force -action_id $inter_item_check_id
+
     
 }
 
