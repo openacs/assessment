@@ -4,6 +4,77 @@ ad_library {
     @creation-date 2004-07-26
 }
 
+ad_proc -public as_item_answer_new {
+    {-answer_id:required}
+    {-name:required}
+    {-title:required}
+    {-data_type ""}
+    {-case_sensitive_p ""}
+    {-percent_score ""}
+    {-compare_by ""}
+    {-regexp_text ""}
+    {-allowed_answerbox_list ""}
+} {
+    @author Natalia Perez (eperez@it.uc3m.es)
+    @creation-date 2004-09-29
+
+    New item answer to the data database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_answer in the CR (and as_item_sa_answers table) getting the revision_id (as_item_answer_id)
+    set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $name -title $title ]
+    set as_item_answer_id [content::revision::new -item_id $item_answer_id -content_type {as_item_answers} -title $title -attributes [list [list answer_id $answer_id ] [list data_type $data_type ] [list case_sensitive_p $case_sensitive_p ] [list percent_score $percent_score] [list compare_by $compare_by] [list regexp_text $regexp_text] [list allowed_answerbox_list $allowed_answerbox_list] ] ]
+    # FIXME too much code repetition here
+    # maybe there are more efficient ways to to it (maybe using hashes to pass the values between functions)
+    return $as_item_answer_id
+}
+
+
+ad_proc -public as_item_type_sa_new {
+    {-name:required}
+    {-title ""}
+    {-increasing_p ""}
+    {-allow_negative_p ""}    
+} {
+    @author Natalia Perez (nperper@it.uc3m.es)
+    @creation-date 2004-09-29
+
+    New Short Answer Answers item to the data database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_type_sa in the CR (and as_item_type_sa table) getting the revision_id (as_item_type_id)
+    set item_item_type_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_type_sa} -name $name -title $title ]
+    set as_item_type_sa_id [content::revision::new -item_id $item_item_type_sa_id -content_type {as_item_type_sa} -title $title -attributes [list [list increasing_p $increasing_p] [list allow_negative_p $allow_negative_p] ] ]
+
+    return $as_item_type_sa_id
+}
+
+ad_proc -public as_item_type_oq_new {
+    {-name:required}
+    {-title ""}
+    {-default_value ""}
+    {-feedback_text ""}    
+} {
+    @author Natalia Perez (nperper@it.uc3m.es)
+    @creation-date 2004-09-29
+
+    New Open Question item to the data database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
+    set item_item_type_oq_id [content::item::new -parent_id $folder_id -content_type {as_item_type_oq} -name $name -title $title ]
+    set as_item_type_oq_id [content::revision::new -item_id $item_item_type_oq_id -content_type {as_item_type_oq} -title $title -attributes [list [list default_value $default_value] [list feedback_text $feedback_text] ] ]
+
+    return $as_item_type_oq_id
+}
+
+
 ad_proc -public as_item_choice_new {
     {-mc_id:required}
     {-name:required}
@@ -93,6 +164,7 @@ ad_proc -public as_item_display_cb_new {
     {-item_answer_alignment ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
+    @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-23
 
     New Item Display CheckBox Type to the database
@@ -106,6 +178,71 @@ ad_proc -public as_item_display_cb_new {
 
     return $as_item_display_cb_id
 }
+
+ad_proc -public as_item_display_tb_new {
+    {-name:required}
+    {-html_display_options ""}
+    {-abs_size ""}
+    {-item_answer_alignment ""}
+} {
+    @author Natalia Perez (nperper@it.uc3m.es)
+    @creation-date 2004-09-29
+
+    New Item Display TextBox Type to the database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)
+    set item_item_display_tb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_tb} -name $name]
+    set as_item_display_tb_id [content::revision::new -item_id $item_item_display_tb_id -content_type {as_item_display_tb} -attributes [list [list html_display_options $html_display_options] [list abs_size $abs_size] [list item_answer_alignment $item_answer_alignment] ] ]
+
+    return $as_item_display_tb_id
+}
+
+ad_proc -public as_item_display_sa_new {
+    {-name:required}
+    {-html_display_options ""}
+    {-abs_size ""}
+    {-box_orientation ""}    
+} {
+    @author Natalia Perez (nperper@it.uc3m.es)
+    @creation-date 2004-09-29
+
+    New Item Display Short Answer Type to the database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_display_sa in the CR (and as_item_display_sa table) getting the revision_id (as_item_display_id)
+    set item_item_display_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_display_sa} -name $name]
+    set as_item_display_sa_id [content::revision::new -item_id $item_item_display_sa_id -content_type {as_item_display_sa} -attributes [list [list html_display_options $html_display_options] [list abs_size $abs_size] [list box_orientation $box_orientation] ] ]
+
+    return $as_item_display_sa_id
+}
+
+ad_proc -public as_item_display_ta_new {
+    {-name:required}
+    {-html_display_options ""}
+    {-abs_size ""}
+    {-acs_widget ""}    
+    {-item_answer_alignment ""}
+} {
+    @author Natalia Perez (nperper@it.uc3m.es)
+    @creation-date 2004-09-29
+
+    New Item Display TextArea Type to the database
+} {
+    set package_id [ad_conn package_id]
+    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+
+    # Insert as_item_display_ta in the CR (and as_item_display_ta table) getting the revision_id (as_item_display_id)
+    set item_item_display_ta_id [content::item::new -parent_id $folder_id -content_type {as_item_display_ta} -name $name]
+    set as_item_display_ta_id [content::revision::new -item_id $item_item_display_ta_id -content_type {as_item_display_ta} -attributes [list [list html_display_options $html_display_options] [list abs_size $abs_size] [list acs_widget $acs_widget] [list item_answer_alignment $item_answer_alignment] ] ]
+
+    return $as_item_display_ta_id
+}
+
 
 ad_proc -public as_item_new {
     {-name:required}
