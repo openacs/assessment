@@ -5,13 +5,8 @@
 <multiple name="assessment_info">
 	<ul>
 		<li>
-			<if @assessment_info.enable_p@ eq f>
-				@assessment_info.name@
-			</if>
-			<else>
-				<a href="">@assessment_info.name@</a>
-			</else>
-			<ul><li>@assessment_info.definition@</li></ul>
+			<a href="assessment?assessment_id=@assessment_info.assessment_id@">@assessment_info.title@</a>
+			<ul><li>@assessment_info.description@</li></ul>
 		</li>
 	</ul>
 </multiple>

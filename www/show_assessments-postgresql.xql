@@ -5,7 +5,7 @@
 
 	<fullquery name="asssessment_id_name_definition">
 		<querytext>
-			SELECT as_assessments.assessment_id, as_assessments.name, as_assessments.definition, as_assessments.enable_p
+			SELECT as_assessmentsx.assessment_id, as_assessmentsx.name, as_assessmentsx.title, as_assessmentsx.description
 			FROM as_assessments
 		</querytext>
 	</fullquery>
