@@ -19,6 +19,10 @@ ad_proc -public as::assessment::check::get_assessments {
     
 } {
     set package_id [ad_conn package_id]
+    set user_id [ad_conn user_id]
+    set permission ""
+    if {[permission::permission_p -object_id $package_id -party_id $user_id -privilege admin] == 0} {
+	set permission "and ci.item_id in (select object_id from acs_permissions where grantee_id=:user_id and privilege='admin')"}
     set assessment_list [list [list "[_ assessment.all]" "all"]]
     set assessments [db_list_of_lists assessment {}]
     foreach  assessment $assessments {

@@ -3,7 +3,7 @@
 
 <fullquery name="as::assessment::check::get_assessments.assessment">
       <querytext>
-      select cr.title ,ci.item_id as assessment_id from cr_folders cf, cr_items ci, cr_revisions cr, as_assessments a where cr.revision_id = ci.latest_revision and a.assessment_id = cr.revision_id and ci.parent_id = cf.folder_id and cf.package_id = :package_id order by cr.title
+      select cr.title ,ci.item_id as assessment_id from cr_folders cf, cr_items ci, cr_revisions cr, as_assessments a where cr.revision_id = ci.latest_revision and a.assessment_id = cr.revision_id and ci.parent_id = cf.folder_id and cf.package_id = :package_id $permission  order by cr.title
 
       </querytext>
 </fullquery>

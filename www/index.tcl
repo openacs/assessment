@@ -43,6 +43,6 @@ db_multirow -extend { session assessment_url } assessments asssessment_id_name_d
     }
 }
 
-set admin_p [ad_permission_p $package_id admin]
+set admin_p [ad_permission_p $package_id create]
 
 ad_return_template

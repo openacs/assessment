@@ -3,7 +3,7 @@
 
 <fullquery name="sysdate">
 <querytext>
-	select to_date (now(),'YYYY-MM-DD')
+	select to_char(now(),'YYYY-MM-DD')
 </querytext>
 </fullquery>
 </queryset>

@@ -41,9 +41,10 @@ if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
 }
 
 #get all assessments order by title
-db_multirow -extend { export permissions} assessments $m_name {} {
+db_multirow -extend { export permissions admin_request} assessments $m_name {} {
     set export "[_ assessment.Export]"
     set permissions "[_ assessment.permissions]"
+    set admin_request "[_ assessment.Request] [_ assessment.Administration]"
 }
 
 #list all assessments
@@ -64,6 +65,11 @@ list::create \
 	    label "[_ assessment.permissions]"
 	    link_url_eval "[export_vars -base permissions { {object_id $assessment_id} }]"
 	}
+	admin_request {
+	    label "[_ assessment.Request] [_ assessment.Administration]"
+	    link_url_eval "[export_vars -base admin-request { {assessment $assessment_id} }]"
+	}
+
 	
     } -actions $actions
 

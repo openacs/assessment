@@ -23,6 +23,7 @@ set item_p ""
 set item_id_check ""
 
 if {[exists_and_not_null item_id]} {
+    set show_p 0
     set by_item_p 1
     set item_p "&item_id=$item_id"
     set item_id_check $item_id
