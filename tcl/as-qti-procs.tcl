@@ -325,8 +325,9 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		    }
 		    # Insert as_item_choice
 		    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
-		    set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)]
-		    if {![info exists as_item_choices__score($as_item_choices__ident)]} {
+		    if {[info exists as_item_choices__score($as_item_choices__ident)]} {
+			set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)]
+		    } else {
 			set as_item_choices__score($as_item_choices__ident) 0
 		    }
 		    # insert as_item_choice
