@@ -215,7 +215,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
-	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
+	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password}]
 	ad_script_abort
     } else {
 	# calculate session points at end of session
@@ -313,7 +313,7 @@ foreach one_item $item_list {
 	    }
 	}"
 	set after_submit "{
-	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
+	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password}\]
 	    ad_script_abort
 	}"
 	
@@ -382,7 +382,7 @@ if {$display(submit_answer_p) != "t"} {
             }
 	    set item_order \$new_item_order
 
-	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
+	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -428,7 +428,7 @@ if {$display(submit_answer_p) != "t"} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
-	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
+	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password}]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
