@@ -9,3 +9,4 @@
 \i assessment-item-create.sql
 \i assessment-section-create.sql
 \i assessment-collected-data-create.sql
+\i assessment-files.sql

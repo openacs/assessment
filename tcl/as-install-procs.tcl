@@ -191,5 +191,6 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_section_data} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_data} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_files} -include_subtypes t
 
 }
