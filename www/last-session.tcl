@@ -20,9 +20,49 @@ set package_id [ad_conn package_id]
 #get the user that take an assessment
 set subject_id [ad_conn user_id]
 
+#if it's an assessment or a survey
+set assessment_or_survey [db_string assessment_or_survey {
+    SELECT survey_p
+    FROM as_assessmentsx
+    WHERE assessment_id = :assessment_id
+}]
+
 #Lists the identifier of sessions, the name of subjects that took this assessment, the name of assessment and the finished time 
 #of assessment for an assessment.
+if {$assessment_or_survey == {t}} {
 template::list::create \
+    -name sessions \
+    -multirow sessions \
+    -pass_properties { package_id } \
+    -key sessions_id \
+    -elements {
+         session_id {
+	    label {[_ assessment.Session]}
+	    link_url_eval {[export_vars -base "session" {session_id}]}
+	}
+        subject_name {
+	    label {[_ assessment.Subject_Name]}
+            link_url_eval {[acs_community_member_url -user_id $subject_id]}
+
+        }
+	assessment_name {
+	    label {Assessment}
+	    link_url_eval {[export_vars -base "assessment" {assessment_id}]}
+	}
+	completed_datetime {
+	    label {[_ assessment.Finish_Time]}
+	    html {nowrap}
+	}
+	other_sessions {
+	    label {[_ assessment.Other_Sessions]}
+	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]sessions?[export_vars {assessment_id subject_id}]}
+	}
+    } \
+    -main_class {
+        narrow
+    }
+} else {
+    template::list::create \
     -name sessions \
     -multirow sessions \
     -pass_properties { package_id } \
@@ -50,13 +90,14 @@ template::list::create \
 	    html {nowrap}
 	}
 	other_sessions {
-	    label {[_ assessment.Other_Sessions]}	    
+	    label {[_ assessment.Other_Sessions]}
 	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]sessions?[export_vars {assessment_id subject_id}]}
 	}
     } \
     -main_class {
         narrow
     }
+}
 
 set admin_p [ad_permission_p $package_id admin]
 
@@ -67,7 +108,7 @@ db_multirow -extend { item_url assessment_id other_sessions } sessions sessions_
 } {
     set item_url [export_vars -base "session" {session_id}]
     set assessment_id $assessment_id_multi
-    set other_sessions "[_ assessment.View_Other_Sessions]"    
+    set other_sessions "[_ assessment.View_Other_Sessions]"
 }
 #if the user is not admin he will display only his sessions
 } else {
@@ -75,7 +116,7 @@ db_multirow -extend { item_url assessment_id other_sessions } sessions sessions_
 } {
     set item_url [export_vars -base "session" {session_id}]
     set assessment_id $assessment_id_multi
-    set other_sessions "[_ assessment.View_Other_Sessions]"    
+    set other_sessions "[_ assessment.View_Other_Sessions]"
 }
 }
 
