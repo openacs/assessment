@@ -16,9 +16,9 @@ db_multirow -extend choice_html items query_all_items {} {
   set choice_html {<ul>}
   db_foreach choices {} {
     if {$correct_answer_p == {t}} {
-    set correct_answer {&#9745;}
+    set correct_answer {<font color="#00ff00">&#9745;</font>}
     } else {
-    set correct_answer {&#9746;}
+    set correct_answer {<font color="#ff0000">&#9746;</font>}
     }
     ns_log Warning "$choice_id $choice_id_answer"
     if {$choice_id_answer == $choice_id } {
