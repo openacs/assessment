@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="get_item_sec_id">
-<querytext>
-  select item_id from cr_revisions where revision_id=:section_id
-
-</querytext>
-</fullquery>
 
 <fullquery name="new_check">
 <querytext>

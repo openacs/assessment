@@ -68,4 +68,12 @@
 </querytext>
 </fullquery>
 
+<fullquery name="get_item_sec_id">
+<querytext>
+  select item_id from cr_revisions where revision_id=:section_id
+
+</querytext>
+</fullquery>
+
+
 </queryset>
