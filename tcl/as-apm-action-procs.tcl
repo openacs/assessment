@@ -19,9 +19,11 @@ ad_proc -public as::actions::insert_actions {
     {-node_id}
 } {
 } { 
-    set user_id [as::actions::get_admin_user_id]
+
+# The code does not work at all on Oracle
+#    set user_id [as::actions::get_admin_user_id]
     
-    db_exec_plsql insert_default {}
+#    db_exec_plsql insert_default {}
 }
 
 ad_proc -public as::actions::insert_actions_after_upgrade {
