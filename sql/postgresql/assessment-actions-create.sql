@@ -144,6 +144,7 @@ begin
 	delete from as_action_params where action_id=del__action_id;
 	
 	delete from as_actions where action_id = del__action_id;
+
         PERFORM acs_object__delete (del__action_id);	
 	return del__action_id;	
 
@@ -191,13 +192,13 @@ ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
+v_parameter_id:= nextval(''as_action_params_parameter_id'')+6;
 insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''first_names'',''First Names of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
+v_parameter_id:= nextval(''as_action_params_parameter_id'')+6;
 insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''last_name'',''Last Name of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
+v_parameter_id:= nextval(''as_action_params_parameter_id'')+6;
 insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''email'',''Email of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
+v_parameter_id:= nextval(''as_action_params_parameter_id'')+6;
 insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''user_name'',''User name of the User'');
 
 v_action_id:= as_action__new (
@@ -211,7 +212,7 @@ events::registration::new -event_id $event_id -user_id $user_id'',
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
+v_parameter_id:= nextval(''as_action_params_parameter_id'')+6;
 insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''event_id'',''Event to add the user'', ''select event_id,event_id from acs_events'');
 
 v_action_id:= as_action__new (
@@ -227,7 +228,7 @@ dotlrn_community::add_user_to_community -community_id $community_id -user_id $us
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
+v_parameter_id:= nextval(''as_action_params_parameter_id'')+6;
 insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''community_id'',''Community to add the user'', ''select pretty_name,community_id from dotlrn_communities'');
 
 	return v_action_id;
