@@ -31,7 +31,7 @@ template::list::create \
 	}
 	session {	    
 	    label {[_ assessment.Sessions]}	    
-	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]sessions?[export_vars {assessment_id}]}
+	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]last-session?[export_vars {assessment_id}]}
 	}
     } \
     -main_class {
