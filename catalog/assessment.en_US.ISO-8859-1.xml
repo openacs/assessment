@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.01d" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.07d" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -34,6 +34,7 @@
   <msg key="Anonymous_Responses">Anonymous Responses</msg>
   <msg key="anonymous_users_allow">Anonymous respondents allowed</msg>
   <msg key="Answer_Alignment">Answer Alignment</msg>
+  <msg key="Answer_Alignment_help">Alignment of the answer in relation to the question.</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
   <msg key="as_Anonymous_help">Is it possible to provide an anonymous answer? 
 &lt;br&gt;
@@ -65,6 +66,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Attempt">Attempt</msg>
   <msg key="Author">Author</msg>
   <msg key="Back_Button">Back button allowed</msg>
+  <msg key="back_button_help">Is it possible to use the backbutton for this section to see previous answers</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
@@ -78,8 +80,10 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Categorization_exact">Exact</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
   <msg key="Choice">Choice</msg>
+  <msg key="choice_Feedback_help">Feedback text given with this choice (in addition to the feedback given with the question itself)</msg>
   <msg key="Choice_help">Description of the choice</msg>
   <msg key="Choice_Orientation">Choice Orientation</msg>
+  <msg key="Choice_Orientation_help">Which orientation shall the choices have</msg>
   <msg key="Consent_Page">Consent Page</msg>
   <msg key="continue_with_copy">Continue with Copy</msg>
   <msg key="continue_with_insert">Continue with Insert</msg>
@@ -106,6 +110,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="data_type_varchar">Short Text</msg>
   <msg key="Default_Path">Default Path</msg>
   <msg key="Default_Selected">Default: Selected</msg>
+  <msg key="Default_Selected_help">Is this choice selected by default</msg>
   <msg key="Default_Value">Default Value</msg>
   <msg key="Definition">Definition</msg>
   <msg key="Delete">Delete</msg>
@@ -150,6 +155,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="hide_item_name">Question name hidden</msg>
   <msg key="horizontal">Horizontal</msg>
   <msg key="Html_Options">HTML Options</msg>
+  <msg key="Html_Options_help">Additional HTML Options for display</msg>
   <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
   <msg key="Import_Results">Import Results</msg>
   <msg key="Increasing">Increasing</msg>
@@ -164,6 +170,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="item_display_sb">Selectbox</msg>
   <msg key="item_display_ta">Textarea</msg>
   <msg key="item_display_tb">Textbox</msg>
+  <msg key="item_Name_help">Name of the question, identifier searchable in the catalog</msg>
   <msg key="item_Required_help">Does this item have to be answered (when displayed)?</msg>
   <msg key="item_Subtext_help">A secondary label, needed for many kinds of questions</msg>
   <msg key="item_time_help">Seconds allowed for completing this question</msg>
@@ -171,16 +178,20 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Item_Type">Question Type</msg>
   <msg key="item_type_dq">Database Question</msg>
   <msg key="item_type_file">File</msg>
+  <msg key="Item_Type_help">Question type used.</msg>
   <msg key="item_type_mc">Multiple Choice</msg>
   <msg key="item_type_oq">Open Question</msg>
   <msg key="item_type_sa">Short Answer</msg>
   <msg key="Items">Items</msg>
   <msg key="Keywords">Search Keywords</msg>
+  <msg key="Keywords_help">Keywords which will be used to search for a section.</msg>
   <msg key="Label_Orientation">Label Orientation</msg>
+  <msg key="Label_Orientation_help">Positioning of the choice label in correspondance with the choice button.</msg>
   <msg key="left">Left</msg>
   <msg key="Lets_you_use_this_a">- Lets you use this assessment as a template to create a new assessment.</msg>
   <msg key="Letter">First Letter</msg>
   <msg key="Letter_all">All</msg>
+  <msg key="Letter_help">First letter to limit the search to.</msg>
   <msg key="Letter_other">Other</msg>
   <msg key="limited_tries">Only %assessment_data.number_tries% tries allowed</msg>
   <msg key="make_anonymous">Make anonymous</msg>
@@ -222,11 +233,14 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="or">OR</msg>
   <msg key="order_of_entry">Order of Entry</msg>
   <msg key="Order_Type">Order Type</msg>
+  <msg key="Order_Type_help">Ordering of choices</msg>
   <msg key="Other_Sessions">Other Sessions</msg>
   <msg key="Out_of">Out of</msg>
   <msg key="Percent_Score">Percent Score</msg>
+  <msg key="Percent_Score_help">Percentage of the points of  the question this choice gives. May be larger than 100 and lower than -100.</msg>
   <msg key="points">points</msg>
   <msg key="points_item">Points for Question</msg>
+  <msg key="points_item_help">How many points in the whole assessment is this section worth.</msg>
   <msg key="points_section">Points for Section</msg>
   <msg key="Preview">Preview</msg>
   <msg key="Question">Question</msg>
@@ -257,21 +271,28 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Search_Item_1">Search and add questions to section &quot;%section_title%&quot;</msg>
   <msg key="Search_Section">Search and add sections</msg>
   <msg key="Search_Section_1">Search and add sections to assessment &quot;%assessment_data.title%&quot;</msg>
+  <msg key="sect_disp_Description_help">Description of this section display type</msg>
+  <msg key="sect_disp_Title_help">Title of the section display, will be used in the selection bar.</msg>
+  <msg key="sect_num_items_help">How many questions will be displayed on a page in a section of  this type. Leave empty for all questions on one page, use &quot;1&quot; for one  question per page.</msg>
   <msg key="section">SECTION</msg>
   <msg key="section_Branched">Branched section</msg>
+  <msg key="section_branched_help">Is this a branched section?</msg>
   <msg key="section_Definition_help">No clue what this is =&gt; No help</msg>
   <msg key="section_Description_help">Description for this section</msg>
   <msg key="section_Display_Type_help">Display Type to use for this section.</msg>
   <msg key="section_Feedback_help">Feedback given to the user after finishing the section.</msg>
   <msg key="section_Instructions_help">Instructions on how to fill out this section.</msg>
+  <msg key="section_Name_help">Artificial Name for the section, used e.g. for searching.</msg>
   <msg key="Section_Navigation">Section Navigation</msg>
   <msg key="section_new_display"> -- New -- </msg>
   <msg key="section_num_Items">Number of questions per page</msg>
   <msg key="Section_Order">Order of questions</msg>
+  <msg key="section_order_help">In which order will the questions be displayed in this section.</msg>
   <msg key="section_Required_help">Is this section required in display?&lt;br&gt;
 Only useful if you display less than the total number of sections.</msg>
   <msg key="Section_Template">Section Template</msg>
-  <msg key="section_time_help">Minutes allowed to finish this section.</msg>
+  <msg key="section_template_help">Template for the section, made up of ADP commands.</msg>
+  <msg key="section_time_help">Seconds allowed to finish this section.</msg>
   <msg key="section_Title_help">Title of the section, will be used in Display and HTML Title</msg>
   <msg key="Sections">Sections</msg>
   <msg key="Secure_Access_1">Secure Access Required</msg>
@@ -293,6 +314,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Subject_Name">Subject Name</msg>
   <msg key="Submit">Submit</msg>
   <msg key="Submit_Answer">Seperate submit for each question</msg>
+  <msg key="submit_answer_help">Does the respondee have to submit the answer for each question seperately.</msg>
   <msg key="Subtext">Subtext</msg>
   <msg key="Summary">Summary</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
