@@ -39,7 +39,7 @@ foreach item_type [db_list item_types {}] {
 }
 
 
-ad_form -name item_add -action item-add -export { assessment_id section_id after } -form {
+ad_form -name item_add -action item-add -export { assessment_id section_id after } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
     {name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
     {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
@@ -51,6 +51,7 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 }
 
 ad_form -extend -name item_add -form {
+    {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
     {field_code:text,optional {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
@@ -73,6 +74,8 @@ ad_form -extend -name item_add -form {
     set points ""
     set data_type "varchar"
     set item_type "sa"
+} -validate {
+    {name {[as::assessment::unique_name -name $name -new_p 1]} "[_ assessment.name_used]"}
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
 } -new_data {
@@ -92,6 +95,29 @@ ad_form -extend -name item_add -form {
 
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $as_item_id $category_ids
+	}
+
+	if {![empty_string_p $content]} {
+	    set filename [lindex $content 0]
+	    set tmp_filename [lindex $content 1]
+	    set file_mimetype [lindex $content 2]
+	    set n_bytes [file size $tmp_filename]
+	    set max_file_size 10000000
+	    # [ad_parameter MaxAttachmentSize]
+	    set pretty_max_size [util_commify_number $max_file_size]
+
+	    if { $n_bytes > $max_file_size && $max_file_size > 0 } {
+		ad_return_complaint 1 "[_ assessment.file_too_large]"
+		return
+	    }
+	    if { $n_bytes == 0 } {
+		ad_return_complaint 1 "[_ assessment.file_zero_size]"
+		return
+	    }
+
+	    set folder_id [as::assessment::folder_id -package_id $package_id]
+	    set content_rev_id [cr_import_content -package_id $package_id -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
+	    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
 	}
     }
 } -after_submit {

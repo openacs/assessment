@@ -23,6 +23,19 @@
       </querytext>
 </fullquery>
 
+<fullquery name="get_item_content">
+      <querytext>
+
+    select cr.title || ' (' || cr.content_length || ' bytes)' as content_name,
+           cr.revision_id as content_rev_id, cr.title as content_filename
+    from cr_revisions cr, as_item_rels r
+    where r.item_rev_id = :as_item_id
+    and r.target_rev_id = cr.revision_id
+    and r.rel_type = 'as_item_content_rel'
+
+      </querytext>
+</fullquery>
+
 <fullquery name="general_item_data">
 <querytext>
 
@@ -48,6 +61,27 @@
       </querytext>
 </fullquery>
 
+<fullquery name="update_item_content">
+      <querytext>
+
+		update as_item_rels
+		set target_rev_id = :content_rev_id
+		where item_rev_id = :new_item_id
+		and rel_type = 'as_item_content_rel'
+
+      </querytext>
+</fullquery>
+
+<fullquery name="delete_item_content">
+      <querytext>
+
+		delete from as_item_rels
+		where item_rev_id = :new_item_id
+		and rel_type = 'as_item_content_rel'
+
+      </querytext>
+</fullquery>
+
 <fullquery name="update_section_in_assessment">
       <querytext>
 
@@ -64,7 +98,8 @@
 
 		update as_item_section_map
 		set as_item_id = :new_item_id,
-		    points = :points
+		    points = :points,
+		    required_p = :required_p
 		where section_id = :new_section_id
 		and as_item_id = :as_item_id
 

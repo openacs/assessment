@@ -17,7 +17,7 @@ ad_proc -public as::item_type_oq::new {
     New Open Question item to the data database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -67,7 +67,7 @@ ad_proc -public as::item_type_oq::copy {
     Copy an Open Question Type
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
     db_transaction {

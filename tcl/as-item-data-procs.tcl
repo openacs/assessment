@@ -28,7 +28,7 @@ ad_proc -public as::item_data::new {
     New as_item_data to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_data in the CR (and as_item_data table) getting the revision_id (item_data_id)
     db_transaction {

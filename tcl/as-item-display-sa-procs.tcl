@@ -17,7 +17,7 @@ ad_proc -public as::item_display_sa::new {
     New Item Display ShortAnswer Type to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_sa in the CR (and as_item_display_sa table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -67,7 +67,7 @@ ad_proc -public as::item_display_sa::copy {
     Copy an Item Display ShortAnswer Type
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_sa in the CR (and as_item_display_sa table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -98,9 +98,6 @@ ad_proc -public as::item_display_sa::render {
     Render an Item Display ShortAnswer Type
 } {
     db_1row display_item_data {}
-    if {![empty_string_p $abs_size]} {
-	set maxlength_option {-maxlength $abs_size}
-    }
     if {[empty_string_p $required_p]} {
 	set required_p f
     }
@@ -108,7 +105,15 @@ ad_proc -public as::item_display_sa::render {
 	set datatype text
     }
 
-    set options {-datatype $datatype -widget text -label $title -help_text $subtext -value $default_value -required_p $required_p -html $html_display_options}
+    set optional ""
+    if {$required_p != "t"} {
+	set optional ",optional"
+    }
+    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list html $html_display_options]]
+    if {![empty_string_p $abs_size]} {
+	lappend param_list [list maxlength $abs_size]
+    }
+    set element_params [concat [list "$element\:$datatype\(text)$optional"] $param_list]
 
-    eval template::element::create $form $element $options $maxlength_option
+    ad_form -extend -name $form -form [list $element_params]
 }

@@ -18,7 +18,7 @@ ad_proc -public as::item_display_ta::new {
     New Item Display TextArea Type to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_ta in the CR (and as_item_display_ta table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -71,7 +71,7 @@ ad_proc -public as::item_display_ta::copy {
     Copy an Item Display TextArea Type
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_ta in the CR (and as_item_display_ta table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -103,10 +103,6 @@ ad_proc -public as::item_display_ta::render {
     Render an Item Display TextArea Type
 } {
     db_1row display_item_data {}
-    set maxlength_option ""
-    if {![empty_string_p $abs_size]} {
-	set maxlength_option {-maxlength $abs_size}
-    }
     if {[empty_string_p $required_p]} {
 	set required_p f
     }
@@ -114,7 +110,18 @@ ad_proc -public as::item_display_ta::render {
 	set datatype text
     }
 
-    set options {-datatype $datatype -widget textarea -label $title -help_text $subtext -value $default_value -required_p $required_p -nospell -html $html_display_options}
+    # fixme
+    set datatype text
 
-    eval template::element::create $form $element $options $maxlength_option
+    set optional ""
+    if {$required_p != "t"} {
+	set optional ",optional"
+    }
+    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list html $html_display_options]]
+    if {![empty_string_p $abs_size]} {
+	lappend param_list [list maxlength $abs_size]
+    }
+    set element_params [concat [list "$element\:$datatype\(textarea),nospell$optional"] $param_list]
+
+    ad_form -extend -name $form -form [list $element_params]
 }

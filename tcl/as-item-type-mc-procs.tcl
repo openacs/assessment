@@ -21,7 +21,7 @@ ad_proc -public as::item_type_mc::new {
     New Multiple Choice item to the data database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -109,7 +109,7 @@ ad_proc -public as::item_type_mc::copy {
     Copy a Multiple Choice Type
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -151,11 +151,16 @@ ad_proc -public as::item_type_mc::render {
 
     if {![empty_string_p $session_id]} {
 	if {[empty_string_p $show_feedback] || $show_feedback == "none"} {
-	    set choice_list [db_list_of_lists get_sorted_choices {}]
+	    set choice_list ""
+	    db_foreach get_sorted_choices {} {
+		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
+		lappend choice_list [list $title $choice_id]
+	    }
 	} else {
 	    # incorrect correct
 	    set choice_list ""
 	    db_foreach get_sorted_choices_with_feedback {} {
+		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
 		set pos [lsearch -exact -integer $defaults $choice_id]
 		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
 		    lappend choice_list [list "$title <img src=graphics/correct.gif> <font color=green>$feedback_text</font>" $choice_id]
@@ -180,14 +185,34 @@ ad_proc -public as::item_type_mc::render {
     set total 0
     db_foreach choices {} {
 	incr total
+	set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
 	lappend display_choices [list $title $choice_id]
 	if {$selected_p == "t"} {
 	    lappend defaults $choice_id
 	}
-	if {$correct_answer_p == "t"} {
-	    lappend correct_choices [list $title $choice_id]
+	if {![empty_string_p $fixed_position]} {
+	    set fixed_pos($fixed_position) [list $title $choice_id]
+	    if {![empty_string_p $num_answers]} {
+		incr num_answers -1
+	    }
+	    if {$correct_answer_p == "t" && ![empty_string_p $num_correct_answers]} {
+		incr num_correct_answers -1
+	    }
 	} else {
-	    lappend wrong_choices [list $title $choice_id]
+	    if {$correct_answer_p == "t"} {
+		lappend correct_choices [list $title $choice_id]
+	    } else {
+		lappend wrong_choices [list $title $choice_id]
+	    }
+	}
+    }
+
+    if {[array exists fixed_pos]} {
+	if {[empty_string_p $num_answers]} {
+	    set num_answers [expr [llength $correct_choices] + [llength $wrong_choices]]
+	}
+	if {[empty_string_p $num_correct_answers]} {
+	    set num_correct_answers [llength $correct_choices]
 	}
     }
 
@@ -209,6 +234,31 @@ ad_proc -public as::item_type_mc::render {
 	set display_choices [util::randomize_list $display_choices]
     }
     
+    # now add fixed positions in result list
+    if {[array exists fixed_pos]} {
+	set max_pos [expr $num_answers + [array size fixed_pos]]
+	set open_positions $display_choices
+	set display_choices [list]
+
+	for {set position 1} {$position <= $max_pos} {incr position} {
+	    if {[info exists fixed_pos($position)]} {
+		lappend display_choices $fixed_pos($position)
+		array unset fixed_pos $position
+	    } elseif {[llength $open_positions] > 0} {
+		lappend display_choices [lindex $open_positions 0]
+		set open_positions [lreplace $open_positions 0 0]
+	    }
+	}
+	# set negative fixed positions relative to the end of the choice list
+	if {[array exists fixed_pos]} {
+	    foreach position [lsort -integer [array names fixed_pos]] {
+		if {$position < 0} {
+		    lappend display_choices $fixed_pos($position)
+		}
+	    }
+	}
+    }
+
     # save choice order
     if {![empty_string_p $session_id]} {
 	set count 0
@@ -241,58 +291,30 @@ ad_proc -public as::item_type_mc::process {
     db_foreach check_choices {} {
 	if {$correct_answer_p == "t"} {
 	    set correct_choices($choice_id) $percent_score
-	} else {
-	    set wrong_choices($choice_id) $percent_score
 	}
+	set choices($choice_id) $percent_score
     }
 
     if {$increasing_p == "t"} {
 	# if not all correct answers are given, award fraction of the points
 	set percent 0
-	if {[array exists correct_choices]} {
-	    set wrong_p 0
-	    foreach choice_id $response {
-		if {[exists_and_not_null correct_choices($choice_id)]} {
-		    incr percent $correct_choices($choice_id)
-		}
-		if {![info exists correct_choices($choice_id)] && $allow_negative_p != "t"} {
-		    set wrong_p 1
-		}
-	    }
-	    if {$wrong_p} {
-		# reset points to 0 if wrong answers given and no negative allowed
-		set percent 0
-	    }
-	    if {$allow_negative_p == "t" && [array exists wrong_choices]} {
-		foreach choice_id $response {
-		    if {[exists_and_not_null wrong_choices($choice_id)]} {
-			incr percent $wrong_choices($choice_id)
-		    }
-		}
-	    }
+	foreach choice_id $response {
+	    incr percent $choices($choice_id)
 	}
     } else {
-	# award 100% points if all correct answers are given
+	# award 100% points if and only if all correct answers are given
 	if {[array exists correct_choices] && [lsort -integer $response] == [lsort -integer [array names correct_choices]]} {
 	    set percent 100
 	} else {
-	    if {$allow_negative_p == "t"} {
-		# wrong answers, calculate points by adding percentages for wrong answers
-		set percent 0
-		if {[array exists wrong_choices]} {
-		    foreach choice_id $response {
-			if {[exists_and_not_null wrong_choices($choice_id)]} {
-			    incr percent $wrong_choices($choice_id)
-			}
-		    }
-		}
-	    } else {
-		# wrong answers, no negative points allowed => 0 points
-		set percent 0
-	    }
+	    set percent 0
 	}
     }
 
+    if {$allow_negative_p == "f" && $percent < 0} {
+	# don't allow negative percentage
+	set percent 0
+    }
+	
     set points [expr round($max_points * $percent / 100)]
 
     as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -choice_answer $response -points $points

@@ -25,7 +25,7 @@ ad_proc -public as::item::new {
     New item to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     db_transaction {
@@ -135,7 +135,7 @@ ad_proc -public as::item::copy {
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     db_transaction {
 	db_1row item_data {}

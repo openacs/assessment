@@ -15,8 +15,7 @@ set package_id [ad_conn package_id]
 
 db_1row revision_info { *SQL* } 
 set the_url $name
-#set content_root [db_string get_folder_id { *SQL* }]
-set content_root [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+set content_root [as::assessment::folder_id -package_id $package_id]
 
 set template_root ""
 

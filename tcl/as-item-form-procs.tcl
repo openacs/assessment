@@ -13,6 +13,7 @@ ad_proc -public as::item_form::add_item_to_form  {
     {-session_id ""}
     {-default_value ""}
     {-show_feedback ""}
+    {-required_p f}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @modified-date 2004-12-10

@@ -21,7 +21,6 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set assessment_rev_id $assessment_data(assessment_rev_id)
 set session_user_url [acs_community_member_url -user_id $subject_id]
 
 # get start and end times

@@ -4,7 +4,7 @@
 <fullquery name="assessment_data">
 <querytext>
 
-	select cr.title, cr.description, a.instructions, a.run_mode,
+	select ci.name, cr.title, cr.description, a.instructions, a.run_mode,
 	       a.anonymous_p, a.secure_access_p, a.reuse_responses_p, a.show_item_name_p,
 	       a.entry_page, a.exit_page, a.consent_page, a.return_url, a.number_tries,
 	       a.wait_between_tries, a.time_for_response, a.show_feedback, a.section_navigation,

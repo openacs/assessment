@@ -37,6 +37,7 @@
   <msg key="Answer_Alignment">Answer Alignment</msg>
   <msg key="Answer_Alignment_help">Alignment of the answer in relation to the question.</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
+  <msg key="Answer_Value">Answer Value</msg>
   <msg key="as_Anonymous_help">Is it possible to provide an anonymous answer? 
 &lt;br&gt;
 The author of the assement will not see who gave the answer.</msg>
@@ -81,6 +82,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Categorization_exact">Exact</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
   <msg key="Choice">Choice</msg>
+  <msg key="choice_Content">Upload File</msg>
+  <msg key="choice_Delete_Content">Delete File</msg>
+  <msg key="choice_display_Content">Choice File</msg>
   <msg key="choice_Feedback_help">Feedback text given with this choice (in addition to the feedback given with the question itself)</msg>
   <msg key="Choice_help">Description of the choice</msg>
   <msg key="Choice_Orientation">Choice Orientation</msg>
@@ -153,8 +157,11 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Field_Code">Field Code</msg>
   <msg key="Field_Code_help">A short label used when exporting question (e.g. for column or row names in a spreadsheet)
 </msg>
+  <msg key="file_too_large">Your file is too large. Files are limited to %pretty_max_size% bytes.\n</msg>
+  <msg key="file_zero_size">Your file is zero-length. Either you attempted to upload a zero length file, a file which does not exists, or something went wrong during the transfer.\n</msg>
   <msg key="Finish_Time">Finish Time</msg>
   <msg key="Finished">Finished</msg>
+  <msg key="Fixed_Position">Fixed Order Position</msg>
   <msg key="from">From:</msg>
   <msg key="hide_item_name">Question name hidden</msg>
   <msg key="horizontal">Horizontal</msg>
@@ -166,9 +173,12 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Increasing_help">Increasing (true) will give (number of correct matches / number of total matches) *100% points.&lt;br&gt;
 Increasing (false) will either give 100%, if all correct answers are given, or 0% else. </msg>
   <msg key="Instructions">Instructions</msg>
+  <msg key="item_Content">Upload File</msg>
   <msg key="item_Definition_help">REDUNDANT, Description should be enough</msg>
+  <msg key="item_Delete_Content">Delete File</msg>
   <msg key="item_Description_help">Additional searchable description for the question catalog</msg>
   <msg key="item_display_cb">Checkboxes</msg>
+  <msg key="item_display_Content">Question File</msg>
   <msg key="item_display_rb">Radiobuttons</msg>
   <msg key="item_display_sa">Short Answer</msg>
   <msg key="item_display_sb">Selectbox</msg>
@@ -217,6 +227,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Move_Up">Move Up</msg>
   <msg key="Multiple">Allow Multiple Answers</msg>
   <msg key="Name">Name</msg>
+  <msg key="name_used">Name is already used.</msg>
   <msg key="New_Assessment">New Assessment</msg>
   <msg key="New_Assessment2">Create New Assessment</msg>
   <msg key="Next">Next</msg>
@@ -229,6 +240,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>
   <msg key="num_Correct_Answer">Number of displayed Correct Choices</msg>
   <msg key="num_Correct_help">Number of correct answers that have to be displayed</msg>
+  <msg key="num_items">Number of Items displayed</msg>
   <msg key="Number_of_Tries">Number of Tries allowed</msg>
   <msg key="numerical">Numerical</msg>
   <msg key="on_creation_date">, on %creation_date%</msg>

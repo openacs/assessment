@@ -42,6 +42,12 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit
 }
 
+if {[db_0or1row get_item_content {}]} {
+    ad_form -extend -name item_edit -form {
+	{content:text(inform),optional {label "[_ assessment.item_display_Content]"} {value {<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>}} {help_text "[_ assessment.item_Content_help]"}}
+    }
+}
+
 ad_form -extend -name item_edit -form {
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {value $subtext} {help_text "[_ assessment.item_Subtext_help]"}}
     {field_code:text,optional {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {value $field_code} {help_text "[_ assessment.Field_Code_help]"}}

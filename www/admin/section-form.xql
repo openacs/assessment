@@ -18,7 +18,7 @@
       <querytext>
 
 	select ci.name, cr.title, cr.description, s.instructions, s.display_type_id,
-	       s.feedback_text, s.max_time_to_complete, s.points
+	       s.feedback_text, s.max_time_to_complete, s.points, s.num_items
 	from as_sections s, cr_revisions cr, cr_items ci
 	where cr.revision_id = s.section_id
 	and ci.item_id = cr.item_id

@@ -19,7 +19,7 @@ ad_proc -public as::item_display_sb::new {
     New Item Display SelectBox Type to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_sb in the CR (and as_item_display_sb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -75,7 +75,7 @@ ad_proc -public as::item_display_sb::copy {
     Copy an Item Display SelectBox Type
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_sb in the CR (and as_item_display_sb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -130,7 +130,12 @@ ad_proc -public as::item_display_sb::render {
 	}
     }
     
-    set options {-datatype text -widget $widget -label $title -help_text $subtext -values $default_value -required_p $required_p -html $html_display_options -options $data}
+    set optional ""
+    if {$required_p != "t"} {
+	set optional ",optional"
+    }
+    set param_list [list [list label $title] [list help_text $subtext] [list values $default_value] [list options $data] [list html $html_display_options]]
+    set element_params [concat [list "$element\:text($widget)$optional"] $param_list]
 
-    eval template::element::create $form $element $options
+    ad_form -extend -name $form -form [list $element_params]
 }

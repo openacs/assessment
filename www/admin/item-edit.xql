@@ -38,4 +38,17 @@
       </querytext>
 </fullquery>
 
+<fullquery name="get_item_content">
+      <querytext>
+
+    select cr.title || ' (' || cr.content_length || ' bytes)' as content_name,
+           cr.revision_id as content_rev_id, cr.title as content_filename
+    from cr_revisions cr, as_item_rels r
+    where r.item_rev_id = :as_item_id
+    and r.target_rev_id = cr.revision_id
+    and r.rel_type = 'as_item_content_rel'
+
+      </querytext>
+</fullquery>
+
 </queryset>

@@ -19,7 +19,10 @@
 		update as_item_choices
 		set feedback_text = :feedback_text,
 		    selected_p = :selected_p,
-		    percent_score = :percent_score
+		    percent_score = :percent_score,
+		    fixed_position = :fixed_position,
+		    text_value = :answer_value,
+		    content_value = :content_rev_id
 		where choice_id = :choice_id
 
       </querytext>

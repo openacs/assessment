@@ -23,12 +23,12 @@
 
 <if @display.submit_answer_p@ eq f>
   <formtemplate id="show_item_form">
-      <input type="hidden" name="session_id" value="@session_id@">
 
       <multiple name="items">
       <tr>
       <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td>
         <td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
+      <if @items.content@ not nil><tr><td colspan="4">@items.content;noquote@</td></tr></if>
 
       <tr class="form-widget"><td colspan="4">
         <blockquote>
@@ -67,13 +67,12 @@
 </if><else>
   <multiple name="items">
     <formtemplate id="show_item_form_@items.as_item_id@">
-      <input type="hidden" name="session_id" value="@session_id@">
-      <input type="hidden" name="section_order" value="@old_section_order@">
-      <input type="hidden" name="item_order" value="@old_item_order@">
       <input type="hidden" name="as_item_id" value="@items.as_item_id@">
       <tr>
       <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></td>
         <td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
+      <if @items.content@ not nil><tr><td colspan="4">@items.content;noquote@</td></tr></if>
+
       <tr><td colspan="4">
         <blockquote>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>

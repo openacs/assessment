@@ -7,6 +7,7 @@ ad_library {
 namespace eval as::assessment {}
 
 ad_proc -public as::assessment::new {
+    {-name ""}
     {-title:required}
     {-creator_id ""}
     {-description ""}
@@ -35,11 +36,15 @@ ad_proc -public as::assessment::new {
     New assessment to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
     db_transaction {
-	set assessment_item_id [content::item::new -parent_id $folder_id -content_type {as_assessments} -name [exec uuidgen] -title $title ]
+	set assessment_item_id [db_nextval acs_object_id_seq]
+	if {[empty_string_p $name]} {
+	    set name "ASS_$assessment_item_id"
+	}
+	set assessment_item_id [content::item::new -item_id $assessment_item_id -parent_id $folder_id -content_type {as_assessments} -name $name -title $title ]
 
 	set as_assessment_id [content::revision::new \
 				  -item_id $assessment_item_id \
@@ -282,4 +287,52 @@ ad_proc as::assessment::pretty_time {
 	set time "$time_min\:$time_sec min"
     }
     return $time
+}
+
+ad_proc as::assessment::folder_id {
+    -package_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-06
+
+    Returns the folder_id of the package instance
+} {
+    return [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+}
+
+ad_proc as::assessment::unique_name {
+    {-name ""}
+    {-new_p 1}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-05
+
+    Checks if a name string is unique or empty
+} {
+    if {$new_p && ![empty_string_p $name] && [db_string check_unique {}] > 0} {
+	return 0
+    } else {
+	return 1
+    }
+}
+
+ad_proc as::assessment::display_content {
+    -content_id:required
+    -content_type:required
+    -filename:required
+    {-title ""}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-01-06
+
+    Returns a html snippet to display a content item (i.e. image)
+} {
+    if {[empty_string_p $content_id]} {
+	return $title
+    }
+    if {$content_type == "image"} {
+	return "<img src=\"view/$filename?revision_id=$content_id\" alt=\"$title\">"
+    } else {
+	return "<a href=\"view/$filename?revision_id=$content_id\">$title</a>"
+    }
 }

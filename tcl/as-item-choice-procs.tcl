@@ -19,7 +19,7 @@ ad_proc -public as::item_choice::new {
     {-correct_answer_p ""}
     {-sort_order ""}
     {-percent_score ""}
-
+    {-fixed_position ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -27,7 +27,7 @@ ad_proc -public as::item_choice::new {
     New item choice to the data database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     db_transaction {
@@ -46,7 +46,8 @@ ad_proc -public as::item_choice::new {
 					[list selected_p $selected_p] \
 					[list correct_answer_p $correct_answer_p] \
 					[list sort_order $sort_order] \
-					[list percent_score $percent_score] ] ]
+					[list percent_score $percent_score] \
+					[list fixed_position $fixed_position] ] ]
     # FIXME too much code repetition here
     # maybe there are more efficient ways to to it (maybe using hashes to pass the values between functions)
     }
@@ -71,16 +72,17 @@ ad_proc -public as::item_choice::new_revision {
 				-content_type {as_item_choices} \
 				-title $title \
 				-attributes [list [list mc_id $mc_id ] \
-					[list data_type $data_type ] \
-					[list numeric_value $numeric_value ] \
-					[list text_value $text_value] \
-					[list boolean_value $boolean_value] \
-					[list content_value $content_value] \
-					[list feedback_text $feedback_text] \
-					[list selected_p $selected_p] \
-					[list correct_answer_p $correct_answer_p] \
-					[list sort_order $sort_order] \
-					[list percent_score $percent_score] ] ]
+						 [list data_type $data_type ] \
+						 [list numeric_value $numeric_value ] \
+						 [list text_value $text_value] \
+						 [list boolean_value $boolean_value] \
+						 [list content_value $content_value] \
+						 [list feedback_text $feedback_text] \
+						 [list selected_p $selected_p] \
+						 [list correct_answer_p $correct_answer_p] \
+						 [list sort_order $sort_order] \
+						 [list percent_score $percent_score] \
+						 [list fixed_position $fixed_position] ] ]
     }
 
     return $as_item_choice_id
@@ -96,7 +98,7 @@ ad_proc -public as::item_choice::copy {
     Copy a Multiple Choice
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     db_transaction {
@@ -113,7 +115,8 @@ ad_proc -public as::item_choice::copy {
 			       -selected_p $selected_p \
 			       -correct_answer_p $correct_answer_p \
 			       -sort_order $sort_order \
-			       -percent_score $percent_score]
+			       -percent_score $percent_score \
+			       -fixed_position $fixed_position]
     }
 
     return $new_choice_id

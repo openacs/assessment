@@ -24,4 +24,20 @@
 		</querytext>
 	</fullquery>
 
+	<fullquery name="session_updated">
+		<querytext>
+	UPDATE as_sessions
+	SET last_mod_datetime = sysdate
+	WHERE session_id = :session_id
+		</querytext>
+	</fullquery>
+
+	<fullquery name="session_finished">
+		<querytext>
+	UPDATE as_sessions
+	SET completed_datetime = sysdate
+	WHERE session_id = :session_id
+		</querytext>
+	</fullquery>
+
 </queryset>

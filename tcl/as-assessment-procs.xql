@@ -76,4 +76,14 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::assessment::unique_name.check_unique">
+	<querytext>
+
+	select count(*)
+	from cr_items
+	where name = :name
+
+	</querytext>
+</fullquery>
+	
 </queryset>

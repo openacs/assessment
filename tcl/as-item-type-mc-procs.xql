@@ -55,51 +55,12 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_type_mc::render.get_sorted_choices">
-      <querytext>
-
-	select r.title, c.choice_id
-	from as_session_choices c, cr_revisions r
-	where c.session_id = :session_id
-	and c.section_id = :section_id
-	and c.as_item_id = :as_item_id
-	and r.revision_id = c.choice_id
-
-      </querytext>
-</fullquery>
-
-<fullquery name="as::item_type_mc::render.get_sorted_choices_with_feedback">
-      <querytext>
-
-	select r.title, c.choice_id, c.correct_answer_p, c.feedback_text
-	from as_session_choices sc, as_item_choices c, cr_revisions r
-	where sc.session_id = :session_id
-	and sc.section_id = :section_id
-	and sc.as_item_id = :as_item_id
-	and r.revision_id = sc.choice_id
-	and c.choice_id = sc.choice_id
-
-      </querytext>
-</fullquery>
-
 <fullquery name="as::item_type_mc::render.item_type_data">
       <querytext>
 
 	select num_correct_answers, num_answers
 	from as_item_type_mc
 	where as_item_type_id = :type_id
-
-      </querytext>
-</fullquery>
-
-<fullquery name="as::item_type_mc::render.choices">
-      <querytext>
-
-	    select c.choice_id, r.title, c.correct_answer_p, c.selected_p
-	    from as_item_choices c, cr_revisions r
-	    where c.mc_id = :type_id
-	    and r.revision_id = c.choice_id
-	    order by c.sort_order
 
       </querytext>
 </fullquery>

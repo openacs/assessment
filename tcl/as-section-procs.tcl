@@ -13,6 +13,7 @@ ad_proc -public as::section::new {
     {-instructions ""}
     {-feedback_text ""}
     {-max_time_to_complete ""}
+    {-num_items ""}
     {-display_type_id ""}
     {-points ""}
 } {
@@ -22,7 +23,7 @@ ad_proc -public as::section::new {
     New section to the database
 } {
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
     db_transaction {
@@ -40,6 +41,7 @@ ad_proc -public as::section::new {
 			       -attributes [list [list instructions $instructions] \
 						[list feedback_text $feedback_text] \
 						[list max_time_to_complete $max_time_to_complete] \
+						[list num_items $num_items] \
 						[list display_type_id $display_type_id] \
 						[list points $points] ] ]
     }
@@ -54,6 +56,7 @@ ad_proc -public as::section::edit {
     {-instructions ""}
     {-feedback_text ""}
     {-max_time_to_complete ""}
+    {-num_items ""}
     {-display_type_id ""}
     {-points ""}
 } {
@@ -74,6 +77,7 @@ ad_proc -public as::section::edit {
 				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
+						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
 
@@ -102,6 +106,7 @@ ad_proc -public as::section::new_revision {
 				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
+						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
 
@@ -123,7 +128,7 @@ ad_proc -public as::section::copy {
 } {
     # edit as_section in the CR
     set package_id [ad_conn package_id]
-    set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
 
     db_transaction {
 	db_1row section_data {}
@@ -142,6 +147,7 @@ ad_proc -public as::section::copy {
 				-attributes [list [list instructions $instructions] \
 						 [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
+						 [list num_items $num_items] \
 						 [list required_p $required_p] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
@@ -169,6 +175,7 @@ ad_proc as::section::items {
     {-section_id:required}
     {-session_id:required}
     {-sort_order_type ""}
+    {-num_items ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
@@ -186,7 +193,7 @@ ad_proc as::section::items {
     set open_positions ""
     set max_pos 0
     db_foreach section_items {} {
-	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete]
+	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type]
 	if {![empty_string_p $fixed_position] && $fixed_position != "0"} {
 	    set fixed_positions($fixed_position) $as_item_id
 	    if {$max_pos < $fixed_position} {
@@ -228,6 +235,10 @@ ad_proc as::section::items {
 		lappend sorted_items $fixed_positions($position)
 	    }
 	}
+    }
+
+    if {![empty_string_p $num_items]} {
+	set sorted_items [lreplace $sorted_items $num_items end]
     }
 
     # save item order

@@ -3,8 +3,8 @@
 
 <fullquery name="find_assessment">
       <querytext>
-    select r.item_id as assessment_id, s.subject_id,
-           p.first_names, p.last_name
+    select r.item_id as assessment_id, s.assessment_id as assessment_rev_id,
+           s.subject_id, p.first_names, p.last_name
     from as_sessions s, cr_revisions r, persons p
     where s.session_id = :session_id
     and r.revision_id = s.assessment_id

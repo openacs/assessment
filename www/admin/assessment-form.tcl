@@ -5,18 +5,19 @@ ad_page_contract {
     @cvs-id $Id:
 } {
     assessment_id:integer,optional
+    {__new_p 0}
 } -properties {
     context_bar:onevalue
     page_title:onevalue
 }
 
-if {[info exists assessment_id]} {
+if {![info exists assessment_id] || $__new_p} {
+    set page_title [_ assessment.New_Assessment2]
+    set _assessment_id 0
+} else {
     set page_title [_ assessment.Edit_Assessment]
     set _assessment_id 0
     db_0or1row rev_id_from_item_id {}
-} else {
-    set page_title [_ assessment.New_Assessment2]
-    set _assessment_id 0
 }
 
 set context_bar [ad_context_bar $page_title]
@@ -31,8 +32,21 @@ set navigation_options [list [list "[_ assessment.Default_Path]" "default path"]
 
 ad_form -name assessment_form -action assessment-form -form {
     {assessment_id:key}
+}
+
+if {[info exists assessment_id]} {
+    ad_form -extend -name assessment_form -form {
+	{name:text(inform) {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
+    }
+} else {
+    ad_form -extend -name assessment_form -form {
+	{name:text,optional {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
+    }
+}
+
+ad_form -extend -name assessment_form -form {
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.as_Title_help]"}}
-    {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Description_help]"}}
+    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Description_help]"}}
 }
 
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
@@ -58,6 +72,7 @@ ad_form -extend -name assessment_form -form {
     {show_feedback:text(select),optional {label "[_ assessment.Show_Feedback]"} {options $feedback_options} {help_text "[_ assessment.as_Feedback_help]"}}
     {section_navigation:text(select),optional {label "[_ assessment.Section_Navigation]"} {options $navigation_options} {help_text "[_ assessment.as_Navigation_help]"}}
 } -new_request {
+    set name ""
     set title ""
     set description ""
     set instructions ""
@@ -86,6 +101,8 @@ ad_form -extend -name assessment_form -form {
     if {![empty_string_p $end_time]} {
 	set end_time [util::date::acquire clock [clock scan $end_time]]
     }
+} -validate {
+    {name {[as::assessment::unique_name -name $name -new_p $__new_p]} "[_ assessment.name_used]"}
 } -on_submit {
     if {$start_time == "NULL"} {
 	set start_time ""
@@ -97,6 +114,7 @@ ad_form -extend -name assessment_form -form {
 } -new_data {
     db_transaction {
 	set assessment_rev_id [as::assessment::new \
+				   -name $name \
 				   -title $title \
 				   -description $description \
 				   -instructions $instructions \
