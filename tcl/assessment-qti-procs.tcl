@@ -6,7 +6,6 @@ ad_library {
 }
 
 ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
-	set items [list]
 	# set utf-8 system encoding
 	encoding system utf-8
 	
@@ -78,15 +77,14 @@ ad_proc -public parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			}
 		} else {
 			# Just items (no assessments)
-			set items [parse_item $questestinterop 0]
+			parse_item $questestinterop 0
 		}
 	}
-	return $items
+	return 1
 }
 
 ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI file } {
 	set as_item_section_map__sort_order 0
-	set items [list]
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
 		# Order of the item_choices
@@ -94,6 +92,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 		set as_items__title [$item getAttribute {title}]
 		set as_items__name [$item getAttribute {ident}]
 		array set as_item_choices__correct_answer_p {}
+		array set as_item_choices__score {}
 		set objectivesNodes [$item selectNodes {objectives}]
 		foreach objectives $objectivesNodes {
 			set mattextNodes [$objectives selectNodes {material/mattext/text()}]
@@ -111,6 +110,19 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 					foreach correct $correctNodes {
 						set as_item_choices__correct_answer_p([string trim [$correct nodeValue]]) {t}
 					}
+				}
+				if {$title == {adjustscore}} {
+					set choice {}
+					set score {}
+					set scoreNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
+					foreach correct $scoreNodes {
+						set choice [string trim [$correct nodeValue]]
+					}
+					set scoreNodes [$respcondition selectNodes {setvar[@varname='SCORE']/text()}]
+					foreach scorenode $scoreNodes {
+						set score [string trim [$scorenode nodeValue]]
+					}
+					set as_item_choices__score($choice) $score
 				}
 			}
 		}
@@ -181,7 +193,10 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 					}
 					# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
 					set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
-					as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident)
+					if {![info exists as_item_choices__score($as_item_choices__ident)]} {
+						set as_item_choices__score($as_item_choices__ident) 0
+					}
+					as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) -percent_score $as_item_choices__score($as_item_choices__ident)
 					# order of the item_choices
 					incr sort_order
 				}
@@ -193,5 +208,5 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 			incr as_item_section_map__sort_order
 		}
 	}
-	return $items
+	return 1
 }
