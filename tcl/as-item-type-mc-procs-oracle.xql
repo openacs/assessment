@@ -9,8 +9,8 @@
 	       r2.title as content_filename, i.content_type
 	from as_session_choices sc, cr_revisions r, as_item_choices c,
 	     cr_revisions r2, cr_items i
-	where r2.revision_id = c.content_value (+)
-	and i.item_id = r2.item_id (+)
+	where r2.revision_id(+) = c.content_value
+	and i.item_id(+) = r2.item_id
 	and sc.session_id = :session_id
 	and sc.section_id = :section_id
 	and sc.as_item_id = :as_item_id
@@ -29,8 +29,8 @@
 	       i.content_type
 	from as_session_choices sc, cr_revisions r, as_item_choices c,
 	     cr_revisions r2, cr_items i
-	where r2.revision_id = c.content_value (+)
-	and i.item_id = r2.item_id (+)
+	where r2.revision_id(+) = c.content_value
+	and i.item_id(+) = r2.item_id
 	and sc.session_id = :session_id
 	and sc.section_id = :section_id
 	and sc.as_item_id = :as_item_id
@@ -48,8 +48,8 @@
 	       r2.revision_id as content_rev_id, r2.title as content_filename,
 	       i.content_type
 	from cr_revisions r, as_item_choices c, cr_revisions r2, cr_items i
-	where r2.revision_id = c.content_value (+)
-	and i.item_id = r2.item_id (+)
+	where r2.revision_id(+) = c.content_value
+	and i.item_id(+) = r2.item_id
 	and c.mc_id = :type_id
 	and r.revision_id = c.choice_id
 	order by c.sort_order

@@ -16,8 +16,6 @@ create table as_items (
 	subtext		varchar(500),
 	-- a short label for use in data output header rows, etc
 	field_code	varchar(500),
-	-- some descriptive text
-	definition 	clob,
 	-- whether Item must be answered (default value, can be overriden)
 	required_p	char(1) default 'f'
 			constraint as_items_required_p_ck
@@ -26,12 +24,12 @@ create table as_items (
 	data_type	varchar(50),
 	-- optional max number of seconds to perform Item
 	max_time_to_complete	integer,
-	-- a denormalization to cache the generated "widget" for the Item (NB: when any change is made to an as_item_choice related to an as_item, this will have to be updated!)
-	adp_chunk	varchar(500),
 	-- right feedback  
 	feedback_right	clob,
 	-- wrong feedback
-	feedback_wrong	clob
+	feedback_wrong	clob,
+	-- number of points for item; might be used for defining difficulty levels
+	points		integer
 );
 
 -- contains additional information for all multiple choices (radiobutton, checkbox)
@@ -68,11 +66,15 @@ create table as_item_choices (
 			check (correct_answer_p in ('t','f')),
 	-- the order this choice will appear with regards to the MC item.
 	sort_order	integer,
+	-- fixed position in display. 0 for default, negative values relative to end
+	fixed_position	integer,
 	-- this is where points are stored
 	percent_score		integer
 			constraint as_item_choices_percent_ck
 			check (percent_score <= 100)	
 );
+
+create index as_i_choices_order_idx on as_item_choices (mc_id, sort_order);
 
 -- Short Answer Answers
 create table as_item_sa_answers (

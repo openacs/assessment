@@ -10,7 +10,7 @@
 	   c.content_value, r2.title as content_filename,
 	   r2.title || ' (' || r2.content_length || ' bytes)' as content_name
     from cr_revisions r, as_item_choices c, cr_revisions r2
-    where c.content_value(+) = r2.revision_id
+    where c.content_value = r2.revision_id(+)
     and r.revision_id = c.choice_id
     and c.mc_id = :mc_id
     order by c.sort_order

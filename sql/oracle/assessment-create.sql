@@ -9,7 +9,7 @@
 @ assessment-item-create.sql
 @ assessment-section-create.sql
 @ assessment-collected-data-create.sql
-@ assessment-files.sql
+@ assessment-types-create.sql
 @ assessment-checks-create.sql
 @ assessment-actions-create.sql
 @ assessment-checks-package-create.sql

@@ -22,63 +22,63 @@ declare
 
 begin
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'name',
 		pretty_name	=>	'Name',
 		pretty_plural	=>	'Names',
 		datatype	=>	'string'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'action_p',
 		pretty_name	=>	'Action_p',
 		pretty_plural	=>	'Action_p',
 		datatype	=>	'string'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'section_id_from',
 		pretty_name	=>	'From',
 		pretty_plural	=>	'from',
 		datatype	=>	'integer'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'section_id_to',
 		pretty_name	=>	'To',
 		pretty_plural	=>	'to',
 		datatype	=>	'integer'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'check_sql',
 		pretty_name	=>	'check_sql',
 		pretty_plural	=>	'check_sql',
 		datatype	=>	'string'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'description',
 		pretty_name	=>	'Description',
 		pretty_plural	=>	'descriptions',
 		datatype	=>	'string'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'postcheck_p',
 		pretty_name	=>	'postcheck_p',
 		pretty_plural	=>	'postcheck_p',
 		datatype	=>	'string'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'item_id',
 		pretty_name	=>	'item_id',
 		pretty_plural	=>	'item_id',
 		datatype	=>	'integer'
 	);
 	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'inter_item_check',
+		object_type	=> 	'as_inter_item_check',
 		attribute_name 	=>	'assessment_id',
 		pretty_name	=>	'assessment_id',
 		pretty_plural	=>	'assessment_id',
