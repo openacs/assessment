@@ -20,9 +20,11 @@
 
 <tr class="even"><td>#assessment.View_Responses# </td><td>
 	<a href="../sessions?assessment_id=@assessment_id@">#assessment.All#</a> |
-	<a href="results-users?assessment_id=@assessment_id@">#assessment.By_user#</a> |
-<!--	<a href="results-summary?assessment_id=@assessment_id@">#assessment.Summary#</a> | -->
+	<a href="results-users?assessment_id=@assessment_id@">#assessment.By_user#</a>
+<!-- |
+	<a href="results-summary?assessment_id=@assessment_id@">#assessment.Summary#</a> |
 	<if @assessment_data.anonymous_p@>#assessment.CSV_file#</if><else><a href="results-export?assessment_id=@assessment_id@">#assessment.CSV_file#</a></else></td>
+-->
 </tr>
 
 <tr class="odd">
