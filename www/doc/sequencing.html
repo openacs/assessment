@@ -34,26 +34,9 @@ Sequencing. (Note: we reviewed several alternatives in the archived
 prior discussions <a
  href="http://openacs.org/projects/openacs/packages/assessment/specs/sequencing">here</a>.
 </p>
-<p>So here's the current approach. First, we think that the QTI
-components
-nicely capture the essential pieces needed for both Data Validation and
-Navigation Control (the combination of which we're referring to as
-Sequencing). But though not explicitly part of the QTI schema,
-implicitly there is (or should be) another component:
-</p>
-<p></p>
-<ul>
-  <li> a destination that defines which is the next
-item/section/form to be presented to the user based on the evaluation
-of the first four elements; It appears to us that this could include
-the optional Data Validation step, in that certain rule evaluation
-results may product a "no move" destination requiring the user to
-remain at the current item and perform some additional action (change
-the result or provide an additional comment/justification) </li>
-</ul>
-<p>
-Next we note that there are two scopes over which Sequencing needs to
-be handled: </p>
+So here is our current approach. We note that there are two scopes
+over which Sequencing needs to
+be handled:
 <p></p>
 <ul>
   <li> intra-item: checks pertaining to user responses to a single item
@@ -71,97 +54,8 @@ So how might we implement this in our datamodel? Consider the
  src="images/assessment-sequencefocus.jpg"
  style="width: 711px; height: 707px;"></p>
 </center>
-Here is how this might work:
 <p></p>
 <ul>
-  <li> Each intra-item "rule" (eg "age &lt; 90") is a row in the
-as_item_checks table, which has columns for a "comparator" (EQ, NE, LT,
-LE, GT, GE, IN), a "conjunction" ("and", "or", "not"), and columns for
-the target value to be compared (the "content_value" is an version_id
-in cr_versions for images etc).
-    <p>Thus to say that a user's response must be greater than or equal
-to 0
-and less than one would involve insertion of two rows into
-as_item_checks (in abbreviated pseudo-sql): </p>
-    <ol>
-      <li> insert into as_item_checks
-(comparator,numeric_value,conjunction) values (GE,0,'and') </li>
-      <li> insert into as_item_checks
-(comparator,numeric_value,conjunction) values (LT,1,'and') </li>
-    </ol>
-    <p>Then when a user submits a response to this item, the
-as_item_checks
-table would be queried as part of the "get_assessment_info" proc to get
-these parameters, which would then be passed to some procedure that
-checks the user's response by converting the "GE", say, to an actual
-numeric comparison in some switch structure (unless there's a cleverer
-way to do this via uplevel'ing, upvar'ing or exec'ing). </p>
-    <p>As long as these criteria aren't grouped (other than the
-default "single group" implicit in such a statement, the
-as_check_groups table isn't needed. However, if you want to say a
-user's response must be greather than or equal to 0 and less than one
-OR greater than 10, then you'd insert a third row into as_item_checks
-and two rows into as_check_groups: </p>
-    <ol>
-      <li> insert into as_check_groups (conjunction) values ('or') <br>
-then use this new check_group_id = 234 (eg) to insert into the
-as_item_checks rows: </li>
-      <li> insert into as_item_checks
-(comparator,numeric_value,conjunction,check_group_id) values
-(GE,0,'and',234) </li>
-      <li> insert into as_item_checks
-(comparator,numeric_value,conjunction,check_group_id) values
-(LT,1,'and',234)
-        <p></p>
-      </li>
-      <li> insert into as_check_groups (conjunction) values ('or') <br>
-then use this new check_group_id = 235 (eg) to insert into the
-as_item_checks row: </li>
-      <li> insert into as_item_checks
-(comparator,numeric_value,conjunction,check_group_id) values
-(GT,10,'and',235) </li>
-    </ol>
-    <p>If the grouping were more complex, then the parent_group_id
-field would
-get used to define the hierarchical grouping. </p>
-    <p></p>
-  </li>
-  <li> Each inter-item "rule" (eg "age &lt; 90" or "gender =
-male") is a row in the as_inter_item_checks, which has columns for each
-of the two items to be compared in this rule, similar to the use in
-as_item_checks; each rule is a row in this table. Each row thus
-supports a pairwise check, so to test for three items would involve
-three rows:
-    <p></p>
-    <ol>
-      <li> insert into as_inter_item_checks (item1_flds,item2_flds)
-values (item1_vals,item2_vals) </li>
-      <li> insert into as_inter_item_checks (item1_flds,item3_flds)
-values (item1_vals,item3_vals) </li>
-      <li> insert into as_inter_item_checks (item2_flds,item3_flds)
-values (item2_vals,item3_vals) </li>
-    </ol>
-    <p>Obviously, this schema quickly becomes unworkable since 2^n rows
-are
-required for n items, but I can't see needing more than several such
-checks for any real case; in fact I've only encountered the need for
-two items to be checked against each other in real applications.
-However, if there's a more clever way to do this without falling into
-the Bottomless Combinatorial Pit, I'm keen to hear it. ;-) </p>
-    <p>Groups and ordering of these inter-item checks would be handled
-by adding rows to as_check_groups as before. </p>
-    <p></p>
-  </li>
-  <li> Navigation information is removed to the
-as_check_navigation table, each row of which defines by
-form/section/item ids where to user is to be taken based on evaluation
-of the top-level group (ie parent_group_id is null) for that item or
-inter-item check group. This table would store what is to happen (ie
-where the user is to go) depending on whether the item/inter-item
-checks evaluate to "success" (ie everything is fine so proceed),
-"warning" (something isn't exactly right but isn't flagrantly wrong;
-with an explanation we'll take that value), or "error" (nope, that's
-right out; resubmit the damn data idjit!"). </li>
 </ul>
 <p>
 </p>
@@ -197,9 +91,7 @@ focus moves </li>
       <li> user_message - optional text to return to user if check is
 true<br>
       </li>
-      <li>check_sql - The sql that contains the check<br>
-      </li>
-      <li> navigation_id - references as_check_navigation </li>
+      <li>check_sql - The sql that contains the check</li>
     </ul>
     <p> </p>
   </li>
@@ -209,90 +101,53 @@ sided checks that are associated with as_sections defining if a section
 should be displayed or with as_items, defining if an item should be
 displayed.<br>
     <br>
-The goal is to have a way of telling if a section shall be displayed or
-not depending on the section-checks. This way you could say that you
-only display this section if the response to item(1234) "Color of your
-eye" was "blue" and the response to item(4231) "Color of your hair" was
-"red". Sadly we can't use such an easy way of checking the ":value" as
-we do with item_checks, as we do not know which item this refers to.
-Instead we store the item_id like this ":item_1234". This way the
-check_sql would look like ":item_1234 == 'blue' AND :item_4231 ==
-'red'". Additionally other variables might be defined by the API at a
-later
-stage,&nbsp; e.g. ":current_percentage", which would be replaced by the
+The goal is to have a way of telling if a section (or an item within a
+section) shall be displayed or not depending on the section-checks.
+This way you could say that you only display this section if the
+response to item(1234) "Color of your eye" was "blue" and the response
+to item(4231) "Color of your hair" was "red". Sadly we can't use such
+an easy way of checking the ":value" as we do with item_checks, as we
+do not know which item this refers to. Instead we store the item_id
+like this ":item_1234". This way the check_sql would look like
+":item_1234 == 'blue' AND :item_4231 == 'red'". Additionally other
+variables might be defined by the API at a later
+stage,&nbsp; e.g. ":percent_score", which would be replaced by the
 current percentage value (aka score) that subject had in the test so
-far. It might be interesting to pass these variables along in the API,
-this remains to be seen when actually implementing the system.
+far (taken from the as_session_table). It might be interesting to pass
+these variables along in the API,
+this remains to be seen when actually implementing the system.<br>
+    <br>
+The Inter Item Checks also allow post section navigation (in contrast
+to the pre section / item navigation mentioned above). If post_check_p
+is true, the check will be done *after* the user has hit the submit
+button. Depending on the result of the check (if it is true) the user
+will be taken to the section given by section_id or to the item given
+by item_id, depending whether this assessment is section based
+(questions are displayed in sections) or item based (each item will be
+displayed on a seperate page). If there are multiple post checks for a
+given section/item the order will be defined by the relationship (which
+means this relationship has to have a sort_order attribute).<br>
     <p></p>
     <ul>
       <li> inter_item_check_id </li>
       <li>cr:name - identifier</li>
-      <li>cr:description - Explanation what this check does<br>
+      <li>cr:description - Explanation what this check does</li>
+      <li>user_message - optional text to return to user</li>
+      <li>check_sql - The sql that contains the check<br>
       </li>
-      <li> item1_id </li>
-      <li> item2_id </li>
-      <li> comparator1_id </li>
-      <li> comparator2_id </li>
-      <li> check_group_id - references as_check_group </li>
-      <li> user_message - optional text to return to user </li>
-      <li> navigation_id - references as_check_navigation </li>
+      <li>post_check_p - Is this a check that should be executed after
+the user hit the submit button while answering the item / section.<br>
+      </li>
+      <li>section_id - Section to call if we are in a section mode (all
+items will be displayed in sections) and it is a post_check.<br>
+      </li>
+      <li>item_id - Item to call if we are in "per item" mode (all
+items will be displayed on a seperate page) and it is a post_check.</li>
+      <li>Potential extension: item_list - list of item_ids that are
+used in the check_sql to speed up the check.<br>
+      </li>
     </ul>
-    <p> </p>
-  </li>
-  <li> Check Groups (as_check_groups) are the grouping/associative
-mechanisms by which Item Checks and Inter-Item Checks operate.
-    <p></p>
-    <ul>
-      <li> group_id </li>
-      <li> parent_group_id </li>
-      <li> sort_order </li>
-    </ul>
-    <p> </p>
-  </li>
-  <li> Comparators (as_comparators) are where we abstract
-the comparisons in order to support extensibly additional types of
-comparisons (image-image comparisons, etc). Since tcl is poorly typed
-but sql is not, we have to use a skinny table approach here, too.
-Attributes include:
-    <p></p>
-    <ul>
-      <li> comparator_id </li>
-      <li> data_type </li>
-      <li> numeric_ref_value </li>
-      <li> text_ref_value </li>
-      <li> boolean_ref_value </li>
-      <li> content_ref_value </li>
-      <li> blob_ref_value </li>
-      <li> item_null_p - this is "t" if the check "Is this Item value
-null?" is supposed to evaluate to True. Without this attribute, the
-only way to get this meaning is to leave all the other *_ref_values
-null and test each time that they all are null. Instead, this
-gives us a single, positive check. Why do we want this? There are lots
-of inter-item checks of this sort: "If Item(gender) = "male" then
-Item(bra size) is null". The comparator attached to Item(bra size)
-would have item_null_p = "t". (Well, we would hope that this is the
-case. ;-) </li>
-    </ul>
-    <p> </p>
-  </li>
-  <li> Check Navigation (as_check_navigation) abstracts
-out where the user will be directed after a check or group of checks is
-completed. We need to handle three outputs from the check functions:
-success, warning, failure. And we need to be able able to send the user
-to the next assessment, section or item. Attributes include:
-    <p></p>
-    <ul>
-      <li> navigation_id </li>
-      <li> success_next_assess_id </li>
-      <li> success_next_section_id </li>
-      <li> success_next_item_id </li>
-      <li> warning_next_assess_id </li>
-      <li> warning_next_section_id </li>
-      <li> warning_next_item_id </li>
-      <li> failure_next_assess_id </li>
-      <li> failure_next_section_id </li>
-      <li> failure_next_item_id </li>
-    </ul>
+    <br>
   </li>
 </ul>
 </body>
