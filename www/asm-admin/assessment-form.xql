@@ -30,7 +30,7 @@
 <fullquery name="rev_id_from_item_id">
 <querytext>
 
-	select latest_revision as _assessment_id
+	select latest_revision as s_assessment_id
 	from cr_items
 	where item_id = :assessment_id
 

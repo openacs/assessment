@@ -13,11 +13,11 @@ ad_page_contract {
 
 if {![info exists assessment_id] || $__new_p} {
     set page_title [_ assessment.New_Assessment2]
-    set _assessment_id 0
+    set s_assessment_id 0
 } else {
     set page_title [_ assessment.Edit_Assessment]
     permission::require_permission -object_id $assessment_id -privilege admin
-    set _assessment_id 0
+    set s_assessment_id 0
     db_0or1row rev_id_from_item_id {}
 }
 set package_id [ad_conn package_id]
@@ -58,7 +58,7 @@ ad_form -extend -name assessment_form -form {
 }
 
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
-    category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $_assessment_id -form_name assessment_form
+    category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $s_assessment_id -form_name assessment_form
 }
 
 ad_form -extend -name assessment_form -form {

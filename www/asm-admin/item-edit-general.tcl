@@ -122,11 +122,11 @@ ad_form -extend -name item_edit_general -form {
 	} elseif {[info exists delete_content]} {
 	    db_dml delete_item_content {}
 	}
-
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
 	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
+	as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id $new_section_id -as_item_id $as_item_id -new_item_id $new_item_id
 	db_dml update_section_in_assessment {}
 	db_dml update_item_in_section {}
     }
