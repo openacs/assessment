@@ -59,3 +59,25 @@ create table as_item_display_cb (
 	sort_order_type		varchar(20),
 	item_answer_alignment	varchar(20)
 );
+
+create table as_item_display_tb (
+	as_item_display_id	integer
+				constraint as_item_display_tb_as_item_display_id_pk
+				primary key
+				constraint as_item_display_tb_as_item_display_id_fk
+				references cr_revisions(revision_id),
+	html_display_options	varchar(50),
+	abs_size		varchar(10),
+	item_answer_alignment	varchar(10)
+);
+
+create table as_item_display_sa (
+	as_item_display_id	integer
+				constraint as_item_display_sa_as_item_display_id_pk
+				primary key
+				constraint as_item_display_sa_as_item_display_id_fk
+				references cr_revisions(revision_id),
+	html_display_options	varchar(50),
+	abs_size		varchar(10),
+	box_orientation		varchar(10)
+);
