@@ -31,41 +31,41 @@
 
 <tr class="odd">
 	<td><if @assessment_data.anonymous_p@> #assessment.anonymous_users_allow#</if><else>#assessment.reg_users_required#</else> -
-	[ <a href="response-anonymous-toggle?assessment_id=@assessment_id@">
+	[ <a href="assessment-form?assessment_id=@assessment_id@">
 	<if @assessment_data.anonymous_p@>#assessment.make_non_anonymous#</if><else>#assessment.make_anonymous#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
 	<td><if @assessment_data.secure_access_p@> #assessment.secure_access_require#</if><else>#assessment.unsecure_access_allow#</else> -
-	[ <a href="response-secure-toggle?assessment_id=@assessment_id@">
+	[ <a href="assessment-form?assessment_id=@assessment_id@">
 	<if @assessment_data.secure_access_p@>#assessment.make_unsecure#</if><else>#assessment.make_secure#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
 	<td><if @assessment_data.reuse_responses_p@> #assessment.reuse_responses#</if><else>#assessment.dont_reuse_responses#</else> -
-	[ <a href="response-reuse-toggle?assessment_id=@assessment_id@">
+	[ <a href="assessment-form?assessment_id=@assessment_id@">
 	<if @assessment_data.reuse_responses_p@>#assessment.make_not_reuse_respo#</if><else>#assessment.make_reuse_responses#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
 	<td><if @assessment_data.show_item_name_p@> #assessment.show_item_name#</if><else>#assessment.hide_item_name#</else> -
-	[ <a href="response-showiname-toggle?assessment_id=@assessment_id@">
+	[ <a href="assessment-form?assessment_id=@assessment_id@">
 	<if @assessment_data.show_item_name_p@>#assessment.make_hide_item_name#</if><else>#assessment.make_show_item_name#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
 	<td><if @assessment_data.number_tries@ not nil> #assessment.limited_tries#</if><else>#assessment.unlimited_tries#</else> -
-	[ <a href="response-tries-edit?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
+	[ <a href="assesment-form?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
 </tr>
 
 <tr class="odd">
 	<td><if @assessment_data.wait_between_tries@ not nil> #assessment.time_to_wait#</if><else>#assessment.no_waiting#</else> -
-	[ <a href="response-wait-edit?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
+	[ <a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
 </tr>
 
 <tr class="odd">
 	<td><if @assessment_data.time_for_response@ not nil> #assessment.time_response#</if><else>#assessment.unlimited_time#</else> -
-	[ <a href="response-time-edit?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
+	[ <a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
 </tr>
 
 <tr class="even"><td valign="top" rowspan="2">#assessment.Email_Options#</td><td >@notification_chunk;noquote@</td></tr>

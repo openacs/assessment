@@ -22,7 +22,7 @@ ad_page_contract {
     {page:optional 1}
 }
 
-ad_require_permission $assessment_id admin
+permission::permission_p -object_id $assessment_id -privilege admin
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
