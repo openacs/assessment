@@ -10,13 +10,6 @@
 		</querytext>
 	</fullquery>
 
-	<fullquery name="parse_item.as_item_choice_map_insert">
-		<querytext>
-			INSERT INTO as_item_choice_map (as_item_id, choice_id, sort_order) 
-			VALUES (:as_item_id, :choice_id, :sort_order)
-		</querytext>
-	</fullquery>
-
 	<fullquery name="parse_item.as_item_section_map_insert">
 		<querytext>
 			INSERT INTO as_item_section_map (as_item_id, section_id) 
