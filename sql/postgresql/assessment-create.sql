@@ -80,7 +80,7 @@ create table as_items (
 	name		varchar(500)
                         constraint as_item_name_nn
                         not null,
-	-- the primary "label" attached to an Item's display
+	-- the primary "label" attached to an Item display
 	item_text	varchar(500),
 	-- a secondary label, needed for many kinds of questions
 	item_subtext	varchar(500),
