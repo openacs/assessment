@@ -76,4 +76,5 @@ ad_proc -public add_item_to_form  { form item_id } { Add items to a form. The fo
 		-required_p $required_p
 	}
     }
+    return $presentation_type
 }
