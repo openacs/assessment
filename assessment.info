@@ -18,15 +18,16 @@
         <maturity>0</maturity>
 
         <provides url="assessment" version="0.10d6"/>
+        <requires url="acs-content-repository" version="5.1.4d3"/>
         <requires url="acs-kernel" version="5.0d13"/>
         <requires url="acs-templating" version="4.1.2"/>
         <requires url="categories" version="1.0d5"/>
         <requires url="notifications" version="0.1"/>
-	<requires url="acs-content-repository" version="5.1.4d3"/>
 
         <callbacks>
             <callback type="after-install"  proc="as::install::assessment_create_install"/>
             <callback type="after-instantiate"  proc="as::install::package_instantiate"/>
+            <callback type="after-mount"  proc="as::actions::insert_actions"/>
             <callback type="after-upgrade"  proc="inter_item_checks::apm_callback::after_upgrade"/>
             <callback type="before-uninstall"  proc="inter_item_checks::apm_callback::package_uninstall"/>
         </callbacks>
