@@ -144,7 +144,7 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 		}
 		set presentationNodes [$item selectNodes {presentation}]
 		foreach presentation $presentationNodes {
-			set presentationChildNodes [$presentation selectNodes {.//material|.//response_str}]
+			set presentationChildNodes [$presentation selectNodes {.//material|.//response_str|.//response_num}]
 			set materialNodes [$presentation selectNodes {.//material}]
 			set material [lindex $materialNodes 0]
 			# Initialize in case it doesn't exist
@@ -168,8 +168,10 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 					foreach node $presentationChildNodes {
 					if {[$node nodeName] == {material}} {
 						set mattextNodes [$node selectNodes {mattext/text()}]
-						set mattext [lindex $mattextNodes 0]
-						append as_items__title [ad_quotehtml [$mattext nodeValue]]
+						foreach mattext $mattextNodes {
+							append as_items__title [ad_quotehtml [$mattext nodeValue]]
+							append as_items__title " "
+						}
 					}
 					}
 					set as_item_type_id [as::item_type_oq::new -name [ad_generate_random_string]]
@@ -180,9 +182,11 @@ ad_proc -private as::qti::parse_item { qtiNode section_id} { Parse items from a 
 				foreach node $presentationChildNodes {
 					if {[$node nodeName] == {material}} {
 						set mattextNodes [$node selectNodes {mattext/text()}]
-						set mattext [lindex $mattextNodes 0]
-						append as_items__title [ad_quotehtml [$mattext nodeValue]]
-					} elseif {[$node nodeName] == {response_str}} {
+						foreach mattext $mattextNodes {
+							append as_items__title [ad_quotehtml [$mattext nodeValue]]
+							append as_items__title " "
+						}
+					} elseif {[$node nodeName] == {response_str} || [$node nodeName] == {response_num} } {
 						set as_item_choices__ident [$node getAttribute {ident}]
 						# get the correct response
 						set as_item_choices__choice_text_nodes [$node selectNodes "//conditionvar/or/varequal\[@respident='$as_item_choices__ident'\]/text()"]
