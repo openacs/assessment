@@ -65,7 +65,9 @@ create table as_assessments (
 	-- A revision_id inherited from cr_revisions
 	assessment_id	integer
 			constraint as_assessments_assessment_id_pk
-			primary key,
+			primary key
+			constraint as_assessments_assessment_id_fk
+			references cr_revisions(revision_id),
 	creator_id integer,
 	instructions	text,
 	-- whether this is a standalone assessment (like current surveys), or if it provides an "assessment service" to another OpenACS app, or a "web service" via SOAP etc
