@@ -10,7 +10,7 @@ ad_page_contract {
 
 set context [list "[_ assessment.Show_Items]"]
 
-set as_session_id [as_session_new -assessment_id $assessment_id -subject_id [ad_conn user_id]]
+set as_session_id [as::session::new -assessment_id $assessment_id -subject_id [ad_conn user_id]]
 
 set assessment_name [db_string assessment_name {
     SELECT title
@@ -29,7 +29,7 @@ ad_form -name show_item_form -action process-response -html {enctype multipart/f
 }
 
 db_multirow -extend {presentation_type html} items query_all_items {} {
-    set presentation_type [add_item_to_form show_item_form $as_item_id]
+    set presentation_type [as::item_form::add_item_to_form show_item_form $as_item_id]
     if {$presentation_type == {fitb}} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }

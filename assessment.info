@@ -25,8 +25,8 @@
         <requires url="acs-content-repository" version="5.2.0d8"/>
 	
 	 <callbacks>
-            <callback type="after-install"  proc="assessment::install::assessment_create_install"/>
-	    <callback type="after-instantiate"  proc="assessment::install::package_instantiate"/>
+            <callback type="after-install"  proc="as::install::assessment_create_install"/>
+	    <callback type="after-instantiate"  proc="as::install::package_instantiate"/>
         </callbacks>
 
         <parameters>

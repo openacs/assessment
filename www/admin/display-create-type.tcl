@@ -85,7 +85,7 @@ switch -- $item_type {
       db_transaction {
        #add the item
         #Insert as_item_display_rb in the CR (and as_item_display_rb table) getting the revision_id (as_item_display_id)
-        set as_item_display_rb_id [as_item_display_rb_new -name $as_item_display_type__name -html_display_options $as_item_display_type__html_display_options -choice_orientation $as_item_display_rb__choice_orientation -choice_label_orientation $as_item_display_rb__choice_label_orientation -sort_order_type $as_item_display_rb__sort_order -item_answer_alignment $as_item_display_rb__item_answer_alignment]
+        set as_item_display_rb_id [as::item_display_rb::new -name $as_item_display_type__name -html_display_options $as_item_display_type__html_display_options -choice_orientation $as_item_display_rb__choice_orientation -choice_label_orientation $as_item_display_rb__choice_label_orientation -sort_order_type $as_item_display_rb__sort_order -item_answer_alignment $as_item_display_rb__item_answer_alignment]
        
         #set the relation between as_items table and as_item_display_rb table
         content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id1"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_display_rb_id"] -relation_tag {as_item_display_rel} -relation_type {cr_item_rel}

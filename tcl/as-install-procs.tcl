@@ -1,4 +1,4 @@
-# /packages/assessment/tcl/install-procs.tcl
+# /packages/assessment/tcl/as-install-procs.tcl
 
 ad_library {
     Assessment Package callbacks library

@@ -22,7 +22,7 @@ catch { exec unzip ${zipfile.tmpfile} -d $tmpdirectory } outMsg
 
 # Read the content of the temporary directory
 foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
-	parse_qti_xml $file_i
+	as::qti::parse_qti_xml $file_i
 }
 
 # Delete the temporary directory

@@ -93,7 +93,7 @@ switch -- $item_type {
 	    
 	  
           db_transaction {  
-	     as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__name($i) -title $as_item_choices__title($i) -feedback_text $as_item_choices__feedback_text($i) -percent_score $as_item_choices__score($i)
+	     as::item_choice::new -mc_id $as_item_type_id -name $as_item_choices__name($i) -title $as_item_choices__title($i) -feedback_text $as_item_choices__feedback_text($i) -percent_score $as_item_choices__score($i)
 	  
           }
     

@@ -82,7 +82,7 @@ if { [template::form is_valid item-add-2] } {
     
     db_transaction {   
         #Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
-	set as_item_type_id [as_item_type_mc_new -name $as_item_type_id1 -increasing_p $as_item_type_mc__increasing_p -allow_negative_p $as_item_type_mc__allow_negative_p -num_correct_answers $as_item_type_mc__num_correct_answers -num_answers $as_item_type_mc__num_answers]
+	set as_item_type_id [as::item_type_mc::new -name $as_item_type_id1 -increasing_p $as_item_type_mc__increasing_p -allow_negative_p $as_item_type_mc__allow_negative_p -num_correct_answers $as_item_type_mc__num_correct_answers -num_answers $as_item_type_mc__num_answers]
 	#set the relation between as_items table and as_item_type_mc table
 	content::item::relate -item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id1"] -object_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_type_id"] -relation_tag {as_item_type_rel} -relation_type {cr_item_rel}
     }
