@@ -45,19 +45,19 @@ create table as_sessions (
 --Assessment Section Data: tracks the state of each Section in the Assessment.
 create table as_section_data (
 	section_data_id integer
-		constraint as_section_data_section_data_id_pk
+		constraint as_section_data_id_pk
 		primary key
-		constraint as_section_data_section_data_id_fk
+		constraint as_section_data_id_fk
 		references cr_revisions(revision_id),
 	session_id integer
-		constraint as_section_data_session_id_fk
+		constraint as_section_data_sess_id_fk
 		references as_sessions(session_id),
 	section_id integer
-		constraint as_section_data_section_id_fk
+		constraint as_section_data_sect_id_fk
 		references as_sections(section_id),
 -- if subjects can't be "persons" then Assessment will have to define an as_subjects table for its own use.
 	subject_id integer
-		constraint as_section_data_subject_id_fk
+		constraint as_section_data_subj_id_fk
 		references persons(person_id),
 	staff_id integer
 		constraint as_section_data_staff_id_fk
@@ -67,16 +67,16 @@ create table as_section_data (
 -- Assessment Item Data: is the "long skinny table" where all the primary data go
 create table as_item_data (
 	item_data_id integer
-		constraint as_item_data_item_data_id_pk
+		constraint as_item_data_id_pk
 		primary key
-		constraint as_item_data_item_data_id_fk
+		constraint as_item_data_id_fk
 		references cr_revisions(revision_id),
 	session_id integer
-		constraint as_item_data_session_id_fk
+		constraint as_item_data_sess_id_fk
 		references as_sessions(session_id),
 	-- if subjects can't be "persons" then Assessment will have to define an as_subjects table for its own use
 	subject_id integer
-		constraint as_item_data_subject_id_fk
+		constraint as_item_data_subj_id_fk
 		references persons(person_id),
 	-- missing foreign key
 	staff_id integer
@@ -86,29 +86,29 @@ create table as_item_data (
 		constraint as_item_data_item_id
 		references as_items(as_item_id),
 	is_unknown_p char(1) default 'f'
-		constraint as_item_data_is_unknown_p_ck
+		constraint as_item_data_unknown_p_ck
 		check (is_unknown_p in ('t','f')),
 	-- references as_item_choices
 	choice_id_answer integer
-		constraint as_item_data_choice_id_answer_fk
+		constraint as_item_data_choice_id_fk
 		references as_item_choices(choice_id),
 	boolean_answer	char(1)
-			constraint as_item_data_boolean_ck
+			constraint as_item_data_bool_ck
 			check (boolean_answer in ('t','f')),
 	clob_answer 	clob,
-	numeric_answer	number,
+	numeric_answer	numeric,
 	integer_answer	integer,
 	-- presumably can store both varchar and text datatypes 
 	text_answer	varchar(500),
 	timestamp_answer	date,
 	-- references cr_revisions
 	content_answer	integer
-		constraint as_item_data_content_answer_fk
+		constraint as_item_data_content_fk
 		references cr_revisions,
 	-- This field stores the signed entered data
 	signed_data varchar(500)
 	--percent_score integer
-	-- constraint as_item_data_percent_score_ck
+	-- constraint as_item_data_percent_ck
 	--check (percent_score <=100)
 	-- to do: figure out how attachment answers should be supported; the Attachment package is still in need of considerable help. Can we rely on it here?
 );

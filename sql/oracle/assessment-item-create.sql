@@ -47,14 +47,14 @@ create table as_item_choices (
 	-- which of the value columns has the information this Choice conveys
 	data_type	varchar(20),
 	-- we can stuff both integers and real numbers here
-        numeric_value   number,
+        numeric_value   numeric,
 	text_value	varchar(500),
 	boolean_value	char(1)
 			constraint as_item_choices_boolean_ck
 			check (boolean_value in ('t','f')),
 	-- references an item in the CR -- for an image, audio file, or video file
 	content_value	integer
-			constraint as_item_choices_content_value_fk
+			constraint as_item_choices_content_fk
                         references cr_revisions,
 	-- where optionally some preset feedback can be specified by the author
 	feedback_text	varchar(500),	
@@ -64,35 +64,35 @@ create table as_item_choices (
 			check (selected_p in ('t','f')),
 	-- this choice is the correct answer
 	correct_answer_p	char(1) default 'f'
-			constraint as_item_choices_correct_answer_ck
+			constraint as_item_choices_canswer_ck
 			check (correct_answer_p in ('t','f')),
 	-- the order this choice will appear with regards to the MC item.
 	sort_order	integer,
 	-- this is where points are stored
 	percent_score		integer
-			constraint as_item_choices_percent_score_ck
+			constraint as_item_choices_percent_ck
 			check (percent_score <= 100)	
 );
 
 -- Short Answer Answers
 create table as_item_sa_answers (
 	choice_id       integer
-                        constraint as_item_sa_answers_id_pk
+                        constraint as_item_sa_answ_id_pk
                         primary key
-			constraint as_item_sa_answers_id_fk
+			constraint as_item_sa_answ_id_fk
 			references cr_revisions(revision_id),
 	answer_id	integer
-			constraint as_item_sa_answers_parent_id_fk
+			constraint as_item_sa_answ_parent_id_fk
 			references as_item_type_sa(as_item_type_id),
 	-- integer vs. real number vs. text
 	data_type	varchar(20),
 	-- shall the match be case sensitive
 	case_sensitive_p	char(1) default 't'
-			constraint as_item_sa_answers_case_sensitive_p_ck
+			constraint as_item_sa_answ_case_p_ck
 			check (case_sensitive_p in ('t','f')),
 	-- this is where points are stored
 	percent_score		integer
-			constraint as_item_sa_answers_percent_score_ck
+			constraint as_item_sa_answ_percent_ck
 			check (percent_score <= 100),
 	-- how is the comparison done (equal, contains, regexp)
 	compare_by	varchar(20),
