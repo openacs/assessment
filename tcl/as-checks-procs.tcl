@@ -179,6 +179,7 @@ ad_proc -public as::assessment::check::action_log {
     set log_id [db_string get_next_val {}]
     set action_id [db_string action_id {}]
     set message " "
+
     if { $failed == "f" } {
 	set message "This action failed."
     }
@@ -242,14 +243,16 @@ ad_proc -public as::assessment::check::action_exec {
     
     set tcl_code_p [db_1row select_tcl {}]
     set failed_p "t"
-    set failed [catch $tcl_code]
+    set failed [catch $tcl_code errorMsg]
+    
 
     if { $failed > 0 } {
 	set failed_p "f"
-	set error_txt "This action failed"
     }
     
-    notification::new -type_id [notification::type::get_type_id -short_name as_inter_item_checks_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message $error_txt"
+    ns_log notice "-----------------------> error $errorMsg"
+
+    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message $error_txt"
     
     as::assessment::check::action_log -session_id $session_id -check_id $inter_item_check_id -failed $failed_p
     
