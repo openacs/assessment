@@ -28,11 +28,7 @@ set assessment_instruction [db_string assessment_instruction {
 }]
 
 # update the creation_datetime col of as_sessions table to set the time when the subject initiated the Assessment
-db_dml session_start {
-    UPDATE as_sessions
-    SET creation_datetime = NOW()
-    WHERE session_id = :as_session_id
-}
+db_dml session_start {}
 
 # form for display an assessment with sections and items
 ad_form -name show_item_form -action process-response -html {enctype multipart/form-data} -form {

@@ -16,7 +16,7 @@ set context_bar [list]
 # FIXME Check staff_id or subject_id against user_id
 
 # update the last_mod_datetime col of as_sessions table to set the time when the most recent submission of assessment was done
-db_dml session_finished {UPDATE as_sessions SET last_mod_datetime = NOW(), completed_datetime = NOW() WHERE session_id = :as_session_id}
+db_dml session_finished {}
 
 foreach response_to_item_name [array names response_to_item] {
     #reset variables

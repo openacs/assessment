@@ -123,7 +123,6 @@ content::type::create_attribute -content_type {as_sections} -attribute_name {max
 content::type::create_attribute -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {editable_p}         -datatype {boolean} -pretty_name {Assessment Editable} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {anonymous_p}         -datatype {boolean} -pretty_name {Assessment Anonymous} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {secure_access_p}         -datatype {boolean} -pretty_name {Assessment Secure Access} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {reuse_responses_p}         -datatype {boolean} -pretty_name {Assessment Reuse Responses} -column_spec {char(1)}

@@ -16,22 +16,64 @@ ad_page_contract {
 }
 
 set context [list "[_ assessment.View_Results]"]
-#get survey_p in order to find out whether it's an assessment or a survey
-set survey_p [db_string survey_p {SELECT as_assessmentsx.survey_p FROM as_assessmentsx INNER JOIN as_sessionsx ON as_assessmentsx.assessment_id = as_sessionsx.assessment_id WHERE as_sessionsx.session_id=:session_id}]
 
-set assessment_name [db_string assessment_name {SELECT as_assessmentsx.title FROM as_assessmentsx INNER JOIN as_sessionsx ON as_assessmentsx.assessment_id = as_sessionsx.assessment_id WHERE as_sessionsx.session_id=:session_id}]
+#get survey_p in order to find out whether it's an assessment or a survey
+set survey_p [db_string survey_p {
+    SELECT a.survey_p
+    FROM as_assessmentsx a, as_sessionsx ss
+    WHERE a.assessment_id = ss.assessment_id
+    AND ss.session_id = :session_id
+}]
+
+set assessment_name [db_string assessment_name {
+    SELECT a.title
+    FROM as_assessmentsx a, as_sessionsx ss
+    WHERE a.assessment_id = ss.assessment_id
+    AND ss.session_id = :session_id
+}]
+
 #get the user takes a session
-db_1row session_user_id {SELECT persons.first_names, persons.last_name, assessment_id FROM as_sessionsx INNER JOIN persons ON as_sessionsx.subject_id = persons.person_id WHERE as_sessionsx.session_id=:session_id}
+db_1row session_user_id {
+    SELECT p.first_names, p.last_name, ss.assessment_id
+    FROM as_sessionsx ss, persons p
+    WHERE ss.subject_id = p.person_id
+    AND ss.session_id = :session_id
+}
+
 set assessment_url [export_vars -base "assessment" {assessment_id}]
 set session_user_name "$first_names $last_name"
+
 #get information of assessment as subject that took it, the started time and finished time of assessment
-db_1row session_data {SELECT subject_id, creation_datetime AS session_start, completed_datetime AS session_finish, completed_datetime-creation_datetime AS session_time FROM as_sessionsx WHERE as_sessionsx.session_id = :session_id}
+db_1row session_data {
+    SELECT subject_id, creation_datetime AS session_start,
+           completed_datetime AS session_finish,
+           completed_datetime-creation_datetime AS session_time
+    FROM as_sessionsx ss
+    WHERE ss.session_id = :session_id
+}
+
 set session_user_url [acs_community_member_url -user_id $subject_id]
 #get the number of attempts
-set session_attempt [db_string session_attempt {SELECT COUNT(*) FROM as_sessionsx WHERE as_sessionsx.subject_id = :subject_id AND as_sessionsx.assessment_id=:assessment_id}]
+set session_attempt [db_string session_attempt {
+    SELECT COUNT(*)
+    FROM as_sessionsx ss
+    WHERE ss.subject_id = :subject_id
+    AND ss.assessment_id = :assessment_id
+}]
+
 set assessment_score 100 ;# FIXME
 #get the number of items of an assessment
-set assessment_items [db_string assessment_items {SELECT COUNT(*) FROM (as_sectionsx INNER JOIN (as_assessmentsx INNER JOIN as_assessment_section_map ON as_assessmentsx.assessment_id=as_assessment_section_map.assessment_id) ON as_sectionsx.section_id=as_assessment_section_map.section_id) INNER JOIN (as_itemsx INNER JOIN as_item_section_map ON as_itemsx.as_item_id=as_item_section_map.as_item_id) ON as_sectionsx.section_id=as_item_section_map.section_id WHERE as_assessmentsx.assessment_id = :assessment_id}]
+set assessment_items [db_string assessment_items {
+    SELECT COUNT(*)
+    FROM as_sectionsx s, as_assessmentsx a, as_assessment_section_map asm,
+         as_itemsx i, as_item_section_map ism
+    WHERE a.assessment_id = asm.assessment_id
+    AND s.section_id = asm.section_id
+    AND i.as_item_id = ism.as_item_id
+    AND s.section_id = ism.section_id
+    AND a.assessment_id = :assessment_id
+}]
+
 #set maximum score by each item
 set itemmaxscore [expr $assessment_score/$assessment_items] ;# FIXME total_points/items_number
 

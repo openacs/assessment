@@ -9,6 +9,7 @@
 
     <version name="0.01d" url="http://openacs.org/repository/download/apm/assessment-0.01d.apm">
     <database-support>
+        <database>oracle</database>
         <database>postgresql</database>
     </database-support>
         <owner url="mailto:eperez@it.uc3m.es">Eduardo Perez Ureta</owner>

@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <queryset>
 
-	<rdbms><type>postgresql</type><version>7.4</version></rdbms>
-
 	<fullquery name="as::qti::parse_qti_xml.as_assessment_section_map_insert">
 		<querytext>
 			INSERT INTO as_assessment_section_map (assessment_id, section_id, sort_order) 

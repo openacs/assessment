@@ -12,7 +12,6 @@ ad_proc -public as::assessment::new {
     {-description ""}
     {-instructions ""}
     {-mode ""}
-    {-editable_p ""}
     {-anonymous_p ""}
     {-secure_access_p ""}
     {-reuse_responses_p ""}
@@ -50,7 +49,6 @@ ad_proc -public as::assessment::new {
 				  -attributes [list [list creator_id $creator_id] \
 						   [list instructions $instructions] \
 						   [list mode $mode] \
-						   [list editable_p $editable_p] \
 						   [list anonymous_p $anonymous_p] \
 						   [list secure_access_p $secure_access_p] \
 						   [list reuse_responses_p $reuse_responses_p] \
@@ -79,7 +77,6 @@ ad_proc -public as::assessment::edit {
     {-description ""}
     {-instructions ""}
     {-mode ""}
-    {-editable_p ""}
     {-anonymous_p ""}
     {-secure_access_p ""}
     {-reuse_responses_p ""}
@@ -113,7 +110,6 @@ ad_proc -public as::assessment::edit {
 			    -attributes [list [list creator_id $creator_id] \
 					     [list instructions $instructions] \
 					     [list mode $mode] \
-					     [list editable_p $editable_p] \
 					     [list anonymous_p $anonymous_p] \
 					     [list secure_access_p $secure_access_p] \
 					     [list reuse_responses_p $reuse_responses_p] \
@@ -184,7 +180,6 @@ ad_proc -public as::assessment::new_revision {
 			    -attributes [list [list creator_id $a(creator_id)] \
 					     [list instructions $a(instructions)] \
 					     [list mode $a(mode)] \
-					     [list editable_p $a(editable_p)] \
 					     [list anonymous_p $a(anonymous_p)] \
 					     [list secure_access_p $a(secure_access_p)] \
 					     [list reuse_responses_p $a(reuse_responses_p)] \

@@ -4,11 +4,17 @@
 
 	<fullquery name="query_all_items">
 		<querytext>
-			SELECT as_itemsx.as_item_id, as_itemsx.name, as_itemsx.title, as_itemsx.feedback_right, as_itemsx.feedback_wrong, as_sectionsx.section_id, as_sectionsx.title as section_title, as_sectionsx.description as section_description
-			FROM ((as_sectionsx INNER JOIN (as_assessmentsx INNER JOIN as_assessment_section_map ON as_assessmentsx.assessment_id=as_assessment_section_map.assessment_id) ON
-			as_sectionsx.section_id=as_assessment_section_map.section_id) INNER JOIN (as_itemsx INNER JOIN as_item_section_map ON as_itemsx.as_item_id=as_item_section_map.as_item_id) ON as_sectionsx.section_id=as_item_section_map.section_id) INNER JOIN as_sessionsx ON as_assessmentsx.assessment_id = as_sessionsx.assessment_id
-			WHERE as_sessionsx.session_id = :session_id
-			ORDER BY as_sectionsx.section_id, as_item_section_map.sort_order
+			SELECT i.as_item_id, i.name, i.title, i.feedback_right, i.feedback_wrong,
+			       s.section_id, s.title as section_title, s.description as section_description
+			FROM as_sectionsx s, as_assessment_section_map asm, as_itemsx i,
+			     as_item_section_map ism, as_sessionsx ss
+			WHERE a.assessment_id = asm.assessment_id
+			AND s.section_id = asm.section_id
+			AND i.as_item_id = ism.as_item_id
+			AND s.section_id = ism.section_id
+			AND a.assessment_id = ss.assessment_id
+			AND ss.session_id = :session_id
+			ORDER BY s.section_id, ism.sort_order
 		</querytext>
 	</fullquery>
 
