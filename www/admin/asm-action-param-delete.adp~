@@ -1,8 +1,0 @@
-<master>
-<property name="title">Actions Admin</property>
-<property name="context_bar">@context_bar;noquote@</property>
-
-<blockquote>
-  <formtemplate id="parameter_delete"></formtemplate>
-</blockquote>
-
