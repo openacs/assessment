@@ -91,7 +91,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	} -main_class {
 	    narrow
-	}
+	} 
 }
 
 
@@ -103,7 +103,7 @@ if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
     set query "sessions_of_assessment"
 }
 
-db_multirow -extend { item_url assessment_id } sessions $query {
+db_multirow -extend { item_url } sessions $query {
 } {
     set item_url [export_vars -base "session" {session_id}]
 }

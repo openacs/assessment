@@ -31,11 +31,13 @@ set assessment_rev_id $assessment_data(assessment_rev_id)
 
 db_transaction {
     if {[empty_string_p $session_id]} {
-	# todo: check if there's an old session that could be continued
-	set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id]
+	if {![db_0or1row unfinished_session_id {}]} {
+	    # todo: check if there's an old session that could be continued
+	    set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id]
 
-	# update the creation_datetime col of as_sessions table to set the time when the subject initiated the Assessment
-	db_dml session_start {}
+	    # update the creation_datetime col of as_sessions table to set the time when the subject initiated the Assessment
+	    db_dml session_start {}
+	}
     }
 
     # get all sections of assessment in correct order
@@ -86,7 +88,7 @@ db_transaction {
 	set new_section_order [expr $section_order + 1]
     }
 
-    if {$section_order == [llength $section_list]} {
+    if {$new_section_order == [llength $section_list]} {
 	set new_section_order ""
     }
 }
