@@ -169,9 +169,13 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	    # last section
 	    set new_section_order ""
 	}
-
+	
 	# answer all remaining section items with empty string
-	as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
+	db_transaction {
+	    as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
+	    #immediate checks execution
+	    as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
+	}
     } else {
 	# skip entire session
 	set new_section_order ""
@@ -193,6 +197,8 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
+	#immediate checks execution
+	as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 	ad_script_abort
     } else {
@@ -279,7 +285,7 @@ foreach one_item $item_list {
 		if {!\[info exists response_to_item(\$response_item_id)\]} {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
-                   ns_log \"--------------> branch check\"
+
                    set section_to_tmp \[as::assessment::checks::branch_checks -item_id \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
@@ -325,7 +331,7 @@ if {$display(submit_answer_p) != "t"} {
 		if {!\[info exists response_to_item(\$response_item_id)\]} {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
-                   ns_log notice \"--------------> branch check \$response_item_id \"
+
                    
                    set item_to \$response_item_id
                    set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$item_to -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
@@ -344,7 +350,6 @@ if {$display(submit_answer_p) != "t"} {
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
-                as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	    }
 	}
     }"
@@ -357,6 +362,9 @@ if {$display(submit_answer_p) != "t"} {
 	    set section_order \$new_section_order
             }
 	    set item_order \$new_item_order
+      	    #immediate checks execution
+            as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
+
 	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
 	    ad_script_abort
 	} else {
@@ -394,6 +402,9 @@ if {$display(submit_answer_p) != "t"} {
 	    if {$section_order != $new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
+		#immediate checks execution
+		as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
+
 	    }
 	}
     } -after_submit {
@@ -401,6 +412,8 @@ if {$display(submit_answer_p) != "t"} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
+	    #immediate checks execution
+	    as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 	    ad_script_abort
 	} else {
