@@ -57,8 +57,8 @@ content::type::create_attribute -content_type {as_sections} -attribute_name {ena
 
 
 content::type::create_attribute -content_type {as_assessments} -attribute_name {creator_id}            -datatype {number}  -pretty_name {Assessment Creator Identifier}  -column_spec {integer}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {varchar(500)}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_assessments} -attribute_name {instructions}            -datatype {string}  -pretty_name {Assessment Creator Instructions}  -column_spec {text}
+content::type::create_attribute -content_type {as_assessments} -attribute_name {mode}            -datatype {string}  -pretty_name {Assessment Mode}  -column_spec {varchar(25)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {enabled_p}         -datatype {boolean} -pretty_name {Assessment Enabled} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {anonymous_p}         -datatype {boolean} -pretty_name {Assessment Anonymous} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {secure_access_p}         -datatype {boolean} -pretty_name {Assessment Secure Access} -column_spec {char(1)}
@@ -66,10 +66,10 @@ content::type::create_attribute -content_type {as_assessments} -attribute_name {
 content::type::create_attribute -content_type {as_assessments} -attribute_name {show_item_name_p}         -datatype {boolean} -pretty_name {Assessment Show question titles} -column_spec {char(1)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {entry_page}            -datatype {string}  -pretty_name {Assessment Customizable Entry page}  -column_spec {varchar(50)}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {exit_page}            -datatype {string}  -pretty_name {Assessment Customizable Thank/Exit page}  -column_spec {varchar(50)}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {consent_page}            -datatype {string}  -pretty_name {Assessment Consent Pages}  -column_spec {varchar(500)}
+content::type::create_attribute -content_type {as_assessments} -attribute_name {consent_page}            -datatype {string}  -pretty_name {Assessment Consent Pages}  -column_spec {text}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {return_url}            -datatype {string}  -pretty_name {Assessment Return URL}  -column_spec {varchar(50)}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {start_time}            -datatype {number}  -pretty_name {Assessment Start Time}  -column_spec {integer}
-content::type::create_attribute -content_type {as_assessments} -attribute_name {end_time}            -datatype {number}  -pretty_name {Assessment End Time}  -column_spec {integer}
+content::type::create_attribute -content_type {as_assessments} -attribute_name {start_time}            -datatype {number}  -pretty_name {Assessment Start Time}  -column_spec {timestamptz}
+content::type::create_attribute -content_type {as_assessments} -attribute_name {end_time}            -datatype {number}  -pretty_name {Assessment End Time}  -column_spec {timestamptz}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {number_tries}            -datatype {number}  -pretty_name {Assessment Number Tries}  -column_spec {integer}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {wait_between_tries}            -datatype {number}  -pretty_name {Assessment Wait Between Tries}  -column_spec {integer}
 content::type::create_attribute -content_type {as_assessments} -attribute_name {time_for_response}            -datatype {number}  -pretty_name {Assessment Time for Response}  -column_spec {integer}

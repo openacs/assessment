@@ -12,8 +12,8 @@ create table as_item_type_mc (
 				constraint as_item_type_mc_as_item_type_id_fk
 				references cr_revisions(revision_id),
 	increasing_p		char(1) default 'f'
-				constraint as_item_type_mc_point_distrib_p_ck
-				check (point_distrib_p in ('t','f')),
+				constraint as_item_type_mc_increasing_p_ck
+				check (increasing_p in ('t','f')),
 	allow_negative_p	char(1) default 'f'
 				constraint as_item_type_mc_allow_negative_p_ck
 				check (allow_negative_p in ('t','f')),
@@ -23,18 +23,19 @@ create table as_item_type_mc (
 
 create table as_item_type_oq (
 	as_item_type_id		integer
-				constraint as_item_type_mc_as_item_type_id_pk
+				constraint as_item_type_oq_as_item_type_id_pk
 				primary key
-				constraint as_item_type_mc_as_item_type_id_fk
+				constraint as_item_type_oq_as_item_type_id_fk
 				references cr_revisions(revision_id),
-	default_value		varchar(500)
+	default_value		varchar(500),
+	feedback_text    varchar(500)
 );
 
 create table as_item_display_rb (
 	as_item_display_id	integer
-				constraint as_item_display_mc_as_item_display_id_pk
+				constraint as_item_display_rb_as_item_display_id_pk
 				primary key
-				constraint as_item_display_mc_as_item_display_id_fk
+				constraint as_item_display_rb_as_item_display_id_fk
 				references cr_revisions(revision_id),
 	html_display_options	varchar(50),
 	choice_orientation	varchar(20),
@@ -45,15 +46,15 @@ create table as_item_display_rb (
 
 create table as_item_display_cb (
 	as_item_display_id	integer
-				constraint as_item_display_mc_as_item_display_id_pk
+				constraint as_item_display_cb_as_item_display_id_pk
 				primary key
-				constraint as_item_display_mc_as_item_display_id_fk
+				constraint as_item_display_cb_as_item_display_id_fk
 				references cr_revisions(revision_id),
 	html_display_options	varchar(50),
 	choice_orientation	varchar(20),
 	choice_label_orientation varchar(20),
 	allow_multiple_p	char(1) default 'f'
-				constraint as_item_type_mc_allow_multiple_p_ck
+				constraint as_item_type_cb_allow_multiple_p_ck
 				check (allow_multiple_p in ('t','f')),
 	sort_order_type		varchar(20),
 	item_answer_alignment	varchar(20)

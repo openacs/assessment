@@ -25,7 +25,7 @@ create table as_section_display_types (
 	-- May actually be superfluous
 	presentation_type	varchar(25),
 	item_aligment		varchar(25)
-				constraint as_section_display_types_ck
+				constraint as_section_display_types_item_alignment_ck
 				check (item_aligment in ('beside_left','beside_right','below','above')),
 	display_options		varchar(25)
 );
@@ -66,24 +66,38 @@ create table as_assessments (
 	assessment_id	integer
 			constraint as_assessments_assessment_id_pk
 			primary key,
-	short_name	varchar(500),
-	author	varchar(500),
-	definition	text,
+	creator_id integer,
 	instructions	text,
-	scaled_p	char(1) default 'f'
-			constraint as_assessments_scaled_p_ck
-			check (scaled_p in ('t','f')),
+	-- whether this is a standalone assessment (like current surveys), or if it provides an "assessment service" to another OpenACS app, or a "web service" via SOAP etc
 	mode	varchar(25),
-	validate_p	char(1) default 'f'
-			constraint as_assessments_validate_p_ck
-			check (validate_p in ('t','f')),
-	enabled_p	char(1) default 'f'
-			constraint as_assessments_enable_p_ck
-			check (enable_p in ('t','f')),
 	editable_p	char(1) default 'f'
 			constraint as_assessments_editable_p_ck
 			check (editable_p in ('t','f')),
-	as_template	integer
+	anonymous_p	char(1) default 'f'
+			constraint as_assessments_anonymous_p_ck
+			check (anonymous_p in ('t','f')),
+	secure_access_p	char(1) default 'f'
+			constraint as_assessments_secure_access_p_ck
+			check (secure_access_p in ('t','f')),		
+	reuse_responses_p	char(1) default 'f'
+			constraint as_assessments_reuse_responses_p_ck
+			check (reuse_responses_p in ('t','f')),
+	show_item_name_p	char(1) default 'f'
+			constraint as_assessments_show_item_name_p_ck
+			check (show_item_name_p in ('t','f')),
+	-- The customizable entry page that will be displayed before the first response.
+	entry_page varchar(50),
+	-- Customizable exit / thank you page that will be displayed once the assessment has been responded.
+	exit_page varchar(50),
+	consent_page text,
+	return_url varchar(50),
+	start_time timestamptz,
+	end_time timestamptz,
+	number_tries integer,
+	wait_between_tries integer,
+	time_for_response integer,
+	show_feedback varchar(50),
+	section_navigation varchar(50)
 );
 
 create table as_assessment_section_map (
@@ -113,7 +127,10 @@ create table as_item_section_map (
 			constraint as_item_section_map_required_p_ck
 			check (required_p in ('t','f')),
 	item_default	integer,
-	content_value	integer,
+	-- references CR
+	content_value	integer
+			constraint as_item_section_map_content_value_fk
+                        references cr_revisions,
 	numeric_value	integer,
 	feedback_text	text,
 	max_time_to_complete	integer,

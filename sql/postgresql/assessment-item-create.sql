@@ -7,17 +7,19 @@
 
 create table as_items (
 	as_item_id	integer
-			constraint as_item_item_id_pk
+			constraint as_items_item_id_pk
                         primary key
-			constraint as_item_item_id_fk
+			constraint as_items_item_id_fk
 			references cr_revisions(revision_id),
 	-- a secondary label, needed for many kinds of questions
 	subtext	varchar(500),
 	-- a short label for use in data output header rows, etc
 	field_code	varchar(500),
+	-- some descriptive text
+	definition text,
 	-- whether Item must be answered (default value, can be overriden)
 	required_p	char(1) default 'f'
-			constraint as_item_required_p_ck
+			constraint as_items_required_p_ck
 			check (required_p in ('t','f')),
 	data_type	varchar(50),
 	-- optional max number of seconds to perform Item
@@ -28,9 +30,9 @@ create table as_items (
 
 create table as_item_choices (
 	choice_id       integer
-                        constraint as_item_choice_id_pk
+                        constraint as_item_choices_id_pk
                         primary key
-			constraint as_item_choice_id_fk
+			constraint as_item_choices_id_fk
 			references cr_revisions(revision_id),
 	parent_id	integer
 			constraint as_item_choices_parent_id_fk
@@ -42,21 +44,21 @@ create table as_item_choices (
 	boolean_value	boolean,
 	-- references an item in the CR -- for an image, audio file, or video file
 	content_value	integer
-			constraint as_item_choice_content_value_fk
+			constraint as_item_choices_content_value_fk
                         references cr_revisions,
 	-- where optionally some preset feedback can be specified by the author
-	feedback_text	varchar(500),
-	correct_answer_p	char(1) default 'f'
-				constraint as_item_choice_correct_answer_p_ck
-				check (correct_answer_p in ('t','f')),
+	feedback_text	varchar(500),	
 	selected_p	char(1) default 'f'
-			constraint as_item_choice_correct_answer_p_ck
+			constraint as_item_choices_selected_p_ck
+			check (selected_p in ('t','f')),
+	correct_answer_p	char(1) default 'f'
+			constraint as_item_choices_correct_answer_ck
 			check (correct_answer_p in ('t','f')),
+	sort_order	integer,
 	-- this is where points are stored
-	score		integer
-			constraint as_item_choice_value_ck
-			check (value <= 100),
-	sort_order	integer
+	percent_score		integer
+			constraint as_item_choices_percent_score_ck
+			check (percent_score <= 100)	
 );
 
 create table as_item_help_map (
