@@ -18,6 +18,10 @@ set context_bar [list]
 db_dml session_finished {UPDATE as_sessions SET last_mod_datetime = NOW(), completed_datetime = NOW() WHERE session_id = :as_session_id}
 
 foreach response_to_item_name [array names response_to_item] {
+    set as_item_display_rbx__item_id {}
+    unset as_item_display_rbx__item_id
+    set as_item_display_tbx__item_id {}
+    unset as_item_display_tbx__item_id
     regsub -all -line -nocase -- {.*_} $response_to_item_name {} response_to_item_choice_id
     regsub -all -line -nocase -- {_.*} $response_to_item_name {} response_to_item_id 
     set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:response_to_item_id"]
