@@ -27,9 +27,10 @@
 
       <multiple name="items">
       <tr>
-      <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b></td>
+      <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td>
         <td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
-      <tr><td colspan="4">
+
+      <tr class="form-widget"><td colspan="4">
         <blockquote>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
             <formgroup id="response_to_item.@items.as_item_id@">
@@ -51,6 +52,8 @@
               <noparse>@items.subtext@</noparse>
             </div>
           </if>
+
+          <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
 
         </blockquote>
         <hr>
@@ -69,7 +72,7 @@
       <input type="hidden" name="item_order" value="@old_item_order@">
       <input type="hidden" name="as_item_id" value="@items.as_item_id@">
       <tr>
-      <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b></td>
+      <tr bgcolor="#e4eaef"><td colspan="2" nowrap><b><if @assessment_data.show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></td>
         <td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@</if></b></td></tr>
       <tr><td colspan="4">
         <blockquote>
@@ -93,6 +96,7 @@
               <noparse>@items.subtext@</noparse>
             </div>
           </if>
+          <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
           <if @items.submitted_p@ eq f><br><input type=submit value="#assessment.Submit#"></if>
         </blockquote>
         <hr>
