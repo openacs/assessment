@@ -40,9 +40,7 @@ create table as_sections (
 	section_display_type_id	integer
 				constraint as_sections_section_display_type_id_fk
 				references as_section_display_types (section_display_type_id),
-	definition	text
-			constraint as_sections_definition_nn
-			not null,
+	definition	text,
 	instructions	text,
 	-- Maybe this isnt really useful
 	required_p	char(1) default 't'
