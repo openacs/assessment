@@ -1,5 +1,4 @@
-ad_library {
-    Assessment Checks procs
+ad_library {    Assessment Checks procs
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-13
 }
@@ -393,7 +392,7 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 	foreach check_id $checks {
 
 	    set info [db_0or1row check_info {}]
-	    set perform [db_string check_sql $check_sql]
+	    set perform [db_string check_sql $check_sql -default 0]
 	    if {$action_p == "t"} {
 		if {$perform == 1} {
 		    as::assessment::check::action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id
@@ -413,7 +412,7 @@ ad_proc -public as::assessment::check::eval_m_checks {
 
 	db_foreach assessment_checks {} {
 	    if {$action_p == "t"} {
-	    set perform [db_string check_sql $check_sql]
+	    set perform [db_string check_sql $check_sql -default 0]
 
 	    
 		if {$perform == 1} {
