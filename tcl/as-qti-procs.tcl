@@ -138,20 +138,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 				set as_items__description [$mattext nodeValue]
 			}
 		}
-		# <itemfeedback>
-		set itemfeedbackNodes [$item selectNodes {itemfeedback}]
-		foreach itemfeedback $itemfeedbackNodes {
-			# right feedback
-			if {[regexp displayRight [$itemfeedback getAttribute {ident} {}]]} {
-				set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
-				set as_items__feedback_right [[lindex $feedback_textNodes 0] nodeValue]
-			}
-			# wrong feedback
-			if {[regexp displayWrong [$itemfeedback getAttribute {ident} {}]]} {
-				set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
-				set as_items__feedback_wrong [[lindex $feedback_textNodes 0] nodeValue]
-			}
-		}
+
 		# <resprocessing>
 		set resprocessingNodes [$item selectNodes {resprocessing}]
 		foreach resprocessing $resprocessingNodes {
@@ -179,6 +166,25 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 						set score [string trim [$scorenode nodeValue]]
 					}
 					set as_item_choices__score($choice) $score
+				}
+				#<displayfeedback>
+				set displayfeedbackNodes [$respcondition selectNodes {displayfeedback}]
+			        if {[llength $displayfeedbackNodes]>0} {
+			            set displayfeedbackelement [lindex $displayfeedbackNodes 0]
+				    set displayfeedback__ident [$displayfeedbackelement getAttribute {linkrefid}]
+				# <itemfeedback>
+				set itemfeedbackNodes [$item selectNodes {itemfeedback}]
+				foreach itemfeedback $itemfeedbackNodes {
+				    # wrong feedback
+				    if {[string compare [$itemfeedback getAttribute {ident}] $displayfeedback__ident] == 0} {
+				        set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
+				        set as_items__feedback_wrong [[lindex $feedback_textNodes 0] nodeValue]
+				    # right feedback
+				    } else {
+				        set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
+					set as_items__feedback_right [[lindex $feedback_textNodes 0] nodeValue]
+				    }
+				}
 				}
 			}
 		}
