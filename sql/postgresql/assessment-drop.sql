@@ -1,4 +1,3 @@
-drop table as_item_choice_map;
 drop table as_item_choices;
 drop table as_item_attributes;
 drop table as_item_localized;

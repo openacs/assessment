@@ -91,7 +91,7 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 
 	set itemNodes [$qtiNode selectNodes {item}]
 	foreach item $itemNodes {
-		# Order of the item_choices (as_item_choice_map)
+		# Order of the item_choices
 		set sort_order 0
 		set as_items__name [$item getAttribute {title}]
 		set objectivesNodes [$item selectNodes {objectives}]
@@ -136,7 +136,6 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 						# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
 						set as_items_choices__choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $as_item_choices__ident -title $as_item_choices__choice_text ]
 						set choice_id [content::revision::new -item_id $as_items_choices__choice_id -content_type {as_item_choices} -title $as_item_choices__choice_text ]
-						db_dml as_item_choice_map_insert {}
 						# order of the item_choices
 						incr sort_order
 					}
@@ -168,7 +167,6 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 					# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
 					set as_items_choices__choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name $as_item_choices__ident -title $as_item_choices__choice_text ]
 					set choice_id [content::revision::new -item_id $as_items_choices__choice_id -content_type {as_item_choices} -title $as_item_choices__choice_text ]
-					db_dml as_item_choice_map_insert {}
 					# order of the item_choices
 					incr sort_order
 				}

@@ -64,12 +64,17 @@ create table as_item_choices (
 			check (value <= 100)
 );
 
-create table as_item_choice_map (
+create table as_item_help_map (
 	as_item_id		integer
-		constraint as_item_choice_map_item_id_fk
+		constraint as_item_help_map_as_item_id_fk
 		references as_items (as_item_id),
-	choice_id	integer
-		constraint as_item_choice_map_choice_id_fk
-		references as_item_choices (choice_id),
+	message_id	integer
+		constraint as_item_help_map_message_id_fk
+		references as_messages (message_id),
 	sort_order	integer
+);
+
+create table as_messages (
+	message_id	integer,
+	message		varchar(500)
 );
