@@ -38,9 +38,7 @@ begin
 		new__creation_user,
 		null,
 		new__package_id,
-		''t'',
-		null,
-		new__package_id
+		''t''
 	);
 	insert into as_actions 
 	(action_id,name,description,tcl_code)
