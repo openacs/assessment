@@ -174,7 +174,7 @@ ad_proc -public assessment::install::package_instantiate {
     
 } {
 
-    set folder_id [content::folder::new -name {as_items} -package_id $package_id ]
+    set folder_id [content::folder::new -name "assessment_$package_id" -package_id $package_id ]
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_choices} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_mc} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_sa_answers} -include_subtypes t
