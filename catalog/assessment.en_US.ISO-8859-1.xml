@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d5" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d4" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -81,7 +81,7 @@ each question be shown to the subject.</msg>
   <msg key="as_Number_Tries_help">How often can a subject retake the test. 0 for infinite.</msg>
   <msg key="as_parameter_description_help">Purpouse of the variable (short desc.)</msg>
   <msg key="as_parameter_help">Name of the variable that you going to call on the tcl code (ie. student_id) without &quot;$&quot;</msg>
-  <msg key="as_parameter_query_help">Just put the query that retrive the info desired</msg>
+  <msg key="as_parameter_query_help">Just put the query that retrive the info desired (Syntax: select name,id from table_name where condition)</msg>
   <msg key="as_parameter_type_help">Select the type of variable you spect to use. It it is a query you have to put your query below</msg>
   <msg key="as_Return_Url_help">URL to go to after the assessment has been finished by a subject</msg>
   <msg key="as_Reuse_Responses_help">If yes, the system will look for previous responses to the the questions and prefill the last answer the respondee has given in the assessment form of the respondee</msg>
@@ -307,6 +307,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="not_answered">not answered</msg>
   <msg key="not_approved">Not Approved</msg>
   <msg key="not_yet_reviewed">not yet reviewed</msg>
+  <msg key="Notification">Notification</msg>
   <msg key="notify_user">Notify User</msg>
   <msg key="num_Answers">Total Number of displayed Choices</msg>
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>
@@ -333,6 +334,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Percent_Score">Percent Score</msg>
   <msg key="Percent_Score_help">Percentage of the points of  the question this choice gives. May be larger than 100 and lower than -100.</msg>
   <msg key="performed">Performed</msg>
+  <msg key="permissions">Permissions</msg>
   <msg key="points">points</msg>
   <msg key="points_item">Points for Question</msg>
   <msg key="points_item_help">How many points is this question worth in a section. This is a measurement for relative difficulty.</msg>
@@ -354,6 +356,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="remove_item">Remove Question</msg>
   <msg key="remove_section">Remove Section</msg>
   <msg key="Removes_all_questio">- Removes all questions and responses</msg>
+  <msg key="Request">Request</msg>
   <msg key="request_notif">Request Notification for </msg>
   <msg key="Requested_assess_does">Requested assessment does not exist</msg>
   <msg key="Required">Required</msg>
@@ -441,6 +444,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="top">Top</msg>
   <msg key="Total_score">Total score</msg>
   <msg key="trigger">Trigger</msg>
+  <msg key="trigger_delete">Delete Trigger</msg>
   <msg key="triggers">Trigger</msg>
   <msg key="two_days">Two days ago</msg>
   <msg key="type_of_trigger">Type of the trigger</msg>
