@@ -87,13 +87,21 @@ ad_proc -public as::item_type_sa::render {
     -as_item_id:required
     {-default_value ""}
     {-session_id ""}
+    {-show_feedback ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
 
     Render a Short Answer Type
 } {
-    return [list "" ""]
+    if {![empty_string_p $default_value]} {
+	array set values $default_value
+	set default $values(text_answer)
+    } else {
+	set default ""
+    }
+
+    return [list $default ""]
 }
 
 ad_proc -public as::item_type_sa::process {

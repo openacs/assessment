@@ -5,7 +5,7 @@
       <querytext>
       
     select i.as_item_id, i.subtext, cr.title, ci.name, ism.required_p,
-           ism.section_id, ism.sort_order,
+           ism.section_id, ism.sort_order, i.feedback_right, i.feedback_wrong,
            ism.max_time_to_complete, ism.points
     from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism,
          as_session_items si

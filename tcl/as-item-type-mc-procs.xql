@@ -68,6 +68,20 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_type_mc::render.get_sorted_choices_with_feedback">
+      <querytext>
+
+	select r.title, c.choice_id, c.correct_answer_p, c.feedback_text
+	from as_session_choices sc, as_item_choices c, cr_revisions r
+	where sc.session_id = :session_id
+	and sc.section_id = :section_id
+	and sc.as_item_id = :as_item_id
+	and r.revision_id = sc.choice_id
+	and c.choice_id = sc.choice_id
+
+      </querytext>
+</fullquery>
+
 <fullquery name="as::item_type_mc::render.item_type_data">
       <querytext>
 

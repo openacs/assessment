@@ -206,6 +206,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="no">No</msg>
   <msg key="no_waiting">Immediate retry allowed</msg>
   <msg key="None">None</msg>
+  <msg key="not_answered">not answered</msg>
   <msg key="not_yet_reviewed">not yet reviewed</msg>
   <msg key="num_Answers">Total Number of displayed Choices</msg>
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>

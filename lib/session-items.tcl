@@ -3,12 +3,10 @@ ad_form -name session_results_$section_id -mode display -form {
 }
 
 # todo: display feedback text
-db_multirow -extend { presentation_type html result_points } items session_items {} {
+db_multirow -extend { presentation_type html result_points feedback answered_p } items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
 
-    ns_log notice "\#\#\# $default_value"
-
-    set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value]
+    set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback]
 
     if {$presentation_type == "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
@@ -18,7 +16,20 @@ db_multirow -extend { presentation_type html result_points } items session_items
 	set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
-    array set values $default_value
-    set result_points $values(points)
-    array unset values
+    if {![empty_string_p $default_value]} {
+	array set values $default_value
+	set result_points $values(points)
+	array unset values
+	set answered_p t
+
+	if {$result_points < $points} {
+	    set feedback "<font color=red>$feedback_wrong</font>"
+	} else {
+	    set feedback "<font color=green>$feedback_right</font>"
+	}
+    } else {
+	set result_points ""
+	set feedback ""
+	set answered_p f
+    }
 }

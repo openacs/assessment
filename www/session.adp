@@ -21,16 +21,17 @@
 <multiple name="sections">
 
 <table cellspacing=0>
-<tr><td valign="top">@sections.rownum@. #assessment.section# @sections.title@
+<tr><td valign="top">#assessment.section# @sections.title@
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
 (0 / @sections.points@ #assessment.points#)
 </td></tr>
 
 <tr><td><i> @sections.description@ </i><br></td></tr>
+<tr><td>@sections.feedback_text@</td></tr>
 </table>      
 
 <blockquote>
-  <include src="/packages/assessment/lib/session-items" section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" show_item_name_p="@assessment_data.show_item_name_p@">
+  <include src="/packages/assessment/lib/session-items" section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@">
 </blockquote>
 
 </multiple>

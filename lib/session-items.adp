@@ -1,5 +1,8 @@
 <formtemplate id="session_results_@section_id@">
 <table cellspacing=0>
+<if @items:rowcount@ eq 0>
+  <tr><td>#assessment.not_answered#</td></tr>
+</if>
 
 <multiple name="items">
 
@@ -10,7 +13,8 @@
     <tr class="even">
   </else>
 
-  <td valign="top"><b><if @show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b></td></tr>
+  <td valign="top"><b><if @show_item_name_p@ eq t>@items.name@:</if><else>#assessment.Question# @items.rownum@:</else></b>
+  <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if></td></tr>
 
   <if @items.rownum@ odd>
     <tr class="odd">
@@ -20,10 +24,12 @@
   </else>
 
 <td>
-<if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#</b></if>
-<else><b>#assessment.not_yet_reviewed#</b></else>
-
-<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
+<if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#<if @items.feedback@ not nil>: @items.feedback;noquote@</b></if></b>
+</if>
+<else>
+  <if @items.answered_p@ eq t><b>#assessment.not_yet_reviewed#</b></if>
+  <else><b>#assessment.not_answered#</b></else>
+</else>
 </td></tr>
 
   <if @items.rownum@ odd>

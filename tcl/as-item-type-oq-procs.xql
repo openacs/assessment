@@ -25,7 +25,7 @@
 <fullquery name="as::item_type_oq::render.item_type_data">
       <querytext>
 
-	select default_value
+	select default_value as default
 	from as_item_type_oq
 	where as_item_type_id = :type_id
 

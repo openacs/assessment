@@ -136,19 +136,36 @@ ad_proc -public as::item_type_mc::render {
     -as_item_id:required
     {-default_value ""}
     {-session_id ""}
+    {-show_feedback ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
 
     Render a Multiple Choice Type
 } {
+    set defaults ""
     if {![empty_string_p $default_value]} {
 	array set values $default_value
 	set defaults $values(choice_answer)
     }
 
     if {![empty_string_p $session_id]} {
-	set choice_list [db_list_of_lists get_sorted_choices {}]
+	if {[empty_string_p $show_feedback] || $show_feedback == "none"} {
+	    set choice_list [db_list_of_lists get_sorted_choices {}]
+	} else {
+	    # incorrect correct
+	    set choice_list ""
+	    db_foreach get_sorted_choices_with_feedback {} {
+		set pos [lsearch -exact -integer $defaults $choice_id]
+		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+		    lappend choice_list [list "$title <img src=graphics/correct.gif> <font color=green>$feedback_text</font>" $choice_id]
+		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+		    lappend choice_list [list "$title <img src=graphics/wrong.gif> <font color=red>$feedback_text</font>" $choice_id]
+		} else {
+		    lappend choice_list [list $title $choice_id]
+		}
+	    }
+	}
 	
 	if {[llength $choice_list] > 0} {
 	    return [list $defaults $choice_list]
@@ -157,7 +174,6 @@ ad_proc -public as::item_type_mc::render {
 
     db_1row item_type_data {}
 
-    set defaults ""
     set display_choices [list]
     set correct_choices [list]
     set wrong_choices [list]
