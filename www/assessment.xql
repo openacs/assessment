@@ -62,6 +62,17 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="unfinished_last_item">
+	<querytext>
+
+	select max(i.sort_order) as item_order
+        from as_session_items i
+        where i.session_id = :session_id
+	and i.section_id = :section_id
+
+	</querytext>
+</fullquery>
+	
 <fullquery name="process_item_type">
 	<querytext>
 

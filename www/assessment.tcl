@@ -59,6 +59,9 @@ db_transaction {
 	    } else {
 		db_1row unfinished_section_id {}
 		db_1row unfinished_item_order {}
+		if {[empty_string_p $item_order]} {
+		    db_1row unfinished_last_item {}
+		}
 		incr section_order -1
 		incr item_order -1
 	    }

@@ -24,7 +24,7 @@
 <!--	<a href="results-summary?assessment_id=@assessment_id@">#assessment.Summary#</a> | -->
 	<if @assessment_data.anonymous_p@>#assessment.CSV_file#</if><else><a href="results-export?assessment_id=@assessment_id@">#assessment.CSV_file#</a></else></td>
 </tr>
-
+<!--
 <tr class="odd">
 	<td valign="top" rowspan="8"><nobr>#assessment.Response_Options# </nobr></td>
 </tr>
@@ -67,7 +67,7 @@
 	<td><if @assessment_data.time_for_response@ not nil> #assessment.time_response#</if><else>#assessment.unlimited_time#</else> -
 	[ <a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a> ]</td>
 </tr>
-
+-->
 <tr class="even"><td valign="top" rowspan="2">#assessment.Email_Options#</td><td >@notification_chunk;noquote@</td></tr>
 
 <tr class="even"><td ><a href="send-mail?assessment_id=@assessment_id@">#assessment.Send_bulkmail#</a> #assessment.regarding_this_assess# </td></tr>

@@ -41,7 +41,7 @@ ad_form -name assessment_form -action assessment-form -form {
 
 if {[info exists assessment_id]} {
     ad_form -extend -name assessment_form -form {
-	{name:text(inform) {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
+	{name:text(inform) {label "#assessment.Name#"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
     }
 } else {
     ad_form -extend -name assessment_form -form {

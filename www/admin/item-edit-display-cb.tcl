@@ -36,7 +36,7 @@ foreach label_or_type [list top left right bottom] {
 }
 
 set order_types [list]
-foreach one_order_type [list numerical alphabetical randomized order_of_entry] {
+foreach one_order_type [list alphabetical randomized order_of_entry] {
     lappend order_types [list "[_ assessment.$one_order_type]" $one_order_type]
 }
 
