@@ -48,9 +48,9 @@ set choices [db_list_of_lists get_choices {}]
 foreach one_choice $choices {
     util_unlist $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score fixed_position answer_value content_rev_id content_filename content_name
     if {$correct_answer_p == "t"} {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=../graphics/correct.gif>\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=/resources/assessment/correct.gif>\"\}\}\n"
     } else {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=../graphics/wrong.gif>\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice]\"\} \{value \"$title <img src=/resources/assessment/wrong.gif>\"\}\}\n"
     }
     if {$selected_p == "t"} {
 	append ad_form_code "\{selected.$choice_id:text(checkbox),optional \{label \"[_ assessment.Default_Selected]\"\} \{options \$selected_options\} \{value \"t\"\} \{help_text \"[_ assessment.Default_Selected_help]\"\}\}\n"

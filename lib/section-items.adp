@@ -34,20 +34,20 @@
 
 <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
 
-<a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Search_Item#</a><img src="../graphics/spacer.gif" border="0" alt="" width="10">
+<a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Search_Item#</a><img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 
 <if @items.mc_type@ ne "nmc">
 <a
-href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a> (<a href="../asm-admin/checks-admin?section_id=@items.section_id@&assessment_id=@assessment_id@&item_id=@items.as_item_id@">@items.checks_related@</a>)<img src="../graphics/spacer.gif" border="0" alt="" width="10">
+href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a> (<a href="../asm-admin/checks-admin?section_id=@items.section_id@&assessment_id=@assessment_id@&item_id=@items.as_item_id@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 </if>
 
 <if @items.rownum@ lt @items:rowcount@>
-  <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=down"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
+  <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
 </if>
 <if @items.rownum@ gt 1>
-  <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=up"><img src="../graphics/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+  <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
 </if>
-<a href="item-delete?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@"><img src="../graphics/delete.gif" border="0" alt="#assessment.remove_item#"></a>
+<a href="item-delete?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@"><img src="/resources/assessment/delete.gif" border="0" alt="#assessment.remove_item#"></a>
 
 <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
 (@items.points@ #assessment.points#)

@@ -93,10 +93,10 @@ template::list::create \
 	    display_template {    
 		<if $show_p eq 1>
 		<if @aa_checks.order_by@ lt @aa_checks:rowcount@>
-		<a href="swap-actions?assessment_id=$assessment_id&check_id=@aa_checks.inter_item_check_id@&order_by=@aa_checks.order_by@&section_id=@aa_checks.section_id_from@&action_perform=@aa_checks.action_perform@&direction=d"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
+		<a href="swap-actions?assessment_id=$assessment_id&check_id=@aa_checks.inter_item_check_id@&order_by=@aa_checks.order_by@&section_id=@aa_checks.section_id_from@&action_perform=@aa_checks.action_perform@&direction=d"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
 		</if>
 		<if @aa_checks.order_by@ gt 1>
-		<a href="swap-actions?assessment_id=$assessment_id&check_id=@aa_checks.inter_item_check_id@&order_by=@aa_checks.order_by@&section_id=@aa_checks.section_id_from@&action_perform=@aa_checks.action_perform@&direction=u"><img src="../graphics/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+		<a href="swap-actions?assessment_id=$assessment_id&check_id=@aa_checks.inter_item_check_id@&order_by=@aa_checks.order_by@&section_id=@aa_checks.section_id_from@&action_perform=@aa_checks.action_perform@&direction=u"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
 		</if>
 		</if>
 		<a href=request-notification?assessment_id=$assessment_id&inter_item_check_id=@aa_checks.inter_item_check_id@&section_id=$section_id>#assessment.notify_user#</a>
@@ -139,10 +139,10 @@ template::list::create \
 	    display_template {   
 		<if $show_p eq 1>
 		<if @i_checks.order_by@ lt @i_checks:rowcount@>
-		<a href="swap-actions?assessment_id=$assessment_id&check_id=@i_checks.inter_item_check_id@&order_by=@i_checks.order_by@&section_id=@i_checks.section_id_from@&action_perform=@i_checks.action_perform@&direction=d"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
+		<a href="swap-actions?assessment_id=$assessment_id&check_id=@i_checks.inter_item_check_id@&order_by=@i_checks.order_by@&section_id=@i_checks.section_id_from@&action_perform=@i_checks.action_perform@&direction=d"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
 		</if>
 		<if @i_checks.order_by@ gt 1>
-		    <a href="swap-actions?assessment_id=$assessment_id&check_id=@i_checks.inter_item_check_id@&order_by=@i_checks.order_by@&section_id=@i_checks.section_id_from@&action_perform=@i_checks.action_perform@&direction=u"><img src="../graphics/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+		    <a href="swap-actions?assessment_id=$assessment_id&check_id=@i_checks.inter_item_check_id@&order_by=@i_checks.order_by@&section_id=@i_checks.section_id_from@&action_perform=@i_checks.action_perform@&direction=u"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
 		</if>
 		</if>
 		<a href=request-notification?assessment_id=$assessment_id&inter_item_check_id=@i_checks.inter_item_check_id@&section_id=$section_id>#assessment.notify_user#</a>

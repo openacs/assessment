@@ -108,15 +108,15 @@
 <a
 href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
 
-<img src="../graphics/spacer.gif" border="0" alt="" width="10">
+<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 
 <if @sections.rownum@ lt @sections:rowcount@>
-  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="../graphics/down" border="0" alt="#assessment.Move_Down#"></a>
+  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
 </if>
 <if @sections.rownum@ gt 1>
-  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=up"><img src="../graphics/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
 </if>
-<a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="../graphics/delete.gif" border="0" alt="#assessment.remove_section#"></a>
+<a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="/resources/assessment/delete.gif" border="0" alt="#assessment.remove_section#"></a>
 
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
 (@sections.points@ #assessment.points#)
