@@ -35,10 +35,12 @@
   <msg key="Add_Sections">Añadir secciones al assessment</msg>
   <msg key="Add_to_assessment">Añadir al assessment</msg>
   <msg key="Add_to_section">Añadir a la sección</msg>
+  <msg key="add_trigger">Añadir condición</msg>
   <msg key="admin_actions">Administración de acciones</msg>
   <msg key="Admin_catalog">Administración del catálogo de preguntas</msg>
   <msg key="admin_categories">Administración de Categorías</msg>
   <msg key="admin_requests">Administración de peticiones</msg>
+  <msg key="admin_triggers">Administrar condiciones</msg>
   <msg key="Administration">Administración</msg>
   <msg key="after_this_asm">Después de este assessment:</msg>
   <msg key="All">Todos</msg>
@@ -55,7 +57,6 @@
   <msg key="Answer_Alignment">Alineación de las respuestas</msg>
   <msg key="Answer_Alignment_help">Alinear la respuesta en relación a la pregunta.</msg>
   <msg key="Answer_Choices">Respuestas</msg>
-  <msg key="Applet">Applet de Assessment</msg>
   <msg key="approve">Aprobar</msg>
   <msg key="approve_actions">Aprobar acciones</msg>
   <msg key="approved">Aprobado</msg>
@@ -71,6 +72,7 @@
   <msg key="as_Exit_Page_help">Página a visualizar después de que acabe el assessment.</msg>
   <msg key="as_Feedback_help">Bajo qué condiciones se debería mostrar al alumno el feedback asociado a cada pregunta.</msg>
   <msg key="as_Instructions_help">Instrucciones sobre cómo usar este assessment</msg>
+  <msg key="as_ip_mask_help">Máscara de red que define qué direcciones IP pueden participar en este assessment</msg>
   <msg key="as_Minutes_Retry_help">Cuantos minutos tienen que transcurrir entre cada intento.</msg>
   <msg key="as_Navigation_help">Como se hará la navegación entre secciones  dentro de un assessment.</msg>
   <msg key="as_Number_Tries_help">Cuantas veces un alumno puede repetir el test. Desde 0 a infinito.</msg>
@@ -88,6 +90,7 @@
   <msg key="Assessment">Assessment</msg>
   <msg key="Assessment_Administration">Administración de Assessment</msg>
   <msg key="Assessment_Imported_Correctly">Assessment importado correctamente</msg>
+  <msg key="assessment_Name_help">Te permite dar un identificador único al assessment, que puede ser un código.</msg>
   <msg key="assessment_not_public">El assessment no es público.</msg>
   <msg key="assessment_restricted_ips">Acceso restringido, IP errónea.</msg>
   <msg key="Assessment_Title">Título</msg>
@@ -103,6 +106,7 @@
   <msg key="besideright">Al lado-a la derecha</msg>
   <msg key="bottom">Abajo</msg>
   <msg key="Box_Orientation">Orientación del cuadro</msg>
+  <msg key="bulk_mail_send">Correo a todos</msg>
   <msg key="By_user">Por usuario</msg>
   <msg key="cancel_and_return">Cancelar y Volver a Assessment</msg>
   <msg key="Categories_combine">Combinar categorías por</msg>
@@ -163,6 +167,7 @@
   <msg key="delete_parameter">Borrar parámetro</msg>
   <msg key="Delete_this_assess">Borrar este assessment</msg>
   <msg key="Description">Descripción</msg>
+  <msg key="description_trigger">Descripción de la condición (por ejemplo ¿qué acción hará? )</msg>
   <msg key="disabled">Deshabilitar</msg>
   <msg key="Display_Type">Tipo de visualización</msg>
   <msg key="Display_Type_help">Tipo de visualización de la pregunta</msg>
@@ -284,6 +289,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
   <msg key="Name">Nombre</msg>
+  <msg key="name_of_trigger">Nombre de la condición.</msg>
   <msg key="name_used">El nombre que ya se usa.</msg>
   <msg key="New_Assessment">Nuevo Assessment</msg>
   <msg key="New_Assessment2">Crear un nuevo Assessment</msg>
@@ -295,6 +301,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="not_answered">no contestada</msg>
   <msg key="not_approved">No aprobado</msg>
   <msg key="not_yet_reviewed">sin revisar</msg>
+  <msg key="Notification">Notificación</msg>
+  <msg key="notified_users">Usuarios notificados</msg>
   <msg key="notify_user">Notificar al usuario</msg>
   <msg key="num_Answers">Número total de respuestas a visualizar</msg>
   <msg key="num_Answers_help">Si este número es más pequeño que el número de respuestas añadidas, se cogerán las respuestas aleatoriamente.</msg>
@@ -321,6 +329,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Percent_Score">Puntuación (en porcentaje)</msg>
   <msg key="Percent_Score_help">Porcentaje de puntos que supone responder esta respuesta para la puntuación total de la pregunta. Puede ser mayor que 100 y menor que 100.</msg>
   <msg key="performed">Realizado</msg>
+  <msg key="permissions">Permisos</msg>
   <msg key="points">puntos</msg>
   <msg key="points_item">Puntos por pregunta</msg>
   <msg key="points_item_help">Cuántos puntos vale esta pregunta en una sección. Ésta es una medida de la dificultad relativa.</msg>
@@ -341,6 +350,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="remove_item">Eliminar Pregunta</msg>
   <msg key="remove_section">Eliminar Sección</msg>
   <msg key="Removes_all_questio">- Eliminar todas las preguntas y respuestas</msg>
+  <msg key="Request">Petición</msg>
   <msg key="request_notif">Pedir notificación para</msg>
   <msg key="Requested_assess_does">El assessment solicitado no existe</msg>
   <msg key="Required">Obligatorio</msg>
@@ -424,7 +434,11 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="today">Hoy</msg>
   <msg key="top">Encima</msg>
   <msg key="Total_score">Puntuación total</msg>
+  <msg key="trigger">Condición</msg>
+  <msg key="trigger_delete">Borrar condición</msg>
+  <msg key="triggers">Condición</msg>
   <msg key="two_days">Hace dos días</msg>
+  <msg key="type_of_trigger">Tipo de condición</msg>
   <msg key="unlimited_time">Tiempo para responder ilimitado</msg>
   <msg key="unlimited_tries">Número de intentos permitidos ilimitado</msg>
   <msg key="unsecure_access_allow">Permitir acceso no seguro</msg>
