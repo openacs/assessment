@@ -22,8 +22,43 @@ set package_id [ad_conn package_id]
 #set subject_id [ad_conn user_id]
 set subject_id $subject_id
 
+#if it's an assessment or a survey
+set assessment_or_survey [db_string assessment_or_survey {
+    SELECT survey_p
+    FROM as_assessmentsx
+    WHERE assessment_id = :assessment_id
+}]
+
+if {$assessment_or_survey == {t}} {
 #Lists the identifier of sessions, the name of subjects that took this assessment, the name of assessment and the finished time 
 #of assessment for an assessment.
+template::list::create \
+    -name sessions \
+    -multirow sessions \
+    -key sessions_id \
+    -elements {
+        session_id {
+	    label {[_ assessment.Session]}
+	    link_url_eval {[export_vars -base "session" {session_id}]}
+	}
+        subject_name {
+	    label {[_ assessment.Subject_Name]}
+            link_url_eval {[acs_community_member_url -user_id $subject_id]}
+
+        }
+	assessment_name {
+	    label {Assessment}
+	    link_url_eval {[export_vars -base "assessment" {assessment_id}]}
+	}
+	completed_datetime {
+	    label {[_ assessment.Finish_Time]}
+	    html {nowrap}
+	}
+    } \
+    -main_class {
+        narrow
+    }
+} else {
 template::list::create \
     -name sessions \
     -multirow sessions \
@@ -54,6 +89,7 @@ template::list::create \
     -main_class {
         narrow
     }
+}
 
 
 
