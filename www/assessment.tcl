@@ -286,7 +286,7 @@ foreach one_item $item_list {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
 
-                   set section_to_tmp \[as::assessment::checks::branch_checks -item_id \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
+                   set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$response_item_id -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
                     }
