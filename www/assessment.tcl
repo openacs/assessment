@@ -184,6 +184,8 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	db_transaction {
 	    # answer all remaining section items with empty string
 	    as::section::close -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id -subject_id $user_id
+	    # immediate checks execution
+	    as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 
 	    set section_list [lreplace $section_list 0 [expr $section_order]]
 	    foreach section_id $section_list {
@@ -197,8 +199,6 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
-	#immediate checks execution
-	as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 	ad_script_abort
     } else {
@@ -290,7 +290,6 @@ foreach one_item $item_list {
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
                     }
-               
                 }
 		
 		set points \[ad_decode \$points \"\" 0 \$points\]
@@ -332,24 +331,22 @@ if {$display(submit_answer_p) != "t"} {
 		    set response_to_item(\$response_item_id) \"\"
 		} else {
 
-                   
                    set item_to \$response_item_id
-                   set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$item_to -response \$response_to_item(\$response_item_id) -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
+                   set section_to_tmp \[as::assessment::check::branch_checks -item_id_to \$item_to -response \$response_to_item(\$response_item_id) -session_id \$session_id -assessment_id \$assessment_id -section_id \$section_id\]
                    if { \$section_to_tmp != \"f\" && \$section_to_tmp != \"f\"} {
                            set section_to \$section_to_tmp
                     }
-               
                 }
-
 
 		set points \[ad_decode \$points \"\" 0 \$points\]
 		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response_to_item(\$response_item_id) -max_points \$points -allow_overwrite_p \$display(back_button_p)
-
 	    }
 
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
+		# immediate checks execution
+		as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	    }
 	}
     }"
@@ -362,8 +359,6 @@ if {$display(submit_answer_p) != "t"} {
 	    set section_order \$new_section_order
             }
 	    set item_order \$new_item_order
-      	    #immediate checks execution
-            as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 
 	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order}\]
 	    ad_script_abort
@@ -402,9 +397,8 @@ if {$display(submit_answer_p) != "t"} {
 	    if {$section_order != $new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
-		#immediate checks execution
+		# immediate checks execution
 		as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
-
 	    }
 	}
     } -after_submit {
@@ -412,8 +406,6 @@ if {$display(submit_answer_p) != "t"} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
-	    #immediate checks execution
-	    as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order}]
 	    ad_script_abort
 	} else {
