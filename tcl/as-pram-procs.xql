@@ -20,11 +20,6 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::actionparam::actiondelete.delete_action">
-      <querytext>
-      delete from as_actions where action_id =:action_id
-      </querytext>
-</fullquery>
 
 
 <fullquery name="as::actionparam::actiondelete.delete_param">

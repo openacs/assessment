@@ -4,18 +4,16 @@ ad_library {
     
 }
 
-
-namespace eval as::actions {
+namespace eval as::actions {}
     
-    ad_proc -public insert_actions {
-	-package_id:integer,required
-	-node_id:integer,required
-    } {
-    } { 
-	set user_id [auth::test::get_admin_user_id]
-	set instance_id $package_id
-	   
-	 db_exec_plsql insert_default {}
-    }
+ad_proc -public as::actions::insert_actions {
+    {-package_id}
+    {-node_id}
+} {
+} { 
+    set user_id [auth::test::get_admin_user_id]
     
+    db_exec_plsql insert_default {}
 }
+
+
