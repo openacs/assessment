@@ -237,9 +237,9 @@ create table as_assessments (
 	assessment_id	integer
 			constraint as_assessments_assessment_id_pk
 			primary key,
-	name	varchar(25),
-	short_name	varchar(25),
-	author	varchar(25),
+	name	varchar(500),
+	short_name	varchar(500),
+	author	varchar(500),
 	definition	text,
 	instructions	text,
 	scaled_p	char(1) default 'f'
