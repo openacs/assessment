@@ -21,7 +21,7 @@ set assessment_items [db_string assessment_items {SELECT COUNT(*) FROM (as_secti
 set itemmaxscore [expr $assessment_score/$assessment_items] ;# FIXME total_points/items_number
 
 set session_score 0
-db_multirow -extend [list choice_html score maxscore notanswered item_correct] items query_all_items {} {
+db_multirow -extend [list choice_html score maxscore notanswered item_correct presentation_type] items query_all_items {} {
   set as_item_display_rbx__item_id {}
   unset as_item_display_rbx__item_id
   set item_item_id [db_string cr_item_from_revision "select item_id from cr_revisions where revision_id=:as_item_id"]
@@ -29,8 +29,10 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct] i
   set mc_id [db_string item_to_rev "SELECT revision_id FROM cr_revisions WHERE item_id=:item_mc_id"]
   set item_display_id [db_string item_item_type "SELECT related_object_id FROM cr_item_rels WHERE relation_tag = 'as_item_display_rel' AND item_id=:item_item_id"]
   db_0or1row as_item_display_rbx "SELECT item_id AS as_item_display_rbx__item_id FROM as_item_display_rbx WHERE item_id=:item_display_id"
+  db_0or1row as_item_display_tbx "SELECT item_id AS as_item_display_tbx__item_id FROM as_item_display_tbx WHERE item_id=:item_display_id"
   set presentation_type "checkbox" ;# DEFAULT
   if {[info exists as_item_display_rbx__item_id]} {set presentation_type "radio"}
+  if {[info exists as_item_display_tbx__item_id]} {set presentation_type "fitb"}
 
   set notanswered 1
   set maxscore $itemmaxscore
@@ -39,23 +41,41 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct] i
   set choice_html "<table cellspacing=\"0\" cellpadding=\"3\" border=\"0\">"
   db_foreach choices {} {
     if {[string length "$choice_id_answer"]} {set notanswered 0}
-    if {$correct_answer_p == {t}} { set correct_answer_bool 1 } else { set correct_answer_bool 0 }
-    set choice_correct [expr $correct_answer_bool == ("$choice_id_answer" == $choice_id)]
+    set choice_correct 0
+    if {[info exists as_item_display_tbx__item_id]} {
+        foreach text_value $choice_title {
+            if {[empty_string_p $text_answer]} { } else {
+                if {$text_answer == $text_value} { set choice_correct 1 }
+            }
+        }
+    } else {
+        if {$correct_answer_p == {t}} { set correct_answer_bool 1 } else { set correct_answer_bool 0 }
+        set choice_correct [expr $correct_answer_bool == ("$choice_id_answer" == $choice_id)]
+    }
     set item_correct [expr $item_correct && $choice_correct]
     if {$choice_correct} {
-    set correct_answer {}
+        set correct_answer {}
     } else {
-    set correct_answer {<font color="#ff0000">Error</font>}
+        set correct_answer {<font color="#ff0000">Error</font>}
     }
+    if {[info exists as_item_display_tbx__item_id]} {
+        if {$choice_correct} {
+            regsub -all -line -nocase -- "<textbox.as_item_choice_id=$choice_id" $title "<input value=\"$text_answer\" readonly disabled" title
+        } else {
+            regsub -all -line -nocase -- "<textbox.as_item_choice_id=$choice_id" $title "<input value=\"$text_answer\" readonly disabled style=\"color: #ff0000\"" title
+        }
+    } else {
     if {$choice_id_answer == $choice_id } {
       set choice_answer "<input type=\"$presentation_type\" readonly disabled checked>"
     } else {
       set choice_answer "<input type=\"$presentation_type\" readonly disabled>"
     }
     append choice_html "<tr><td>$correct_answer</td><td>$choice_answer [ad_quotehtml $choice_title]</td></tr>"
+    }
   }
   if {$item_correct} { set score $itemmaxscore }
   set session_score [expr $session_score+$score]
+  if {[info exists as_item_display_tbx__item_id]} { append choice_html $title }
   append choice_html {</table>}
 }
 

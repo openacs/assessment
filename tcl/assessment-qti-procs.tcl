@@ -176,12 +176,15 @@ ad_proc -private parse_item { qtiNode section_id} { Parse items from a XML QTI f
 						set as_item_choices__ident [$node getAttribute {ident}]
 						# get the correct response
 						set as_item_choices__choice_text_nodes [$node selectNodes "//conditionvar/or/varequal\[@respident='$as_item_choices__ident'\]/text()"]
-						set as_item_choices__choice_text [string trim [[lindex $as_item_choices__choice_text_nodes 0] nodeValue]]
+						set as_item_choices__choice_text {}
+						foreach respident $as_item_choices__choice_text_nodes {
+							lappend as_item_choices__choice_text [string trim [$respident nodeValue]]
+						}
 						# Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (choice_id)
 						set as_item_choice_id [as_item_choice_new -mc_id $as_item_type_id -name $as_item_choices__ident -title $as_item_choices__choice_text -sort_order $sort_order]
 						# order of the item_choices
 						incr sort_order
-						append as_items__title "<textbox as_item_choice_id=$as_item_choice_id>"
+						append as_items__title " <textbox as_item_choice_id=$as_item_choice_id> "
 					}
 				}
 				# Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)

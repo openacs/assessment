@@ -22,7 +22,7 @@
 		<multiple name="items">
 			<tr bgcolor="#e4eaef"><td colspan="2"><b>#assessment.Question# @items.rownum@</b>&nbsp;&nbsp;(@items.maxscore@ #assessment.points#)</td></tr>
 			<tr><td colspan="2">
-			<b>@items.title@</b>
+			<b><if @items.presentation_type@ not in fitb>@items.title@</if></b>
 			</td></tr>
 			<tr><td colspan="2">
 			@items.choice_html;noquote@</td></tr>

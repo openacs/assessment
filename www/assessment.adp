@@ -17,7 +17,7 @@
 		<b>#assessment.Items#</b><br><br>
 		<multiple name="items">
 			<tr>
-				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b>@items.title@</b></td></tr>
+				<tr bgcolor="#e4eaef"><td colspan="2" nowrap><b>#assessment.Question# @items.rownum@:</b></td><td><b><if @items.presentation_type@ not in fitb>@items.title@</if></b></td></tr>
 				<tr><td colspan="4">
 					<blockquote>
 						<if @items.presentation_type@ in radio checkbox>
@@ -27,6 +27,9 @@
 								<br/>
 							</formgroup>
 						</if>
+						<elseif @items.presentation_type@ in fitb>
+							@items.html;noquote@
+						</elseif>
 						<else>
 							<formwidget id="response_to_item.@items.as_item_id@">
 						</else>

@@ -18,8 +18,11 @@ ad_form -name show_item_form -action process-response -html {enctype multipart/f
     { as_session_id:text {value $as_session_id} }
 }
 
-db_multirow -extend {presentation_type} items query_all_items {} {
+db_multirow -extend {presentation_type html} items query_all_items {} {
     set presentation_type [add_item_to_form show_item_form $as_item_id]
+    if {$presentation_type == {fitb}} {
+        regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
+    }
 }
 
 ad_return_template
