@@ -450,6 +450,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	set as_items__title [$item getAttribute {title} {Item}]
 	array set as_item_choices__correct_answer_p {}
 	array set as_item_choices__score {}
+	array set as_item_choices__feedback_text {}
 	set as_items__points 0
 	set as_items__feedback_right {}
 	set as_items__feedback_wrong {}	
@@ -468,10 +469,12 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	    # <respcondition>
 	    set respconditionNodes [$resprocessing selectNodes {respcondition}]
 	    foreach respcondition $respconditionNodes {
+		set resp_cond_varNodes {}
 		set scoreNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
 		foreach choice $scoreNodes {
+		    set choice_id ""
 		    set choice_id [string trim [$choice nodeValue]]
-		}
+		
 		if {[info exists choice_id]} {
 		    set score 0
 		    # get score
@@ -483,30 +486,63 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 			}
 		    }
 		    set as_item_choices__score($choice_id) $score
-		    incr as_items__points $score
+		    incr as_items__points $score		    
 		}
-		#<displayfeedback>
-		set displayfeedbackNodes [$respcondition selectNodes {displayfeedback}]
-		if {[llength $displayfeedbackNodes]>0} {
-		    set displayfeedbackelement [lindex $displayfeedbackNodes 0]
-		    set displayfeedback__ident [$displayfeedbackelement getAttribute {linkrefid}]
-		    # <itemfeedback>
-		    set itemfeedbackNodes [$item selectNodes {itemfeedback}]
-		    foreach itemfeedback $itemfeedbackNodes {
-			# wrong feedback
-			if {[string compare [$itemfeedback getAttribute {ident}] $displayfeedback__ident] == 0} {
-			    set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
-			    set as_items__feedback_wrong [[lindex $feedback_textNodes 0] nodeValue]
-			    # right feedback
-			} else {
-			    set feedback_textNodes [$itemfeedback selectNodes {.//mattext/text()}]
-			    set as_items__feedback_right [[lindex $feedback_textNodes 0] nodeValue]
+		}
+		
+		set scoreNodes [$respcondition selectNodes {conditionvar/and/varequal/text()}]
+		foreach choice $scoreNodes {
+		    set choice_id ""
+		    set choice_id [string trim [$choice nodeValue]]
+		
+		if {[info exists choice_id]} {
+		    set score 0
+		    # get score
+		    set scoreNodes [$respcondition selectNodes {setvar/text()}]
+		    foreach scorenode $scoreNodes {
+			set score [string trim [$scorenode nodeValue]]
+			if {$score>0} {
+			    set as_item_choices__correct_answer_p($choice_id) {t}
 			}
 		    }
+		    set scoreNodes1 [$respcondition selectNodes {conditionvar/and/varequal}]
+		    if {[llength $scoreNodes1]>0} {
+		        set score1 [expr ($score*1.0/[llength $scoreNodes1])]
+		    }		    
+		    set as_item_choices__score($choice_id) $score1
+		    set as_items__points $score		    
 		}
+		}
+		
+		set resp_cond_varNodes [$respcondition selectNodes {conditionvar/varequal/text()}]		
+		if {[llength $resp_cond_varNodes]==1} { } else {	
+		    set resp_cond_or_varNodes [$respcondition selectNodes {conditionvar/or/not/and/varequal/text() | conditionvar/not/or/varequal/text() | conditionvar/not/and/or/varequal/text()}]
+		    if {[llength $resp_cond_or_varNodes]>0} {
+		        set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
+			if {[llength $displayfeedbackNode]>0} {
+			    set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]			
+			    set as_items__feedback_wrong [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
+			    if {[llength $as_items__feedback_wrong]>0} {
+				set as_items__feedback_wrong [$as_items__feedback_wrong nodeValue]		        
+			    }
+ 			}
+		    } else {
+			set resp_cond_and_varNodes [$respcondition selectNodes {conditionvar/and/varequal/text()| conditionvar/or/varequal/text()}]
+			if {[llength $resp_cond_and_varNodes]>0} {		    
+			    set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
+			    if {[llength $displayfeedbackNode]>0} {
+			        set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]			    
+			        set as_items__feedback_right [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
+			        if {[llength $as_items__feedback_right]>0} {
+			            set as_items__feedback_right [$as_items__feedback_right nodeValue]		        
+			        }	
+			    }
+                         }
+		     }
+		 }    	 
 	    }
 	}
-
+	
 	# <presentation> element
 	set presentationNodes [$item selectNodes {presentation}]
 	foreach presentation $presentationNodes {
@@ -689,9 +725,38 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		    # Insert as_item_choice
 		    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
 		    if {[info exists as_item_choices__score($as_item_choices__ident)]} {
+		        if {$as_items__points== 0} {
+			    #if <setvar> is missing
+			    set as_items__points 1			
+			}
 			set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)]
 		    } else {
 			set as_item_choices__score($as_item_choices__ident) 0
+		    }
+		    set as_item_choices__feedback_text($as_item_choices__ident) ""    
+		    
+		    set resprocessingNodes [$item selectNodes {resprocessing}]
+	            foreach resprocessing $resprocessingNodes {
+	            # <respcondition>
+	            set respconditionNodes [$resprocessing selectNodes {respcondition}]		    
+	            foreach respcondition $respconditionNodes {
+		        set displayfeedbackNode ""
+		        set resp_cond_varNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
+			if {[llength $resp_cond_varNodes]==1} {		    
+			    set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]		    
+			    set choice_identifier [$resp_cond_varNodes nodeValue]
+			    if {[llength $displayfeedbackNode]>0} {
+		                set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]		    
+		                set choice_identifier [$resp_cond_varNodes nodeValue]		        
+		                if {$as_item_choices__ident == $choice_identifier} {   		        
+		                    set choices__feedback_text [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
+			            if {[llength $choices__feedback_text]>0} {
+			                set as_item_choices__feedback_text($as_item_choices__ident) [$choices__feedback_text nodeValue]
+			            }		        
+		                }
+		            }  
+		        } 
+		    }
 		    }
 		    # insert as_item_choice
 		    as::item_choice::new \
@@ -699,6 +764,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 				    -title $as_item_choices__choice_text \
 				    -sort_order $sort_order \
 				    -selected_p $selected_p \
+				    -feedback_text $as_item_choices__feedback_text($as_item_choices__ident) \
 				    -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) \
 				    -percent_score $as_item_choices__score($as_item_choices__ident) \
 				    -content_value $as_item_choices__content_value
