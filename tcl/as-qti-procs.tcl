@@ -148,27 +148,21 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 	    # <respcondition>
 	    set respconditionNodes [$resprocessing selectNodes {respcondition}]
 	    foreach respcondition $respconditionNodes {
-		set title [$respcondition getAttribute {title} {Correct}]
-		if {$title == {Correct}} {
-		    # get the correct answer
-		    set correctNodes [$respcondition selectNodes {conditionvar/and/varequal/text()}]
-		    foreach correct $correctNodes {
-			set as_item_choices__correct_answer_p([string trim [$correct nodeValue]]) {t}
-		    }
+		set scoreNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
+		foreach choice $scoreNodes {
+		    set choice_id [string trim [$choice nodeValue]]
 		}
-		if {$title == {adjustscore}} {
-		    set choice {}
-		    set score {}
-		    set scoreNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
-		    foreach correct $scoreNodes {
-			set choice [string trim [$correct nodeValue]]
-		    }
+		if {[info exists choice_id]} {
+		    set score 0
 		    # get score
-		    set scoreNodes [$respcondition selectNodes {setvar[@varname='SCORE']/text()}]
+		    set scoreNodes [$respcondition selectNodes {setvar/text()}]
 		    foreach scorenode $scoreNodes {
 			set score [string trim [$scorenode nodeValue]]
+			if {$score>0} {
+			    set as_item_choices__correct_answer_p($choice_id) {t}
+			}
 		    }
-		    set as_item_choices__score($choice) $score
+		    set as_item_choices__score($choice_id) $score
 		    incr as_items__points $score
 		}
 		#<displayfeedback>
