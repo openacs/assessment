@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <queryset>
 
+<rdbms><type>oracle</type><version>8.1.6</version></rdbms>
+
 <fullquery name="as::assessment::check::action_log.get_next_val">
       <querytext>
       

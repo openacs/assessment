@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <queryset>
 
+    <rdbms><type>postgresql</type><version>7.2</version></rdbms>
+
     <fullquery name="as::actions::insert_actions.insert_default">
         <querytext>
 		  select as_action__default_actions ($package_id,$user_id,$package_id)
