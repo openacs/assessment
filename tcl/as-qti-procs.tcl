@@ -84,6 +84,18 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 				set as_assessments__ip_mask ""
 				set as_assessments__show_feedback "none"
 				set as_assessments__section_navigation "default path"
+								
+				set itemfeedbacknodes [$root selectNodes {/questestinterop/assessment/section/item/itemfeedback}]
+				if { [llength $itemfeedbacknodes] >0} {
+				    as_assessments__show_feedback "all"
+				}
+				set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
+				set as_assessments__survey_p {f}				
+				if { [llength $resprocessNodes] == 0 } {				     
+				     set as_assessments__survey_p {t}
+				     #if it's a survey don't show feedback
+				     set as_assessments__show_feedback "none"				     
+				}			
 				
 				if {[llength $qtimetadataNodes] > 0} {
 				    #nodes qtimetadatafield
@@ -137,16 +149,8 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					 }
 					 
 				    }				    
-				}
-				
-				set show_feedback "all"
-				set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
-				set as_assessments__survey_p {f}				
-				if { [llength $resprocessNodes] == 0 } {				     
-				     set as_assessments__survey_p {t}
-				     #if it's a survey don't show feedback
-				     set show_feedback "none"				     
 				}				
+					
 				# Insert assessment in the CR (and as_assessments table) getting the revision_id (assessment_id)
 				set as_assessments__assessment_id [as::assessment::new \
 				                                   -title $as_assessments__title \
@@ -165,7 +169,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 								   -wait_between_tries $as_assessments__wait_between_tries \
 								   -time_for_response $as_assessments__duration \
 								   -ip_mask $as_assessments__ip_mask \
-								   -show_feedback $show_feedback \
+								   -show_feedback $as_assessments__show_feedback \
 								   -section_navigation $as_assessments__section_navigation \
 								   -survey_p $as_assessments__survey_p ]			
 				
@@ -650,6 +654,7 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 		# <response_label> (each choice)
 		set response_labelNodes [$presentation selectNodes {.//response_label}]
 		foreach response_label $response_labelNodes {
+		    set selected_p f
 		    set as_item_choices__ident [$response_label getAttribute {ident}]
 		    set mattextNodes [$response_label selectNodes {material/mattext/text()}]
 		    set as_item_choices__choice_text [db_null]
@@ -675,7 +680,14 @@ ad_proc -private as::qti::parse_item {qtiNode section_id basepath} { Parse items
 			set as_item_choices__score($as_item_choices__ident) 0
 		    }
 		    # insert as_item_choice
-		    as::item_choice::new -mc_id $as_item_type_id -title $as_item_choices__choice_text -sort_order $sort_order -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) -percent_score $as_item_choices__score($as_item_choices__ident) -content_value $as_item_choices__content_value
+		    as::item_choice::new \
+		                    -mc_id $as_item_type_id \
+				    -title $as_item_choices__choice_text \
+				    -sort_order $sort_order \
+				    -selected_p $selected_p \
+				    -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) \
+				    -percent_score $as_item_choices__score($as_item_choices__ident) \
+				    -content_value $as_item_choices__content_value
 		    # order of the item_choices
 		    incr sort_order
 		}

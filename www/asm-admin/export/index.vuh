@@ -598,6 +598,9 @@ db_multirow sections query_all_sections {} {
 	$displayfeedback setAttribute linkrefid $linkrefid
 	$respcondition appendChild $displayfeedback
 	
+	set num_answers_correct ""
+	db_0or1row num_answers_correct {}
+	
 	db_foreach query_all_choices {} {
 	    set i 0
 	    # [info exists tb__display_id] because for fib item choice_correct_answer_p is null
@@ -639,7 +642,9 @@ db_multirow sections query_all_sections {} {
 		    # in fib items choice_percent_score column is null
 		    if {[empty_string_p $choice_percent_score]} {
 		        set choice_percent_score 1
-		    }
+		    } else {
+		        set choice_percent_score [expr round (($num_answers_correct * $choice_percent_score * 1.0) / 100)]
+		    }		    
 		    set text [$doc createCDATASection $choice_percent_score]
 		    $setvar appendChild $text
 		}    

@@ -121,4 +121,16 @@
 	and ir.rel_type = 'as_item_type_rel'
 </querytext>
 </fullquery>
+
+<fullquery name="num_answers_correct">
+<querytext>
+        SELECT count(aic.correct_answer_p) as num_answers_correct
+	FROM cr_revisions r, as_item_choicesx aic
+	left outer join cr_revisions r2 on (r2.revision_id = aic.content_value)
+	left outer join cr_items i on (i.item_id = r2.item_id)
+	WHERE aic.mc_id= :mc_id
+	and r.revision_id = aic.choice_id
+        and aic.correct_answer_p = 't'	
+</querytext>
+</fullquery>
 </queryset>
