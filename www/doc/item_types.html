@@ -59,15 +59,17 @@ answer
 box, which could be automatically corrected. The questioneer can define
 what values are valid in each answer box and use various compare
 functions to compare the output. The creation of a short answer
-question will trigger entries into the as_item check tables. It also
-enables us to have Fill-in-the-blank
-items. In addition to supporting automated validation/grading, this
+question will trigger entries into the as_item check tables. In
+addition to supporting automated validation/grading, this
 item type differs from "Open Questions" in that only textboxes are
 supported -- meaning short answers, no text area essays. </p>
     <ul>
       <li>Intro_label: textarea. This contains the leading text that
 will be presented before the first answerbox.</li>
       <li>Extro_label: textarea. This contains the trailing text.</li>
+      <li>Number of Answerboxes: integer. Number of answerboxes
+presented to the user.<br>
+      </li>
       <li>The questioneer has the option to define multiple possible
 correct answers that will be matched with the response of the user in
 various ways. For each of the possible answers the following fields are
@@ -92,13 +94,14 @@ between the answer string and the response shall happen. </li>
 field contains the actual regexp.</li>
           <li>sort_order<br>
           </li>
-          <li>Allow in answerbox: (multiple select box with "All" and
-the
-numbers from 1 to x where x is the number of answerboxes from above.
-For sure this only works with JS enabled :)). Defines the answerboxes
-the user can fill out that shall be matched with this answer. I don't
-follow this exactly, but I think the comments about Sections of Items
-above applies here also. </li>
+          <li>Allow in answerbox: This defines to which answerbox the
+answer check of the short_answer is compared to. If we have four
+answerboxes and the question was "Name four&nbsp; European Capitals of
+EU members", then you would 25 correct answers which could be given in
+all answerboxes. If the question was "Name four European Capitals of EU
+members ordered by Name", then you'd only have four answers "Athen,
+Berlin, Copenhagen, <br>
+          </li>
         </ul>
       </li>
     </ul>

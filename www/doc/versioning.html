@@ -40,14 +40,12 @@ trans-language data sets.
 <ul>
   <li> Many-many relationships: a given Section may be reused in
 many different Assessments (eg if it contains commonly-needed Items
-such as questions about demographic details)
-  </li>
+such as questions about demographic details) </li>
   <li> Multiple versions: that same Section may exist in
 different versions in those different Assessments (eg if different
 Assessment authors add or subtract an Item, change wording of an Item's
 label, etc). This includes different translations of semantically
-identical text.
-  </li>
+identical text. </li>
 </ul>
 <h2>Approach</h2>
 <p>The Content Repository (CR) in OpenACS is designed to handle these
@@ -64,11 +62,9 @@ actually have, for instance, two tables for Items:
 <p></p>
 <ul>
   <li> as_items (a cr_item) for whatever "immutable" attributes there
-are
-  </li>
+are </li>
   <li> as_items_revs (a cr_revision) for all mutable attributes
-including translations
-  </li>
+including translations </li>
 </ul>
 <p>
 This pattern of dual tables is used for all components that need to
@@ -106,8 +102,7 @@ need to insert new as_section_item_map rows.
     <p></p>
   </li>
   <li> If we change the text of an Item Choice, then we need to insert
-new stuff all the way up the hierarchy.
-  </li>
+new stuff all the way up the hierarchy. </li>
 </ul>
 <p>
 Another key issue, discussed in <a
@@ -126,23 +121,14 @@ contain other entities; the parent_id column is only in cr_items. Thus
 if we want to add a fifth as_item_choice to an as_item (while
 preserving the state of the as_item that only had four
 as_item_choices), we need to insert a new as_item and not merely a new
-as_item_rev for the existing as_item.
-</p>
-<p>On the other hand, if we manage the many-many hierarchies of
-Assessment package entities in our own mapping tables outside of the CR
-mechanism, then we can handle this differently. At this point, we're
-not sure what is the best approach. Please post comments!
-</p>
+as_item_rev for the existing as_item.</p>
 <p>A final point concerns the mapping tables. The OpenACS
 framework provides a variety of special-purpose mapping tables that are
 all proper acs_objects (member_rels, composition_rels, acs_rels, and
 the CR's own cr_rels). These provide additional control over
-permissioning but fundamentally are mapping tables. Whether to use them
-or just simple two-key tables will depend on the need for permission
-management in the given relationship. Presumably for most of the
-relations over which joins occur (ie that aren't exposed to outside
-procs etc), the simple kind will be superior since they are far lighter
-weight constructs.
+permissioning but fundamentally are mapping tables. In the long run the
+benefit of using them is the ability of OpenACS 6, to auto construct
+code based on cr_item_types and relationships.<br>
 </p>
 <p></p>
 <h2>Specific Versionable Entities</h2>
@@ -156,66 +142,50 @@ of the subsystems' pages.
   <li> Core - Items:
     <p></p>
     <ul>
-      <li> Items: as_items; as_items_revs
-      </li>
-      <li> Item Choices: as_item_choices; as_item_choices_revs
-      </li>
+      <li> Items: as_items; as_items_revs </li>
+      <li> Item Choices: as_item_choices; as_item_choices_revs </li>
       <li> Localized Items: as_item_localized; as_item_localized_revs <br>
 Note:
 we're not yet entirely sure what we gain by this when Items themselves
 are versioned; we haven't yet settled on whether different translations
-of the same Items should be different versions or not.
-      </li>
-      <li> Messages: as_messages; as_messages_revs
-      </li>
+of the same Items should be different versions or not. </li>
+      <li> Messages: as_messages; as_messages_revs </li>
     </ul>
-    <p>
-    </p>
+    <p> </p>
   </li>
   <li> Core - Grouping:
     <p></p>
     <ul>
-      <li> Assessments: as_assessments; as_assessments_revs
-      </li>
-      <li> Sections: as_sections; as_sections_revs
-      </li>
+      <li> Assessments: as_assessments; as_assessments_revs </li>
+      <li> Sections: as_sections; as_sections_revs </li>
     </ul>
-    <p>
-    </p>
+    <p> </p>
   </li>
   <li> Scheduling:
     <p></p>
     <ul>
       <li> Assessment Events: as_assessment_events;
-as_assessment_events_revs
-      </li>
+as_assessment_events_revs </li>
       <li> Assessment Policies: as_assessment_policies;
-as_assessment_policies_revs
-      </li>
+as_assessment_policies_revs </li>
     </ul>
-    <p>
-    </p>
+    <p> </p>
   </li>
   <li> Core - Collected Data:
     <p></p>
     <ul>
-      <li> Item Data: as_item_data; as_item_data_revs
-      </li>
-      <li> Scale Data: as_scale_data; as_scale_data_revs
-      </li>
+      <li> Item Data: as_item_data; as_item_data_revs </li>
+      <li> Scale Data: as_scale_data; as_scale_data_revs </li>
     </ul>
-    <p>
-    </p>
+    <p> </p>
   </li>
   <li> Session Data:
     <p></p>
     <ul>
-      <li> Sessions: as_sessions; as_sessions_revs
-      </li>
+      <li> Sessions: as_sessions; as_sessions_revs </li>
       <li> Assessment Data: as_assessment_data; as_assessment_data_revs
       </li>
-      <li> Section Data: as_section_data; as_section_data_revs
-      </li>
+      <li> Section Data: as_section_data; as_section_data_revs </li>
     </ul>
   </li>
 </ul>

@@ -170,41 +170,65 @@ right out; resubmit the damn data idjit!"). </li>
   <li> Item-checks (as_item_checks) define 1..n ordered
 evaluations of a user's response to a single Item. These can occur
 either via client-side Javascript when the user moves focus from the
-Item, or server-side once the entire html form comes back.
+Item, or server-side once the entire html form comes back. They are
+associated (related) to as_items.
     <p> The goal is to have a flexible, expressive grammar for these
-checks to support arbitrary types of checks, which will include both
-input validation ("Is the user's number within bounds?"; "Is that a
-properly formatted phone number?") as well as grading ("How many points
-out of the Item's total should this response get?"). The implementation
-details remain somewhat uncertain, but the general approach seems
-sound: define groups of checks, run through the ordered hierarchy
-calling a tcl/sql callback proc that performs a comparison operation,
-and then evaluate the results and implement some consequence
-(navigation, etc). </p>
-    <p>Item Checks thus will have these attributes: </p>
+checks to support arbitrary types of checks, which will be input
+validation ("Is the user's number within bounds?"; "Is that a
+properly formatted phone number?"). One notion on check_sql. Instead of
+using comparators we store the whole SQL command that makes up this
+check with a predefined variable "value" that contains the response of
+the user to the item the item_check is related to. If we want to make
+sure the value is between 0 and 1 we store "0 &lt; :value &lt; 1" with
+the check. Once an item is submitted, the system looks up the related
+checks for this item and replaces in each of them ":value" with the
+actual response. <br>
+    </p>
+    <p>Item Checks thus will have these attributes:</p>
     <p></p>
     <ul>
-      <li> item_check_id </li>
-      <li> check_location - client-side or server-side </li>
-      <li> comparator_type </li>
-      <li> comparator_id - references as_comparators where we abstract
-the actual comparators </li>
-      <li> check_group_id - references as_check_group </li>
+      <li> item_check_id</li>
+      <li>cr:name - identifier</li>
+      <li>cr:description - Explanation what this check does<br>
+      </li>
+      <li> check_location - client-side or server-side</li>
       <li> javascript_function - name of function that gets called when
 focus moves </li>
-      <li> user_message - optional text to return to user </li>
+      <li> user_message - optional text to return to user if check is
+true<br>
+      </li>
+      <li>check_sql - The sql that contains the check<br>
+      </li>
       <li> navigation_id - references as_check_navigation </li>
     </ul>
     <p> </p>
   </li>
-  <li> Inter-item-checks (as_inter_item_checks) are
-similar to Item-Checks but operate pairwise over multiple Items. These
-are server-side checks though conceivably it may be possible to spin
-out Javascript that could perform these client-side; this will
-definitely be tricky though. Attributes include:
+  <li>Inter-Item-checks (as_inter_item_checks) are
+similar to Item-Checks but operate over multiple Items. They are server
+sided checks that are associated with as_sections defining if a section
+should be displayed or with as_items, defining if an item should be
+displayed.<br>
+    <br>
+The goal is to have a way of telling if a section shall be displayed or
+not depending on the section-checks. This way you could say that you
+only display this section if the response to item(1234) "Color of your
+eye" was "blue" and the response to item(4231) "Color of your hair" was
+"red". Sadly we can't use such an easy way of checking the ":value" as
+we do with item_checks, as we do not know which item this refers to.
+Instead we store the item_id like this ":item_1234". This way the
+check_sql would look like ":item_1234 == 'blue' AND :item_4231 ==
+'red'". Additionally other variables might be defined by the API at a
+later
+stage,&nbsp; e.g. ":current_percentage", which would be replaced by the
+current percentage value (aka score) that subject had in the test so
+far. It might be interesting to pass these variables along in the API,
+this remains to be seen when actually implementing the system.
     <p></p>
     <ul>
       <li> inter_item_check_id </li>
+      <li>cr:name - identifier</li>
+      <li>cr:description - Explanation what this check does<br>
+      </li>
       <li> item1_id </li>
       <li> item2_id </li>
       <li> comparator1_id </li>
