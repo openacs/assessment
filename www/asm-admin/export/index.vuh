@@ -513,6 +513,20 @@ db_multirow sections query_all_sections {} {
 		}
 	    } 
 	    }
+	    
+	    set num_answers_correct ""
+	    db_0or1row num_answers_correct {}
+	
+	    if {$item_points == 1 && $num_answers_correct>1} {
+		#<setvar>
+		set setvar [$doc createElement setvar]
+		$setvar setAttribute varname "SCORE"
+		$setvar setAttribute action "Add"
+		$respcondition appendChild $setvar
+		set text [$doc createCDATASection $item_points]
+		$setvar appendChild $text
+	    }
+	    
 	    #<displayfeedback>
 	    set displayfeedback [$doc createElement displayfeedback]
 	    set linkrefid { }
@@ -598,9 +612,8 @@ db_multirow sections query_all_sections {} {
 	$displayfeedback setAttribute linkrefid $linkrefid
 	$respcondition appendChild $displayfeedback
 	
-	set num_answers_correct ""
-	db_0or1row num_answers_correct {}
 	
+	if {$item_points>1 || $num_answers_correct==1} {
 	db_foreach query_all_choices {} {
 	    set i 0
 	    # [info exists tb__display_id] because for fib item choice_correct_answer_p is null
@@ -647,10 +660,41 @@ db_multirow sections query_all_sections {} {
 		    }		    
 		    set text [$doc createCDATASection $choice_percent_score]
 		    $setvar appendChild $text
+		    #feedback choice
+		    if {![empty_string_p $choice_feedback_text]} {
+		        set displayfeedback [$doc createElement displayfeedback]
+			set linkrefid { }
+			append linkrefid $choice_name feedbackChoice
+			$displayfeedback setAttribute linkrefid $linkrefid
+			$respcondition appendChild $displayfeedback
+		    }		    
 		}    
 	    }
 	    incr i 2   	
+	    
+	    #for feedback choice
+	    if { $choice_correct_answer_p == "f" && ![empty_string_p $choice_feedback_text] } {
+	        #<respcondition>
+	        set respcondition [$doc createElement respcondition]
+		$resprocessing appendChild $respcondition
+		#<conditionvar>
+		set conditionvar [$doc createElement conditionvar]
+		$respcondition appendChild $conditionvar
+		#<varequal>
+		set varequal [$doc createElement varequal]
+		$varequal setAttribute respident $item_name
+		$conditionvar appendChild $varequal
+		set text [$doc createCDATASection $choice_name]
+		$varequal appendChild $text		        
+		#feedback choice
+		set displayfeedback [$doc createElement displayfeedback]
+		set linkrefid { }
+		append linkrefid $choice_name feedbackChoice
+		$displayfeedback setAttribute linkrefid $linkrefid
+		$respcondition appendChild $displayfeedback		
+	    } 	
         }
+	}
 	
        	#feedback_wrong
 	if {![empty_string_p $item_feedback_wrong] } {
@@ -674,6 +718,20 @@ db_multirow sections query_all_sections {} {
 	    $item appendChild $itemfeedback
 	    #<flow_mat>
 	    as::export::new_element -value $item_feedback_right -father $itemfeedback -label flow_mat -root $doc -material_p t   
+	}
+	
+	#feedback_choice
+	db_foreach query_all_choices {} {
+	    if {![empty_string_p $choice_feedback_text]} {
+	        #<itemfeedback>
+	        set itemfeedback [$doc createElement itemfeedback]
+	        set ident { }
+	        append ident $choice_name feedbackChoice
+	        $itemfeedback setAttribute ident $ident
+	        $item appendChild $itemfeedback
+	        #<flow_mat>
+	        as::export::new_element -value $choice_feedback_text -father $itemfeedback -label flow_mat -root $doc -material_p t   
+	    }	    
 	}
     }	
 	
