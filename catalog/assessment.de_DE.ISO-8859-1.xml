@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d9" locale="de_DE" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d10" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="above">Über</msg>
   <msg key="Absolute_Size">Absolute Größe</msg>
+  <msg key="Absolute_Size_help">Anzahl der Zeichen die ein Benutzer in Textfeld für die Antwort eingeben darf.</msg>
   <msg key="action">Aktion</msg>
   <msg key="action_admin">Administration Aktionen</msg>
   <msg key="action_description">Beschreibung</msg>
   <msg key="action_edit">Aktionen</msg>
   <msg key="action_log">Aktionslog</msg>
   <msg key="action_name">Name der Aktion</msg>
+  <msg key="action_params">Parameter für die Aktion</msg>
+  <msg key="action_select">Auswahl der Selektion</msg>
   <msg key="action_tcl_code">Tcl-Code</msg>
+  <msg key="action_that_will">Die Aktion welche ausgeführt wird.</msg>
+  <msg key="action_to_perform">Aktion welche durchgeführt wird</msg>
+  <msg key="add_item">Neue Frage hinzufügen</msg>
+  <msg key="add_item_display_cb">Neue Frage vom Anzeigetyp &quot;Checkbox&quot; hinzufügen</msg>
+  <msg key="add_item_display_rb">Neue Frage vom Anzeigetyp &quot;RadioButton&quot; hinzufügen</msg>
+  <msg key="add_item_display_sa">Neue Frage vom Anzeigetyp &quot;Short Anwer&quot; hinzufügen</msg>
+  <msg key="add_item_display_sb">Neue Frage vom Anzeigetyp &quot;Selectbox&quot; hinzufügen</msg>
+  <msg key="add_item_display_ta">Neue Frage vom Anzeigetyp &quot;Textarea&quot; hinzufügen</msg>
   <msg key="add_new_action">Neue Aktion hinzufügen</msg>
   <msg key="add_new_section">Neuen Abschnitt hinzufügen</msg>
   <msg key="admin_actions">Administration Aktionen</msg>
@@ -61,6 +72,9 @@
   <msg key="Email_Options">e-Mail Optionen:</msg>
   <msg key="End_Time">Ende Assessment</msg>
   <msg key="Export">Export</msg>
+  <msg key="Html_Options">HTML Optionen</msg>
+  <msg key="Html_Options_help">Zusätzliche HTML Optionen welche innerhalb des FORM Tags verwendet werden können. Diese sind als Name/Wert Paare anzugeben welche durch Leerzeichen getrennt sind, zb.:&lt;br /&gt;
+&lt;i&gt;cols 50 rows 10&lt;/i&gt;</msg>
   <msg key="Import_QTI_ZIP_File">Importieren QTI ZIP Datei</msg>
   <msg key="Instructions">Anleitung</msg>
   <msg key="ip_mask">IP Maske</msg>
