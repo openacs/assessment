@@ -16,7 +16,7 @@ set title "$assessment_data(title)"
 set context [list [list "one-a?assessment_id=$assessment_id" $title] [list "checks-admin?assessment_id=$assessment_id&section_id=$section_id" "$title [_ assessment.Administration]"] "[_ assessment.Request] [_ assessment.Notification]"]
 
 form create notify
-set type "as_inter_item_checks_notif"
+set type "inter_item_checks_notif"
 set type_id [notification::type::get_type_id -short_name $type]
 set intervals [notification::get_intervals -type_id $type_id]
 set delivery_methods [notification::get_delivery_methods -type_id $type_id]

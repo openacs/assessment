@@ -20,6 +20,14 @@ template::list::create \
 	}
 	type {
 	    label "[_ assessment.parameter_type]"
+	    display_template {
+		<if @parameter_list.type@ eq n>
+		#assessment.var#
+		</if>
+		<else>
+		#assessment.query#
+		</else>
+	    }
 	}
 
 	query {

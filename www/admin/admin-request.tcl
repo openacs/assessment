@@ -45,9 +45,11 @@ if {[exists_and_not_null state]} {
     set d_state $state 
 
 } 
+
+set today [db_string sysdate {}]
 if {[exists_and_not_null interval] && $interval!="all"} {
     set d_interval $interval
-    set interval_query "and to_date(al.date_requested,'YYYY-MM-DD') >= to_date('$interval','YYYY-MM-DD') and to_date(al.date_requested,'YYYY-MM-DD') <=to_date(now(),'YYYY-MM-DD') "
+    set interval_query "and to_date(al.date_requested,'YYYY-MM-DD') >= to_date('$interval','YYYY-MM-DD') and to_date(al.date_requested,'YYYY-MM-DD') <=to_date($today,'YYYY-MM-DD') "
     set date_query ""
 }
 
