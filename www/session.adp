@@ -27,7 +27,7 @@
 			<tr><td valign="top" nowrap>
 			Student response:</td><td>
 			@items.choice_html;noquote@</td></tr>
-			<tr><td></td><td><if @items.item_correct@>@items.feedback_text@</if></td></tr>
+			<tr><td></td><td><if @items.item_correct@ false>@items.feedback_text@</if></td></tr>
 			<tr><td nowrap>
 			Score:</td><td><span>@items.score@ / @items.maxscore@</span>
 			<if @items.notanswered@>(<i>Question not answered.</i>)</if></td></tr>

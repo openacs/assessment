@@ -40,7 +40,7 @@ db_multirow -extend [list choice_html score maxscore notanswered item_correct] i
     set correct_answer {<img src="graphics/wrong.gif">}
     }
     if {$choice_id_answer == $choice_id } {
-      set choice_answer {<img src="graphics/answer.gif">}
+      set choice_answer {<img src="graphics/right.gif">}
     } else {
       set choice_answer {}
     }
