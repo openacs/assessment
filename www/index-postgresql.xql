@@ -4,7 +4,7 @@
 
 <fullquery name="asssessment_id_name_definition">
 	<querytext>
-	select cr.item_id as assessment_id, cr.title, cr.description,
+	select cr.item_id as assessment_id, cr.title, cr.description, a.password,
 	       to_char(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start_time,
 	       to_char(a.end_time, 'YYYY-MM-DD HH24:MI:SS') as end_time,
 	       to_char(now(), 'YYYY-MM-DD HH24:MI:SS') as cur_time
@@ -16,6 +16,7 @@
 		from as_assessment_section_map asm, as_item_section_map ism
 		where asm.assessment_id = a.assessment_id
 		and ism.section_id = asm.section_id)
+	and acs_permission__permission_p (a.assessment_id, :user_id, 'read') = 't'
 	</querytext>
 </fullquery>
 	

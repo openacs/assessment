@@ -36,7 +36,11 @@ create table as_item_type_oq (
 	-- the content of this field will be prefilled in the response of the user taking the survey
 	default_value		varchar(500),
 	-- the person correcting the answers will see the contents of this box as correct answer for comparison with the user response
-	feedback_text    varchar(500)
+	feedback_text    	varchar(500),
+	-- reference text with the expected perfect answer
+	reference_answer	text,
+	-- keyword list for automatic pre-grading
+	keywords		varchar(4000)
 );
 
 -- Radiobutton display type

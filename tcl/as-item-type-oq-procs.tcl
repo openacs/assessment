@@ -9,7 +9,9 @@ namespace eval as::item_type_oq {}
 ad_proc -public as::item_type_oq::new {
     {-title ""}
     {-default_value ""}
-    {-feedback_text ""}    
+    {-feedback_text ""}
+    {-reference_answer ""}
+    {-keywords ""}
 } {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
@@ -23,11 +25,13 @@ ad_proc -public as::item_type_oq::new {
     db_transaction {
         set item_item_type_oq_id [content::item::new -parent_id $folder_id -content_type {as_item_type_oq} -name [exec uuidgen]]
         set as_item_type_oq_id [content::revision::new \
-				-item_id $item_item_type_oq_id \
-				-content_type {as_item_type_oq} \
-				-title $title \
-				-attributes [list [list default_value $default_value] \
-						[list feedback_text $feedback_text] ] ]
+				    -item_id $item_item_type_oq_id \
+				    -content_type {as_item_type_oq} \
+				    -title $title \
+				    -attributes [list [list default_value $default_value] \
+						     [list feedback_text $feedback_text] \
+						     [list reference_answer $reference_answer] \
+						     [list keywords $keywords] ] ]
     }
 
     return $as_item_type_oq_id
@@ -38,6 +42,8 @@ ad_proc -public as::item_type_oq::edit {
     {-title ""}
     {-default_value ""}
     {-feedback_text ""}    
+    {-reference_answer ""}
+    {-keywords ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -52,7 +58,9 @@ ad_proc -public as::item_type_oq::edit {
 				  -content_type {as_item_type_oq} \
 				  -title $title \
 				  -attributes [list [list default_value $default_value] \
-						   [list feedback_text $feedback_text] ] ]
+						   [list feedback_text $feedback_text] \
+						   [list reference_answer $reference_answer] \
+						   [list keywords $keywords] ] ]
     }
 
     return $new_item_type_id
@@ -75,7 +83,9 @@ ad_proc -public as::item_type_oq::copy {
 
 	set new_item_type_id [new -title $title \
 				  -default_value $default_value \
-				  -feedback_text $feedback_text]
+				  -feedback_text $feedback_text \
+				  -reference_answer $reference_answer \
+				  -keywords $keywords]
     }
 
     return $new_item_type_id
@@ -120,7 +130,22 @@ ad_proc -public as::item_type_oq::process {
 
     Process a Response to an Open Question Type
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -clob_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p
+    db_1row item_type_data {}
+    set response [lindex $response 0]
+
+    if {[llength $keywords] > 0} {
+	set points 0
+	foreach keyword $keywords {
+	    if {[regexp $keyword $response]} {
+		incr points
+	    }
+	}
+	set points [expr round($max_points * $points / [llength $keywords])]
+    } else {
+	set points ""
+    }
+
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -clob_answer $response -points $points -allow_overwrite_p $allow_overwrite_p
 }
 
 ad_proc -public as::item_type_oq::results {

@@ -305,11 +305,12 @@ ad_proc -public as::section::calculate {
 	set item_points 0
     }
 
-    if {![exists_and_not_null item_max_points]||$item_max_points==0} {
-	set item_max_points 1
+    if {![exists_and_not_null item_max_points] || $item_max_points==0} {
+	set item_max_points 100
     }
 
     set section_points [expr round($section_max_points * $item_points / $item_max_points)]
+    as::session_results::new -target_id $section_data_id -points $section_points
     db_dml update_section_points {}
 }
 

@@ -71,8 +71,7 @@
 	update as_section_data
 	set points = :section_points,
 	    completed_datetime = now()
-	where session_id = :session_id
-	and section_id = :section_id
+	where section_data_id = :section_data_id
 
 	</querytext>
 </fullquery>

@@ -39,19 +39,30 @@ ad_form -name item_add_oq -action item-add-oq -export { assessment_id section_id
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.oq_Title_help]"}}
     {default_value:text(textarea),optional,nospell {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Deafult_Value_help]"}}
     {feedback:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_help]"}}
+    {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
+    {keywords:text(textarea),optional {label "[_ assessment.oq_Keywords]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Keywords_help]"}}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 } -edit_request {
     set title ""
     set default_value ""
     set feedback ""
+    set reference_answer ""
+    set keywords ""
     set display_type "tb"
+} -on_submit {
+    set keyword_list [list]
+    foreach line [split $keywords "\n"] {
+	lappend keyword_list [string trim $line]
+    }
 } -edit_data {
     db_transaction {
 	if {![db_0or1row item_type {}] || $object_type != "as_item_type_oq"} {
 	    set as_item_type_id [as::item_type_oq::new \
 				     -title $title \
 				     -default_value $default_value \
-				     -feedback_text $feedback]
+				     -feedback_text $feedback \
+				     -reference_answer $reference_answer \
+				     -keywords $keyword_list]
 	
 	    if {![info exists object_type]} {
 		# first item type mapped
@@ -68,7 +79,9 @@ ad_form -name item_add_oq -action item-add-oq -export { assessment_id section_id
 				     -as_item_type_id $as_item_type_id \
 				     -title $title \
 				     -default_value $default_value \
-				     -feedback_text $feedback]
+				     -feedback_text $feedback \
+				     -reference_answer $reference_answer \
+				     -keywords $keyword_list]
 	
 	    db_dml update_item_type {}
 	}

@@ -37,6 +37,7 @@ content::type::new -content_type {as_assessments}  -supertype {content_revision}
 content::type::new -content_type {as_sessions} -supertype {content_revision} -pretty_name {Assessment Session} -pretty_plural {Assessment Sessions} -table_name {as_sessions} -id_column {session_id}
 content::type::new -content_type {as_section_data} -supertype {content_revision} -pretty_name {Assessment Section Data} -pretty_plural {Assessment Sections Data} -table_name {as_section_data} -id_column {section_data_id}
 content::type::new -content_type {as_item_data} -supertype {content_revision} -pretty_name {Assessment Item Data} -pretty_plural {Assessment Items Data} -table_name {as_item_data} -id_column {item_data_id}
+content::type::new -content_type {as_session_results} -supertype {content_revision} -pretty_name {Assessment Session Result} -pretty_plural {Assessment Session Results} -table_name {as_session_results} -id_column {result_id}
 
 # Radiobutton display type
 content::type::attribute::new -content_type {as_item_display_rb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -111,6 +112,8 @@ content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name
 # Item type open question
 content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {default_value}    -datatype {string}  -pretty_name {Default Value}    -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {feedback_text}    -datatype {string} -pretty_name {Feedback Text} -column_spec {varchar(500)}
+content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {reference_answer} -datatype {text} -pretty_name {Reference Answer} -column_spec {text}
+content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {keywords} -datatype {string} -pretty_name {Keywords} -column_spec {varchar(4000)}
 
 # Items
 content::type::attribute::new -content_type {as_items} -attribute_name {subtext}              -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
@@ -156,6 +159,7 @@ content::type::attribute::new -content_type {as_assessments} -attribute_name {nu
 content::type::attribute::new -content_type {as_assessments} -attribute_name {wait_between_tries}            -datatype {number}  -pretty_name {Assessment Wait Between Tries}  -column_spec {integer}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {time_for_response}            -datatype {number}  -pretty_name {Assessment Time for Response}  -column_spec {integer}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask}            -datatype {string}  -pretty_name {IP Mask}  -column_spec {varchar(100)}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {password} -datatype {string} -pretty_name {Password} -column_spec {varchar(100)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {show_feedback}            -datatype {string}  -pretty_name {Assessment Show comments to the user}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {section_navigation}            -datatype {string}  -pretty_name {Assessment Navigation of sections}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {survey_p}            -datatype {string}  -pretty_name {Survey}  -column_spec {char(1)}
@@ -199,6 +203,9 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {cont
 content::type::attribute::new -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {integer}
 
+# Session results
+content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
+content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
 }
 
 ad_proc -public as::install::package_instantiate {
@@ -291,9 +298,53 @@ ad_proc -public as::install::after_upgrade {
 		    }
 		}
 	    }
-	    
 	    0.10d6 0.10d7 {
 		as::actions::insert_actions_after_upgrade
+	    }
+	    0.10d8 0.10d9 {
+		db_transaction {
+		    content::type::new -content_type {as_session_results} -supertype {content_revision} -pretty_name {Assessment Session Result} -pretty_plural {Assessment Session Results} -table_name {as_session_results} -id_column {result_id}
+		    content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
+		    content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
+
+		    set packages [db_list packages {select package_id from apm_packages where package_key = 'assessment'}]
+		    foreach package_id $packages {
+			set folder_id [as::assessment::folder_id -package_id $package_id]
+			content::folder::register_content_type -folder_id $folder_id -content_type {as_session_results} -include_subtypes t
+		    }
+
+		    set item_data_list [db_list_of_lists get_all_item_data_ids {
+			select item_data_id, points
+			from as_item_data
+			where points is not null
+		    }]
+		    foreach item_data $item_data_list {
+			as::session_results::new -target_id [lindex $item_data 0] -points [lindex $item_data 1]
+		    }
+
+		    set section_data_list [db_list_of_lists get_all_section_data_ids {
+			select section_data_id, points
+			from as_section_data
+			where points is not null
+		    }]
+		    foreach section_data $section_data_list {
+			as::session_results::new -target_id [lindex $section_data 0] -points [lindex $section_data 1]
+		    }
+
+		    set session_list [db_list_of_lists get_all_session_ids {
+			select session_id, percent_score
+			from as_sessions
+			where percent_score is not null
+		    }]
+		    foreach session $session_list {
+			as::session_results::new -target_id [lindex $session 0] -points [lindex $session 1]
+		    }
+
+		    content::type::attribute::new -content_type {as_assessments} -attribute_name {password} -datatype {string} -pretty_name {Password} -column_spec {varchar(100)}
+
+		    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {reference_answer} -datatype {text} -pretty_name {Reference Answer} -column_spec {text}
+		    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {keywords} -datatype {string} -pretty_name {Keywords} -column_spec {varchar(4000)}
+		}
 	    }
 	}
     

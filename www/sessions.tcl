@@ -18,6 +18,7 @@ set page_title "[_ assessment.Show_Sessions]"
 set context_bar [ad_context_bar $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 set user_id [ad_conn user_id]
+permission::require_permission -object_id $assessment_id -privilege read
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id

@@ -14,7 +14,8 @@
 <fullquery name="as::item_type_oq::copy.item_type_data">
       <querytext>
 
-	select cr.title, i.default_value, i.feedback_text
+	select cr.title, i.default_value, i.feedback_text, i.reference_answer,
+	       i.keywords
 	from cr_revisions cr, as_item_type_oq i
 	where cr.revision_id = :type_id
 	and i.as_item_type_id = cr.revision_id
@@ -26,6 +27,16 @@
       <querytext>
 
 	select default_value as default
+	from as_item_type_oq
+	where as_item_type_id = :type_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_oq::process.item_type_data">
+      <querytext>
+
+	select keywords
 	from as_item_type_oq
 	where as_item_type_id = :type_id
 

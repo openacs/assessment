@@ -34,7 +34,6 @@ if {![info exists section_id] || $__new_p} {
 }
 
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
-set package_id [ad_conn package_id]
 
 set display_types [db_list_of_lists section_display_types {}]
 set display_types [concat [list [list "[_ assessment.section_new_display]" ""]] $display_types]
@@ -68,7 +67,7 @@ ad_form -extend -name section_form -form {
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Feedback_help]"}}
     {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.section_time_help]"}}
     {num_items:integer,optional,nospell {label "[_ assessment.num_items]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_items_help]"}}
-    {points:integer,optional,nospell {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+    {points:integer,optional,nospell {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_section_help]"}}
     {display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.section_Display_Type_help]"}}
 } -new_request {
     set name ""

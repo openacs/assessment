@@ -36,7 +36,11 @@ create table as_item_type_oq (
 	-- the content of this field will be prefilled in the response of the user taking the survey
 	default_value		varchar(500),
 	-- the person correcting the answers will see the contents of this box as correct answer for comparison with the user response
-	feedback_text    varchar(500)
+	feedback_text    	varchar(500),
+	-- reference text with the expected perfect answer
+	reference_answer	clob,
+	-- keyword list for automatic pre-grading
+	keywords		varchar(4000)
 );
 
 -- Radiobutton display type
@@ -110,7 +114,7 @@ create table as_item_display_tb (
 	-- an abstraction of the real size value in "small","medium","large" 
 	abs_size		varchar(10),
 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
-	item_answer_alignment	varchar(10)
+	item_answer_alignment	varchar(20)
 );
 
 -- ShortAnswer Display Type: multiple textboxes in one item.

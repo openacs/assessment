@@ -33,8 +33,16 @@ ad_form -name item_edit_oq -action item-edit-oq -export { assessment_id section_
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.oq_Title_help]"}}
     {default_value:text(textarea),optional,nospell {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Deafult_Value_help]"}}
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_help]"}}
+    {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
+    {keywords:text(textarea),optional {label "[_ assessment.oq_Keywords]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Keywords_help]"}}
 } -edit_request {
     db_1row item_type_data {}
+    set keywords [join $keywords "\n"]
+} -on_submit {
+    set keyword_list [list]
+    foreach line [split $keywords "\n"] {
+	lappend keyword_list [string trim $line]
+    }
 } -edit_data {
     db_transaction {
 	set new_item_id [as::item::new_revision -as_item_id $as_item_id]
@@ -43,7 +51,9 @@ ad_form -name item_edit_oq -action item-edit-oq -export { assessment_id section_
 				  -as_item_type_id $as_item_type_id \
 				  -title $title \
 				  -default_value $default_value \
-				  -feedback_text $feedback_text]
+				  -feedback_text $feedback_text \
+				  -reference_answer $reference_answer \
+				  -keywords $keyword_list]
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]

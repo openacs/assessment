@@ -7,6 +7,7 @@ ad_page_contract {
     @creation-date 2004-09-13
 } -query {
     assessment_id:integer,notnull
+    {password:optional ""}
     {session_id:integer,optional ""}
     {section_order:integer,optional ""}
     {item_order:integer,optional ""}
@@ -24,6 +25,7 @@ set section_to ""
 set item_to ""
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
+permission::require_permission -object_id $assessment_id -privilege read
 
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
@@ -31,7 +33,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
-set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id]
+set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id -password $password]
 if {![empty_string_p $errors]} {
     ad_return_complaint 1 $errors
     ad_script_abort
@@ -232,7 +234,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 
 
 # form for display an assessment with sections and items
-ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
+ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order password} -form {
     {session_id:text(hidden) {value $session_id}}
 }
 
@@ -281,7 +283,7 @@ foreach one_item $item_list {
 	}
 	
 	# create seperate submit form for each item
-	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order} -form {
+	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order password} -form {
 	    {session_id:text(hidden) {value $session_id}}
 	    {item_id:text(hidden) {value $as_item_id}}
 	}

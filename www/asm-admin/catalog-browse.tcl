@@ -20,7 +20,7 @@ ad_page_contract {
     keywords:optional
     {orderby:optional "title,asc"}
     {page:optional 1}
-    search_again_url
+    {search_again_url:optional ""}
 }
 
 
@@ -157,7 +157,7 @@ list::create \
     -key $key_name \
     -pass_properties { assessment_id section_id after } \
     -no_data "[_ assessment.None]" \
-    -filters { assessment_id {} section_id {} after {} category_ids { type multival } join_cat {} subtree_p {} keywords {} join_key {} letter {} itype {} } \
+    -filters { assessment_id {} section_id {} after {} category_ids { type multival } join_cat {} subtree_p {} keywords {} join_key {} letter {} itype {} search_again_url {} } \
     -elements $elements \
     -bulk_actions $bulk_actions -bulk_action_export_vars { assessment_id section_id after } -page_size 20 -page_flush_p 1 -page_query_name $page_query
 

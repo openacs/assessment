@@ -14,6 +14,7 @@ set page_title "[_ assessment.Show_Assessments]"
 set context_bar [ad_context_bar]
 set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
+set user_id [ad_conn user_id]
 
 # create a list with all assessments and their sessions
 template::list::create \
@@ -37,7 +38,11 @@ template::list::create \
 db_multirow -extend { session assessment_url } assessments asssessment_id_name_definition {} {
     set session {Sessions}
     if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
-	set assessment_url [export_vars -base "assessment" {assessment_id}]
+	if {[empty_string_p $password]} {
+	    set assessment_url [export_vars -base "assessment" {assessment_id}]
+	} else {
+	    set assessment_url [export_vars -base "assessment-password" {assessment_id}]
+	}
     } else {
 	set assessment_url ""
     }

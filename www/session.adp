@@ -6,7 +6,7 @@
 <tr>
 <th colspan="3" align=left>#assessment.Assessment#: <a href="assessment?assessment_id=@assessment_id@">@assessment_data.title@</a></th></tr>
 <tr><td nowrap><b>#assessment.User_ID#:</b> <span><if @show_username_p@><a href="@session_user_url@">@first_names@ @last_name@</a></if><else>#assessment.anonymous_name#</else></span></td>
-<td nowrap><b>#assessment.Attempt#:</b> <span><a href="sessions?assessment_id=@assessment_id@">@session_attempt@</a> / Unlimited</span></td>
+<td nowrap><b>#assessment.Attempt#:</b> <span><a href="sessions?assessment_id=@assessment_id@">@session_attempt@</a><if @assessment_data.number_tries@ not nil> / @assessment_data.number_tries@</if></span></td>
 <td nowrap><if @assessment_data.survey_p@ ne t><b>#assessment.Out_of#:</b> <span>@assessment_score@</span></if></td></tr>
 
 <tr><td><b>#assessment.Started#:</b> <span>@session_start@</span></td>
@@ -36,13 +36,13 @@
 </table>      
 
 <blockquote>
-  <include src="/packages/assessment/lib/session-items" section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@">
+  <include src="/packages/assessment/lib/session-items" section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@" survey_p="@assessment_data.survey_p@">
 </blockquote>
 
 </multiple>
 </td>
 <td>
-<include src=actions-results>
+<include src="/packages/assessment/lib/actions-results" session_id="@session_id@">
 </td>
 </tr>
 </table>

@@ -30,8 +30,9 @@ template::list::create \
     -multirow results \
     -key sessions_id \
     -elements {
-	all_responses {
-	    link_url_eval {[export_vars -base "../sessions" {session_id assessment_id}]}
+	session_id {
+	    label {[_ assessment.Session]}
+	    link_url_eval {[export_vars -base "results-session" {session_id}]}
 	}
 	subject_name {
 	    label {[_ assessment.Subject_Name]}
@@ -43,7 +44,7 @@ template::list::create \
 	}
 	percent_score {
 	    label {[_ assessment.Percent_Score]}
-	    link_url_eval {[export_vars -base "../session" {session_id}]}
+	    link_url_eval {[export_vars -base "results-session" {session_id}]}
 	    html {align right nowrap}
 	}
     } -main_class {
@@ -51,9 +52,8 @@ template::list::create \
     } 
 
 
-db_multirow -extend { subject_url all_responses } results assessment_results {
+db_multirow -extend { subject_url } results assessment_results {
 } {
-    set all_responses "[_ assessment.View_all_responses]"
     if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
 	set subject_name "[_ assessment.anonymous_name]"
 	set subject_url ""

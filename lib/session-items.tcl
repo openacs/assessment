@@ -1,3 +1,7 @@
+if {![exists_and_not_null edit_p]} {
+    set edit_p 0
+}
+
 ad_form -name session_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
@@ -33,6 +37,3 @@ db_multirow -extend { presentation_type html result_points feedback answered_p }
 	set answered_p f
     }    
 }
-db_1row assessment_id_section {}
-# Get the assessment data
-as::assessment::data -assessment_id $assessment_id        

@@ -51,6 +51,8 @@ ad_form -name item_add_mc -action item-add-mc -export { assessment_id section_id
 }
 
 # add form entries for each choice
+set validate_list [list]
+set count_correct [array exists correct]
 set ad_form_code "-form \{\n"
 for {set i 1} {$i <= $num_choices} {incr i} {
     if {[info exists choice($i)]} {
@@ -63,78 +65,86 @@ for {set i 1} {$i <= $num_choices} {incr i} {
     } else {
 	append ad_form_code "\{correct.$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $i\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     }
+    lappend validate_list "correct.$i {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
 }
 append ad_form_code "\}"
 eval ad_form -extend -name item_add_mc $ad_form_code
 
-
-ad_form -extend -name item_add_mc -edit_request {
-    set title ""
+set edit_request "{
+    set title \"\"
     set increasing_p f
     set negative_p f
-    set num_correct_answers ""
-    set num_answers ""
-    set display_type "sa"
-} -on_submit {
-    if {[template::form get_action item_add_mc] == "more"} {
+    set num_correct_answers \"\"
+    set num_answers \"\"
+    set display_type \"sa\"
+}"
+
+set on_submit "{
+    if {\[template::form get_action item_add_mc\] == \"more\"} {
 	# add 5 more choice entries and redirect to this form
 	incr num_choices 5
-	ad_returnredirect [export_vars -base "item-add-mc" {assessment_id section_id as_item_id after as_item_type_id title increasing_p negative_p num_correct_answers num_answers display_type num_choices choice:array correct:array}]
+	ad_returnredirect \[export_vars -base \"item-add-mc\" {assessment_id section_id as_item_id after as_item_type_id title increasing_p negative_p num_correct_answers num_answers display_type num_choices choice:array correct:array}\]
 	ad_script_abort
     }
-} -edit_data {
+}"
+
+set edit_data "{
     db_transaction {
-	if {![db_0or1row item_type {}] || $object_type != "as_item_type_mc"} {
-	    set mc_id [as::item_type_mc::new \
-			   -title $title \
-			   -increasing_p $increasing_p \
-			   -allow_negative_p $negative_p \
-			   -num_correct_answers $num_correct_answers \
-			   -num_answers $num_answers]
+	if {!\[db_0or1row item_type {}\] || \$object_type != \"as_item_type_mc\"} {
+	    set mc_id \[as::item_type_mc::new \\
+			   -title \$title \\
+			   -increasing_p \$increasing_p \\
+			   -allow_negative_p \$negative_p \\
+			   -num_correct_answers \$num_correct_answers \\
+			   -num_answers \$num_answers\]
 	    
-	    if {![info exists object_type]} {
+	    if {!\[info exists object_type\]} {
 		# first item type mapped
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $mc_id -type as_item_type_rel
+		as::item_rels::new -item_rev_id \$as_item_id -target_rev_id \$mc_id -type as_item_type_rel
 	    } else {
 		# old item type existing
-		set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+		set as_item_id \[as::item::new_revision -as_item_id \$as_item_id\]
 		db_dml update_item_type {}
 	    }
 	} else {
 	    # old mc item type existing
-	    set as_item_id [as::item::new_revision -as_item_id $as_item_id]
-	    set mc_id [as::item_type_mc::edit \
-			   -as_item_type_id $as_item_type_id \
-			   -title $title \
-			   -increasing_p $increasing_p \
-			   -allow_negative_p $negative_p \
-			   -num_correct_answers $num_correct_answers \
-			   -num_answers $num_answers]
+	    set as_item_id \[as::item::new_revision -as_item_id \$as_item_id\]
+	    set mc_id \[as::item_type_mc::edit \\
+			   -as_item_type_id \$as_item_type_id \\
+			   -title \$title \\
+			   -increasing_p \$increasing_p \\
+			   -allow_negative_p \$negative_p \\
+			   -num_correct_answers \$num_correct_answers \\
+			   -num_answers \$num_answers\]
 	    
 	    db_dml update_item_type {}
 	}
 	
 	set count 0
-	foreach i [lsort -integer [array names choice]] {
-	    if {![empty_string_p $choice($i)]} {
+	foreach i \[lsort -integer \[array names choice\]\] {
+	    if {!\[empty_string_p \$choice(\$i)\]} {
 		incr count
-		set choice_id [as::item_choice::new -mc_id $mc_id \
-				   -title "$choice($i)" \
-				   -numeric_value "" \
-				   -text_value "" \
-				   -content_value "" \
-				   -feedback_text "" \
-				   -selected_p "" \
-				   -correct_answer_p "[ad_decode [info exists correct($i)] 0 f t]" \
-				   -sort_order "$count" \
-				   -percent_score ""]
+		set choice_id \[as::item_choice::new -mc_id \$mc_id \\
+				   -title \$choice(\$i) \\
+				   -numeric_value \"\" \\
+				   -text_value \"\" \\
+				   -content_value \"\" \\
+				   -feedback_text \"\" \\
+				   -selected_p \"\" \\
+				   -correct_answer_p \[ad_decode \[info exists correct(\$i)\] 0 f t\] \\
+				   -sort_order \$count \\
+				   -percent_score \"\"\]
 	    }
 	}
     }
-} -after_submit {
+}"
+
+set after_submit "{
     # now go to form to enter choice-specific data
-    ad_returnredirect [export_vars -base "item-add-mc-choices" {assessment_id section_id as_item_id after mc_id display_type}]
+    ad_returnredirect \[export_vars -base \"item-add-mc-choices\" {assessment_id section_id as_item_id after mc_id display_type}\]
     ad_script_abort
-}
+}"
+
+eval ad_form -extend -name item_add_mc -validate "{$validate_list}" -edit_request $edit_request -on_submit $on_submit -edit_data $edit_data -after_submit $after_submit
 
 ad_return_template

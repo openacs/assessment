@@ -1,5 +1,5 @@
 ad_library {
-    Item Data procs
+    Section Data procs
     @author timo@timohentschel.de
     @creation-date 2005-01-14
 }
@@ -36,7 +36,7 @@ ad_proc -public as::section_data::new {
 						     [list section_id $section_id] \
 						     [list subject_id $subject_id] \
 						     [list staff_id $staff_id] \
-						     [list points $points] ] ]
+						     [list points $points ] ] ]
 
 	db_dml update_creation_time {}
     }

@@ -87,8 +87,7 @@
 	set creation_datetime= sysdate,
 	    completed_datetime = sysdate,
 	    points = 0
-	where session_id = :session_id
-	and section_id = :section_id
+	where section_data_id = :section_data_id
 
 	</querytext>
 </fullquery>

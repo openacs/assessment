@@ -124,6 +124,20 @@ create index as_item_data_pk2 on as_item_data (session_id, section_id, as_item_i
 create index as_item_data_pk3 on as_item_data (as_item_id, section_id, session_id);
 create index as_item_data_subject_id_idx on as_item_data (subject_id);
 
+create table as_session_results (
+       result_id   integer
+                   constraint as_session_results_result_id_pk
+                   primary key
+                   constraint as_session_results_result_id_fk
+                   references cr_revisions(revision_id),
+       target_id   integer
+                   constraint as_session_results_target_id_fk
+                   references cr_revisions(revision_id),
+       points      integer
+);
+
+create index as_session_results_target_idx on as_session_results (target_id);
+
 -- here the selected choices are stored
 create table as_item_data_choices (
 	item_data_id	integer

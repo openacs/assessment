@@ -16,6 +16,7 @@ db_1row find_assessment {}
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
+permission::require_permission -object_id $assessment_id -privilege read
 
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
@@ -34,6 +35,7 @@ set session_user_url [acs_community_member_url -user_id $subject_id]
 
 # get start and end times
 db_1row session_data {}
+set session_time [as::assessment::pretty_time -seconds $session_time -hours]
 
 # get the number of attempts
 set session_attempt [db_string session_attempt {}]

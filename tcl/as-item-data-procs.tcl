@@ -21,8 +21,8 @@ ad_proc -public as::item_data::new {
     {-timestamp_answer ""}
     {-content_answer ""}
     {-signed_data ""}
-    {-points ""}
     {-allow_overwrite_p t}
+    {-points ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-12
@@ -62,7 +62,7 @@ ad_proc -public as::item_data::new {
 						  [list timestamp_answer $timestamp_answer] \
 						  [list content_answer $content_answer] \
 						  [list signed_data $signed_data] \
-						  [list points $points] ] ]
+						  [list points $points ] ] ]
 
 	foreach choice_id $choice_answer {
 	    db_dml save_choice_answer {}

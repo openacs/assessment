@@ -4,7 +4,8 @@
 <fullquery name="item_type_data">
 <querytext>
 
-	select r.title, i.default_value, i.feedback_text
+	select r.title, i.default_value, i.feedback_text, i.reference_answer,
+	       i.keywords
 	from cr_revisions r, as_item_rels ir, as_item_type_oq i
 	where r.revision_id = i.as_item_type_id
 	and i.as_item_type_id = ir.target_rev_id

@@ -319,7 +319,8 @@ ad_proc -public as::item_type_mc::process {
 	
     set points [expr round($max_points * $percent / 100)]
 
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p
+    set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p]
+    as::session_results::new -target_id $item_data_id -points $points
 }
 
 ad_proc -public as::item_type_mc::results {

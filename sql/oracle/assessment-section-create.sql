@@ -105,6 +105,8 @@ create table as_assessments (
 	time_for_response integer,
 	-- ip mask for restricted access
 	ip_mask varchar(100),
+	-- password for restricted access
+	password varchar(100),
 	-- the feedback type which will be displayed to the respondee (all, none, correct, incorrect)
 	show_feedback varchar(50) default 'all'
 			constraint as_assessments_feedback_ck

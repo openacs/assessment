@@ -27,6 +27,7 @@ ad_proc -public as::assessment::new {
     {-wait_between_tries ""}
     {-time_for_response ""}
     {-ip_mask ""}
+    {-password ""}
     {-show_feedback ""}
     {-section_navigation ""}
     {-survey_p ""}
@@ -69,6 +70,7 @@ ad_proc -public as::assessment::new {
 						   [list wait_between_tries $wait_between_tries] \
 						   [list time_for_response $time_for_response] \
 						   [list ip_mask $ip_mask] \
+						   [list password $password] \
 						   [list show_feedback $show_feedback] \
 						   [list section_navigation $section_navigation] \
 						   [list survey_p $survey_p]] ]
@@ -98,6 +100,7 @@ ad_proc -public as::assessment::edit {
     {-wait_between_tries ""}
     {-time_for_response ""}
     {-ip_mask ""}
+    {-password ""}
     {-show_feedback ""}
     {-section_navigation ""}
 } {
@@ -132,6 +135,7 @@ ad_proc -public as::assessment::edit {
 					     [list wait_between_tries $wait_between_tries] \
 					     [list time_for_response $time_for_response] \
 					     [list ip_mask $ip_mask] \
+					     [list password $password] \
 					     [list show_feedback $show_feedback] \
 					     [list section_navigation $section_navigation] ] ]
 
@@ -203,6 +207,7 @@ ad_proc -public as::assessment::new_revision {
 					     [list wait_between_tries $a(wait_between_tries)] \
 					     [list time_for_response $a(time_for_response)] \
 					     [list ip_mask $a(ip_mask)] \
+					     [list password $a(password)] \
 					     [list show_feedback $a(show_feedback)] \
 					     [list section_navigation $a(section_navigation)] ] ]
 	
@@ -258,6 +263,7 @@ ad_proc -public as::assessment::copy {
 					     [list wait_between_tries $a(wait_between_tries)] \
 					     [list time_for_response $a(time_for_response)] \
 					     [list ip_mask $a(ip_mask)] \
+					     [list password $a(password)] \
 					     [list show_feedback $a(show_feedback)] \
 					     [list section_navigation $a(section_navigation)] ] ]
 	
@@ -347,17 +353,19 @@ ad_proc -public as::assessment::calculate {
 
     db_1row sum_of_section_points {}
 
-    if {![exists_and_not_null section_max_points]||$section_max_points==0} {
-	set section_max_points 1
+    if {![exists_and_not_null section_max_points] || $section_max_points==0} {
+	set section_max_points 100
     }
 
     set percent_score [expr round(100 * $section_points / $section_max_points)]
+    as::session_results::new -target_id $session_id -points $percent_score
     db_dml update_assessment_percent {}
 }
 
 ad_proc -public as::assessment::check_session_conditions {
     -assessment_id:required
     -subject_id:required
+    -password:required
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-22
@@ -386,6 +394,9 @@ ad_proc -public as::assessment::check_session_conditions {
 	set pretty_wait_time [pretty_time -seconds [expr $wait_between_tries - $cur_wait_time]]
 	append error_list "<li>[_ assessment.assessment_wait_retry]</li>"
     }
+    if {![empty_string_p $as_password] && ![string equal $password $as_password]} {
+	append error_list "<li>[_ assessment.assessment_wrong_password]</li>"
+    }
     if {![empty_string_p $ip_mask]} {
 	regsub -all {\.} "^$ip_mask" {\\.} ip_mask
 	regsub -all {\*} $ip_mask {.*} ip_mask
@@ -399,6 +410,7 @@ ad_proc -public as::assessment::check_session_conditions {
 
 ad_proc as::assessment::pretty_time {
     {-seconds}
+    {-hours:boolean}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
@@ -407,10 +419,17 @@ ad_proc as::assessment::pretty_time {
 } {
     set time ""
     if {![empty_string_p $seconds]} {
+	if {$hours_p} {
+	    set time_hour [expr $seconds / 3600]
+	    set seconds [expr $seconds - ($time_hour * 3600)]
+	}
 	set time_min [expr $seconds / 60]
 	set time_sec [expr $seconds - ($time_min * 60)]
 	set pad "00"
-	set time "[string range $pad [string length $time_min] end]$time_min\:[string range $pad [string length $time_sec] end]$time_sec min"
+	if {$hours_p} {
+	    append time "[string range $pad [string length $time_hour] end]$time_hour\:"
+	}
+	append time "[string range $pad [string length $time_min] end]$time_min\:[string range $pad [string length $time_sec] end]$time_sec min"
     }
     return $time
 }

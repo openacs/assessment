@@ -24,13 +24,15 @@
   </else>
 
 <td>
-<if @assessment_data.survey_p@ in f>
+<if @survey_p@ ne t>
     <if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#<if @items.feedback@ not nil>: @items.feedback;noquote@</b></if></b>
     </if>
     <else>
-      <if @items.answered_p@ eq t><b>#assessment.not_yet_reviewed#</b></if>
-      <else><b>#assessment.not_answered#</b></else>
+      <if @items.answered_p@ eq t><b>#assessment.not_yet_reviewed#</b> </if>
+      <else><b>#assessment.not_answered#</b> </else>
     </else>
+    <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
+    <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
 </if>
 </td></tr>
 

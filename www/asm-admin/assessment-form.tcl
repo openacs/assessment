@@ -76,6 +76,7 @@ ad_form -extend -name assessment_form -form {
     {wait_between_tries:integer,optional,nospell {label "[_ assessment.Minutes_for_Retry]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Minutes_Retry_help]"}}
     {time_for_response:integer,optional,nospell {label "[_ assessment.time_for_response]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_time_help]"}}
     {ip_mask:text,optional,nospell {label "[_ assessment.ip_mask]"} {html {size 20 maxlength 100}} {help_text "[_ assessment.as_ip_mask_help]"}}
+    {password:text,optional,nospell {label "[_ assessment.password]"} {html {size 20 maxlength 100}} {help_text "[_ assessment.as_password_help]"}}
     {show_feedback:text(select),optional {label "[_ assessment.Show_Feedback]"} {options $feedback_options} {help_text "[_ assessment.as_Feedback_help]"}}
     {section_navigation:text(select),optional {label "[_ assessment.Section_Navigation]"} {options $navigation_options} {help_text "[_ assessment.as_Navigation_help]"}}
 } -new_request {
@@ -98,6 +99,7 @@ ad_form -extend -name assessment_form -form {
     set wait_between_tries ""
     set time_for_response ""
     set ip_mask ""
+    set password ""
     set show_feedback "none"
     set section_navigation "default path"
 } -edit_request {
@@ -146,6 +148,7 @@ ad_form -extend -name assessment_form -form {
 				   -wait_between_tries $wait_between_tries \
 				   -time_for_response $time_for_response \
 				   -ip_mask $ip_mask \
+				   -password $password \
 				   -show_feedback $show_feedback \
 				   -section_navigation $section_navigation]
 
@@ -188,6 +191,7 @@ ad_form -extend -name assessment_form -form {
 				   -wait_between_tries $wait_between_tries \
 				   -time_for_response $time_for_response \
 				   -ip_mask $ip_mask \
+				   -password $password \
 				   -show_feedback $show_feedback \
 				   -section_navigation $section_navigation]
 
