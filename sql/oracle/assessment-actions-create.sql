@@ -14,7 +14,7 @@ create table as_actions(
 			primary key,
 	name		varchar(200),
 	description	varchar(200),
-	tcl_code	varchar(400)
+	tcl_code	varchar(4000)
 			constraint as_actions_tcl_code_nn not null
 );
 

@@ -40,7 +40,7 @@ begin
 		attribute_name 	=>	'tcl_code',
 		pretty_name	=>	'Tcl_code',
 		pretty_plural	=>	'Tcl_code',
-		datatype	=>	'integer'
+		datatype	=>	'string'
 	);
 end;
 /
@@ -51,19 +51,17 @@ as
 	function new (
 	action_id     	in acs_objects.object_id%TYPE default null,
         name  		in as_actions.name%TYPE,
-        description     in as_actions.name%TYPE,
-        tcl_code        in as_actions.name%TYPE,
+        description     in as_actions.description%TYPE,
+        tcl_code        in as_actions.tcl_code%TYPE,
 	context_id	in acs_objects.context_id%TYPE,
-	creation_user	in acs_objects.creation_user%TYPE,
-	package_id      in acs_objects.package_id%TYPE
+	creation_user	in acs_objects.creation_user%TYPE
 		     ) return as_actions.action_id%TYPE;
 	procedure delete (
 	 	action_id 	in as_actions.action_id%TYPE
 	);
 	procedure default_actions (
 		context_id	in acs_objects.context_id%TYPE,
-		creation_user	in acs_objects.creation_user%TYPE,
-		package_id      in acs_objects.package_id%TYPE
+		creation_user	in acs_objects.creation_user%TYPE
 	);
 end as_action;
 /
@@ -74,12 +72,11 @@ as
 	function new (
 	action_id     	in acs_objects.object_id%TYPE default null,
         name  		in as_actions.name%TYPE,
-        description     in as_actions.name%TYPE,
-        tcl_code        in as_actions.name%TYPE,
+        description     in as_actions.description%TYPE,
+        tcl_code        in as_actions.tcl_code%TYPE,
 	context_id	in acs_objects.context_id%TYPE,
-	creation_user	in acs_objects.creation_user%TYPE,
-	package_id      in acs_objects.package_id%TYPE
-		     ) return as_actions.action_id%TYPE
+	creation_user	in acs_objects.creation_user%TYPE
+     ) return as_actions.action_id%TYPE
 	is
 		v_action_id as_actions.action_id%TYPE;
  	
@@ -88,7 +85,6 @@ as
 	v_action_id := acs_object.new (
 			object_id	=> 	action_id,
 			object_type	=>	'as_action',
-			package_id	=>	package_id,
 			creation_user	=>	creation_user,
 			creation_ip	=>	null,
 			context_id	=>	context_id
@@ -116,8 +112,8 @@ as
 
 	procedure default_actions (
 		context_id	in acs_objects.context_id%TYPE,
-		creation_user	in acs_objects.creation_user%TYPE,
-		package_id      in acs_objects.package_id%TYPE
+		creation_user	in acs_objects.creation_user%TYPE
+
 	) is
 		v_action_id		as_actions.action_id%TYPE;
 
@@ -149,8 +145,7 @@ Thank you,
 $administration_name"
 ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"',
 	context_id	=>	context_id,
-	creation_user	=>	creation_user,
-	package_id	=>	package_id
+	creation_user	=>	creation_user
 	);
 
 
@@ -173,8 +168,7 @@ v_action_id:=  new (
 	tcl_code	=>	'set user_id [ad_conn user_id]
 events::registration::new -event_id $event_id -user_id $user_id',
 	context_id	=>	context_id,
-	creation_user	=>	creation_user,
-	package_id	=>	package_id
+	creation_user	=>	creation_user
 	);
 
 
@@ -190,8 +184,7 @@ dotlrn_privacy::set_user_guest_p -user_id $user_id -value "t"
 dotlrn::user_add -can_browse  -user_id $user_id
 dotlrn_community::add_user_to_community -community_id $community_id -user_id $user_id',
 	context_id	=>	context_id,
-	creation_user	=>	creation_user,
-	package_id	=>	package_id
+	creation_user	=>	creation_user
 	);
 
 
