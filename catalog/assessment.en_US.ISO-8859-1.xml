@@ -321,6 +321,8 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="notify_user">Notify User</msg>
   <msg key="num_Answers">Total Number of displayed Choices</msg>
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>
+  <msg key="Num_Choices">Number of choices for multiple-choice item</msg>
+  <msg key="Num_Choices_help">Enter the number of choices for this item if it's a multiple-choice item.</msg>
   <msg key="num_Correct_Answer">Number of displayed Correct Choices</msg>
   <msg key="num_Correct_help">Number of correct answers that have to be displayed</msg>
   <msg key="num_items">Number of Items displayed</msg>
