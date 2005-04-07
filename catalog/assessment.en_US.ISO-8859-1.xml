@@ -369,6 +369,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Randomized">Randomized</msg>
   <msg key="randomized">Randomized</msg>
   <msg key="reg_asm">Used in the Registration Process</msg>
+  <msg key="Reg_Assessment_title">Main Site Custom Registration Questionnaire: &quot;%assessment_data.title%&quot;</msg>
   <msg key="reg_users_required">Registrated respondents required</msg>
   <msg key="regarding_this_assess">regarding this survey</msg>
   <msg key="related">Related</msg>
