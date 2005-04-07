@@ -30,7 +30,10 @@ if {[exists_and_not_null reg_p]} {
 }
 set context [list [list index [_ assessment.admin]] $assessment_data(title)]
 
+set assessment_rev_id $assessment_data(assessment_rev_id)
 
+set anonymous_p [db_string has_privilege {} -default "f"]
+set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
 set value [parameter::get_from_package_key -parameter AsmForRegisterId -package_key "acs-subsite"]
 
 if { [string eq $assessment_id $value] } {
@@ -41,8 +44,6 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
 }
-
-set assessment_rev_id $assessment_data(assessment_rev_id)
 
 set creation_date [util_AnsiDatetoPrettyDate $assessment_data(creation_date)]
 set creator_link [acs_community_member_url -user_id $assessment_data(creation_user)]

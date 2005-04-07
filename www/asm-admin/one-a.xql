@@ -13,5 +13,13 @@
     order by asm.sort_order
       </querytext>
 </fullquery>
+<fullquery name="has_privilege">
+
+      <querytext>	
+      select anonymous_p from as_assessments a where a.assessment_id=:assessment_rev_id 
+
+      </querytext>
+</fullquery>
+
 
 </queryset>
