@@ -77,7 +77,7 @@ ad_form -extend -name item_add -form {
     set points ""
     set data_type "varchar"
     set item_type "sa"
-    set num_choices 0
+    set num_choices 10
 } -validate {
     {name {[as::assessment::unique_name -name $name -new_p 1 -item_id $as_item_id]} "[_ assessment.name_used]"}
 } -on_submit {
