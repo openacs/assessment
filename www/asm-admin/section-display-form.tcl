@@ -8,7 +8,7 @@ ad_page_contract {
     section_id:integer,optional
     display_type_id:integer,optional
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 

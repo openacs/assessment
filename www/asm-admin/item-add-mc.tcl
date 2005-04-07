@@ -12,7 +12,7 @@ ad_page_contract {
     correct:optional,array
     {num_choices:integer,optional 10}
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 

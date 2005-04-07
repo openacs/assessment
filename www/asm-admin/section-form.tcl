@@ -9,7 +9,7 @@ ad_page_contract {
     after:integer,optional
     {__new_p 0}
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 

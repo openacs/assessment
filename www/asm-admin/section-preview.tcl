@@ -8,7 +8,7 @@ ad_page_contract {
     assessment_id:integer
     section_id:integer
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 

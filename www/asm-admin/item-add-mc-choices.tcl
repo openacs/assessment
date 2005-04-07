@@ -16,7 +16,7 @@ ad_page_contract {
     percent:array,optional
     selected:array,optional
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
