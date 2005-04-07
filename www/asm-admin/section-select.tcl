@@ -10,6 +10,9 @@ ad_page_contract {
     section_id:integer
     by_item_p:optional
     item_id:optional
+} -properties {
+    context:onevalue
+    title:onevalue
 }
 
 set package_id [ad_conn package_id]
@@ -38,7 +41,7 @@ set new_assessment_revision $assessment_data(assessment_rev_id)
 set sections_list [db_list_of_lists get_sections {}]
 
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
+set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
 
 set title "[_ assessment.section_select]"
 ad_form -name get_section -export {by_item_p item_id} -form {

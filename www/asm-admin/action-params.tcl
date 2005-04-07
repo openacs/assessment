@@ -13,6 +13,9 @@ ad_page_contract {
     edit_check:optional
     item_id:optional
     by_item_p:optional
+} -properties {
+    context:onevalue
+    title:onevalue
 }
 
 set package_id [ad_conn package_id]
@@ -28,7 +31,7 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set return_url "one-a?assessment_id=$assessment_id"
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "[_ assessment.action_params]" ]
+set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] "[_ assessment.action_params]" ]
 
 set new_assessment_revision $assessment_data(assessment_rev_id)
 

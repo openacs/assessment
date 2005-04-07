@@ -12,6 +12,9 @@ ad_page_contract {
     edit_check:optional
     by_item_p:optional
     item_id:optional
+} -properties {
+    context:onevalue
+    title:onevalue
 }
 
 set package_id [ad_conn package_id]
@@ -26,7 +29,7 @@ if {![info exists assessment_data(assessment_id)]} {
 set edit_p [ db_string exist_check {}]
 
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] [_ assessment.action_select]]
+set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] [_ assessment.action_select]]
 
 set title "[_ assessment.action_select]" 
 set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"]]

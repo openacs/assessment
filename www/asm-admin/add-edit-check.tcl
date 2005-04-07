@@ -13,6 +13,9 @@ ad_page_contract {
     type:optional
     by_item_p:optional
     item_id:optional
+} -properties {
+    context:onevalue
+    title:onevalue
 }
 
 set package_id [ad_conn package_id]
@@ -30,7 +33,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set title $assessment_data(title)
-set context_bar [ad_context_bar [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
+set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
 
 if {![exists_and_not_null as_item_id] } {
     set condition_sql [db_string get_item_id {}] 
