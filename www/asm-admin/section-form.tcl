@@ -33,7 +33,7 @@ if {![info exists section_id] || $__new_p} {
     set _section_id $section_id
 }
 
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set display_types [db_list_of_lists section_display_types {}]
 set display_types [concat [list [list "[_ assessment.section_new_display]" ""]] $display_types]

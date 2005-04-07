@@ -26,7 +26,7 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set page_title "[_ assessment.section_preview]"
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 db_1row section_data {} -column_array section
 
 # get all items of section in correct order

@@ -1,6 +1,7 @@
 <master>
 <property name="title">@p_title@</property>
-<property name="context_bar">@context_bar;noquote@</property>
+<property name="context">@context;noquote@</property>
+
 #assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date#</h2>
 
 

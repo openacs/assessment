@@ -28,7 +28,7 @@ if {[exists_and_not_null reg_p]} {
     set p_title [_ assessment.One_Assessment_data]
 
 }
-set context_bar [ad_context_bar $assessment_data(title)]
+set context [list [list index [_ assessment.admin]] $assessment_data(title)]
 
 
 set value [parameter::get_from_package_key -parameter AsmForRegisterId -package_key "acs-subsite"]
@@ -54,9 +54,6 @@ if {$assessment_data(number_tries) > 0} {
 
 # allow site-wide admins to enable/disable assessments directly from here
 set target "[export_vars -base one-a {assessment_id reg_p}]"
-
-
-
 
 set notification_chunk [notification::display::request_widget \
 			    -type assessment_response_notif \
