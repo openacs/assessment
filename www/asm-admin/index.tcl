@@ -15,7 +15,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 set title "[_ assessment.Administration]"
-set context {}
+set context [list "[_ assessment.admin]"]
 set package_id [ad_conn package_id]
 set categories_url [db_string get_category_url {}]
 set user_id [ad_conn user_id]
