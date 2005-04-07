@@ -63,6 +63,7 @@ ad_form -extend -name item_add -form {
     {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
     {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}
     {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
+    {num_choices:integer,optional,nospell {label "[_ assessment.Num_Choices]"} {html {size 5 maxlength 3}} {help_text "[_ assessment.Num_Choices_help]"}}
 } -new_request {
     set name ""
     set title ""
@@ -76,6 +77,7 @@ ad_form -extend -name item_add -form {
     set points ""
     set data_type "varchar"
     set item_type "sa"
+    set num_choices 0
 } -validate {
     {name {[as::assessment::unique_name -name $name -new_p 1 -item_id $as_item_id]} "[_ assessment.name_used]"}
 } -on_submit {
@@ -149,7 +151,7 @@ ad_form -extend -name item_add -form {
     }
 } -after_submit {
     # now go to item-type specific form (i.e. multiple choice)
-    ad_returnredirect [export_vars -base "item-add-$item_type" {assessment_id section_id as_item_id after}]
+    ad_returnredirect [export_vars -base "item-add-$item_type" {assessment_id section_id as_item_id after num_choices}]
     ad_script_abort
 }
 
