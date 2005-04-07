@@ -9,20 +9,32 @@ ad_page_contract {
     @cvs-id $Id: 
 } {
     assessment_id:integer
+    {context ""}
+    {reg_p ""}
 }
-set reg_p ""
+set is_reg_asm_p ""
 set package_id [ad_conn package_id]
-
+set p_title ""
 
 permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
-
+set admin_p [acs_user::site_wide_admin_p]
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
+
+if {[exists_and_not_null reg_p]} {
+    set p_title "[_ assessment.Reg_Assessment_title]"
+} else {
+    set p_title [_ assessment.One_Assessment_data]
+
+}
+set context_bar [ad_context_bar $assessment_data(title)]
+
+
 set value [parameter::get_from_package_key -parameter AsmForRegisterId -package_key "acs-subsite"]
 
 if { [string eq $assessment_id $value] } {
-    set reg_p "[_ assessment.reg_asm]"
+    set is_reg_asm_p "[_ assessment.reg_asm]"
 }
 
 if {![info exists assessment_data(assessment_id)]} {
@@ -41,16 +53,16 @@ if {$assessment_data(number_tries) > 0} {
 }
 
 # allow site-wide admins to enable/disable assessments directly from here
-set target "[export_vars -base one-a {assessment_id}]"
+set target "[export_vars -base one-a {assessment_id reg_p}]"
 
 
-set context_bar [ad_context_bar $assessment_data(title)]
+
 
 set notification_chunk [notification::display::request_widget \
 			    -type assessment_response_notif \
 			    -object_id $assessment_id \
 			    -pretty_name $assessment_data(title) \
-			    -url [export_vars -base one-a {assessment_id}] ]
+			    -url [export_vars -base one-a {assessment_id reg_p}] ]
 
 db_multirow sections assessment_sections {} {
     if {[empty_string_p $points]} {
