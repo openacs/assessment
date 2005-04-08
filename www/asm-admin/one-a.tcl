@@ -25,7 +25,7 @@ set context [list [list index [_ assessment.admin]] $assessment_data(title)]
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set subsite_id [ad_conn subsite_id]
-set url [subsite::get_url -node_id $subsite_id]
+set url [apm_package_url_from_id $subsite_id]
 set anonymous_p [db_string has_privilege {} -default "f"]
 set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
 set value [parameter::get -parameter AsmForRegisterId -package_id $subsite_id]
