@@ -21,13 +21,6 @@ permission::require_permission -object_id $assessment_id -privilege admin
 set admin_p [acs_user::site_wide_admin_p]
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
-
-if {[exists_and_not_null reg_p]} {
-    set p_title "[_ assessment.Reg_Assessment_title]"
-} else {
-    set p_title [_ assessment.One_Assessment_data]
-
-}
 set context [list [list index [_ assessment.admin]] $assessment_data(title)]
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
@@ -39,6 +32,14 @@ set value [parameter::get_from_package_key -parameter AsmForRegisterId -package_
 if { [string eq $assessment_id $value] } {
     set is_reg_asm_p "[_ assessment.reg_asm]"
 }
+
+if {[exists_and_not_null is_reg_asm_p]} {
+    set p_title "[_ assessment.Reg_Assessment_title]"
+} else {
+    set p_title [_ assessment.One_Assessment_data]
+
+}
+
 
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
