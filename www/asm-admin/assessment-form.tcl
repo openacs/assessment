@@ -7,7 +7,7 @@ ad_page_contract {
     assessment_id:integer,optional
     {__new_p 0}
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -23,7 +23,7 @@ if {![info exists assessment_id] || $__new_p} {
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 
-set context_bar [ad_context_bar $page_title]
+set context [list [list index [_ assessment.admin]] $page_title]
 set package_id [ad_conn package_id]
 set sql_format "YYYY-MM-DD HH24:MI:SS"
 set form_format "[lc_get formbuilder_date_format] [lc_get formbuilder_time_format]"

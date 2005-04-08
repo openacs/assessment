@@ -11,6 +11,9 @@ ad_page_contract {
 } {
   assessment_id:integer,notnull
   {to "responded"}  
+} -properties {
+    context:onevalue
+    page_title:onevalue
 }
 
 set package_id [ad_conn package_id]
@@ -30,7 +33,7 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set page_title "[_ assessment.Send_Mail]"
 set assessment_name $assessment_data(title)
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 db_1row select_sender_info {}
 set dotlrn_installed_p [apm_package_installed_p dotlrn]
