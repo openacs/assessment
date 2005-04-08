@@ -24,10 +24,11 @@ as::assessment::data -assessment_id $assessment_id
 set context [list [list index [_ assessment.admin]] $assessment_data(title)]
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
-
+set subsite_id [ad_conn subsite_id]
+set url [subsite::get_url -node_id $subsite_id]
 set anonymous_p [db_string has_privilege {} -default "f"]
 set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
-set value [parameter::get_from_package_key -parameter AsmForRegisterId -package_key "acs-subsite"]
+set value [parameter::get -parameter AsmForRegisterId -package_id $subsite_id]
 
 if { [string eq $assessment_id $value] } {
     set is_reg_asm_p "[_ assessment.reg_asm]"
