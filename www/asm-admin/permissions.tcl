@@ -5,6 +5,9 @@ ad_page_contract {
     
 } {
     object_id:integer
+} -properties {
+    context:onevalue
+    page_title:onevalue
 }
 
 set page_title "Permissions"
@@ -17,4 +20,4 @@ permission::require_permission -object_id $package_id -party_id $user_id -privil
 
 set node_id [ad_conn node_id]
 set return_url "[site_node::get_url -node_id $node_id]asm-admin/"
-set context [list [list "[site_node::get_url -node_id $node_id]asm-admin/" "[_ assessment.Assessment] [_ assessment.Administration]"] $page_title]
+set context [list [list index [_ assessment.admin]] $page_title]
