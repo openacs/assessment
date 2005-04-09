@@ -68,6 +68,7 @@ ad_form -extend -name assessment_form -form {
     {secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
     {reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}
     {show_item_name_p:text(select) {label "[_ assessment.Show_Item_Name_1]"} {options $boolean_options} {help_text "[_ assessment.as_Show_Item_Name_help]"}}
+    {random_p:text(select) {label "[_ assessment.Allow_Random]"} {options $boolean_options} {help_text "[_ assessment.as_Allow_Random_help]"}}
     {consent_page:text(textarea),optional,nospell {label "[_ assessment.Consent_Page]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Consent_Page_help]"}}
     {return_url:text,optional,nospell {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}
     {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
@@ -89,6 +90,7 @@ ad_form -extend -name assessment_form -form {
     set secure_access_p f
     set reuse_responses_p f
     set show_item_name_p f
+    set random_p t
     set entry_page ""
     set exit_page ""
     set consent_page ""
@@ -138,6 +140,7 @@ ad_form -extend -name assessment_form -form {
 				   -secure_access_p $secure_access_p \
 				   -reuse_responses_p $reuse_responses_p \
 				   -show_item_name_p $show_item_name_p \
+				   -random_p $random_p \
 				   -entry_page "" \
 				   -exit_page "" \
 				   -consent_page $consent_page \
@@ -181,6 +184,7 @@ ad_form -extend -name assessment_form -form {
 				   -secure_access_p $secure_access_p \
 				   -reuse_responses_p $reuse_responses_p \
 				   -show_item_name_p $show_item_name_p \
+				   -random_p $random_p \
 				   -entry_page "" \
 				   -exit_page "" \
 				   -consent_page $consent_page \

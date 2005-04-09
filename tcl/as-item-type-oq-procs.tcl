@@ -108,7 +108,8 @@ ad_proc -public as::item_type_oq::render {
 	array set values $default_value
 	set default $values(clob_answer)
     } else {
-	set default [db_string item_type_data {}]
+	array set type [util_memoize [list as::item_type_oq::data -type_id $type_id]]
+	set default $type(default_value)
     }
 
     return [list $default ""]
@@ -130,22 +131,35 @@ ad_proc -public as::item_type_oq::process {
 
     Process a Response to an Open Question Type
 } {
-    db_1row item_type_data {}
+    array set type [util_memoize [list as::item_type_oq::data -type_id $type_id]]
     set response [lindex $response 0]
 
-    if {[llength $keywords] > 0} {
+    if {[llength $type(keywords)] > 0} {
 	set points 0
-	foreach keyword $keywords {
+	foreach keyword $type(keywords) {
 	    if {[regexp -nocase [string tolower $keyword] $response]} {
 		incr points
 	    }
 	}
-	set points [expr round($max_points * $points / [llength $keywords])]
+	set points [expr round($max_points * $points / [llength $type(keywords)])]
     } else {
 	set points ""
     }
 
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -clob_answer $response -points $points -allow_overwrite_p $allow_overwrite_p
+    set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -clob_answer $response -points $points -allow_overwrite_p $allow_overwrite_p]
+    as::session_results::new -target_id $item_data_id -points $points
+}
+
+ad_proc -public as::item_type_oq::data {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-04-08
+
+    Return the Data of an Open Question Type
+} {
+    db_1row item_type_data {} -column_array type
+    return [array get type]
 }
 
 ad_proc -public as::item_type_oq::results {

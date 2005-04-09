@@ -100,6 +100,7 @@ ad_proc -public as::item_display_rb::render {
     {-title ""}
     {-subtext ""}
     {-required_p ""}
+    {-random_p ""}
     {-default_value ""}
     {-data ""}
 } {
@@ -108,13 +109,17 @@ ad_proc -public as::item_display_rb::render {
 
     Render an Item Display RadioButton Type
 } {
-    db_1row display_item_data {}
     if {[empty_string_p $required_p]} {
 	set required_p f
     }
 
+    array set type [util_memoize [list as::item_display_rb::data -type_id $type_id]]
+    if {$random_p == "f"} {
+	set type(sort_order_type) "order_of_entry"
+    }
+
     # numerical alphabetical randomized order_of_entry
-    switch -exact $sort_order_type {
+    switch -exact $type(sort_order_type) {
 	alphabetical {
 	    set data [lsort -dictionary -index 0 $data]
 	}
@@ -127,8 +132,20 @@ ad_proc -public as::item_display_rb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list options $data] [list html $html_display_options]]
+    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list options $data] [list html $type(html_display_options)]]
     set element_params [concat [list "$element\:text(radio)$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]
+}
+
+ad_proc -public as::item_display_rb::data {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-04-08
+
+    Get the Display Data of RadioButton Type
+} {
+    db_1row display_item_data {} -column_array type
+    return [array get type]
 }

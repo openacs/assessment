@@ -94,6 +94,7 @@ ad_proc -public as::item_display_ta::render {
     {-title ""}
     {-subtext ""}
     {-required_p ""}
+    {-random_p ""}
     {-default_value ""}
     {-data ""}
 } {
@@ -102,7 +103,7 @@ ad_proc -public as::item_display_ta::render {
 
     Render an Item Display TextArea Type
 } {
-    db_1row display_item_data {}
+    array set type [util_memoize [list as::item_display_ta::data -type_id $type_id]]
     if {[empty_string_p $required_p]} {
 	set required_p f
     }
@@ -117,11 +118,23 @@ ad_proc -public as::item_display_ta::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list html $html_display_options]]
-    if {![empty_string_p $abs_size]} {
-	lappend param_list [list maxlength $abs_size]
+    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list html $type(html_display_options)]]
+    if {![empty_string_p $type(abs_size)]} {
+	lappend param_list [list maxlength $type(abs_size)]
     }
     set element_params [concat [list "$element\:$datatype\(textarea),nospell$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]
+}
+
+ad_proc -public as::item_display_ta::data {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-04-08
+
+    Get the Display Data of TextArea Type
+} {
+    db_1row display_item_data {} -column_array type
+    return [array get type]
 }

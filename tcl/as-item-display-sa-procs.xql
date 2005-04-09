@@ -22,7 +22,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_display_sa::render.display_item_data">
+<fullquery name="as::item_display_sa::data.display_item_data">
       <querytext>
 
 	select html_display_options, abs_size, box_orientation

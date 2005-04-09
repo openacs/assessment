@@ -86,6 +86,10 @@ create table as_assessments (
 	show_item_name_p	char(1) default 'f'
 			constraint as_assessments_show_item_name_p_ck
 			check (show_item_name_p in ('t','f')),
+	-- whether the order of section, items, choices can be random
+	random_p	char(1) default 't'
+			constraint as_assessments_random_p_ck
+			check (random_p in ('t','f')),
 	-- the customizable entry page that will be displayed before the first response.
 	entry_page varchar(50),
 	-- customizable exit / thank you page that will be displayed once the assessment has been responded.

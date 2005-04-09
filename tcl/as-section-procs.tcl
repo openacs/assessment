@@ -202,6 +202,7 @@ ad_proc as::section::items {
     {-session_id:required}
     {-sort_order_type ""}
     {-num_items ""}
+    {-random_p ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
@@ -231,6 +232,10 @@ ad_proc as::section::items {
     }
     if {$max_pos < [array size section_items]} {
 	set max_pos [array size section_items]
+    }
+
+    if {$random_p == "f"} {
+	set sort_order_type "order_by_entry"
     }
 
     # sort item positions that are not fixed

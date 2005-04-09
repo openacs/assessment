@@ -74,7 +74,7 @@
 	</querytext>
 </fullquery>
 	
-<fullquery name="as::item_type_mc::process.item_type_data">
+<fullquery name="as::item_type_mc::data.item_type_data">
       <querytext>
 
 	select increasing_p, allow_negative_p
@@ -84,7 +84,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_type_mc::process.check_choices">
+<fullquery name="as::item_type_mc::data.check_choices">
       <querytext>
 
 	    select choice_id, correct_answer_p, percent_score

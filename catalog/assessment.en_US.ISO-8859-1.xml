@@ -50,6 +50,7 @@
   <msg key="allow_multiple">allow multiple</msg>
   <msg key="Allow_Negative">Allow Negative</msg>
   <msg key="Allow_Negative_help">Shall a negative percentage be allowed (as the total result).</msg>
+  <msg key="Allow_Random">Allow Randomizing</msg>
   <msg key="allow_tries">allow %assessment_data.number_tries%</msg>
   <msg key="alphabetical">Alphabetical</msg>
   <msg key="and">AND</msg>

@@ -9,7 +9,7 @@
 	       cr.description, o.creation_user, o.creation_date, a.instructions, a.run_mode,
 	       a.anonymous_p, a.secure_access_p, a.reuse_responses_p, a.ip_mask, a.password,
 	       a.show_item_name_p, a.entry_page, a.exit_page, a.consent_page, a.return_url,
-	       a.start_time, a.end_time, a.number_tries, a.wait_between_tries,
+	       a.start_time, a.end_time, a.number_tries, a.wait_between_tries, a.random_p,
 	       a.time_for_response, a.show_feedback, a.section_navigation, a.creator_id, a.survey_p
 	from as_assessments a, cr_revisions cr, cr_items ci, acs_objects o
 	where ci.item_id = :assessment_id

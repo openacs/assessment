@@ -149,6 +149,7 @@ content::type::attribute::new -content_type {as_assessments} -attribute_name {an
 content::type::attribute::new -content_type {as_assessments} -attribute_name {secure_access_p}         -datatype {boolean} -pretty_name {Assessment Secure Access} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {reuse_responses_p}         -datatype {boolean} -pretty_name {Assessment Reuse Responses} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {show_item_name_p}         -datatype {boolean} -pretty_name {Assessment Show question titles} -column_spec {char(1)}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {random_p}         -datatype {boolean} -pretty_name {Assessment Allow Random} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {entry_page}            -datatype {string}  -pretty_name {Assessment Customizable Entry page}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {exit_page}            -datatype {string}  -pretty_name {Assessment Customizable Thank/Exit page}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {consent_page}            -datatype {text}  -pretty_name {Assessment Consent Pages}  -column_spec {text}
@@ -349,6 +350,8 @@ ad_proc -public as::install::after_upgrade {
 	    0.10d9 0.10d10 {
 		as::actions::update_checks_after_upgrade
 	    }
+	    0.10d10 0.10d11 {
+		content::type::attribute::new -content_type {as_assessments} -attribute_name {random_p} -datatype {boolean} -pretty_name {Assessment Allow Random} -column_spec {char(1)}
+	    }
 	}
-    }
 }

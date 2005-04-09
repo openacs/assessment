@@ -292,16 +292,13 @@ ad_proc -public as::item_type_mc::process {
 
     Process a Response to a Multiple Choice Type
 } {
-    db_1row item_type_data {}
-
-    db_foreach check_choices {} {
-	if {$correct_answer_p == "t"} {
-	    set correct_choices($choice_id) $percent_score
-	}
-	set choices($choice_id) $percent_score
+    array set type [util_memoize [list as::item_type_mc::data -type_id $type_id]]
+    array set choices $type(choices)
+    if {[info exists type(correct_choices)]} {
+	array set correct_choices $type(correct_choices)
     }
 
-    if {$increasing_p == "t"} {
+    if {$type(increasing_p) == "t"} {
 	# if not all correct answers are given, award fraction of the points
 	set percent 0
 	foreach choice_id $response {
@@ -316,7 +313,7 @@ ad_proc -public as::item_type_mc::process {
 	}
     }
 
-    if {$allow_negative_p == "f" && $percent < 0} {
+    if {$type(allow_negative_p) == "f" && $percent < 0} {
 	# don't allow negative percentage
 	set percent 0
     }
@@ -325,6 +322,31 @@ ad_proc -public as::item_type_mc::process {
 
     set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p]
     as::session_results::new -target_id $item_data_id -points $points
+}
+
+ad_proc -public as::item_type_mc::data {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-04-08
+
+    Return the Data of a Multiple Choice Type
+} {
+    db_1row item_type_data {} -column_array type
+
+    db_foreach check_choices {} {
+	if {$correct_answer_p == "t"} {
+	    set correct_choices($choice_id) $percent_score
+	}
+	set choices($choice_id) $percent_score
+    }
+
+    set type(choices) [array get choices]
+    if {[array exists correct_choices]} {
+	set type(correct_choices) [array get correct_choices]
+    }
+
+    return [array get type]
 }
 
 ad_proc -public as::item_type_mc::results {

@@ -94,7 +94,7 @@ db_transaction {
 
 
 	# get all sections of assessment in correct order
-	set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation)]
+	set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
 
 	if {[empty_string_p $section_order]} {
 	    # start at the first section
@@ -116,7 +116,8 @@ db_transaction {
 	}
 
 	# get all items of section in correct order
-	set item_list [as::section::items -section_id $section_id -session_id $session_id -sort_order_type $display(sort_order_type) -num_items $section(num_items)]
+	set item_list [as::section::items -section_id $section_id -session_id $session_id -sort_order_type $display(sort_order_type) -num_items $section(num_items) -random_p $assessment_data(random_p)]
+
 	set section(num_sections) [llength $section_list]
 	set section(num_items) [llength $item_list]
 	if {![empty_string_p $section(max_time_to_complete)]} {
@@ -271,7 +272,7 @@ foreach one_item $item_list {
 	if {$assessment_data(reuse_responses_p) == "t"} {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
 	}
-	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
+	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p -random_p $assessment_data(random_p)]
 	
     } else {
 	# submit each item seperately
@@ -339,7 +340,11 @@ foreach one_item $item_list {
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 
     if {$presentation_type == "rb" || $presentation_type == "cb"} {
-	db_1row choice_orientation {}
+	array set item [util_memoize [list as::item_form::item_data -item_id $as_item_id]]
+	array set type [util_memoize [list as::item_display_$presentation_type\::data -type_id $item(display_type_id)]]
+	set choice_orientation $type(choice_orientation)
+	array unset item
+	array unset type
     } else {
 	set choice_orientation ""
     }

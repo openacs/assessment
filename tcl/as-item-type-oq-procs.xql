@@ -23,20 +23,10 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_type_oq::render.item_type_data">
+<fullquery name="as::item_type_oq::data.item_type_data">
       <querytext>
 
-	select default_value
-	from as_item_type_oq
-	where as_item_type_id = :type_id
-
-      </querytext>
-</fullquery>
-
-<fullquery name="as::item_type_oq::process.item_type_data">
-      <querytext>
-
-	select keywords
+	select keywords, default_value
 	from as_item_type_oq
 	where as_item_type_id = :type_id
 

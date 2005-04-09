@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="as::item_form::add_item_to_form.item_properties">
+<fullquery name="as::item_form::item_data.item_properties">
 	<querytext>
 		select cr.title, i.subtext, i.data_type,
 		       max(oi.object_id) as item_type_id, oi.object_type as item_type,

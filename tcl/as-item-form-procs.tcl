@@ -14,30 +14,50 @@ ad_proc -public as::item_form::add_item_to_form  {
     {-default_value ""}
     {-show_feedback ""}
     {-required_p f}
+    {-random_p ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
-    @modified-date 2004-12-10
+    @modified-date 2005-04-08
 
     Add items to a form. The form values are stored in response_to_item.item_id
 } {
     randomInit [randomRange 20000]
     set element_name "response_to_item.$item_id"
-    db_1row item_properties {}
-    set item_type [string range $item_type end-1 end]
-    set display_type [string range $display_type end-1 end]
+    array set item [util_memoize [list as::item_form::item_data -item_id $item_id]]
+    set item_type [string range $item(item_type) end-1 end]
+    set display_type [string range $item(display_type) end-1 end]
 
-    util_unlist [as::item_type_$item_type\::render -type_id $item_type_id -session_id $session_id -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback] default_value data
+    if {$random_p == "f"} {
+	set item_data [util_memoize [list as::item_type_$item_type\::render -type_id $item(item_type_id) -session_id "" -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]]
+    } else {
+	set item_data [as::item_type_$item_type\::render -type_id $item(item_type_id) -session_id $session_id -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]
+    }
+
+    util_unlist $item_data default_value data
 
     as::item_display_$display_type\::render \
 	-form $name \
 	-element $element_name \
-	-type_id $display_type_id \
-	-datatype $data_type \
-	-title $title \
-	-subtext $subtext \
+	-type_id $item(display_type_id) \
+	-datatype $item(data_type) \
+	-title $item(title) \
+	-subtext $item(subtext) \
 	-required_p $required_p \
+	-random_p $random_p \
 	-default_value $default_value \
 	-data $data
 
     return $display_type
+}
+
+ad_proc -private as::item_form::item_data  {
+    -item_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-04-08
+
+    Gets the item type and display
+} {
+    db_1row item_properties {} -column_array item
+    return [array get item]
 }

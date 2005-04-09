@@ -23,7 +23,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_display_sb::render.display_item_data">
+<fullquery name="as::item_display_sb::data.display_item_data">
       <querytext>
 
 	select html_display_options, multiple_p, choice_label_orientation,

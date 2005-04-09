@@ -17,6 +17,7 @@ ad_proc -public as::assessment::new {
     {-secure_access_p ""}
     {-reuse_responses_p ""}
     {-show_item_name_p ""}
+    {-random_p ""}
     {-entry_page ""}
     {-exit_page ""}
     {-consent_page ""}
@@ -60,6 +61,7 @@ ad_proc -public as::assessment::new {
 						   [list secure_access_p $secure_access_p] \
 						   [list reuse_responses_p $reuse_responses_p] \
 						   [list show_item_name_p $show_item_name_p] \
+						   [list random_p $random_p] \
 						   [list entry_page $entry_page] \
 						   [list exit_page $exit_page] \
 						   [list consent_page $consent_page] \
@@ -90,6 +92,7 @@ ad_proc -public as::assessment::edit {
     {-secure_access_p ""}
     {-reuse_responses_p ""}
     {-show_item_name_p ""}
+    {-random_p ""}
     {-entry_page ""}
     {-exit_page ""}
     {-consent_page ""}
@@ -125,6 +128,7 @@ ad_proc -public as::assessment::edit {
 					     [list secure_access_p $secure_access_p] \
 					     [list reuse_responses_p $reuse_responses_p] \
 					     [list show_item_name_p $show_item_name_p] \
+					     [list random_p $random_p] \
 					     [list entry_page $entry_page] \
 					     [list exit_page $exit_page] \
 					     [list consent_page $consent_page] \
@@ -197,6 +201,7 @@ ad_proc -public as::assessment::new_revision {
 					     [list secure_access_p $a(secure_access_p)] \
 					     [list reuse_responses_p $a(reuse_responses_p)] \
 					     [list show_item_name_p $a(show_item_name_p)] \
+					     [list random_p $a(random_p)] \
 					     [list entry_page $a(entry_page)] \
 					     [list exit_page $a(exit_page)] \
 					     [list consent_page $a(consent_page)] \
@@ -253,6 +258,7 @@ ad_proc -public as::assessment::copy {
 					     [list secure_access_p $a(secure_access_p)] \
 					     [list reuse_responses_p $a(reuse_responses_p)] \
 					     [list show_item_name_p $a(show_item_name_p)] \
+					     [list random_p $a(random_p)] \
 					     [list entry_page $a(entry_page)] \
 					     [list exit_page $a(exit_page)] \
 					     [list consent_page $a(consent_page)] \
@@ -302,6 +308,7 @@ ad_proc as::assessment::sections {
     {-assessment_id:required}
     {-session_id:required}
     {-sort_order_type ""}
+    {-random_p ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
@@ -317,6 +324,10 @@ ad_proc as::assessment::sections {
 
     # get all sections of assessment
     set all_sections [db_list_of_lists assessment_sections {}]
+
+    if {$random_p == "f"} {
+	set sort_order_type "default path"
+    }
 
     # sort section positions
     switch -exact $sort_order_type {
