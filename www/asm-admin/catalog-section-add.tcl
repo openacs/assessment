@@ -13,6 +13,10 @@ ad_page_contract {
     after:integer
     section_id:integer,multiple,optional
     section_ids:optional
+} -properties {
+    title:onevalue
+    context:onevalue
+    sections:multirow
 }
 
 set package_id [ad_conn package_id]
@@ -28,7 +32,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set page_title "[_ assessment.Search_Section_1]"
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] "[_ assessment.Search_Section]"]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] "[_ assessment.Search_Section]"]
 
 if {[info exists section_id]} {
     set section_ids $section_id
