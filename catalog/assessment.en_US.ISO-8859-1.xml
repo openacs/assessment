@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d10" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d11" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -38,6 +38,7 @@
   <msg key="Add_to_assessment">Add to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="Add_to_section">Add to section &quot;%section_title%&quot;</msg>
   <msg key="add_trigger">Add Trigger</msg>
+  <msg key="admin">Admin</msg>
   <msg key="admin_actions">Actions Administration</msg>
   <msg key="Admin_catalog">Question Catalog Administration</msg>
   <msg key="admin_categories">Categories Administration</msg>
