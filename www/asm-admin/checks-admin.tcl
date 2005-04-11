@@ -59,7 +59,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set title "$assessment_data(title)"
-set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] "$title [_ assessment.Administration]"]
+set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] "[_ assessment.Triggers]"]
 
 
 
