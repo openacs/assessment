@@ -403,6 +403,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Search">Search</msg>
   <msg key="Search_Item">Search for questions</msg>
   <msg key="Search_Item_1">Search and add questions to section &quot;%section_title%&quot;</msg>
+  <msg key="Search_Results">Search Results</msg>
   <msg key="Search_Section">Search for sections</msg>
   <msg key="Search_Section_1">Search and add sections to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="sect_disp_Description_help">Description of this section display type</msg>
@@ -474,6 +475,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Total_score">Total score</msg>
   <msg key="trigger">Trigger</msg>
   <msg key="trigger_delete">Delete Trigger</msg>
+  <msg key="Triggers">Triggers</msg>
   <msg key="triggers">Trigger</msg>
   <msg key="try_again">Try again</msg>
   <msg key="two_days">Two days ago</msg>
