@@ -468,7 +468,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	foreach objectives $objectivesNodes {
 	    set mattextNodes [$objectives selectNodes {material/mattext}]
 	    foreach mattext $mattextNodes {
-		set as_items__description [as::qti::mattext_gethtml $mattext nodeValue]
+		set as_items__description [as::qti::mattext_gethtml $mattext]
 	    }
 	}
 	
