@@ -31,6 +31,7 @@ ad_proc -public as::export::new_element {
 	    set material [$root createElement material]
             $label appendChild $material
             set mattext [$root createElement mattext]    
+	    $mattext setAttribute texttype text/html
             $material appendChild $mattext    
             set text [$root createCDATASection $value]
             $mattext appendChild $text

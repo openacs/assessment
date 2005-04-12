@@ -294,6 +294,7 @@ db_multirow sections query_all_sections {} {
 	    $presentation appendChild $material
 	    #<mattext> 
 	    set mattext [$doc createElement mattext]	    
+	    $mattext setAttribute texttype text/html
 	    $material appendChild $mattext 
 	    set text [$doc createCDATASection $item_title]
 	    $mattext appendChild $text
@@ -362,7 +363,8 @@ db_multirow sections query_all_sections {} {
 		    
 	        } else {	
 		    #<mattext> 
-	            set mattext [$doc createElement mattext]	        
+		    set mattext [$doc createElement mattext]
+		    $mattext setAttribute texttype text/html
 	            $material appendChild $mattext 
 	            set text [$doc createCDATASection $choice_title]
 	            $mattext appendChild $text
@@ -414,6 +416,7 @@ db_multirow sections query_all_sections {} {
 		    $presentation appendChild $material
 	            #<mattext> 
 	            set mattext [$doc createElement mattext]	            
+		    $mattext setAttribute texttype text/html
 	            $material appendChild $mattext 
 	            set text [$doc createCDATASection $item_title]
 	            $mattext appendChild $text
