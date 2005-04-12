@@ -7,6 +7,15 @@ ad_library {
 
 namespace eval as::qti {}
 
+ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a mattext } {
+	set texttype [$mattextNode getAttribute {texttype} {text/plain}]
+	if { $texttype == "text/html" } {
+		return [$mattextNode text]
+	} else {
+		return [util_convert_line_breaks_to_html -includes_html=1 -- [ad_quotehtml [$mattextNode text]]]
+	}
+}
+
 ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 	set as_assessments__assessment_id {}
 
@@ -42,23 +51,23 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					set nodeName [$node nodeName]
 					#as_assessmentsx.description = <qticomment> or <objectives>
 					if {$nodeName == "qticomment"} {
-						set definitionNodes [$assessment selectNodes {qticomment/text()}]
+						set definitionNodes [$assessment selectNodes {qticomment}]
 						if {[llength $definitionNodes] != 0} {
 							set definition [lindex $definitionNodes 0]
-							set as_assessments__definition [$definition nodeValue]
+							set as_assessments__definition [as::qti::mattext_gethtml $definition]
 						}
 					} elseif {$nodeName == "objectives"} {
-						set definitionNodes [$assessment selectNodes {objectives/material/mattext/text()}]
+						set definitionNodes [$assessment selectNodes {objectives/material/mattext}]
 						if {[llength $definitionNodes] != 0} {
 							set definition [lindex $definitionNodes 0]
-							set as_assessments__definition [$definition nodeValue]
+							set as_assessments__definition [as::qti::mattext_gethtml $definition]
 						}
 					#as_assessments.instructions = <rubric>
 					} elseif {$nodeName == "rubric"} {
-						set instructionNodes [$assessment selectNodes {rubric/material/mattext/text()}]
+						set instructionNodes [$assessment selectNodes {rubric/material/mattext}]
 						if {[llength $instructionNodes] != 0} {
 							set instruction [lindex $instructionNodes 0]
-							set as_assessments__instructions [$instruction nodeValue]
+							set as_assessments__instructions [as::qti::mattext_gethtml $instruction]
 						}
 					#as_assessments.time_for_response = <duration>	
 					} elseif {$nodeName == "duration"} {
@@ -192,16 +201,16 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						set nodeName [$node nodeName]
 						#as_sectionsx.description = <qticomment> or <objectives>
 						if {$nodeName == "qticomment"} {
-							set definitionNodes [$section selectNodes {qticomment/text()}]
+							set definitionNodes [$section selectNodes {qticomment}]
 							if {[llength $definitionNodes] != 0} {
 								set definition [lindex $definitionNodes 0]
-								set as_sections__definition [$definition nodeValue]
+								set as_sections__definition [as::qti::mattext_gethtml $definition]
 							}
 						} elseif {$nodeName == "objectives"} {
-						    set definitionNodes [$section selectNodes {objectives/material/mattext/text()}]
+						    set definitionNodes [$section selectNodes {objectives/material/mattext}]
 						    if {[llength $definitionNodes] != 0} {
 							set definition [lindex $definitionNodes 0]
-							set as_sections__definition [$definition nodeValue]
+							set as_sections__definition [as::qti::mattext_gethtml $definition]
 						    }		
 						#as_sections.max_time_to_complete = <duration>    				    
 					        } elseif {$nodeName == "duration"} {
@@ -212,17 +221,17 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						    }				
 						#as_sections.instructions = <rubric>    		    
 					        } elseif {$nodeName == "rubric"} {
-						    set section_instructionNodes [$section selectNodes {rubric/material/mattext/text()}]
+						    set section_instructionNodes [$section selectNodes {rubric/material/mattext}]
 						    if {[llength $section_instructionNodes] != 0} {
 							set section_instruction [lindex $section_instructionNodes 0]
-							set as_sections__instructions [$section_instruction nodeValue]
+							set as_sections__instructions [as::qti::mattext_gethtml $section_instruction]
 						    }				
 						#as_sections.feedback_text = <sectionfeedback>    		        
 					        } elseif {$nodeName == "sectionfeedback"} {
-						    set sectionfeedbackNodes [$section selectNodes {sectionfeedback/material/mattext/text()}]
+						    set sectionfeedbackNodes [$section selectNodes {sectionfeedback/material/mattext}]
 						    if {[llength $sectionfeedbackNodes] != 0} {
 							set sectionfeedback [lindex $sectionfeedbackNodes 0]
-							set as_sections__sectionfeedback [$sectionfeedback nodeValue]
+							set as_sections__sectionfeedback [as::qti::mattext_gethtml $sectionfeedback]
 						    }				
 					        } 							
 					}
@@ -374,10 +383,10 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		}
 	    #as_items.subtext = <rubric>
 	    } elseif {$nodeName == "rubric"} {
-		set instructionNodes [$item selectNodes {rubric/material/mattext/text()}]
+		set instructionNodes [$item selectNodes {rubric/material/mattext}]
 		if {[llength $instructionNodes] != 0} {
 		    set instruction [lindex $instructionNodes 0]
-		    set as_items__subtext [$instruction nodeValue]
+		    set as_items__subtext [as::qti::mattext_gethtml $instruction]
 		}
 	    }		 	    
 	}   
@@ -457,9 +466,9 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	# <objectives> 
 	set objectivesNodes [$item selectNodes {objectives}]
 	foreach objectives $objectivesNodes {
-	    set mattextNodes [$objectives selectNodes {material/mattext/text()}]
+	    set mattextNodes [$objectives selectNodes {material/mattext}]
 	    foreach mattext $mattextNodes {
-		set as_items__description [$mattext nodeValue]
+		set as_items__description [as::qti::mattext_gethtml $mattext nodeValue]
 	    }
 	}
 	
@@ -554,9 +563,9 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	    # Initialize in case it doesn't exist
 	    set as_items__title {}
 	    if {[$material nodeName] == {material}} {
-		set mattextNodes [$material selectNodes {mattext/text()}]
+		set mattextNodes [$material selectNodes {mattext}]
 		set mattext [lindex $mattextNodes 0]
-		set as_items__title [$mattext nodeValue]		
+		set as_items__title [as::qti::mattext_gethtml $mattext]
 	    }
 	    # <render_fib>
 	    set render_fibNodes [$presentation selectNodes {.//render_fib}]
@@ -582,9 +591,9 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		    foreach node $presentationChildNodes {
 			# get the title of item
 			if {[$node nodeName] == {material}} {
-			    set mattextNodes [$node selectNodes {mattext/text()}]
+			    set mattextNodes [$node selectNodes {mattext}]
 			    foreach mattext $mattextNodes {
-				append as_items__title [ad_quotehtml [$mattext nodeValue]]
+				append as_items__title [as::qti::mattext_gethtml $mattext]
 				append as_items__title " "
 			    }
 			}
@@ -605,9 +614,9 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 
 		    foreach node $presentationChildNodes {
 			if {[$node nodeName] == {material}} {
-			    set mattextNodes [$node selectNodes {mattext/text()}]
+			    set mattextNodes [$node selectNodes {mattext}]
 			    foreach mattext $mattextNodes {
-				append as_items__title [ad_quotehtml [$mattext nodeValue]]
+				append as_items__title [as::qti::mattext_gethtml $mattext]
 				append as_items__title " "
 			    }
 			} elseif {[$node nodeName] == {response_str} || [$node nodeName] == {response_num} } {
@@ -708,11 +717,11 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 		foreach response_label $response_labelNodes {
 		    set selected_p f
 		    set as_item_choices__ident [$response_label getAttribute {ident}]
-		    set mattextNodes [$response_label selectNodes {material/mattext/text()}]
+		    set mattextNodes [$response_label selectNodes {material/mattext}]
 		    set as_item_choices__choice_text [db_null]
 		    # get the title of each choice
 		    foreach mattext $mattextNodes {
-			set as_item_choices__choice_text [$mattext nodeValue]
+			set as_item_choices__choice_text [as::qti::mattext_gethtml $mattext]
 		    }
 		    # for multimedia items
 		    set matmediaNodes [$response_label selectNodes {material/matimage[@uri]}]
