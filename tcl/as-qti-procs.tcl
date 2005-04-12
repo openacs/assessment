@@ -12,7 +12,7 @@ ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a ma
 	if { $texttype == "text/html" } {
 		return [$mattextNode text]
 	} else {
-		return [util_convert_line_breaks_to_html -includes_html=1 -- [ad_quotehtml [$mattextNode text]]]
+		return [ad_html_text_convert -from text/plain -to text/html -- [$mattextNode text]]
 	}
 }
 
