@@ -340,8 +340,8 @@ foreach one_item $item_list {
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 
     if {$presentation_type == "rb" || $presentation_type == "cb"} {
-	array set item [util_memoize [list as::item_form::item_data -item_id $as_item_id]]
-	array set type [util_memoize [list as::item_display_$presentation_type\::data -type_id $item(display_type_id)]]
+	array set item [as::item_form::item_data -as_item_id $as_item_id]
+	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
 	set choice_orientation $type(choice_orientation)
 	array unset item
 	array unset type

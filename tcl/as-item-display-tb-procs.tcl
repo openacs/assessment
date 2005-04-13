@@ -128,6 +128,17 @@ ad_proc -public as::item_display_tb::data {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
 
+    Get the cached Display Data of TextBox Type
+} {
+    return [util_memoize [list as::item_display_tb::data_not_cached -type_id $type_id]]
+}
+
+ad_proc -private as::item_display_tb::data_not_cached {
+    -type_id:required
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-04-08
+
     Get the Display Data of TextBox Type
 } {
     db_1row display_item_data {} -column_array type

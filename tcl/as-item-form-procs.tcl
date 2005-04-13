@@ -23,19 +23,17 @@ ad_proc -public as::item_form::add_item_to_form  {
 } {
     randomInit [randomRange 20000]
     set element_name "response_to_item.$item_id"
-    array set item [util_memoize [list as::item_form::item_data -item_id $item_id]]
-    set item_type [string range $item(item_type) end-1 end]
-    set display_type [string range $item(display_type) end-1 end]
+    array set item [as::item::item_data -as_item_id $item_id]
 
     if {$random_p == "f"} {
-	set item_data [util_memoize [list as::item_type_$item_type\::render -type_id $item(item_type_id) -session_id "" -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]]
+	set item_data [util_memoize [list as::item_type_$item(item_type)\::render -type_id $item(item_type_id) -session_id "" -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]]
     } else {
-	set item_data [as::item_type_$item_type\::render -type_id $item(item_type_id) -session_id $session_id -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]
+	set item_data [as::item_type_$item(item_type)\::render -type_id $item(item_type_id) -session_id $session_id -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]
     }
 
     util_unlist $item_data default_value data
 
-    as::item_display_$display_type\::render \
+    as::item_display_$item(display_type)\::render \
 	-form $name \
 	-element $element_name \
 	-type_id $item(display_type_id) \
@@ -47,17 +45,5 @@ ad_proc -public as::item_form::add_item_to_form  {
 	-default_value $default_value \
 	-data $data
 
-    return $display_type
-}
-
-ad_proc -private as::item_form::item_data  {
-    -item_id:required
-} {
-    @author Timo Hentschel (timo@timohentschel.de)
-    @creation-date 2005-04-08
-
-    Gets the item type and display
-} {
-    db_1row item_properties {} -column_array item
-    return [array get item]
+    return $item(display_type)
 }

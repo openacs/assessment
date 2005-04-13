@@ -36,7 +36,7 @@
 
 <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Search_Item#</a><img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 
-<if @items.mc_type@ ne "nmc">
+<if @items.item_type@ eq "mc">
 <a
 href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a> (<a href="../asm-admin/checks-admin?section_id=@items.section_id@&assessment_id=@assessment_id@&item_id=@items.as_item_id@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 </if>

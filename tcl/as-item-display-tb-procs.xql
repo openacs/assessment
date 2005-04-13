@@ -22,7 +22,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_display_tb::data.display_item_data">
+<fullquery name="as::item_display_tb::data_not_cached.display_item_data">
       <querytext>
 
 	select html_display_options, abs_size, item_answer_alignment

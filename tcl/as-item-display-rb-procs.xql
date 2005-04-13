@@ -23,7 +23,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_display_rb::data.display_item_data">
+<fullquery name="as::item_display_rb::data_not_cached.display_item_data">
       <querytext>
 
 	select html_display_options, choice_orientation, choice_label_orientation,
