@@ -267,9 +267,9 @@ ad_proc as::section::items {
 	    }
 	}
     }
-
-    if {![empty_string_p $num_items]} {
-	set sorted_items [lreplace $sorted_items $num_items end]
+    
+    if {![empty_string_p $num_items] && [llength $sorted_items] > $num_items} {
+    	set sorted_items [lreplace $sorted_items $num_items end]
     }
 
     # save item order
