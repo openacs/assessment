@@ -404,7 +404,9 @@ if {$display(submit_answer_p) != "t"} {
 	    }
 	}
     }"
+
     set after_submit "{
+
 	if {!\[empty_string_p \$new_section_order\]} {
 	    # go to next section
             if { \$section_to != \"\"} {

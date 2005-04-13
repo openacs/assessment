@@ -451,9 +451,9 @@ ad_proc as::assessment::folder_id {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-06
 
-    Returns the folder_id of the package instance
+    Returns the folder_id of the package instance. Cached
 } {
-    return [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
+    return [content::folder::get_folder_from_package -package_id $package_id]
 }
 
 ad_proc as::assessment::unique_name {
