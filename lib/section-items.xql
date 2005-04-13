@@ -16,41 +16,5 @@
     
       </querytext>
 </fullquery>
-
-<fullquery name="item_type_id">
-<querytext>
-
-    select max(t.as_item_type_id) as as_item_type_id
-    from as_item_type_mc t, cr_revisions c, as_item_rels r
-    where t.as_item_type_id = r.target_rev_id
-    and r.item_rev_id = :as_item_id
-    and r.rel_type = 'as_item_type_rel'
-    and c.revision_id = t.as_item_type_id
-    group by c.title, t.increasing_p, t.allow_negative_p,
-    t.num_correct_answers, t.num_answers
-
-</querytext>
-</fullquery>
-
-<fullquery name="choice_orientation">
-	<querytext>
-
-	    select d.choice_orientation
-	    from as_item_rels r, as_item_display_$presentation_type d
-	    where r.item_rev_id = :as_item_id
-	    and r.rel_type = 'as_item_display_rel'
-	    and r.target_rev_id = d.as_item_display_id
-
-	</querytext>
-</fullquery>
 	
-<fullquery name="checks_related">
-<querytext>
-	
-	select check_sql from as_inter_item_checks where assessment_id=:assessment_id and section_id_from=:section_id
-
-</querytext>
-</fullquery>
-
-
 </queryset>

@@ -203,3 +203,43 @@ ad_proc as::item::copy_types {
 } {
     db_dml copy_types {}
 }
+
+ad_proc -private as::item::mc_type {
+    -as_item_id:required
+} {
+    Return the type to determine if this is a multiple choice question
+    
+    Allow caching of the choice_orientation as it is unlikely to change.
+} {
+    return [util_memoize [list as::item::mc_type_not_cached -as_item_id $as_item_id]]
+}
+
+ad_proc -private as::item::mc_type_not_cached {
+    -as_item_id:required
+} {
+    Return the type to determine if this is a multiple choice question
+    
+} {
+    return [db_string item_type_id {} -default "nmc"]
+}
+
+ad_proc -private as::item::get_choice_orientation {
+    -as_item_id:required
+    -presentation_type:required
+} {
+    Return the orientation for choices.
+    
+    Allow caching of the choice_orientation as it is unlikely to change.
+} {
+    return [util_memoize [list as::item::get_choice_orientation_not_cached -as_item_id $as_item_id -presentation_type $presentation_type]]
+}
+
+ad_proc -private as::item::get_choice_orientation_not_cached {
+    -as_item_id:required
+    -presentation_type:required
+} {
+    Return the orientation for choices
+    
+} {
+    return [db_string get_choice_orientation ""]
+}

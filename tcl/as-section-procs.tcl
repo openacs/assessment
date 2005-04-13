@@ -361,3 +361,25 @@ ad_proc -public as::section::close {
 	calculate -section_id $section_id -assessment_id $assessment_id -session_id $session_id
     }
 }
+
+
+ad_proc -private as::section::checks_list {
+    -assessment_id:required
+    -section_id:required
+} {
+    Return a list of checks for the section within the assessment
+    
+    Allow caching of the choice_orientation as it is unlikely to change.
+} {
+    return [util_memoize [list as::section::checks_list_not_cached -assessment_id $assessment_id -section_id $section_id]]
+}
+
+ad_proc -private as::section::checks_list_not_cached {
+    -assessment_id:required
+    -section_id:required
+} {
+    Return a list of checks for the section within the assessment
+    
+} {
+    return [db_list_of_lists checks_related { } ] 
+}
