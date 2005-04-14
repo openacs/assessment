@@ -525,6 +525,7 @@ ad_proc -private as::assessment::quote_export {
 } {
     regsub -all {;} $text {,,} text
     regsub -all "\n" $text {} text
+    regsub -all "\r" $text {} text
     return $text
 }
 
