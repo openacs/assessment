@@ -2,7 +2,7 @@
 <property name="title">@p_title@</property>
 <property name="context">@context;noquote@</property>
 
-#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date#</h2>
+#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date# - <a href="assessment-history?assessment_id=@assessment_id@">#assessment.history#</a>
 
 
 <p>

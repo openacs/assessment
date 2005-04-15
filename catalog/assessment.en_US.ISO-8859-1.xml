@@ -240,6 +240,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="from">From:</msg>
   <msg key="goes_to_section">Goes to section</msg>
   <msg key="hide_item_name">Question name hidden</msg>
+  <msg key="history">Change History</msg>
   <msg key="horizontal">Horizontal</msg>
   <msg key="Html_Options">HTML Options</msg>
   <msg key="Html_Options_help">Additional HTML Options for display</msg>
@@ -312,6 +313,8 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="message_to_display_to">Message to display to the user when the action is executed (ie. You have joined &quot;My Community&quot;)</msg>
   <msg key="Minutes_for_Retry">Minutes required for Retry</msg>
   <msg key="Mode">Mode</msg>
+  <msg key="Modified_Time">Time Modified</msg>
+  <msg key="Modified_User">Modified by</msg>
   <msg key="Move_Down">Move Down</msg>
   <msg key="Move_Up">Move Up</msg>
   <msg key="Multiple">Allow Multiple Answers</msg>
