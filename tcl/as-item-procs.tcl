@@ -8,10 +8,10 @@ namespace eval as::item {}
 
 ad_proc -public as::item::new {
     {-item_item_id ""}
-    {-name ""}
     {-title:required}
     {-description ""}
     {-subtext ""}
+    {-field_name ""}
     {-field_code ""}
     {-required_p ""}
     {-data_type ""}
@@ -33,8 +33,9 @@ ad_proc -public as::item::new {
 	if {[empty_string_p $item_item_id]} {
 	    set item_item_id [db_nextval acs_object_id_seq]
 	}
-	if {[empty_string_p $name]} {
-	    set name "QUE_$item_item_id"
+	set name "QUE_$item_item_id"
+	if {[empty_string_p $field_name]} {
+	    set field_name $name
 	}
         set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name]
         set as_item_id [content::revision::new -item_id $item_item_id \
@@ -42,6 +43,7 @@ ad_proc -public as::item::new {
 			    -title $title \
 			    -description $description \
 			    -attributes [list [list subtext $subtext] \
+					     [list field_name $field_name] \
 					     [list field_code $field_code] \
 					     [list required_p $required_p] \
 					     [list data_type $data_type] \
@@ -59,6 +61,7 @@ ad_proc -public as::item::edit {
     {-title:required}
     {-description ""}
     {-subtext ""}
+    {-field_name ""}
     {-field_code ""}
     {-required_p ""}
     {-data_type ""}
@@ -81,6 +84,7 @@ ad_proc -public as::item::edit {
 			     -title $title \
 			     -description $description \
 			     -attributes [list [list subtext $subtext] \
+					      [list field_name $field_name] \
 					      [list field_code $field_code] \
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \
@@ -112,6 +116,7 @@ ad_proc -public as::item::new_revision {
 			     -title $title \
 			     -description $description \
 			     -attributes [list [list subtext $subtext] \
+					      [list field_name $field_name] \
 					      [list field_code $field_code] \
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \
@@ -145,7 +150,9 @@ ad_proc -public as::item::latest {
 
 ad_proc -public as::item::copy {
     {-as_item_id:required}
-    {-name ""}
+    -title:required
+    {-description ""}
+    {-field_name ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -161,9 +168,11 @@ ad_proc -public as::item::copy {
 	append title "[_ assessment.copy_appendix]"
 
 	set item_item_id [db_nextval acs_object_id_seq]
-	if {[empty_string_p $name]} {
-	    set name "QUE_$item_item_id"
+	set name "QUE_$item_item_id"
+	if {[empty_string_p $field_name]} {
+	    set field_name $name
 	}
+
         set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name]
         set new_item_id [content::revision::new \
 			     -item_id $item_item_id \
@@ -171,6 +180,7 @@ ad_proc -public as::item::copy {
 			     -title $title \
 			     -description $description \
 			     -attributes [list [list subtext $subtext] \
+					      [list field_name $field_name] \
 					      [list field_code $field_code] \
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \

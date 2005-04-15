@@ -8,7 +8,7 @@ ad_page_contract {
     section_id:integer
     as_item_id:integer
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -32,7 +32,7 @@ set item_type [string range $item_type end-1 end]
 set result_points [db_string result_points {} -default ""]
 
 set page_title "[_ assessment.Results_edit]"
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base results-users {assessment_id}] [_ assessment.Results_by_user]] [list [export_vars -base results-session {session_id}] [_ assessment.View_Results]] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base results-users {assessment_id}] [_ assessment.Results_by_user]] [list [export_vars -base results-session {session_id}] [_ assessment.View_Results]] $page_title]
 
 
 ad_form -name results_edit -action results-edit -export { session_id section_id as_item_id } -form {

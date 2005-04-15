@@ -32,6 +32,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set correct_options [list [list "[_ assessment.yes]" t]]
+set add_existing_link [export_vars -base "item-edit-mc-existing" {assessment_id section_id as_item_id}]
 
 
 ad_form -name item_edit_mc -action item-edit-mc -export { assessment_id section_id num_choices } -form {
@@ -116,7 +117,7 @@ set edit_data "{
 	set section_id \[as::section::latest -section_id \$section_id -assessment_rev_id \$new_assessment_rev_id\]
 	set new_section_id \[as::section::new_revision -section_id \$section_id -assessment_id \$assessment_id\]
 	set as_item_id \[as::item::latest -as_item_id \$as_item_id -section_id \$new_section_id\]
-	as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id \$new_section_id -as_item_id \$as_item_id -new_item_id \$new_item_id
+	as::assessment::check::copy_item_checks -assessment_id \$assessment_id -section_id \$new_section_id -as_item_id \$as_item_id -new_item_id \$new_item_id
 
 	db_dml update_section_in_assessment {}
 	db_dml update_item_in_section {}

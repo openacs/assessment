@@ -15,7 +15,7 @@
 	where ci.item_id = :assessment_id
 	and cr.revision_id = ci.latest_revision
 	and a.assessment_id = cr.revision_id
-	and o.object_id = a.assessment_id
+	and o.object_id = ci.item_id
 
 </querytext>
 </fullquery>

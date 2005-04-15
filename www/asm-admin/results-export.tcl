@@ -6,7 +6,7 @@ ad_page_contract {
 } {
     assessment_id:integer
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -24,16 +24,29 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set page_title "[_ assessment.csv_export]"
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set export_options [list [list "[_ assessment.csv_export_name]" name] [list "[_ assessment.csv_export_title]" title]]
-
+set form_format [lc_get formbuilder_date_format]
 
 ad_form -name assessment_export -action results-export -form {
     {assessment_id:key}
     {column_format:text(radio) {label "[_ assessment.csv_export_format]"} {options $export_options} {help_text "[_ assessment.csv_export_format_help]"}}
+    {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_Start_Time_help]"}}
+    {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_End_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_End_Time_help]"}}
 } -edit_request {
 } -on_submit {
+    if {$start_time == "NULL"} {
+	set start_time ""
+    }
+    if {$end_time == "NULL"} {
+	set end_time ""
+    }
+    if {[db_type] == "postgresql"} {
+	regsub -all -- {to_date} $start_time {to_timestamp} start_time
+	regsub -all -- {to_date} $end_time {to_timestamp} end_time
+    }
+
     if {$assessment_data(anonymous_p) == "t"} {
 	set csv_first_row [list score submission_date]
     } else {
@@ -44,7 +57,7 @@ ad_form -name assessment_export -action results-export -form {
     db_foreach all_items {} {
 	lappend item_list [list $as_item_item_id $section_item_id [string range $object_type end-1 end] $data_type]
 	if {$column_format == "name"} {
-	    lappend csv_first_row [as::assessment::quote_export -text $name]
+	    lappend csv_first_row [as::assessment::quote_export -text $field_name]
 	} else {
 	    if {[empty_string_p $description]} {
 		lappend csv_first_row [as::assessment::quote_export -text $title]
@@ -54,6 +67,12 @@ ad_form -name assessment_export -action results-export -form {
 	}
     }
     
+    if {![empty_string_p $start_time] && ![empty_string_p $end_time]} {
+	set date_sql [db_map restrict_completed_date]
+    } else {
+	set date_sql ""
+    }
+
     set session_list ""
     db_foreach all_sessions {} {
 	lappend session_list $session_id
@@ -64,20 +83,22 @@ ad_form -name assessment_export -action results-export -form {
 	    set csv($session_id) [list $percent_score $submission_date $subject_id [as::assessment::quote_export -text $email] [as::assessment::quote_export -text $first_names] [as::assessment::quote_export -text $last_name]]
 	}
     }
-    
-    foreach one_item $item_list {
-	util_unlist $one_item as_item_item_id section_item_id item_type data_type
-	array set results [as::item_type_$item_type\::results -as_item_item_id $as_item_item_id -section_item_id $section_item_id -data_type $data_type -sessions $session_list]
-	
-	foreach session_id $session_list {
-	    if {[info exists results($session_id)]} {
-		lappend csv($session_id) [as::assessment::quote_export -text $results($session_id)]
-	    } else {
-		lappend csv($session_id) ""
+
+    if {![empty_string_p $session_list]} {
+	foreach one_item $item_list {
+	    util_unlist $one_item as_item_item_id section_item_id item_type data_type
+	    array set results [as::item_type_$item_type\::results -as_item_item_id $as_item_item_id -section_item_id $section_item_id -data_type $data_type -sessions $session_list]
+	    
+	    foreach session_id $session_list {
+		if {[info exists results($session_id)]} {
+		    lappend csv($session_id) [as::assessment::quote_export -text $results($session_id)]
+		} else {
+		    lappend csv($session_id) ""
+		}
 	    }
+	    
+	    array unset results
 	}
-	
-	array unset results
     }
     
     set csv_text "[join $csv_first_row ";"]\r\n"

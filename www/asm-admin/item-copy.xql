@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="item_title">
+<fullquery name="item_data">
       <querytext>
 
-	select title as item_title
-	from cr_revisions
-	where revision_id = :as_item_id
+	select r.title as item_title, r.title, r.description, i.field_name
+	from cr_revisions r, as_items i
+	where r.revision_id = i.as_item_id
+	and i.as_item_id = :as_item_id
 
       </querytext>
 </fullquery>

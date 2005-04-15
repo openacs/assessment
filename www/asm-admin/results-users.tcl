@@ -7,7 +7,7 @@ ad_page_contract {
 } {
     assessment_id
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -22,7 +22,7 @@ if {![info exists assessment_data(assessment_id)]} {
 set user_id [ad_conn user_id]
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set page_title "[_ assessment.Results_by_user]"
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 
 template::list::create \
@@ -52,19 +52,34 @@ template::list::create \
     } 
 
 
+template::multirow create subjects subject_id subject_url subject_name
+
 db_multirow -extend { result_url subject_url } results assessment_results {
 } {
-    if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
+    # to display list of users who answered the assessment if anonymous
+    template::multirow append subjects $subject_id [acs_community_member_url -user_id $subject_id] $subject_name
 
-	# You should be able to see who answered this assessment but not his answer.
-	# set subject_name "[_ assessment.anonymous_name]"
-	set subject_url ""
-	set result_url ""
-    } else {
-	set subject_url [acs_community_member_url -user_id $subject_id]
-	set result_url [export_vars -base "results-session" {session_id}]
+    if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
+	set subject_name "[_ assessment.anonymous_name]"
     }
+
+    set subject_url [acs_community_member_url -user_id $subject_id]
+    set result_url [export_vars -base "results-session" {session_id}]
 }
 
+if {$assessment_data(anonymous_p) == "t"} {
+    template::list::create \
+	-name subjects \
+	-multirow subjects \
+	-key subject_id \
+	-elements {
+	    subject_name {
+		label {[_ assessment.Subject_Name]}
+		display_template {<a href="@subjects.subject_url@">@subjects.subject_name@</a>}
+	    }
+	} -main_class {
+	    narrow
+	} 
+}
 
 ad_return_template

@@ -14,7 +14,9 @@ create table as_items (
 			references cr_revisions(revision_id),
 	-- a secondary label, needed for many kinds of questions
 	subtext		varchar(500),
-	-- a short label for use in data output header rows, etc
+	-- a short label for use in cvs export
+	field_name	varchar(500),
+	-- a short label for use in qti export
 	field_code	varchar(500),
 	-- whether Item must be answered (default value, can be overriden)
 	required_p	char(1) default 'f'

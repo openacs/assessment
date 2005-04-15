@@ -20,16 +20,6 @@
       </querytext>
 </fullquery>
 
-<fullquery name="update_name">
-      <querytext>
-
-    update cr_items
-    set name = :name
-    where latest_revision = :as_item_id
-
-      </querytext>
-</fullquery>
-
 <fullquery name="delete_files">
       <querytext>
 

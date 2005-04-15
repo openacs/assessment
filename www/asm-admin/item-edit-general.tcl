@@ -39,7 +39,6 @@ foreach display_type [db_list display_types {}] {
 
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {name:text(inform),nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
     {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 }
@@ -57,6 +56,7 @@ if {[db_0or1row get_item_content {}]} {
 ad_form -extend -name item_edit_general -form {
     {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
+    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
@@ -86,6 +86,7 @@ ad_form -extend -name item_edit_general -form {
 			     -title $title \
 			     -description $description \
 			     -subtext $subtext \
+			     -field_name $field_name \
 			     -field_code $field_code \
 			     -required_p $required_p \
 			     -data_type $data_type \

@@ -43,7 +43,6 @@ foreach item_type [db_list item_types {}] {
 
 ad_form -name item_add -action item-add -export { assessment_id section_id after } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.item_Name_help]"}}
     {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 }
@@ -55,6 +54,7 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 ad_form -extend -name item_add -form {
     {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
+    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
@@ -69,6 +69,7 @@ ad_form -extend -name item_add -form {
     set title ""
     set description ""
     set subtext ""
+    set field_name ""
     set field_code ""
     set required_p t
     set feedback_right ""
@@ -78,8 +79,6 @@ ad_form -extend -name item_add -form {
     set data_type "varchar"
     set item_type "sa"
     set num_choices 10
-} -validate {
-    {name {[as::assessment::unique_name -name $name -new_p 1 -item_id $as_item_id]} "[_ assessment.name_used]"}
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {[empty_string_p $points]} {
@@ -90,10 +89,10 @@ ad_form -extend -name item_add -form {
 	if {![db_0or1row item_exists {}]} {
 	    set as_item_id [as::item::new \
 				-item_item_id $as_item_id \
-				-name $name \
 				-title $title \
 				-description $description \
 				-subtext $subtext \
+				-field_name $field_name \
 				-field_code $field_code \
 				-required_p $required_p \
 				-data_type $data_type \
@@ -107,6 +106,7 @@ ad_form -extend -name item_add -form {
 				-title $title \
 				-description $description \
 				-subtext $subtext \
+				-field_name $field_name \
 				-field_code $field_code \
 				-required_p $required_p \
 				-data_type $data_type \
@@ -116,10 +116,6 @@ ad_form -extend -name item_add -form {
 				-points $points]
 
 	    db_dml delete_files {}
-
-	    if {![empty_string_p $name]} {
-		db_dml update_name {}
-	    }
 	}
 
 	if {[exists_and_not_null category_ids]} {

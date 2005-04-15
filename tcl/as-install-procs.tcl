@@ -117,6 +117,7 @@ content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {k
 
 # Items
 content::type::attribute::new -content_type {as_items} -attribute_name {subtext}              -datatype {string}  -pretty_name {Item Subtext}    -column_spec {varchar(500)}
+content::type::attribute::new -content_type {as_items} -attribute_name {field_name}           -datatype {string}  -pretty_name {Item Field Name} -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_items} -attribute_name {field_code}           -datatype {string}  -pretty_name {Item Field Code} -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_items} -attribute_name {required_p}           -datatype {boolean} -pretty_name {Item Required}   -column_spec {char(1)}
 content::type::attribute::new -content_type {as_items} -attribute_name {data_type}            -datatype {string}  -pretty_name {Item Data Type}  -column_spec {varchar(50)}
@@ -352,6 +353,9 @@ ad_proc -public as::install::after_upgrade {
 	    }
 	    0.10d10 0.10d11 {
 		content::type::attribute::new -content_type {as_assessments} -attribute_name {random_p} -datatype {boolean} -pretty_name {Assessment Allow Random} -column_spec {char(1)}
+	    }
+	    0.10d11 0.10d12 {
+		content::type::attribute::new -content_type {as_items} -attribute_name {field_name} -datatype {string} -pretty_name {Item Field Name} -column_spec {varchar(500)}
 	    }
 	}
 }

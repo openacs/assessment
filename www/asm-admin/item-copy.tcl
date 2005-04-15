@@ -34,11 +34,12 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
     {as_item_id:key}
     {item_title:text(inform) {label "[_ assessment.copy_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
-    {name:text,optional {label "[_ assessment.Name]"} {help_text "[_ assessment.Name_help]"}}
+    {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
+    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
 } -edit_request {
-    db_1row item_title {}
-    set name ""
+    db_1row item_data {}
 } -on_submit {
     if {$confirmation} {
 	db_transaction {
@@ -46,7 +47,7 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
 	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
 	    set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
-	    set new_item_id [as::item::copy -as_item_id $as_item_id -name $name]
+	    set new_item_id [as::item::copy -as_item_id $as_item_id -title $title -description $description -field_name $field_name]
 
 	    db_dml update_section_in_assessment {}
 	    db_dml move_down_items {}

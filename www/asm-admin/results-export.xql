@@ -4,14 +4,13 @@
 <fullquery name="all_items">
       <querytext>
 
-	select ci.name, cr.title, cr.description, o.object_type, i.data_type,
-	       ci.item_id as as_item_item_id, rs.item_id as section_item_id
+	select cr.title, cr.description, o.object_type, i.data_type, i.field_name,
+	       cr.item_id as as_item_item_id, rs.item_id as section_item_id
 	from as_assessment_section_map asm, as_item_section_map ism, cr_revisions cr,
-	     cr_items ci, as_items i, as_item_rels ir, acs_objects o, cr_revisions rs
+	     as_items i, as_item_rels ir, acs_objects o, cr_revisions rs
 	where asm.assessment_id = :assessment_rev_id
 	and ism.section_id = asm.section_id
 	and cr.revision_id = ism.as_item_id
-	and ci.item_id = cr.item_id
 	and i.as_item_id = ism.as_item_id
 	and ir.item_rev_id = i.as_item_id
 	and ir.rel_type = 'as_item_type_rel'
@@ -38,6 +37,7 @@
 	where s.session_id = sub.session_id
 	and sub.subject_id = p.person_id
 	and sub.subject_id = y.party_id
+	$date_sql
 	order by s.session_id
 
       </querytext>

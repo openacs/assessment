@@ -15,7 +15,7 @@
       <querytext>
 
 	select cr.item_id as item_item_id, cr.title, cr.description, i.subtext, i.field_code,
-	       i.required_p, i.data_type, i.max_time_to_complete,
+	       i.field_name, i.required_p, i.data_type, i.max_time_to_complete,
 	       i.feedback_right, i.feedback_wrong, i.points
 	from cr_revisions cr, as_items i
 	where cr.revision_id = :as_item_id
@@ -40,9 +40,9 @@
 <fullquery name="as::item::copy.item_data">
       <querytext>
 
-	select cr.title, cr.description, i.subtext, i.field_code,
-	       i.required_p, i.data_type, i.max_time_to_complete,
-	       i.feedback_right, i.feedback_wrong, i.points
+	select i.subtext, i.field_code, i.required_p, i.data_type,
+	       i.max_time_to_complete, i.feedback_right,
+	       i.feedback_wrong, i.points
 	from cr_revisions cr, as_items i
 	where cr.revision_id = :as_item_id
 	and i.as_item_id = cr.revision_id
@@ -74,7 +74,7 @@
 
 <fullquery name="as::item::item_data_not_cached.item_properties">
 	<querytext>
-		select cr.title, i.subtext, i.data_type,
+		select cr.title, i.subtext, i.data_type, i.field_name,
 		       max(oi.object_id) as item_type_id, oi.object_type as item_type,
 		       od.object_id as display_type_id, od.object_type as display_type
 		from as_items i, cr_revisions cr, as_item_rels it,
@@ -87,7 +87,7 @@
 		and dt.rel_type = 'as_item_display_rel'
 		and oi.object_id = it.target_rev_id
 		and od.object_id = dt.target_rev_id
-		group by cr.title, i.subtext, i.data_type, oi.object_type,od.object_id, od.object_type
+		group by cr.title, i.subtext, i.field_name, i.data_type, oi.object_type,od.object_id, od.object_type
 	</querytext>
 </fullquery>
 
