@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d9" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d11" locale="es_ES" charset="ISO-8859-1">
 
   <msg key="above">Arriba</msg>
   <msg key="Absolute_Size">Tamaño Absoluto</msg>
@@ -24,6 +24,7 @@
   <msg key="add_item_display_tb">Añadir nueva pregunta: Textbox</msg>
   <msg key="add_item_type_mc">Añadir nueva pregunta: respuesta múltiple</msg>
   <msg key="add_item_type_mc_choices">Añadir nueva pregunta: respuesta múltiple</msg>
+  <msg key="add_item_type_mc_existing">Agrega un conjunto de opciones</msg>
   <msg key="add_item_type_oq">Añadir nueva pregunta: pregunta abierta</msg>
   <msg key="add_item_type_sa">Añadir nueva pregunta: Short Answer</msg>
   <msg key="Add_Items">Añadir preguntas a la sección</msg>
@@ -32,10 +33,12 @@
   <msg key="add_new_section">Añadir nueva sección</msg>
   <msg key="add_new_section_display">Añadir nueva visualización de la sección</msg>
   <msg key="add_parameter">Añadir parámetro</msg>
+  <msg key="add_section_first">Para agregar una pregunta, agregue una sección primero.</msg>
   <msg key="Add_Sections">Añadir secciones al assessment</msg>
   <msg key="Add_to_assessment">Añadir al assessment</msg>
   <msg key="Add_to_section">Añadir a la sección</msg>
   <msg key="add_trigger">Añadir condición</msg>
+  <msg key="admin">Administración</msg>
   <msg key="admin_actions">Administración de acciones</msg>
   <msg key="Admin_catalog">Administración del catálogo de preguntas</msg>
   <msg key="admin_categories">Administración de Categorías</msg>
@@ -48,6 +51,7 @@
   <msg key="allow_multiple">permitir múltiple</msg>
   <msg key="Allow_Negative">Permitir Negativo</msg>
   <msg key="Allow_Negative_help">Si se permite un porcentaje negativo (como resultado total).</msg>
+  <msg key="Allow_Random">Permitir Selección Aleatorea</msg>
   <msg key="allow_tries">permitir varios intentos</msg>
   <msg key="alphabetical">Alfabéticamente</msg>
   <msg key="and">Y</msg>
@@ -57,6 +61,8 @@
   <msg key="Answer_Alignment">Alineación de las respuestas</msg>
   <msg key="Answer_Alignment_help">Alinear la respuesta en relación a la pregunta.</msg>
   <msg key="Answer_Choices">Respuestas</msg>
+  <msg key="Answer_Value">Valor de la respuesta</msg>
+  <msg key="Answer_Value_help">Valor de esta respuesta</msg>
   <msg key="Applet">Assessment Applet </msg>
   <msg key="approve">Aprobar</msg>
   <msg key="approve_actions">Aprobar acciones</msg>
@@ -65,6 +71,7 @@
   <msg key="as_action_description_help">Descripción de la acción. (por ejemplo, ¿qué hace?)</msg>
   <msg key="as_action_help">El nombre al que se refiere cuando se llama a la acción</msg>
   <msg key="as_action_tcl_code_help">Código tcl que se ejecuta al invocar la acción. (por ejemplo puede ser una llamada a una función o cualquier tipo de validación de código tcl)</msg>
+  <msg key="as_Allow_Random_help">Permitir selección aleatorea?</msg>
   <msg key="as_Anonymous_help">Si es posible dar una respuesta anónima. El autor del assessment no verá quien respondió.</msg>
   <msg key="as_Consent_Page_help">Estado de consentimiento que un usuario debe acordar para continuar con el assessment.</msg>
   <msg key="as_Description_help">Descripción de un assessment</msg>
@@ -93,6 +100,7 @@
   <msg key="Assessment_Imported_Correctly">Assessment importado correctamente</msg>
   <msg key="assessment_Name_help">Te permite dar un identificador único al assessment, que puede ser un código.</msg>
   <msg key="assessment_not_public">El assessment no es público.</msg>
+  <msg key="Assessment_porlet">Assessments</msg>
   <msg key="assessment_restricted_ips">Acceso restringido, IP errónea.</msg>
   <msg key="Assessment_Title">Título</msg>
   <msg key="assessment_too_many_tries">Solo se permiten %number_tries% intentos.</msg>
@@ -108,6 +116,8 @@
   <msg key="besideright">Al lado-a la derecha</msg>
   <msg key="bottom">Abajo</msg>
   <msg key="Box_Orientation">Orientación del cuadro</msg>
+  <msg key="branch">Rama</msg>
+  <msg key="branches">Ramas</msg>
   <msg key="bulk_mail_send">Correo a todos</msg>
   <msg key="By_user">Por usuario</msg>
   <msg key="cancel_and_return">Cancelar y Volver a Assessment</msg>
@@ -118,14 +128,17 @@
   <msg key="Categorization_sub">Incluir Subcategorías</msg>
   <msg key="Choice">Respuesta</msg>
   <msg key="choice_Content">Subir Archivo</msg>
+  <msg key="choice_Content_help">Subir un archivo con el contenido de la respuesta</msg>
   <msg key="choice_Delete_Content">Borrar Archivo</msg>
   <msg key="choice_display_Content">Elegir Archivo</msg>
   <msg key="choice_Feedback_help">Feedback dado con esta respuesta (además del feedback dado con la pregunta)</msg>
+  <msg key="choice_Fixed_Position_help">Orden fijo para esta opción?</msg>
   <msg key="Choice_help">Descripción de la respuesta</msg>
   <msg key="Choice_Orientation">Orientación de las respuestas</msg>
   <msg key="Choice_Orientation_help">La orientación que tendrán las respuestas</msg>
   <msg key="choice_set">Título</msg>
   <msg key="choice_set_title">Título</msg>
+  <msg key="Choice_Sets">Conjunto de Opciones existente</msg>
   <msg key="choose_action">Elegir la acción a hacer</msg>
   <msg key="condition">Condición</msg>
   <msg key="Confirm_Consent">Confirmación</msg>
@@ -145,6 +158,7 @@
   <msg key="Created_by">Creado por</msg>
   <msg key="csv_export">Exportar CSV</msg>
   <msg key="csv_export_format">Exportar a formato CSV</msg>
+  <msg key="csv_export_format_help">Selecione el dato que se utilizará para identificar cada pregunta</msg>
   <msg key="csv_export_name">Identificador de la pregunta</msg>
   <msg key="csv_export_title">Texto de la pregunta</msg>
   <msg key="CSV_file">Fichero CSV</msg>
@@ -292,6 +306,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
   <msg key="Name">Nombre</msg>
+  <msg key="Name_help">Nombre de la nueva copia del assessment  </msg>
   <msg key="name_of_trigger">Nombre de la condición.</msg>
   <msg key="name_used">El nombre que ya se usa.</msg>
   <msg key="New_Assessment">Nuevo Assessment</msg>
@@ -309,6 +324,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="notify_user">Notificar al usuario</msg>
   <msg key="num_Answers">Número total de respuestas a visualizar</msg>
   <msg key="num_Answers_help">Si este número es más pequeño que el número de respuestas añadidas, se cogerán las respuestas aleatoriamente.</msg>
+  <msg key="Num_Choices">Número de Opciones</msg>
+  <msg key="Num_Choices_help">Número de Opciones para esta pregunta en caso que se de de tip opción múltiple</msg>
   <msg key="num_Correct_Answer">Número de respuestas correctas a visualizar</msg>
   <msg key="num_Correct_help">Número de respuestas correctas que se tienen que visualizar</msg>
   <msg key="num_items">Número de preguntas visualizadas</msg>
@@ -350,6 +367,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="points_section">Puntos por Sección</msg>
   <msg key="points_section_help">Los puntos que vale esta sección en un assessment. Es una medida de la dificultad relativa de la sección.
 </msg>
+  <msg key="post_check">Post Chuequeo</msg>
   <msg key="Preview">Visualización previa</msg>
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
@@ -357,6 +375,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Questions">Preguntas</msg>
   <msg key="Randomized">Aleatoria</msg>
   <msg key="randomized">Aleatorio</msg>
+  <msg key="reg_asm">Usando en el proceso de Registro</msg>
+  <msg key="Reg_Assessment_title">Cuestionario de Registro de Customización del Sitio Principal: &quot;%assessment_data.title&quot;</msg>
   <msg key="reg_users_required">Se requiere que los usuarios estén registrados</msg>
   <msg key="regarding_this_assess">En relación con esta encuesta</msg>
   <msg key="related">Relacionado</msg>
@@ -388,6 +408,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Search">Buscar</msg>
   <msg key="Search_Item">Buscar y añadir preguntas</msg>
   <msg key="Search_Item_1">Buscar y añadir preguntas a la sección </msg>
+  <msg key="Search_Results">Resultados de la Búsqueda</msg>
   <msg key="Search_Section">Buscar y añadir secciones</msg>
   <msg key="Search_Section_1">Buscar y añadir secciones al assessment</msg>
   <msg key="sect_disp_Description_help">Descripción del tipo de visualización de esta sección</msg>
@@ -406,6 +427,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="section_num_Items">Número de preguntas por página</msg>
   <msg key="Section_Order">Orden de las preguntas</msg>
   <msg key="section_order_help">En qué orden se verán las preguntas en esta sección.</msg>
+  <msg key="section_preview">Vista Previa</msg>
   <msg key="section_Required_help">¿Es obligatorio ver esta sección? Sólo es útil si se quieren ver menos secciones de las que hay en total.</msg>
   <msg key="section_select">Seleccionar sección</msg>
   <msg key="Section_Template">Plantilla de la Sección</msg>
@@ -455,6 +477,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Total_score">Puntuación total</msg>
   <msg key="trigger">Condición</msg>
   <msg key="trigger_delete">Borrar condición</msg>
+  <msg key="Triggers">Disparadores</msg>
   <msg key="triggers">Condición</msg>
   <msg key="try_again">Intentar de nuevo</msg>
   <msg key="two_days">Hace dos días</msg>
