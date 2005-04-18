@@ -67,10 +67,13 @@ ad_form -name assessment_export -action results-export -form {
 	}
     }
     
-    if {![empty_string_p $start_time] && ![empty_string_p $end_time]} {
-	set date_sql [db_map restrict_completed_date]
-    } else {
-	set date_sql ""
+    set start_date_sql ""
+    set end_date_sql ""
+    if {![empty_string_p $start_time]} {
+	set start_date_sql [db_map restrict_start_date]
+    }
+    if {![empty_string_p $end_time]} {
+	set end_date_sql [db_map restrict_end_date]
     }
 
     set session_list ""
@@ -107,6 +110,7 @@ ad_form -name assessment_export -action results-export -form {
     }
 } -after_submit {
      ns_set put [ad_conn outputheaders] Content-Disposition "attachment;filename=results.csv"
-     ns_return 200 "text/plain" "$csv_text"}
+     ns_return 200 "text/plain" "$csv_text"
+}
 
 ad_return_template

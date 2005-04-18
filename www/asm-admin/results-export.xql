@@ -37,7 +37,8 @@
 	where s.session_id = sub.session_id
 	and sub.subject_id = p.person_id
 	and sub.subject_id = y.party_id
-	$date_sql
+	$start_date_sql
+	$end_date_sql
 	order by s.session_id
 
       </querytext>
