@@ -63,6 +63,7 @@
   <msg key="Answer_Choices">Answer Choices</msg>
   <msg key="Answer_Value">Answer Value</msg>
   <msg key="Answer_Value_help">Value of this answer</msg>
+  <msg key="answered_assessments">Answered Assessments</msg>
   <msg key="Applet">Assessment Applet</msg>
   <msg key="approve">Approve</msg>
   <msg key="approve_actions">Approve Actions</msg>
@@ -111,6 +112,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="assessment_too_many_tries">Only %number_tries% tries allowed.</msg>
   <msg key="assessment_wait_retry">You have to wait %pretty_wait_time% before your next try.</msg>
   <msg key="assessment_wrong_password">Wrong password.</msg>
+  <msg key="Assessments">Assessments</msg>
   <msg key="at_the_end">At the end of this assessment</msg>
   <msg key="Attempt">Attempt</msg>
   <msg key="Author">Author</msg>
@@ -349,6 +351,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="one_correct_choice_req">At least one correct choice required</msg>
   <msg key="Only_correct">Only correct Responses</msg>
   <msg key="Only_incorrect">Only incorrect Responses</msg>
+  <msg key="open_assessments">Open Assessments</msg>
   <msg key="oq_Keywords">Keywords</msg>
   <msg key="oq_Keywords_help">Keywords used for automatic grading</msg>
   <msg key="oq_Reference_Answer">Reference Answer</msg>

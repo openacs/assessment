@@ -2,7 +2,7 @@
 <queryset>
 	<rdbms><type>postgresql</type><version>7.3</version></rdbms>
 
-<fullquery name="asssessment_id_name_definition">
+<fullquery name="open_asssessments">
 	<querytext>
 	select cr.item_id as assessment_id, cr.title, cr.description, a.password,
 	       to_char(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start_time,

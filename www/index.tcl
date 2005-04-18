@@ -16,15 +16,42 @@ set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 set user_id [ad_conn user_id]
 
-# create a list with all assessments and their sessions
+# create a list with all open assessments
 template::list::create \
     -name assessments \
     -multirow assessments \
     -key assessment_id \
     -elements {
         title {
-            label {Assessment}
-            display_template {<if @assessments.assessment_url@ not nil><a href="@assessments.assessment_url@">@assessments.title@</a></if><else>@assessments.title@</else>}
+            label "[_ assessment.open_assessments]"
+            display_template {<a href="@assessments.assessment_url@">@assessments.title@</a>}
+        }
+    } -main_class {
+        narrow
+    }
+
+# get the information of all open assessments
+template::multirow create assessments assessment_id title description assessment_url
+db_foreach open_asssessments {} {
+    if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
+	if {[empty_string_p $password]} {
+	    set assessment_url [export_vars -base "assessment" {assessment_id}]
+	} else {
+	    set assessment_url [export_vars -base "assessment-password" {assessment_id}]
+	}
+	template::multirow append assessments $assessment_id $title $description $assessment_url
+    }
+}
+
+# create a list with all answered assessments and their sessions
+template::list::create \
+    -name sessions \
+    -multirow sessions \
+    -key assessment_id \
+    -elements {
+        title {
+            label "[_ assessment.Assessments]"
+            display_template {@sessions.title@}
         }
         session {
             label {[_ assessment.Sessions]}
@@ -35,17 +62,8 @@ template::list::create \
     }
 
 # get the information of all assessments store in the database
-db_multirow -extend { session assessment_url } assessments asssessment_id_name_definition {} {
+db_multirow -extend { session } sessions answered_asssessments {} {
     set session {Sessions}
-    if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
-	if {[empty_string_p $password]} {
-	    set assessment_url [export_vars -base "assessment" {assessment_id}]
-	} else {
-	    set assessment_url [export_vars -base "assessment-password" {assessment_id}]
-	}
-    } else {
-	set assessment_url ""
-    }
 }
 
 set admin_p [ad_permission_p $package_id create]
