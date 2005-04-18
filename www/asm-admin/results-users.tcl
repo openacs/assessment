@@ -61,12 +61,14 @@ db_multirow -extend { result_url subject_url } results assessment_results {
 
     if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
 	set subject_name "[_ assessment.anonymous_name]"
+	set subject_url "" 
+    } else {
+	set subject_url [acs_community_member_url -user_id $subject_id]
     }
-
-    set subject_url [acs_community_member_url -user_id $subject_id]
     set result_url [export_vars -base "results-session" {session_id}]
 }
 
+template::multirow sort subjects subject_name
 if {$assessment_data(anonymous_p) == "t"} {
     template::list::create \
 	-name subjects \
