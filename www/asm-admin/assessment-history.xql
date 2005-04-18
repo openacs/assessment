@@ -9,7 +9,7 @@
 	where r.item_id = :assessment_id
 	and o.object_id = r.revision_id
 	and p.person_id = o.creation_user
-	order by o.creation_date
+	order by o.creation_date desc
 	</querytext>
 </fullquery>
 
