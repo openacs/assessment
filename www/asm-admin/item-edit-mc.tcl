@@ -27,12 +27,16 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
+if {[template::form get_action item_show_mc] == "existing"} {
+    ad_returnredirect [export_vars -base item-edit-mc-existing {assessment_id section_id as_item_id}]
+    ad_script_abort
+}
+
 set page_title [_ assessment.edit_item_type_mc]
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set correct_options [list [list "[_ assessment.yes]" t]]
-set add_existing_link [export_vars -base "item-edit-mc-existing" {assessment_id section_id as_item_id}]
 
 
 ad_form -name item_edit_mc -action item-edit-mc -export { assessment_id section_id num_choices } -form {

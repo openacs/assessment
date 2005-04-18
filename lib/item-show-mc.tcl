@@ -3,8 +3,10 @@
 
 db_1row item_type_data {}
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set actions [list [list "[_ acs-kernel.common_Edit]" edit] [list "[_ assessment.add_item_type_mc_existing]" existing]]
 
-ad_form -name item_show_mc -mode display -action item-edit-mc -export { assessment_id section_id as_item_id } -form {
+
+ad_form -name item_show_mc -mode display -action item-edit-mc -export { assessment_id section_id as_item_id } -actions $actions -form {
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {value $title} {help_text "[_ assessment.oq_Title_help]"}}
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options} {value $increasing_p} {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {value $allow_negative_p} {help_text "[_ assessment.Allow_Negative_help]"}}
