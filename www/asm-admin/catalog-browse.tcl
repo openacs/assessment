@@ -21,6 +21,7 @@ ad_page_contract {
     {orderby:optional "title,asc"}
     {page:optional 1}
     {search_again_url:optional ""}
+    {size:optional 10}
 } -properties {
     title:onevalue
     context:onevalue
@@ -111,8 +112,12 @@ if {$category_ids_length > 0} {
 
 set keyword_where_clause ""
 if {![empty_string_p $keywords]} {
-    set keyword_sql "%$keywords%"
-    set keyword_where_clause [db_map keywords]
+    set keyword_sql [string tolower "%$keywords%"]
+    if {[info exists section_id]} {
+	set keyword_where_clause [db_map item_keywords]
+    } else {
+	set keyword_where_clause [db_map section_keywords]
+    }
 }
 
 
@@ -135,16 +140,20 @@ if {[info exists section_id]} {
 	orderby_asc "o.object_type asc, lower(cr.title) asc"
 	orderby_desc "o.object_type desc, lower(cr.title) desc"
     }
+    lappend elements field_name {
+	label "[_ assessment.Field_Name]"
+	orderby "lower(i.field_name)"
+    }
     set key_name as_item_id
     set page_query item_list
 } else {
     set assessment_rev_id $assessment_data(assessment_rev_id)
     set key_name section_id
     set page_query section_list
-}
-lappend elements name {
-    label "[_ assessment.Name]"
-    orderby "lower(ci.name)"
+    lappend elements name {
+	label "[_ assessment.Name]"
+	orderby "lower(ci.name)"
+    }
 }
 lappend elements author {
     label "Author"
@@ -159,7 +168,8 @@ list::create \
     -key $key_name \
     -pass_properties { assessment_id section_id after } \
     -no_data "[_ assessment.None]" \
-    -filters { assessment_id {} section_id {} after {} category_ids { type multival } join_cat {} subtree_p {} keywords {} join_key {} letter {} itype {} search_again_url {} } \
+    -filters { 
+	assessment_id {} section_id {} after {} category_ids { type multival } join_cat {} subtree_p {} keywords {} join_key {} letter {} itype {} search_again_url {} } \
     -elements $elements \
     -bulk_actions $bulk_actions -bulk_action_export_vars { assessment_id section_id after } -page_size 20 -page_flush_p 1 -page_query_name $page_query
 

@@ -35,9 +35,15 @@
       </querytext>
 </partialquery>
 
-<partialquery name="keywords">
+<partialquery name="item_keywords">
       <querytext>
-      and (cr.title like :keyword_sql or cr.description like :keyword_sql or ci.name like :keyword_sql)
+      and (lower(cr.title) like :keyword_sql or lower(cr.description) like :keyword_sql or lower(i.field_name) like :keyword_sql)
+      </querytext>
+</partialquery>
+
+<partialquery name="section_keywords">
+      <querytext>
+      and (lower(cr.title) like :keyword_sql or lower(cr.description) like :keyword_sql or lower(ci.name) like :keyword_sql)
       </querytext>
 </partialquery>
 
@@ -99,7 +105,7 @@
 				 where m.section_id = :section_id)
         and exists (select 1 from as_item_rels ir where item_rev_id =
 	cr.revision_id and ir.rel_type = 'as_item_display_rel')
-	and ao.object_id = cr.revision_id
+	and ao.object_id = ci.item_id
 	and p.person_id = ao.creation_user
 	and ir.item_rev_id = cr.revision_id
 	and ir.target_rev_id = o.object_id
@@ -116,7 +122,7 @@
 <fullquery name="unmapped_items_to_section">
       <querytext>
       
-    select i.as_item_id, cr.title, ci.name, p.first_names, p.last_name,
+    select i.as_item_id, cr.title, i.field_name, p.first_names, p.last_name,
            o.object_type as item_type
     from cr_items ci, cr_revisions cr, as_items i, acs_objects ao,
          persons p, as_item_rels ir, acs_objects o $category_table_clause
@@ -125,7 +131,7 @@
     and i.as_item_id not in (select m.as_item_id
 			     from as_item_section_map m
 			     where m.section_id = :section_id)
-    and ao.object_id = cr.revision_id
+    and ao.object_id = ci.item_id
     and p.person_id = ao.creation_user
     and ir.item_rev_id = cr.revision_id
     and ir.target_rev_id = o.object_id
@@ -151,7 +157,7 @@
 	and i.section_id not in (select m.section_id
 				 from as_assessment_section_map m
 				 where m.assessment_id = :assessment_rev_id)
-	and ao.object_id = cr.revision_id
+	and ao.object_id = ci.item_id
 	and p.person_id = ao.creation_user
 	$category_where_clause
 	$keyword_where_clause
@@ -172,7 +178,7 @@
     and i.section_id not in (select m.section_id
 			     from as_assessment_section_map m
 			     where m.assessment_id = :assessment_rev_id)
-    and ao.object_id = cr.revision_id
+    and ao.object_id = ci.item_id
     and p.person_id = ao.creation_user
     $page_where_clause
     $category_where_clause
