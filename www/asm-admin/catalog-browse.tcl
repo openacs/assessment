@@ -21,7 +21,7 @@ ad_page_contract {
     {orderby:optional "title,asc"}
     {page:optional 1}
     {search_again_url:optional ""}
-    {size:optional 10}
+    {page_size:optional 20}
 } -properties {
     title:onevalue
     context:onevalue
@@ -171,7 +171,11 @@ list::create \
     -filters { 
 	assessment_id {} section_id {} after {} category_ids { type multival } join_cat {} subtree_p {} keywords {} join_key {} letter {} itype {} search_again_url {} } \
     -elements $elements \
-    -bulk_actions $bulk_actions -bulk_action_export_vars { assessment_id section_id after } -page_size 20 -page_flush_p 1 -page_query_name $page_query
+    -bulk_actions $bulk_actions \
+    -bulk_action_export_vars { assessment_id section_id after } \
+    -page_size_variable_p 1 \
+    -page_flush_p 1 \
+    -page_query_name $page_query
 
 
 set orderby_clause [list::orderby_clause -orderby -name objects]
