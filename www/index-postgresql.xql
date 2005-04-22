@@ -17,6 +17,7 @@
 		where asm.assessment_id = a.assessment_id
 		and ism.section_id = asm.section_id)
 	and acs_permission__permission_p (a.assessment_id, :user_id, 'read') = 't'
+	order by lower(cr.title)
 	</querytext>
 </fullquery>
 	

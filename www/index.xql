@@ -13,6 +13,7 @@
 		where s.assessment_id = a.assessment_id
 		and s.subject_id = :user_id
 		and s.completed_datetime is not null)
+	order by lower(cr.title)
 	</querytext>
 </fullquery>
 	
