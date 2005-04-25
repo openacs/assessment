@@ -165,7 +165,6 @@ ad_proc -public as::item::copy {
 
     db_transaction {
 	db_1row item_data {}
-	append title "[_ assessment.copy_appendix]"
 
 	set item_item_id [db_nextval acs_object_id_seq]
 	set name "QUE_$item_item_id"
