@@ -35,9 +35,17 @@
   <blockquote>
     <if @items.presentation_type@ ne fitb>@items.title;noquote@<br></if>
     <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
-      <formgroup id="response_to_item.@items.as_item_id@">
-        @formgroup.widget;noquote@ @formgroup.label;noquote@<br>
-      </formgroup>
+      <if @items.choice_orientation@ ne horizontal>
+        <formgroup id="response_to_item.@items.as_item_id@">
+          @formgroup.widget;noquote@ @formgroup.label;noquote@<br>
+        </formgroup>
+      </if>
+      <else>
+        <formgroup id="response_to_item.@items.as_item_id@">
+          @formgroup.widget;noquote@ @formgroup.label;noquote@
+        </formgroup>
+        <br>
+      </else>
     </if>
     <elseif @items.presentation_type@ eq fitb>
       @items.html;noquote@
