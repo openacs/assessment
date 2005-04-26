@@ -19,14 +19,9 @@ ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a ma
 ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 	set as_assessments__assessment_id {}
 
-	# set utf-8 system encoding
-	encoding system utf-8
-	
 	# Parser
 	# XML => DOM document
-	set file_id [open $xmlfile r]
-	dom parse -channel $file_id document
-	close $file_id
+	dom parse [::tDOM::xmlReadFile $xmlfile] document
 	# DOM document => DOM root
 	$document documentElement root
 	# XPath v1.0
