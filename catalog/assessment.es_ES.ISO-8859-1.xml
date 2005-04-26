@@ -88,6 +88,7 @@
   <msg key="as_parameter_help">Nombre de la variable que vas a usar en el código tcl (por ejemplo, student_id) sin &quot;$&quot;</msg>
   <msg key="as_parameter_query_help">Solo poner la pregunta que obtenga la información deseada</msg>
   <msg key="as_parameter_type_help">Selecciona el tipo de variable que esperas usar. Es una pregunta que tienes que poner a tu pregunta siguiente.</msg>
+  <msg key="as_password_help">Ingrese una contrase&ntilde;a para el assessment</msg>
   <msg key="as_Return_Url_help">URL a la que se direcciona después de que el alumno ha acabado el assessment.</msg>
   <msg key="as_Reuse_Responses_help">Si sí, el sistema buscará las respuestas previas a las preguntas y rellenará la respuesta con la última respuesta que se dio.</msg>
   <msg key="as_Secure_Access_help">¿Es https:// el método requerido para acceder a este assessment?</msg>
@@ -242,6 +243,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Instructions">Instrucciones</msg>
   <msg key="ip_mask">Máscara IP</msg>
   <msg key="item_Content">Subir Archivo</msg>
+  <msg key="item_Content_help">Suba un archivo con el contenido</msg>
   <msg key="item_counter">Preguntas %section.cur_first_item% - %section.cur_last_item% de %section.num_items%</msg>
   <msg key="item_Definition_help">REDUNDANTE, la descripción debería ser suficiente</msg>
   <msg key="item_Delete_Content">Borrar Archivo</msg>
@@ -305,6 +307,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Move_Down">Bajar</msg>
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
+  <msg key="Multiple_help">Desea permitir  m?ltiples respuestas?</msg>
   <msg key="Name">Nombre</msg>
   <msg key="Name_help">Nombre de la nueva copia del assessment  </msg>
   <msg key="name_of_trigger">Nombre de la condición.</msg>
@@ -329,6 +332,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="num_Correct_Answer">Número de respuestas correctas a visualizar</msg>
   <msg key="num_Correct_help">Número de respuestas correctas que se tienen que visualizar</msg>
   <msg key="num_items">Número de preguntas visualizadas</msg>
+  <msg key="num_items_help">N?mero de preguntas visualizadas</msg>
   <msg key="Number_of_Tries">Número de Intentos permitidos</msg>
   <msg key="numerical">Numérico</msg>
   <msg key="on_creation_date">Fecha de creación</msg>
