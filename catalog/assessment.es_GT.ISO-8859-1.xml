@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d11" locale="es_GT" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.10d13" locale="es_GT" charset="ISO-8859-1">
 
   <msg key="above">Arriba</msg>
   <msg key="Absolute_Size">Tamaño Absoluto</msg>
@@ -63,6 +63,7 @@
   <msg key="Answer_Choices">Respuestas</msg>
   <msg key="Answer_Value">Valor de la respuesta</msg>
   <msg key="Answer_Value_help">Valor de esta respuesta</msg>
+  <msg key="answered_assessments">Cuestionarios Contestados</msg>
   <msg key="Applet">Cuestionario Applet </msg>
   <msg key="approve">Aprobar</msg>
   <msg key="approve_actions">Aprobar acciones</msg>
@@ -107,6 +108,7 @@
   <msg key="assessment_too_many_tries">Solo se permiten %number_tries% intentos.</msg>
   <msg key="assessment_wait_retry">Tienes que esperar %pretty_wait_time% antes del siguiente intento.</msg>
   <msg key="assessment_wrong_password">Contraseña incorrecta.</msg>
+  <msg key="Assessments">Cuestionarios</msg>
   <msg key="at_the_end">Al final de este cuestionario</msg>
   <msg key="Attempt">Número de intentos</msg>
   <msg key="Author">Autor</msg>
@@ -157,12 +159,14 @@
   <msg key="Correct_Answer_Choice">Elegir Respuesta Correcta</msg>
   <msg key="Correct_Answer_help">¿es esta respuesta la correcta?</msg>
   <msg key="Created_by">Creado por</msg>
+  <msg key="csv_End_Time">Tiempo para terminar</msg>
   <msg key="csv_export">Exportar CSV</msg>
   <msg key="csv_export_format">Exportar a formato CSV</msg>
   <msg key="csv_export_format_help">Selecione el dato que se utilizará para identificar cada pregunta</msg>
   <msg key="csv_export_name">Identificador de la pregunta</msg>
   <msg key="csv_export_title">Texto de la pregunta</msg>
   <msg key="CSV_file">Fichero CSV</msg>
+  <msg key="csv_Start_Time">Tiempo de Inicio</msg>
   <msg key="currently">Actualmente:</msg>
   <msg key="Data_Type">Tipo de Dato</msg>
   <msg key="data_type_boolean">Boleano</msg>
@@ -223,6 +227,8 @@
   <msg key="Feedback_wrong">Feedback para respuesta errónea</msg>
   <msg key="Feedback_wrong_help">Feedback dado al alumno si ha contestado erróneamente</msg>
   <msg key="Field_Code_help">Breve etiqueta usada cuando se exporta una pregunta (por ejemplo, el nombre de una columna o una fila en una hoja de cálculo)</msg>
+  <msg key="Field_Name">CSV Nombre del Campo</msg>
+  <msg key="Field_Name_help">Nombre corto usado en la exportacin de preguntas y respuestas en archivo CSV</msg>
   <msg key="file_too_large">Tu archivo es demasiado grande. El tamaño de los archivos está limitado a %pretty_max_size% bytes.</msg>
   <msg key="file_zero_size">Tu archivo tiene 0 bytes. Puede que hayas intentado subir un archivo de 0 bytes, un archivo que no exista o puede que haya ocurrido un error durante la transferencia.</msg>
   <msg key="Finish_Time">Hora de finalización</msg>
@@ -232,6 +238,7 @@
   <msg key="from">De:</msg>
   <msg key="goes_to_section">Ir a sección</msg>
   <msg key="hide_item_name">Nombre de la pregunta oculto</msg>
+  <msg key="history">Cambiar Historia</msg>
   <msg key="horizontal">Horizontal</msg>
   <msg key="Html_Options">Opciones HTML</msg>
   <msg key="Html_Options_help">Opciones adicionales de HTML para visualización</msg>
@@ -305,6 +312,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="message_to_display_to">Mensaje que ve el usuario cuando se ejecuta la acción (por ejemplo, te has unido a &quot;Mi Comunidad&quot;)</msg>
   <msg key="Minutes_for_Retry">Minutos entre intentos</msg>
   <msg key="Mode">Modo</msg>
+  <msg key="Modified_Time">Tiempo Modificado</msg>
+  <msg key="Modified_User">Modificado por</msg>
   <msg key="Move_Down">Bajar</msg>
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
@@ -342,6 +351,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
 </msg>
   <msg key="Only_correct">Solo las respuestas correctas</msg>
   <msg key="Only_incorrect">Solo las respuestas incorrectas</msg>
+  <msg key="open_assessments">Cuestionarios Abiertos</msg>
   <msg key="oq_Keywords">Palabras clave</msg>
   <msg key="oq_Keywords_help">Palabras clave usadas para hacer una evaluación automática
 </msg>
@@ -395,6 +405,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="request_notif">Pedir notificación para</msg>
   <msg key="Requested_assess_does">El cuestionario solicitado no existe</msg>
   <msg key="Required">Obligatorio</msg>
+  <msg key="Responding_Users">Respondiendo a usuarios</msg>
   <msg key="Response_Options">Opciones de la respuesta: </msg>
   <msg key="Response_Submitted">Respuesta Enviada</msg>
   <msg key="Results_by_user">Resultados del cuestionario por usuario</msg>
