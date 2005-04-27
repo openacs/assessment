@@ -208,6 +208,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="edit_item_display_sb">Edit Question: Selectbox Display</msg>
   <msg key="edit_item_display_ta">Edit Question: Textarea Display</msg>
   <msg key="edit_item_display_tb">Edit Question: Textbox Display</msg>
+  <msg key="edit_item_general">Editar Question</msg>
   <msg key="edit_item_type_mc">Edit Question: Multiple Choice</msg>
   <msg key="edit_item_type_mc_choices">Edit Question: Multiple Choices</msg>
   <msg key="edit_item_type_oq">Edit Question: Open Question</msg>

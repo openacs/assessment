@@ -199,6 +199,7 @@
   <msg key="edit_item_display_sb">Editar Pregunta: Selectbox</msg>
   <msg key="edit_item_display_ta">Editar Pregunta: Textarea</msg>
   <msg key="edit_item_display_tb">Editar Pregunta: Textbox</msg>
+  <msg key="edit_item_general">Editar Pregunta</msg>
   <msg key="edit_item_type_mc">Editar Pregunta: Respuesta Múltiple</msg>
   <msg key="edit_item_type_mc_choices">Editar Pregunta: Respuesta múltiple</msg>
   <msg key="edit_item_type_oq">Editar Pregunta: Pregunta Abierta</msg>
