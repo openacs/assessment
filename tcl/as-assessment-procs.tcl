@@ -47,7 +47,12 @@ ad_proc -public as::assessment::new {
 	if {[empty_string_p $name]} {
 	    set name "ASS_$assessment_item_id"
 	}
-	set assessment_item_id [content::item::new -item_id $assessment_item_id -parent_id $folder_id -content_type {as_assessments} -name $name]
+	set assessment_item_id [content::item::new \
+                                    -item_id $assessment_item_id \
+                                    -parent_id $folder_id \
+                                    -creation_user $creator_id \
+                                    -content_type {as_assessments} \
+                                    -name $name]
 
 	set as_assessment_id [content::revision::new \
 				  -item_id $assessment_item_id \

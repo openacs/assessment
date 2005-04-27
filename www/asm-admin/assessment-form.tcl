@@ -133,6 +133,7 @@ ad_form -extend -name assessment_form -form {
 	set assessment_rev_id [as::assessment::new \
 				   -name $name \
 				   -title $title \
+                                   -creator_id $user_id \
 				   -description $description \
 				   -instructions $instructions \
 				   -run_mode $run_mode \
