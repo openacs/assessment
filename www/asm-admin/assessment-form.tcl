@@ -6,6 +6,7 @@ ad_page_contract {
 } {
     assessment_id:integer,optional
     {__new_p 0}
+    {permission_p 0}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -38,7 +39,7 @@ set navigation_options [list [list "[_ assessment.Default_Path]" "default path"]
 ##    {exit_page:text,optional,nospell {label "[_ assessment.Exit_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Exit_Page_help]"}}
 
 
-ad_form -name assessment_form -action assessment-form -form {
+ad_form -name assessment_form -export permission_p -action assessment-form -form {
     {assessment_id:key}
 }
 
@@ -64,8 +65,18 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 ad_form -extend -name assessment_form -form {
     {instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Instructions_help]"}}
     {run_mode:text,optional,nospell {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
-    {anonymous_p:text(select) {label "[_ assessment.Anonymous_Responses]"} {options $boolean_options} {help_text "[_ assessment.as_Anonymous_help]"}}
-    {secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
+}
+if { !$permission_p } { 
+    ad_form -extend -name assessment_form  -form {
+	{anonymous_p:text(select) {label "[_ assessment.Anonymous_Responses]"} {options $boolean_options} {help_text "[_ assessment.as_Anonymous_help]"} {value f}}
+    } 
+} else {
+    ad_form -extend -name assessment_form  -form {
+	{anonymous_p:text(hidden) {value t}}
+    }
+    
+}
+ad_form -extend -name assessment_form -form {{secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
     {reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}
     {show_item_name_p:text(select) {label "[_ assessment.Show_Item_Name_1]"} {options $boolean_options} {help_text "[_ assessment.as_Show_Item_Name_help]"}}
     {random_p:text(select) {label "[_ assessment.Allow_Random]"} {options $boolean_options} {help_text "[_ assessment.as_Allow_Random_help]"}}
@@ -86,7 +97,6 @@ ad_form -extend -name assessment_form -form {
     set description ""
     set instructions ""
     set run_mode ""
-    set anonymous_p f
     set secure_access_p f
     set reuse_responses_p f
     set show_item_name_p f
@@ -212,6 +222,9 @@ ad_form -extend -name assessment_form -form {
 	}
     }
 } -after_submit {
+    if {$permission_p} {
+	permission::grant -party_id "-1" -object_id $assessment_id -privilege read
+    }
     ad_returnredirect [export_vars -base one-a {assessment_id}]
     ad_script_abort
 }
