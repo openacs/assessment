@@ -11,7 +11,7 @@ ad_page_contract {
 }
 
 set page_title "[_ assessment.Show_Assessments]"
-set context_bar [ad_context_bar]
+set context_bar [list]
 set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 set user_id [ad_conn user_id]
