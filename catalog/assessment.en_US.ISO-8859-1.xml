@@ -484,6 +484,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="submit_answer_help">Does the respondee have to submit the answer for each question seperately.</msg>
   <msg key="Subtext">Subtext</msg>
   <msg key="Summary">Summary</msg>
+  <msg key="Target_Community">Target Community</msg>
   <msg key="the_condition_to">The condition to branch or execute the action</msg>
   <msg key="there_are_no_users">There are no users to notify</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>

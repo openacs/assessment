@@ -30,22 +30,26 @@ set page_title "[_ assessment.copy_assessment]"
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set confirm_options [list [list "[_ assessment.continue_with_copy]" t] [list "[_ assessment.cancel_and_return]" f]]
+set node_options [db_list_of_lists assessment_instances {}]
 
 ad_form -name assessment_copy_confirm -action assessment-copy -form {
     {assessment_id:key}
     {assessment_title:text(inform) {label "[_ assessment.copy_1]"}}
     {name:text,optional {label "[_ assessment.Name]"} {help_text "[_ assessment.Name_help]"}}
+    {node_id:text(select) {label "[_ assessment.Target_Community]"} {options $node_options} {help_text "[_ assessment.Target_Community_help]"}}
     {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
 } -edit_request {
     db_1row assessment_title {}
     set name ""
+    set node_id [site_node::get_node_id -url [ad_conn url]]
 } -on_submit {
     if {$confirmation} {
-	set assessment_id [as::assessment::copy -assessment_id $assessment_id -name $name]
+	set folder_id [as::assessment::folder_id -package_id [site_node::get_object_id -node_id $node_id]]
+	set assessment_id [as::assessment::copy -assessment_id $assessment_id -name $name -folder_id $folder_id]
     }
     permission::grant -party_id $user_id -object_id $assessment_id -privilege admin
 } -after_submit {
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect "[site_node::get_url -node_id $node_id][export_vars -base "asm-admin/one-a" {assessment_id}]"
     ad_script_abort
 }
 

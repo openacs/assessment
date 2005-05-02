@@ -231,14 +231,17 @@ ad_proc -public as::assessment::new_revision {
 ad_proc -public as::assessment::copy {
     {-assessment_id:required}
     {-name ""}
+    {-folder_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-23
 
     Copies an assessment with all sections and items
 } {
-    set package_id [ad_conn package_id]
-    set folder_id [as::assessment::folder_id -package_id $package_id]
+    if {[empty_string_p $folder_id]} {
+	set package_id [ad_conn package_id]
+	set folder_id [as::assessment::folder_id -package_id $package_id]
+    }
 
     data -assessment_id $assessment_id
     array set a [array get assessment_data]
