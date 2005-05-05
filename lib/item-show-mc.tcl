@@ -3,7 +3,7 @@
 
 db_1row item_type_data {}
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
-set actions [list [list "[_ acs-kernel.common_Edit]" edit] [list "[_ assessment.add_item_type_mc_existing]" existing]]
+set actions [list [list "[_ acs-kernel.common_Edit]" edit] [list "[_ assessment.add_item_type_mc_existing]" existing] [list "Add More Choices" more]]
 
 
 ad_form -name item_show_mc -mode display -action item-edit-mc -export { assessment_id section_id as_item_id } -actions $actions -form {
@@ -24,7 +24,7 @@ foreach one_choice $choices {
     incr count
     set options ""
     if {$count < $total} {
-	append options " <a href=\\\"item-mc-edit-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=down\\\"><img src=\\\"/resources/assessment/down.gif\\\" border=0 alt=\\\"[_ assessment.Move_Down]\\\"></a>"
+	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=down\\\"><img src=\\\"/resources/assessment/down.gif\\\" border=0 alt=\\\"[_ assessment.Move_Down]\\\"></a>"
     }
     if {$count > 1} {
 	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=up\\\"><img src=\\\"/resources/assessment/up.gif\\\" border=0 alt=\\\"[_ assessment.Move_Up]\\\"></a>"
@@ -49,3 +49,6 @@ foreach one_choice $choices {
 }
 append ad_form_code "\}"
 eval ad_form -extend -name item_show_mc $ad_form_code
+# pass along number of choices
+set num_choices $total
+eval ad_form -extend -name item_show_mc -export {num_choices}
