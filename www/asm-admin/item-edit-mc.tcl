@@ -10,6 +10,7 @@ ad_page_contract {
     choice:optional,array
     correct:optional,array
     {num_choices:integer,optional 5}
+    {old_choices:optional}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -38,7 +39,6 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set correct_options [list [list "[_ assessment.yes]" t]]
 
-
 ad_form -name item_edit_mc -action item-edit-mc -export { assessment_id section_id num_choices } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
@@ -55,6 +55,7 @@ set choices [db_list_of_lists existing_choices {}]
 set count 0
 set validate_list [list]
 set count_correct [array exists correct]
+set old_choices [list]
 foreach one_choice $choices {
     util_unlist $one_choice choice_title choice_id choice_correct_p
     incr count
@@ -72,31 +73,34 @@ foreach one_choice $choices {
 	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     }
     lappend validate_list "correct.$choice_id {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
+    lappend old_choices $choice_id
 }
+append ad_form_code "\{old_choices:text(hidden) \{value $old_choices\}\}\n"
 
-# add new empty form entries for new choices
-for {set i 1} {$i <= $num_choices} {incr i} {
-    incr count
-    if {[info exists choice(-$i)]} {
-	append ad_form_code "\{choice.-$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(-$i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
-    } else {
-	append ad_form_code "\{choice.-$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
-    }
-    if {[info exists correct(-$i)]} {
-	append ad_form_code "\{correct.-$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
-    } else {
-	append ad_form_code "\{correct.-$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+if {[template::form get_action item_show_mc] == "more"} {
+    # add new empty form entries for new choices
+    for {set i 1} {$i <= $num_choices} {incr i} {
+        incr count
+        if {[info exists choice($i)]} {
+            append ad_form_code "\{choice.$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+        } else {
+            append ad_form_code "\{choice.$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+        }
+        if {[info exists correct($i)]} {
+            append ad_form_code "\{correct.$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+        } else {
+            append ad_form_code "\{correct.$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+        }
     }
 }
 append ad_form_code "\}"
 eval ad_form -extend -name item_edit_mc $ad_form_code
 
-
 set edit_request "{
     db_1row item_type_data {}
 }"
 
-set on_submit "{
+set on_submit "{ 
     if {\[template::form get_action item_add_mc\] == \"more\"} {
 	# add 5 more choice entries and redirect to this form
 	incr num_choices 5
@@ -106,6 +110,7 @@ set on_submit "{
 }"
 
 set edit_data "{
+
     db_transaction {
 	set new_item_id \[as::item::new_revision -as_item_id \$as_item_id\]
 	set as_item_type_id \[db_string item_type_id {}\]
@@ -127,32 +132,30 @@ set edit_data "{
 	db_dml update_item_in_section {}
 	db_dml update_item_type {}
 
-	# edit existing choices
-	set count 0
-	foreach i \[lsort -integer \[array names choice\]\] {
-	    if {\$i > 0 && !\[empty_string_p \$choice(\$i)\]} {
-		incr count
+        set count 0
+	set new_count \[llength \$old_choices\]
+	foreach i \[array names choice\] {
+	    if {\[lsearch \$old_choices \$i\] != -1 } {
+                # old_choices preserves the prior order
+                set count \[expr \[lsearch \$old_choices \$i\] + 1\]
+	        # edit existing choices
 		set new_choice_id \[as::item_choice::new_revision -choice_id \$i -mc_id \$new_item_type_id\]
 		set title \$choice(\$i)
 		set correct_answer_p \[ad_decode \[info exists correct(\$i)\] 0 f t\]
 		db_dml update_title {}
 		db_dml update_correct_and_sort_order {}
-	    }
-	}
-
-	# add new choices
-	foreach i \[lsort -integer -decreasing \[array names choice\]\] {
-	    if {\$i < 0 && !\[empty_string_p \$choice(\$i)\]} {
-		incr count
+	    } elseif { !\[empty_string_p \$choice(\$i)\] } {
+        	# add new choices
+                incr new_count
 		set new_choice_id \[as::item_choice::new -mc_id \$new_item_type_id \\
 				       -title \$choice(\$i) \\
 				       -numeric_value \"\" \\
 				       -text_value \"\" \\
 				       -content_value \"\" \\
-				       -feedback_text \"\" 
+				       -feedback_text \"\" \\
 				       -selected_p \"\" \\
 				       -correct_answer_p \[ad_decode \[info exists correct(\$i)\] 0 f t\] \\
-				       -sort_order \$count \\
+				       -sort_order \$new_count \\
 				       -percent_score \"\"\]
 	    }
 	}
@@ -168,6 +171,7 @@ set after_submit "{
     ad_script_abort
 }"
 
-eval ad_form -extend -name item_edit_mc -validate "{$validate_list}" -edit_request $edit_request -on_submit $on_submit -edit_data $edit_data -after_submit $after_submit
+#eval ad_form -extend -name item_edit_mc -validate "{$validate_list}" -edit_request $edit_request -on_submit $on_submit -edit_data $edit_data -after_submit $after_submit
+eval ad_form -extend -name item_edit_mc -validate "{$validate_list}" -edit_request $edit_request  -edit_data $edit_data -after_submit $after_submit
 
 ad_return_template
