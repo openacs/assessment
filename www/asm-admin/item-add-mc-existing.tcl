@@ -9,7 +9,7 @@ ad_page_contract {
     as_item_id:integer
     after:integer
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -26,7 +26,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set page_title [_ assessment.add_item_type_mc_existing]
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 
 set choice_sets [db_list_of_lists existing_choice_sets {}]
