@@ -24,7 +24,7 @@ if { ![ad_form_new_p -key action_id] } {
 }
 
 set page_title "[_ assessment.add_new_action]"
-set context [list [list index [_ assessment.admin]] [list [export_vars -base asm-action-admin ] [_ assessment.action_admin]] $page_title]
+set context [list [list [export_vars -base asm-action-admin ] [_ assessment.action_admin]] $page_title]
 
 ad_form -name action_admin -form {
     action_id:key

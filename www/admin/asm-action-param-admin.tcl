@@ -19,7 +19,7 @@ if { ![ad_form_new_p -key parameter_id] } {
 }
 
 
-set context [list [list index [_ assessment.admin]] [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
+set context [list [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
 
 
 set type_options [list [list "[_ assessment.query]" q] [list "[_ assessment.var ]" n]]
