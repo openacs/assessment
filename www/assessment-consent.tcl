@@ -9,12 +9,12 @@ ad_page_contract {
     assessment_id:integer,notnull
     {password:optional ""}
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
 set page_title "[_ assessment.Confirm_Consent]"
-set context_bar [ad_context_bar $page_title]
+set context [list $page_title]
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
