@@ -29,7 +29,7 @@ foreach one_choice $choices {
     if {$count > 1} {
 	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=up\\\"><img src=\\\"/resources/assessment/up.gif\\\" border=0 alt=\\\"[_ assessment.Move_Up]\\\"></a>"
     }
-    append options " <a href=\\\"item-edit-mc-choices-delete?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&choice_id=$choice_id\\\"><img src=\\\"/resources/assessment/delete.gif\\\" border=0 alt=\\\"[_ assessment.remove_choice]\\\"></a>"
+    append options " <a href=\\\"item-edit-mc-choices-delete?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&choice_id=$choice_id&mc_id=$as_item_type_id\\\"><img src=\\\"/resources/assessment/delete.gif\\\" border=0 alt=\\\"[_ assessment.remove_choice]\\\"></a>"
 
     if {$correct_answer_p == "t"} {
 	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/correct.gif> $title$options\"\}\}\n"
