@@ -15,13 +15,13 @@ ad_page_contract {
     {return_url:optional}
     response_to_item:array,optional,multiple,html
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
 set user_id [ad_conn user_id]
 set page_title "[_ assessment.Show_Items]"
-set context_bar [ad_context_bar $page_title]
+set context [list $page_title]
 set section_to ""
 set item_to ""
 set url ""

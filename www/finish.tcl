@@ -9,7 +9,7 @@ ad_page_contract {
     assessment_id:integer,notnull
     return_url:optional
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -25,7 +25,7 @@ if {[info exists return_url]} {
     }
 }
 set page_title "[_ assessment.Response_Submitted]"
-set context_bar [ad_context_bar $page_title]
+set context [list $page_title]
 
 
 ad_return_template

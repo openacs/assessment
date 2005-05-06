@@ -7,13 +7,13 @@ ad_page_contract {
 } -query {
     assessment_id:integer,notnull
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
 set user_id [ad_conn user_id]
 set page_title "[_ assessment.Password_Enter]"
-set context_bar [ad_context_bar $page_title]
+set context [list $page_title]
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
