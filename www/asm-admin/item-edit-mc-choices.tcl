@@ -15,7 +15,7 @@ ad_page_contract {
     percent:array,optional
     selected:array,optional
 } -properties {
-    context_bar:onevalue
+    context:onevalue
     page_title:onevalue
 }
 
@@ -33,7 +33,7 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set package_id [ad_conn package_id]
 set page_title [_ assessment.edit_item_type_mc_choices]
-set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
+set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
 
 set selected_options [list [list "[_ assessment.yes]" t]]
 
