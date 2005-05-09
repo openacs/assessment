@@ -8,6 +8,7 @@ ad_page_contract {
     session_id:integer,notnull
     assessment_id:integer,notnull
     {password:optional ""}
+    {next_asm:optional}
 } -properties {
     context:onevalue
     page_title:onevalue

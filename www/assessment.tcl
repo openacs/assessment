@@ -14,6 +14,7 @@ ad_page_contract {
     {item_id ""}
     {return_url:optional}
     response_to_item:array,optional,multiple,html
+    {next_asm:optional}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -27,11 +28,13 @@ set item_to ""
 set url ""
 
 if { [info exists return_url] } {
+    
     set url $return_url
     ns_log notice "$return_url"
 } 
 
 set return_url "$url"
+
 
 
 # Get the assessment data
@@ -62,13 +65,13 @@ db_transaction {
 		# set the time when the subject initiated the Assessment
 		db_dml session_start {}
 	    } else {
-		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url}]
+		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm}]
 	    }
 	} else {
 	    # pick up old session
 	    db_1row unfinished_section_order {}
 	    if {[empty_string_p $section_order]} {
-		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url}]
+		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm}]
 	    } else {
 		db_1row unfinished_section_id {}
 		db_1row unfinished_item_order {}
@@ -227,7 +230,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
-	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url}]
+	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm}]
 	ad_script_abort
     } else {
 	# calculate session points at end of session
@@ -236,7 +239,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
         as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {[empty_string_p $assessment_data(return_url)]} {
-	    ad_returnredirect [export_vars -base finish {session_id assessment_id return_url}]
+	    ad_returnredirect [export_vars -base finish {session_id assessment_id return_url next_asm}]
 	} else {
 	    ad_returnredirect $assessment_data(return_url)
 	}
@@ -246,7 +249,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 
 
 # form for display an assessment with sections and items
-ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order password return_url} -form {
+ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export { next_asm assessment_id section_id section_order item_order password return_url} -form {
     {session_id:text(hidden) {value $session_id}}
 }
 
@@ -295,7 +298,7 @@ foreach one_item $item_list {
 	}
 	
 	# create seperate submit form for each item
-	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order password return_url} -form {
+	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order password return_url next_asm} -form {
 	    {session_id:text(hidden) {value $session_id}}
 	    {item_id:text(hidden) {value $as_item_id}}
 	}
@@ -325,7 +328,7 @@ foreach one_item $item_list {
 	    }
 	}"
 	set after_submit "{
-	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url}\]
+	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm}\]
 	    ad_script_abort
 	}"
 	
@@ -416,7 +419,7 @@ if {$display(submit_answer_p) != "t"} {
             }
 	    set item_order \$new_item_order
 
-	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url}\]
+	    ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -425,7 +428,7 @@ if {$display(submit_answer_p) != "t"} {
             as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {\[empty_string_p \$assessment_data(return_url)\]} {
-		ad_returnredirect \[export_vars -base finish {session_id assessment_id return_url}\]
+		ad_returnredirect \[export_vars -base finish {session_id assessment_id return_url next_asm}\]
 	    } else {
 		ad_returnredirect \$assessment_data(return_url)
 	    }
@@ -462,7 +465,7 @@ if {$display(submit_answer_p) != "t"} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
-	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url}]
+	    ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm}]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -471,7 +474,7 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {[empty_string_p $assessment_data(return_url)]} {
-		ad_returnredirect [export_vars -base finish {session_id assessment_id return_url}]
+		ad_returnredirect [export_vars -base finish {session_id assessment_id return_url next_asm}]
 	    } else {
 		ad_returnredirect $assessment_data(return_url)
 	    }
