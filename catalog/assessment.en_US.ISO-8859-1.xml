@@ -15,6 +15,7 @@
   <msg key="action_tcl_code">Tcl_code</msg>
   <msg key="action_that_will">The action that will be executed.</msg>
   <msg key="action_to_perform">Action to Perform</msg>
+  <msg key="add_filter">Add Filter</msg>
   <msg key="add_item">Add new question</msg>
   <msg key="add_item_display_cb">Add new question: Checkbox Display</msg>
   <msg key="add_item_display_rb">Add new question: Radiobutton Display</msg>
