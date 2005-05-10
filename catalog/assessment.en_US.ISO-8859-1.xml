@@ -43,6 +43,7 @@
   <msg key="admin_actions">Actions Administration</msg>
   <msg key="Admin_catalog">Question Catalog Administration</msg>
   <msg key="admin_categories">Categories Administration</msg>
+  <msg key="admin_filters">Admin Filters</msg>
   <msg key="admin_requests">Requests Administration</msg>
   <msg key="admin_triggers">Administer triggers</msg>
   <msg key="Administration">Administration</msg>
@@ -238,6 +239,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Field_Name_help">A short label used when exporting question answers in CSV file</msg>
   <msg key="file_too_large">Your file is too large. Files are limited to %pretty_max_size% bytes.\n</msg>
   <msg key="file_zero_size">Your file is zero-length. Either you attempted to upload a zero length file, a file which does not exists, or something went wrong during the transfer.\n</msg>
+  <msg key="filter">Filter</msg>
+  <msg key="filters">Filters</msg>
+  <msg key="filters_admin">Administer Item Filters</msg>
   <msg key="filters_none">There are no filters matching these criteria.</msg>
   <msg key="Finish_Time">Finish Time</msg>
   <msg key="Finished">Finished</msg>
