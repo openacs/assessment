@@ -122,6 +122,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
+  <msg key="boolean_ref_not_set_error">You need to provide a valid character expression for this field</msg>
   <msg key="boolean_ref_value">Boolean Reference Value</msg>
   <msg key="bottom">Bottom</msg>
   <msg key="bounded_numeric">User input must be a number (real or integer) bounded by a comparator reference value</msg>
@@ -248,7 +249,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="file_zero_size">Your file is zero-length. Either you attempted to upload a zero length file, a file which does not exists, or something went wrong during the transfer.\n</msg>
   <msg key="filter">Filter</msg>
   <msg key="filter_add">Add New Filter</msg>
+  <msg key="filter_add_instructions">There are several types of filters you can add:&lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Datatype filters&lt;/b&gt;: These test user input to check whether it is alphanumeric, alpha characters only, numeric, integer, or boolean.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Bounds filters&lt;/b&gt;: These test user input (numeric which includes integers, boolean, or text) against a reference value using a comparator.&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;You should look through existing filters and re-use them rather than create duplicate filters, though we don't prevent you from doing so.</msg>
   <msg key="filter_edit">Edit Filter</msg>
+  <msg key="filter_edit_instructions">If you edit this existing filter, you will create a new version of it. The original will still be available for use elsewhere.</msg>
   <msg key="filters">Filters</msg>
   <msg key="filters_admin">Admin Filters</msg>
   <msg key="filters_available">Filters Available</msg>
@@ -332,6 +335,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="make_show_item_name">Show item name</msg>
   <msg key="make_unsecure">Allow unsecure connection</msg>
   <msg key="manually">Manually</msg>
+  <msg key="matching_boolean">User input must match a boolean value</msg>
   <msg key="matching_text">User input must match a specific text</msg>
   <msg key="max_time">max. time allowed:</msg>
   <msg key="mc_Title_help">A name for this set of choices (for reusability)</msg>
@@ -379,6 +383,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="num_items_help">Number of Items displayed</msg>
   <msg key="num_ref_value">Numeric Reference Value</msg>
   <msg key="Number_of_Tries">Number of Tries allowed</msg>
+  <msg key="numeric_ref_not_set_error">You must provide a valid number for this field</msg>
   <msg key="numerical">Numerical</msg>
   <msg key="on_creation_date">, on %creation_date%</msg>
   <msg key="One_Assessment_data">One Assessment: %assessment_data.title%</msg>
@@ -516,6 +521,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Subtext">Subtext</msg>
   <msg key="Summary">Summary</msg>
   <msg key="Target_Community">Target Community</msg>
+  <msg key="text_ref_not_set_error">You need to provide a valid character expression for this field</msg>
   <msg key="text_ref_value">Text Reference Value</msg>
   <msg key="the_condition_to">The condition to branch or execute the action</msg>
   <msg key="there_are_no_users">There are no users to notify</msg>
