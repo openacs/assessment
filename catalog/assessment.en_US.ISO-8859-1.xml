@@ -252,6 +252,10 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="filter_add_instructions">There are several types of filters you can add:&lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Datatype filters&lt;/b&gt;: These test user input to check whether it is alphanumeric, alpha characters only, numeric, integer, or boolean.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Bounds filters&lt;/b&gt;: These test user input (numeric which includes integers, boolean, or text) against a reference value using a comparator.&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;You should look through existing filters and re-use them rather than create duplicate filters, though we don't prevent you from doing so.</msg>
   <msg key="filter_edit">Edit Filter</msg>
   <msg key="filter_edit_instructions">If you edit this existing filter, you will create a new version of it. The original will still be available for use elsewhere.</msg>
+  <msg key="filter_eval_output">Filter TCL Expression</msg>
+  <msg key="filter_output">Filter Description</msg>
+  <msg key="filter_preview">Filter Preview</msg>
+  <msg key="filter_settings">Filter Settings</msg>
   <msg key="filters">Filters</msg>
   <msg key="filters_admin">Admin Filters</msg>
   <msg key="filters_available">Filters Available</msg>
@@ -278,6 +282,7 @@ in addition to the question itself when taking the survey.</msg>
 Increasing (false) will either give 100%, if all correct answers are given, or 0% else. </msg>
   <msg key="Instructions">Instructions</msg>
   <msg key="ip_mask">IP Mask</msg>
+  <msg key="item">Item</msg>
   <msg key="item_Content">Upload File</msg>
   <msg key="item_Content_help">Upload a file</msg>
   <msg key="item_counter">Questions %section.cur_first_item% - %section.cur_last_item% out of %section.num_items%</msg>
@@ -373,6 +378,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Notification">Notification</msg>
   <msg key="notified_users">Notified Users</msg>
   <msg key="notify_user">Notify User</msg>
+  <msg key="null_value">User input should be null</msg>
   <msg key="num_Answers">Total Number of displayed Choices</msg>
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>
   <msg key="Num_Choices">Number of choices for multiple-choice item</msg>
@@ -431,6 +437,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="reg_users_required">Registrated respondents required</msg>
   <msg key="regarding_this_assess">regarding this survey</msg>
   <msg key="regexp">regexp of user input must return 1 against this pattern:</msg>
+  <msg key="regexp_not_set_error">You must provide a regular expression against which user input will be matched</msg>
   <msg key="regexp_value">Regexp Pattern to Match</msg>
   <msg key="related">Related</msg>
   <msg key="remove_1">Remove:</msg>
@@ -458,6 +465,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="right">Right</msg>
   <msg key="Rulebased_branching">Rule-based Branching</msg>
   <msg key="sa_Title_help">A title for this short answer feature set so it can be reused in the future.</msg>
+  <msg key="Save">Save</msg>
   <msg key="Score">Score</msg>
   <msg key="Search">Search</msg>
   <msg key="Search_Item">Search for questions</msg>
