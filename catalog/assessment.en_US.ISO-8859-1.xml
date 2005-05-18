@@ -155,6 +155,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="comparator">Comparator</msg>
   <msg key="comparator_not_set_error">You must set a Comparator for this Comparison Type</msg>
   <msg key="comparison_type">Comparison Type</msg>
+  <msg key="comparison_type_help">Different fields below will be required depending on this setting</msg>
   <msg key="condition">Condition</msg>
   <msg key="Confirm_Consent">Confirmation</msg>
   <msg key="Consent_Page">Consent Page</msg>
@@ -250,12 +251,17 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="filter">Filter</msg>
   <msg key="filter_add">Add New Filter</msg>
   <msg key="filter_add_instructions">There are several types of filters you can add:&lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Datatype filters&lt;/b&gt;: These test user input to check whether it is alphanumeric, alpha characters only, numeric, integer, or boolean.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Bounds filters&lt;/b&gt;: These test user input (numeric which includes integers, boolean, or text) against a reference value using a comparator.&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;You should look through existing filters and re-use them rather than create duplicate filters, though we don't prevent you from doing so.</msg>
+  <msg key="filter_contingent_attributes">Contingent Attributes</msg>
   <msg key="filter_edit">Edit Filter</msg>
   <msg key="filter_edit_instructions">If you edit this existing filter, you will create a new version of it. The original will still be available for use elsewhere.</msg>
   <msg key="filter_eval_output">Filter TCL Expression</msg>
   <msg key="filter_output">Filter Description</msg>
+  <msg key="filter_outputs">Filter Outputs</msg>
   <msg key="filter_preview">Filter Preview</msg>
+  <msg key="filter_req_attributes">Required Attributes</msg>
   <msg key="filter_settings">Filter Settings</msg>
+  <msg key="filter_title_help">Use a compact, descriptive phrase to aid finding this filter for re-use</msg>
+  <msg key="filter_user_messages">User Messages</msg>
   <msg key="filters">Filters</msg>
   <msg key="filters_admin">Admin Filters</msg>
   <msg key="filters_available">Filters Available</msg>
@@ -438,6 +444,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="regarding_this_assess">regarding this survey</msg>
   <msg key="regexp">regexp of user input must return 1 against this pattern:</msg>
   <msg key="regexp_not_set_error">You must provide a regular expression against which user input will be matched</msg>
+  <msg key="regexp_val_help">This needs to be a valid regular expression for regexp</msg>
   <msg key="regexp_value">Regexp Pattern to Match</msg>
   <msg key="related">Related</msg>
   <msg key="remove_1">Remove:</msg>
