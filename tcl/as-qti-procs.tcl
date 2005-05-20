@@ -5,7 +5,59 @@ ad_library {
 	@cvs-id $Id$
 }
 
+ad_proc -public -callback lors::import -impl qti {} {
+    this is the lors qti importer
+} {
+	if {$res_type == "imsqti_xmlv1p0" || $res_type == "imsqti_xmlv1p1" || $res_type =="imsqti_item_xmlv2p0"} {
+	    return [as::qti::register \
+			-tmp_dir $tmp_dir/$res_href \
+			-community_id $community_id]
+	}
+}
+
 namespace eval as::qti {}
+
+ad_proc -public as::qti::register {
+    {-tmp_dir:required}
+    {-community_id:required}
+} {
+    Relation with assessment    
+
+} {
+   
+    # Generate a random directory name
+    set tmpdirectory [ns_tmpnam]
+    # Create a temporary directory
+    file mkdir $tmpdirectory
+
+    # UNZIP the zip file in the temporary directory
+    catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+
+    # Save the current package_id to restore when the assessment is
+    # imported
+    set current_package_id [ad_conn package_id]
+    # Get the assessment package_id associated with the current
+    # community
+    # FIXME this is a hack until I figure out how to get the
+    # package_id of the assessment of the current community
+    ad_conn -set package_id [db_string get_assessment_package_id {select dotlrn_community_applets.package_id from dotlrn_community_applets join apm_packages on (dotlrn_community_applets.package_id=apm_packages.package_id) where community_id = :community_id and package_key='assessment'}]
+    
+    # Read the content of the temporary directory
+    foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
+	set assessment_revision_id [as::qti::parse_qti_xml $file_i]
+	set assessment_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :assessment_revision_id"]
+    }
+
+    # Delete the temporary directory
+    file delete -force $tmpdirectory
+
+    # Restore the package_id
+    ad_conn -set package_id $current_package_id
+
+    set url_assessment "../../assessment/assessment?assessment_id=$assessment_id"
+    
+    return $url_assessment
+}
 
 ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a mattext } {
 	set texttype [$mattextNode getAttribute {texttype} {text/plain}]
