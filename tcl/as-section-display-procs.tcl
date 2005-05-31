@@ -26,7 +26,7 @@ ad_proc -public as::section_display::new {
 
     # Insert as_section_display_type in the CR (and as_section_display_types table) getting the revision_id (display_type_id)
     db_transaction {
-	set display_item_id [content::item::new -parent_id $folder_id -content_type {as_section_display_types} -name [exec uuidgen]]
+	set display_item_id [content::item::new -parent_id $folder_id -content_type {as_section_display_types} -name [as::item::generate_unique_name]]
 
 	set display_id [content::revision::new \
 			    -item_id $display_item_id \

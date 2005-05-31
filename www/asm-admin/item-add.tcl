@@ -141,7 +141,7 @@ ad_form -extend -name item_add -form {
 	    }
 
 	    set folder_id [as::assessment::folder_id -package_id $package_id]
-	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
+	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
 	    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
 	}
     }

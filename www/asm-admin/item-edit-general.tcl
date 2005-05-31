@@ -118,7 +118,7 @@ ad_form -extend -name item_edit_general -form {
 	    }
 
 	    set folder_id [as::assessment::folder_id -package_id $package_id]
-	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
+	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
 	    db_dml update_item_content {}
 	} elseif {[info exists delete_content]} {
 	    db_dml delete_item_content {}

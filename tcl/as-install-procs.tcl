@@ -100,6 +100,11 @@ content::type::attribute::new -content_type {as_item_choices} -attribute_name {s
 content::type::attribute::new -content_type {as_item_type_sa} -attribute_name {increasing_p}  -datatype {boolean}  -pretty_name {Increasing} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_type_sa} -attribute_name {allow_negative_p} -datatype {boolean}  -pretty_name {Allow Negative} -column_spec {char(1)}
 
+# Item type sitewide category
+# uses checkbox, radio, and select box display types
+content::type::new -content_type {as_item_type_swcat} -supertype {content_revision} -pretty_name {Assessment Item Type Sitewide Category} -pretty_plural {Assessment Item Type Sitewide Category} -table_name {as_item_type_swcat} -id_column {as_item_type_id}
+content::type::attribute::new -content_type {as_item_type_swcat} -attribute_name {tree_id} -datatype {number}  -pretty_name {Tree ID} -column_spec {integer constraint as_item_type_swcat_tree_id_fk references category_trees}
+
 # Item answers
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {answer_id}     -datatype {number}  -pretty_name {Parent ID}     -column_spec {integer}
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {data_type}     -datatype {string}  -pretty_name {Data Type}     -column_spec {varchar(20)}

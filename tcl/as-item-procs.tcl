@@ -234,8 +234,31 @@ ad_proc -private as::item::item_data_not_cached  {
 } {
     db_1row item_properties {} -column_array item
 
-    set item(item_type) [string range $item(item_type) end-1 end]
-    set item(display_type) [string range $item(display_type) end-1 end]
+    set item(item_type) [lindex [split $item(item_type) "_"] end]
+    set item(display_type) [lindex [split $item(display_type) "_"] end]
 
     return [array get item]
+}
+
+ad_proc -private as::item::generate_unique_name {
+    args
+} {
+    Generate a unique string to be used as item name
+    
+    @author Roel Canicula (roelmc@info.com.ph)
+    @creation-date 2005-05-06
+    
+    @param args
+
+    @return 
+    
+    @error 
+} {
+    if { [llength $args] } {
+	return [join $args "-"]
+    } elseif { ! [catch {set uuid [exec uuidgen]}] } {
+	return $uuid
+    } else {
+	return "[clock seconds]-[expr round([ns_rand]*100000)]"
+    }
 }

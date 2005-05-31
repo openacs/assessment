@@ -5,9 +5,6 @@ ad_page_contract {
     @cvs-id $Id:
 } {
     action_id:optional
-} -properties {
-    title:onevalue
-    context:onevalue
 }
 
 set package_id [ad_conn package_id]
@@ -24,7 +21,7 @@ if { ![ad_form_new_p -key action_id] } {
 }
 
 set page_title "[_ assessment.add_new_action]"
-set context [list [list [export_vars -base asm-action-admin ] [_ assessment.action_admin]] $page_title]
+set context_bar [ad_context_bar [list [export_vars -base asm-action-admin ] [_ assessment.action_admin]] $page_title]
 
 ad_form -name action_admin -form {
     action_id:key

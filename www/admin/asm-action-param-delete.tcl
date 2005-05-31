@@ -6,13 +6,10 @@ ad_page_contract {
 } {
     parameter_id:integer
     action_id:integer
-} -properties {
-    page_title:onevalue
-    context:onevalue
 }
 
 set page_title [_ assessment.delete_parameter]
-set context [list [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
+set context_bar [ad_context_bar [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
 db_1row select_param_info {select type,varname,description,query 
 	from as_action_params 
     where parameter_id = :parameter_id}

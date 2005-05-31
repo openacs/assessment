@@ -13,7 +13,6 @@ ad_page_contract {
     section_id:integer,notnull
     as_item_id:integer,notnull
     choice_id:integer,notnull
-    mc_id:integer,notnull
 }
 
 set package_id [ad_conn package_id]

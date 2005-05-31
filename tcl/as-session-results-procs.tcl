@@ -23,7 +23,7 @@ ad_proc -public as::session_results::new {
     # Insert as_session_results in the CR (and as_session_results table) getting the revision_id
     db_transaction {
 	if {![db_0or1row result_exists {}]} {
-	    set result_item_id [content::item::new -parent_id $folder_id -content_type {as_session_results} -name [exec uuidgen]]
+	    set result_item_id [content::item::new -parent_id $folder_id -content_type {as_session_results} -name [as::item::generate_unique_name]]
 	}
         set result_id [content::revision::new \
 			   -item_id $result_item_id \
