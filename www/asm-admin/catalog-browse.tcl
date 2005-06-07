@@ -173,7 +173,7 @@ list::create \
     -elements $elements \
     -bulk_actions $bulk_actions \
     -bulk_action_export_vars { assessment_id section_id after } \
-    -page_size_variable_p 1 \
+    -page_size $page_size \
     -page_flush_p 1 \
     -page_query_name $page_query
 

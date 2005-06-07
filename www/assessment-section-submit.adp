@@ -20,7 +20,7 @@
 <table border="0">
   <tr bgcolor="#d0d0d0"><td><b>@section.title@</b></td></tr>
   <tr><td><i>@section.description@</i></td></tr>
-  <tr><td>@section.instructions@</td></tr>
+  <tr><td>@section.instructions;noquote@</td></tr>
 </table>
 
 <table border="0">
