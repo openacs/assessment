@@ -18,6 +18,7 @@ ad_proc -public as::install::assessment_create_install {
 } { 
 
 inter_item_checks::apm_callback::package_install
+
     
 content::type::new -content_type {as_item_choices} -supertype {content_revision} -pretty_name {Assessment Item Choice} -pretty_plural {Assessment Item Choices} -table_name {as_item_choices} -id_column {choice_id}
 content::type::new -content_type {as_item_sa_answers} -supertype {content_revision} -pretty_name {Assessment Item Answer} -pretty_plural {Assessment Item Answer} -table_name {as_item_sa_answers} -id_column {choice_id}
@@ -357,5 +358,10 @@ ad_proc -public as::install::after_upgrade {
 	    0.10d11 0.10d12 {
 		content::type::attribute::new -content_type {as_items} -attribute_name {field_name} -datatype {string} -pretty_name {Item Field Name} -column_spec {varchar(500)}
 	    }
+	    
 	}
 }
+
+
+
+    

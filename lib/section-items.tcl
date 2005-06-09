@@ -27,6 +27,7 @@ db_multirow -extend { checks_related presentation_type html item_type choice_ori
     
     set checks [as::section::checks_list -assessment_id $assessment_id -section_id $section_id] 
     set checks_related 0
+    ns_log notice "[llength $checks]"
     foreach  check_sql $checks {
 	set cond_list  [split $check_sql "="]
 	set item_id [lindex [split [lindex $cond_list 2] " "] 0]

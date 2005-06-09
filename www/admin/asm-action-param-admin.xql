@@ -29,11 +29,5 @@
 </querytext>
 </fullquery>
 
-<fullquery name="get_records">
-<querytext>
-    select count(*) from ($query) as query
-
-</querytext>
-</fullquery>
 
 </queryset>

@@ -523,6 +523,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Session">Session</msg>
   <msg key="session_time_remaining">Remaining session time: %assessment_data.pretty_remaining_time%</msg>
   <msg key="Sessions">Sessions</msg>
+  <msg key="set_reg_asm">New Registration Assessment</msg>
   <msg key="Show_Assessments">Show Assessments</msg>
   <msg key="Show_Feedback">Show Feedback</msg>
   <msg key="show_item_name">Question name displayed</msg>

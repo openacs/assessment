@@ -20,7 +20,7 @@ if { ![ad_form_new_p -key parameter_id] } {
 
 
 set context [list [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
-
+set user_id [ad_conn user_id]
 
 set type_options [list [list "[_ assessment.query]" q] [list "[_ assessment.var ]" n]]
 
@@ -46,11 +46,16 @@ ad_form -name parameter_admin -form {
 	}
     {action_id:text(hidden) {value $action_id}}
 
-} -select_query_name {get_param_info} -new_data {
+} -edit_request {
+    db_1row get_param_info {}
+} -new_data {
     if { $type == "q" } {
-	set count_query_record [db_1row get_records "" ]
-	if { $count_query_record != 0 } {
-	        db_dml insert_param {}
+	
+	set user_id [ad_conn user_id]	
+	set count_query_record [db_list_of_lists get_records "$query" ]
+	
+	if { [llength $count_query_record] != 0 } {
+	    db_dml insert_param {}
 	} else {
 	    ad_script_abort
 	}
@@ -60,17 +65,20 @@ ad_form -name parameter_admin -form {
 } -edit_data {
 
     if { $type == "q" } {
-	set count_query_record [db_1row get_records "" ]
-	if { $count_query_record != 0 } {
-	        db_dml edit_param {}
+	set user_id [ad_conn user_id]	
+	set count_query_record [db_list_of_lists get_records "$query" ]
+	
+	if { [llength $count_query_record] != 0 } {
+	    db_dml edit_param {}
 	} else {
 	    ad_script_abort
 	}
     } else {
 	db_dml edit_param {}
     }
-
-
+    
+    
 } -on_submit {
+    
     ad_returnredirect "asm-action-param-admin?action_id=$action_id"
 }
