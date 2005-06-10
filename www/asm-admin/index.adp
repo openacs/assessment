@@ -1,5 +1,4 @@
 <master>
-<property name="title">@title;noquote@</property>
 <property name="context">@context;noquote@</property>
 
 <if @package_admin_p@ eq 1>

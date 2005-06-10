@@ -580,3 +580,34 @@ ad_proc -public as::assessment::check::copy_item_checks {
 	}
     }
 }
+
+
+ad_proc -public as::assessment::check::eval_single_check {
+    {-session_id}
+    {-assessment_id}
+    {-inter_item_check_id}
+} {
+    
+} {
+    db_1row get_check_info {} 
+    
+    set perform [db_string check_sql $check_sql -default 0]
+    ns_log notice "$check_sql $perform"
+    if {$perform == 1} {
+	set failed ""
+	as::assessment::check::manual_action_log -check_id $inter_item_check_id -session_id $session_id 
+    }
+}
+
+
+ad_proc -public as::assessment::check::add_manual_check {
+    {-assessment_id:required}
+    {-inter_item_check_id:required}
+} {
+    
+} {
+    set sessions [db_list_of_lists get_sessions {select session_id from as_sessions where assessment_id=:assessment_id}]
+    foreach session_id $sessions {
+	as::assessment::check::eval_single_check -session_id $session_id -assessment_id $assessment_id  -inter_item_check_id $inter_item_check_id
+    }
+}

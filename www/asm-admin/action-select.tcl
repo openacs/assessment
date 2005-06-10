@@ -22,6 +22,8 @@ permission::require_permission -object_id $package_id -privilege create
 
 permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
+set assessment_rev_id $assessment_data(assessment_rev_id)
+
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
@@ -64,12 +66,12 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
 	{help_text "[_ assessment.action_that_will]"}
 	{$action_value}
     }
-	{action_perform:text(select)
-	    {label "[_ assessment.when_this_will]"}
-	    {options $options}
-	    {help_text "[_ assessment.when_this_action]"}
-	    {$action_perform_value}
-	}
+    {action_perform:text(select)
+	{label "[_ assessment.when_this_will]"}
+	{options $options}
+	{help_text "[_ assessment.when_this_action]"}
+	{$action_perform_value}
+    }
     {user_message:text(textarea),optional
 	{label "[_ assessment.message]"}
 	{html {cols 50} {rows 15}}
@@ -90,9 +92,9 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
 	    set perform [db_string action_perform {}]
 	    if { $perform==$action_perform} {
 		db_dml edit_action {}
-
+		
 	    } else {
-
+		
 		#re-order the other group
 		as::assessment::check::re_order_actions -check_id $inter_item_check_id -section_id $section_id -action_perform $perform
 		set order_value [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
@@ -101,7 +103,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
 	} else {
 	    db_dml delete_action_map {}
 	    db_dml delete_param_map {}
-		
+	    
 	    set order_value [as::assessment::check::get_max_order -section_id $section_id -action_perform $action_perform]
 	    db_dml select_action {}
 	}
@@ -109,7 +111,12 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     
     
 } -on_submit {
-
     set url "action-params?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&action_id=$action_id&section_id=$section_id"
     ad_returnredirect "${url}$return_url"
+    
+} -after_submit {
+    if {  $action_perform == "m" } {
+	as::assessment::check::add_manual_check -assessment_id $assessment_rev_id -inter_item_check_id  $inter_item_check_id
+    }
+    
 }

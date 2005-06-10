@@ -230,7 +230,7 @@ dotlrn_community::add_user_to_community -community_id $community_id -user_id $us
 	);
 
 v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''community_id'',''Community to add the user'', ''select pretty_name,community_id from dotlrn_communities'');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''community_id'',''Community to add the user'', ''select pretty_name,community_id from dotlrn_communities where community_id in (select object_id from acs_permissions_all where grantee_id=:user_id)'');
 
 	return v_action_id;
 end;' language 'plpgsql';

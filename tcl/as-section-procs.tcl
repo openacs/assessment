@@ -371,7 +371,8 @@ ad_proc -private as::section::checks_list {
     
     Allow caching of the choice_orientation as it is unlikely to change.
 } {
-    return [util_memoize [list as::section::checks_list_not_cached -assessment_id $assessment_id -section_id $section_id]]
+    
+    return [as::section::checks_list_not_cached -assessment_id $assessment_id -section_id $section_id]
 }
 
 ad_proc -private as::section::checks_list_not_cached {

@@ -19,6 +19,7 @@ ad_page_contract {
 }
 
 set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 permission::require_permission -object_id $package_id -privilege create
 
 permission::require_permission -object_id $assessment_id -privilege admin

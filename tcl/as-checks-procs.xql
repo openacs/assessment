@@ -343,6 +343,11 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::check::eval_single_check.get_check_info">
+      <querytext>
+      select * from as_inter_item_checks where inter_item_check_id=:inter_item_check_id
+      </querytext>
+</fullquery>
 
 
 </queryset>

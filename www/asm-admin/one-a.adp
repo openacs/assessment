@@ -81,7 +81,7 @@
 	<if @admin_p@ eq 1>	
 	 <if @anonymous_p@ eq t>
 	   <if @read_p@ eq 1>
-	      <br><a href="@url@admin/set-reg-assessment?assessment_id=@assessment_id@">#acs-subsite.set_reg_asm#</a>
+	      <br><a href="@reg_url@/set-reg-assessment?assessment_id=@assessment_id@">#acs-subsite.set_reg_asm#</a>
 	   </if>
          </if>
         </if>

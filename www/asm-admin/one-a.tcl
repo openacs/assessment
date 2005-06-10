@@ -11,6 +11,8 @@ ad_page_contract {
     assessment_id:integer
     {context ""}
     {reg_p ""}
+    {asm_instance ""}
+    {reg_url ""}
 }
 set is_reg_asm_p ""
 set package_id [ad_conn package_id]
@@ -24,12 +26,17 @@ as::assessment::data -assessment_id $assessment_id
 set context [list [list index [_ assessment.admin]] $assessment_data(title)]
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
-set subsite_id [ad_conn subsite_id]
+set subsite_id [subsite::main_site_id]
 set url [apm_package_url_from_id $subsite_id]
 set anonymous_p [db_string has_privilege {} -default "f"]
 set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
 set value [parameter::get -parameter AsmForRegisterId -package_id $subsite_id]
 
+if { [exists_and_not_null asm_instance]} {
+    set reg_url "[apm_package_url_from_id $asm_instance]admin"
+} else {
+    set reg_url "../admin"
+} 
 if { [string eq $assessment_id $value] } {
     set is_reg_asm_p "[_ assessment.reg_asm]"
 }
