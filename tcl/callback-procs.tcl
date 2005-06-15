@@ -2,7 +2,7 @@ ad_library {
     Callback definitions 
     
 }
-ad_proc -public -callback user::registration -impl url {} {
+ad_proc -public -callback user::registration -impl asm_url {} {
     
     Return the properly formed link (URL) that the user will click to go into the registration process.
     

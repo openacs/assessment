@@ -19,11 +19,6 @@ ad_proc -public as::install::assessment_create_install {
 
 inter_item_checks::apm_callback::package_install
 
-set value [parameter::get -parameter "AsmForRegisterId" -package_id [subsite::main_site_id]]
-
-if {[empty_string_p $value]} {
-    apm_parameter_register "AsmForRegisterId" "Assessment used on the registration process." "acs-subsite" "0" "number" "user-login"
-}
 
     
 content::type::new -content_type {as_item_choices} -supertype {content_revision} -pretty_name {Assessment Item Choice} -pretty_plural {Assessment Item Choices} -table_name {as_item_choices} -id_column {choice_id}
