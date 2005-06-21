@@ -13,7 +13,7 @@ set subsite_id [subsite::main_site_id]
 set asm_instance [ad_conn package_id]
 
 if {![exists_and_not_null assessment_id]} {
-    set value [parameter::get -parameter AsmForRegisterId -package_id $subsite_id]
+    set value [parameter::get -parameter RegistrationId -package_id $subsite_id]
     set assessment_id $value
 }
 
@@ -46,7 +46,8 @@ ad_form -name get_assessment  -form {
 	    ad_returnredirect "${url}asm-admin/one-a?assessment_id=$assessment_id&reg_p=1&asm_instance=$asm_instance"
 	}
     }  else {
-	parameter::set_value -package_id [subsite::main_site_id] -parameter AsmForRegisterId -value $assessment_id
+	parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationId -value $assessment_id
+	parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationImplName -value "asm_url"
 	ad_returnredirect ""
     }
 }

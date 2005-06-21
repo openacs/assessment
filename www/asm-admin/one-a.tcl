@@ -30,7 +30,7 @@ set subsite_id [subsite::main_site_id]
 set url [apm_package_url_from_id $subsite_id]
 set anonymous_p [db_string has_privilege {} -default "f"]
 set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
-set value [parameter::get -parameter AsmForRegisterId -package_id $subsite_id]
+set value [parameter::get -parameter RegistrationId -package_id $subsite_id]
 
 if { [exists_and_not_null asm_instance]} {
     set reg_url "[apm_package_url_from_id $asm_instance]admin"

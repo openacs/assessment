@@ -15,10 +15,7 @@ ad_page_contract {
 }
 
 set user_id [ad_conn user_id]
-if { $user_id != 0} {
-    db_dml update_session {update as_sessions set subject_id=:user_id where session_id=:session_id}
-    
-}
+db_dml update_session {update as_sessions set subject_id=:user_id where session_id=:session_id}
 
 
 
@@ -29,7 +26,7 @@ if { [exists_and_not_null next_asm ] } {
     ad_returnredirect "assessment?assessment_id=$next_asm"
 } 
 
-set value [parameter::get -parameter "AsmForRegisterId" -package_id [subsite::main_site_id]]
+set value [parameter::get -parameter "RegistrationId" -package_id [subsite::main_site_id]]
 
 if  {[info exists return_url]} {
     if { $return_url != ""} {
