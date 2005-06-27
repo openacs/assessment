@@ -19,7 +19,7 @@
         from as_sessions 
         where completed_datetime is null
         and assessment_id = :assessment_rev_id
-        and subject_id = :user_id
+        and subject_id = :user_id and subject_id <> 0
 
 	</querytext>
 </fullquery>

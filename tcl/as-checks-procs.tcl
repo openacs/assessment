@@ -288,6 +288,7 @@ ad_proc -public as::assessment::check::manual_action_exec {
 } { 
     
 } {
+    db_0or1row subject_id {select subject_id from as_sessions where session_id=:session_id}
     db_foreach get_check_params { } {
 	set parameter_name [db_1row select_name {}]
 	
