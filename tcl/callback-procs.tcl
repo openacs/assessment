@@ -7,8 +7,7 @@ ad_proc -public -callback user::registration -impl asm_url {} {
     Return the properly formed link (URL) that the user will click to go into the registration process.
     
 } {
-    set assessment_id [parameter::get -parameter AsmForRegisterId]
-    
+    set assessment_id [parameter::get -parameter RegistrationId]
     if { $assessment_id != 0 } {
 	
 	set package_id [db_string package_id {}]
