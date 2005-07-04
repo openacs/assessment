@@ -38,11 +38,11 @@ foreach orientation_type [list horizontal vertical] {
 ad_form -name item_add_display_f -action item-add-display-f -export { assessment_id section_id after } -form {
     {as_item_id:key}
     {html_options:text,optional,nospell {label "[_ assessment.Html_Options]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Html_Options_help]"}}
-    {abs_size:text,nospell {label "[_ assessment.Absolute_Size]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.Absolute_Size_help]"}}
+    {abs_size:text,nospell {label "[_ assessment.Absolute_Size]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.Absolute_Size_help]"} }
     {box_orientation:text(select) {label "[_ assessment.Box_Orientation]"} {options $orientation_types} {help_text "[_ assessment.Box_Orientation_help]"}}
 } -edit_request {
     set html_options ""
-    set abs_size ""
+    set abs_size "1000"
     set box_orientation "vertical"
 } -validate {
     {html_options {[as::assessment::check_html_options -options $html_options]} "[_ assessment.error_html_options]"}
