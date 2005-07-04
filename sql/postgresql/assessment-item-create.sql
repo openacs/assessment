@@ -124,3 +124,18 @@ create table as_item_help_map (
 	-- order in which the messages appear
 	sort_order	integer
 );
+
+-- File Upload Answers
+create table as_item_fu_answers (
+	choice_id       integer
+                        constraint as_item_fu_answers_id_pk
+                        primary key
+			constraint as_item_fu_answers_id_fk
+			references cr_revisions(revision_id),
+	answer_id	integer
+			constraint as_item_fu_answers_parent_id_fk
+			references as_item_type_fu(as_item_type_id),
+	file_id         integer	
+			constraint as_item_fu_file_id_fk
+			references cr_revisions(revision_id)
+);

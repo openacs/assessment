@@ -24,7 +24,7 @@ foreach one_choice $choices {
     incr count
     set options ""
     if {$count < $total} {
-	append options " <a href=\\\"item-mc-edit-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=down\\\"><img src=\\\"/resources/assessment/down.gif\\\" border=0 alt=\\\"[_ assessment.Move_Down]\\\"></a>"
+	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=down\\\"><img src=\\\"/resources/assessment/down.gif\\\" border=0 alt=\\\"[_ assessment.Move_Down]\\\"></a>"
     }
     if {$count > 1} {
 	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=up\\\"><img src=\\\"/resources/assessment/up.gif\\\" border=0 alt=\\\"[_ assessment.Move_Up]\\\"></a>"

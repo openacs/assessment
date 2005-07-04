@@ -7,14 +7,19 @@ ad_form -name session_results_$section_id -mode display -form {
 }
 
 # todo: display feedback text
-db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title num } items session_items {} {
+db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title num view} items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
 
     set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback]
+    
 
     if {$presentation_type == "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
+    if {$presentation_type == "f"} {
+	set view "[as::item_display_$presentation_type\::view -item_id $as_item_id -session_id $session_id -section_id $section_id]"
+    }
+
     if {$presentation_type == "rb" || $presentation_type == "cb"} {
 	array set item [as::item::item_data -as_item_id $as_item_id]
 	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]

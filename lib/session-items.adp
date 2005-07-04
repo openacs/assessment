@@ -77,7 +77,7 @@
               <else><br><b>#assessment.not_answered#</b> </else>
             </else>
             <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
-            <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
+            <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@"> 
           </if>
         </if>
       </td>
@@ -101,8 +101,11 @@
         </else>
       </if>
       <elseif @items.presentation_type@ eq fitb>
-        <td>@items.html;noquote@
+        <td>@items.html;noquote@ 
       </elseif>
+      <elseif @items.presentation_type@ eq f>
+      <a href= "@items.view@" onclick= "var w=window.open(this.href, 'newWindow', 'width=650,height=400'); return !w;"><formwidget id="response_to_item.@items.as_item_id@"></a>
+	</elseif>
       <else>
         <td colspan=10><formwidget id="response_to_item.@items.as_item_id@">
       </else>

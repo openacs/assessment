@@ -25,6 +25,8 @@ insert into as_item_types_map (item_type, display_type)
 values ('mc', 'cb');
 insert into as_item_types_map (item_type, display_type)
 values ('mc', 'sb');
+insert into as_item_types_map (item_type, display_type)
+values ('fu', 'f');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('ca', 'tb');
 -- insert into as_item_types_map (item_type, display_type)

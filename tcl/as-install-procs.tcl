@@ -210,6 +210,17 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {poin
 # Session results
 content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
 content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
+
+#File Upload Ansers
+content::type::new -content_type {as_item_type_fu} -supertype {content_revision} -pretty_name {Assessment Item Type File Upload} -pretty_plural {Assessment Item Type File Upload} -table_name {as_item_type_fu} -id_column {as_item_type_id}
+
+content::type::new -content_type {as_item_display_f} -supertype {content_revision} -pretty_name {Assessment Item Display File} -pretty_plural {Assessment Item Display File} -table_name {as_item_display_f} -id_column {as_item_display_id}
+
+# File Upload display type
+content::type::attribute::new -content_type {as_item_display_f} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
+content::type::attribute::new -content_type {as_item_display_f} -attribute_name {abs_size} -datatype {string}    -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
+content::type::attribute::new -content_type {as_item_display_f} -attribute_name {box_orientation} -datatype {string}    -pretty_name {Box Orientation} -column_spec {varchar(20)}
+
 }
 
 ad_proc -public as::install::package_instantiate {
@@ -236,6 +247,9 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_ta} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_section_display_types} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_fu_answers} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_display_f} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t

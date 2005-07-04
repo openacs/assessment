@@ -33,6 +33,9 @@ db_1row general_item_data {}
 set item_type [string range [db_string item_type {}] end-1 end]
 set display_type [string range [db_string display_type {}] end-1 end]
 
+if {[string eq $display_type "_f"]} {
+    set display_type f
+}
 
 ad_form -name item_edit -mode display -action item-edit-general -export { assessment_id section_id as_item_id } -form {
     {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {value $title} {help_text "[_ assessment.item_Title_help]"}}

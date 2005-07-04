@@ -149,7 +149,7 @@ set edit_data "{
 				       -numeric_value \"\" \\
 				       -text_value \"\" \\
 				       -content_value \"\" \\
-				       -feedback_text \"\" 
+				       -feedback_text \"\" \\
 				       -selected_p \"\" \\
 				       -correct_answer_p \[ad_decode \[info exists correct(\$i)\] 0 f t\] \\
 				       -sort_order \$count \\
