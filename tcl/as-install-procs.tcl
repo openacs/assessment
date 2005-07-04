@@ -384,10 +384,13 @@ ad_proc -public as::install::after_upgrade {
 		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {abs_size} -datatype {string} -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
 		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {box_orientation} -datatype {string} -pretty_name {Box Orientation} -column_spec {varchar(20)}
 		
-		# File Upload registration
-		content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
-		content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_display_f} -include_subtypes t
-		
+	        db_foreach packages { select package_id from apm_packages where package_key = 'assessment'} { 
+		    set folder_id [as::assessment::folder_id -package_id $package_id]
+		    
+		    # File Upload registration
+		    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
+		    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_display_f} -include_subtypes t
+		}
 		
 	    }
 	    
