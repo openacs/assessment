@@ -7,6 +7,7 @@ ad_page_contract {
     assessment_id:integer,optional
     {__new_p 0}
     {permission_p 0}
+    {edit_p:optional "0"}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -43,7 +44,7 @@ ad_form -name assessment_form -export permission_p -action assessment-form -form
     {assessment_id:key}
 }
 
-if {[info exists assessment_id]} {
+if {[info exists assessment_id] &&   $edit_p } {# 
     ad_form -extend -name assessment_form -form {
 	{name:text(inform) {label "#assessment.Name#"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
     }
@@ -124,7 +125,7 @@ ad_form -extend -name assessment_form -form {{secure_access_p:text(select) {labe
 	set end_time [util::date::acquire ansi $end_time]
     }
 } -validate {
-    {name {[as::assessment::unique_name -name $name -new_p $__new_p]} "[_ assessment.name_used]"}
+    {name {[as::assessment::unique_name -name $name -new_p $__new_p]} "[_ assessment.name_used] $assessment_id"}
 } -on_submit {
     if {$start_time == "NULL"} {
 	set start_time ""
