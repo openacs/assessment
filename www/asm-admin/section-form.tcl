@@ -36,7 +36,7 @@ if {![info exists section_id] || $__new_p} {
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set display_types [db_list_of_lists section_display_types {}]
-set display_types [concat [list [list "[_ assessment.section_new_display]" ""]] $display_types]
+set display_types [concat [list [list "[_ assessment.no_display]" ""] [list "[_ assessment.section_new_display]" "-1"]] $display_types]
 
 
 ad_form -name section_form -action section-form -export { assessment_id after } -form {
@@ -69,6 +69,8 @@ ad_form -extend -name section_form -form {
     {num_items:integer,optional,nospell {label "[_ assessment.num_items]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_items_help]"}}
     {points:integer,optional,nospell {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_section_help]"}}
     {display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.section_Display_Type_help]"}}
+    {no_display:text(hidden) {value f}
+    }
 } -new_request {
     set name ""
     set title ""
@@ -79,6 +81,7 @@ ad_form -extend -name section_form -form {
     set num_items ""
     set points ""
     set display_type_id ""
+    set no_display "f"
 } -edit_request {
     db_1row section_data {}
 } -validate {
@@ -89,6 +92,14 @@ ad_form -extend -name section_form -form {
 	set points 0
     }
 } -new_data {
+    if { [empty_string_p $display_type_id]} {
+	set no_display "t"
+    }
+    if { $display_type_id == -1} {
+	set display_type_id ""
+    }
+
+    
     db_transaction {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 
@@ -112,7 +123,15 @@ ad_form -extend -name section_form -form {
 	}
     }
 } -edit_data {
+
     db_transaction {
+	if { $display_type_id == -1} {
+	    set display_type_id ""
+	}
+	if { [empty_string_p $display_type_id]} {
+	    set no_display "t"
+	}
+	
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 
@@ -135,11 +154,14 @@ ad_form -extend -name section_form -form {
 	}
     }
 } -after_submit {
-    if {[empty_string_p $display_type_id]} {
-	set section_id $new_section_id
-	ad_returnredirect [export_vars -base section-display-form {assessment_id section_id}]
+    if { $no_display } {
+	ad_returnredirect [export_vars -base one-a {assessment_id}]
 	ad_script_abort
-    } else {
+    } elseif {[empty_string_p $display_type_id]} {
+	    set section_id $new_section_id
+	    ad_returnredirect [export_vars -base section-display-form {assessment_id section_id}]
+	    ad_script_abort
+    }  else {
 	ad_returnredirect [export_vars -base one-a {assessment_id}]
 	ad_script_abort
     }
