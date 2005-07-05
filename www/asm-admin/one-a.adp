@@ -2,8 +2,10 @@
 <property name="title">@p_title@</property>
 <property name="context">@context;noquote@</property>
 
-#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date# - <a href="assessment-history?assessment_id=@assessment_id@">#assessment.history#</a>
-
+<table width=100%>
+<tr><td>#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date# - <a href="assessment-history?assessment_id=@assessment_id@">#assessment.history#</a></td>
+<td align=right><a href=".">#assessment.other_asm#</a></td></tr>
+</table>
 
 <p>
 <table class="table-display" cellpadding=2 cellspacing=0>

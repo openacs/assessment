@@ -397,6 +397,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="order_of_entry">Order of Entry</msg>
   <msg key="Order_Type">Order Type</msg>
   <msg key="Order_Type_help">Ordering of choices</msg>
+  <msg key="other_asm">Manage another assessment</msg>
   <msg key="Other_Sessions">Other Sessions</msg>
   <msg key="Out_of">Out of</msg>
   <msg key="parameter_description">Description</msg>
