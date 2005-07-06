@@ -77,15 +77,15 @@ foreach one_choice $choices {
 # add new empty form entries for new choices
 for {set i 1} {$i <= $num_choices} {incr i} {
     incr count
-    if {[info exists choice(-$i)]} {
-	append ad_form_code "\{choice.-$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(-$i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+    if {[info exists choice(_$i)]} {
+	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(_$i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     } else {
-	append ad_form_code "\{choice.-$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     }
-    if {[info exists correct(-$i)]} {
-	append ad_form_code "\{correct.-$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+    if {[info exists correct(_$i)]} {
+	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     } else {
-	append ad_form_code "\{correct.-$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     }
 }
 append ad_form_code "\}"
@@ -129,9 +129,9 @@ set edit_data "{
 
 	# edit existing choices
 	set count 0
-	foreach i \[lsort -integer \[array names choice\]\] {
-	    if {\$i > 0 && !\[empty_string_p \$choice(\$i)\]} {
-		incr count
+	foreach i \[lsort \[array names choice\]\] {
+            if {\[string range  \$i 0 0\] != \"_\" && !\[empty_string_p \$choice(\$i)\]} {
+          	incr count
 		set new_choice_id \[as::item_choice::new_revision -choice_id \$i -mc_id \$new_item_type_id\]
 		set title \$choice(\$i)
 		set correct_answer_p \[ad_decode \[info exists correct(\$i)\] 0 f t\]
@@ -141,8 +141,9 @@ set edit_data "{
 	}
 
 	# add new choices
-	foreach i \[lsort -integer -decreasing \[array names choice\]\] {
-	    if {\$i < 0 && !\[empty_string_p \$choice(\$i)\]} {
+	foreach i \[lsort \[array names choice\]\] {
+	
+	    if {\[string range  \$i 0 0\] == \"_\" && !\[empty_string_p \$choice(\$i)\]} {
 		incr count
 		set new_choice_id \[as::item_choice::new -mc_id \$new_item_type_id \\
 				       -title \$choice(\$i) \\
