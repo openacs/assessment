@@ -32,6 +32,7 @@ ad_proc -public as::assessment::new {
     {-show_feedback ""}
     {-section_navigation ""}
     {-survey_p ""}
+    {-type ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -80,7 +81,9 @@ ad_proc -public as::assessment::new {
 						   [list password $password] \
 						   [list show_feedback $show_feedback] \
 						   [list section_navigation $section_navigation] \
-						   [list survey_p $survey_p]] ]
+						   [list survey_p $survey_p] \
+				                   [list type $type]]]
+			      
     }
 
     return $as_assessment_id
@@ -111,6 +114,7 @@ ad_proc -public as::assessment::edit {
     {-password ""}
     {-show_feedback ""}
     {-section_navigation ""}
+    {-type ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-10-26
@@ -146,7 +150,8 @@ ad_proc -public as::assessment::edit {
 					     [list ip_mask $ip_mask] \
 					     [list password $password] \
 					     [list show_feedback $show_feedback] \
-					     [list section_navigation $section_navigation] ] ]
+					     [list section_navigation $section_navigation] \
+					     [list type $type]] ]
 
 	copy_sections -assessment_id $assessment_rev_id -new_assessment_id $new_rev_id
     }
@@ -178,8 +183,9 @@ ad_proc -public as::assessment::data {
 	# own way
 	return
     }
-
+    
     set assessment_data(creator_name) [person::name -person_id $assessment_data(creation_user)]
+    set assessment_data(title) [as::assessment::title -title $assessment_data(title)]
 }
 
 ad_proc -public as::assessment::new_revision {
@@ -219,7 +225,8 @@ ad_proc -public as::assessment::new_revision {
 					     [list ip_mask $a(ip_mask)] \
 					     [list password $a(password)] \
 					     [list show_feedback $a(show_feedback)] \
-					     [list section_navigation $a(section_navigation)] ] ]
+					     [list section_navigation $a(section_navigation)]  \
+					     [list type $a(type)]]]
 	
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
 	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
@@ -279,7 +286,8 @@ ad_proc -public as::assessment::copy {
 					     [list ip_mask $a(ip_mask)] \
 					     [list password $a(password)] \
 					     [list show_feedback $a(show_feedback)] \
-					     [list section_navigation $a(section_navigation)] ] ]
+					     [list section_navigation $a(section_navigation)] \
+					     [list type $a(type)]] ]
 	
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
 	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
@@ -555,4 +563,18 @@ ad_proc -private as::assessment::compare_numbers {a b} {
 }
 
 
+ad_proc -private as::assessment::title {
+    -title
+} {
+    @annyflores@viaro.net
+    Remove html tags from assessment title
+} {
+    
+    regsub -all {\<[a-zA-Z]*\>} $title "" title
+    regsub -all {</[a-z]*>} $title "" title
+    regsub -all {<a [^<]*>} $title "" title
+   
+    return $title
 
+
+}
