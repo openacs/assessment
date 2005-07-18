@@ -34,9 +34,9 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
 }
 
 if { $sw_admin } {
-    set actions [list "[_ assessment.New_Assessment]" assessment-form "[_ assessment.New_Assessment2]" [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]]
+    set actions [list "[_ assessment.New_Assessment]" assessment-new "[_ assessment.New_Assessment2]" [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]]
 } else {
-    set actions [list "[_ assessment.New_Assessment]" assessment-form "[_ assessment.New_Assessment2]"]
+    set actions [list "[_ assessment.New_Assessment]" assessment-new"[_ assessment.New_Assessment2]"]
 }
 
 if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
@@ -45,6 +45,7 @@ if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
 
 #get all assessments order by title
 db_multirow -extend { export permissions admin_request} assessments $m_name {} {
+    set title [as::assessment::title -title $title]
     set export "[_ assessment.Export]"
     set permissions "[_ assessment.permissions]"
     set admin_request "[_ assessment.Request] [_ assessment.Administration]"
@@ -58,7 +59,7 @@ list::create \
     -elements {
 	title {
 	    label "[_ assessment.Title]"
-	    link_url_eval "[export_vars -base one-a { assessment_id }]"
+	    display_template {<a href="one-a?assessment_id=@assessments.assessment_id@">@assessments.title;noquote@</a>} 
 	}
 	export {
 	    label "[_ assessment.Export]"

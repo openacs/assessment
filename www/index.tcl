@@ -24,7 +24,7 @@ template::list::create \
     -elements {
         title {
             label "[_ assessment.open_assessments]"
-            display_template {<a href="@assessments.assessment_url@">@assessments.title@</a>}
+            display_template {<a href="@assessments.assessment_url@">@assessments.title;noquote@</a>}
         }
     } -main_class {
         narrow
@@ -33,6 +33,7 @@ template::list::create \
 # get the information of all open assessments
 template::multirow create assessments assessment_id title description assessment_url
 db_foreach open_asssessments {} {
+    set title [as::assessment::title -title $title]
     if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
 	if {[empty_string_p $password]} {
 	    set assessment_url [export_vars -base "assessment" {assessment_id}]
@@ -51,7 +52,7 @@ template::list::create \
     -elements {
         title {
             label "[_ assessment.Assessments]"
-            display_template {@sessions.title@}
+            display_template {@sessions.title;noquote@}
         }
         session {
             label {[_ assessment.Sessions]}
