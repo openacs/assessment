@@ -151,6 +151,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="choice_set_title">Title</msg>
   <msg key="Choice_Sets">Existing Choice Set</msg>
   <msg key="choose_action">Choose the action to perform</msg>
+  <msg key="choose_type">What kind of assessment you want to create?</msg>
   <msg key="comparator">Comparator</msg>
   <msg key="comparator_not_set_error">You must set a Comparator for this Comparison Type</msg>
   <msg key="comparison_type">Comparison Type</msg>
@@ -542,7 +543,12 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="triggers">Trigger</msg>
   <msg key="try_again">Try again</msg>
   <msg key="two_days">Two days ago</msg>
+  <msg key="Type">Type</msg>
+  <msg key="type_1">Survey</msg>
+  <msg key="type_2">Expert Assessment</msg>
+  <msg key="type_ea">Expert Assessment</msg>
   <msg key="type_of_trigger">Type of the trigger</msg>
+  <msg key="type_s">Survey</msg>
   <msg key="unhappy_search">Unhappy with your search result?</msg>
   <msg key="unlimited_time">Unlimited time for response</msg>
   <msg key="unlimited_tries">Unlimited number of tries allowed</msg>

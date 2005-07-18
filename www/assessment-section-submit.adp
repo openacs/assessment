@@ -3,11 +3,11 @@
 <property name="context">@context;noquote@</property>
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
-<tr><th colspan="3">@assessment_data.title@</th></tr>
+<tr><th colspan="3">@assessment_data.html_title;noquote@</th></tr>
 <tr><td><i><font size="1">@assessment_data.instructions;noquote@</font></i></td></tr>
 <tr><td align=right>
-#assessment.section_counter#
-<br>#assessment.item_counter#
+<!--#assessment.section_counter#
+<br>#assessment.item_counter#-->
 <if @assessment_data.time_for_response@ not nil><br>#assessment.session_time_remaining#</if>
 <if @section.max_time_to_complete@ not nil><br>#assessment.section_time_remaining#</if>
 </td></tr>

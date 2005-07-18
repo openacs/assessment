@@ -17,8 +17,10 @@ set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
 
+
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
+
 
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
@@ -37,7 +39,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 
 set display_types [db_list_of_lists section_display_types {}]
 set display_types [concat [list [list "[_ assessment.no_display]" ""] [list "[_ assessment.section_new_display]" "-1"]] $display_types]
-
+set type $assessment_data(type)
 
 ad_form -name section_form -action section-form -export { assessment_id after } -form {
     {section_id:key}
@@ -55,19 +57,45 @@ if {[info exists section_id]} {
 
 ad_form -extend -name section_form -form {
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.section_Title_help]"}}
-    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Description_help]"}}
+}
+if {$type > 1} {
+    ad_form -extend -name section_form -form {
+	{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Description_help]"}}
+    }
 }
 
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $_section_id -form_name section_form
 }
 
+
 ad_form -extend -name section_form -form {
     {instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Instructions_help]"}}
-    {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Feedback_help]"}}
-    {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.section_time_help]"}}
+}
+if {$type > 1} {
+    ad_form -extend -name section_form -form {
+	{feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_Feedback_help]"}}
+	{max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.section_time_help]"}}
+    }
+}
+    
+ad_form -extend -name section_form -form {	
     {num_items:integer,optional,nospell {label "[_ assessment.num_items]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_items_help]"}}
-    {points:integer,optional,nospell {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_section_help]"}}
+}
+if {$type > 1} {
+    ad_form -extend -name section_form -form {
+	{points:integer,optional,nospell {label "[_ assessment.points_section]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_section_help]"}}
+    }
+} else {
+    ad_form -extend -name section_form -form {
+	{description:text(hidden) {value ""}}
+	{feedback_text:text(hidden) {value ""}}
+	{max_time_to_complete:text(hidden) {value ""}}
+	{points:text(hidden) {value ""}}
+    }
+}
+
+ad_form -extend -name section_form -form {	
     {display_type_id:text(select),optional {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.section_Display_Type_help]"}}
     {no_display:text(hidden) {value f}
     }
@@ -125,11 +153,12 @@ ad_form -extend -name section_form -form {
 } -edit_data {
 
     db_transaction {
-	if { $display_type_id == -1} {
-	    set display_type_id ""
-	}
 	if { [empty_string_p $display_type_id]} {
 	    set no_display "t"
+	}
+
+	if { $display_type_id == -1} {
+	    set display_type_id ""
 	}
 	
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]

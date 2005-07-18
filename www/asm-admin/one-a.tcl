@@ -23,7 +23,8 @@ permission::require_permission -object_id $assessment_id -privilege admin
 set admin_p [acs_user::site_wide_admin_p]
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
-set context [list [list index [_ assessment.admin]] $assessment_data(title)]
+set title [as::assessment::title -title $assessment_data(title)]
+set context [list [list index [_ assessment.admin]] $title]
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set subsite_id [subsite::main_site_id]
@@ -68,7 +69,7 @@ set target "[export_vars -base one-a {assessment_id reg_p}]"
 set notification_chunk [notification::display::request_widget \
 			    -type assessment_response_notif \
 			    -object_id $assessment_id \
-			    -pretty_name $assessment_data(title) \
+			    -pretty_name   $title \
 			    -url [export_vars -base one-a {assessment_id reg_p}] ]
 
 db_multirow sections assessment_sections {} {

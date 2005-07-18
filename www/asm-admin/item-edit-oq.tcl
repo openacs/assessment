@@ -27,15 +27,33 @@ if {![info exists assessment_data(assessment_id)]} {
 set page_title [_ assessment.edit_item_type_oq]
 set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
 
+set type $assessment_data(type)
+
+
 
 ad_form -name item_edit_oq -action item-edit-oq -export { assessment_id section_id } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.oq_Title_help]"}}
+}
+
+if { $type > 1} {
+    ad_form -extend -name item_edit_oq -form {
     {default_value:text(textarea),optional,nospell {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Deafult_Value_help]"}}
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_help]"}}
     {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
     {keywords:text(textarea),optional {label "[_ assessment.oq_Keywords]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Keywords_help]"}}
-} -edit_request {
+    }
+} else {
+    ad_form -extend -name item_edit_oq -form {
+	{default_value:text(hidden) {value ""}}
+    {feedback_text:text(hidden) {value ""}}
+    {reference_answer:text(hidden) {value ""}}
+    {keywords:text(hidden) {value ""}}
+    }
+
+}
+
+ad_form -extend -name item_edit_oq  -edit_request {
     db_1row item_type_data {}
     set keywords [join $keywords "\n"]
 } -on_submit {

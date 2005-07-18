@@ -167,6 +167,8 @@ content::type::attribute::new -content_type {as_assessments} -attribute_name {pa
 content::type::attribute::new -content_type {as_assessments} -attribute_name {show_feedback}            -datatype {string}  -pretty_name {Assessment Show comments to the user}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {section_navigation}            -datatype {string}  -pretty_name {Assessment Navigation of sections}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {survey_p}            -datatype {string}  -pretty_name {Survey}  -column_spec {char(1)}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
+
 
 # Sessions
 content::type::attribute::new -content_type {as_sessions} -attribute_name {assessment_id}            -datatype {number}  -pretty_name {Assessment ID}  -column_spec {integer}
@@ -392,7 +394,10 @@ ad_proc -public as::install::after_upgrade {
 		}
 		
 	    }
-	    
+	    0.12 0.13 {
+		content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
+		
+	    }
 	}
 }
 

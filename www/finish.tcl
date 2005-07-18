@@ -15,8 +15,12 @@ ad_page_contract {
 }
 
 set user_id [ad_conn user_id]
-db_dml update_session {update as_sessions set subject_id=:user_id where session_id=:session_id}
 
+if { ![string eq $user_id 0]} {
+    
+    db_dml update_session {update as_sessions set subject_id=:user_id where session_id=:session_id}
+    db_dml update_session {update as_item_data set subject_id=:user_id where session_id=:session_id}
+}
 
 
 set page_title "[_ assessment.Response_Submitted]"

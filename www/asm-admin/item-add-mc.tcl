@@ -33,6 +33,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 set folder_id [as::assessment::folder_id -package_id $package_id]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set type $assessment_data(type) 
 set correct_options [list [list "[_ assessment.yes]" t]]
 set add_existing_link [export_vars -base "item-add-mc-existing" {assessment_id section_id as_item_id after}]
 
@@ -45,12 +46,28 @@ foreach display_type [db_list display_types {}] {
 ad_form -name item_add_mc -action item-add-mc -export { assessment_id section_id after num_choices } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.choice_set_title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
+}
+
+if { $type > 1} {
+ad_form -extend -name item_add_mc -form {
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options}  {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
     {num_correct_answers:text,optional,nospell {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
+}
+} else {
+ad_form -extend -name item_add_mc -form {
+    {increasing_p:text(hidden) {value ""}}
+    {negative_p:text(hidden) {value ""}}
+    {num_correct_answers:text(hidden) {value ""}}
+}
+}
+
+
+ad_form -extend -name item_add_mc -form {
     {num_answers:text,optional,nospell {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 }
+
 
 # add form entries for each choice
 set validate_list [list]
@@ -62,6 +79,8 @@ for {set i 1} {$i <= $num_choices} {incr i} {
     } else {
 	append ad_form_code "\{choice.$i:text,optional,nospell \{label \"[_ assessment.Choice] $i\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     }
+    
+    if { $type > 1} {
     if {[info exists correct($i)]} {
 	append ad_form_code "\{correct.$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $i\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     } else {
@@ -69,6 +88,7 @@ for {set i 1} {$i <= $num_choices} {incr i} {
     }
     if {[exists_and_not_null num_correct_answers] && $num_correct_answers > 0} {
 	lappend validate_list "correct.$i {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
+    }
     }
 }
 append ad_form_code "\}"
@@ -149,7 +169,9 @@ set edit_data "{
 
 set after_submit "{
     # now go to form to enter choice-specific data
+
     ad_returnredirect \[export_vars -base \"item-add-mc-choices\" {assessment_id section_id as_item_id after mc_id display_type}\]
+
     ad_script_abort
 }"
 

@@ -1,5 +1,5 @@
 <master>
-<property name="title">@p_title@</property>
+<property name="title">@p_title;noquote@</property>
 <property name="context">@context;noquote@</property>
 
 <table width=100%>
@@ -11,13 +11,15 @@
 <table class="table-display" cellpadding=2 cellspacing=0>
 
 <tr class="odd">
-	<td valign="top">#assessment.Assessment_Title#:<p>#assessment.Description#:<p>#assessment.Instructions#: </td>
+	<td valign="top">#assessment.Assessment_Title#:<p>#assessment.Description#:<p>#assessment.Instructions#:<p>#assessment.Type#:</td>
 	<td valign="top"> 
 	<!-- <a href="assessment-preview?assessment_id=@assessment_id@">#assessment.Preview#</a> -->
-	<a href="assessment-form?assessment_id=@assessment_id@&edit_p=1">#assessment.Edit#</a>
-	@assessment_data.title@ <div align=center><font color=red>@is_reg_asm_p@</font></div>
+	<a href="assessment-new?assessment_id=@assessment_id@&edit_p=1">#assessment.Edit#</a>
+	@assessment_data.title;noquote@ <div align=center><font color=red>@is_reg_asm_p@</font></div>
         <p><if @assessment_data.description@ nil>#assessment.None#</if><else>@assessment_data.description;noquote@</else>
-        <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else></td>
+        <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else>
+	<p><if @assessment_data.type@ nil>#assessment.None#</if><else><if @assessment_data.type@ eq 1>#assessment.type_s#</if> <if @assessment_data.type@ eq 2>#assessment.type_ea#</if></else></td>
+</td>
 </tr>
 
 <tr class="even"><td>#assessment.View_Responses# </td><td>

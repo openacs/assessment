@@ -34,6 +34,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 set package_id [ad_conn package_id]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set type $assessment_data(type)
 
 set order_types [list]
 foreach one_order_type [list alphabetical randomized order_of_entry] {
@@ -46,12 +47,26 @@ ad_form -name section_display_form -action section-display-form -export { assess
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.sect_disp_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.sect_disp_Description_help]"}}
     {num_items:integer,optional,nospell {label "[_ assessment.section_num_Items]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.sect_num_items_help]"}}
+}
+
+if { $type > 1} {
+    ad_form -extend -name section_display_form -form {
     {adp_chunk:text(textarea),optional,nospell {label "[_ assessment.Section_Template]"} {html {rows 5 cols 80}} {help_text "[_ assessment.section_template_help]"}}
     {branched_p:text(select) {label "[_ assessment.section_Branched]"} {options $boolean_options} {help_text "[_ assessment.section_branched_help]"}}
     {back_button_p:text(select) {label "[_ assessment.Back_Button]"} {options $boolean_options} {help_text "[_ assessment.back_button_help]"}}
     {submit_answer_p:text(select) {label "[_ assessment.Submit_Answer]"} {options $boolean_options} {help_text "[_ assessment.submit_answer_help]"}}
     {sort_order_type:text(select) {label "[_ assessment.Section_Order]"} {options $order_types} {help_text "[_ assessment.section_order_help]"}}
-} -new_request {
+    }
+} else {
+   ad_form -extend -name section_display_form -form {
+    {adp_chunk:text(hidden) {value ""}}
+    {branched_p:text(hidden) {value ""}}
+    {back_button_p:text(hidden) {value ""}}
+    {submit_answer_p:text(hidden) {value ""}}
+    {sort_order_type:text(hidden) {value ""}}
+    }
+}
+ad_form -extend -name section_display_form -new_request {
     set title ""
     set description ""
     set num_items ""

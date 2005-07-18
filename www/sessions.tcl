@@ -62,7 +62,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    assessment_name {
 		label {Assessment}
-		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name@</a></if><else>@sessions.assessment_name@</else>}
+		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name;noquote@</a></if><else>@sessions.assessment_name;noquote@</else>}
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}
@@ -87,7 +87,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    assessment_name {
 		label {Assessment}
-		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name@</a></if><else>@sessions.assessment_name@</else>}
+		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name;noquote@</a></if><else>@sessions.assessment_name;noquote@</else>}
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}

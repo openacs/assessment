@@ -122,7 +122,8 @@ create table as_assessments (
 	-- differenciate between an assessment and a survey
 	survey_p 	char(1) default 'f'
 			constraint as_assessments_survey_p_ck
-			check (survey_p in ('t', 'f'))
+			check (survey_p in ('t', 'f')),
+	type		integer
 );
 
 -- Style Options 

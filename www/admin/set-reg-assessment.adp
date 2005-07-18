@@ -5,7 +5,7 @@
 	#acs-subsite.no_assessment#
 </if>
 <else>
-<a href="../asm-admin/assessment-form?permission_p=1" class="button">#acs-subsite.create_asm#</a>
+<a href="../asm-admin/assessment-new?permission_p=1" class="button">#acs-subsite.create_asm#</a>
 <br>
 <br>
 <formtemplate id="get_assessment">

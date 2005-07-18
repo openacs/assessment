@@ -15,6 +15,7 @@ ad_page_contract {
     answer_val:array,optional
     percent:array,optional
     selected:array,optional
+    {type ""}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -33,8 +34,11 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set package_id [ad_conn package_id]
+set type $assessment_data(type)
 set page_title [_ assessment.add_item_type_mc_choices]
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+
+
 
 set selected_options [list [list "[_ assessment.yes]" t]]
 
@@ -45,6 +49,49 @@ ad_form -name item_add_mc_choices -action item-add-mc-choices -export { assessme
 # add form entries for each choice
 set ad_form_code "-form \{\n"
 set count_correct 0
+
+if { $type == 1} {
+    set max_file_size 10000000
+    # [ad_parameter MaxAttachmentSize]
+    set pretty_max_size [util_commify_number $max_file_size]
+    set folder_id [as::assessment::folder_id -package_id $package_id]
+
+    db_transaction {
+	set count 0
+	foreach choice_id [array names feedback] {
+	    set feedback_text $feedback($choice_id)
+	    set selected_p [ad_decode [info exists selected($choice_id)] 0 f t]
+	    set percent_score $percent($choice_id)
+	    set fixed_position $fixed_pos($choice_id)
+	    set answer_value $answer_val($choice_id)
+
+	    eval set content "\$content_$choice_id"
+	    if {![empty_string_p $content]} {
+		set filename [lindex $content 0]
+		set tmp_filename [lindex $content 1]
+		set file_mimetype [lindex $content 2]
+		set n_bytes [file size $tmp_filename]
+
+		if { $n_bytes > $max_file_size && $max_file_size > 0 } {
+		    ad_return_complaint 1 "[_ assessment.file_too_large]"
+		    return
+		}
+		if { $n_bytes == 0 } {
+		    ad_return_complaint 1 "[_ assessment.file_zero_size]"
+		    return
+		}
+		set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
+	    } else {
+		set content_rev_id ""
+	    }
+
+	    db_dml update_choice_data {}
+	}
+    }
+    ad_returnredirect [export_vars -base "item-add-display-$display_type" {assessment_id section_id as_item_id after}]
+    ad_script_abort
+}
+
 db_foreach get_choices {} {
     if {$correct_answer_p == "t"} {
 	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $title\"\} \{value \"<img src=/resources/assessment/correct.gif>\"\}\}\n"

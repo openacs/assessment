@@ -32,7 +32,7 @@ ad_form -name section_delete_confirm -action section-delete -export { assessment
     {section_id:key}
     {section_title:text(inform) {label "[_ assessment.remove_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {confirmation:text(radio) {label " "} {options $confirm_options} {value t}}
 } -select_query_name {section_title} \
 -on_submit {
     if {$confirmation} {

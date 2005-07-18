@@ -37,14 +37,28 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set correct_options [list [list "[_ assessment.yes]" t]]
+set type $assessment_data(type)
 
 
 ad_form -name item_edit_mc -action item-edit-mc -export { assessment_id section_id num_choices } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
+}
+
+if {$type > 1} {
+    ad_form -extend -name item_edit_mc -form {
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options}  {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
     {num_correct_answers:text,optional,nospell {label "[_ assessment.num_Correct_Answer]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Correct_help]"}}
+    }
+} else {
+    ad_form -extend -name item_edit_mc -form {
+	{increasing_p:text(hidden) {value ""}}
+	{negative_p:text(hidden) {value ""}}
+	{num_correct_answers:text(hidden) {value ""}}
+    }
+}
+ad_form -extend -name item_edit_mc -form {
     {num_answers:text,optional,nospell {label "[_ assessment.num_Answers]"} {html {size 5 maxlength 5}} {help_text "[_ assessment.num_Answers_help]"}}
 }
 
@@ -66,12 +80,14 @@ foreach one_choice $choices {
     }
     append ad_form_code "\{choice.$choice_id:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($choice_id)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
 
+    if { $type > 1} {
     if {[info exists correct($choice_id)]} {
 	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     } else {
 	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     }
     lappend validate_list "correct.$choice_id {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
+    }
 }
 
 # add new empty form entries for new choices
@@ -82,10 +98,12 @@ for {set i 1} {$i <= $num_choices} {incr i} {
     } else {
 	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
     }
+    if { $type > 1} {
     if {[info exists correct(_$i)]} {
 	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     } else {
 	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+    }
     }
 }
 append ad_form_code "\}"

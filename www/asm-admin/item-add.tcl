@@ -29,6 +29,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 set package_id [ad_conn package_id]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set type $assessment_data(type)
 
 set data_types [list]
 foreach data_type [list varchar text integer float date timestamp boolean content_type] {
@@ -41,26 +42,50 @@ foreach item_type [db_list item_types {}] {
 }
 
 
-ad_form -name item_add -action item-add -export { assessment_id section_id after } -html {enctype multipart/form-data} -form {
+ad_form -name item_add -action item-add -export { assessment_id section_id after type} -html {enctype multipart/form-data} -form {
     {as_item_id:key}
     {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
-    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+}
+if { $type > 1} {
+    ad_form -extend -name item_add -form {{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+    }
 }
 
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id 0 -form_name item_add
 }
 
+if { $type > 1} {
 ad_form -extend -name item_add -form {
     {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
     {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
-    {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
+}
+}
+ad_form -extend -name item_add -form {   {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
+}
+if { $type > 1} {
+ad_form -extend -name item_add -form {
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
     {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
     {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
     {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+}
+} else {
+ad_form -extend -name item_add -form {
+    {description:text(hidden) {value ""}}
+    {content:text(hidden) {value ""}}
+    {subtext:text(hidden) {value ""}}
+    {field_name:text(hidden) {value ""}}
+    {field_code:text(hidden) {value ""}}
+    {feedback_right:text(hidden) {value ""}}
+    {feedback_wrong:text(hidden) {value ""}}
+    {max_time_to_complete:text(hidden) {value ""}}
+    {points:text(hidden) {value ""}}
+}
+}
+ad_form -extend -name item_add -form {
     {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}
     {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
     {num_choices:integer,optional,nospell {label "[_ assessment.Num_Choices]"} {html {size 5 maxlength 3}} {help_text "[_ assessment.Num_Choices_help]"}}
@@ -79,6 +104,9 @@ ad_form -extend -name item_add -form {
     set data_type "varchar"
     set item_type "sa"
     set num_choices 10
+    if { $type == 1} {
+	set num_choices 3
+    }
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {[empty_string_p $points]} {

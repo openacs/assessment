@@ -33,7 +33,7 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
     {as_item_id:key}
     {item_title:text(inform) {label "[_ assessment.remove_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {confirmation:text(radio) {label " "} {options $confirm_options} {value t}}
 } -select_query_name {item_title} -on_submit {
     if {$confirmation} {
 	db_transaction {
