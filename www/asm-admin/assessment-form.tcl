@@ -56,8 +56,14 @@ if {[info exists assessment_id] &&   $edit_p } {#
 	{name:text(inform) {label "#assessment.Name#"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
     }
 } else {
-    ad_form -extend -name assessment_form -form {
-	{name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
+    if {$type > 1} {
+	ad_form -extend -name assessment_form -form {
+	    {name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
+	}
+    } else {
+	ad_form -extend -name assessment_form -form {
+	    {name:text(hidden) {value ""}}
+	}
     }
 }
 
@@ -103,10 +109,8 @@ if { $type > 1} {
     }
 }
 
-ad_form -extend -name assessment_form -form {{return_url:text,optional,nospell {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}}
-
 if { $type > 1} {
-    ad_form -extend -name assessment_form -form {
+    ad_form -extend -name assessment_form -form {{return_url:text,optional,nospell {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}
 	{start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
 	{end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_End_Time_help]"}}
 	{number_tries:integer,optional,nospell {label "[_ assessment.Number_of_Tries]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Number_Tries_help]"}}
@@ -120,6 +124,7 @@ if { $type > 1} {
     }
 } else  {
     ad_form -extend -name assessment_form -form {
+	{return_url:text(hidden) value ""}
 	{description:text(hidden) value ""}
 	{run_mode:text(hidden) {value ""}}
 	{secure_access_p:text(hidden) {value "f"}}

@@ -83,10 +83,16 @@ ad_form -extend -name item_add -form {
     {feedback_wrong:text(hidden) {value ""}}
     {max_time_to_complete:text(hidden) {value ""}}
     {points:text(hidden) {value ""}}
+    {data_type:text(hidden) {value ""}}
+
 }
 }
+
+if { $type > 1} {
 ad_form -extend -name item_add -form {
-    {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}
+    {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}}
+} 
+ad_form -extend -name item_add -form {
     {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
     {num_choices:integer,optional,nospell {label "[_ assessment.Num_Choices]"} {html {size 5 maxlength 3}} {help_text "[_ assessment.Num_Choices_help]"}}
 } -new_request {
@@ -113,6 +119,16 @@ ad_form -extend -name item_add -form {
 	set points 0
     }
 } -new_data {
+    if {[string eq $item_type "sa"]} {
+	set data_type "varchar" 
+    } elseif {[string eq $item_type "oq"]} {
+	set data_type "text" 
+    } elseif {[string eq $item_type "mc"]} {
+	set data_type "varchar" 
+    } elseif {[string eq $item_type "fu"]} {
+	set data_type "file" 
+    } 
+
     db_transaction {
 	if {![db_0or1row item_exists {}]} {
 	    set as_item_id [as::item::new \
