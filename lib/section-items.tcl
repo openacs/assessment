@@ -1,3 +1,4 @@
+as::assessment::data -assessment_id $assessment_id
 ad_form -name admin_section -form {
     {section_id:text(hidden) {value $section_id}}
 }

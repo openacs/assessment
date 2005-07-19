@@ -57,4 +57,25 @@
 </querytext>
 </fullquery>
 
+<fullquery name="move_down_sections">
+      <querytext>
+
+	    update as_assessment_section_map
+	    set sort_order = sort_order+1
+	    where assessment_id = :new_assessment_rev_id
+	    and sort_order > :after
+
+      </querytext>
+</fullquery>
+
+<fullquery name="add_section_to_assessment">
+      <querytext>
+
+	    insert into as_assessment_section_map (assessment_id, section_id,sort_order)
+	    values (:new_assessment_rev_id, :new_section_id,:sort_order)
+
+      </querytext>
+</fullquery>
+
+
 </queryset>

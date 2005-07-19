@@ -107,28 +107,19 @@
 <tr class="odd">
 <td valign="top">@sections.rownum@. @sections.name@</td></tr>
 <tr class="odd">
+<td>
 
-<td><a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
 
-<a href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
+<a class=button href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
 
-<a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
+<a class=button href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
 
-<if @sections.display_type_id@ not nil><a href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
+<if @sections.display_type_id@ not nil><a class=button href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
 
-<a href="section-preview?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.section_preview#</a>
+<a class=button href="section-preview?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.section_preview#</a>
 
-<a href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
+<a class=button href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
 
-<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
-
-<if @sections.rownum@ lt @sections:rowcount@>
-  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
-</if>
-<if @sections.rownum@ gt 1>
-  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
-</if>
-<a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="/resources/assessment/delete.gif" border="0" alt="#assessment.remove_section#"></a>
 
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
 (@sections.points@ #assessment.points#)
@@ -142,8 +133,19 @@
   </else>
 <td colspan="3">
   <blockquote>
-    @sections.title@
+    @sections.title@ 
+<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
+<a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a> 
+<if @sections.rownum@ lt @sections:rowcount@>
+  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
+</if>
+<if @sections.rownum@ gt 1>
+  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+</if>
+<a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="/resources/acs-subsite/Delete16.gif" border="0" alt="#assessment.remove_section#"></a>
+
   </blockquote>
+
 </td></tr>
 </table>      
 

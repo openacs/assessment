@@ -169,7 +169,6 @@ set edit_data "{
 
 set after_submit "{
     # now go to form to enter choice-specific data
-
     ad_returnredirect \[export_vars -base \"item-add-mc-choices\" {assessment_id section_id as_item_id after mc_id display_type}\]
 
     ad_script_abort

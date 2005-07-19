@@ -9,6 +9,7 @@ ad_page_contract {
     {permission_p 0}
     {edit_p:optional "0"}
     {type ""}
+    {after "0"}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -47,7 +48,7 @@ set navigation_options [list [list "[_ assessment.Default_Path]" "default path"]
 ##    {exit_page:text,optional,nospell {label "[_ assessment.Exit_Page]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Exit_Page_help]"}}
 
 
-ad_form -name assessment_form -export permission_p -action assessment-form -form {
+ad_form -name assessment_form -export {permission_p after} -action assessment-form -form {
     {assessment_id:key}
 }
 
@@ -170,7 +171,7 @@ ad_form -extend -name assessment_form -new_request {
     set section_navigation "default path"
 } -edit_request {
     db_1row assessment_data {}
-
+    
     if {![empty_string_p $start_time]} {
 	set start_time [util::date::acquire ansi $start_time]
     }
@@ -237,6 +238,22 @@ ad_form -extend -name assessment_form -new_request {
 	if {![empty_string_p $end_time]} {
 	    db_dml update_end_time {}
 	}
+	if { $type } {
+	    db_transaction {
+		set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+		
+		set new_section_id [as::section::new -title [_ assessment.survey_section] ]
+		
+		db_dml move_down_sections {}
+		set sort_order [expr $after + 1]
+		db_dml add_section_to_assessment {}
+		
+		if {[exists_and_not_null category_ids]} {
+		    category::map_object -object_id $new_section_id $category_ids
+		}
+	    }
+	}
+	
     }
 } -edit_data {
     db_transaction {
