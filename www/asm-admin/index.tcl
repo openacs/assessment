@@ -36,7 +36,7 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
 if { $sw_admin } {
     set actions [list "[_ assessment.New_Assessment]" assessment-new "[_ assessment.New_Assessment2]" [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]]
 } else {
-    set actions [list "[_ assessment.New_Assessment]" assessment-new"[_ assessment.New_Assessment2]"]
+    set actions [list "[_ assessment.New_Assessment]" assessment-new "[_ assessment.New_Assessment2]"]
 }
 
 if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
