@@ -96,5 +96,76 @@
 	where staff_id = :from_user_id
       </querytext>
     </fullquery>
+    
+    <fullquery name="callback::datamanager::move_assessment::impl::datamanager.update_as_cr_items">
+    <querytext>
+            update cr_items
+        set parent_id = (select folder_id 
+                        from cr_folders 
+                        where package_id=
+                            (select package_id 
+                             from dotlrn_community_applets 
+                             where applet_id=
+                                (select applet_id 
+                                 from dotlrn_applets 
+                                 where applet_key='dotlrn_assessment') 
+                             and community_id=:selected_community))
+        where item_id=(select context_id from acs_objects where object_id=:object_id);
+
+    </querytext>
+    </fullquery>
+
+    <fullquery name="callback::datamanager::move_assessment::impl::datamanager.update_as_it_acs_objects1">
+    <querytext>
+    update acs_objects
+        set context_id =(select folder_id 
+                        from cr_folders 
+                        where package_id=
+                            (select package_id 
+                             from dotlrn_community_applets 
+                             where applet_id=
+                                (select applet_id 
+                                 from dotlrn_applets 
+                                 where applet_key='dotlrn_assessment') 
+                             and community_id=:selected_community))                   
+        where object_id = (select context_id from acs_objects where object_id=:object_id)
+
+    </querytext>
+    </fullquery>
+
+    <fullquery name="callback::datamanager::move_assessment::impl::datamanager.update_as_it_acs_objects2">
+    <querytext>
+    update acs_objects
+        set package_id = (select package_id 
+                             from dotlrn_community_applets 
+                             where applet_id=
+                                (select applet_id 
+                                 from dotlrn_applets 
+                                 where applet_key='dotlrn_assessment') 
+                             and community_id=:selected_community)
+        where object_id = (select context_id from acs_objects where object_id=:object_id)
+
+    </querytext>
+    </fullquery>
+
+    <fullquery name="callback::datamanager::move_assessment::impl::datamanager.update_as_as_acs_objects">
+    <querytext>
+    update acs_objects
+        set package_id =(select package_id 
+                             from dotlrn_community_applets 
+                             where applet_id=
+                                (select applet_id 
+                                 from dotlrn_applets 
+                                 where applet_key='dotlrn_assessment') 
+                             and community_id=:selected_community)
+        where object_id in (select object_id 
+                            from acs_objects 
+                            where context_id=
+                                (select context_id 
+                                 from acs_objects 
+                                 where object_id=:object_id)) 
+
+    </querytext>
+    </fullquery>
 
   </queryset>

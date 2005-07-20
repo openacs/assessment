@@ -61,3 +61,22 @@ ad_proc -callback merge::MergePackageUser -impl as {
     return $result
 }
 
+
+ad_proc -public -callback datamanager::move_assessment -impl datamanager {
+     -object_id:required
+     -selected_community:required
+} {
+    Move an assessment to another class or community
+} {
+
+#se actualiza el parent_id del assessment en cr_items
+db_dml update_as_cr_items {}
+
+#se actualiza el context_id y el package_id del assessment en acs_objects
+db_dml update_as_it_acs_objects1 {}
+db_dml update_as_it_acs_objects2 {}
+
+#se actualiza el package_id del assessment en acs_objects
+db_dml update_as_as_acs_objects {}
+}
+
