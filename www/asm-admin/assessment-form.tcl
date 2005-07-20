@@ -10,6 +10,7 @@ ad_page_contract {
     {edit_p:optional "0"}
     {type ""}
     {after "0"}
+    {edit_f ""}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -24,7 +25,7 @@ if {![info exists assessment_id] || $__new_p} {
     permission::require_permission -object_id $assessment_id -privilege admin
     set s_assessment_id 0
     db_0or1row rev_id_from_item_id {}
-    if {![info exist type]} {
+    if {[empty_string_p  $type]} {
 	# Get the assessment data
 	as::assessment::data -assessment_id $assessment_id
 	set type $assessment_data(type)
@@ -57,7 +58,7 @@ if {[info exists assessment_id] &&   $edit_p } {#
 	{name:text(inform) {label "#assessment.Name#"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
     }
 } else {
-    if {$type > 1} {
+    if {$type > 1 && [empty_string_p $edit_f]} {
 	ad_form -extend -name assessment_form -form {
 	    {name:text,optional,nospell {label "[_ assessment.Name]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.assessment_Name_help]"}}
 	}
@@ -68,40 +69,60 @@ if {[info exists assessment_id] &&   $edit_p } {#
     }
 }
 
-ad_form -extend -name assessment_form -form {
-    {title:text,nospell {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.as_Title_help]"}}
+if { [string eq $edit_f t] || [empty_string_p $edit_f]} {
+    ad_form -extend -name assessment_form -form {
+	{title:text,nospell {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.as_Title_help]"}}
+    }
+} else {
+    ad_form -extend -name assessment_form -form {
+	{title:text(hidden) {value ""}}
+    }
+	    
 }
-if { $type > 1} {
-    ad_form -extend -name assessment_form -form {    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Description_help]"}}
+
+if {[string eq  $edit_f d] || [empty_string_p $edit_f]} {
+    if { $type > 1 } {
+    	ad_form -extend -name assessment_form -form {    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Description_help]"}}
+	} 
+    } else {
+	ad_form -extend -name assessment_form -form { {description:text(hidden) {value ""}}}
     }
 }
+
 
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $s_assessment_id -form_name assessment_form
 }
 
-
- 
-ad_form -extend -name assessment_form -form {{instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Instructions_help]"}}
+if { [string eq $edit_f i] || [empty_string_p $edit_f]} { 
+    ad_form -extend -name assessment_form -form {{instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Instructions_help]"}}
+    }
+} else {
+    ad_form -extend -name assessment_form -form {{instructions:text(hidden) {value ""}}}
 }
-if { $type > 1} {
+
+if { $type > 1 && [empty_string_p $edit_f]} {
     ad_form -extend -name assessment_form -form {
 	{run_mode:text,optional,nospell {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
     }
 }
 
+
 if { !$permission_p } { 
-    ad_form -extend -name assessment_form  -form {
-	{anonymous_p:text(select) {label "[_ assessment.Anonymous_Responses]"} {options $boolean_options} {help_text "[_ assessment.as_Anonymous_help]"} {value f}}
-    } 
-} else {
-    ad_form -extend -name assessment_form  -form {
-	{anonymous_p:text(hidden) {value t}}
+    if { [empty_string_p $edit_f]} {
+	ad_form -extend -name assessment_form  -form {
+	    {anonymous_p:text(select) {label "[_ assessment.Anonymous_Responses]"} {options $boolean_options} {help_text "[_ assessment.as_Anonymous_help]"} {value f}}
+	} 
+    }     else {
+	ad_form -extend -name assessment_form  -form {
+	    {anonymous_p:text(hidden) {value t}}
+	}
+	
+	
     }
-    
 }
 
-if { $type > 1} {
+if { $type > 1 && [empty_string_p $edit_f]} {
     ad_form -extend -name assessment_form -form {{secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
 	{reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}
 	{show_item_name_p:text(select) {label "[_ assessment.Show_Item_Name_1]"} {options $boolean_options} {help_text "[_ assessment.as_Show_Item_Name_help]"}}
@@ -110,7 +131,7 @@ if { $type > 1} {
     }
 }
 
-if { $type > 1} {
+if { $type > 1 && [empty_string_p $edit_f]} {
     ad_form -extend -name assessment_form -form {{return_url:text,optional,nospell {label "[_ assessment.Return_Url]"} {html {size 50 maxlength 50}} {help_text "[_ assessment.as_Return_Url_help]"}}
 	{start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
 	{end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_End_Time_help]"}}
@@ -126,7 +147,6 @@ if { $type > 1} {
 } else  {
     ad_form -extend -name assessment_form -form {
 	{return_url:text(hidden) value ""}
-	{description:text(hidden) value ""}
 	{run_mode:text(hidden) {value ""}}
 	{secure_access_p:text(hidden) {value "f"}}
 	{reuse_responses_p:text(hidden) {value "f"}}
