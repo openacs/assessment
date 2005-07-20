@@ -87,6 +87,8 @@ if {[string eq  $edit_f d] || [empty_string_p $edit_f]} {
     } else {
 	ad_form -extend -name assessment_form -form { {description:text(hidden) {value ""}}}
     }
+} else {
+    ad_form -extend -name assessment_form -form { {description:text(hidden) {value ""}}}
 }
 
 

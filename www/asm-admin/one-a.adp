@@ -11,14 +11,19 @@
 <table class="table-display" cellpadding=2 cellspacing=0>
 
 <tr class="odd">
-	<td valign="top">#assessment.Assessment_Title#:<p>#assessment.Description#:<p>#assessment.Instructions#:<p>#assessment.Type#:</td>
+	<td valign="top">#assessment.Assessment_Title#:	<if @assessment_data.type@ gt 1><p>#assessment.Description#:</if><p>#assessment.Instructions#:<p>#assessment.Type#:</td>
 	<td valign="top"> 
 	<!-- <a href="assessment-preview?assessment_id=@assessment_id@">#assessment.Preview#</a> -->
-	<a href="assessment-new?assessment_id=@assessment_id@&edit_p=1">#assessment.Edit#</a>
-	@assessment_data.title;noquote@ <div align=center><font color=red>@is_reg_asm_p@</font></div>
+	@assessment_data.title;noquote@ 
+	<a href="assessment-form?assessment_id=@assessment_id@&edit_f=t">#assessment.Edit#</a>
+	<div align=center><font color=red>@is_reg_asm_p@</font></div>
+	<if @assessment_data.type@ gt 1>
         <p><if @assessment_data.description@ nil>#assessment.None#</if><else>@assessment_data.description;noquote@</else>
+	<a href="assessment-form?assessment_id=@assessment_id@&edit_f=d">#assessment.Edit#</a>
+	</if>
         <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else>
-	<p><if @assessment_data.type@ nil>#assessment.None#</if><else><if @assessment_data.type@ eq 1>#assessment.type_s#</if> <if @assessment_data.type@ eq 2>#assessment.type_ea#</if></else></td>
+	<a href="assessment-form?assessment_id=@assessment_id@&edit_f=i">#assessment.Edit#</a>
+	<p><if @assessment_data.type@ nil>#assessment.None#</if><else><if @assessment_data.type@ eq 1>#assessment.type_s#</if> <if @assessment_data.type@ eq 2>#assessment.type_ea#</if></else>	<a href="assessment-new?assessment_id=@assessment_id@&edit_p=1">#assessment.Edit#</a></td>
 </td>
 </tr>
 

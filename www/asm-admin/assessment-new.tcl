@@ -33,9 +33,15 @@ ad_form -name assessment_type -export {assessment_id permission_p} -form {
 	{value $type}
     }
 } -on_submit {
-    if { ![empty_string_p $permission_p]} {
-	ad_returnredirect [export_vars -base assessment-form {type assessment_id permission_p}]
+    if { [exists_and_not_null assessment_id]} {
+    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+    db_dml update_asm { update as_assessments set type=:type where assessment_id=:new_assessment_rev_id}
+    ad_returnredirect [export_vars -base one-a {assessment_id}]
     } else {
-	ad_returnredirect [export_vars -base assessment-form {type assessment_id}]
+	if { ![empty_string_p $permission_p]} {
+	    ad_returnredirect [export_vars -base assessment-form {type assessment_id permission_p}]
+	} else {
+	    ad_returnredirect [export_vars -base assessment-form {type assessment_id}]
+	}
     }
 }
