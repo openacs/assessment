@@ -78,7 +78,7 @@
 The author of the assement will not see who gave the answer.</msg>
   <msg key="as_Consent_Page_help">Consent statement that a user must agree to in order to proceed with the assessment.</msg>
   <msg key="as_Description_help">Description of an assessment</msg>
-  <msg key="as_End_Time_help">Timestamp after which noone is allowed to  submit a response.</msg>
+  <msg key="as_End_Time_help">Timestamp after which noone is allowed to submit a response.</msg>
   <msg key="as_Entry_Page_help">Page to display before the actual assessment</msg>
   <msg key="as_Exit_Page_help">Page to display after the assessment has finished.</msg>
   <msg key="as_Feedback_help">Under which conditions should the feedback associated with &lt;br&gt;
@@ -370,7 +370,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="must_be_integer">User input must be an integer type</msg>
   <msg key="must_be_numeric">User input must be a numeric type</msg>
   <msg key="Name">Name</msg>
-  <msg key="Name_help">Assessment name of the new coppy </msg>
+  <msg key="Name_help">Assessment name of the new copy</msg>
   <msg key="name_of_trigger">The name of the trigger.</msg>
   <msg key="name_used">Name is already used.</msg>
   <msg key="New_Assessment">New Assessment</msg>
@@ -425,7 +425,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="password">Password</msg>
   <msg key="Password_Enter">Enter assessment password</msg>
   <msg key="Percent_Score">Percent Score</msg>
-  <msg key="Percent_Score_help">Percentage of the points of  the question this choice gives. May be larger than 100 and lower than -100.</msg>
+  <msg key="Percent_Score_help">Percentage of the points of the question this choice gives. May be larger than 100 and lower than -100.</msg>
   <msg key="performed">Performed</msg>
   <msg key="permissions">Permissions</msg>
   <msg key="points">points</msg>
@@ -487,7 +487,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Search_Section_1">Search and add sections to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="sect_disp_Description_help">Description of this section display type</msg>
   <msg key="sect_disp_Title_help">Title of the section display type. It will be used to select the display type when creating new sections.</msg>
-  <msg key="sect_num_items_help">How many questions will be displayed on a page in a section of  this type. Leave empty for all questions on one page, use &quot;1&quot; for one  question per page.</msg>
+  <msg key="sect_num_items_help">How many questions will be displayed on a page in a section of this type. Leave empty for all questions on one page, use &quot;1&quot; for one  question per page.</msg>
   <msg key="section">SECTION</msg>
   <msg key="section_Branched">Branched section</msg>
   <msg key="section_branched_help">Is this a branched section?</msg>
