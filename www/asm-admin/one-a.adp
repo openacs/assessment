@@ -100,7 +100,7 @@
 
 </table>
 <br>
-
+<listtemplate name=sections></listtemplate>
 <if @sections:rowcount@ eq 0>
 <font color=red><b>#assessment.add_section_first#</b></font>
 </if>
@@ -110,7 +110,7 @@
 
 <table cellspacing=0>
 <tr class="odd">
-<td valign="top">@sections.rownum@. @sections.name@</td></tr>
+<td valign="top"><a name=@sections.section_id@>@sections.rownum@. @sections.name@</a></td></tr>
 <tr class="odd">
 <td>
 

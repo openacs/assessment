@@ -79,4 +79,17 @@ db_multirow sections assessment_sections {} {
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 }
 
+list::create \
+    -name sections \
+    -pass_properties assessment_id \
+    -multirow sections \
+    -key section_id \
+    -no_data "[_ assessment.None]" \
+    -elements {
+	title {
+	    label "[_ assessment.Sections]"
+	    display_template {<a href="one-a?assessment_id=@assessment_id@\#@sections.section_id@">@sections.title;noquote@</a>} 
+	}
+    }
+
 ad_return_template
