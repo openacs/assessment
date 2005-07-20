@@ -260,7 +260,7 @@ ad_form -extend -name assessment_form -new_request {
 	if {![empty_string_p $end_time]} {
 	    db_dml update_end_time {}
 	}
-	if { $type } {
+	if { $type == 1} {
 	    db_transaction {
 		set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 		
