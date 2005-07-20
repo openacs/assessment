@@ -57,7 +57,7 @@
   <msg key="and">Y</msg>
   <msg key="anonymous_name">Anónimo</msg>
   <msg key="Anonymous_Responses">Respuestas anónimas</msg>
-  <msg key="anonymous_users_allow">Permitir que sea respuesto por anónimos</msg>
+  <msg key="anonymous_users_allow">Permitir que sea respondido por anónimos</msg>
   <msg key="Answer_Alignment">Alineación de las respuestas</msg>
   <msg key="Answer_Alignment_help">Alinear la respuesta en relación a la pregunta.</msg>
   <msg key="Answer_Choices">Respuestas</msg>
@@ -72,7 +72,7 @@
   <msg key="as_action_description_help">Descripción de la acción. (por ejemplo, ¿qué hace?)</msg>
   <msg key="as_action_help">El nombre al que se refiere cuando se llama a la acción</msg>
   <msg key="as_action_tcl_code_help">Código tcl que se ejecuta al invocar la acción. (por ejemplo puede ser una llamada a una función o cualquier tipo de validación de código tcl)</msg>
-  <msg key="as_Allow_Random_help">Permitir selección aleatorea?</msg>
+  <msg key="as_Allow_Random_help">Permitir selección aleatoria?</msg>
   <msg key="as_Anonymous_help">Si es posible dar una respuesta anónima. El autor del assessment no verá quien respondió.</msg>
   <msg key="as_Consent_Page_help">Estado de consentimiento que un usuario debe acordar para continuar con el assessment.</msg>
   <msg key="as_Description_help">Descripción de un assessment</msg>
@@ -172,7 +172,7 @@
   <msg key="csv_End_Time">Tiempo para terminar</msg>
   <msg key="csv_export">Exportar CSV</msg>
   <msg key="csv_export_format">Exportar a formato CSV</msg>
-  <msg key="csv_export_format_help">Selecione el dato que se utilizará para identificar cada pregunta</msg>
+  <msg key="csv_export_format_help">Seleccione el dato que se utilizará para identificar cada pregunta</msg>
   <msg key="csv_export_name">Identificador de la pregunta</msg>
   <msg key="csv_export_title">Texto de la pregunta</msg>
   <msg key="CSV_file">Fichero CSV</msg>
@@ -360,7 +360,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Move_Down">Bajar</msg>
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
-  <msg key="Multiple_help">Desea permitir  m?ltiples respuestas?</msg>
+  <msg key="Multiple_help">Desea permitir múltiples respuestas?</msg>
   <msg key="must_be_alpha">El valor ingresado debe contener letras solamente</msg>
   <msg key="must_be_alphanumeric">El valor ingresado debe de ser de tipo alfanumérico</msg>
   <msg key="must_be_boolean">El valor ingresado debe ser de tipo buleano</msg>
@@ -370,8 +370,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Name_help">Nombre de la nueva copia del assessment  </msg>
   <msg key="name_of_trigger">Nombre de la condición.</msg>
   <msg key="name_used">El nombre que ya se usa.</msg>
-  <msg key="New_Assessment">Nuevo Assessment</msg>
-  <msg key="New_Assessment2">Crear un nuevo Assessment</msg>
+  <msg key="New_Assessment">Nuevo Exámen Experto</msg>
+  <msg key="New_Assessment2">Crear un nuevo Exámen Experto</msg>
   <msg key="new_parameter">Nuevo parámetro</msg>
   <msg key="Next">Siguiente</msg>
   <msg key="no">No</msg>
@@ -395,7 +395,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="num_items_help">N?mero de preguntas visualizadas</msg>
   <msg key="num_ref_value">Valor Númerico de Referencia</msg>
   <msg key="Number_of_Tries">Número de Intentos permitidos</msg>
-  <msg key="numeric_ref_not_set_error">Debe proveer un numéro válido para este campo</msg>
+  <msg key="numeric_ref_not_set_error">Debe proveer un numero válido para este campo</msg>
   <msg key="numerical">Numérico</msg>
   <msg key="on_creation_date">Fecha de creación</msg>
   <msg key="One_Assessment_data">Datos de un assessment</msg>
@@ -437,7 +437,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="points_section">Puntos por Sección</msg>
   <msg key="points_section_help">Los puntos que vale esta sección en un assessment. Es una medida de la dificultad relativa de la sección.
 </msg>
-  <msg key="post_check">Post Chuequeo</msg>
+  <msg key="post_check">Post Chequeo</msg>
   <msg key="Preview">Visualización previa</msg>
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
@@ -446,13 +446,13 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Randomized">Aleatoria</msg>
   <msg key="randomized">Aleatorio</msg>
   <msg key="reg_asm">Usando en el proceso de Registro</msg>
-  <msg key="Reg_Assessment_title">Cuestionario de Registro de Customización del Sitio Principal: &quot;%assessment_data.title&quot;</msg>
+  <msg key="Reg_Assessment_title">Cuestionario de Registro de personalización del Sitio Principal: &quot;%assessment_data.title&quot;</msg>
   <msg key="reg_users_required">Se requiere que los usuarios estén registrados</msg>
   <msg key="regarding_this_assess">En relación con esta encuesta</msg>
   <msg key="regexp">el comando regexp debe retornar 1 con este patrón:</msg>
-  <msg key="regexp_not_set_error">Debe de ingresar una expresión regular para ser utilizada en la compración de la entrada del usuario. </msg>
+  <msg key="regexp_not_set_error">Debe de ingresar una expresión regular para ser utilizada en la comparación de la entrada del usuario. </msg>
   <msg key="regexp_val_help">Debe de ser una expresión regular válida para el comando regexp</msg>
-  <msg key="regexp_value">Patrón para conoración</msg>
+  <msg key="regexp_value">Patrón para comparación</msg>
   <msg key="related">Relacionado</msg>
   <msg key="remove_1">Eliminar: </msg>
   <msg key="remove_assessment">Quitar assessment</msg>
@@ -472,7 +472,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Results_edit">Editar el resultado del assessment</msg>
   <msg key="Results_edit_Description">Cambiar explicación</msg>
   <msg key="return">Volver</msg>
-  <msg key="Return_Url">Devolver URL</msg>
+  <msg key="Return_Url">URL de Finalización</msg>
   <msg key="reuse_responses">Visualizar las respuestas anteriores</msg>
   <msg key="Reuse_Responses_1">Reutilizar Respuestas</msg>
   <msg key="Review_Asessment">Revisión del Examen</msg>
@@ -544,7 +544,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Subtext">Subtexto</msg>
   <msg key="Summary">Resumen</msg>
   <msg key="Target_Community">Comunidad Destino</msg>
-  <msg key="text_ref_not_set_error">Usted necesita proporcionar una expresión válida de carácteres para este campo</msg>
+  <msg key="text_ref_not_set_error">Usted necesita proporcionar una expresión válida de caracteres para este campo</msg>
   <msg key="text_ref_value">Valor del Texto de Referencia</msg>
   <msg key="the_condition_to">La condición para saltar o ejecutar la acción</msg>
   <msg key="there_are_no_users">No hay usuarios a notificar</msg>
