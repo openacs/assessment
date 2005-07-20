@@ -51,13 +51,13 @@
   <msg key="allow_multiple">permitir múltiple</msg>
   <msg key="Allow_Negative">Permitir Negativo</msg>
   <msg key="Allow_Negative_help">Si se permite un porcentaje negativo (como resultado total).</msg>
-  <msg key="Allow_Random">Permitir Selección Aleatorea</msg>
+  <msg key="Allow_Random">Permitir Selección Aleatoria</msg>
   <msg key="allow_tries">permitir varios intentos</msg>
   <msg key="alphabetical">Alfabéticamente</msg>
   <msg key="and">Y</msg>
   <msg key="anonymous_name">Anónimo</msg>
   <msg key="Anonymous_Responses">Respuestas anónimas</msg>
-  <msg key="anonymous_users_allow">Permitir que sea respuesto por anónimos</msg>
+  <msg key="anonymous_users_allow">Permitir que sea respondido por anónimos</msg>
   <msg key="Answer_Alignment">Alineación de las respuestas</msg>
   <msg key="Answer_Alignment_help">Alinear la respuesta en relación a la pregunta.</msg>
   <msg key="Answer_Choices">Respuestas</msg>
@@ -72,7 +72,7 @@
   <msg key="as_action_description_help">Descripción de la acción. (por ejemplo, ¿qué hace?)</msg>
   <msg key="as_action_help">El nombre al que se refiere cuando se llama a la acción</msg>
   <msg key="as_action_tcl_code_help">Código tcl que se ejecuta al invocar la acción. (por ejemplo puede ser una llamada a una función o cualquier tipo de validación de código tcl)</msg>
-  <msg key="as_Allow_Random_help">Permitir selección aleatorea?</msg>
+  <msg key="as_Allow_Random_help">Permitir selección aleatoria?</msg>
   <msg key="as_Anonymous_help">Si es posible dar una respuesta anónima. El autor del cuestionario no verá quien respondió.</msg>
   <msg key="as_Consent_Page_help">Estado de consentimiento que un usuario debe acordar para continuar con el cuestionario.</msg>
   <msg key="as_Description_help">Descripción de un cuestionario</msg>
@@ -90,8 +90,8 @@
   <msg key="as_parameter_help">Nombre de la variable que vas a usar en el código tcl (por ejemplo, student_id) sin &quot;$&quot;</msg>
   <msg key="as_parameter_query_help">Solo poner la pregunta que obtenga la información deseada</msg>
   <msg key="as_parameter_type_help">Selecciona el tipo de variable que esperas usar. Es una pregunta que tienes que poner a tu pregunta siguiente.</msg>
-  <msg key="as_password_help">Ingrese una contrase&amp;ntilde;a para el cuestionario</msg>
-  <msg key="as_password_user_help">Para poder tomar este cuestionario ud. debe de ingresar una contrase&amp;ntilde;a. </msg>
+  <msg key="as_password_help">Ingrese una contraseña para el cuestionario</msg>
+  <msg key="as_password_user_help">Para poder tomar este cuestionario, debe ingresar una contraseña.</msg>
   <msg key="as_Return_Url_help">URL a la que se direcciona después de que el alumno ha acabado el cuestionario.</msg>
   <msg key="as_Reuse_Responses_help">Si sí, el sistema buscará las respuestas previas a las preguntas y rellenará la respuesta con la última respuesta que se dio.</msg>
   <msg key="as_Secure_Access_help">¿Es https:// el método requerido para acceder a este cuestionario?</msg>
@@ -120,7 +120,7 @@
   <msg key="besideleft">Al lado-a la izquierda</msg>
   <msg key="besideright">Al lado-a la derecha</msg>
   <msg key="boolean_ref_not_set_error">Debe de proveer una expresión válida del carácter para este campo</msg>
-  <msg key="boolean_ref_value">Valor Boleano de Referencia</msg>
+  <msg key="boolean_ref_value">Valor Booleano de Referencia</msg>
   <msg key="bottom">Abajo</msg>
   <msg key="bounded_numeric">La entrada del usuario debe ser un número (real o entero) limitado por un valor de referencia</msg>
   <msg key="Box_Orientation">Orientación del cuadro</msg>
@@ -172,14 +172,14 @@
   <msg key="csv_End_Time">Tiempo para terminar</msg>
   <msg key="csv_export">Exportar CSV</msg>
   <msg key="csv_export_format">Exportar a formato CSV</msg>
-  <msg key="csv_export_format_help">Selecione el dato que se utilizará para identificar cada pregunta</msg>
+  <msg key="csv_export_format_help">Seleccione el dato que se utilizará para identificar cada pregunta</msg>
   <msg key="csv_export_name">Identificador de la pregunta</msg>
   <msg key="csv_export_title">Texto de la pregunta</msg>
   <msg key="CSV_file">Fichero CSV</msg>
   <msg key="csv_Start_Time">Tiempo de Inicio</msg>
   <msg key="currently">Actualmente:</msg>
   <msg key="Data_Type">Tipo de Dato</msg>
-  <msg key="data_type_boolean">Boleano</msg>
+  <msg key="data_type_boolean">Booleano</msg>
   <msg key="data_type_content_type">Fichero</msg>
   <msg key="data_type_date">Fecha</msg>
   <msg key="data_type_float">Float</msg>
@@ -189,7 +189,7 @@
   <msg key="data_type_timestamp">Hora</msg>
   <msg key="data_type_varchar">Texto corto</msg>
   <msg key="date_request">Fecha solicitada desde ...</msg>
-  <msg key="Deafult_Value_help">Valor por defecto para esta Respuesta.</msg>
+  <msg key="Deafult_Value_help">Valor por defecto para esta respuesta.</msg>
   <msg key="Default_Path">Path por defecto</msg>
   <msg key="Default_Selected">Defecto: Seleccionado</msg>
   <msg key="Default_Selected_help">¿Se selecciona esta respuesta por defecto?</msg>
@@ -244,14 +244,12 @@
   <msg key="Field_Code">Código QTI para el Campo</msg>
   <msg key="Field_Code_help">Breve etiqueta usada cuando se exporta una pregunta (por ejemplo, el nombre de una columna o una fila en una hoja de cálculo)</msg>
   <msg key="Field_Name">CSV Nombre del Campo</msg>
-  <msg key="Field_Name_help">Nombre corto usado en la exportacin de preguntas y respuestas en archivo CSV</msg>
+  <msg key="Field_Name_help">Nombre corto usado en la exportación de preguntas y respuestas en archivo CSV</msg>
   <msg key="file_too_large">Tu archivo es demasiado grande. El tamaño de los archivos está limitado a %pretty_max_size% bytes.</msg>
   <msg key="file_zero_size">Tu archivo tiene 0 bytes. Puede que hayas intentado subir un archivo de 0 bytes, un archivo que no exista o puede que haya ocurrido un error durante la transferencia.</msg>
   <msg key="filter">Filtro</msg>
-  <msg key="filter_add">Agregar Nuevo Filtro</msg>
-  <msg key="filter_add_instructions">Existen ciertos tipos de filtros que puede agregar: &lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Filtros de Tipo de Dato&lt;/b
-&gt;: Pone a prueba los datos ingresados por el usuario, y chequea que sean de tipo alfanumérico, caracteres del alfabeto solamente, numérico, entero, buleano. &lt;/l
-i&gt;&lt;li&gt;&lt;b&gt;Filtros de Límites&lt;/b&gt;: Ponen a prueba valores  ingresados por el usuario ( de tipo numérico que incluye números enteros, boleano, o texto) contra valores de referencia utilizando un comparador. &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Debe buscar los filtros ya creados y reutilizarlos en vez de crear filtros duplicados, pero usted puede hacerlo con toda libertad.</msg>
+  <msg key="filter_add">Agregar nuevo Filtro</msg>
+  <msg key="filter_add_instructions">Existen ciertos tipos de filtros que puede agregar: &lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Filtros de Tipo de Dato&lt;/b&gt;: Pone a prueba los datos ingresados por el usuario, y chequea que sean de tipo alfanumérico, caracteres del alfabeto solamente, numérico, entero, booleano. &lt;/li&gt;&lt;li&gt;&lt;b&gt;Filtros de Límites&lt;/b&gt;: Ponen a prueba valores  ingresados por el usuario ( de tipo numérico que incluye números enteros, booleano, o texto) contra valores de referencia utilizando un comparador. &lt;/li&gt;&lt;/ul&gt; &lt;p&gt; Debe buscar los filtros ya creados y reutilizarlos en vez de crear filtros duplicados, pero usted puede hacerlo con toda libertad.</msg>
   <msg key="filter_contingent_attributes">Atributos Contingentes</msg>
   <msg key="filter_edit">Editar Filtro</msg>
   <msg key="filter_edit_instructions">Si edita este filtro existente, se creará una nueva versión </msg>
@@ -260,13 +258,13 @@ i&gt;&lt;li&gt;&lt;b&gt;Filtros de Límites&lt;/b&gt;: Ponen a prueba valores  in
   <msg key="filter_outputs">Salidas del Filtro</msg>
   <msg key="filter_preview">Vista previa del Filtro</msg>
   <msg key="filter_req_attributes">Atributos Requeridos</msg>
-  <msg key="filter_settings">Atributos del filtro</msg>
+  <msg key="filter_settings">Atributos del Filtro</msg>
   <msg key="filter_title_help">Use una frase compacta y descriptiva para poder reutilizar este filtro</msg>
   <msg key="filter_user_messages">Mensajes de Usuario</msg>
   <msg key="filters">Filtros</msg>
   <msg key="filters_admin">Admin Filtros</msg>
   <msg key="filters_available">Filtros Disponibles</msg>
-  <msg key="filters_currently_mapped">Filtros Mapeados actualmente a este Objecto</msg>
+  <msg key="filters_currently_mapped">Filtros actualmente mapeados a este objecto</msg>
   <msg key="filters_none">No hay filtros que cumplan este criterio.</msg>
   <msg key="Finish_Time">Hora de finalización</msg>
   <msg key="Finished">Hora de finalización</msg>
@@ -347,8 +345,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="make_show_item_name">Mostrar el nombre de la pregunta</msg>
   <msg key="make_unsecure">Permitir una conexión no segura</msg>
   <msg key="manually">Manualmente</msg>
-  <msg key="matching_boolean">El valor ingresado debe coincidir con un valor buleano</msg>
-  <msg key="matching_text">El valor ingresado debe concidir con un texto en especifico</msg>
+  <msg key="matching_boolean">El valor ingresado debe coincidir con un valor booleano</msg>
+  <msg key="matching_text">El valor ingresado debe coincidir con un texto en específico</msg>
   <msg key="max_time">Máx. tiempo permitido: </msg>
   <msg key="mc_Title_help">Un nombre para un conjunto de respuestas (para reutilización)</msg>
   <msg key="Message">Mensaje</msg>
@@ -362,18 +360,18 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Move_Down">Bajar</msg>
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
-  <msg key="Multiple_help">Desea permitir  m?ltiples respuestas?</msg>
+  <msg key="Multiple_help">Desea permitir múltiples respuestas?</msg>
   <msg key="must_be_alpha">El valor ingresado debe contener letras solamente</msg>
-  <msg key="must_be_alphanumeric">El valor ingresado debe de ser de tipo alfanumérico</msg>
-  <msg key="must_be_boolean">El valor ingresado debe de ser de tipo buleano</msg>
-  <msg key="must_be_integer">El valor ingresado debe de ser de tipo entero</msg>
-  <msg key="must_be_numeric">El valor ingresado debe de ser de tipo numérico</msg>
+  <msg key="must_be_alphanumeric">El valor ingresado debe ser de tipo alfanumérico</msg>
+  <msg key="must_be_boolean">El valor ingresado debe ser de tipo booleano</msg>
+  <msg key="must_be_integer">El valor ingresado debe ser de tipo entero</msg>
+  <msg key="must_be_numeric">El valor ingresado debe ser de tipo numérico</msg>
   <msg key="Name">Nombre</msg>
-  <msg key="Name_help">Nombre de la nueva copia del cuestionario  </msg>
+  <msg key="Name_help">Nombre de la nueva copia del cuestionario</msg>
   <msg key="name_of_trigger">Nombre de la condición.</msg>
   <msg key="name_used">El nombre que ya se usa.</msg>
-  <msg key="New_Assessment">Nuevo Cuestionario</msg>
-  <msg key="New_Assessment2">Crear un nuevo Cuestionario</msg>
+  <msg key="New_Assessment">Nuevo Cuestionario experto</msg>
+  <msg key="New_Assessment2">Crear un nuevo Cuestionario experto</msg>
   <msg key="new_parameter">Nuevo parámetro</msg>
   <msg key="Next">Siguiente</msg>
   <msg key="no">No</msg>
@@ -386,7 +384,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Notification">Notificación</msg>
   <msg key="notified_users">Usuarios notificados</msg>
   <msg key="notify_user">Notificar al usuario</msg>
-  <msg key="null_value">EL valor igresado debe ser nulo</msg>
+  <msg key="null_value">El valor ingresado debe ser nulo</msg>
   <msg key="num_Answers">Número total de respuestas a visualizar</msg>
   <msg key="num_Answers_help">Si este número es más pequeño que el número de respuestas añadidas, se cogerán las respuestas aleatoriamente.</msg>
   <msg key="Num_Choices">Número de Opciones</msg>
@@ -410,7 +408,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="oq_Keywords_help">Palabras clave usadas para hacer una evaluación automática
 </msg>
   <msg key="oq_Reference_Answer">Respuesta de Referencia</msg>
-  <msg key="oq_Reference_Answer_help">Texto de Referencia para la Respuesta.</msg>
+  <msg key="oq_Reference_Answer_help">Texto para la Respuesta de Referencia.</msg>
   <msg key="oq_Title_help">Título para esta Pregunta Abierta. Usado para busquedas en un futuro.</msg>
   <msg key="or">O</msg>
   <msg key="order_of_entry">Orden de entrada</msg>
@@ -439,7 +437,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="points_section">Puntos por Sección</msg>
   <msg key="points_section_help">Los puntos que vale esta sección en un cuestionario. Es una medida de la dificultad relativa de la sección.
 </msg>
-  <msg key="post_check">Post Chuequeo</msg>
+  <msg key="post_check">Chequeo Posterior</msg>
   <msg key="Preview">Visualización previa</msg>
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
@@ -448,13 +446,13 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Randomized">Aleatoria</msg>
   <msg key="randomized">Aleatorio</msg>
   <msg key="reg_asm">Usando en el proceso de Registro</msg>
-  <msg key="Reg_Assessment_title">Cuestionario de Registro de Customización del Sitio Principal: &quot;%assessment_data.title&quot;</msg>
+  <msg key="Reg_Assessment_title">Cuestionario de Registro de personalización del Sitio Principal: &quot;%assessment_data.title&quot;</msg>
   <msg key="reg_users_required">Se requiere que los usuarios estén registrados</msg>
   <msg key="regarding_this_assess">En relación con esta encuesta</msg>
   <msg key="regexp">el comando regexp debe retornar 1 con este patrón:</msg>
-  <msg key="regexp_not_set_error">Debe de ingresar una expresión regular para ser utilizada en la compración de la entrada del usuario.</msg>
+  <msg key="regexp_not_set_error">Debe de ingresar una expresión regular para ser utilizada en la comparación de la entrada del usuario.</msg>
   <msg key="regexp_val_help">Debe de ser una expresión regular válida para el comando regexp</msg>
-  <msg key="regexp_value">Debe de ser una expresión regular válida para el comando regexp</msg>
+  <msg key="regexp_value">Patrón para comparación</msg>
   <msg key="related">Relacionado</msg>
   <msg key="remove_1">Eliminar: </msg>
   <msg key="remove_assessment">Quitar cuestionario</msg>
@@ -474,7 +472,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Results_edit">Editar el resultado del cuestionario</msg>
   <msg key="Results_edit_Description">Cambiar explicación</msg>
   <msg key="return">Volver</msg>
-  <msg key="Return_Url">Devolver URL</msg>
+  <msg key="Return_Url">URL de Finalización</msg>
   <msg key="reuse_responses">Visualizar las respuestas anteriores</msg>
   <msg key="Reuse_Responses_1">Reutilizar Respuestas</msg>
   <msg key="Review_Asessment">Revisión del Examen</msg>
@@ -546,7 +544,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Subtext">Subtexto</msg>
   <msg key="Summary">Resumen</msg>
   <msg key="Target_Community">Comunidad Destino</msg>
-  <msg key="text_ref_not_set_error">Usted necesita proporcionar una expresión válida de carácteres para este campo</msg>
+  <msg key="text_ref_not_set_error">Usted necesita proporcionar una expresión válida de caracteres para este campo</msg>
   <msg key="text_ref_value">Valor del Texto de Referencia</msg>
   <msg key="the_condition_to">La condición para saltar o ejecutar la acción</msg>
   <msg key="there_are_no_users">No hay usuarios a notificar</msg>
