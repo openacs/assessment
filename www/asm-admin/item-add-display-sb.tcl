@@ -84,7 +84,7 @@ if { $type == 1} {
 	    db_dml update_item {}
 	}
     }
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base one-a {assessment_id}]\#$as_item_id
     ad_script_abort
     
 }
@@ -167,7 +167,7 @@ ad_form -name item_add_display_sb -action item-add-display-sb -export { assessme
     }
 } -after_submit {
     # now go to assessment-page
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base one-a {assessment_id}]\#$as_item_id
     ad_script_abort
 }
 

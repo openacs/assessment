@@ -12,4 +12,10 @@
       </querytext>
 </fullquery>
 
+<fullquery name="get_item_id">
+      <querytext>
+	select as_item_id from as_item_section_map where sort_order=:sort_order and section_id=:section_id
+      </querytext>
+</fullquery>
+
 </queryset>

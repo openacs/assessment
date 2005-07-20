@@ -18,7 +18,7 @@
     <tr class="even">
   </else>
 
-  <td valign="top">@items.rownum@. @items.field_name@<if @items.required_p@ eq t> <font color=red>*</font> </if></td></tr>
+ <td valign="top"><a name=@items.as_item_id@> @items.rownum@. @items.field_name@</a><if @items.required_p@ eq t> <font color=red>*</font> </if></td></tr>
 
   <if @items.rownum@ odd>
     <tr class="odd">
