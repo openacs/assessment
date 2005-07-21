@@ -164,8 +164,8 @@ if { $type != 5 && [empty_string_p $edit_f]} {
 
 if { $type == 2 && [empty_string_p $edit_f]} {
     ad_form -extend -name assessment_form -form {
-	{start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
-	{end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {help} {help_text "[_ assessment.as_End_Time_help]"}}
+	{start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_Start_Time_help]"}}
+	{end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.End_Time]"} {format $form_format} {help} {help_text "[_ assessment.as_End_Time_help]"}}
     }
 } else  {
     ad_form -extend -name assessment_form -form {
