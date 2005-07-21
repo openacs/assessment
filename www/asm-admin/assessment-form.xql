@@ -8,7 +8,7 @@
 	       a.anonymous_p, a.secure_access_p, a.reuse_responses_p, a.show_item_name_p, random_p,
 	       a.entry_page, a.exit_page, a.consent_page, a.return_url, a.number_tries,
 	       a.wait_between_tries, a.time_for_response, a.show_feedback, a.section_navigation,
-	       to_char(a.start_time, :sql_format) as start_time, to_char(a.end_time, :sql_format) as end_time
+	       to_char(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start_time, to_char(a.end_time, 'YYYY-MM-DD HH24:MI:SS') as end_time
 	from as_assessments a, cr_revisions cr, cr_items ci
 	where ci.item_id = :assessment_id
 	and cr.revision_id = ci.latest_revision

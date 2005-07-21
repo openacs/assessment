@@ -36,7 +36,6 @@ permission::require_permission -object_id $package_id -privilege create
 
 set context [list [list index [_ assessment.admin]] $page_title]
 set package_id [ad_conn package_id]
-set sql_format "YYYY-MM-DD HH24:MI:SS"
 set form_format "[lc_get formbuilder_date_format] [lc_get formbuilder_time_format]"
 set user_id [ad_conn user_id]
 
