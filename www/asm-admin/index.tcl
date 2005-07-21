@@ -33,10 +33,11 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
     {zipfile:file {label "[_ assessment.Import_QTI_ZIP_File]"}}
 }
 
+set actions [list]
+lappend actions "[_ assessment.New_Assessment]" assessment-new "[_ assessment.New_Assessment2]"
+
 if { $sw_admin } {
-    set actions [list "[_ assessment.New_Assessment]" assessment-new "[_ assessment.New_Assessment2]" [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]]
-} else {
-    set actions [list "[_ assessment.New_Assessment]" assessment-new "[_ assessment.New_Assessment2]"]
+    lappend actions [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]
 }
 
 if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
