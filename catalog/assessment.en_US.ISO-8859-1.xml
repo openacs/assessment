@@ -277,7 +277,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="history">Change History</msg>
   <msg key="horizontal">Horizontal</msg>
   <msg key="Html_Options">HTML Options</msg>
-  <msg key="Html_Options_help">Additional HTML Options for display</msg>
+  <msg key="Html_Options_help">Additional HTML Options for display (i.e. cols,rows,disabled)</msg>
   <msg key="immediately">Immediately</msg>
   <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
   <msg key="Import_Results">Import Results</msg>
