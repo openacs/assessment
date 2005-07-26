@@ -202,7 +202,7 @@ ad_proc as::section::items {
     {-session_id:required}
     {-sort_order_type ""}
     {-num_items ""}
-    {-random_p ""}
+    {-random_p "t"}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
@@ -239,6 +239,7 @@ ad_proc as::section::items {
     }
 
     # sort item positions that are not fixed
+    ns_log notice "--------------> $sort_order_type"
     switch -exact $sort_order_type {
 	alphabetical {
 	    set open_positions [lsort -dictionary -index 1 $open_positions]
