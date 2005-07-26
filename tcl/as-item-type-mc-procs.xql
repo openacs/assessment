@@ -40,7 +40,7 @@
 
 	    select choice_id
 	    from as_item_choices
-	    where mc_id = :type_id
+	    where mc_id = :as_item_type_id
 
       </querytext>
 </fullquery>
