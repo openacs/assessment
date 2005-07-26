@@ -239,7 +239,7 @@ ad_proc as::section::items {
     }
 
     # sort item positions that are not fixed
-    ns_log notice "--------------> $sort_order_type"
+
     switch -exact $sort_order_type {
 	alphabetical {
 	    set open_positions [lsort -dictionary -index 1 $open_positions]
