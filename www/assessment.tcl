@@ -375,6 +375,10 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
     }
 }
 
+ad_form -extend -name show_item_form -on_request {
+    as::assessment::check::eval_or_checks -session_id $session_id -section_id $section_id 
+}
+
 if {$display(submit_answer_p) != "t"} {
     # process multiple submit
     set template "assessment-section-submit"

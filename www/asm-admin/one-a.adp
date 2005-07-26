@@ -125,6 +125,8 @@
 
 <a class=button href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
 
+<a class=button href="add-edit-section-check?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.add_section_trigger#</a>
+
 
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
 (@sections.points@ #assessment.points#)

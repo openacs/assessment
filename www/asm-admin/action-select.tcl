@@ -34,7 +34,7 @@ set title $assessment_data(title)
 set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] [_ assessment.action_select]]
 
 set title "[_ assessment.action_select]" 
-set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"]]
+set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"] [list "On Request" "or"]]
 set actions_list [db_list_of_lists get_actions {} ]
 set return_url ""
 
