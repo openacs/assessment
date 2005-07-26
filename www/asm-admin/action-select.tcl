@@ -12,6 +12,7 @@ ad_page_contract {
     edit_check:optional
     by_item_p:optional
     item_id:optional
+    {section_check_p 0}
 } -properties {
     context:onevalue
     title:onevalue
@@ -34,7 +35,11 @@ set title $assessment_data(title)
 set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] [_ assessment.action_select]]
 
 set title "[_ assessment.action_select]" 
-set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"] [list "On Request" "or"]]
+if {$section_check_p} {
+    set options [list [list "On Request" "or"]]
+} else {
+    set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"]]
+}
 set actions_list [db_list_of_lists get_actions {} ]
 set return_url ""
 

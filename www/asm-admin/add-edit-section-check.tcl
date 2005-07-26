@@ -90,5 +90,5 @@ ad_form \
         db_dml update_check {}
     } -after_submit {
         set url [as::assessment::check::add_check_return_url $action_p]
-        ad_returnredirect "${url}?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&section_id=$section_id_from$return_url"
+        ad_returnredirect "${url}?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&section_id=$section_id_from&section_check_p=1$return_url"
 }
