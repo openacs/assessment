@@ -277,6 +277,23 @@
         select c.inter_item_check_id,c.check_sql,action_p from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='or' and  section_id_from=:section_id order by am.order_by
       </querytext>
 </fullquery>
+<fullquery name="as::assessment::check::eval_sa_checks.section_checks">
+      <querytext>
+        select c.inter_item_check_id from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='sa' and  c.assessment_id=:assessment_id order by am.order_by
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::eval_sa_checks.get_assessment_id">
+      <querytext>
+        select max(revision_id) from cr_revisions where item_id=:assessment_id
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::eval_sa_checks.check_info">
+      <querytext>
+        select * from as_inter_item_checks c,as_action_map am where
+      c.inter_item_check_id=am.inter_item_check_id and am.action_perform='sa'
+      and  c.assessment_id=:assessment_id and c.inter_item_check_id=:check_id order by am.order_by 
+      </querytext>
+</fullquery>
 <fullquery name="as::assessment::check::confirm_display.get_check_info">
       <querytext>
       select * from as_inter_item_checks where inter_item_check_id=:check_id

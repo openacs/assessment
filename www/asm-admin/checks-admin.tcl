@@ -48,6 +48,7 @@ if {[exists_and_not_null item_id]} {
 } 
 
 db_multirow  or_checks get_or_checks {}  
+db_multirow  sa_checks get_sa_checks {}  
 db_multirow  aa_checks get_aa_checks {}  
 db_multirow  i_checks  get_i_checks {}  
 db_multirow  branches  get_branches {} 
@@ -101,6 +102,50 @@ template::list::create \
 		</if>
 		</if>
 		<a href=request-notification?assessment_id=$assessment_id&inter_item_check_id=@or_checks.inter_item_check_id@&section_id=$section_id>#assessment.notify_user#</a>
+		
+	    }
+	    
+	}
+    }
+
+
+template::list::create \
+    -name sa_checks \
+    -multirow sa_checks \
+    -key inter_item_check_id \
+    -bulk_actions {
+	"\#assessment.Delete\#" "confirm-delete" "\#assessment.delete_checked\#"
+    }\
+    -bulk_action_method post \
+    -bulk_action_export_vars {
+	assessment_id
+	section_id
+	{type_check t}
+	item_id_check
+	by_item_p
+    }\
+    -row_pretty_plural "[_ assessment.Assessment] [_ assessment.triggers]" \
+    -elements {
+	name {
+	    label "[_ assessment.Name]"
+	    display_template {
+		<a href=add-edit-section-check?assessment_id=$assessment_id&inter_item_check_id=@sa_checks.inter_item_check_id@&section_id=@sa_checks.section_id_from@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @sa_checks.name@
+	    }
+	}
+	action_name {
+	    label "[_ assessment.action_to_perform]"
+	}
+	counter {
+	    display_template {    
+		<if $show_p eq 1>
+		<if @sa_checks.order_by@ lt @sa_checks:rowcount@>
+		<a href="swap-actions?assessment_id=$assessment_id&check_id=@sa_checks.inter_item_check_id@&order_by=@sa_checks.order_by@&section_id=@sa_checks.section_id_from@&action_perform=@sa_checks.action_perform@&direction=d"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
+		</if>
+		<if @sa_checks.order_by@ gt 1>
+		<a href="swap-actions?assessment_id=$assessment_id&check_id=@sa_checks.inter_item_check_id@&order_by=@sa_checks.order_by@&section_id=@sa_checks.section_id_from@&action_perform=@sa_checks.action_perform@&direction=u"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+		</if>
+		</if>
+		<a href=request-notification?assessment_id=$assessment_id&inter_item_check_id=@sa_checks.inter_item_check_id@&section_id=$section_id>#assessment.notify_user#</a>
 		
 	    }
 	    

@@ -260,8 +260,6 @@ ad_proc -public as::assessment::check::action_exec {
     set failed_p "t"
     set failed [catch $tcl_code errorMsg]
     
-    ns_log Notice "DEDS as::assessment::check::action_exec -- $tcl_code"
-
     if { $failed > 0 } {
 	set failed_p "f"
     }
@@ -470,6 +468,30 @@ ad_proc -public as::assessment::check::eval_or_checks {
             }
         }
     }
+}
+
+
+ad_proc -public as::assessment::check::eval_sa_checks {
+    {-session_id}
+    {-assessment_id}
+} {
+    
+} {
+
+    set assessment_rev_id [db_string get_assessment_id {}]
+
+	set checks [db_list_of_lists section_checks {}]
+	foreach check_id $checks {
+
+	    set info [db_0or1row check_info {}]
+	    set perform [db_string check_sql $check_sql -default 0]
+	    if {$action_p == "t"} {
+		if {$perform == 1} {
+		    as::assessment::check::action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id
+		}
+	    }
+	}
+    
 }
 
 

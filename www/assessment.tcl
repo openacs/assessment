@@ -239,6 +239,8 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	db_dml session_finished {}
 	as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+    # section based aa checks
+    as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
         as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {[empty_string_p $assessment_data(return_url)]} {
 	    ad_returnredirect [export_vars -base finish {session_id assessment_id return_url next_asm}]
@@ -446,6 +448,8 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::calculate -session_id \$session_id -assessment_id \$assessment_rev_id
 	    db_dml session_finished {}
             as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+            # section based aa checks
+            as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {\[empty_string_p \$assessment_data(return_url)\]} {
 		ad_returnredirect \[export_vars -base finish {session_id assessment_id return_url next_asm}\]
@@ -499,6 +503,8 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	    db_dml session_finished {}
 	    as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+        # section based aa checks
+        as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {[empty_string_p $assessment_data(return_url)]} {
 		ad_returnredirect [export_vars -base finish {session_id assessment_id return_url next_asm}]

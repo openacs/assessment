@@ -36,7 +36,7 @@ set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$
 
 set title "[_ assessment.action_select]" 
 if {$section_check_p} {
-    set options [list [list "On Request" "or"]]
+    set options [list [list "On Request" "or"] [list "[_ assessment.at_the_end]" "sa"]]
 } else {
     set options [list [list "[_ assessment.immediately]" "i"] [list "[_ assessment.at_the_end]" "aa"] [list "[_ assessment.manually]" "m"]]
 }
