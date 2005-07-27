@@ -157,7 +157,9 @@
 
 <fullquery name="as::assessment::check::action_exec.get_check_params">
       <querytext>
-       select * from as_param_map where inter_item_check_id = :inter_item_check_id
+       select ci.latest_revision as item_id,parameter_id, value, inter_item_check_id 
+       from as_param_map pm,cr_items ci  where inter_item_check_id = :inter_item_check_id and 
+       ci.item_id=pm.item_id
       </querytext>
 </fullquery>
 
@@ -200,7 +202,8 @@
 
 <fullquery name="as::assessment::check::manual_action_exec.get_check_params">
       <querytext>
-       select * from as_param_map where inter_item_check_id = :inter_item_check_id 
+       select ci.latest_revision as item_id,parameter_id, value, inter_item_check_id 
+       from as_param_map pm, cr_items ci  where inter_item_check_id = :inter_item_check_id 
       </querytext>
 </fullquery>
 

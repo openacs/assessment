@@ -398,6 +398,15 @@ ad_proc -public as::install::after_upgrade {
 		content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
 		
 	    }
+	    0.13 0.14 {
+		# update as_param_map table to set the item_id  as a cr_item and not a cr_revision id
+		
+		db_foreach as_parameter { select cr.item_id, pm.parameter_id from as_param_map pm, cr_revisions cr where cr.revision_id = pm.item_id} {
+		    db_dml  update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
+		}
+		
+	    }
+	    
 	}
 }
 

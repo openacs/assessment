@@ -30,7 +30,7 @@
 
 <fullquery name="choices">
 <querytext>
-    select cri.title, sm.as_item_id
+    select cri.title, cri.item_id as as_item_id
     from as_item_section_map sm, cr_revisions cri
     where sm.as_item_id = cri.revision_id and sm.section_id in (
     select s.section_id
@@ -46,7 +46,7 @@
 
 <fullquery name="prev_choices">
 <querytext>
-    select cri.title, sm.as_item_id
+    select cri.title, cr.item_id as as_item_id
     from as_item_section_map sm, cr_revisions cri
     where sm.as_item_id = cri.revision_id and sm.section_id in (
     select s.section_id
