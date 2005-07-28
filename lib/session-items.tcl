@@ -70,3 +70,5 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
 	set this(next_title) ""
     }
 }
+
+set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]

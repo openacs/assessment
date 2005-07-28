@@ -26,7 +26,7 @@
 <td>
 <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
   <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
-  <if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#
+  <if @items.result_points@ not nil><if @showpoints@ eq 1><b>@items.result_points@ / @items.points@ #assessment.points#</if>
     <if @show_feedback@ ne none>
       <if @items.feedback@ not nil>: @items.feedback;noquote@</if>
     </if>
@@ -66,7 +66,7 @@
       <td valign=top>@items.description;noquote@
         <if @survey_p@ ne t>
           <if @items.title@ eq @items.next_title@ or @items.groupnum@ gt 1>
-            <if @items.result_points@ not nil><br><b>@items.result_points@ / @items.points@ #assessment.points#
+            <if @items.result_points@ not nil><if @showpoints@ eq 1><br><b>@items.result_points@ / @items.points@ #assessment.points#</if>
               <if @show_feedback@ ne none>
                 <if @items.feedback@ not nil>:<br>@items.feedback;noquote@</if>
               </if>
