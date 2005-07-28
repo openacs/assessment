@@ -25,15 +25,16 @@
         <requires url="notifications" version="0.1"/>
 
         <callbacks>
-            <callback type="after-install"  proc="as::install::assessment_create_install"/>
-            <callback type="after-instantiate"  proc="as::install::package_instantiate"/>
-            <callback type="after-mount"  proc="as::actions::insert_actions"/>
-            <callback type="after-upgrade"  proc="as::install::after_upgrade"/>
-            <callback type="before-uninstall"  proc="inter_item_checks::apm_callback::package_uninstall"/>
-            <callback type="before-uninstantiate"  proc="as::parameter::reset_parameter"/>
             <callback type="before-unmount"  proc="as::parameter::reset_parameter"/>
+            <callback type="before-uninstall"  proc="inter_item_checks::apm_callback::package_uninstall"/>
+            <callback type="after-mount"  proc="as::actions::insert_actions"/>
+            <callback type="after-install"  proc="as::install::assessment_create_install"/>
+            <callback type="before-uninstantiate"  proc="as::parameter::reset_parameter"/>
+            <callback type="after-upgrade"  proc="as::install::after_upgrade"/>
+            <callback type="after-instantiate"  proc="as::install::package_instantiate"/>
         </callbacks>
         <parameters>
+            <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="ShowPoints"  default="1" description="Whether or not we show the points in the user interface for an assessment."/>
         </parameters>
 
     </version>
