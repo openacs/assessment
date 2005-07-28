@@ -7,7 +7,7 @@
 <th colspan="3" align=left>#assessment.Assessment#: <a href="assessment?assessment_id=@assessment_id@">@assessment_data.title@</a></th></tr>
 <tr><td nowrap><b>#assessment.User_ID#:</b> <span><if @show_username_p@><a href="@session_user_url@">@first_names@ @last_name@</a></if><else>#assessment.anonymous_name#</else></span></td>
 <td nowrap><b>#assessment.Attempt#:</b> <span><a href="sessions?assessment_id=@assessment_id@">@session_attempt@</a><if @assessment_data.number_tries@ not nil> / @assessment_data.number_tries@</if></span></td>
-<td nowrap><if @assessment_data.survey_p@ ne t> <if @showpoints@ eq 1> <b>#assessment.Percent_Score#:</b> </if> <span>@assessment_score@</span></if></td></tr>
+<td nowrap><if @assessment_data.survey_p@ ne t> <if @showpoints@ eq 1> <b>#assessment.Percent_Score#:</b>  <span>@assessment_score@</span></if></if> </td></tr>
 
 <tr><td><b>#assessment.Started#:</b> <span>@session_start@</span></td>
 <td><b>#assessment.Finished#:</b> <span>@session_finish@</font></td>
