@@ -374,5 +374,17 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::assessment::check::update_checks_condition.checks">
+      <querytext>
+	select inter_item_check_id,check_sql from as_inter_item_checks 
+      </querytext>	
+</fullquery>	
+
+<fullquery name="as::assessment::check::update_checks_condition.update_check">
+      <querytext>
+	update as_inter_item_checks set check_sql=:check_sql where inter_item_check_id = :inter_item_check_id
+      </querytext>
+</fullquery>
+
 
 </queryset>

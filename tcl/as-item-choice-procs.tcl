@@ -84,7 +84,8 @@ ad_proc -public as::item_choice::new_revision {
 						 [list percent_score $percent_score] \
 						 [list fixed_position $fixed_position] ] ]
     }
-
+    
+    
     return $as_item_choice_id
 }
 

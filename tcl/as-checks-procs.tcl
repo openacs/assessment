@@ -656,3 +656,24 @@ ad_proc -public as::assessment::check::add_manual_check {
 	as::assessment::check::eval_single_check -session_id $session_id -assessment_id $assessment_id  -inter_item_check_id $inter_item_check_id
     }
 }
+
+ad_proc -public as::assessment::check::update_checks_condition {
+    {-choice_id:required}
+    {-new_choice_id:required}
+} {
+    
+} {
+    set checks [db_list_of_lists checks {}]
+    foreach check $checks {
+	set cond_list  [split [lindex $check 1] "="]
+	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	set condition [lindex [split [lindex $cond_list 1] " "] 0]
+	
+	if {$choice_id == $condition} {
+	    set inter_item_check_id [lindex $check 0]
+	    set check_sql [as::assessment::check::get_sql -item_id $item_id  -condition $new_choice_id]
+	    
+	    db_dml update_check {}
+	}
+    }
+}

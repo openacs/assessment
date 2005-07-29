@@ -151,6 +151,7 @@ set edit_data "{
             if {\[string range  \$i 0 0\] != \"_\" && !\[empty_string_p \$choice(\$i)\]} {
           	incr count
 		set new_choice_id \[as::item_choice::new_revision -choice_id \$i -mc_id \$new_item_type_id\]
+                as::assessment::check::update_checks_condition -choice_id \$i -new_choice_id \$new_choice_id
 		set title \$choice(\$i)
 		set correct_answer_p \[ad_decode \[info exists correct(\$i)\] 0 f t\]
 		db_dml update_title {}
