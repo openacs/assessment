@@ -32,15 +32,7 @@
 <querytext>
     select cri.title, cri.item_id as as_item_id
     from as_item_section_map sm, cr_revisions cri
-    where sm.as_item_id = cri.revision_id and sm.section_id in (
-    select s.section_id
-    from as_sections s, cr_revisions cr, cr_items ci,
-    as_assessment_section_map asm,as_item_section_map sm
-    where ci.item_id = cr.item_id
-    and cr.revision_id = s.section_id
-    and s.section_id = asm.section_id 
-    and asm.assessment_id = :new_assessment_revision)
-
+    where sm.as_item_id = cri.revision_id and sm.section_id = :section_id
 </querytext>
 </fullquery>
 

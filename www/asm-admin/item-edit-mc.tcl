@@ -86,7 +86,7 @@ foreach one_choice $choices {
     } else {
 	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     }
-    lappend validate_list "correct.$choice_id {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
+    # lappend validate_list "correct.$choice_id {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
     }
 }
 
