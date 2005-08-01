@@ -26,15 +26,16 @@ if {[exists_and_not_null item_id]} {
     set show_p 0
     set by_item_p 1
     set item_p "&item_id=$item_id"
-    set item_id_check $item_id
+    set item_id_check $item_id 
+    set as_item_id_i [db_string get_item_id { select item_id from cr_revisions where revision_id = :item_id}]
     set check_list "and c.inter_item_check_id in ("
     set checks [db_list_of_lists get_all_checks { }]
     set count  0
     
     foreach check $checks {
 	set cond_list  [split [lindex $check 1] "="]
-	set as_item_id [lindex [split [lindex $cond_list 2] " "] 0]
-	if { $item_id == $as_item_id} {
+	set as_item_id [lindex [split [lindex $cond_list 2] ")"] 0]
+	if { $as_item_id_i == $as_item_id} {
 	    incr count
 	    append check_list "[lindex $check 0],"
 	}
@@ -173,7 +174,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@aa_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @aa_checks.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@aa_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p&section_id=$section_id><img border=0 src=images/Edit16.gif></a>  @aa_checks.name@
 	    }
 	}
 	action_name {
@@ -219,7 +220,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@i_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @i_checks.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&section_id=$section_id&inter_item_check_id=@i_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @i_checks.name@
 	    }
 	}
 	action_name {
@@ -264,7 +265,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@m_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @m_checks.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@m_checks.inter_item_check_id@&edit_check=t&by_item_p=$by_item_p$item_p&section_id=$section_id><img border=0 src=images/Edit16.gif></a>  @m_checks.name@
 	    }
 	}
 	action_name {
@@ -299,7 +300,7 @@ template::list::create \
 	name {
 	    label "[_ assessment.Name]"
 	    display_template {
-		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@branches.inter_item_check_id@&edit_check=t&type=b&by_item_p=$by_item_p$item_p><img border=0 src=images/Edit16.gif></a>  @branches.name@
+		<a href=add-edit-check?assessment_id=$assessment_id&inter_item_check_id=@branches.inter_item_check_id@&edit_check=t&type=b&by_item_p=$by_item_p$item_p&section_id=$section_id><img border=0 src=images/Edit16.gif></a>  @branches.name@
 	    }
 	}
 	section_id_to {

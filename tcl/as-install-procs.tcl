@@ -406,8 +406,23 @@ ad_proc -public as::install::after_upgrade {
 		}
 		
 	    }
+	    0.14 0.15 {
+		# update as_inter_item_check_id table to set the check_sql condition using the item_id of a choice instead of using the revision_id
+		
+		db_foreach check  { select inter_item_check_id, check_sql from as_inter_item_checks } {
+		    set cond_list  [split $check_sql "="]
+		    set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+		    set choice_id [lindex [split [lindex $cond_list 1] " "] 0]
+		    set condition [db_string get_item_id {select item_id from cr_revisions where revision_id=:choice_id} -default -1]
+		    set check_sql_updated [as::assessment::check::get_sql -item_id $item_id -condition $condition]
+		    if { $condition != -1 } {
+			db_dml update_check_sql { update as_inter_item_checks set check_sql = :check_sql_updated where inter_item_check_id=:inter_item_check_id}
+		    }
+		}
+		
+	    }
 	    
-	}
+	}    
 }
 
 

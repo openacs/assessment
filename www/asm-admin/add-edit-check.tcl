@@ -39,8 +39,10 @@ if {![exists_and_not_null as_item_id] } {
     set condition_sql [db_string get_item_id {}] 
     #parse condition_sql to get item_id
     set cond_list  [split $condition_sql "="]
-    set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-    
+    set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
+    set item_id [content::item::get_latest_revision -item_id $item_id]
+
+
 } else {
     set item_id $as_item_id
 }
@@ -48,6 +50,7 @@ if {![exists_and_not_null as_item_id] } {
 if {[exists_and_not_null section_id]} {
     set section_id_from $section_id
 }
+
 
 set as_item_id $item_id
 

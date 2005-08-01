@@ -142,7 +142,9 @@ ad_proc -public as::assessment::check::get_sql {
 } {
     
 } {
-    set check_sql "select (case when idc.choice_id in (select revision_id from cr_revisions where item_id=$condition) then \'1\' else \'0\' end) as perform_p from as_item_data id, as_item_data_choices idc where id.as_item_id=$item_id and id.item_data_id=idc.item_data_id and id.session_id=:session_id"
+    set as_item_id [db_string get_item_id {select item_id from cr_revisions where revision_id=:item_id}]
+    
+    set check_sql "select (case when idc.choice_id in (select revision_id from cr_revisions where item_id=$condition) then \'1\' else \'0\' end) as perform_p from as_item_data id, as_item_data_choices idc where id.as_item_id in (select revision_id from cr_revisions where item_id=$as_item_id) and id.item_data_id=idc.item_data_id and id.session_id=:session_id"
     
     return $check_sql
 }
@@ -590,7 +592,7 @@ ad_proc -public as::assessment::check::delete_item_checks {
     set checks [db_list_of_lists related_checks {}]
     foreach check $checks {
 	set cond_list  [split [lindex $check 1] "="]
-	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
 	if {$item_id == $as_item_id} {
 	    set check_id [lindex $check 0]
 	    db_exec_plsql delete_check {}
@@ -613,7 +615,7 @@ ad_proc -public as::assessment::check::copy_item_checks {
 
 	
 	set cond_list  [split [lindex $check 1] "="]
-	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
 	set condition [lindex [split [lindex $cond_list 1] ")"] 0]
 	
 	if {$item_id == $as_item_id} {
