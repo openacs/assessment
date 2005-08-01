@@ -44,7 +44,7 @@ ad_proc -public as::actions::update_checks_after_upgrade {
 	set check_sql [lindex $check 1]
 	set cond_list  [split  $check_sql "="]
 	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-	set condition [lindex [split [lindex $cond_list 1] " "] 0]
+	set condition [lindex [split [lindex $cond_list 1] ")"] 0]
 	
 	set append_sql " and id.item_data_id = (select max(item_data_id) from as_item_data where as_item_id=$item_id and session_id=:session_id)"
 	append check_sql $append_sql

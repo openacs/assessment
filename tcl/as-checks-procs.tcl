@@ -142,7 +142,7 @@ ad_proc -public as::assessment::check::get_sql {
 } {
     
 } {
-    set check_sql "select (case when idc.choice_id=$condition then \'1\' else \'0\' end) as perform_p from as_item_data id, as_item_data_choices idc where id.as_item_id=$item_id and id.item_data_id=idc.item_data_id and id.session_id=:session_id"
+    set check_sql "select (case when idc.choice_id in (select revision_id from cr_revisions where item_id=$condition) then \'1\' else \'0\' end) as perform_p from as_item_data id, as_item_data_choices idc where id.as_item_id=$item_id and id.item_data_id=idc.item_data_id and id.session_id=:session_id"
     
     return $check_sql
 }
@@ -614,7 +614,7 @@ ad_proc -public as::assessment::check::copy_item_checks {
 	
 	set cond_list  [split [lindex $check 1] "="]
 	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-	set condition [lindex [split [lindex $cond_list 1] " "] 0]
+	set condition [lindex [split [lindex $cond_list 1] ")"] 0]
 	
 	if {$item_id == $as_item_id} {
 	    set inter_item_check_id [lindex $check 0]
@@ -657,23 +657,3 @@ ad_proc -public as::assessment::check::add_manual_check {
     }
 }
 
-ad_proc -public as::assessment::check::update_checks_condition {
-    {-choice_id:required}
-    {-new_choice_id:required}
-} {
-    
-} {
-    set checks [db_list_of_lists checks {}]
-    foreach check $checks {
-	set cond_list  [split [lindex $check 1] "="]
-	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-	set condition [lindex [split [lindex $cond_list 1] " "] 0]
-	
-	if {$choice_id == $condition} {
-	    set inter_item_check_id [lindex $check 0]
-	    set check_sql [as::assessment::check::get_sql -item_id $item_id  -condition $new_choice_id]
-	    
-	    db_dml update_check {}
-	}
-    }
-}

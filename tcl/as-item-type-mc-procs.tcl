@@ -93,7 +93,6 @@ ad_proc -public as::item_type_mc::new_revision {
 	    set choices [db_list get_choices {}]
 	    foreach choice_id $choices {
 		set new_choice_id [as::item_choice::new_revision -choice_id $choice_id -mc_id $new_item_type_id]
-                as::assessment::check::update_checks_condition -choice_id $choice_id -new_choice_id $new_choice_id
 	    }
 	}
     }
