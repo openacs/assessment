@@ -344,8 +344,9 @@ ad_proc -public as::assessment::check::manual_action_exec {
     foreach notify_user $admin {
 	lappend to $notify_user
     }
-    
-    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" -subset $to -force -action_id $inter_item_check_id
+    if { [parameter::get -package_id [ad_conn package_id] -parameter NotifyAdminOfActions -default 1] } {
+    	notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" -subset $to -force -action_id $inter_item_check_id
+    }
 
     
 }

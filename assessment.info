@@ -34,7 +34,8 @@
             <callback type="before-unmount"  proc="as::parameter::reset_parameter"/>
         </callbacks>
         <parameters>
-        <!-- No version parameters -->
+            <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="NotifyAdminOfActions"  default="1" description="This parameter controls whether to allow notifications of triggered actions. This affects all assessments in the system."/>
+            <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="ShowPoints"  default="1" description="Whether or not we show the points in the user interface for an assessment."/>
         </parameters>
 
     </version>
