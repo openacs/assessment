@@ -10,13 +10,16 @@ ad_proc -public as::item_display_tb::new {
     {-html_display_options ""}
     {-abs_size ""}
     {-item_answer_alignment ""}
+    {-package_id ""}
 } {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
 
     New Item Display TextBox Type to the database
 } {
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)

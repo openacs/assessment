@@ -19,13 +19,16 @@ ad_proc -public as::item::new {
     {-feedback_right ""}
     {-feedback_wrong ""}
     {-points ""}
+    {-package_id ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
 
     New item to the database
 } {
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
