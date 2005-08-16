@@ -31,7 +31,7 @@ set form_format [lc_get formbuilder_date_format]
 
 ad_form -name assessment_export -action results-export -form {
     {assessment_id:key}
-    {column_format:text(radio) {label "[_ assessment.csv_export_format]"} {options $export_options} {help_text "[_ assessment.csv_export_format_help]"}}
+    {column_format:text(radio) {label "[_ assessment.csv_export_format]"} {value "name" } {options $export_options} {help_text "[_ assessment.csv_export_format_help]"}}
     {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_Start_Time_help]"}}
     {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_End_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_End_Time_help]"}}
 } -edit_request {
@@ -104,9 +104,9 @@ ad_form -name assessment_export -action results-export -form {
 	}
     }
     
-    set csv_text "[join $csv_first_row ";"]\r\n"
+    set csv_text "[join $csv_first_row ","]\r\n"
     foreach session_id $session_list {
-	append csv_text "[join $csv($session_id) ";"]\r\n"
+	append csv_text "[join $csv($session_id) ","]\r\n"
     }
 } -after_submit {
      ns_set put [ad_conn outputheaders] Content-Disposition "attachment;filename=results.csv"
