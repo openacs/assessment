@@ -17,9 +17,9 @@ permission::require_permission -object_id $package_id -privilege create
 set title "[_ assessment.Administration]"
 set context [list "[_ assessment.admin]"]
 set package_id [ad_conn package_id]
+set folder_id [as::assessment::folder_id -package_id $package_id]
 set categories_url [db_string get_category_url {}]
 set user_id [ad_conn user_id]
-set sw_admin [acs_user::site_wide_admin_p -user_id $user_id]
 set package_admin_p [permission::permission_p -party_id $user_id -object_id $package_id -privilege "admin"]
 
 if { $package_admin_p == 0} {
@@ -33,11 +33,7 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
     {zipfile:file {label "[_ assessment.Import_QTI_ZIP_File]"}}
 }
 
-if { $sw_admin } {
-    set actions [list "[_ assessment.New_Assessment]" assessment-form "[_ assessment.New_Assessment2]" [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]]
-} else {
-    set actions [list "[_ assessment.New_Assessment]" assessment-form "[_ assessment.New_Assessment2]"]
-}
+set actions [list "[_ assessment.New_Assessment]" assessment-form "[_ assessment.New_Assessment2]"]
 
 if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
     # lappend actions "[_ assessment.Admin_catalog]" "catalog/" "[_ assessment.Admin_catalog]"
