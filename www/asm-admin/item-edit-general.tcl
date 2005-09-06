@@ -80,7 +80,7 @@ ad_form -extend -name item_edit_general -form {
     {description:text(hidden) {value ""}}
     {content:text(hidden) {value ""}}
     {subtext:text(hidden) {value ""}}
-    {field_name:text(hidden) {value ""}}
+    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text(hidden) {value ""}}
     {feedback_right:text(hidden) {value ""}}
     {max_time_to_complete:text(hidden) {value ""}}
