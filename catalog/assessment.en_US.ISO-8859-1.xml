@@ -363,6 +363,10 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="New_Assessment">New Assessment</msg>
   <msg key="New_Assessment2">Create New Assessment</msg>
   <msg key="new_parameter">New Parameter</msg>
+  <msg key="New_Partial_Assessment">New Partial Assessment</msg>
+  <msg key="New_Quick_Assessment">New Quick Assessment</msg>
+  <msg key="New_Review_Assessment">New Review Assessment</msg>
+  <msg key="New_Survey">New Survey</msg>
   <msg key="Next">Next</msg>
   <msg key="no">No</msg>
   <msg key="no_display">-- None --</msg>
