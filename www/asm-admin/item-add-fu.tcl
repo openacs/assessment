@@ -40,7 +40,7 @@ ad_form -name item_add_fu -action item-add-fu -export { assessment_id section_id
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.fu_Title_help]"}}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 } -edit_request {
-    set title ""
+    set title [db_string get_title {} -default ""]
     set display_type "f"
 } -edit_data {
     db_transaction {

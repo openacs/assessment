@@ -58,7 +58,7 @@ if { $type > 1} {
 ad_form -extend -name item_add_oq -form {
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 } -edit_request {
-    set title ""
+    set title [db_string get_title {} -default ""]
     set default_value ""
     set feedback ""
     set reference_answer ""

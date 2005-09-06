@@ -99,7 +99,7 @@ eval ad_form -extend -name item_add_mc $ad_form_code
 
 
 set edit_request "{
-    set title \"\"
+    set title \[db_string get_title {} -default \"\"\]
     set increasing_p f
     set negative_p f
     set num_correct_answers \"\"
