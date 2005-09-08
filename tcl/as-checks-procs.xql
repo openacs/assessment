@@ -175,6 +175,7 @@
       from as_item_data
       where session_id = :session_id
       and as_item_id = :item_id
+      and item_data_id in (select latest_revision from cr_items)
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::manual_action_exec.get_answer">
