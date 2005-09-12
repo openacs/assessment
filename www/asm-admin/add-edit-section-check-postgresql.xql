@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!DOCTYPE queryset PUBLIC "-//OpenACS//DTD XQL 1.0//EN" "http://www.thecodemill.biz/repository/xql.dtd">
 <!-- oacs-5-2/packages/assessment/www/asm-admin/add-edit-section-check-postgresql.xql -->
 <!-- @author Deds Castillo (deds@i-manila.com.ph) -->
@@ -7,11 +6,6 @@
 <!-- @cvs-id $Id$ -->
 
 <queryset>
-  
-  <rdbms>
-    <type>postgresql</type>
-    <version>7.4</version>
-  </rdbms>
   
   <fullquery name="new_check">
     <querytext>
