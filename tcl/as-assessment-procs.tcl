@@ -240,6 +240,7 @@ ad_proc -public as::assessment::copy {
     {-assessment_id:required}
     {-name ""}
     {-folder_id ""}
+    {-new_title ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-23
@@ -253,7 +254,11 @@ ad_proc -public as::assessment::copy {
 
     data -assessment_id $assessment_id
     array set a [array get assessment_data]
-    append a(title) "[_ assessment.copy_appendix]"
+    if {[empty_string_p $new_title]} {
+        append a(title) "[_ assessment.copy_appendix]"
+    } else {
+        set a(title) $new_title
+    }
 
     db_transaction {
 	set new_assessment_id [db_nextval acs_object_id_seq]
