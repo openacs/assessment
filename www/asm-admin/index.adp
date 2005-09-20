@@ -4,7 +4,7 @@
 <if @package_admin_p@ eq 1>
 <a
 href="@categories_url@cadmin/one-object?object_id=@package_id@">#assessment.admin_categories#</a>
-| <a href=../admin/asm-action-admin>#assessment.admin_actions#</a> | <a href=../asm-admin/admin-request>#assessment.admin_requests#</a> | <a href="permissions?object_id=@package_id@">#assessment.permissions#</a>
+|<if @sw_admin@ eq 1> <a href=../admin/asm-action-admin>#assessment.admin_actions#</a> |</if> <a href=../asm-admin/admin-request>#assessment.admin_requests#</a> | <a href="permissions?object_id=@package_id@">#assessment.permissions#</a>
 </if> <else>
 <a href=../asm-admin/admin-request>#assessment.admin_requests#</a>
 </else>
