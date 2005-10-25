@@ -43,6 +43,7 @@ ad_proc -public as::assessment::new {
     if { ![exists_and_not_null package_id] } { set package_id [ad_conn package_id] }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
+
     # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
     db_transaction {
 	set assessment_item_id [db_nextval acs_object_id_seq]
@@ -54,7 +55,8 @@ ad_proc -public as::assessment::new {
                                     -parent_id $folder_id \
                                     -creation_user $creator_id \
                                     -content_type {as_assessments} \
-                                    -name $name]
+                                    -name $name \
+                                    -package_id $package_id]
 
 	set as_assessment_id [content::revision::new \
 				  -item_id $assessment_item_id \
@@ -83,7 +85,8 @@ ad_proc -public as::assessment::new {
 						   [list show_feedback $show_feedback] \
 						   [list section_navigation $section_navigation] \
 						   [list survey_p $survey_p] \
-				                   [list type $type]]]
+						   [list package_id $package_id] \
+                           [list type $type]]]
 			      
     }
 
