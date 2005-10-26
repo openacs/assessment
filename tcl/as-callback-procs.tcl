@@ -74,16 +74,21 @@ ad_proc -public -callback datamanager::move_assessment -impl datamanager {
 #get the new parent_id and package_id
     db_1row get_new_parent_id {}
     db_1row get_new_package_id {}
-   
+
+
+    db_transaction {
 #update table
-    db_dml update_as_cr_items {}
+        db_dml update_as_cr_items {}
 
 #se actualiza el context_id y el package_id del assessment en acs_objects
-    db_dml update_as_it_acs_objects1 {}
-    db_dml update_as_it_acs_objects2 {}
+        db_dml update_as_it_acs_objects1 {}
+        db_dml update_as_it_acs_objects2 {}
 
 #se actualiza el package_id del assessment en acs_objects
-    db_dml update_as_as_acs_objects {}
+        db_dml update_as_as_acs_objects {}
+    } on_error {
+         ad_return_error "Error:" "The error was: $errmsg"
+    }
 }
 
 
@@ -91,7 +96,7 @@ ad_proc -public -callback datamanager::copy_assessment -impl datamanager {
      -object_id:required
      -selected_community:required
 } {
-    Move an assessment to another class or community
+    Copy an assessment to another class or community
 } {
 #get assessment data
     db_1row get_assessment_data {}
@@ -121,15 +126,17 @@ ad_proc -public -callback datamanager::copy_assessment -impl datamanager {
     -password $password    \
     -show_feedback $show_feedback    \
     -section_navigation $section_navigation    \
-    -survey_p $survey_p    \
+    -survey_p $survey_p     \
     -package_id $package_id    \
     -type $type ]
 
+ns_log Notice "package_id: $package_id"
 #get sections data
      set sections_id_list [db_list get_sections_id_list {}]
 #asociate section with assessment
      for {set i 0} {$i < [llength $sections_id_list]} {incr i} {
          set section_id [lindex $sections_id_list $i]
+
          db_1row get_section_data {}
          db_dml map_ass_sections {} 
      }        
@@ -148,9 +155,13 @@ ad_proc -public -callback datamanager::delete_assessment -impl datamanager {
     set trash_package_id [datamanager::get_trash_package_id -community_id $community_id]
  
 #update tables
-
-    db_dml del_update_as_cr_items {}
-    db_dml del_update_as_it_acs_objects {}
+    db_transaction {
+        db_dml del_update_as_cr_items {}
+        db_dml del_update_as_it_acs_objects {}
 #    db_dml del_update_as_it_acs_objects2 {}
-    db_dml del_update_as_as_acs_objects {} 
+        db_dml del_update_as_as_acs_objects {} 
+    } on_error {
+        ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
+    }
+
 }
