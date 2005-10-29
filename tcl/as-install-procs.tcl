@@ -61,6 +61,7 @@ content::type::attribute::new -content_type {as_item_display_sb} -attribute_name
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {multiple_p} -datatype {string}    -pretty_name {Allow Multiple} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
+content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
 
 # Textbox display type
 content::type::attribute::new -content_type {as_item_display_tb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -420,6 +421,9 @@ ad_proc -public as::install::after_upgrade {
 		    }
 		}
 		
+	    }
+	    0.15 0.16 {
+		content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
 	    }
 	    
 	}    

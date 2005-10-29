@@ -99,7 +99,10 @@ create table as_item_display_sb (
 	-- order in which the choices will appear (numerical, alphabetic, randomized or by order of entry)
 	sort_order_type		varchar(20),
 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
-	item_answer_alignment	varchar(20)
+	item_answer_alignment	varchar(20),
+
+	-- prepend an empty item to the list, useful for validation of a required sb but you don't want any option as selected by default
+	prepend_empty_p		char(1) default 'f'
 );
 
 -- Textbox Display Type

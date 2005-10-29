@@ -12,6 +12,7 @@ ad_proc -public as::item_display_sb::new {
     {-choice_label_orientation ""}
     {-sort_order_type ""}
     {-item_answer_alignment ""}
+    {-prepend_empty_p "f"}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-08
@@ -31,7 +32,8 @@ ad_proc -public as::item_display_sb::new {
 						[list mulitple_p $multiple_p] \
 						[list choice_label_orientation $choice_label_orientation] \
 						[list sort_order_type $sort_order_type] \
-						[list item_answer_alignment $item_answer_alignment] ] ]	
+						[list item_answer_alignment $item_answer_alignment] \
+						[list prepend_empty_p $prepend_empty_p] ] ]	
     }
 
     return $as_item_display_sb_id
@@ -44,6 +46,7 @@ ad_proc -public as::item_display_sb::edit {
     {-choice_label_orientation ""}
     {-sort_order_type ""}
     {-item_answer_alignment ""}
+    {-prepend_empty_p "f"}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-08
@@ -60,7 +63,8 @@ ad_proc -public as::item_display_sb::edit {
 						      [list multiple_p $multiple_p] \
 						      [list choice_label_orientation $choice_label_orientation] \
 						      [list sort_order_type $sort_order_type] \
-						      [list item_answer_alignment $item_answer_alignment] ] ]	
+						      [list item_answer_alignment $item_answer_alignment] \
+						      [list prepend_empty_p $prepend_empty_p] ] ]	
     }
 
     return $new_item_display_id
@@ -133,6 +137,10 @@ ad_proc -public as::item_display_sb::render {
 	}
     }
     
+    if { $type(prepend_empty_p) == "t" } {
+	set data [linsert $data 0 [list "" ""]]
+    }
+
     set optional ""
     if {$required_p != "t"} {
 	set optional ",optional"

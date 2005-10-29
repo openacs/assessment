@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.15" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.16" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -174,6 +174,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Correct_Answer_help">Is this the correct answer?</msg>
   <msg key="Created_by">Created by</msg>
   <msg key="csv_End_Time">End Time</msg>
+  <msg key="csv_End_Time_help">Select an end date. This field is optional.</msg>
   <msg key="csv_export">CSV Export</msg>
   <msg key="csv_export_format">CSV Export Format</msg>
   <msg key="csv_export_format_help">Select one of the above, the selected field is goint to identify the question in your csv file.</msg>
@@ -181,6 +182,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="csv_export_title">Question Text</msg>
   <msg key="CSV_file">CSV file</msg>
   <msg key="csv_Start_Time">Start Time</msg>
+  <msg key="csv_Start_Time_help">Select a start date. This field is optional.</msg>
   <msg key="currently">Currently:</msg>
   <msg key="Data_Type">Data Type</msg>
   <msg key="data_type_boolean">Boolean</msg>
@@ -332,6 +334,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
+  <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
   <msg key="make_hide_item_name">Hide item name</msg>
@@ -425,6 +428,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="points_section">Points for Section</msg>
   <msg key="points_section_help">How many points is this section worth in an assessment. This is a measurement for relative difficulty.</msg>
   <msg key="post_check">Post Check</msg>
+  <msg key="Prepend_Empty_Item">Prepend Empty Item</msg>
   <msg key="Preview">Preview</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>

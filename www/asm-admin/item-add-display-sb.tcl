@@ -110,6 +110,7 @@ ad_form -name item_add_display_sb -action item-add-display-sb -export { assessme
     {multiple_p:text(select) {label "[_ assessment.Multiple]"} {options $boolean_options} {help_text "[_ assessment.Multiple_help]"}}
     {label_orientation:text(hidden)}
     {order_type:text(select) {label "[_ assessment.Order_Type]"} {options $order_types} {help_text "[_ assessment.Order_Type_help]"}}
+    {prepend_empty_p:text(select) {label "[_ assessment.Prepend_Empty_Item]"} {options $boolean_options} {help_text "[_ assessment.lt_Prepend_an_empty_item]"}}
     {answer_alignment:text(hidden)}
 } -edit_request {
     set html_options ""
@@ -117,6 +118,7 @@ ad_form -name item_add_display_sb -action item-add-display-sb -export { assessme
     set label_orientation "top"
     set order_type "order_of_entry"
     set answer_alignment "besideright"
+    set prepend_empty_p f
 } -validate {
     {html_options {[as::assessment::check_html_options -options $html_options]} "[_ assessment.error_html_options]"}
 } -edit_data {
@@ -133,7 +135,8 @@ ad_form -name item_add_display_sb -action item-add-display-sb -export { assessme
 					-multiple_p $multiple_p \
 					-choice_label_orientation $label_orientation \
 					-sort_order_type $order_type \
-					-item_answer_alignment $answer_alignment]
+					-item_answer_alignment $answer_alignment \
+				        -prepend_empty_p $prepend_empty_p]
 	    
 	    if {![info exists object_type]} {
 		# first item display mapped
@@ -151,7 +154,8 @@ ad_form -name item_add_display_sb -action item-add-display-sb -export { assessme
 					-multiple_p $multiple_p \
 					-choice_label_orientation $label_orientation \
 					-sort_order_type $order_type \
-					-item_answer_alignment $answer_alignment]
+					-item_answer_alignment $answer_alignment \
+					-prepend_empty_p $prepend_empty_p]
 	}
 
 	set old_item_id [as::item::latest -as_item_id $old_item_id -section_id $new_section_id -default 0]
