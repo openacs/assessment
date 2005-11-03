@@ -140,7 +140,7 @@
     <fullquery name="callback::datamanager::move_assessment::impl::datamanager.update_as_it_acs_objects2">
     <querytext>
         update acs_objects
-        set package_id = :new_package_id        
+        set package_id = :package_id        
         where object_id = (select context_id from acs_objects where object_id=:object_id)
     </querytext>
     </fullquery>
@@ -148,7 +148,7 @@
     <fullquery name="callback::datamanager::move_assessment::impl::datamanager.update_as_as_acs_objects">
     <querytext>
         update acs_objects
-        set package_id =:new_package_id
+        set package_id =:package_id
         where object_id in (select object_id 
                             from acs_objects 
                             where context_id=
@@ -220,7 +220,7 @@
            sort_order,
            points
     FROM as_assessment_section_map  
-    WHERE section_id=:section_id
+    WHERE section_id=:section_id and assessment_id=:object_id
 </querytext>
 </fullquery>
 
