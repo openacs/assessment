@@ -15,14 +15,36 @@ ad_proc -public as::qti::register {
 
 } {
    
-    # Generate a random directory name
-    set tmpdirectory [ns_tmpnam]
-    # Create a temporary directory
-    file mkdir $tmpdirectory
+    if {[regexp -nocase -- {\.zip$} $tmp_dir]} {
+	# Generate a random directory name
+	set tmpdirectory [ns_tmpnam]
+	# Create a temporary directory
+	file mkdir $tmpdirectory
+	# UNZIP the zip file in the temporary directory
+	catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
 
-    # UNZIP the zip file in the temporary directory
-    catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+	set url_assessment {}
+	# Read the content of the temporary directory
+	foreach file_i [ glob -directory $tmp_dir *{.xml}  ] {
+	    set url_assessment [as::qti::register_xml -xml_file $file_i -community_id $community_id]
+	}
 
+	# Delete the temporary directory
+	file delete -force $tmpdirectory
+    } else {
+        set url_assessment [as::qti::register_xml -xml_file $tmp_dir -community_id $community_id]
+    }
+
+    return $url_assessment
+}
+
+ad_proc -public as::qti::register_xml {
+    {-xml_file:required}
+    {-community_id:required}
+} {
+    Relation with assessment of QTI XML files
+
+} {
     # Save the current package_id to restore when the assessment is
     # imported
     set current_package_id [ad_conn package_id]
@@ -32,18 +54,12 @@ ad_proc -public as::qti::register {
     # package_id of the assessment of the current community
     ad_conn -set package_id [db_string get_assessment_package_id {select dotlrn_community_applets.package_id from dotlrn_community_applets join apm_packages on (dotlrn_community_applets.package_id=apm_packages.package_id) where community_id = :community_id and package_key='assessment'}]
     
-    # Read the content of the temporary directory
-    foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
-	set assessment_revision_id [as::qti::parse_qti_xml $file_i]
-	set assessment_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :assessment_revision_id"]
-    }
-
-    # Delete the temporary directory
-    file delete -force $tmpdirectory
+    set assessment_revision_id [as::qti::parse_qti_xml $xml_file]
+    set assessment_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :assessment_revision_id"]
 
     # Restore the package_id
     ad_conn -set package_id $current_package_id
-
+   
     set url_assessment "../../assessment/assessment?assessment_id=$assessment_id"
     
     return $url_assessment
