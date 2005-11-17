@@ -42,7 +42,21 @@ ad_proc -public as::qti::register_xml {
     {-xml_file:required}
     {-community_id:required}
 } {
-    Relation with assessment of QTI XML files
+    Relation with assessment of QTI XML files returning the relative url to it
+
+} {
+    set assessment_id [as::qti::register_xml_object_id -xml_file $xml_file -community_id $community_id]
+
+    set url_assessment "../../assessment/assessment?assessment_id=$assessment_id"
+    
+    return $url_assessment
+}
+
+ad_proc -public as::qti::register_xml_object_id {
+    {-xml_file:required}
+    {-community_id:required}
+} {
+    Relation with assessment of QTI XML files returning the object_id
 
 } {
     # Save the current package_id to restore when the assessment is
@@ -60,9 +74,7 @@ ad_proc -public as::qti::register_xml {
     # Restore the package_id
     ad_conn -set package_id $current_package_id
    
-    set url_assessment "../../assessment/assessment?assessment_id=$assessment_id"
-    
-    return $url_assessment
+    return $assessment_id
 }
 
 ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a mattext } {
