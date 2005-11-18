@@ -70,6 +70,7 @@ ad_proc -public as::qti::register_xml_object_id {
     ad_conn -set package_id [db_string get_assessment_package_id {select dotlrn_community_applets.package_id from dotlrn_community_applets join apm_packages on (dotlrn_community_applets.package_id=apm_packages.package_id) where community_id = :community_id and package_key='assessment'}]
     
     set assessment_revision_id [as::qti::parse_qti_xml $xml_file]
+    content::item::set_live_revision -revision_id $assessment_revision_id
     set assessment_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :assessment_revision_id"]
 
     # Restore the package_id
