@@ -141,7 +141,7 @@ ad_proc -public -callback datamanager::copy_assessment -impl datamanager {
     -package_id $package_id    \
     -type $type ]
 
-ns_log Notice "package_id: $package_id"
+
 #get sections data
      set sections_id_list [db_list get_sections_id_list {}]
 #asociate section with assessment
@@ -151,6 +151,7 @@ ns_log Notice "package_id: $package_id"
          db_1row get_section_data {}
          db_dml map_ass_sections {} 
      }        
+    return $new_assessment_id
 }
 
 
