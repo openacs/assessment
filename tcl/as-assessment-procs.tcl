@@ -587,3 +587,16 @@ ad_proc -private as::assessment::title {
 
 
 }
+
+ad_proc -private as::assessment::get_package_id {
+    -community_id
+} {
+    lfuente@it.uc3m.es
+    Get assessment package id from an specific community
+} {
+        if {[info exist community_id]==0} {set community_id [ad_conn community_id]}
+        ns_log Notice "community_id: $community_id"
+        db_1row get_assessment_package_id {} 
+        return $package_id
+}
+

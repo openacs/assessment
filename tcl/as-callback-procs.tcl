@@ -111,7 +111,7 @@ ad_proc -public -callback datamanager::copy_assessment -impl datamanager {
 } {
 #get assessment data
     db_1row get_assessment_data {}
-    db_1row get_assessment_package_id {}
+    set package_id [as::assessment::get_package_id -community_id $selected_community ]
 
 #create the assessment
     set new_assessment_id [as::assessment::new  -title $title   \
