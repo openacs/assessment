@@ -754,7 +754,9 @@ set file [open $file_name w 0600]
 puts $file $outfd
 close $file
 
-set out_file [file join ${out_path} ${download_name}]
+set tmp_file "[ad_generate_random_string].zip"
+
+set out_file [file join ${out_path} ${tmp_file}]
  
 # get the archive command
 # TODO SECURITY DONT USE GLOBBING
