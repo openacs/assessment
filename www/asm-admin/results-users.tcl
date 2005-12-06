@@ -6,6 +6,8 @@ ad_page_contract {
     @creation-date 2005-01-24
 } {
     assessment_id
+    {start_time:optional ""}
+    {end_time:optional ""}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -24,6 +26,36 @@ set assessment_rev_id $assessment_data(assessment_rev_id)
 set page_title "[_ assessment.Results_by_user]"
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
+set form_format [lc_get formbuilder_date_format]
+
+set start_date_sql ""
+set end_date_sql ""
+
+ad_form -name assessment_results -action results-users -form {
+    {assessment_id:key}
+    {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_Start_Time_help]"}}
+    {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_End_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_End_Time_help]"}}
+} -edit_request {
+} -on_submit {
+    if {$start_time == "NULL"} {
+	set start_time ""
+    }
+    if {$end_time == "NULL"} {
+	set end_time ""
+    }
+    if {[db_type] == "postgresql"} {
+	regsub -all -- {to_date} $start_time {to_timestamp} start_time
+	regsub -all -- {to_date} $end_time {to_timestamp} end_time
+    }
+
+    if {![empty_string_p $start_time]} {
+	set start_date_sql [db_map restrict_start_date]
+    }
+    if {![empty_string_p $end_time]} {
+	set end_date_sql [db_map restrict_end_date]
+    }
+    #ad_returnredirect [export_vars -base results-users {assessment_id start_time end_time}]
+}
 
 template::list::create \
     -name results \
