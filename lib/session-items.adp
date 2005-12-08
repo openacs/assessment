@@ -66,18 +66,20 @@
       <td valign=top>@items.description;noquote@
         <if @survey_p@ ne t>
           <if @items.title@ eq @items.next_title@ or @items.groupnum@ gt 1>
-            <if @items.result_points@ not nil><br><b>@items.result_points@ / @items.points@ #assessment.points#
-              <if @show_feedback@ ne none>
-                <if @items.feedback@ not nil>:<br>@items.feedback;noquote@</if>
+            <if @items.presentation_type@ eq @items.next_pr_type@ or @items.choice_orientation@ eq horizontal>
+              <if @items.result_points@ not nil><br><b>@items.result_points@ / @items.points@ #assessment.points#
+                <if @show_feedback@ ne none>
+                  <if @items.feedback@ not nil>:<br>@items.feedback;noquote@</if>
+                </if>
+                </b>
               </if>
-              </b>
+              <else>
+                <if @items.answered_p@ eq t><br><b>#assessment.not_yet_reviewed#</b> </if>
+                <else><br><b>#assessment.not_answered#</b> </else>
+              </else>
+              <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
+              <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
             </if>
-            <else>
-              <if @items.answered_p@ eq t><br><b>#assessment.not_yet_reviewed#</b> </if>
-              <else><br><b>#assessment.not_answered#</b> </else>
-            </else>
-            <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
-            <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
           </if>
         </if>
       </td>

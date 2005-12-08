@@ -253,7 +253,7 @@ ad_form -name show_item_form -action assessment -html {enctype multipart/form-da
     {session_id:text(hidden) {value $session_id}}
 }
 
-multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_title
+multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_title next_pr_type
 
 set unsubmitted_list [list]
 set validate_list [list]
@@ -352,7 +352,7 @@ foreach one_item $item_list {
 	set choice_orientation ""
     }
 
-    multirow append items $as_item_id $name $title $description $subtext $required_p $max_time_to_complete $presentation_type "" $submitted_p [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type] $as_item_type_id $choice_orientation ""
+    multirow append items $as_item_id $name $title $description $subtext $required_p $max_time_to_complete $presentation_type "" $submitted_p [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type] $as_item_type_id $choice_orientation "" ""
 }
 
 for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
@@ -360,8 +360,10 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
     if {$i < ${items:rowcount}} {
 	upvar 0 items:$j next
 	set this(next_title) $next(title)
+	set this(next_pr_type) $next(presentation_type)
     } else {
 	set this(next_title) ""
+	set this(next_pr_type) ""
     }
 }
 
@@ -395,7 +397,7 @@ if {$display(submit_answer_p) != "t"} {
 
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
-		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
+		# as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
 		# immediate checks execution
 		as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
                 set section_to_tmp \[as::assessment::check::branch_checks -session_id $session_id -assessment_id $assessment_id\ -section_id $section_id]
@@ -455,7 +457,7 @@ if {$display(submit_answer_p) != "t"} {
 
 	    if {$section_order != $new_section_order} {
 		# calculate section points at end of section
-		as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
+		# as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
 		# immediate checks execution
 		as::assessment::check::eval_i_checks -session_id $session_id -section_id $section_id 
 	    }
