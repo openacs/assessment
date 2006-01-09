@@ -21,7 +21,9 @@ ad_proc -private inter_item_checks::apm_callback::package_install {
 
 	# Enable the delivery intervals and delivery methods for a specific INTER_ITEM_CHECK
 	enable_intervals_and_methods $type_id
-
+    
+    # Service contract implementations - fts 
+    as::sc::register_implementations
     }
 }
 
@@ -38,6 +40,8 @@ ad_proc -private inter_item_checks::apm_callback::package_uninstall {
         # Delete the implementation for the notification of one specific INTER_ITEM_CHECK
         delete_inter_item_check_impl
 
+        # Delete service contract implementation
+        as::sc::unregister_implementations
     }
 }
 
