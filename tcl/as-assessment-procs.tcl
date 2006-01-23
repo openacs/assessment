@@ -43,6 +43,7 @@ ad_proc -public as::assessment::new {
     if { ![exists_and_not_null package_id] } { set package_id [ad_conn package_id] }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
+    if { [empty_string_p $creator_id] } { set creator_id [ad_conn user_id]}
 
     # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
     db_transaction {
