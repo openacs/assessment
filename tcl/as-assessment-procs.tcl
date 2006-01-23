@@ -554,5 +554,6 @@ ad_proc -private as::assessment::compare_numbers {a b} {
     }
 }
 
+    if { [empty_string_p $creator_id] } { set creator_id [ad_conn user_id]}
 
 
