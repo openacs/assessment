@@ -335,6 +335,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
   <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
+  <msg key="lt_This_field_is_used_to">This field is used to validate the answer entered. This must have a multiple of 2 lines. The first line is a TCL expression to be used to check the answer and the second line is the error message. The string %%answer%% will be replaced by the answer entered.</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
   <msg key="make_hide_item_name">Hide item name</msg>
@@ -570,6 +571,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="User_ID">User</msg>
   <msg key="Users_may_edit_their_">Users may edit their responses</msg>
   <msg key="Users_may_not_edit_th">Users may not edit their responses</msg>
+  <msg key="Validation_Block">Validation Block</msg>
   <msg key="var">Name</msg>
   <msg key="vertical">Vertical</msg>
   <msg key="View_all_responses">All responses</msg>

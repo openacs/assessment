@@ -95,6 +95,7 @@ ad_form -extend -name item_add -form {
 ad_form -extend -name item_add -form {
     {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
     {num_choices:integer,optional,nospell {label "[_ assessment.Num_Choices]"} {html {size 5 maxlength 3}} {help_text "[_ assessment.Num_Choices_help]"}}
+    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
 } -new_request {
     set name ""
     set title ""
@@ -143,7 +144,8 @@ ad_form -extend -name item_add -form {
 				-feedback_right $feedback_right \
 				-feedback_wrong $feedback_wrong \
 				-max_time_to_complete $max_time_to_complete \
-				-points $points]
+				-points $points \
+				-validate_block $validate_block]
 	} else {
 	    set as_item_id [as::item::edit \
 				-as_item_id $as_item_id \
@@ -157,7 +159,8 @@ ad_form -extend -name item_add -form {
 				-feedback_right $feedback_right \
 				-feedback_wrong $feedback_wrong \
 				-max_time_to_complete $max_time_to_complete \
-				-points $points]
+				-points $points \
+				-validate_block $validate_block]
 
 	    db_dml delete_files {}
 	}

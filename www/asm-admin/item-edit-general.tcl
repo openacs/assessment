@@ -92,6 +92,7 @@ ad_form -extend -name item_edit_general -form {
     {data_type_disp:text(inform) {label "[_ assessment.Data_Type]"} {help_text "[_ assessment.Data_Type_help]"}}
     {data_type:text(hidden)}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
+    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}    
 } -edit_request {
     db_1row general_item_data {}
     if {[empty_string_p $data_type]} {
@@ -119,7 +120,8 @@ ad_form -extend -name item_edit_general -form {
 			     -feedback_right $feedback_right \
 			     -feedback_wrong $feedback_wrong \
 			     -max_time_to_complete $max_time_to_complete \
-			     -points $points]
+			     -points $points \
+			     -validate_block $validate_block]
 
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $new_item_id $category_ids

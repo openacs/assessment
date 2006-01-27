@@ -257,20 +257,27 @@ ad_form -name show_item_form -action assessment -html {enctype multipart/form-da
     {session_id:text(hidden) {value $session_id}}
 }
 
-multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_title
+multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_title validate_block
 
 set unsubmitted_list [list]
 set validate_list [list]
 set required_count 0
 
 foreach one_item $item_list {
-    util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id
+    util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id validate_block
 
     if {$required_p == "t"} {
 	# make sure that mandatory items are answered
 	lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
 	incr required_count
     }
+
+    foreach {check_expr check_message} [split $validate_block \n] {
+	regsub -all {%answer%} $check_expr \$response_to_item($as_item_id) check_expr
+	regsub -all {%answer%} [lang::util::localize $check_message] \$response_to_item($as_item_id) check_message
+	lappend validate_list "response_to_item.$as_item_id { $check_expr } { $check_message }"
+    }
+
     set default_value ""
     set submitted_p f
 

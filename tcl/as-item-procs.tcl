@@ -20,6 +20,7 @@ ad_proc -public as::item::new {
     {-feedback_wrong ""}
     {-points ""}
     {-package_id ""}
+    {-validate_block ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -53,7 +54,8 @@ ad_proc -public as::item::new {
 					     [list max_time_to_complete $max_time_to_complete] \
 					     [list feedback_right $feedback_right] \
 					     [list feedback_wrong $feedback_wrong] \
-					     [list points $points] ] ]
+					     [list points $points] \
+					     [list validate_block $validate_block] ] ]
     }
 
     return $as_item_id
@@ -72,6 +74,7 @@ ad_proc -public as::item::edit {
     {-feedback_right ""}
     {-feedback_wrong ""}
     {-points ""}
+    {-validate_block ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -94,7 +97,8 @@ ad_proc -public as::item::edit {
 					      [list max_time_to_complete $max_time_to_complete] \
 					      [list feedback_right $feedback_right] \
 					      [list feedback_wrong $feedback_wrong] \
-					      [list points $points] ] ]
+					      [list points $points] \
+					      [list validate_block $validate_block] ] ]
 
 	copy_types -as_item_id $as_item_id -new_item_id $new_item_id
     }
@@ -126,7 +130,8 @@ ad_proc -public as::item::new_revision {
 					      [list max_time_to_complete $max_time_to_complete] \
 					      [list feedback_right $feedback_right] \
 					      [list feedback_wrong $feedback_wrong] \
-					      [list points $points] ] ]
+					      [list points $points] \
+					      [list validate_block $validate_block] ] ]
 
 	copy_types -as_item_id $as_item_id -new_item_id $new_item_id
 	as::assessment::copy_categories -from_id $as_item_id -to_id $new_item_id
@@ -189,7 +194,8 @@ ad_proc -public as::item::copy {
 					      [list max_time_to_complete $max_time_to_complete] \
 					      [list feedback_right $feedback_right] \
 					      [list feedback_wrong $feedback_wrong] \
-					      [list points $points] ] ]
+					      [list points $points] \
+					      [list validate_block $validate_block] ] ]
 
 	as::assessment::copy_categories -from_id $as_item_id -to_id $new_item_id
 

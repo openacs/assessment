@@ -40,7 +40,7 @@
 <querytext>
 
 	select r.title, r.description, i.subtext, i.field_name, i.field_code, i.required_p,
-	       i.feedback_right, i.feedback_wrong, i.max_time_to_complete, i.data_type, i.points
+	       i.feedback_right, i.feedback_wrong, i.max_time_to_complete, i.data_type, i.points, i.validate_block
 	from cr_revisions r, as_items i
 	where r.revision_id = i.as_item_id
 	and i.as_item_id = :as_item_id
