@@ -26,6 +26,10 @@ if { ![string eq $user_id 0]} {
 set page_title "[_ assessment.Response_Submitted]"
 set context [list $page_title]
 
+callback imsld::finish_object -object_id $assessment_id 
+
+
+
 if { [exists_and_not_null next_asm ] } {
     ad_returnredirect "assessment?assessment_id=$next_asm"
 } 
