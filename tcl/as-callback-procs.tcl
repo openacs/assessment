@@ -177,3 +177,8 @@ ad_proc -public -callback datamanager::delete_assessment -impl datamanager {
     }
 
 }
+
+ad_proc -public -callback imsld::finish_object {
+    -object_id
+} {
+}
