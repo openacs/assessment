@@ -144,10 +144,13 @@ ad_form -extend -name item_edit_general -form {
 		ad_return_complaint 1 "[_ assessment.file_zero_size]"
 		return
 	    }
-
 	    set folder_id [as::assessment::folder_id -package_id $package_id]
 	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
-	    db_dml update_item_content {}
+	    # delete content association if it exists then insert a new one
+	    # otherwise we can't add a file on edit that did not exist
+	    # when the question was originally created
+	    db_dml delete_item_content {}
+	    db_dml insert_item_content {}
 	} elseif {[info exists delete_content]} {
 	    db_dml delete_item_content {}
 	}
