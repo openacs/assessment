@@ -60,6 +60,15 @@
       </querytext>
 </fullquery>
 
+<fullquery name="insert_item_content">
+      <querytext>
+	        insert into as_item_rels
+                (target_rev_id, item_rev_id, rel_type)
+                values
+                (:content_rev_id, :new_item_id, 'as_item_content_rel')
+      </querytext>
+</fullquery>
+
 <fullquery name="update_item_content">
       <querytext>
 
