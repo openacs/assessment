@@ -89,4 +89,18 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="total_tries">
+	<querytext>
+
+	select count(*) as total_tries, max(session_id) as last_session_id
+	from as_sessions s, cr_revisions r, cr_revisions r2
+	where s.subject_id = :user_id
+	and s.completed_datetime is not null
+	and s.assessment_id = r.revision_id
+	and r.item_id = r2.item_id
+	and r2.revision_id = :assessment_id
+
+	</querytext>
+</fullquery>
+
 </queryset>
