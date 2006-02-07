@@ -51,7 +51,7 @@ if {![info exists assessment_data(assessment_id)]} {
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set number_tries $assessment_data(number_tries)
 db_1row total_tries {}
-if {![empty_string_p $number_tries] && $number_tries >= $total_tries} {
+if {![empty_string_p $number_tries] && $number_tries <= $total_tries} {
     ad_returnredirect [export_vars -base sessions {assessment_id}]
 }
 set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id -password $password]
