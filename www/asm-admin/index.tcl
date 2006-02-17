@@ -46,6 +46,12 @@ db_multirow -extend { export permissions admin_request} assessments $m_name {} {
     set admin_request "[_ assessment.Request] [_ assessment.Administration]"
 }
 
+# Bulk action for mass setting the start and endtime of assessments.
+set bulk_actions  [list \
+		       "[_ assessment.Change_timings]" \
+		       "change-timing" \
+		       "[_ assessment.Change_multiple_timings]"]
+
 #list all assessments
 list::create \
     -name assessments \
@@ -69,7 +75,8 @@ list::create \
 	    link_url_eval "[export_vars -base admin-request { {assessment $assessment_id} }]"
 	}
 
-	
-    } -actions $actions
+       
+    } -actions $actions \
+    -bulk_actions $bulk_actions
 
 ad_return_template

@@ -352,7 +352,7 @@ ad_proc -public as::item_type_mc::data {
 ad_proc -public as::item_type_mc::results {
     -as_item_item_id:required
     -section_item_id:required
-    -data_type:required
+    {-data_type ""}
     -sessions:required
 } {
     @author Timo Hentschel (timo@timohentschel.de)
@@ -360,6 +360,7 @@ ad_proc -public as::item_type_mc::results {
 
     Return the results of a given item in a given list of sessions as an array
 } {
+    
     db_foreach get_results {} {
 	if {[empty_string_p $text_value]} {
 	    lappend results($session_id) [as::assessment::quote_export -text $title]

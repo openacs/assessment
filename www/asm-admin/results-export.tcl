@@ -69,16 +69,18 @@ ad_form -name assessment_export -action results-export -form {
 	if {$assessment_data(anonymous_p) == "t"} {
 	    set csv_result_list($session_id) [list $percent_score $submission_date]
 	} else {
-	    set csv_result_list($session_id) [list $percent_score $submission_date $subject_id [as::assessment::quote_export -text [party::email -party_id $subject_id]] [as::assessment::quote_export -text [person::name -person_id $subject_id]]]
+	    set subject_mail [db_string get-email "select email from parties where party_id = :subject_id"]
+	    set csv_result_list($session_id) [list $percent_score $submission_date $subject_id [as::assessment::quote_export -text $subject_mail] [as::assessment::quote_export -text [person::name -person_id $subject_id]]]
 	}
     }
 	
+    set item_list [list]
     if {![empty_string_p $session_list]} {
 
-	set section_list [db_list all_sections {}]
+	set section_list [db_list_of_lists all_sections {}]
 
-	set item_list [list]
-	foreach section_id $section_list {
+	foreach one_section $section_list {
+	    util_unlist $one_section section_id section_item_id
 	    set mc_item_list [list]
 	    db_foreach all_section_items {} {
 		lappend item_list $as_item_item_id
@@ -95,7 +97,7 @@ ad_form -name assessment_export -action results-export -form {
 		if {$item_type == "mc"} {
 		    lappend mc_item_list $as_item_item_id		    
 		} else {
-		    array set results [as::item_type_$item_type\::results -as_item_item_id $as_item_item_id -section_item_id $section_id -data_type $data_type -sessions $session_list]
+		    array set results [as::item_type_$item_type\::results -as_item_item_id $as_item_item_id -section_item_id $section_item_id -data_type $data_type -sessions $session_list]
 		    foreach session_id $session_list {
 			if {[info exists results($session_id)]} {
 			    set csv_${as_item_item_id}($session_id) [as::assessment::quote_export -text $results($session_id)]
@@ -111,7 +113,13 @@ ad_form -name assessment_export -action results-export -form {
 	    if {![empty_string_p $mc_item_list]} {
 		db_foreach mc_items {} {
 		    if {[empty_string_p $text_value]} {
-			set csv_${mc_item_id}($session_id) [as::assessment::quote_export -text $title]
+			if {[exists_and_not_null csv_${mc_item_id}($session_id)]} {
+			    # append list of choices seperated with comma
+			    append csv_${mc_item_id}($session_id) ",[as::assessment::quote_export -text $title]"
+			} else {
+			    # just set the choice value
+			    set csv_${mc_item_id}($session_id) [as::assessment::quote_export -text $title]
+			}
 		    } else {
 	      		set csv_${mc_item_id}($session_id) [as::assessment::quote_export -text $text_value]
 		    }
@@ -120,7 +128,7 @@ ad_form -name assessment_export -action results-export -form {
 	    }
 	}
     }
-    
+
     foreach item_id $item_list {
 	lappend csv_first_row_list $csv_first_row($item_id)
     }
@@ -136,6 +144,7 @@ ad_form -name assessment_export -action results-export -form {
 	}
 	append csv_text "[join $csv_result_list($session_id) ";"]\r\n"
     }
+    set csv_text [string map {\xe4 ä \xfc ü \xf6 ö \xdf ß \xc4 Ä \xdc Ü \xd6 Ö} $csv_text]
 } -after_submit {
     set tmp_filename [ns_tmpnam]                                                                                                                                                            
     set tmp_csv_filename "$tmp_filename.csv"
