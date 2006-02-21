@@ -3,7 +3,6 @@ ad_library {
 	@author eperez@it.uc3m.es
 	@creation-date 2004-04-16
 	@cvs-id $Id$
-
 }
 
 namespace eval as::qti {}

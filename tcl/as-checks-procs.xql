@@ -375,6 +375,4 @@
       </querytext>
 </fullquery>
 
-
-
 </queryset>

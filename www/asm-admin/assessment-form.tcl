@@ -98,7 +98,7 @@ if { (!$permission_p) } {
     }
 }
 
-if { $type == 2 && [empty_string_p $edit_f]} {
+if { $type == 2 && [empty_string_p $edit_p]} {
     ad_form -extend -name assessment_form -form {
 	{secure_access_p:text(select) {label "[_ assessment.Secure_Access_1]"} {options $boolean_options} {help_text "[_ assessment.as_Secure_Access_help]"}}
 	{reuse_responses_p:text(select) {label "[_ assessment.Reuse_Responses_1]"} {options $boolean_options} {help_text "[_ assessment.as_Reuse_Responses_help]"}}

@@ -17,6 +17,7 @@ permission::require_permission -object_id $package_id -privilege create
 set title "[_ assessment.Administration]"
 set context [list "[_ assessment.admin]"]
 set package_id [ad_conn package_id]
+set folder_id [as::assessment::folder_id -package_id $package_id]
 set categories_url [db_string get_category_url {}]
 set user_id [ad_conn user_id]
 set sw_admin [acs_user::site_wide_admin_p -user_id $user_id]
@@ -56,6 +57,12 @@ db_multirow -extend { export permissions admin_request} assessments $m_name {} {
     set admin_request "[_ assessment.Request] [_ assessment.Administration]"
 }
 
+# Bulk action for mass setting the start and endtime of assessments.
+set bulk_actions  [list \
+		       "[_ assessment.Change_timings]" \
+		       "change-timing" \
+		       "[_ assessment.Change_multiple_timings]"]
+
 #list all assessments
 list::create \
     -name assessments \
@@ -79,7 +86,8 @@ list::create \
 	    link_url_eval "[export_vars -base admin-request { {assessment $assessment_id} }]"
 	}
 
-	
-    } -actions $actions
+       
+    } -actions $actions \
+    -bulk_actions $bulk_actions
 
 ad_return_template

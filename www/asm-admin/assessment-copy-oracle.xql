@@ -13,8 +13,10 @@
     and na.object_id = pa.package_id
     and nc.node_id = na.parent_id
     and pc.package_id = nc.object_id
-    and acs_permission.permission_p (pa.package_id, :user_id, 'admin') = 't'
-
+        and exists (select 1 from acs_object_party_privilege_map ppm
+                    where ppm.object_id = pa.package_id
+                    and ppm.privilege = 'admin'
+                    and ppm.party_id = :user_id)
       </querytext>
 </fullquery>
 

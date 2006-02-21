@@ -44,11 +44,13 @@
           <tr class="form-widget">
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
             <if @items.title@ eq @items.next_title@ and @items.groupnum@ eq 1>
-              <td></td>
-              <formgroup id="response_to_item.@items.as_item_id@">
-                <td align=center>@formgroup.label;noquote@</td>
-              </formgroup>
-              </tr><tr class="form-widget">
+              <if @items.presentation_type@ eq @items.next_pr_type@ or @items.choice_orientation@ eq horizontal>
+                <td></td>
+                <formgroup id="response_to_item.@items.as_item_id@">
+                  <td align=center>@formgroup.label;noquote@</td>
+                </formgroup>
+                </tr><tr class="form-widget">
+              </if>
             </if>
           </if>
           <td valign=top>@items.description;noquote@</td>

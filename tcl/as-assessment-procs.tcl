@@ -572,7 +572,6 @@ ad_proc -private as::assessment::compare_numbers {a b} {
     }
 }
 
-
 ad_proc -private as::assessment::title {
     -title
 } {

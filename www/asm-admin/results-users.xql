@@ -5,7 +5,7 @@
 	<querytext>
 	select s.session_id, s.subject_id, s.percent_score,
 	       to_char(s.completed_datetime, :format) as completed_datetime,
-	       p.first_names || ' ' || p.last_name AS subject_name,
+	       p.last_name || ', ' || p.first_names AS subject_name,
 	       :assessment_id as assessment_id
 	from as_sessions s, persons p,
 		(select max(s2.session_id) as session_id, s2.subject_id
@@ -16,6 +16,8 @@
 		group by s2.subject_id) sub
 	where s.session_id = sub.session_id
 	and sub.subject_id = p.person_id
+	$start_date_sql
+	$end_date_sql
 	order by s.completed_datetime
 	</querytext>
 </fullquery>

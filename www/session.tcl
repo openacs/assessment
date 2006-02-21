@@ -69,4 +69,6 @@ db_multirow sections sections {} {
 
 set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
 
+set comments_installed_p [apm_package_enabled_p "general-comments"]
+
 ad_return_template
