@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.16" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.18" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -138,6 +138,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Categorization">Categorization</msg>
   <msg key="Categorization_exact">Exact</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
+  <msg key="Change_multiple_timings">Change Availability (alle)</msg>
+  <msg key="Change_timings">Change time based availability</msg>
   <msg key="Choice">Choice</msg>
   <msg key="choice_Content">Upload File</msg>
   <msg key="choice_Content_help">Upload a file with the content of the anwser</msg>
@@ -177,7 +179,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="csv_End_Time_help">Select an end date. This field is optional.</msg>
   <msg key="csv_export">CSV Export</msg>
   <msg key="csv_export_format">CSV Export Format</msg>
-  <msg key="csv_export_format_help">Select one of the above, the selected field is goint to identify the question in your csv file.</msg>
+  <msg key="csv_export_format_help">Select one of the above, the selected field is going to identify the question in your csv file.</msg>
   <msg key="csv_export_name">Question Field Name</msg>
   <msg key="csv_export_title">Question Text</msg>
   <msg key="CSV_file">CSV file</msg>
