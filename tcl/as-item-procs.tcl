@@ -161,6 +161,7 @@ ad_proc -public as::item::copy {
     -title:required
     {-description ""}
     {-field_name ""}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -168,7 +169,9 @@ ad_proc -public as::item::copy {
     Copies an item in the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     db_transaction {
