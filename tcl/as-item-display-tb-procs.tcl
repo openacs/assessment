@@ -76,7 +76,7 @@ ad_proc -public as::item_display_tb::copy {
     db_transaction {
 	db_1row display_item_data {}
 
-	set new_item_display_it [new -html_display_options $html_display_options \
+	set new_item_display_id [new -html_display_options $html_display_options \
 				     -abs_size $abs_size \
 				     -item_answer_alignment $item_answer_alignment]
     }
