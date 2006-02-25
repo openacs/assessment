@@ -21,9 +21,8 @@ foreach optional_param {} {
 set return_url [ad_return_url]
 
 set general_comments_url [apm_package_url_from_key "general-comments"]
-if {[permission::permission_p -object_id $object_id -privilege "general_comments_create"]} {
+if {[set has_permission_p [permission::permission_p -object_id $object_id -privilege "general_comments_create"]]} {
     set comment_add_url [export_vars -base "${general_comments_url}comment-add" {object_id return_url}]
-}
 
 db_multirow -extend { html_content edit_url } comments comments {
     select g.comment_id,
@@ -46,3 +45,4 @@ db_multirow -extend { html_content edit_url } comments comments {
     set edit_url [export_vars -base "${general_comments_url}comment-edit" {comment_id return_url}]
 }
 
+}

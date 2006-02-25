@@ -1,3 +1,4 @@
+<if @has_permission_p@>
 <h3>Comments</h3>
 <if @comments:rowcount@ gt 0>
 <multiple name="comments">
@@ -14,3 +15,4 @@
 </else>
 <br /><br />
 <a href="@comment_add_url@" class="button">Add comment<a/>
+</if>
