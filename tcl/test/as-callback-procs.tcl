@@ -73,12 +73,9 @@ aa_register_case as_copy {
             } -default "0"]
             aa_equals "assessment has been created at origin" $orig_success_p 1
 
-            set new_assessment_id [callback -catch datamanager::move_assessment -object_id $assessment_id -selected_community $destiny_club_key]
-            #check if assessment has been copied successfully
-            set orig_success_p [db_string orig_success_p {
-                select 1 from acs_objects where package_id=:orig_package_id and object_id = (select context_id from acs_objects where object_id=:assessment_id) 
-            } -default "0"]
-            aa_equals "assessment has been removed from origin" $orig_success_p 1
+	    set folder_id [as::assessment::folder_id -package_id $dest_package_id]
+	    set as_item_id [content::revision::item_id -revision_id $assessment_id]
+	    set new_assessment_id [as::assessment::copy -assessment_id $as_item_id -name "copyoffoo_$assessment_id" -folder_id $folder_id -new_title "copy of foo"]
 
             set orig_success_p [db_string orig_success_p {
                 select 1 from acs_objects where package_id=:dest_package_id and object_id = (select context_id from acs_objects where object_id=:new_assessment_id) 
