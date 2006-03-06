@@ -189,7 +189,7 @@ ad_proc -public as::assessment::data {
 	return
     }
     
-    set assessment_data(creator_name) [person::name -person_id $assessment_data(creator_id)]
+    set assessment_data(creator_name) [person::name -person_id $assessment_data(creation_user)]
     set assessment_data(title) [as::assessment::title -title $assessment_data(title)]
 }
 
