@@ -90,7 +90,7 @@ ad_form -name item_add_display_sa -action item-add-display-sa -export { assessme
     }
 } -after_submit {
     # now go to assessment-page
-    ad_returnredirect [export_vars -base one-a {assessment_id }]\#$as_item_id
+    ad_returnredirect [export_vars -base one-a {assessment_id }]&\#$as_item_id
     ad_script_abort
 }
 
