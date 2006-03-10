@@ -5,12 +5,12 @@ ad_library {
     @cvs-id $Id$
 }
 
-ad_proc -public -callback imsld::import -impl qti {} {
-    this is the imsld qti importer
+ad_proc -public -callback lors::import -impl qti {} {
+    this is the lors qti importer
 } {
     if {$res_type == "imsqti_xmlv1p0" || $res_type == "imsqti_xmlv1p1" || $res_type =="imsqti_item_xmlv2p0"} {
-	return [as::qti::register_xml_object_id \
-		    -xml_file $tmp_dir/$res_href \
+	return [as::qti::register \
+		    -tmp_dir $tmp_dir/$res_href \
 		    -community_id $community_id]
     }
 }
