@@ -22,7 +22,6 @@ set total [llength $choices]
 foreach one_choice $choices {
     util_unlist $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score sort_order fixed_position answer_value content_rev_id content_filename content_name
     incr count
-    regsub -all \\$ $title {\\$ } title
     set options ""
     if {$count < $total} {
 	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=down\\\"><img src=\\\"/resources/assessment/down.gif\\\" border=0 alt=\\\"[_ assessment.Move_Down]\\\"></a>"
@@ -33,9 +32,9 @@ foreach one_choice $choices {
     append options " <a href=\\\"item-edit-mc-choices-delete?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&choice_id=$choice_id\\\"><img src=\\\"/resources/assessment/delete.gif\\\" border=0 alt=\\\"[_ assessment.remove_choice]\\\"></a>"
 
     if {$correct_answer_p == "t"} {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/correct.gif> $title$options\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/correct.gif> \$title$options\"\}\}\n"
     } else {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/wrong.gif> $title$options\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/wrong.gif> \$title$options\"\}\}\n"
     }
 
     if {![empty_string_p $content_rev_id]} {
