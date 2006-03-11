@@ -238,7 +238,7 @@ ad_proc -public as::install::package_instantiate {
     
 } {
     # create a content folder
-    set folder_id [content::folder::new -name "assessment_$package_id" -package_id $package_id ]
+    set folder_id [content::folder::new -name "assessment_$package_id" -package_id $package_id -context_id $package_id]
     # register the allowed content types for a folder
     content::folder::register_content_type -folder_id $folder_id -content_type {image} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {content_revision} -include_subtypes t
