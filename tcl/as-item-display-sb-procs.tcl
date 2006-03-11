@@ -145,7 +145,7 @@ ad_proc -public as::item_display_sb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label $title] [list help_text $subtext] [list values $default_value] [list options $data] [list html $type(html_display_options)]]
+    set param_list [list [list label \$title] [list help_text \$subtext] [list values \$default_value] [list options \$data] [list html \$type(html_display_options)]]
     set element_params [concat [list "$element\:text($widget)$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]

@@ -110,7 +110,7 @@ ad_proc -public as::item_display_sa::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list html $type(html_display_options)]]
+    set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list html \$type(html_display_options)]]
     if {![empty_string_p $type(abs_size)]} {
 	lappend param_list [list maxlength $type(abs_size)]
     }
