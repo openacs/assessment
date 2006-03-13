@@ -58,7 +58,7 @@ ad_proc -public as::assessment::new {
                                     -content_type {as_assessments} \
                                     -name $name \
                                     -package_id $package_id \
-				    -context_id $package_id]
+				    -context_id $folder_id]
 
 	set as_assessment_id [content::revision::new \
 				  -item_id $assessment_item_id \
