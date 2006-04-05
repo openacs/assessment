@@ -25,7 +25,7 @@ ad_proc -public as::qti::register {
 
 	set url_assessment {}
 	# Read the content of the temporary directory
-	foreach file_i [ glob -directory $tmp_dir *{.xml}  ] {
+	foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
 	    set url_assessment [as::qti::register_xml -xml_file $file_i -community_id $community_id]
 	}
 
