@@ -20,7 +20,7 @@ permission::require_permission -object_id $assessment_id -privilege admin
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
-set assessment_rev_id $assessment_data(assessment_rev_id)
+#set assessment_rev_id $assessment_data(assessment_rev_id)
 
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
@@ -38,7 +38,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 ad_form -name results_edit -action results-edit -export { session_id section_id as_item_id } -form {
     {result_id:key}
     {title:text,nospell,optional {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Results_edit_Title_help]"}}
-    {description:text(textarea) {label "[_ assessment.Results_edit_Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Results_edit_Description_help]"}}
+    {description:text(textarea),optional {label "[_ assessment.Results_edit_Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Results_edit_Description_help]"}}
     {points:integer,nospell {label "[_ assessment.points_answer]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_answer_help]"}}
 } -new_request {
     set title ""
