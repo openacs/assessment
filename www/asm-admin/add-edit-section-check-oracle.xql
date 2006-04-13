@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE queryset PUBLIC "-//OpenACS//DTD XQL 1.0//EN" "http://www.thecodemill.biz/repository/xql.dtd">
 <!-- oacs-5-2/packages/assessment/www/asm-admin/add-edit-section-check-oracle.xql -->
 <!-- @author Deds Castillo (deds@i-manila.com.ph) -->
 <!-- @creation-date 2005-07-26 -->
@@ -9,7 +8,7 @@
 <queryset>
   
   <rdbms>
-    <type>oracle</type>
+    <type>oracle</type><version>8.1.6</version>
   </rdbms>
   
   <fullquery name="new_check">
