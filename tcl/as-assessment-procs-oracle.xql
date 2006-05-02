@@ -59,4 +59,16 @@
 	</querytext>
 </fullquery>
 	
+<fullquery name="as::assessment::calculate.sum_of_section_points">
+	<querytext>
+
+	select nvl(sum(m.points), 0) as section_max_points, nvl(sum(d.points), 0) as section_points
+	from as_assessment_section_map m, as_section_data d
+	where m.assessment_id = :assessment_id
+	and m.section_id = d.section_id
+	and d.session_id = :session_id
+
+	</querytext>
+</fullquery>
+
 </queryset>
