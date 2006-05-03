@@ -20,6 +20,11 @@ foreach optional_param {} {
 
 set return_url [ad_return_url]
 
+# If the user has package admin perms, give him general_comments_create perms
+if { [permission::permission_p -object_id [ad_conn package_id] -privilege "admin"] && ![permission::permission_p -object_id $object_id -privilege "general_comments_create"] } {
+    permission::grant -object_id $object_id -privilege "general_comments_create" -party_id [ad_conn user_id]
+}
+
 set general_comments_url [apm_package_url_from_key "general-comments"]
 if {[set has_permission_p [permission::permission_p -object_id $object_id -privilege "general_comments_create"]]} {
     set comment_add_url [export_vars -base "${general_comments_url}comment-add" {object_id return_url}]
