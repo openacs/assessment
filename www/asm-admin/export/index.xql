@@ -14,7 +14,7 @@
 
 <fullquery name="query_all_items">
 <querytext>
-	SELECT i.as_item_id, i.title as item_title, i.name as item_name, i.description as item_description, i.subtext as item_subtext, i.field_code as item_field_code, i.required_p as item_required_p, i.data_type as item_data_type, i.max_time_to_complete as item_max_time_to_complete, i.feedback_right as item_feedback_right, i.feedback_wrong as item_feedback_wrong, i.points as item_points
+	SELECT i.as_item_id, i.title as item_title, i.name as item_name, i.description as item_description, i.subtext as item_subtext, i.field_code as item_field_code, i.required_p as item_required_p, i.data_type as item_data_type, i.max_time_to_complete as item_max_time_to_complete, i.feedback_right as item_feedback_right, i.feedback_wrong as item_feedback_wrong, i.points as item_points, i.field_name
 	FROM as_itemsx i, as_item_section_map ism
 	WHERE i.as_item_id = ism.as_item_id AND ism.section_id = :section_id
 	ORDER BY ism.sort_order

@@ -29,7 +29,9 @@ ad_proc -public as::section::new {
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
     db_transaction {
 	set section_item_id [db_nextval acs_object_id_seq]
-	if {[empty_string_p $name]} {
+	if { ![empty_string_p $name] && [db_0or1row item_exists {}] } {
+	    set name "$section_item_id: $name"
+	} elseif {[empty_string_p $name]} {
 	    set name "SEC_$section_item_id"
 	}
 	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name]
