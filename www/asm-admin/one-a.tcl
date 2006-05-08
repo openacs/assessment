@@ -88,7 +88,7 @@ list::create \
     -elements {
 	title {
 	    label "[_ assessment.Sections]"
-	    display_template {<a href="one-a?assessment_id=@assessment_id@\#@sections.section_id@">@sections.title;noquote@</a>} 
+	    display_template {<a href="one-a?assessment_id=@assessment_id@&\#@sections.section_id@">@sections.title;noquote@</a>} 
 	}
     }
 
