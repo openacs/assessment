@@ -32,9 +32,9 @@ foreach one_choice $choices {
     append options " <a href=\\\"item-edit-mc-choices-delete?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&choice_id=$choice_id\\\"><img src=\\\"/resources/assessment/delete.gif\\\" border=0 alt=\\\"[_ assessment.remove_choice]\\\"></a>"
 
     if {$correct_answer_p == "t"} {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/correct.gif> \$title$options\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/correct.gif> $title$options\"\}\}\n"
     } else {
-	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/wrong.gif> \$title$options\"\}\}\n"
+	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/wrong.gif> $title$options\"\}\}\n"
     }
 
     if {![empty_string_p $content_rev_id]} {
