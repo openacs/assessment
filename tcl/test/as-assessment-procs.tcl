@@ -25,3 +25,27 @@ aa_register_case -cats { smoke } assessment_owner {
 	    }
 	}
 }
+
+aa_register_case -cats { api } assessment_new {
+    Test creation of a new assessment
+} {
+    aa_run_with_teardown \
+        -rollback \
+        -test_code {
+            # we need an assessment package
+            set node_name [ns_mktemp __assessment__test__XXXXXX]
+            set package_id [site_node::instantiate_and_mount \
+                                -node_name $node_name \
+                                -package_key assessment]
+            aa_log "Package_id = '${package_id}'"
+
+            # now try to create an empty assessment
+            set assessment_id \
+                [as::assessment::new \
+                     -package_id $package_id \
+                     -title "Test Assessment" \
+                     -instructions "These are the instructions"]
+            
+        }
+
+}
