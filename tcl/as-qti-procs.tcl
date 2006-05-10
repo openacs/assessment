@@ -250,7 +250,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 		
 		# Section
 		set sectionNodes [$assessment selectNodes {section}]
-		set as_assessment_section_map__sort_order 0
+		set as_asmt_sect_map__sort_order 0
 		foreach section $sectionNodes {					
 		    set as_sections__title [$section getAttribute {title} {Section}]
 		    set as_sections__ident [$section getAttribute {ident} {Section}]
@@ -377,9 +377,15 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 					-display_type_id $display_type_id]
 		    
 		    # Relation between as_sections and as_assessments
+ns_log debug "
+DB --------------------------------------------------------------------------------
+DB DAVE debugging procedure as::qti::parse_qti_xml
+DB --------------------------------------------------------------------------------
+
+DB --------------------------------------------------------------------------------"
 		    db_dml as_assessment_section_map_insert {}
-		    incr as_assessment_section_map__sort_order
-		    set as_item_section_map__sort_order 0
+		    incr as_asmt_sect_map__sort_order
+		    set as_item_sect_map__sort_order 0
 		    # Process the items
 		    set as_items [as::qti::parse_item $section [file dirname $xmlfile]]
 		    # Relation between as_items and as_sections
@@ -390,7 +396,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 			set as_item__points $as_item(points)
 			set as_item__required_p $as_item(required_p)
 			db_dml as_item_section_map_insert {}
-			incr as_item_section_map__sort_order
+			incr as_item_sect_map__sort_order
 		    }
 		    
 		    #get points from a section
