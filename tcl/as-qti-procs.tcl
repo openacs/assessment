@@ -393,7 +393,7 @@ DB -----------------------------------------------------------------------------
 			array set as_item $as_item_list
 			set as_item_id $as_item(as_item_id)
 			set as_item__duration $as_item(duration)
-			set as_item__points $as_item(points)
+			set as_item__points [expr int($as_item(points))]
 			set as_item__required_p $as_item(required_p)
 			db_dml as_item_section_map_insert {}
 			incr as_item_sect_map__sort_order
@@ -572,13 +572,13 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 			# get score
 			set scoreNodes [$respcondition selectNodes {setvar/text()}]
 			foreach scorenode $scoreNodes {
-			    set score [string trim [$scorenode nodeValue]]
+			    set score [expr int([string trim [$scorenode nodeValue]])]
 			    if {$score>0} {
 				set as_item_choices__correct_answer_p($choice_id) {t}
 			    }
 			}
 			set as_item_choices__score($choice_id) $score
-			incr as_items__points $score		    
+			incr as_items__points $score
 		    }
 		}
 		
@@ -592,7 +592,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 			# get score
 			set scoreNodes [$respcondition selectNodes {setvar/text()}]
 			foreach scorenode $scoreNodes {
-			    set score [string trim [$scorenode nodeValue]]
+			    set score [expr int([string trim [$scorenode nodeValue]])]
 			    if {$score>0} {
 				set as_item_choices__correct_answer_p($choice_id) {t}
 			    }
