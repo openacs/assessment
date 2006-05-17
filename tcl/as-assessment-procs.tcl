@@ -66,7 +66,6 @@ ad_proc -public as::assessment::new {
 				  -title $title \
 				  -description $description \
 				  -attributes [list [list creator_id $creator_id] \
-						   [list instructions $instructions] \
 						   [list run_mode $run_mode] \
 						   [list anonymous_p $anonymous_p] \
 						   [list secure_access_p $secure_access_p] \
@@ -75,7 +74,6 @@ ad_proc -public as::assessment::new {
 						   [list random_p $random_p] \
 						   [list entry_page $entry_page] \
 						   [list exit_page $exit_page] \
-						   [list consent_page $consent_page] \
 						   [list return_url $return_url] \
 						   [list start_time $start_time] \
 						   [list end_time $end_time] \
@@ -91,7 +89,8 @@ ad_proc -public as::assessment::new {
                            [list type $type]]]
 			      
     }
-
+    db_dml update_clobs {} -clobs [list $instructions $consent_page]
+    
     return $as_assessment_id
 }
 
@@ -137,7 +136,6 @@ ad_proc -public as::assessment::edit {
 			    -title $title \
 			    -description $description \
 			    -attributes [list [list creator_id $creator_id] \
-					     [list instructions $instructions] \
 					     [list run_mode $run_mode] \
 					     [list anonymous_p $anonymous_p] \
 					     [list secure_access_p $secure_access_p] \
@@ -146,7 +144,6 @@ ad_proc -public as::assessment::edit {
 					     [list random_p $random_p] \
 					     [list entry_page $entry_page] \
 					     [list exit_page $exit_page] \
-					     [list consent_page $consent_page] \
 					     [list return_url $return_url] \
 					     [list start_time $start_time] \
 					     [list end_time $end_time] \
@@ -158,7 +155,7 @@ ad_proc -public as::assessment::edit {
 					     [list show_feedback $show_feedback] \
 					     [list section_navigation $section_navigation] \
 					     [list type $type]] ]
-
+        db_dml update_clobs {} -clobs [list $instructions $consent_page]
 	copy_sections -assessment_id $assessment_rev_id -new_assessment_id $new_rev_id
     }
 

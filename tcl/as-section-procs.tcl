@@ -16,14 +16,17 @@ ad_proc -public as::section::new {
     {-num_items ""}
     {-display_type_id ""}
     {-points ""}
-    
+    {-package_id ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
 
     New section to the database
 } {
-    set package_id [ad_conn package_id]
+    if {$package_id eq "" \
+            && [ad_conn -connected_p]} {
+        set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
@@ -41,14 +44,14 @@ ad_proc -public as::section::new {
 			       -content_type {as_sections} \
 			       -title $title \
 			       -description $description \
-			       -attributes [list [list instructions $instructions] \
-						[list feedback_text $feedback_text] \
+			       -attributes [list [list feedback_text $feedback_text] \
 						[list max_time_to_complete $max_time_to_complete] \
 						[list num_items $num_items] \
 						[list display_type_id $display_type_id] \
 						[list points $points] ] ]
     }
 
+    db_dml update_clobs {} -clobs [list $instructions]
     return $as_section_id
 }
 
@@ -78,13 +81,13 @@ ad_proc -public as::section::edit {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list instructions $instructions] \
-						 [list feedback_text $feedback_text] \
+				-attributes [list [list feedback_text $feedback_text] \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
 
+        db_dml update_clobs {} -clobs [list $instructions]						         
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }

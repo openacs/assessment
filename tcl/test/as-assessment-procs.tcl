@@ -38,13 +38,50 @@ aa_register_case -cats { api } assessment_new {
                                 -node_name $node_name \
                                 -package_key assessment]
             aa_log "Package_id = '${package_id}'"
-
+            
             # now try to create an empty assessment
+            set instructions "These are the instructions"
             set assessment_id \
                 [as::assessment::new \
                      -package_id $package_id \
                      -title "Test Assessment" \
-                     -instructions "These are the instructions"]
+                     -instructions $instructions \
+                     -consent_page "This is the consent page"]
+
+            aa_true "Instructions set for section" \
+                [expr {
+                     $instructions eq \
+                     [db_string get_instructions \
+                          "select instructions
+                           from as_assessments
+                           where assessment_id=:assessment_id"]}]
+            
+            set section_id \
+                [as::section::new \
+                     -package_id $package_id \
+                     -title "Test Title" \
+                     -instructions $instructions]
+db_dml add_section_to_assessment "insert into as_assessment_section_map (assessment_id, section_id)
+	    values (:assessment_id, :section_id)"
+            aa_true "Instructions set for section" \
+                [expr {
+                     $instructions eq \
+                     [db_string get_instructions \
+                          "select instructions
+                           from as_sections
+                           where section_id=:section_id"]}]
+
+            as::assessment::edit \
+                -assessment_id [content::revision::item_id -revision_id $assessment_id] \
+                -title "Test Assessment" \
+                -instructions $instructions \
+                -consent_page "This is the consent_page"
+
+            as::section::edit \
+                -section_id $section_id \
+                -title "Test Title" \
+                -instructions $instructions \
+                -assessment_id [content::revision::item_id -revision_id $assessment_id]
             
         }
 
