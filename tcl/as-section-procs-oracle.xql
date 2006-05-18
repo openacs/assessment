@@ -109,9 +109,10 @@
 
 <fullquery name="as::section::edit.update_clobs">
     <querytext>
-      update as_sections set instructions=empty_clob()
+      update as_sections set instructions=empty_clob(),
+      feedback_text=empty_clob()
       where section_id=:new_section_id
-      returning instructions into :1
+      returning instructions,feedback_text into :1, :2
     </querytext>
 </fullquery>  
   

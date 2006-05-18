@@ -53,12 +53,10 @@ ad_proc -public as::item::new {
 					     [list required_p $required_p] \
 					     [list data_type $data_type] \
 					     [list max_time_to_complete $max_time_to_complete] \
-					     [list feedback_right $feedback_right] \
-					     [list feedback_wrong $feedback_wrong] \
 					     [list points $points] \
 					     [list validate_block $validate_block] ] ]
     }
-
+    db_dml update_clobs "" -clobs [list $feedback_right $feedback_wrong]
     return $as_item_id
 }
 
@@ -96,14 +94,12 @@ ad_proc -public as::item::edit {
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \
 					      [list max_time_to_complete $max_time_to_complete] \
-					      [list feedback_right $feedback_right] \
-					      [list feedback_wrong $feedback_wrong] \
 					      [list points $points] \
 					      [list validate_block $validate_block] ] ]
 
 	copy_types -as_item_id $as_item_id -new_item_id $new_item_id
     }
-
+    db_dml update_clobs "" -clobs [list $feedback_right $feedback_wrong]
     return $new_item_id
 }
 

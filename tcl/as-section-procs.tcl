@@ -44,14 +44,13 @@ ad_proc -public as::section::new {
 			       -content_type {as_sections} \
 			       -title $title \
 			       -description $description \
-			       -attributes [list [list feedback_text $feedback_text] \
-						[list max_time_to_complete $max_time_to_complete] \
+			       -attributes [list [list max_time_to_complete $max_time_to_complete] \
 						[list num_items $num_items] \
 						[list display_type_id $display_type_id] \
 						[list points $points] ] ]
     }
 
-    db_dml update_clobs {} -clobs [list $instructions]
+    db_dml update_clobs {} -clobs [list $instructions $feedback_text]
     return $as_section_id
 }
 
