@@ -12,7 +12,7 @@
     <version>8.1.7</version>
   </rdbms>
   
-  <fullquery name="as::section::display::new.update_clobs">
+  <fullquery name="as::section_display::new.update_clobs">
     <querytext>
       update as_section_display_types
       set adp_chunk=empty_clob()
@@ -21,7 +21,7 @@
     </querytext>
   </fullquery>
 
-  <fullquery name="as::section::display::edit.update_clobs">
+  <fullquery name="as::section_display::edit.update_clobs">
     <querytext>
       update as_section_display_types
       set adp_chunk=empty_clob()

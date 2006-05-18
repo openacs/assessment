@@ -13,7 +13,7 @@
     <version>7.4</version>
   </rdbms>
   
-  <fullquery name="as::section::display::new.update_clobs">
+  <fullquery name="as::section_display::new.update_clobs">
     <querytext>
       update as_section_display_types
       set adp_chunk=:adp_chunk
@@ -21,12 +21,13 @@
     </querytext>
   </fullquery>
 
-  <fullquery name="as::section::display::edit.update_clobs">
+  <fullquery name="as::section_display::edit.update_clobs">
     <querytext>
       update as_section_display_types
       set adp_chunk=:adp_chunk
       where display_type_id=:display_id
     </querytext>
+
   </fullquery>  
   
 </queryset>
