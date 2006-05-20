@@ -32,18 +32,65 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     if {![empty_string_p $default_value]} {
 	array set values $default_value
 	set result_points $values(points)
+	set item_data_id $values(item_data_id)
 	array unset values
 	set answered_p t
 
-	if {$result_points < $points} {
-	    if {$show_feedback != "correct"} {
-	        set feedback "<font color=red>$feedback_wrong</font>"
-	    }	
-	} else {
-	    if {$show_feedback != "incorrect"} {
-	        set feedback "<font color=green>$feedback_right</font>"
+	if { $points != 0 } {
+	    if {$result_points < $points} {
+		if {$show_feedback != "correct"} {
+		    set feedback "<font color=red>$feedback_wrong</font>"
+		}	
+	    } else {
+		if {$show_feedback != "incorrect"} {
+		    set feedback "<font color=green>$feedback_right</font>"
+		}
 	    }
-	}	
+	} else {
+	    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+		set user_answers [db_list get_user_choice_answers {}]
+
+		set correct_answers [db_list get_correct_choice_answers {}]
+
+		if { $presentation_type == "rb" } {
+		    set user_answers [lindex $user_answers 0]
+		 
+		    if { [lsearch $correct_answers $user_answers] == -1 } {
+			if {$show_feedback != "correct"} {
+			    set feedback "<font color=red>$feedback_wrong</font>"
+			}	
+		    } else {
+			if {$show_feedback != "incorrect"} {
+			    set feedback "<font color=green>$feedback_right</font>"
+			}
+		    }		    
+		} else {
+		    # Checkbox, all answers must be correct if no
+		    # points are set
+		    if { [llength $user_answers] != [llength $correct_answers] } {
+			set correct_p 0
+		    } else {
+			set correct_p 1
+			foreach one_answer $user_answers {
+			    if { [lsearch $correct_answers $one_answer] == -1 } {
+				set correct_p 0
+				break
+			    }
+			}
+		    }
+
+		    if { !$correct_p } {
+			if {$show_feedback != "correct"} {
+			    set feedback "<font color=red>$feedback_wrong</font>"
+			}	
+		    } else {
+			if {$show_feedback != "incorrect"} {
+			    set feedback "<font color=green>$feedback_right</font>"
+			}
+		    }
+		}
+	    }
+	}
     } else {
 	set result_points ""
 	set feedback ""
