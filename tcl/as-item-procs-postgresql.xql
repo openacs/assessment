@@ -13,21 +13,21 @@
   </rdbms>
   
   <fullquery name="as::item::new.update_clobs">
-    <queryset>
+    <querytext>
       update as_items
       set feedback_right=:feedback_right
       feedback_wrong=:feedback_wrong
       where as_item_id=:as_item_id
-      </queryset>
+      </querytext>
   </fullquery>
 
   <fullquery name="as::item::edit.update_clobs">
-    <queryset>
+    <querytext>
       update as_items
       set feedback_right=:feedback_right
       feedback_wrong=:feedback_wrong
       where as_item_id=:new_item_id
-      </queryset>
+      </querytext>
   </fullquery>  
   
 </queryset>
