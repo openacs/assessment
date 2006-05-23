@@ -36,7 +36,7 @@
 	select i.as_item_id, ci.name, cr.title, cr.description, i.subtext,
 	       m.required_p, m.max_time_to_complete, r2.revision_id as content_rev_id,
 	       r2.title as content_filename, ci2.content_type, m.fixed_position,
-	       ir.target_rev_id as as_item_type_id
+	       ir.target_rev_id as as_item_type_id, i.validate_block
 	from as_item_section_map m, as_items i, cr_revisions cr, cr_items ci,
 	     as_item_rels ar, cr_revisions r2, cr_items ci2, as_item_rels ir
 	where ar.item_rev_id (+) = i.as_item_id
