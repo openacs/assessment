@@ -58,7 +58,6 @@ ad_proc -public as::item_data::new {
 						      [list as_item_id $as_item_id] \
 						      [list section_id $section_id] \
 						      [list boolean_answer $boolean_answer] \
-						      [list clob_answer $clob_answer] \
 						      [list numeric_answer $numeric_answer] \
 						      [list integer_answer $integer_answer] \
 						      [list text_answer $text_answer] \
@@ -66,6 +65,8 @@ ad_proc -public as::item_data::new {
 						      [list content_answer $content_answer] \
 						      [list signed_data $signed_data] \
 						      [list points $points ] ] ]
+
+		db_dml update_clobs "" -clobs [list $clob_answer]
 
 	    foreach choice_id $choice_answer {
 		db_dml save_choice_answer {}
