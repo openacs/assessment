@@ -89,4 +89,13 @@
     </querytext>
 </fullquery>
   
+<fullquery name="as::assessment::new_revision.update_clobs">
+    <querytext>
+      update as_assessments set
+      instructions=empty_clob(),consent_page=empty_clob()
+      where assessment_id=:new_rev_id
+      returning instructions, consent_page into :1, :2
+    </querytext>
+</fullquery>
+  
 </queryset>

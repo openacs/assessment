@@ -209,7 +209,6 @@ ad_proc -public as::assessment::new_revision {
 			    -title $a(title) \
 			    -description $a(description) \
 			    -attributes [list [list creator_id $a(creator_id)] \
-					     [list instructions $a(instructions)] \
 					     [list run_mode $a(run_mode)] \
 					     [list anonymous_p $a(anonymous_p)] \
 					     [list secure_access_p $a(secure_access_p)] \
@@ -218,7 +217,6 @@ ad_proc -public as::assessment::new_revision {
 					     [list random_p $a(random_p)] \
 					     [list entry_page $a(entry_page)] \
 					     [list exit_page $a(exit_page)] \
-					     [list consent_page $a(consent_page)] \
 					     [list return_url $a(return_url)] \
 					     [list start_time $a(start_time)] \
 					     [list end_time $a(end_time)] \
@@ -231,6 +229,10 @@ ad_proc -public as::assessment::new_revision {
 					     [list section_navigation $a(section_navigation)]  \
 					     [list type $a(type)]]]
 	
+		set instructions $a(instructions)
+		set consent_page $a(consent_page)
+		db_dml update_clobs {} -clobs [list $a(instructions) $a(consent_page)]
+
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
 	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
     }

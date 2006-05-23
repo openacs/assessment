@@ -87,4 +87,12 @@
     </querytext>
 </fullquery>
   
+<fullquery name="as::assessment::new_revision.update_clobs">
+    <querytext>
+      update as_assessments set
+      instructions=:instructions, consent_page=:consent_page
+      where assessment_id=:new_rev_id
+    </querytext>
+</fullquery>
+  
 </queryset>
