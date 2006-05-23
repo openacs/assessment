@@ -14,7 +14,7 @@
 
   <fieldset style="padding:10px;margin-bottom:10px"><!-- Section FieldSet -->
     <legend><b>@section.title@</b></legend>
-    <if @section.description@ not nil><p>@section.description@;noquote@</p></if>    
+    <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
 
      <formtemplate id="show_item_form">
