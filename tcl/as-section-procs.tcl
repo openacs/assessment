@@ -80,13 +80,13 @@ ad_proc -public as::section::edit {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list feedback_text $feedback_text] \
+				-attributes [list \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
 
-        db_dml update_clobs {} -clobs [list $instructions]						         
+        db_dml update_clobs {} -clobs [list $instructions $feedback_text]
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }

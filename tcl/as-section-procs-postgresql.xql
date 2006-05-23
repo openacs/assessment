@@ -105,7 +105,8 @@
 
 <fullquery name="as::section::edit.update_clobs">
     <querytext>
-      update as_sections set instructions=:instructions
+      update as_sections 
+	  set instructions=:instructions, feedback_text=:feedback_text
       where section_id=:new_section_id
     </querytext>
 </fullquery>
