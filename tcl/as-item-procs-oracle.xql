@@ -34,4 +34,15 @@
     </querytext>
   </fullquery>  
   
+  <fullquery name="as::item::new_revision.update_clobs">
+    <querytext>
+      update as_items
+      set feedback_right=empty_clob(),
+      feedback_wrong=empty_clob(),
+	  validate_block=empty_clob()
+      where as_item_id=:new_item_id
+      returning feedback_right, feedback_wrong, validate_block into :1, :2, :3
+    </querytext>
+  </fullquery>  
+  
 </queryset>

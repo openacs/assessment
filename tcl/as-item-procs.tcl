@@ -123,14 +123,12 @@ ad_proc -public as::item::new_revision {
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \
 					      [list max_time_to_complete $max_time_to_complete] \
-					      [list feedback_right $feedback_right] \
-					      [list feedback_wrong $feedback_wrong] \
-					      [list points $points] \
-					      [list validate_block $validate_block] ] ]
+					      [list points $points] ] ]
 
 	copy_types -as_item_id $as_item_id -new_item_id $new_item_id
 	as::assessment::copy_categories -from_id $as_item_id -to_id $new_item_id
     }
+    db_dml update_clobs "" -clobs [list $feedback_right $feedback_wrong $validate_block]
 
     return $new_item_id
 }
