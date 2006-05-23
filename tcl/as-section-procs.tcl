@@ -111,8 +111,7 @@ ad_proc -public as::section::new_revision {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list instructions $instructions] \
-						 [list feedback_text $feedback_text] \
+				-attributes [list \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
@@ -123,6 +122,7 @@ ad_proc -public as::section::new_revision {
 	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }
 
+    db_dml update_clobs {} -clobs [list $instructions $feedback_text]
     return $new_section_id
 }
 

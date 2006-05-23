@@ -110,4 +110,12 @@
     </querytext>
 </fullquery>
   
+<fullquery name="as::section::new_revision.update_clobs">
+    <querytext>
+      update as_sections 
+	  set instructions=:instructions, feedback_text=:feedback_text
+      where section_id=:new_section_id
+    </querytext>
+</fullquery>
+
 </queryset>
