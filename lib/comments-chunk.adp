@@ -7,7 +7,7 @@
 <br /><br />
 @comments.html_content;noquote@
 <br /><br />
-- @comments.author@ (on @comments.creation_date_ansi)
+- @comments.author@ (on @comments.creation_date_ansi@)
 </multiple>
 </if>
 <else>
