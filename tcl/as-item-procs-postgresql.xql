@@ -16,7 +16,8 @@
     <querytext>
       update as_items
       set feedback_right=:feedback_right,
-      feedback_wrong=:feedback_wrong
+      feedback_wrong=:feedback_wrong,
+	  validate_block=:validate_block
       where as_item_id=:as_item_id
       </querytext>
   </fullquery>
@@ -25,7 +26,8 @@
     <querytext>
       update as_items
       set feedback_right=:feedback_right,
-      feedback_wrong=:feedback_wrong
+      feedback_wrong=:feedback_wrong,
+	  validate_block=:validate_block
       where as_item_id=:new_item_id
       </querytext>
   </fullquery>  
