@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.17" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.20" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -17,6 +17,7 @@
   <msg key="action_to_perform">Action to Perform</msg>
   <msg key="add_item">Add new question</msg>
   <msg key="add_item_display_cb">Add new question: Checkbox Display</msg>
+  <msg key="add_item_display_f">Item Display</msg>
   <msg key="add_item_display_fu">Add new question: File Upload Display</msg>
   <msg key="add_item_display_rb">Add new question: Radiobutton Display</msg>
   <msg key="add_item_display_sa">Add new question: Short Answer Display</msg>
@@ -128,6 +129,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="besideright">Beside-Right</msg>
   <msg key="bottom">Bottom</msg>
   <msg key="Box_Orientation">Box Orientation</msg>
+  <msg key="Box_Orientation_help">Box orientation</msg>
   <msg key="branch">Branch</msg>
   <msg key="branches">Branches</msg>
   <msg key="bulk_mail_send">Bulk Mail</msg>
@@ -276,7 +278,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Fixed_Position">Fixed Order Position</msg>
   <msg key="form_element_required">This is required</msg>
   <msg key="from">From:</msg>
+  <msg key="fu_Title_help">Question title</msg>
   <msg key="goes_to_section">Goes to section</msg>
+  <msg key="help_postcheck_p">Post check?</msg>
   <msg key="hide_item_name">Question name hidden</msg>
   <msg key="history">Change History</msg>
   <msg key="horizontal">Horizontal</msg>
@@ -539,6 +543,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Summary">Summary</msg>
   <msg key="survey_section">Section 1</msg>
   <msg key="Target_Community">Target Community</msg>
+  <msg key="Target_Community_help">Choose the target community</msg>
   <msg key="the_condition_to">The condition to branch or execute the action</msg>
   <msg key="there_are_no_users">There are no users to notify</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
