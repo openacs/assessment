@@ -1,0 +1,2 @@
+<master>
+<include src="@include@">
