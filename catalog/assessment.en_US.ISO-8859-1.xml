@@ -52,6 +52,8 @@
   <msg key="after_this_asm">After this Assessment:</msg>
   <msg key="All">All</msg>
   <msg key="all">All</msg>
+  <msg key="All_Assessments">All Assessments</msg>
+  <msg key="All_Users">All Users</msg>
   <msg key="allow_multiple">allow multiple</msg>
   <msg key="Allow_Negative">Allow Negative</msg>
   <msg key="Allow_Negative_help">Shall a negative percentage be allowed (as the total result).</msg>
@@ -62,6 +64,7 @@
   <msg key="anonymous_name">Anonymous</msg>
   <msg key="Anonymous_Responses">Anonymous Responses</msg>
   <msg key="anonymous_users_allow">Anonymous respondents allowed</msg>
+  <msg key="Answer">Answer</msg>
   <msg key="Answer_Alignment">Answer Alignment</msg>
   <msg key="Answer_Alignment_help">Alignment of the answer in relation to the question.</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
@@ -124,6 +127,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Author">Author</msg>
   <msg key="Back_Button">Back button allowed</msg>
   <msg key="back_button_help">Is it possible to use the backbutton for this section to see previous answers</msg>
+  <msg key="Back_to_Sessions">Back to Sessions</msg>
+  <msg key="Back_to_Summary">Back to Summary</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
@@ -161,6 +166,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="comparator_not_set_error">You must set a Comparator for this Comparison Type</msg>
   <msg key="comparison_type">Comparison Type</msg>
   <msg key="comparison_type_help">Different fields below will be required depending on this setting</msg>
+  <msg key="Complete">Complete</msg>
   <msg key="condition">Condition</msg>
   <msg key="Confirm_Consent">Confirmation</msg>
   <msg key="Consent_Page">Consent Page</msg>
@@ -289,6 +295,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="immediately">Immediately</msg>
   <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
   <msg key="Import_Results">Import Results</msg>
+  <msg key="Incomplete">Incomplete</msg>
   <msg key="Increasing">Increasing</msg>
   <msg key="Increasing_help">Increasing (true) will give (number of correct matches / number of total matches) *100% points.&lt;br&gt;
 Increasing (false) will either give 100%, if all correct answers are given, or 0% else. </msg>
@@ -310,6 +317,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="item_display_tb">Textbox</msg>
   <msg key="item_Name_help">Name of the question, identifier searchable in the catalog</msg>
   <msg key="item_Required_help">Does this item have to be answered (when displayed)?</msg>
+  <msg key="Item_Responses">Item Responses</msg>
   <msg key="item_Subtext_help">A secondary label, needed for many kinds of questions</msg>
   <msg key="item_time_help">Seconds allowed for completing this question</msg>
   <msg key="item_Title">Question</msg>
@@ -328,6 +336,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Label_Orientation">Label Orientation</msg>
   <msg key="Label_Orientation_help">Positioning of the choice label in correspondance with the choice button.</msg>
   <msg key="last_month">Last Month</msg>
+  <msg key="Last_Updated">Last Updated</msg>
   <msg key="last_week">Last Week</msg>
   <msg key="lead_you">The section where the condition will lead you.</msg>
   <msg key="left">Left</msg>
@@ -342,6 +351,8 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
   <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
+  <msg key="lt_Responses_for_assessm">Responses for: %assessment_data.html_title;noquote%</msg>
+  <msg key="lt_Responses_of_user_per">Responses of user: %person_name%</msg>
   <msg key="lt_This_field_is_used_to">This field is used to validate the answer entered. This must have a multiple of 2 lines. The first line is a TCL expression to be used to check the answer and the second line is the error message. The string %%answer%% will be replaced by the answer entered.</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
@@ -356,6 +367,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="manually">Manually</msg>
   <msg key="max_time">max. time allowed:</msg>
   <msg key="mc_Title_help">A name for this set of choices (for reusability)</msg>
+  <msg key="Mean">Mean:</msg>
   <msg key="message">Message</msg>
   <msg key="Message_Subject">Message Subject</msg>
   <msg key="message_to_display_to">Message to display to the user when the action is executed (ie. You have joined &quot;My Community&quot;)</msg>
@@ -381,10 +393,13 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Next">Next</msg>
   <msg key="no">No</msg>
   <msg key="no_display">-- None --</msg>
+  <msg key="No_responses">No responses</msg>
+  <msg key="No_sessions_found">No sessions found</msg>
   <msg key="no_waiting">Immediate retry allowed</msg>
   <msg key="None">None</msg>
   <msg key="not_answered">not answered</msg>
   <msg key="not_approved">Not Approved</msg>
+  <msg key="Not_Taken">Not Taken</msg>
   <msg key="not_yet_reviewed">not yet reviewed</msg>
   <msg key="Notification">Notification</msg>
   <msg key="notified_users">Notified Users</msg>
@@ -441,6 +456,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
   <msg key="Question_not_answered">Question not answered</msg>
+  <msg key="Question_Statistics">Question Statistics</msg>
   <msg key="Questions">Questions</msg>
   <msg key="Randomized">Randomized</msg>
   <msg key="randomized">Randomized</msg>
@@ -531,8 +547,10 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Show_Items">Show Items</msg>
   <msg key="Show_Sessions">Show Sessions</msg>
   <msg key="specific_date">Specific Date</msg>
+  <msg key="Standard_Deviation">Standard Deviation:</msg>
   <msg key="Start_Time">Start Time</msg>
   <msg key="Started">Started</msg>
+  <msg key="Status">Status</msg>
   <msg key="Student_Response">Student Response</msg>
   <msg key="Subject">Subject</msg>
   <msg key="Subject_Name">Subject Name</msg>
@@ -555,6 +573,8 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Title">Title</msg>
   <msg key="today">Today</msg>
   <msg key="top">Top</msg>
+  <msg key="Total_Correct">Total Correct:</msg>
+  <msg key="Total_Responses">Total Responses:</msg>
   <msg key="Total_score">Total score</msg>
   <msg key="trigger">Trigger</msg>
   <msg key="trigger_delete">Delete Trigger</msg>
@@ -585,8 +605,10 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="View_all_responses">All responses</msg>
   <msg key="View_Other_Sessions">View Other Sessions</msg>
   <msg key="View_Responses">View Responses:</msg>
+  <msg key="View_Responses_1">View Responses</msg>
   <msg key="View_Results">View Results</msg>
   <msg key="View_results">View results</msg>
+  <msg key="View_Sessions">View Sessions</msg>
   <msg key="when_this_action">When this action will be executed (ie. At the end of this section)</msg>
   <msg key="when_this_will">When this will be executed?</msg>
   <msg key="yes">Yes</msg>
