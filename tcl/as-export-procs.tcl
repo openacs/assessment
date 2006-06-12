@@ -15,7 +15,7 @@ ad_proc -public as::export::new_element {
     {-attribute_label ""}
     {-attribute_value ""}
 } {
-    @author Natalia Pérez (nperper@it.uc3m.es)
+    @author Natalia PÃ©rez (nperper@it.uc3m.es)
     @creation-date 2004-02-01
 
     New element 
@@ -49,7 +49,7 @@ ad_proc -public as::export::element_qtimetadatafield {
     {-label ""} 
     {-value ""}    
 } {
-    @author Natalia Pérez (nperper@it.uc3m.es)
+    @author Natalia PÃ©rez (nperper@it.uc3m.es)
     @creation-date 2004-02-03
 
     New element qtimetadatafield

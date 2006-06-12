@@ -144,7 +144,7 @@ ad_form -name assessment_export -action results-export -form {
 	}
 	append csv_text "[join $csv_result_list($session_id) ";"]\r\n"
     }
-    set csv_text [string map {\xe4 ä \xfc ü \xf6 ö \xdf ß \xc4 Ä \xdc Ü \xd6 Ö} $csv_text]
+    set csv_text [string map {\xe4 Ã¤ \xfc Ã¼ \xf6 Ã¶ \xdf ÃŸ \xc4 Ã„ \xdc Ãœ \xd6 Ã–} $csv_text]
 } -after_submit {
     set tmp_filename [ns_tmpnam]                                                                                                                                                            
     set tmp_csv_filename "$tmp_filename.csv"

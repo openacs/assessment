@@ -4,7 +4,7 @@ ad_page_contract {
 	this assessment, the name of assessment and the finish time 
 	of assessment for an assessment.
 
-	@author Eduardo Pérez Ureta (eperez@it.uc3m.es)
+	@author Eduardo PÃ©rez Ureta (eperez@it.uc3m.es)
 	@creation-date 2004-09-03
 } {
     assessment_id:notnull
