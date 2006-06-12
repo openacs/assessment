@@ -157,7 +157,9 @@
 
 <fullquery name="as::assessment::check::action_exec.get_check_params">
       <querytext>
-       select * from as_param_map where inter_item_check_id = :inter_item_check_id
+       select ci.latest_revision as item_id,parameter_id, value, inter_item_check_id 
+       from as_param_map pm,cr_items ci  where inter_item_check_id = :inter_item_check_id and 
+       ci.item_id=pm.item_id
       </querytext>
 </fullquery>
 
@@ -173,6 +175,7 @@
       from as_item_data
       where session_id = :session_id
       and as_item_id = :item_id
+      and item_data_id in (select latest_revision from cr_items)
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::manual_action_exec.get_answer">
@@ -200,7 +203,8 @@
 
 <fullquery name="as::assessment::check::manual_action_exec.get_check_params">
       <querytext>
-       select * from as_param_map where inter_item_check_id = :inter_item_check_id 
+       select ci.latest_revision as item_id,parameter_id, value, inter_item_check_id 
+       from as_param_map pm, cr_items ci  where inter_item_check_id = :inter_item_check_id 
       </querytext>
 </fullquery>
 
@@ -270,6 +274,28 @@
 <fullquery name="as::assessment::check::eval_m_checks.assessment_checks">
       <querytext>
       select * from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='m' and  c.assessment_id=:assessment_id order by am.order_by 
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::eval_or_checks.section_checks">
+      <querytext>
+        select c.inter_item_check_id,c.check_sql,action_p from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='or' and  section_id_from=:section_id order by am.order_by
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::eval_sa_checks.section_checks">
+      <querytext>
+        select c.inter_item_check_id from as_inter_item_checks c,as_action_map am where c.inter_item_check_id=am.inter_item_check_id and am.action_perform='sa' and  c.assessment_id=:assessment_id order by am.order_by
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::eval_sa_checks.get_assessment_id">
+      <querytext>
+        select max(revision_id) from cr_revisions where item_id=:assessment_id
+      </querytext>
+</fullquery>
+<fullquery name="as::assessment::check::eval_sa_checks.check_info">
+      <querytext>
+        select * from as_inter_item_checks c,as_action_map am where
+      c.inter_item_check_id=am.inter_item_check_id and am.action_perform='sa'
+      and  c.assessment_id=:assessment_id and c.inter_item_check_id=:check_id order by am.order_by 
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::confirm_display.get_check_info">
@@ -348,6 +374,5 @@
       select * from as_inter_item_checks where inter_item_check_id=:inter_item_check_id
       </querytext>
 </fullquery>
-
 
 </queryset>

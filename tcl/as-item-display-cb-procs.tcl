@@ -24,7 +24,7 @@ ad_proc -public as::item_display_cb::new {
 
     # Insert as_item_display_cb in the CR (and as_item_display_cb table) getting the revision_id (as_item_display_id)
     db_transaction {
-        set item_item_display_cb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_cb} -name [exec uuidgen]]
+        set item_item_display_cb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_cb} -name [as::item::generate_unique_name]]
 	set as_item_display_cb_id [content::revision::new \
 				-item_id $item_item_display_cb_id \
 				-content_type {as_item_display_cb} \
@@ -132,7 +132,7 @@ ad_proc -public as::item_display_cb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label $title] [list help_text $subtext] [list values $default_value] [list options $data] [list html $type(html_display_options)]]
+    set param_list [list [list label \$title] [list help_text \$subtext] [list values \$default_value] [list options \$data] [list html \$type(html_display_options)]]
     set element_params [concat [list "$element\:text(checkbox)$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]

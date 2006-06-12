@@ -113,5 +113,15 @@
 </querytext>
 </fullquery>
 
+<fullquery name="as::section::new.item_exists">
+      <querytext>
+
+      select item_id
+      from cr_items
+      where parent_id = :folder_id
+      and name = :name
+
+      </querytext>
+</fullquery>
 
 </queryset>

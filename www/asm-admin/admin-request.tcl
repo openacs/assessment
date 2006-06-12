@@ -39,17 +39,25 @@ set interval_query ""
 set assessment_query ""
 set state_query ""
 
+if {![acs_user::site_wide_admin_p -user_id [ad_conn user_id]]} {
+    set permission "and c.assessment_id in (select object_id from acs_permissions where grantee_id=:party_id and privilege='admin')"
+}
 if {[exists_and_not_null assessment] && $assessment!="all"} {
     permission::require_permission -object_id $assessment -privilege admin
-    if {[permission::permission_p -object_id $package_id -party_id $party_id -privilege admin] == 0} {
-	set permission "and c.assessment_id in (select object_id from acs_permissions where grantee_id=:party_id and privilege='admin')"}
     
     as::assessment::data -assessment_id $assessment
     set d_assessment $assessment
     set new_assessment_revision $assessment_data(assessment_rev_id)
     
     set assessment_query "and c.section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm  where ci.item_id = cr.item_id  and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id = :new_assessment_revision)"
-} 
+} else {
+    
+    set assessment_query "and assessment_id in (select ci.item_id as assessment_i
+    from cr_folders cf, cr_items ci, cr_revisions cr, as_assessments a 
+    where cr.revision_id = ci.latest_revision
+    and a.assessment_id = cr.revision_id
+    and ci.parent_id = cf.folder_id and cf.package_id = :package_id)"
+}
 
 if {[exists_and_not_null state]} {
     set d_state $state 
@@ -180,4 +188,5 @@ template::list::create \
 
 	
     }
+
 

@@ -16,20 +16,25 @@ ad_proc -public as::section::new {
     {-num_items ""}
     {-display_type_id ""}
     {-points ""}
-    
+    {-package_id ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
 
     New section to the database
 } {
-    set package_id [ad_conn package_id]
+    if {$package_id eq "" \
+            && [ad_conn -connected_p]} {
+        set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
     db_transaction {
 	set section_item_id [db_nextval acs_object_id_seq]
-	if {[empty_string_p $name]} {
+	if { ![empty_string_p $name] && [db_0or1row item_exists {}] } {
+	    set name "$section_item_id: $name"
+	} elseif {[empty_string_p $name]} {
 	    set name "SEC_$section_item_id"
 	}
 	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name]
@@ -39,14 +44,13 @@ ad_proc -public as::section::new {
 			       -content_type {as_sections} \
 			       -title $title \
 			       -description $description \
-			       -attributes [list [list instructions $instructions] \
-						[list feedback_text $feedback_text] \
-						[list max_time_to_complete $max_time_to_complete] \
+			       -attributes [list [list max_time_to_complete $max_time_to_complete] \
 						[list num_items $num_items] \
 						[list display_type_id $display_type_id] \
 						[list points $points] ] ]
     }
 
+    db_dml update_clobs {} -clobs [list $instructions $feedback_text]
     return $as_section_id
 }
 
@@ -76,13 +80,13 @@ ad_proc -public as::section::edit {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list instructions $instructions] \
-						 [list feedback_text $feedback_text] \
+				-attributes [list \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
 						 [list points $points] ] ]
 
+        db_dml update_clobs {} -clobs [list $instructions $feedback_text]
 	copy_items -section_id $section_id -new_section_id $new_section_id
 	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }
@@ -107,8 +111,7 @@ ad_proc -public as::section::new_revision {
 				-content_type {as_sections} \
 				-title $title \
 				-description $description \
-				-attributes [list [list instructions $instructions] \
-						 [list feedback_text $feedback_text] \
+				-attributes [list \
 						 [list max_time_to_complete $max_time_to_complete] \
 						 [list num_items $num_items] \
 						 [list display_type_id $display_type_id] \
@@ -119,6 +122,7 @@ ad_proc -public as::section::new_revision {
 	as::assessment::check::copy_checks -section_id $section_id -new_section_id $new_section_id -assessment_id $assessment_id
     }
 
+    db_dml update_clobs {} -clobs [list $instructions $feedback_text]
     return $new_section_id
 }
 
@@ -202,7 +206,7 @@ ad_proc as::section::items {
     {-session_id:required}
     {-sort_order_type ""}
     {-num_items ""}
-    {-random_p ""}
+    {-random_p "t"}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
@@ -220,7 +224,7 @@ ad_proc as::section::items {
     set open_positions ""
     set max_pos 0
     db_foreach section_items {} {
-	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type $as_item_type_id]
+	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type $as_item_type_id $validate_block]
 	if {![empty_string_p $fixed_position] && $fixed_position != "0"} {
 	    set fixed_positions($fixed_position) $as_item_id
 	    if {$max_pos < $fixed_position} {
@@ -239,6 +243,7 @@ ad_proc as::section::items {
     }
 
     # sort item positions that are not fixed
+
     switch -exact $sort_order_type {
 	alphabetical {
 	    set open_positions [lsort -dictionary -index 1 $open_positions]

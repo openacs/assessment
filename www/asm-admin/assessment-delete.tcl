@@ -31,7 +31,7 @@ set confirm_options [list [list "[_ assessment.continue_with_remove]" t] [list "
 ad_form -name assessment_delete_confirm -action assessment-delete -form {
     {assessment_id:key}
     {assessment_title:text(inform) {label "[_ assessment.remove_1]"}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {confirmation:text(radio) {label " "} {options $confirm_options} {value t}}
 } -select_query_name {assessment_title} \
 -on_submit {
     if {$confirmation} {

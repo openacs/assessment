@@ -6,9 +6,6 @@ ad_page_contract {
 } {
     action_id
     parameter_id:optional
-} -properties {
-    page_title:onevalue
-    context:onevalue
 }
 
 if { ![ad_form_new_p -key parameter_id] } {

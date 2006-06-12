@@ -20,7 +20,7 @@ ad_proc -public as::assessment::check::get_assessments {
     set package_id [ad_conn package_id]
     set user_id [ad_conn user_id]
     set permission ""
-    if {[permission::permission_p -object_id $package_id -party_id $user_id -privilege admin] == 0} {
+    if {![acs_user::site_wide_admin_p -user_id $user_id]} {
 	set permission "and ci.item_id in (select object_id from acs_permissions where grantee_id=:user_id and privilege='admin')"}
     set assessment_list [list [list "[_ assessment.all]" "all"]]
     set assessments [db_list_of_lists assessment {}]
@@ -142,7 +142,9 @@ ad_proc -public as::assessment::check::get_sql {
 } {
     
 } {
-    set check_sql "select (case when idc.choice_id=$condition then \'1\' else \'0\' end) as perform_p from as_item_data id, as_item_data_choices idc where id.as_item_id=$item_id and id.item_data_id=idc.item_data_id and id.session_id=:session_id"
+    set as_item_id [db_string get_item_id {select item_id from cr_revisions where revision_id=:item_id}]
+    
+    set check_sql "select (case when idc.choice_id in (select revision_id from cr_revisions where item_id=$condition) then \'1\' else \'0\' end) as perform_p from as_item_data id, as_item_data_choices idc where id.as_item_id in (select revision_id from cr_revisions where item_id=$as_item_id) and id.item_data_id=idc.item_data_id and id.session_id=:session_id"
     
     return $check_sql
 }
@@ -260,7 +262,6 @@ ad_proc -public as::assessment::check::action_exec {
     set failed_p "t"
     set failed [catch $tcl_code errorMsg]
     
-
     if { $failed > 0 } {
 	set failed_p "f"
     }
@@ -288,6 +289,7 @@ ad_proc -public as::assessment::check::manual_action_exec {
 } { 
     
 } {
+    db_0or1row subject_id {select subject_id from as_sessions where session_id=:session_id}
     db_foreach get_check_params { } {
 	set parameter_name [db_1row select_name {}]
 	
@@ -342,8 +344,9 @@ ad_proc -public as::assessment::check::manual_action_exec {
     foreach notify_user $admin {
 	lappend to $notify_user
     }
-    
-    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" -subset $to -force -action_id $inter_item_check_id
+    if { [parameter::get -package_id [ad_conn package_id] -parameter NotifyAdminOfActions -default 1] } {
+    	notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" -subset $to -force -action_id $inter_item_check_id
+    }
 
     
 }
@@ -450,6 +453,51 @@ ad_proc -public as::assessment::check::eval_m_checks {
     
 }
 
+ad_proc -public as::assessment::check::eval_or_checks {
+    {-session_id}
+    {-section_id}
+} {
+    
+} {
+    
+    set section_checks [db_list_of_lists section_checks { }]
+    
+    foreach check $section_checks  {
+        set check_sql [lindex $check 1]
+        set perform [db_string check_sql $check_sql -default 0]
+        if {[lindex $check 2] == "t"} {
+            if {$perform == 1} {
+                as::assessment::check::action_exec -inter_item_check_id [lindex $check 0] -session_id $session_id
+            }
+        }
+    }
+}
+
+
+ad_proc -public as::assessment::check::eval_sa_checks {
+    {-session_id}
+    {-assessment_id}
+} {
+    
+} {
+
+    set assessment_rev_id [db_string get_assessment_id {}]
+
+	set checks [db_list_of_lists section_checks {}]
+	foreach check_id $checks {
+
+	    set info [db_0or1row check_info {}]
+	    set perform [db_string check_sql $check_sql -default 0]
+	    if {$action_p == "t"} {
+		if {$perform == 1} {
+		    as::assessment::check::action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id
+		}
+	    }
+	}
+    
+}
+
+
 ad_proc -public as::assessment::check::confirm_display {
     {-check_id}
     {-index}
@@ -545,7 +593,7 @@ ad_proc -public as::assessment::check::delete_item_checks {
     set checks [db_list_of_lists related_checks {}]
     foreach check $checks {
 	set cond_list  [split [lindex $check 1] "="]
-	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+	set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
 	if {$item_id == $as_item_id} {
 	    set check_id [lindex $check 0]
 	    db_exec_plsql delete_check {}
@@ -568,8 +616,8 @@ ad_proc -public as::assessment::check::copy_item_checks {
 
 	
 	set cond_list  [split [lindex $check 1] "="]
-	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-	set condition [lindex [split [lindex $cond_list 1] " "] 0]
+	set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
+	set condition [lindex [split [lindex $cond_list 1] ")"] 0]
 	
 	if {$item_id == $as_item_id} {
 	    set inter_item_check_id [lindex $check 0]
@@ -611,3 +659,5 @@ ad_proc -public as::assessment::check::add_manual_check {
 	as::assessment::check::eval_single_check -session_id $session_id -assessment_id $assessment_id  -inter_item_check_id $inter_item_check_id
     }
 }
+
+

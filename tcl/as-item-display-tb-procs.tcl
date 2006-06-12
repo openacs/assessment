@@ -10,18 +10,21 @@ ad_proc -public as::item_display_tb::new {
     {-html_display_options ""}
     {-abs_size ""}
     {-item_answer_alignment ""}
+    {-package_id ""}
 } {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
 
     New Item Display TextBox Type to the database
 } {
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)
     db_transaction {
-        set item_item_display_tb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_tb} -name [exec uuidgen]]
+        set item_item_display_tb_id [content::item::new -parent_id $folder_id -content_type {as_item_display_tb} -name [as::item::generate_unique_name]]
         set as_item_display_tb_id [content::revision::new \
 				-item_id $item_item_display_tb_id \
 				-content_type {as_item_display_tb} \
@@ -73,7 +76,7 @@ ad_proc -public as::item_display_tb::copy {
     db_transaction {
 	db_1row display_item_data {}
 
-	set new_item_display_it [new -html_display_options $html_display_options \
+	set new_item_display_id [new -html_display_options $html_display_options \
 				     -abs_size $abs_size \
 				     -item_answer_alignment $item_answer_alignment]
     }
@@ -113,12 +116,11 @@ ad_proc -public as::item_display_tb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label $title] [list help_text $subtext] [list value $default_value] [list html $type(html_display_options)]]
+    set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list html \$type(html_display_options)]]
     if {![empty_string_p $type(abs_size)]} {
 	lappend param_list [list maxlength $type(abs_size)]
     }
     set element_params [concat [list "$element\:$datatype\(text)$optional"] $param_list]
-
     ad_form -extend -name $form -form [list $element_params]
 }
 

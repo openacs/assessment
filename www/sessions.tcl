@@ -10,12 +10,12 @@ ad_page_contract {
     assessment_id:notnull
     {subject_id:integer,optional ""}
 } -properties {
-    context:onevalue
+    context_bar:onevalue
     page_title:onevalue
 }
 
 set page_title "[_ assessment.Show_Sessions]"
-set context [list $page_title]
+set context_bar [ad_context_bar $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 set user_id [ad_conn user_id]
 permission::require_permission -object_id $assessment_id -privilege read
@@ -62,7 +62,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    assessment_name {
 		label {Assessment}
-		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name@</a></if><else>@sessions.assessment_name@</else>}
+		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name;noquote@</a></if><else>@sessions.assessment_name;noquote@</else>}
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}
@@ -87,7 +87,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    assessment_name {
 		label {Assessment}
-		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name@</a></if><else>@sessions.assessment_name@</else>}
+		display_template {<if @sessions.assessment_url@ not nil><a href="@sessions.assessment_url@">@sessions.assessment_name;noquote@</a></if><else>@sessions.assessment_name;noquote@</else>}
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}

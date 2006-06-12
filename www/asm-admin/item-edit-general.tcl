@@ -29,6 +29,7 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 set package_id [ad_conn package_id]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set type $assessment_data(type)
 
 set item_type [string range [db_string get_item_type {}] end-1 end]
 set display_types [list]
@@ -40,8 +41,11 @@ foreach display_type [db_list display_types {}] {
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
     {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {help_text "[_ assessment.item_Title_help]"}}
-    {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 }
+if { $type > 1} {
+    ad_form -extend -name item_edit_general -form {
+	{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+    }
 
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit_general
@@ -52,20 +56,43 @@ if {[db_0or1row get_item_content {}]} {
 	{delete_content:text(checkbox),optional {label "[_ assessment.item_Delete_Content]"} {options {{{<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>} t}} }}
     }
 }
-
+}
+if { $type > 1} { 
 ad_form -extend -name item_edit_general -form {
     {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
     {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
     {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
+}
+}
+ad_form -extend -name item_edit_general -form {
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
+}
+if { $type > 1} { 
+ad_form -extend -name item_edit_general -form {
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
     {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
     {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
     {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+}
+} else {
+ad_form -extend -name item_edit_general -form {
+    {description:text(hidden) {value ""}}
+    {content:text(hidden) {value ""}}
+    {subtext:text(hidden) {value ""}}
+    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
+    {field_code:text(hidden) {value ""}}
+    {feedback_right:text(hidden) {value ""}}
+    {max_time_to_complete:text(hidden) {value ""}}
+    {feedback_wrong:text(hidden) {value ""}}
+    {points:text(hidden) ""}
+}
+}
+ad_form -extend -name item_edit_general -form {
     {data_type_disp:text(inform) {label "[_ assessment.Data_Type]"} {help_text "[_ assessment.Data_Type_help]"}}
     {data_type:text(hidden)}
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
+    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}    
 } -edit_request {
     db_1row general_item_data {}
     if {[empty_string_p $data_type]} {
@@ -93,7 +120,8 @@ ad_form -extend -name item_edit_general -form {
 			     -feedback_right $feedback_right \
 			     -feedback_wrong $feedback_wrong \
 			     -max_time_to_complete $max_time_to_complete \
-			     -points $points]
+			     -points $points \
+			     -validate_block $validate_block]
 
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $new_item_id $category_ids
@@ -116,10 +144,13 @@ ad_form -extend -name item_edit_general -form {
 		ad_return_complaint 1 "[_ assessment.file_zero_size]"
 		return
 	    }
-
 	    set folder_id [as::assessment::folder_id -package_id $package_id]
-	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [exec uuidgen]]
-	    db_dml update_item_content {}
+	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
+	    # delete content association if it exists then insert a new one
+	    # otherwise we can't add a file on edit that did not exist
+	    # when the question was originally created
+	    db_dml delete_item_content {}
+	    db_dml insert_item_content {}
 	} elseif {[info exists delete_content]} {
 	    db_dml delete_item_content {}
 	}

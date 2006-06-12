@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d13" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.20" locale="es_ES" charset="ISO-8859-1">
 
   <msg key="above">Arriba</msg>
   <msg key="Absolute_Size">Tamaño Absoluto</msg>
@@ -17,16 +17,19 @@
   <msg key="action_to_perform">Acción a realizar</msg>
   <msg key="add_item">Añadir nueva pregunta</msg>
   <msg key="add_item_display_cb">Añadir nueva pregunta: Checkbox</msg>
+  <msg key="add_item_display_f">Visualización</msg>
+  <msg key="add_item_display_fu">Visualización</msg>
   <msg key="add_item_display_rb">Añadir nueva pregunta: Radiobutton</msg>
   <msg key="add_item_display_sa">Añadir nueva pregunta: Short Answer</msg>
   <msg key="add_item_display_sb">Añadir nueva pregunta: Selectbox</msg>
   <msg key="add_item_display_ta">Añadir nueva pregunta: Textarea</msg>
   <msg key="add_item_display_tb">Añadir nueva pregunta: Textbox</msg>
+  <msg key="add_item_type_fu">Añadir nueva pregunta: archivo a subir</msg>
   <msg key="add_item_type_mc">Añadir nueva pregunta: respuesta múltiple</msg>
   <msg key="add_item_type_mc_choices">Añadir nueva pregunta: respuesta múltiple</msg>
   <msg key="add_item_type_mc_existing">Agrega un conjunto de opciones</msg>
   <msg key="add_item_type_oq">Añadir nueva pregunta: pregunta abierta</msg>
-  <msg key="add_item_type_sa">Añadir nueva pregunta: Short Answer</msg>
+  <msg key="add_item_type_sa">Añadir nueva pregunta: texto corto</msg>
   <msg key="Add_Items">Añadir preguntas a la sección</msg>
   <msg key="Add_New">Añadir nueva pregunta</msg>
   <msg key="add_new_action">Añadir nueva acción</msg>
@@ -34,6 +37,7 @@
   <msg key="add_new_section_display">Añadir nueva visualización de la sección</msg>
   <msg key="add_parameter">Añadir parámetro</msg>
   <msg key="add_section_first">Para agregar una pregunta, agregue una sección primero.</msg>
+  <msg key="add_section_trigger">Añadir un disparador para la sección</msg>
   <msg key="Add_Sections">Añadir secciones al cuestionario</msg>
   <msg key="Add_to_assessment">Añadir al cuestionario</msg>
   <msg key="Add_to_section">Añadir a la sección</msg>
@@ -124,6 +128,7 @@
   <msg key="bottom">Abajo</msg>
   <msg key="bounded_numeric">La entrada del usuario debe ser un número (real o entero) limitado por un valor de referencia</msg>
   <msg key="Box_Orientation">Orientación del cuadro</msg>
+  <msg key="Box_Orientation_help">Orientación del cuadro</msg>
   <msg key="branch">Rama</msg>
   <msg key="branches">Ramas</msg>
   <msg key="bulk_mail_send">Correo a todos</msg>
@@ -135,6 +140,8 @@
   <msg key="Categorization">Categorización</msg>
   <msg key="Categorization_exact">Exacto</msg>
   <msg key="Categorization_sub">Incluir Subcategorías</msg>
+  <msg key="Change_multiple_timings">Cambiar Disponibilidad</msg>
+  <msg key="Change_timings">Cambiar fechas de disponibilidad</msg>
   <msg key="Choice">Respuesta</msg>
   <msg key="choice_Content">Subir Archivo</msg>
   <msg key="choice_Content_help">Subir un archivo con el contenido de la respuesta</msg>
@@ -149,6 +156,7 @@
   <msg key="choice_set_title">Título</msg>
   <msg key="Choice_Sets">Conjunto de Opciones existente</msg>
   <msg key="choose_action">Elegir la acción a hacer</msg>
+  <msg key="choose_type">¿Qué tipo de cuestionario desea crear?</msg>
   <msg key="comparator">Comparador</msg>
   <msg key="comparator_not_set_error">Ud. debe ingresar un Comparador para este Tipo de Comparador</msg>
   <msg key="comparison_type">Tipo de Comparación</msg>
@@ -170,6 +178,7 @@
   <msg key="Correct_Answer_help">¿es esta respuesta la correcta?</msg>
   <msg key="Created_by">Creado por</msg>
   <msg key="csv_End_Time">Tiempo para terminar</msg>
+  <msg key="csv_End_Time_help">Indique una fecha final. Este dato es opcional.</msg>
   <msg key="csv_export">Exportar CSV</msg>
   <msg key="csv_export_format">Exportar a formato CSV</msg>
   <msg key="csv_export_format_help">Seleccione el dato que se utilizará para identificar cada pregunta</msg>
@@ -177,12 +186,13 @@
   <msg key="csv_export_title">Texto de la pregunta</msg>
   <msg key="CSV_file">Fichero CSV</msg>
   <msg key="csv_Start_Time">Tiempo de Inicio</msg>
+  <msg key="csv_Start_Time_help">Indique una fecha de inicio. Este dato es opcional.</msg>
   <msg key="currently">Actualmente:</msg>
   <msg key="Data_Type">Tipo de Dato</msg>
   <msg key="data_type_boolean">Booleano</msg>
   <msg key="data_type_content_type">Fichero</msg>
   <msg key="data_type_date">Fecha</msg>
-  <msg key="data_type_float">Float</msg>
+  <msg key="data_type_float">Número decimal</msg>
   <msg key="Data_Type_help">El tipo de dato de la pregunta. Una vez que se selecciona no se puede cambiar.</msg>
   <msg key="data_type_integer">Entero</msg>
   <msg key="data_type_text">Texto</msg>
@@ -271,9 +281,11 @@
   <msg key="Fixed_Position">Orden fijo</msg>
   <msg key="form_element_required">Es requerido</msg>
   <msg key="from">De:</msg>
+  <msg key="fu_Title_help">Título de la pregunta</msg>
   <msg key="goes_to_section">Ir a sección</msg>
   <msg key="greater">mayor que</msg>
   <msg key="greater_equal">mayor o igual que</msg>
+  <msg key="help_postcheck_p">¿Chequeo posterior?</msg>
   <msg key="hide_item_name">Nombre de la pregunta oculto</msg>
   <msg key="history">Cambiar Historia</msg>
   <msg key="horizontal">Horizontal</msg>
@@ -283,8 +295,8 @@
   <msg key="Import_QTI_ZIP_File">Importar un fichero QTI ZIP</msg>
   <msg key="Import_Results">Resultados de la importación</msg>
   <msg key="Increasing">Incrementar</msg>
-  <msg key="Increasing_help">Si incrementar vale true se obtendrán (número de respuestas correctas/número total de respuestas)*100% puntos. 
-Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuestas correctas, o 0% en otro caso.</msg>
+  <msg key="Increasing_help">Si ha elegido &quot;Sí&quot; en &quot;incrementar&quot;, se obtendrán (número de respuestas correctas/número total de respuestas)*100% puntos. 
+Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respuestas esten correctas, 0% en otro caso.</msg>
   <msg key="Instructions">Instrucciones</msg>
   <msg key="ip_mask">Máscara IP</msg>
   <msg key="item">Objeto</msg>
@@ -294,11 +306,12 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="item_Definition_help">REDUNDANTE, la descripción debería ser suficiente</msg>
   <msg key="item_Delete_Content">Borrar Archivo</msg>
   <msg key="item_Description_help">Descripción adicional a buscar para el catálogo de preguntas</msg>
-  <msg key="item_display_cb">Checkboxes</msg>
+  <msg key="item_display_cb">Casillas de selección</msg>
   <msg key="item_display_Content">Archivo de pregunta</msg>
-  <msg key="item_display_rb">Radiobuttons</msg>
+  <msg key="item_display_f">Archivo</msg>
+  <msg key="item_display_rb">Botones radio</msg>
   <msg key="item_display_sa">Short Answer</msg>
-  <msg key="item_display_sb">Caja de selección</msg>
+  <msg key="item_display_sb">Lista desplegable</msg>
   <msg key="item_display_ta">Área de texto</msg>
   <msg key="item_display_tb">Caja de texto</msg>
   <msg key="item_Name_help">Nombre de la pregunta, identificador a buscar en el catálogo</msg>
@@ -310,10 +323,11 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Item_Type">Tipo de Pregunta</msg>
   <msg key="item_type_dq">Pregunta de base de datos</msg>
   <msg key="item_type_file">Fichero</msg>
+  <msg key="item_type_fu">Subir fichero</msg>
   <msg key="Item_Type_help">El tipo de pregunta usada.</msg>
   <msg key="item_type_mc">Elección múltiple</msg>
   <msg key="item_type_oq">Pregunta Abierta</msg>
-  <msg key="item_type_sa">Short Answer</msg>
+  <msg key="item_type_sa">Texto corto</msg>
   <msg key="Items">Preguntas</msg>
   <msg key="Keywords">Buscar palabras clave</msg>
   <msg key="Keywords_help">Palabras clave que se usarán para buscar una sección.</msg>
@@ -331,9 +345,12 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Letter_help">Primera letra para limitar la búsqueda.</msg>
   <msg key="Letter_other">Otro</msg>
   <msg key="limited_tries">Número de intentos permitidos</msg>
+  <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Nota:&lt;/b&gt; Se trata de un cuestionario anónimo por lo que su nombre no aparecerá en los resultados.</msg>
   <msg key="lt_Everyone_eligible_to_">Alguien que hace este cuestionario</msg>
   <msg key="lt_Everyone_who_has_alre">Alguien que ya haya completado este cuestionario</msg>
   <msg key="lt_Everyone_who_has_not_">Alguien que todavía no ha completado este cuestionario</msg>
+  <msg key="lt_Prepend_an_empty_item">Añadir un elemento vacío al principio de la lista</msg>
+  <msg key="lt_This_field_is_used_to">Este bloque será utilizado para validar la respuesta introducida. Debe contener un número par de líneas donde la primera línea es una expresión TCL que será utilizada para la validación y la segunda el texto de error mostrado. La cadena %%answer%% será reemplazada por la respuesta introducida.</msg>
   <msg key="make_anonymous">Hacer anónimo</msg>
   <msg key="make_editable">Hacer editable</msg>
   <msg key="make_hide_item_name">Ocultar nombre de la pregunta</msg>
@@ -373,8 +390,13 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="New_Assessment">Nuevo Cuestionario experto</msg>
   <msg key="New_Assessment2">Crear un nuevo Cuestionario experto</msg>
   <msg key="new_parameter">Nuevo parámetro</msg>
+  <msg key="New_Partial_Assessment">Nuevo Cuestionario Parcial</msg>
+  <msg key="New_Quick_Assessment">Nuevo Cuestionario Rápido</msg>
+  <msg key="New_Review_Assessment">Nuevo Cuestionario de Examen</msg>
+  <msg key="New_Survey">Nueva Encuesta</msg>
   <msg key="Next">Siguiente</msg>
   <msg key="no">No</msg>
+  <msg key="no_display">-- Ninguno --</msg>
   <msg key="no_waiting">Permitir reintentar el cuestionario de forma inmediata</msg>
   <msg key="None">Ninguno</msg>
   <msg key="not_answered">no contestada</msg>
@@ -414,6 +436,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="order_of_entry">Orden de entrada</msg>
   <msg key="Order_Type">Tipo de orden</msg>
   <msg key="Order_Type_help">Orden de las respuestas</msg>
+  <msg key="other_asm">Administrar otro cuestionario</msg>
   <msg key="Other_Sessions">Otras Sesiones</msg>
   <msg key="Out_of">Máxima puntuación</msg>
   <msg key="parameter_description">Descripción</msg>
@@ -438,6 +461,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="points_section_help">Los puntos que vale esta sección en un cuestionario. Es una medida de la dificultad relativa de la sección.
 </msg>
   <msg key="post_check">Chequeo Posterior</msg>
+  <msg key="Prepend_Empty_Item">Añadir un elemento vacío</msg>
   <msg key="Preview">Visualización previa</msg>
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
@@ -525,6 +549,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Session">Sesión</msg>
   <msg key="session_time_remaining">Tiempo restante de la sesión: %assessment_data.pretty_remaining_time%</msg>
   <msg key="Sessions">Sesiones</msg>
+  <msg key="set_reg_asm">Nuevo Cuestionario de Suscripción</msg>
   <msg key="Show_Assessments">Ver Cuestionarios</msg>
   <msg key="Show_Feedback">Mostrar Feedback</msg>
   <msg key="show_item_name">Visualizar el nombre de la pregunta</msg>
@@ -543,6 +568,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="submit_answer_help">Si el alumno tiene que enviar la respuesta a cada pregunta por separado.</msg>
   <msg key="Subtext">Subtexto</msg>
   <msg key="Summary">Resumen</msg>
+  <msg key="survey_section">Sección 1</msg>
   <msg key="Target_Community">Comunidad Destino</msg>
   <msg key="text_ref_not_set_error">Usted necesita proporcionar una expresión válida de caracteres para este campo</msg>
   <msg key="text_ref_value">Valor del Texto de Referencia</msg>
@@ -565,7 +591,12 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="true">Verdadero</msg>
   <msg key="try_again">Intentar de nuevo</msg>
   <msg key="two_days">Hace dos días</msg>
+  <msg key="Type">Tipo</msg>
+  <msg key="type_1">Encuesta</msg>
+  <msg key="type_2">Cuestionario Avanzado</msg>
+  <msg key="type_ea">Cuestionario Avanzado</msg>
   <msg key="type_of_trigger">Tipo de condición</msg>
+  <msg key="type_s">Encuesta</msg>
   <msg key="unhappy_search">¿no estás satisfecho con el resultado de tu búsqueda?</msg>
   <msg key="unlimited_time">Tiempo para responder ilimitado</msg>
   <msg key="unlimited_tries">Número de intentos permitidos ilimitado</msg>
@@ -577,6 +608,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="User_ID">Usuario</msg>
   <msg key="Users_may_edit_their_">Los usuarios pueden editar sus respuestas</msg>
   <msg key="Users_may_not_edit_th">Los usuarios no pueden editar sus respuestas</msg>
+  <msg key="Validation_Block">Bloque de Validación</msg>
   <msg key="var">Nombre</msg>
   <msg key="vertical">Vertical</msg>
   <msg key="View_all_responses">Todas las respuestas</msg>
@@ -587,6 +619,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="warning_msg">Mensaje de Alerta</msg>
   <msg key="when_this_action">Cuando esta acción se ejecutará (por ejemplo, al final de esta sección)</msg>
   <msg key="when_this_will">¿cuando se ejecutará?</msg>
-  <msg key="yes">Si</msg>
+  <msg key="yes">Sí</msg>
   <msg key="yesterday">Ayer</msg>
 </message_catalog>

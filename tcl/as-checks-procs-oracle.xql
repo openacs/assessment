@@ -21,7 +21,7 @@
 <fullquery name="as::assessment::check::delete_assessment_checks.delete_checks">
       <querytext>
 	begin
-	 as_inter_item_check.delete(:check_id);
+	 as_inter_item_check.del(:check_id);
 	end;
 
       </querytext>
@@ -55,7 +55,7 @@
 <fullquery name="as::assessment::check::delete_item_checks.delete_check">
       <querytext>
 	begin
-	 as_inter_item_check.delete(:check_id);
+	 as_inter_item_check.del(:check_id);
 	end;
       </querytext>
 </fullquery>

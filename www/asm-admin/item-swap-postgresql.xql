@@ -2,6 +2,8 @@
 <queryset>
 <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
+
+
 <fullquery name="swap_items">
       <querytext>
 update as_item_section_map

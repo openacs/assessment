@@ -32,6 +32,7 @@ db_transaction {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
     set new_item_id [as::item::new_revision -as_item_id $as_item_id]
+    as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id $new_section_id -as_item_id $as_item_id -new_item_id $new_item_id
     set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id]
     db_dml update_section_in_assessment {}
     db_dml update_item_in_section {}

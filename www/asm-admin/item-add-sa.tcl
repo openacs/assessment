@@ -29,6 +29,7 @@ set page_title [_ assessment.add_item_type_sa]
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set type $assessment_data(type)
 
 set display_types [list]
 foreach display_type [db_list display_types {}] {
@@ -39,11 +40,22 @@ foreach display_type [db_list display_types {}] {
 ad_form -name item_add_sa -action item-add-sa -export { assessment_id section_id after } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.sa_Title_help]"}}
-    {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options} {help_text "[_ assessment.Increasing_help]"}}
-    {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
+}
+if { $type > 1} {
+    ad_form -extend -name item_add_sa -form {
+	{increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options} {help_text "[_ assessment.Increasing_help]"}}
+	{negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
+    }
+} else {
+    ad_form -extend -name item_add_sa -form {
+	{increasing_p:text(hidden) {value f}}
+	{negative_p:text(hidden) {value f}}
+    }
+}
+ad_form -extend -name item_add_sa -form {
     {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
 } -edit_request {
-    set title ""
+    set title [db_string get_title {} -default ""]
     set increasing_p f
     set negative_p f
     set display_type "tb"

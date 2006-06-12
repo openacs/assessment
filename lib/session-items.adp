@@ -26,7 +26,7 @@
 <td>
 <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
   <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
-  <if @items.result_points@ not nil><b>@items.result_points@ / @items.points@ #assessment.points#
+  <if @items.result_points@ not nil><if @showpoints@ eq 1><b>@items.result_points@ / @items.points@ #assessment.points#</if>
     <if @show_feedback@ ne none>
       <if @items.feedback@ not nil>: @items.feedback;noquote@</if>
     </if>
@@ -80,6 +80,12 @@
               <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
               <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
             </if>
+            <else>
+              <if @items.answered_p@ eq t><br><b>#assessment.not_yet_reviewed#</b> </if>
+              <else><br><b>#assessment.not_answered#</b> </else>
+            </else>
+            <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
+            <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@"> 
           </if>
         </if>
       </td>
@@ -103,8 +109,11 @@
         </else>
       </if>
       <elseif @items.presentation_type@ eq fitb>
-        <td>@items.html;noquote@
+        <td>@items.html;noquote@ 
       </elseif>
+      <elseif @items.presentation_type@ eq f>
+      <a href= "@items.view@" onclick= "var w=window.open(this.href, 'newWindow', 'width=650,height=400'); return !w;"><formwidget id="response_to_item.@items.as_item_id@"></a>
+	</elseif>
       <else>
         <td colspan=10><formwidget id="response_to_item.@items.as_item_id@">
       </else>

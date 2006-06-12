@@ -31,7 +31,9 @@ create table as_items (
 	-- wrong feedback
 	feedback_wrong	text,
 	-- number of points for item; might be used for defining difficulty levels
-	points		integer
+	points		integer,
+	-- ad_form validation block
+	validate_block	text
 );
 
 -- contains additional information for all multiple choices (radiobutton, checkbox)
@@ -124,3 +126,4 @@ create table as_item_help_map (
 	-- order in which the messages appear
 	sort_order	integer
 );
+

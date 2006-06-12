@@ -28,14 +28,27 @@ set page_title [_ assessment.edit_item_type_sa]
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
+set type $assessment_data(type)
 
 
 ad_form -name item_edit_sa -action item-edit-sa -export { assessment_id section_id } -form {
     {as_item_id:key}
     {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.oq_Title_help]"}}
-     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options} {help_text "[_ assessment.Increasing_help]"}}
-    {allow_negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
-} -edit_request {
+}
+if { $type > 1} {
+    ad_form -extend -name item_edit_sa -form {
+	{increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options} {help_text "[_ assessment.Increasing_help]"}}
+	{allow_negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {help_text "[_ assessment.Allow_Negative_help]"}}
+    }
+} else {
+    ad_form -extend -name item_edit_sa -form {
+	{increasing_p:text(hidden) {value ""}}
+	{allow_negative_p:text(hidden) {value ""}}
+	
+    }
+}
+
+ad_form -extend -name item_edit_sa  -edit_request {
     db_1row item_type_data {}
 } -edit_data {
     db_transaction {

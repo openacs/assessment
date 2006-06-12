@@ -127,9 +127,11 @@ as
 db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
+
 set admin_user_id [as::actions::get_admin_user_id]
 set administration_name [db_string admin_name "select first_names || '' '' || last_name from persons where 
 person_id = :admin_user_id"]
+
 set system_name [ad_system_name]
 set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
 set admin_email [db_string unused "select email from parties where party_id = :admin_user_id"]
@@ -179,9 +181,26 @@ v_action_id:= new (
 	name		=>	'Add to Community',
 	description	=>	'Add user to a community',
 	tcl_code	=>	'set user_id [ad_conn user_id]
+if { [exists_and_not_null subject_id] } {
+	set user_id $subject_id
+}
 dotlrn_privacy::set_user_guest_p -user_id $user_id -value "t"
 dotlrn::user_add -can_browse  -user_id $user_id
-dotlrn_community::add_user_to_community -community_id $community_id -user_id $user_id',
+dotlrn_community::add_user_to_community -community_id $community_id -user_id $user_id
+set community_name [db_string get_community_name { select pretty_name from dotlrn_communities where community_id = :community_id}]
+
+set subject "Your $community_name membership has been approved"
+set message "Your $community_name membership has been approved. Please return to [ad_url] to log into [ad_system_name]."
+
+set email_from [ad_parameter -package_id [ad_acs_kernel_id] SystemOwner]
+
+db_1row select_user_info { select email, first_names, last_name from registered_users where user_id = :user_id}
+
+if [catch {ns_sendmail $email $email_from $subject $message} errmsg] {
+         ad_return_error \
+        "Error sending mail" \
+        "There was an error sending email to $email."
+}',
 	context_id	=>	context_id,
 	creation_user	=>	creation_user
 	);

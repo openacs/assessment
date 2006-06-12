@@ -26,7 +26,7 @@ ad_proc -public as::section_display::new {
 
     # Insert as_section_display_type in the CR (and as_section_display_types table) getting the revision_id (display_type_id)
     db_transaction {
-	set display_item_id [content::item::new -parent_id $folder_id -content_type {as_section_display_types} -name [exec uuidgen]]
+	set display_item_id [content::item::new -parent_id $folder_id -content_type {as_section_display_types} -name [as::item::generate_unique_name]]
 
 	set display_id [content::revision::new \
 			    -item_id $display_item_id \
@@ -34,13 +34,12 @@ ad_proc -public as::section_display::new {
 			    -title $title \
 			    -description $description \
 			    -attributes [list [list num_items $num_items] \
-					     [list adp_chunk $adp_chunk] \
 					     [list branched_p $branched_p] \
 					     [list back_button_p $back_button_p] \
 					     [list submit_answer_p $submit_answer_p] \
 					     [list sort_order_type $sort_order_type] ] ]
     }
-
+    db_dml update_clobs "" -clobs [list $adp_chunk]
     return $display_id
 }
 
@@ -70,12 +69,11 @@ ad_proc -public as::section_display::edit {
 			    -title $title \
 			    -description $description \
 			    -attributes [list [list num_items $num_items] \
-					     [list adp_chunk $adp_chunk] \
 					     [list branched_p $branched_p] \
 					     [list back_button_p $back_button_p] \
 					     [list submit_answer_p $submit_answer_p] \
 					     [list sort_order_type $sort_order_type] ] ]
     }
-
+    db_dml update_clobs "" -clobs [list $adp_chunk]
     return $display_id
 }

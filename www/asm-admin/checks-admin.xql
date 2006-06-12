@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 <queryset>
 
+<fullquery name="get_or_checks">
+<querytext>		
+        select c.check_sql,am.action_perform,c.inter_item_check_id,c.name,a.name as action_name, am.order_by,c.section_id_from from as_inter_item_checks c,as_actions a, as_action_map am where am.inter_item_check_id = c.inter_item_check_id and am.action_id=a.action_id and c.section_id_from =:section_id and am.action_perform = 'or' and c.action_p = 't'and c.assessment_id=:assessment_id $check_list order by order_by
+</querytext>			
+</fullquery>
+
+<fullquery name="get_sa_checks">
+<querytext>		
+        select c.check_sql,am.action_perform,c.inter_item_check_id,c.name,a.name as action_name, am.order_by,c.section_id_from from as_inter_item_checks c,as_actions a, as_action_map am where am.inter_item_check_id = c.inter_item_check_id and am.action_id=a.action_id and c.section_id_from =:section_id and am.action_perform = 'sa' and c.action_p = 't'and c.assessment_id=:assessment_id $check_list order by order_by
+</querytext>			
+</fullquery>
+
 <fullquery name="get_aa_checks">
 <querytext>		
         select c.check_sql,am.action_perform,c.inter_item_check_id,c.name,a.name as action_name, am.order_by,c.section_id_from from as_inter_item_checks c,as_actions a, as_action_map am where am.inter_item_check_id = c.inter_item_check_id and am.action_id=a.action_id and c.section_id_from =:section_id and am.action_perform = 'aa' and c.action_p = 't'and c.assessment_id=:assessment_id $check_list order by order_by

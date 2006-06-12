@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d13" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.20" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -17,11 +17,14 @@
   <msg key="action_to_perform">Action to Perform</msg>
   <msg key="add_item">Add new question</msg>
   <msg key="add_item_display_cb">Add new question: Checkbox Display</msg>
+  <msg key="add_item_display_f">Item Display</msg>
+  <msg key="add_item_display_fu">Add new question: File Upload Display</msg>
   <msg key="add_item_display_rb">Add new question: Radiobutton Display</msg>
   <msg key="add_item_display_sa">Add new question: Short Answer Display</msg>
   <msg key="add_item_display_sb">Add new question: Selectbox Display</msg>
   <msg key="add_item_display_ta">Add new question: Textarea Display</msg>
   <msg key="add_item_display_tb">Add new question: Textbox Display</msg>
+  <msg key="add_item_type_fu">Add new question: File Upload</msg>
   <msg key="add_item_type_mc">Add new question: Multiple Choice</msg>
   <msg key="add_item_type_mc_choices">Add new question: Multiple Choices</msg>
   <msg key="add_item_type_mc_existing">Add existing choice set</msg>
@@ -34,6 +37,7 @@
   <msg key="add_new_section_display">Add new section display</msg>
   <msg key="add_parameter">Add parameter</msg>
   <msg key="add_section_first">To add a question, add a section first.</msg>
+  <msg key="add_section_trigger">Add section trigger</msg>
   <msg key="Add_Sections">Add sections to assessment</msg>
   <msg key="Add_to_assessment">Add to assessment &quot;%assessment_data.title%&quot;</msg>
   <msg key="Add_to_section">Add to section &quot;%section_title%&quot;</msg>
@@ -123,22 +127,21 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
-  <msg key="boolean_ref_not_set_error">You need to provide a valid character expression for this field</msg>
-  <msg key="boolean_ref_value">Boolean Reference Value</msg>
   <msg key="bottom">Bottom</msg>
-  <msg key="bounded_numeric">User input must be a number (real or integer) bounded by a comparator reference value</msg>
   <msg key="Box_Orientation">Box Orientation</msg>
+  <msg key="Box_Orientation_help">Box orientation</msg>
   <msg key="branch">Branch</msg>
   <msg key="branches">Branches</msg>
   <msg key="bulk_mail_send">Bulk Mail</msg>
   <msg key="By_user">By user</msg>
   <msg key="cancel_and_return">Cancel and Return to Assessment</msg>
-  <msg key="cannot_find_item">The requested Item does not exist</msg>
   <msg key="Categories_combine">Combine categories by</msg>
   <msg key="Categories_select_help">To deselect or select multiple categories use the Control-Key on your keyboard.</msg>
   <msg key="Categorization">Categorization</msg>
   <msg key="Categorization_exact">Exact</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
+  <msg key="Change_multiple_timings">Change Availability (alle)</msg>
+  <msg key="Change_timings">Change time based availability</msg>
   <msg key="Choice">Choice</msg>
   <msg key="choice_Content">Upload File</msg>
   <msg key="choice_Content_help">Upload a file with the content of the anwser</msg>
@@ -153,6 +156,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="choice_set_title">Title</msg>
   <msg key="Choice_Sets">Existing Choice Set</msg>
   <msg key="choose_action">Choose the action to perform</msg>
+  <msg key="choose_type">What kind of assessment you want to create?</msg>
   <msg key="comparator">Comparator</msg>
   <msg key="comparator_not_set_error">You must set a Comparator for this Comparison Type</msg>
   <msg key="comparison_type">Comparison Type</msg>
@@ -174,13 +178,15 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Correct_Answer_help">Is this the correct answer?</msg>
   <msg key="Created_by">Created by</msg>
   <msg key="csv_End_Time">End Time</msg>
+  <msg key="csv_End_Time_help">Select an end date. This field is optional.</msg>
   <msg key="csv_export">CSV Export</msg>
   <msg key="csv_export_format">CSV Export Format</msg>
-  <msg key="csv_export_format_help">Select one of the above, the selected field is goint to identify the question in your csv file.</msg>
+  <msg key="csv_export_format_help">Select one of the above, the selected field is going to identify the question in your csv file.</msg>
   <msg key="csv_export_name">Question Field Name</msg>
   <msg key="csv_export_title">Question Text</msg>
   <msg key="CSV_file">CSV file</msg>
   <msg key="csv_Start_Time">Start Time</msg>
+  <msg key="csv_Start_Time_help">Select a start date. This field is optional.</msg>
   <msg key="currently">Currently:</msg>
   <msg key="Data_Type">Data Type</msg>
   <msg key="data_type_boolean">Boolean</msg>
@@ -231,14 +237,11 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="End_Time">End Time</msg>
   <msg key="Enter_Message">Enter Message</msg>
   <msg key="Entry_Page">Entry Page</msg>
-  <msg key="equal">equal to</msg>
   <msg key="error_enter_tcl_code">You must enter a tcl code to execute</msg>
   <msg key="error_html_options">Need to be pairs of \&quot;key value\&quot;.</msg>
-  <msg key="error_msg">Error Message</msg>
   <msg key="Exit_Page">Exit Page</msg>
   <msg key="Export">Export</msg>
   <msg key="Extreme_Actions">Extreme Actions:</msg>
-  <msg key="false">False</msg>
   <msg key="Feedback">Feedback</msg>
   <msg key="Feedback_help">Feedback given to the user.</msg>
   <msg key="Feedback_right">Feedback right</msg>
@@ -275,14 +278,14 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Fixed_Position">Fixed Order Position</msg>
   <msg key="form_element_required">This is required</msg>
   <msg key="from">From:</msg>
+  <msg key="fu_Title_help">Question title</msg>
   <msg key="goes_to_section">Goes to section</msg>
-  <msg key="greater">greater than</msg>
-  <msg key="greater_equal">greater than or equal to</msg>
+  <msg key="help_postcheck_p">Post check?</msg>
   <msg key="hide_item_name">Question name hidden</msg>
   <msg key="history">Change History</msg>
   <msg key="horizontal">Horizontal</msg>
   <msg key="Html_Options">HTML Options</msg>
-  <msg key="Html_Options_help">Additional HTML Options for display</msg>
+  <msg key="Html_Options_help">Additional HTML Options for display (i.e. cols,rows,disabled)</msg>
   <msg key="immediately">Immediately</msg>
   <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
   <msg key="Import_Results">Import Results</msg>
@@ -291,7 +294,6 @@ in addition to the question itself when taking the survey.</msg>
 Increasing (false) will either give 100%, if all correct answers are given, or 0% else. </msg>
   <msg key="Instructions">Instructions</msg>
   <msg key="ip_mask">IP Mask</msg>
-  <msg key="item">Item</msg>
   <msg key="item_Content">Upload File</msg>
   <msg key="item_Content_help">Upload a file</msg>
   <msg key="item_counter">Questions %section.cur_first_item% - %section.cur_last_item% out of %section.num_items%</msg>
@@ -300,6 +302,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="item_Description_help">Additional searchable description for the question catalog</msg>
   <msg key="item_display_cb">Checkboxes</msg>
   <msg key="item_display_Content">Question File</msg>
+  <msg key="item_display_f">File</msg>
   <msg key="item_display_rb">Radiobuttons</msg>
   <msg key="item_display_sa">Short Answer</msg>
   <msg key="item_display_sb">Selectbox</msg>
@@ -314,6 +317,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Item_Type">Question Type</msg>
   <msg key="item_type_dq">Database Question</msg>
   <msg key="item_type_file">File</msg>
+  <msg key="item_type_fu">File Upload</msg>
   <msg key="Item_Type_help">Question type used.</msg>
   <msg key="item_type_mc">Multiple Choice</msg>
   <msg key="item_type_oq">Open Question</msg>
@@ -327,17 +331,18 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="last_week">Last Week</msg>
   <msg key="lead_you">The section where the condition will lead you.</msg>
   <msg key="left">Left</msg>
-  <msg key="less">less than</msg>
-  <msg key="less_equal">less than or equal to</msg>
   <msg key="Lets_you_use_this_a">- Lets you use this assessment as a template to create a new assessment.</msg>
   <msg key="Letter">First Letter</msg>
   <msg key="Letter_all">All</msg>
   <msg key="Letter_help">First letter to limit the search to.</msg>
   <msg key="Letter_other">Other</msg>
   <msg key="limited_tries">Number of tries allowed: %assessment_data.number_tries%</msg>
+  <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br /&gt;your name will not be included in the results.</msg>
   <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
+  <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
+  <msg key="lt_This_field_is_used_to">This field is used to validate the answer entered. This must have a multiple of 2 lines. The first line is a TCL expression to be used to check the answer and the second line is the error message. The string %%answer%% will be replaced by the answer entered.</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
   <msg key="make_hide_item_name">Hide item name</msg>
@@ -349,8 +354,6 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="make_show_item_name">Show item name</msg>
   <msg key="make_unsecure">Allow unsecure connection</msg>
   <msg key="manually">Manually</msg>
-  <msg key="matching_boolean">User input must match a boolean value</msg>
-  <msg key="matching_text">User input must match a specific text</msg>
   <msg key="max_time">max. time allowed:</msg>
   <msg key="mc_Title_help">A name for this set of choices (for reusability)</msg>
   <msg key="message">Message</msg>
@@ -364,11 +367,6 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Move_Up">Move Up</msg>
   <msg key="Multiple">Allow Multiple Answers</msg>
   <msg key="Multiple_help">Allo Multiple Answers?</msg>
-  <msg key="must_be_alpha">User input must consist of letters only</msg>
-  <msg key="must_be_alphanumeric">User input must be an alphanumeric type</msg>
-  <msg key="must_be_boolean">User input must be a boolean type</msg>
-  <msg key="must_be_integer">User input must be an integer type</msg>
-  <msg key="must_be_numeric">User input must be a numeric type</msg>
   <msg key="Name">Name</msg>
   <msg key="Name_help">Assessment name of the new copy</msg>
   <msg key="name_of_trigger">The name of the trigger.</msg>
@@ -376,18 +374,21 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="New_Assessment">New Assessment</msg>
   <msg key="New_Assessment2">Create New Assessment</msg>
   <msg key="new_parameter">New Parameter</msg>
+  <msg key="New_Partial_Assessment">New Partial Assessment</msg>
+  <msg key="New_Quick_Assessment">New Quick Assessment</msg>
+  <msg key="New_Review_Assessment">New Review Assessment</msg>
+  <msg key="New_Survey">New Survey</msg>
   <msg key="Next">Next</msg>
   <msg key="no">No</msg>
+  <msg key="no_display">-- None --</msg>
   <msg key="no_waiting">Immediate retry allowed</msg>
   <msg key="None">None</msg>
   <msg key="not_answered">not answered</msg>
   <msg key="not_approved">Not Approved</msg>
-  <msg key="not_equal">not equal to</msg>
   <msg key="not_yet_reviewed">not yet reviewed</msg>
   <msg key="Notification">Notification</msg>
   <msg key="notified_users">Notified Users</msg>
   <msg key="notify_user">Notify User</msg>
-  <msg key="null_value">User input should be null</msg>
   <msg key="num_Answers">Total Number of displayed Choices</msg>
   <msg key="num_Answers_help">If this number is smaller than the number of added choices, choices will be picked randomly.</msg>
   <msg key="Num_Choices">Number of choices for multiple-choice item</msg>
@@ -396,9 +397,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="num_Correct_help">Number of correct answers that have to be displayed</msg>
   <msg key="num_items">Number of Items displayed</msg>
   <msg key="num_items_help">Number of Items displayed</msg>
-  <msg key="num_ref_value">Numeric Reference Value</msg>
   <msg key="Number_of_Tries">Number of Tries allowed</msg>
-  <msg key="numeric_ref_not_set_error">You must provide a valid number for this field</msg>
   <msg key="numerical">Numerical</msg>
   <msg key="on_creation_date">, on %creation_date%</msg>
   <msg key="One_Assessment_data">One Assessment: %assessment_data.title%</msg>
@@ -415,6 +414,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="order_of_entry">Order of Entry</msg>
   <msg key="Order_Type">Order Type</msg>
   <msg key="Order_Type_help">Ordering of choices</msg>
+  <msg key="other_asm">Manage another assessment</msg>
   <msg key="Other_Sessions">Other Sessions</msg>
   <msg key="Out_of">Out of</msg>
   <msg key="parameter_description">Description</msg>
@@ -436,6 +436,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="points_section">Points for Section</msg>
   <msg key="points_section_help">How many points is this section worth in an assessment. This is a measurement for relative difficulty.</msg>
   <msg key="post_check">Post Check</msg>
+  <msg key="Prepend_Empty_Item">Prepend Empty Item</msg>
   <msg key="Preview">Preview</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
@@ -477,7 +478,6 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="right">Right</msg>
   <msg key="Rulebased_branching">Rule-based Branching</msg>
   <msg key="sa_Title_help">A title for this short answer feature set so it can be reused in the future.</msg>
-  <msg key="Save">Save</msg>
   <msg key="Score">Score</msg>
   <msg key="Search">Search</msg>
   <msg key="Search_Item">Search for questions</msg>
@@ -541,9 +541,9 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="submit_answer_help">Does the respondee have to submit the answer for each question seperately.</msg>
   <msg key="Subtext">Subtext</msg>
   <msg key="Summary">Summary</msg>
+  <msg key="survey_section">Section 1</msg>
   <msg key="Target_Community">Target Community</msg>
-  <msg key="text_ref_not_set_error">You need to provide a valid character expression for this field</msg>
-  <msg key="text_ref_value">Text Reference Value</msg>
+  <msg key="Target_Community_help">Choose the target community</msg>
   <msg key="the_condition_to">The condition to branch or execute the action</msg>
   <msg key="there_are_no_users">There are no users to notify</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
@@ -560,10 +560,14 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="trigger_delete">Delete Trigger</msg>
   <msg key="Triggers">Triggers</msg>
   <msg key="triggers">Trigger</msg>
-  <msg key="true">True</msg>
   <msg key="try_again">Try again</msg>
   <msg key="two_days">Two days ago</msg>
+  <msg key="Type">Type</msg>
+  <msg key="type_1">Survey</msg>
+  <msg key="type_2">Expert Assessment</msg>
+  <msg key="type_ea">Expert Assessment</msg>
   <msg key="type_of_trigger">Type of the trigger</msg>
+  <msg key="type_s">Survey</msg>
   <msg key="unhappy_search">Unhappy with your search result?</msg>
   <msg key="unlimited_time">Unlimited time for response</msg>
   <msg key="unlimited_tries">Unlimited number of tries allowed</msg>
@@ -575,6 +579,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="User_ID">User</msg>
   <msg key="Users_may_edit_their_">Users may edit their responses</msg>
   <msg key="Users_may_not_edit_th">Users may not edit their responses</msg>
+  <msg key="Validation_Block">Validation Block</msg>
   <msg key="var">Name</msg>
   <msg key="vertical">Vertical</msg>
   <msg key="View_all_responses">All responses</msg>
@@ -582,7 +587,6 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="View_Responses">View Responses:</msg>
   <msg key="View_Results">View Results</msg>
   <msg key="View_results">View results</msg>
-  <msg key="warning_msg">Warning Message</msg>
   <msg key="when_this_action">When this action will be executed (ie. At the end of this section)</msg>
   <msg key="when_this_will">When this will be executed?</msg>
   <msg key="yes">Yes</msg>

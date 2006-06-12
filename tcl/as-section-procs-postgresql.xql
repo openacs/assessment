@@ -8,7 +8,7 @@
 	select s.as_item_id, ci.name, r.title, r.description, i.subtext, m.required_p,
 	       m.max_time_to_complete, r2.revision_id as content_rev_id,
 	       r2.title as content_filename, ci2.content_type,
-	       ir.target_rev_id as as_item_type_id
+	       ir.target_rev_id as as_item_type_id, i.validate_block
 	from cr_items ci, as_items i, as_item_section_map m, cr_revisions r,
 	     as_item_rels ir, as_session_items s
 	left outer join as_item_rels ar on (ar.item_rev_id = s.as_item_id and ar.rel_type = 'as_item_content_rel')
@@ -34,7 +34,7 @@
 	select i.as_item_id, ci.name, cr.title, cr.description, i.subtext,
 	       m.required_p, m.max_time_to_complete, r2.revision_id as content_rev_id,
 	       r2.title as content_filename, ci2.content_type, m.fixed_position,
-	       ir.target_rev_id as as_item_type_id
+	       ir.target_rev_id as as_item_type_id, i.validate_block
 	from as_item_section_map m, cr_revisions cr, cr_items ci,
 	     as_item_rels ir, as_items i
 	left outer join as_item_rels ar on (ar.item_rev_id = i.as_item_id and ar.rel_type = 'as_item_content_rel')
@@ -95,5 +95,28 @@
 
 	</querytext>
 </fullquery>
-	
+
+<fullquery name="as::section::new.update_clobs">
+    <querytext>
+      update as_sections set instructions=:instructions
+      where section_id=:as_section_id
+    </querytext>
+</fullquery>
+
+<fullquery name="as::section::edit.update_clobs">
+    <querytext>
+      update as_sections 
+	  set instructions=:instructions, feedback_text=:feedback_text
+      where section_id=:new_section_id
+    </querytext>
+</fullquery>
+  
+<fullquery name="as::section::new_revision.update_clobs">
+    <querytext>
+      update as_sections 
+	  set instructions=:instructions, feedback_text=:feedback_text
+      where section_id=:new_section_id
+    </querytext>
+</fullquery>
+
 </queryset>

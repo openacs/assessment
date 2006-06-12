@@ -70,4 +70,8 @@ db_multirow sections sections {} {
     incr assessment_score $max_points
 }
 
+set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
+
+set comments_installed_p [apm_package_enabled_p "general-comments"]
+
 ad_return_template

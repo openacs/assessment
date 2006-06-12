@@ -8,7 +8,7 @@ ad_page_contract {
 } {
     session_id:integer
 } -properties {
-    context:onevalue
+    context_bar:onevalue
     page_title:onevalue
 }
 
@@ -29,7 +29,7 @@ if {$subject_id != $user_id} {
 }
 
 set page_title "[_ assessment.View_Results]"
-set context [list [list [export_vars -base sessions {assessment_id}] "[_ assessment.Show_Sessions]"] $page_title]
+set context_bar [ad_context_bar [list [export_vars -base sessions {assessment_id}] "[_ assessment.Show_Sessions]"] $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
 set session_user_url [acs_community_member_url -user_id $subject_id]
 
@@ -66,5 +66,9 @@ db_multirow sections sections {} {
     incr session_score $points
     incr assessment_score $max_points
 }
+
+set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
+
+set comments_installed_p [apm_package_enabled_p "general-comments"]
 
 ad_return_template

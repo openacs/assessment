@@ -15,7 +15,7 @@
       <querytext>
 
 	select i.html_display_options, i.multiple_p, i.choice_label_orientation,
-	       i.sort_order_type, i.item_answer_alignment
+	       i.sort_order_type, i.item_answer_alignment, i.prepend_empty_p
 	from cr_revisions cr, as_item_display_sb i
 	where cr.revision_id = :type_id
 	and i.as_item_display_id = cr.revision_id
@@ -27,7 +27,7 @@
       <querytext>
 
 	select html_display_options, multiple_p, choice_label_orientation,
-	       sort_order_type, item_answer_alignment
+	       sort_order_type, item_answer_alignment, prepend_empty_p
 	from as_item_display_sb
 	where as_item_display_id = :type_id
 

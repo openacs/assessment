@@ -23,14 +23,15 @@ permission::require_permission -object_id $assessment_id -privilege admin
 set admin_p [acs_user::site_wide_admin_p]
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
-set context [list [list index [_ assessment.admin]] $assessment_data(title)]
+set title [as::assessment::title -title $assessment_data(title)]
+set context [list [list index [_ assessment.admin]] $title]
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set subsite_id [subsite::main_site_id]
 set url [apm_package_url_from_id $subsite_id]
 set anonymous_p [db_string has_privilege {} -default "f"]
 set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
-set value [parameter::get -parameter AsmForRegisterId -package_id $subsite_id]
+set value [parameter::get -parameter RegistrationId -package_id $subsite_id]
 
 if { [exists_and_not_null asm_instance]} {
     set reg_url "[apm_package_url_from_id $asm_instance]admin"
@@ -68,7 +69,7 @@ set target "[export_vars -base one-a {assessment_id reg_p}]"
 set notification_chunk [notification::display::request_widget \
 			    -type assessment_response_notif \
 			    -object_id $assessment_id \
-			    -pretty_name $assessment_data(title) \
+			    -pretty_name   $title \
 			    -url [export_vars -base one-a {assessment_id reg_p}] ]
 
 db_multirow sections assessment_sections {} {
@@ -77,5 +78,18 @@ db_multirow sections assessment_sections {} {
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 }
+
+list::create \
+    -name sections \
+    -pass_properties assessment_id \
+    -multirow sections \
+    -key section_id \
+    -no_data "[_ assessment.None]" \
+    -elements {
+	title {
+	    label "[_ assessment.Sections]"
+	    display_template {<a href="one-a?assessment_id=@assessment_id@&\#@sections.section_id@">@sections.title;noquote@</a>} 
+	}
+    }
 
 ad_return_template

@@ -15,6 +15,7 @@ ad_page_contract {
     {return_url:optional}
     response_to_item:array,optional,multiple,html
     {next_asm:optional}
+    {response:multiple,optional}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -26,6 +27,7 @@ set context [list $page_title]
 set section_to ""
 set item_to ""
 set url ""
+
 
 if { [info exists return_url] } {
     
@@ -243,6 +245,8 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	db_dml session_finished {}
 	as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+    # section based aa checks
+    as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
         as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {[empty_string_p $assessment_data(return_url)]} {
 	    ad_returnredirect [export_vars -base finish {session_id assessment_id return_url next_asm}]
@@ -259,20 +263,27 @@ ad_form -name show_item_form -action assessment -html {enctype multipart/form-da
     {session_id:text(hidden) {value $session_id}}
 }
 
-multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_title next_pr_type
+multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_title validate_block next_pr_type
 
 set unsubmitted_list [list]
 set validate_list [list]
 set required_count 0
 
 foreach one_item $item_list {
-    util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id
+    util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id validate_block
 
     if {$required_p == "t"} {
 	# make sure that mandatory items are answered
 	lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
 	incr required_count
     }
+
+    foreach {check_expr check_message} [split $validate_block \n] {
+	regsub -all {%answer%} $check_expr \$response_to_item($as_item_id) check_expr
+	regsub -all {%answer%} [lang::util::localize $check_message] \$response_to_item($as_item_id) check_message
+	lappend validate_list "response_to_item.$as_item_id { $check_expr } { $check_message }"
+    }
+
     set default_value ""
     set submitted_p f
 
@@ -317,6 +328,7 @@ foreach one_item $item_list {
 
 		# save answer
 		set response_item_id \$item_id
+                
 		db_1row process_item_type {}
 		set item_type \[string range \$item_type end-1 end\]
 		if {!\[info exists response_to_item(\$response_item_id)\]} {
@@ -330,7 +342,14 @@ foreach one_item $item_list {
                 }
 		
 		set points \[ad_decode \$points \"\" 0 \$points\]
-		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response_to_item(\$response_item_id) -max_points \$points -allow_overwrite_p \$display(back_button_p)
+
+                set response \$response_to_item(\$response_item_id)
+
+                if { \$item_type == \"fu\" } {
+                    set response \[list  \$response_to_item(\$response_item_id) \$response_to_item(\${response_item_id}.tmpfile)  \$response_to_item(\${response_item_id}.content-type)\]
+                }
+
+		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p)
 	    }
 	}"
 	set after_submit "{
@@ -373,6 +392,10 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
     }
 }
 
+ad_form -extend -name show_item_form -on_request {
+    as::assessment::check::eval_or_checks -session_id $session_id -section_id $section_id 
+}
+
 if {$display(submit_answer_p) != "t"} {
     # process multiple submit
     set template "assessment-section-submit"
@@ -398,7 +421,13 @@ if {$display(submit_answer_p) != "t"} {
                 }
 
 		set points \[ad_decode \$points \"\" 0 \$points\]
-		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response_to_item(\$response_item_id) -max_points \$points -allow_overwrite_p \$display(back_button_p)
+                set response \$response_to_item(\$response_item_id)                 
+
+                if { \$item_type == \"fu\" } {
+                    set response \[list  \$response_to_item(\$response_item_id) \$response_to_item(\${response_item_id}.tmpfile)  \$response_to_item(\${response_item_id}.content-type)\]
+                }
+
+		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p)
 	    }
 
 	    if {\$section_order != \$new_section_order} {
@@ -434,6 +463,8 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::calculate -session_id \$session_id -assessment_id \$assessment_rev_id
 	    db_dml session_finished {}
             as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+            # section based aa checks
+            as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {\[empty_string_p \$assessment_data(return_url)\]} {
 		ad_returnredirect \[export_vars -base finish {session_id assessment_id return_url next_asm}\]
@@ -458,7 +489,14 @@ if {$display(submit_answer_p) != "t"} {
 		set item_type [string range $item_type end-1 end]
 
 		set points [ad_decode $points "" 0 $points]
-		as::item_type_$item_type\::process -type_id $item_type_id -session_id $session_id -as_item_id $response_item_id -section_id $section_id -subject_id $user_id -response "" -max_points $points -allow_overwrite_p $display(back_button_p)
+		set response \$response_to_item(\$response_item_id)\
+		
+		if { \$item_type == \"fu\" } {
+                    set response \[list  \$response_to_item(\$response_item_id) \$response_to_item(\${response_item_id}.tmpfile)  \$response_to_item(\${response_item_id}.content-type)\]
+                }
+
+		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p)
+
 	    }
 
 	    if {$section_order != $new_section_order} {
@@ -480,6 +518,8 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::calculate -session_id $session_id -assessment_id $assessment_rev_id
 	    db_dml session_finished {}
 	    as::assessment::check::eval_aa_checks -session_id $session_id -assessment_id $assessment_id
+        # section based aa checks
+        as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {[empty_string_p $assessment_data(return_url)]} {
 		ad_returnredirect [export_vars -base finish {session_id assessment_id return_url next_asm}]

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.10d10" locale="de_DE" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.20" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="above">Über</msg>
   <msg key="Absolute_Size">Absolute Größe</msg>
@@ -59,6 +59,8 @@
   <msg key="assessment_Name_help">Dies erlaubt es Ihnen, Ihrem Assessment einen speziellen einzigartigen Indentifikator zuzuweisen z.B. einen Code.</msg>
   <msg key="Assessment_Title">Titel</msg>
   <msg key="By_user">Nach User</msg>
+  <msg key="Change_multiple_timings">Zeitliche Verfügbarkeit ändern (alle)</msg>
+  <msg key="Change_timings">Zeitliche Verfügbarkeit ändern</msg>
   <msg key="Consent_Page">Einwilligungs Seite/ Genehmigung</msg>
   <msg key="Copy">Kopieren</msg>
   <msg key="Created_by">Erstellt von</msg>

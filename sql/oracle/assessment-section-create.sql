@@ -91,12 +91,12 @@ create table as_assessments (
 			constraint as_assessments_random_p_ck
 			check (random_p in ('t','f')),
 	-- the customizable entry page that will be displayed before the first response.
-	entry_page	varchar(50),
+	entry_page	varchar(4000),
 	-- customizable exit / thank you page that will be displayed once the assessment has been responded.
-	exit_page	varchar(50),
+	exit_page	varchar(4000),
 	consent_page	clob,
 	-- URL the respondee will be redirected to after finishing the assessment
-	return_url varchar(50),
+	return_url varchar(4000),
 	-- at what time shall the assessment become available to the users 
 	start_time	date,
 	-- at what time the assessment becomes unavailable
@@ -122,7 +122,8 @@ create table as_assessments (
 	-- differenciate between an assessment and a survey
 	survey_p 	char(1) default 'f'
 			constraint as_assessments_survey_p_ck
-			check (survey_p in ('t', 'f'))
+			check (survey_p in ('t', 'f')),
+	type 		integer
 );
 
 -- Style Options 

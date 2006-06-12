@@ -21,7 +21,7 @@ as
 		creation_date		in acs_objects.creation_date%TYPE
 		    ) return as_inter_item_checks.inter_item_check_id%TYPE;
 		
-		procedure delete (
+		procedure del (
 		inter_item_check_id 	in as_inter_item_checks.inter_item_check_id%TYPE
 		);
 end as_inter_item_check;
@@ -67,21 +67,21 @@ as
 
 	end new; 
 
-	-- body for procedure delete
-	procedure delete (
+	-- body for procedure del
+	procedure del (
 		inter_item_check_id	in as_inter_item_checks.inter_item_check_id%TYPE
 		) is
 	begin
 		delete from as_actions_log where 
-		inter_item_check_id = as_inter_item_check.delete.inter_item_check_id;
+		inter_item_check_id = as_inter_item_check.del.inter_item_check_id;
 	
-	        delete from as_param_map where inter_item_check_id= as_inter_item_check.delete.inter_item_check_id;
+	        delete from as_param_map where inter_item_check_id= as_inter_item_check.del.inter_item_check_id;
 
-		delete from as_action_map where inter_item_check_id = as_inter_item_check.delete.inter_item_check_id;
+		delete from as_action_map where inter_item_check_id = as_inter_item_check.del.inter_item_check_id;
 
-		delete from as_inter_item_checks where inter_item_check_id = as_inter_item_check.delete.inter_item_check_id;
-         	 acs_object.del (as_inter_item_check.delete.inter_item_check_id);	
-	end delete;
+		delete from as_inter_item_checks where inter_item_check_id = as_inter_item_check.del.inter_item_check_id;
+         	 acs_object.del (as_inter_item_check.del.inter_item_check_id);	
+	end del;
 	
 end as_inter_item_check;
 /

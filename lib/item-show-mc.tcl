@@ -3,7 +3,7 @@
 
 db_1row item_type_data {}
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
-set actions [list [list "[_ acs-kernel.common_Edit]" edit] [list "[_ assessment.add_item_type_mc_existing]" existing] [list "Add More Choices" more]]
+set actions [list [list "[_ acs-kernel.common_Edit]" edit] [list "[_ assessment.add_item_type_mc_existing]" existing]]
 
 
 ad_form -name item_show_mc -mode display -action item-edit-mc -export { assessment_id section_id as_item_id } -actions $actions -form {
@@ -29,7 +29,7 @@ foreach one_choice $choices {
     if {$count > 1} {
 	append options " <a href=\\\"item-edit-mc-choices-swap?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&mc_id=$as_item_type_id&sort_order=$sort_order&direction=up\\\"><img src=\\\"/resources/assessment/up.gif\\\" border=0 alt=\\\"[_ assessment.Move_Up]\\\"></a>"
     }
-    append options " <a href=\\\"item-edit-mc-choices-delete?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&choice_id=$choice_id&mc_id=$as_item_type_id\\\"><img src=\\\"/resources/assessment/delete.gif\\\" border=0 alt=\\\"[_ assessment.remove_choice]\\\"></a>"
+    append options " <a href=\\\"item-edit-mc-choices-delete?assessment_id=$assessment_id&section_id=$section_id&as_item_id=$as_item_id&choice_id=$choice_id\\\"><img src=\\\"/resources/assessment/delete.gif\\\" border=0 alt=\\\"[_ assessment.remove_choice]\\\"></a>"
 
     if {$correct_answer_p == "t"} {
 	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/correct.gif> $title$options\"\}\}\n"
@@ -49,6 +49,3 @@ foreach one_choice $choices {
 }
 append ad_form_code "\}"
 eval ad_form -extend -name item_show_mc $ad_form_code
-# pass along number of choices
-set num_choices $total
-eval ad_form -extend -name item_show_mc -export {num_choices}

@@ -19,13 +19,17 @@ ad_proc -public as::item::new {
     {-feedback_right ""}
     {-feedback_wrong ""}
     {-points ""}
+    {-package_id ""}
+    {-validate_block ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
 
     New item to the database
 } {
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
@@ -37,7 +41,8 @@ ad_proc -public as::item::new {
 	if {[empty_string_p $field_name]} {
 	    set field_name $name
 	}
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name]
+        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -creation_user [ad_conn user_id] -creation_ip [ad_conn peeraddr]]
+
         set as_item_id [content::revision::new -item_id $item_item_id \
 			    -content_type {as_items} \
 			    -title $title \
@@ -48,11 +53,9 @@ ad_proc -public as::item::new {
 					     [list required_p $required_p] \
 					     [list data_type $data_type] \
 					     [list max_time_to_complete $max_time_to_complete] \
-					     [list feedback_right $feedback_right] \
-					     [list feedback_wrong $feedback_wrong] \
-					     [list points $points] ] ]
+						 [list points $points] ] ]
     }
-
+    db_dml update_clobs "" -clobs [list $feedback_right $feedback_wrong $validate_block]
     return $as_item_id
 }
 
@@ -69,6 +72,7 @@ ad_proc -public as::item::edit {
     {-feedback_right ""}
     {-feedback_wrong ""}
     {-points ""}
+    {-validate_block ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -89,13 +93,11 @@ ad_proc -public as::item::edit {
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \
 					      [list max_time_to_complete $max_time_to_complete] \
-					      [list feedback_right $feedback_right] \
-					      [list feedback_wrong $feedback_wrong] \
-					      [list points $points] ] ]
+						  [list points $points] ] ]
 
 	copy_types -as_item_id $as_item_id -new_item_id $new_item_id
     }
-
+    db_dml update_clobs "" -clobs [list $feedback_right $feedback_wrong $validate_block]
     return $new_item_id
 }
 
@@ -121,13 +123,12 @@ ad_proc -public as::item::new_revision {
 					      [list required_p $required_p] \
 					      [list data_type $data_type] \
 					      [list max_time_to_complete $max_time_to_complete] \
-					      [list feedback_right $feedback_right] \
-					      [list feedback_wrong $feedback_wrong] \
 					      [list points $points] ] ]
 
 	copy_types -as_item_id $as_item_id -new_item_id $new_item_id
 	as::assessment::copy_categories -from_id $as_item_id -to_id $new_item_id
     }
+    db_dml update_clobs "" -clobs [list $feedback_right $feedback_wrong $validate_block]
 
     return $new_item_id
 }
@@ -153,6 +154,7 @@ ad_proc -public as::item::copy {
     -title:required
     {-description ""}
     {-field_name ""}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -160,7 +162,9 @@ ad_proc -public as::item::copy {
     Copies an item in the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     db_transaction {
@@ -186,7 +190,8 @@ ad_proc -public as::item::copy {
 					      [list max_time_to_complete $max_time_to_complete] \
 					      [list feedback_right $feedback_right] \
 					      [list feedback_wrong $feedback_wrong] \
-					      [list points $points] ] ]
+					      [list points $points] \
+					      [list validate_block $validate_block] ] ]
 
 	as::assessment::copy_categories -from_id $as_item_id -to_id $new_item_id
 
@@ -234,8 +239,31 @@ ad_proc -private as::item::item_data_not_cached  {
 } {
     db_1row item_properties {} -column_array item
 
-    set item(item_type) [string range $item(item_type) end-1 end]
-    set item(display_type) [string range $item(display_type) end-1 end]
+    set item(item_type) [lindex [split $item(item_type) "_"] end]
+    set item(display_type) [lindex [split $item(display_type) "_"] end]
 
     return [array get item]
+}
+
+ad_proc -private as::item::generate_unique_name {
+    args
+} {
+    Generate a unique string to be used as item name
+    
+    @author Roel Canicula (roelmc@info.com.ph)
+    @creation-date 2005-05-06
+    
+    @param args
+
+    @return 
+    
+    @error 
+} {
+    if { [llength $args] } {
+	return [join $args "-"]
+    } elseif { ! [catch {set uuid [exec uuidgen]}] } {
+	return $uuid
+    } else {
+	return "[clock seconds]-[expr round([ns_rand]*100000)]"
+    }
 }

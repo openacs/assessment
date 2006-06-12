@@ -25,7 +25,7 @@ ad_proc -public as::item_type_mc::new {
 
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
-        set item_item_type_mc_id [content::item::new -parent_id $folder_id -content_type {as_item_type_mc} -name [exec uuidgen]]
+        set item_item_type_mc_id [content::item::new -parent_id $folder_id -content_type {as_item_type_mc} -name [as::item::generate_unique_name]]
         set as_item_type_mc_id [content::revision::new \
 				-item_id $item_item_type_mc_id \
 				-content_type {as_item_type_mc} \

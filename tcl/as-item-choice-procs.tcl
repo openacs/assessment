@@ -31,7 +31,7 @@ ad_proc -public as::item_choice::new {
 
     # Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     db_transaction {
-        set item_choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [exec uuidgen]]
+        set item_choice_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [as::item::generate_unique_name]]
         set as_item_choice_id [content::revision::new \
 				-item_id $item_choice_id \
 				-content_type {as_item_choices} \
@@ -84,7 +84,8 @@ ad_proc -public as::item_choice::new_revision {
 						 [list percent_score $percent_score] \
 						 [list fixed_position $fixed_position] ] ]
     }
-
+    
+    
     return $as_item_choice_id
 }
 

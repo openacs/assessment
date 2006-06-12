@@ -8,9 +8,6 @@ ad_page_contract {
     assessment_id
     by_item_p:integer
     item_id_check:optional
-} -properties {
-    title:onevalue
-    context:onevalue
 }
 
 set inter_item_check_id [split $inter_item_check_id " "]
@@ -20,7 +17,7 @@ permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 set title "$assessment_data(title)"
 
-set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] [list "checks-admin?assessment_id=$assessment_id&section_id=$section_id" "$title [_ assessment.Administration]"] "[_ assessment.trigger_delete]"]
+set context [list [list "one-a?assessment_id=$assessment_id" $title] [list "checks-admin?assessment_id=$assessment_id&section_id=$section_id" "$title [_ assessment.Administration]"] "[_ assessment.trigger_delete]"]
 
 
 set title "[_ assessment.trigger_delete]"

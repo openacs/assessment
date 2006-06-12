@@ -19,7 +19,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
-
+db_1row get_item_id {}
 if { $direction=="up" } {
      set next_sort_order [expr { $sort_order - 1 }]
 } else {
@@ -36,4 +36,4 @@ db_transaction {
     ad_script_abort
 }
 
-ad_returnredirect [export_vars -base one-a {assessment_id}]
+ad_returnredirect [export_vars -base one-a {assessment_id}]\#$as_item_id

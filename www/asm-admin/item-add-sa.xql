@@ -34,4 +34,14 @@
       </querytext>
 </fullquery>
 
+<fullquery name="get_title">
+      <querytext>
+
+        select r.title
+        from cr_revisions r
+        where r.revision_id = :as_item_id
+
+      </querytext>
+</fullquery>
+
 </queryset>

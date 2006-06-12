@@ -32,14 +32,18 @@ ad_proc -public as::assessment::new {
     {-show_feedback ""}
     {-section_navigation ""}
     {-survey_p ""}
+    {-package_id ""}
+    {-type ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
 
     New assessment to the database
 } {
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } { set package_id [ad_conn package_id] }
     set folder_id [as::assessment::folder_id -package_id $package_id]
+
+    if { [empty_string_p $creator_id] } { set creator_id [ad_conn user_id]}
 
     # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
     db_transaction {
@@ -52,7 +56,9 @@ ad_proc -public as::assessment::new {
                                     -parent_id $folder_id \
                                     -creation_user $creator_id \
                                     -content_type {as_assessments} \
-                                    -name $name]
+                                    -name $name \
+                                    -package_id $package_id \
+				    -context_id $folder_id]
 
 	set as_assessment_id [content::revision::new \
 				  -item_id $assessment_item_id \
@@ -60,7 +66,6 @@ ad_proc -public as::assessment::new {
 				  -title $title \
 				  -description $description \
 				  -attributes [list [list creator_id $creator_id] \
-						   [list instructions $instructions] \
 						   [list run_mode $run_mode] \
 						   [list anonymous_p $anonymous_p] \
 						   [list secure_access_p $secure_access_p] \
@@ -69,7 +74,6 @@ ad_proc -public as::assessment::new {
 						   [list random_p $random_p] \
 						   [list entry_page $entry_page] \
 						   [list exit_page $exit_page] \
-						   [list consent_page $consent_page] \
 						   [list return_url $return_url] \
 						   [list start_time $start_time] \
 						   [list end_time $end_time] \
@@ -80,9 +84,13 @@ ad_proc -public as::assessment::new {
 						   [list password $password] \
 						   [list show_feedback $show_feedback] \
 						   [list section_navigation $section_navigation] \
-						   [list survey_p $survey_p]] ]
+						   [list survey_p $survey_p] \
+						   [list package_id $package_id] \
+                           [list type $type]]]
+			      
     }
-
+    db_dml update_clobs {} -clobs [list $instructions $consent_page]
+    
     return $as_assessment_id
 }
 
@@ -111,6 +119,7 @@ ad_proc -public as::assessment::edit {
     {-password ""}
     {-show_feedback ""}
     {-section_navigation ""}
+    {-type ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-10-26
@@ -127,7 +136,6 @@ ad_proc -public as::assessment::edit {
 			    -title $title \
 			    -description $description \
 			    -attributes [list [list creator_id $creator_id] \
-					     [list instructions $instructions] \
 					     [list run_mode $run_mode] \
 					     [list anonymous_p $anonymous_p] \
 					     [list secure_access_p $secure_access_p] \
@@ -136,7 +144,6 @@ ad_proc -public as::assessment::edit {
 					     [list random_p $random_p] \
 					     [list entry_page $entry_page] \
 					     [list exit_page $exit_page] \
-					     [list consent_page $consent_page] \
 					     [list return_url $return_url] \
 					     [list start_time $start_time] \
 					     [list end_time $end_time] \
@@ -146,8 +153,9 @@ ad_proc -public as::assessment::edit {
 					     [list ip_mask $ip_mask] \
 					     [list password $password] \
 					     [list show_feedback $show_feedback] \
-					     [list section_navigation $section_navigation] ] ]
-
+					     [list section_navigation $section_navigation] \
+					     [list type $type]] ]
+        db_dml update_clobs {} -clobs [list $instructions $consent_page]
 	copy_sections -assessment_id $assessment_rev_id -new_assessment_id $new_rev_id
     }
 
@@ -178,8 +186,9 @@ ad_proc -public as::assessment::data {
 	# own way
 	return
     }
-
+    
     set assessment_data(creator_name) [person::name -person_id $assessment_data(creation_user)]
+    set assessment_data(title) [as::assessment::title -title $assessment_data(title)]
 }
 
 ad_proc -public as::assessment::new_revision {
@@ -200,7 +209,6 @@ ad_proc -public as::assessment::new_revision {
 			    -title $a(title) \
 			    -description $a(description) \
 			    -attributes [list [list creator_id $a(creator_id)] \
-					     [list instructions $a(instructions)] \
 					     [list run_mode $a(run_mode)] \
 					     [list anonymous_p $a(anonymous_p)] \
 					     [list secure_access_p $a(secure_access_p)] \
@@ -209,7 +217,6 @@ ad_proc -public as::assessment::new_revision {
 					     [list random_p $a(random_p)] \
 					     [list entry_page $a(entry_page)] \
 					     [list exit_page $a(exit_page)] \
-					     [list consent_page $a(consent_page)] \
 					     [list return_url $a(return_url)] \
 					     [list start_time $a(start_time)] \
 					     [list end_time $a(end_time)] \
@@ -219,8 +226,13 @@ ad_proc -public as::assessment::new_revision {
 					     [list ip_mask $a(ip_mask)] \
 					     [list password $a(password)] \
 					     [list show_feedback $a(show_feedback)] \
-					     [list section_navigation $a(section_navigation)] ] ]
+					     [list section_navigation $a(section_navigation)]  \
+					     [list type $a(type)]]]
 	
+		set instructions $a(instructions)
+		set consent_page $a(consent_page)
+		db_dml update_clobs {} -clobs [list $a(instructions) $a(consent_page)]
+
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
 	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
     }
@@ -232,6 +244,7 @@ ad_proc -public as::assessment::copy {
     {-assessment_id:required}
     {-name ""}
     {-folder_id ""}
+    {-new_title ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-23
@@ -245,7 +258,11 @@ ad_proc -public as::assessment::copy {
 
     data -assessment_id $assessment_id
     array set a [array get assessment_data]
-    append a(title) "[_ assessment.copy_appendix]"
+    if {[empty_string_p $new_title]} {
+        append a(title) "[_ assessment.copy_appendix]"
+    } else {
+        set a(title) $new_title
+    }
 
     db_transaction {
 	set new_assessment_id [db_nextval acs_object_id_seq]
@@ -279,7 +296,8 @@ ad_proc -public as::assessment::copy {
 					     [list ip_mask $a(ip_mask)] \
 					     [list password $a(password)] \
 					     [list show_feedback $a(show_feedback)] \
-					     [list section_navigation $a(section_navigation)] ] ]
+					     [list section_navigation $a(section_navigation)] \
+					     [list type $a(type)]] ]
 	
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
 	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
@@ -554,6 +572,18 @@ ad_proc -private as::assessment::compare_numbers {a b} {
     }
 }
 
-    if { [empty_string_p $creator_id] } { set creator_id [ad_conn user_id]}
+ad_proc -private as::assessment::title {
+    -title
+} {
+    @annyflores@viaro.net
+    Remove html tags from assessment title
+} {
+    
+    regsub -all {\<[a-zA-Z]*\>} $title "" title
+    regsub -all {</[a-z]*>} $title "" title
+    regsub -all {<a [^<]*>} $title "" title
+   
+    return $title
 
 
+}

@@ -1,21 +1,30 @@
 <master>
-<property name="title">@p_title@</property>
+<property name="title">@p_title;noquote@</property>
 <property name="context">@context;noquote@</property>
 
-#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date# - <a href="assessment-history?assessment_id=@assessment_id@">#assessment.history#</a>
-
+<table width=100%>
+<tr><td>#assessment.Created_by# <a href="@creator_link@">@assessment_data.creator_name@</a>#assessment.on_creation_date# - <a href="assessment-history?assessment_id=@assessment_id@">#assessment.history#</a></td>
+<td align=right><a href=".">#assessment.other_asm#</a></td></tr>
+</table>
 
 <p>
 <table class="table-display" cellpadding=2 cellspacing=0>
 
 <tr class="odd">
-	<td valign="top">#assessment.Assessment_Title#:<p>#assessment.Description#:<p>#assessment.Instructions#: </td>
+	<td valign="top">#assessment.Assessment_Title#:	<if @assessment_data.type@ gt 1><p>#assessment.Description#:</if><p>#assessment.Instructions#:<p>#assessment.Type#:</td>
 	<td valign="top"> 
 	<!-- <a href="assessment-preview?assessment_id=@assessment_id@">#assessment.Preview#</a> -->
-	<a href="assessment-form?assessment_id=@assessment_id@">#assessment.Edit#</a>
-	@assessment_data.title@ <div align=center><font color=red>@is_reg_asm_p@</font></div>
+	@assessment_data.title;noquote@ 
+	<a href="assessment-form?assessment_id=@assessment_id@&edit_f=t">#assessment.Edit#</a>
+	<div align=center><font color=red>@is_reg_asm_p@</font></div>
+	<if @assessment_data.type@ gt 1>
         <p><if @assessment_data.description@ nil>#assessment.None#</if><else>@assessment_data.description;noquote@</else>
-        <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else></td>
+	<a href="assessment-form?assessment_id=@assessment_id@&edit_f=d">#assessment.Edit#</a>
+	</if>
+        <p><if @assessment_data.instructions@ nil>#assessment.None#</if><else>@assessment_data.instructions;noquote@</else>
+	<a href="assessment-form?assessment_id=@assessment_id@&edit_f=i">#assessment.Edit#</a>
+	<p><if @assessment_data.type@ nil>#assessment.None#</if><else><if @assessment_data.type@ eq 1>#assessment.type_s#</if> <if @assessment_data.type@ eq 2>#assessment.type_ea#</if></else>	<a href="assessment-new?assessment_id=@assessment_id@&edit_p=1">#assessment.Edit#</a></td>
+</td>
 </tr>
 
 <tr class="even"><td>#assessment.View_Responses# </td><td>
@@ -91,7 +100,7 @@
 
 </table>
 <br>
-
+<listtemplate name=sections></listtemplate>
 <if @sections:rowcount@ eq 0>
 <font color=red><b>#assessment.add_section_first#</b></font>
 </if>
@@ -101,30 +110,23 @@
 
 <table cellspacing=0>
 <tr class="odd">
-<td valign="top">@sections.rownum@. @sections.name@</td></tr>
+<td valign="top"><a name=@sections.section_id@>@sections.rownum@. @sections.name@</a></td></tr>
 <tr class="odd">
+<td>
 
-<td><a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
 
-<a href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
+<a class=button href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
 
-<a href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
+<a class=button href="catalog-search?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.Search_Section#</a>
 
-<if @sections.display_type_id@ not nil><a href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
+<if @sections.display_type_id@ not nil><a class=button href="section-display-form?assessment_id=@assessment_id@&section_id=@sections.section_id@&display_type_id=@sections.display_type_id@">#assessment.edit_section_display#</a></if>
 
-<a href="section-preview?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.section_preview#</a>
+<a class=button href="section-preview?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.section_preview#</a>
 
-<a href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
+<a class=button href="checks-admin?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.admin_triggers#</a>
 
-<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
+<a class=button href="add-edit-section-check?assessment_id=@assessment_id@&section_id=@sections.section_id@">#assessment.add_section_trigger#</a>
 
-<if @sections.rownum@ lt @sections:rowcount@>
-  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
-</if>
-<if @sections.rownum@ gt 1>
-  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
-</if>
-<a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="/resources/assessment/delete.gif" border="0" alt="#assessment.remove_section#"></a>
 
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
 (@sections.points@ #assessment.points#)
@@ -138,8 +140,19 @@
   </else>
 <td colspan="3">
   <blockquote>
-    @sections.title@
+    @sections.title@ 
+<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
+<a href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a> 
+<if @sections.rownum@ lt @sections:rowcount@>
+  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
+</if>
+<if @sections.rownum@ gt 1>
+  <a href="section-swap?assessment_id=@assessment_id@&sort_order=@sections.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
+</if>
+<a href="section-delete?section_id=@sections.section_id@&assessment_id=@assessment_id@"><img src="/resources/acs-subsite/Delete16.gif" border="0" alt="#assessment.remove_section#"></a>
+
   </blockquote>
+
 </td></tr>
 </table>      
 

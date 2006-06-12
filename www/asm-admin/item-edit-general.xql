@@ -40,7 +40,7 @@
 <querytext>
 
 	select r.title, r.description, i.subtext, i.field_name, i.field_code, i.required_p,
-	       i.feedback_right, i.feedback_wrong, i.max_time_to_complete, i.data_type, i.points
+	       i.feedback_right, i.feedback_wrong, i.max_time_to_complete, i.data_type, i.points, i.validate_block
 	from cr_revisions r, as_items i
 	where r.revision_id = i.as_item_id
 	and i.as_item_id = :as_item_id
@@ -57,6 +57,15 @@
     and r.rel_type = 'as_item_display_rel'
     and o.object_id = r.target_rev_id
 
+      </querytext>
+</fullquery>
+
+<fullquery name="insert_item_content">
+      <querytext>
+	        insert into as_item_rels
+                (target_rev_id, item_rev_id, rel_type)
+                values
+                (:content_rev_id, :new_item_id, 'as_item_content_rel')
       </querytext>
 </fullquery>
 

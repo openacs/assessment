@@ -1,3 +1,4 @@
+as::assessment::data -assessment_id $assessment_id
 ad_form -name admin_section -form {
     {section_id:text(hidden) {value $section_id}}
 }
@@ -30,8 +31,8 @@ db_multirow -extend { checks_related presentation_type html item_type choice_ori
     ns_log notice "[llength $checks]"
     foreach  check_sql $checks {
 	set cond_list  [split $check_sql "="]
-	set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-	if {$item_id == $as_item_id} {
+	set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
+	if {$item_id == $as_item_id_i} {
 	    incr checks_related
 	}
 	

@@ -39,8 +39,10 @@ if {![exists_and_not_null as_item_id] } {
     set condition_sql [db_string get_item_id {}] 
     #parse condition_sql to get item_id
     set cond_list  [split $condition_sql "="]
-    set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-    
+    set item_id [lindex [split [lindex $cond_list 2] ")"] 0]
+    set item_id [content::item::get_latest_revision -item_id $item_id]
+
+
 } else {
     set item_id $as_item_id
 }
@@ -48,6 +50,7 @@ if {![exists_and_not_null as_item_id] } {
 if {[exists_and_not_null section_id]} {
     set section_id_from $section_id
 }
+
 
 set as_item_id $item_id
 
@@ -127,11 +130,11 @@ ad_form -extend -name new_check  -new_data {
     
 } -edit_request {
     db_1row get_check_properties {}
-    set condition_sql [db_string get_item_id {}] 
+    set condition_sql $check_sql
     #parse condition_sql to get choice_id
     set cond_list  [split $condition_sql "="]
-    #set condition [string range [lindex $cond_list 1] 0 3]
-    set condition [lindex [split [lindex $cond_list 1] " "] 0]
+    set condition [lindex [split [lindex $cond_list 1] ")"] 0]
+    #ad_return_complaint 1 "${condition} $choices"
     
 } -edit_data {
     set check_sql [as::assessment::check::get_sql -condition $condition -item_id $item_id]

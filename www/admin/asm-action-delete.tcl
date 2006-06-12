@@ -5,13 +5,10 @@ ad_page_contract {
     @cvs-id $Id:
 } {
     action_id:integer
-} -properties {
-    page_title:onevalue
-    context:onevalue
 }
 
 set page_title [_ assessment.delete]
-set context [list [list index [_ assessment.admin]] [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
+set context_bar [ad_context_bar [list [export_vars -base asm-action-new {action_id} ] [_ assessment.action_admin] ]  $page_title]
 db_1row select_action_info {select name,description,tcl_code 
 	from as_actions
     where action_id = :action_id}

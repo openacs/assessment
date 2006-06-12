@@ -42,7 +42,7 @@ ad_form -name item_add_display_tb -action item-add-display-tb -export { assessme
     {answer_alignment:text(hidden)}
 } -edit_request {
     set html_options ""
-    set abs_size 20
+    set abs_size 200
     set answer_alignment "besideright"
 } -validate {
     {html_options {[as::assessment::check_html_options -options $html_options]} "[_ assessment.error_html_options]"}
@@ -90,7 +90,7 @@ ad_form -name item_add_display_tb -action item-add-display-tb -export { assessme
     }
 } -after_submit {
     # now go to assessment-page
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base one-a {assessment_id}]&\#$as_item_id
     ad_script_abort
 }
 

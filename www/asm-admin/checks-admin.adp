@@ -2,6 +2,14 @@
 <property name="title">@title@ #assessment.Administration#</property>
 <property name="context">@context;noquote@</property>
 <br>
+<b>On Request (section check)</b>
+<br>
+<listtemplate name="or_checks"></listtemplate>
+<br>
+<b>#assessment.after_this_asm# (section check)</b>
+<br>
+<listtemplate name="sa_checks"></listtemplate>
+<br>
 <b>#assessment.after_this_asm#</b>
 <br>
 <listtemplate name="aa_checks"></listtemplate>

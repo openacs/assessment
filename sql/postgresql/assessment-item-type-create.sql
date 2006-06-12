@@ -99,7 +99,10 @@ create table as_item_display_sb (
 	-- order in which the choices will appear (numerical, alphabetic, randomized or by order of entry)
 	sort_order_type		varchar(20),
 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
-	item_answer_alignment	varchar(20)
+	item_answer_alignment	varchar(20),
+	
+	-- prepend an empty item to the list, useful for validation of a required sb but you don't want any option as selected by default
+	prepend_empty_p		char(1) default 'f'
 );
 
 -- Textbox Display Type
@@ -162,6 +165,31 @@ create table as_item_display_ta (
 	abs_size	varchar(20),
 	-- the type of "widget" displayed when the Item is output in html. 
 	acs_widget varchar(20),	
+	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
+	item_answer_alignment	varchar(20)
+);
+
+
+-- File Upload Item
+create table as_item_type_fu (
+	as_item_type_id		integer
+				constraint as_item_type_fu_as_item_type_id_pk
+				primary key
+				constraint as_item_type_fu_as_item_type_id_fk
+				references cr_revisions(revision_id)
+);
+
+-- File Upload Display Type
+create table as_item_display_f (
+	as_item_display_id	integer
+				constraint as_item_display_f_as_item_display_id_pk
+				primary key
+				constraint as_item_display_f_as_item_display_id_fk
+				references cr_revisions(revision_id),
+	-- field to specify other stuff like textarea dimensions
+	html_display_options	varchar(50),
+	-- an abstraction of the real size value in "small","medium","large" 
+	abs_size		varchar(10),
 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
 	item_answer_alignment	varchar(20)
 );

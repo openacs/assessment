@@ -19,7 +19,7 @@
 <querytext>
 
 	select d.html_display_options, d.multiple_p, d.choice_label_orientation,
-	       d.sort_order_type, d.item_answer_alignment
+	       d.sort_order_type, d.item_answer_alignment, d.prepend_empty_p
 	from cr_revisions r, as_item_display_sb d
 	where r.revision_id = d.as_item_display_id
 	and d.as_item_display_id = :as_item_display_id

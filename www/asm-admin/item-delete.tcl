@@ -8,7 +8,7 @@ ad_page_contract {
     section_id:integer
     as_item_id:integer
 } -properties {
-    context:onevalue
+    context_bar:onevalue
     page_title:onevalue
 }
 
@@ -25,7 +25,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set page_title "[_ assessment.remove_item]"
-set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
+set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 
 set confirm_options [list [list "[_ assessment.continue_with_remove]" t] [list "[_ assessment.cancel_and_return]" f]]
 
@@ -33,7 +33,7 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
     {as_item_id:key}
     {item_title:text(inform) {label "[_ assessment.remove_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {confirmation:text(radio) {label " "} {options $confirm_options} {value t}}
 } -select_query_name {item_title} -on_submit {
     if {$confirmation} {
 	db_transaction {

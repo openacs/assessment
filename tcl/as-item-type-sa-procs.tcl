@@ -9,19 +9,22 @@ namespace eval as::item_type_sa {}
 ad_proc -public as::item_type_sa::new {
     {-title ""}
     {-increasing_p ""}
-    {-allow_negative_p ""}    
+    {-allow_negative_p ""}
+    {-package_id ""}
 } {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
 
     New Short Answer Answers item to the data database
 } {
-    set package_id [ad_conn package_id]
+    if { ![exists_and_not_null package_id] } {
+    	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item_type_sa in the CR (and as_item_type_sa table) getting the revision_id (as_item_type_id)
     db_transaction {
-        set item_item_type_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_type_sa} -name [exec uuidgen]]
+        set item_item_type_sa_id [content::item::new -parent_id $folder_id -content_type {as_item_type_sa} -name [as::item::generate_unique_name]]
         set as_item_type_sa_id [content::revision::new \
 				-item_id $item_item_type_sa_id \
 				-content_type {as_item_type_sa} \

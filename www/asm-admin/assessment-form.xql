@@ -8,7 +8,7 @@
 	       a.anonymous_p, a.secure_access_p, a.reuse_responses_p, a.show_item_name_p, random_p,
 	       a.entry_page, a.exit_page, a.consent_page, a.return_url, a.number_tries,
 	       a.wait_between_tries, a.time_for_response, a.show_feedback, a.section_navigation,
-	       to_char(a.start_time, :sql_format) as start_time, to_char(a.end_time, :sql_format) as end_time
+	       to_char(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start_time, to_char(a.end_time, 'YYYY-MM-DD HH24:MI:SS') as end_time
 	from as_assessments a, cr_revisions cr, cr_items ci
 	where ci.item_id = :assessment_id
 	and cr.revision_id = ci.latest_revision
@@ -56,5 +56,26 @@
 
 </querytext>
 </fullquery>
+
+<fullquery name="move_down_sections">
+      <querytext>
+
+	    update as_assessment_section_map
+	    set sort_order = sort_order+1
+	    where assessment_id = :new_assessment_rev_id
+	    and sort_order > :after
+
+      </querytext>
+</fullquery>
+
+<fullquery name="add_section_to_assessment">
+      <querytext>
+
+	    insert into as_assessment_section_map (assessment_id, section_id,sort_order)
+	    values (:new_assessment_rev_id, :new_section_id,:sort_order)
+
+      </querytext>
+</fullquery>
+
 
 </queryset>

@@ -24,7 +24,6 @@ set value [parameter::get -parameter "AsmForRegisterId" -package_id [subsite::ma
 if {[empty_string_p $value]} {
     apm_parameter_register "AsmForRegisterId" "Assessment used on the registration process." "acs-subsite" "0" "number" "user-login"
 }
-
     
 content::type::new -content_type {as_item_choices} -supertype {content_revision} -pretty_name {Assessment Item Choice} -pretty_plural {Assessment Item Choices} -table_name {as_item_choices} -id_column {choice_id}
 content::type::new -content_type {as_item_sa_answers} -supertype {content_revision} -pretty_name {Assessment Item Answer} -pretty_plural {Assessment Item Answer} -table_name {as_item_sa_answers} -id_column {choice_id}
@@ -66,6 +65,7 @@ content::type::attribute::new -content_type {as_item_display_sb} -attribute_name
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {multiple_p} -datatype {string}    -pretty_name {Allow Multiple} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
+content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
 
 # Textbox display type
 content::type::attribute::new -content_type {as_item_display_tb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -132,6 +132,7 @@ content::type::attribute::new -content_type {as_items} -attribute_name {max_time
 content::type::attribute::new -content_type {as_items} -attribute_name {feedback_wrong}    -datatype {text} -pretty_name {Item Right Feedback} -column_spec {text}
 content::type::attribute::new -content_type {as_items} -attribute_name {feedback_right}    -datatype {text} -pretty_name {Item Wrong Feedback} -column_spec {text}
 content::type::attribute::new -content_type {as_items} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this item} -column_spec {integer}
+content::type::attribute::new -content_type {as_items} -attribute_name {validate_block} -datatype {text} -pretty_name {Validation Block} -column_spec {text}
 
 # Sections
 content::type::attribute::new -content_type {as_sections} -attribute_name {display_type_id}      -datatype {number}  -pretty_name {Section Display Type}  -column_spec {integer}
@@ -172,6 +173,8 @@ content::type::attribute::new -content_type {as_assessments} -attribute_name {pa
 content::type::attribute::new -content_type {as_assessments} -attribute_name {show_feedback}            -datatype {string}  -pretty_name {Assessment Show comments to the user}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {section_navigation}            -datatype {string}  -pretty_name {Assessment Navigation of sections}  -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_assessments} -attribute_name {survey_p}            -datatype {string}  -pretty_name {Survey}  -column_spec {char(1)}
+content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
+
 
 # Sessions
 content::type::attribute::new -content_type {as_sessions} -attribute_name {assessment_id}            -datatype {number}  -pretty_name {Assessment ID}  -column_spec {integer}
@@ -215,6 +218,17 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {poin
 # Session results
 content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
 content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
+
+#File Upload Ansers
+content::type::new -content_type {as_item_type_fu} -supertype {content_revision} -pretty_name {Assessment Item Type File Upload} -pretty_plural {Assessment Item Type File Upload} -table_name {as_item_type_fu} -id_column {as_item_type_id}
+
+content::type::new -content_type {as_item_display_f} -supertype {content_revision} -pretty_name {Assessment Item Display File} -pretty_plural {Assessment Item Display File} -table_name {as_item_display_f} -id_column {as_item_display_id}
+
+# File Upload display type
+content::type::attribute::new -content_type {as_item_display_f} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
+content::type::attribute::new -content_type {as_item_display_f} -attribute_name {abs_size} -datatype {string}    -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
+content::type::attribute::new -content_type {as_item_display_f} -attribute_name {box_orientation} -datatype {string}    -pretty_name {Box Orientation} -column_spec {varchar(20)}
+
 }
 
 ad_proc -public as::install::package_instantiate {
@@ -224,7 +238,7 @@ ad_proc -public as::install::package_instantiate {
     
 } {
     # create a content folder
-    set folder_id [content::folder::new -name "assessment_$package_id" -package_id $package_id ]
+    set folder_id [content::folder::new -name "assessment_$package_id" -package_id $package_id -context_id $package_id]
     # register the allowed content types for a folder
     content::folder::register_content_type -folder_id $folder_id -content_type {image} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {content_revision} -include_subtypes t
@@ -241,6 +255,9 @@ ad_proc -public as::install::package_instantiate {
     content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_ta} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_items} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_section_display_types} -include_subtypes t
+
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
+    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_f} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sections} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_assessments} -include_subtypes t
     content::folder::register_content_type -folder_id $folder_id -content_type {as_sessions} -include_subtypes t
@@ -364,8 +381,60 @@ ad_proc -public as::install::after_upgrade {
 	    0.10d11 0.10d12 {
 		content::type::attribute::new -content_type {as_items} -attribute_name {field_name} -datatype {string} -pretty_name {Item Field Name} -column_spec {varchar(500)}
 	    }
+    
+	    0.11 0.12 {
+		#File Upload new type
+		content::type::new -content_type {as_item_type_fu} -supertype {content_revision} -pretty_name {Assessment Item Type File Upload} -pretty_plural {Assessment Item Type File Upload} -table_name {as_item_type_fu} -id_column {as_item_type_id}
+		content::type::new -content_type {as_item_display_f} -supertype {content_revision} -pretty_name {Assessment Item Display File} -pretty_plural {Assessment Item Display File} -table_name {as_item_display_f} -id_column {as_item_display_id}
+		# File Upload display type
+		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {html_display_options} -datatype {string} -pretty_name {HTML display Options} -column_spec {varchar(50)}
+		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {abs_size} -datatype {string} -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
+		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {box_orientation} -datatype {string} -pretty_name {Box Orientation} -column_spec {varchar(20)}
+		
+	        db_foreach packages { select package_id from apm_packages where package_key = 'assessment'} { 
+		    set folder_id [as::assessment::folder_id -package_id $package_id]
+		    
+		    # File Upload registration
+		    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
+		    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_f} -include_subtypes t
+		}
+		
+	    }
+	    0.12 0.13 {
+		content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
+		
+	    }
+	    0.13 0.14 {
+		# update as_param_map table to set the item_id  as a cr_item and not a cr_revision id
+		
+		db_foreach as_parameter { select cr.item_id, pm.parameter_id from as_param_map pm, cr_revisions cr where cr.revision_id = pm.item_id} {
+		    db_dml  update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
+		}
+		
+	    }
+	    0.14 0.15 {
+		# update as_inter_item_check_id table to set the check_sql condition using the item_id of a choice instead of using the revision_id
+		
+		db_foreach check  { select inter_item_check_id, check_sql from as_inter_item_checks } {
+		    set cond_list  [split $check_sql "="]
+		    set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+		    set choice_id [lindex [split [lindex $cond_list 1] " "] 0]
+		    set condition [db_string get_item_id {select item_id from cr_revisions where revision_id=:choice_id} -default -1]
+		    set check_sql_updated [as::assessment::check::get_sql -item_id $item_id -condition $condition]
+		    if { $condition != -1 } {
+			db_dml update_check_sql { update as_inter_item_checks set check_sql = :check_sql_updated where inter_item_check_id=:inter_item_check_id}
+		    }
+		}
+		
+	    }
+	    0.15 0.16 {
+		content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
+	    }
+	    0.16 0.17 {
+		content::type::attribute::new -content_type {as_items} -attribute_name {validate_block} -datatype {text} -pretty_name {Validation Block} -column_spec {text}
+	    }
 	    
-	}
+	}    
 }
 
 

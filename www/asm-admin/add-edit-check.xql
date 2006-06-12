@@ -33,7 +33,7 @@
 <fullquery name="get_choices">
       <querytext>
 
-    select r.title,c.choice_id 
+    select r.title, r.item_id
     from as_item_choices c, cr_revisions r
     where r.revision_id = c.choice_id
     and c.mc_id = :as_item_type_id
