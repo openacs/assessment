@@ -17,17 +17,12 @@ ad_page_contract {
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
-    section_id:optional
+    passed_section_id:optional
 } -properties {
     context:onevalue
     page_title:onevalue
 }
 
-if {[info exists section_id]} {
-    # there are too many queries, and db_1rows etc
-    # that could set section_id
-    set passed_section_id $section_id
-}
 set user_id [ad_conn user_id]
 set page_title "[_ assessment.Show_Items]"
 set context [list $page_title]
