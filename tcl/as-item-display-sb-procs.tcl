@@ -138,7 +138,7 @@ ad_proc -public as::item_display_sb::render {
     }
     
     if { $type(prepend_empty_p) == "t" } {
-	set data [linsert $data 0 [list "" ""]]
+	set data [linsert $data 0 [list "[_ assessment.Please_select_one]" ""]]
     }
 
     set optional ""
