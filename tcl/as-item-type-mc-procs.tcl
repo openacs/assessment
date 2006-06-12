@@ -168,7 +168,7 @@ ad_proc -public as::item_type_mc::render {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
 		    if {$correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
-		        lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif>" $choice_id]			
+		        lappend choice_list [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		    } else {
 		        lappend choice_list [list $title $choice_id]
 		    }	
@@ -286,6 +286,7 @@ ad_proc -public as::item_type_mc::process {
     {-response ""}
     {-max_points 0}
     {-allow_overwrite_p t}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
@@ -320,8 +321,8 @@ ad_proc -public as::item_type_mc::process {
 	
     set points [expr round($max_points * $percent / 100)]
 
-    set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p]
-    as::session_results::new -target_id $item_data_id -points $points
+    set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
+    as::session_results::new -target_id $item_data_id -points $points -package_id $package_id
 }
 
 ad_proc -public as::item_type_mc::data {

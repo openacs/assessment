@@ -332,6 +332,7 @@ ad_proc -public as::section::skip {
     -session_id:required
     -subject_id:required
     {-staff_id ""}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-22
@@ -339,7 +340,7 @@ ad_proc -public as::section::skip {
     Skip section in a session and award 0 points
 } {
     db_transaction {
-	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $subject_id -staff_id $staff_id
+	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $subject_id -staff_id $staff_id -package_id $package_id
 	db_dml set_zero_points {}
     }
 }

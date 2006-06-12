@@ -76,9 +76,14 @@
 	<querytext>
 		select cr.title, i.subtext, i.data_type, i.field_name,
 		       max(oi.object_id) as item_type_id, oi.object_type as item_type,
-		       od.object_id as display_type_id, od.object_type as display_type
-		from as_items i, cr_revisions cr, as_item_rels it,
-		     as_item_rels dt, acs_objects oi, acs_objects od
+		       od.object_id as display_type_id, od.object_type as display_type,
+		       r2.revision_id as content_rev_id, r2.title as content_filename, ci2.content_type
+		from cr_revisions cr, as_item_rels it,
+		     as_item_rels dt, acs_objects oi, acs_objects od,
+		     as_items i
+		left outer join as_item_rels ar on (ar.item_rev_id = i.as_item_id and ar.rel_type = 'as_item_content_rel')
+		left outer join cr_revisions r2 on (ar.target_rev_id = r2.revision_id)
+		left outer join cr_items ci2 on (ci2.item_id = r2.item_id)
 		where i.as_item_id = :as_item_id
 		and cr.revision_id = i.as_item_id
 		and it.item_rev_id = i.as_item_id
@@ -87,7 +92,7 @@
 		and dt.rel_type = 'as_item_display_rel'
 		and oi.object_id = it.target_rev_id
 		and od.object_id = dt.target_rev_id
-		group by cr.title, i.subtext, i.field_name, i.data_type, oi.object_type,od.object_id, od.object_type
+		group by cr.title, i.subtext, i.field_name, i.data_type, oi.object_type,od.object_id, od.object_type, r2.revision_id, r2.title, ci2.content_type
 	</querytext>
 </fullquery>
 

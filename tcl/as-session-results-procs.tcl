@@ -11,13 +11,17 @@ ad_proc -public as::session_results::new {
     -points:required
     {-title ""}
     {-description ""}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-02-17
 
     New as_session_results
 } {
-    set package_id [ad_conn package_id]
+    if {$package_id eq ""} {
+	set package_id [ad_conn package_id]
+    }
+    ns_log notice "session results new package_id = '${package_id}'"
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_session_results in the CR (and as_session_results table) getting the revision_id

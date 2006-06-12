@@ -18,13 +18,17 @@ ad_proc -public as::session::new {
     {-ip_address ""}
     {-percent_score ""}
     {-consent_timestamp ""}
+    {-package_id ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-12
 
     New as_session to the database
 } {
-    set package_id [ad_conn package_id]
+    if {$package_id eq ""} {
+	set package_id [ad_conn package_id]
+    }
+
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
 
 #    # Check to see if there's a session already to not submit another one

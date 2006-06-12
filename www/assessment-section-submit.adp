@@ -1,4 +1,4 @@
-<master>
+
 <property name="title">@assessment_data.html_title;noquote@</property>
 <property name="context">@context;noquote@</property>
 <property name="header_stuff"><link rel="stylesheet" type="text/css" href="/resources/assessment/crbForms.css" media="all"></property>

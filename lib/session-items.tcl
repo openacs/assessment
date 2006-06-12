@@ -2,13 +2,26 @@ if {![exists_and_not_null edit_p]} {
     set edit_p 0
 }
 
+if {![exists_and_not_null feedback_only_p] } {
+    set feedback_only_p 0
+}
+
+set items_clause ""
+if {[info exists item_id_list]} {
+    if {[llength $item_id_list]} {
+	set items_clause "and i.as_item_id in ([join $item_id_list ,])"
+    }
+}
+
 ad_form -name session_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
 
 # todo: display feedback text
-db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num } items session_items {} {
+set feedback_count 0
+db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p } items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
+    array set item [as::item::item_data -as_item_id $as_item_id]
 
     set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback]
     
@@ -21,10 +34,8 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     }
 
     if {$presentation_type == "rb" || $presentation_type == "cb"} {
-	array set item [as::item::item_data -as_item_id $as_item_id]
 	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
 	set choice_orientation $type(choice_orientation)
-	array unset item
 	array unset type
     } else {
 	set choice_orientation ""
@@ -44,11 +55,21 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 	if { $points != 0 } {
 	    if {$result_points < $points} {
 		if {$show_feedback != "correct"} {
-		    set feedback "<font color=red>$feedback_wrong</font>"
+		    if { $feedback_wrong ne "" } {
+			set feedback "<font color=red>$feedback_wrong</font>"
+			set has_feedback_p 1
+		    } else {
+			set feedback ""
+		    }
 		}	
 	    } else {
 		if {$show_feedback != "incorrect"} {
-		    set feedback "<font color=green>$feedback_right</font>"
+		    if { $feedback_right ne "" } {
+			set feedback "<font color=green>$feedback_right</font>"
+			set has_feedback_p 1
+		    } else {
+			set feedback ""
+		    }
 		}
 	    }
 	} else {
@@ -62,11 +83,21 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		 
 		    if { [lsearch $correct_answers $user_answers] == -1 } {
 			if {$show_feedback != "correct"} {
-			    set feedback "<font color=red>$feedback_wrong</font>"
+			    if { $feedback_wrong ne "" } {
+				set feedback "<font color=red>$feedback_wrong</font>"
+				set has_feedback_p 1
+			    } else {
+				set feedback ""
+			    }
 			}	
 		    } else {
 			if {$show_feedback != "incorrect"} {
-			    set feedback "<font color=green>$feedback_right</font>"
+			    if { $feedback_right ne "" } {
+				set feedback "<font color=green>$feedback_right</font>"
+				set has_feedback_p 1
+			    } else {
+				set feedback ""
+			    }
 			}
 		    }		    
 		} else {
@@ -86,11 +117,21 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 
 		    if { !$correct_p } {
 			if {$show_feedback != "correct"} {
-			    set feedback "<font color=red>$feedback_wrong</font>"
+			    if { $feedback_wrong ne "" } {
+				set feedback "<font color=red>$feedback_wrong</font>"
+				set has_feedback_p 1
+			    } else {
+				set feedback ""
+			    }
 			}	
 		    } else {
 			if {$show_feedback != "incorrect"} {
-			    set feedback "<font color=green>$feedback_right</font>"
+			    if { $feedback_right ne "" } {
+				set feedback "<font color=green>$feedback_right</font>"
+				set has_feedback_p 1
+			    } else {
+				set feedback ""
+			    }
 			}
 		    }
 		}
@@ -100,7 +141,19 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 	set result_points ""
 	set feedback ""
 	set answered_p f
-    }    
+    }
+
+    set content [as::assessment::display_content -content_id $item(content_rev_id) -filename $item(content_filename) -content_type $item(content_type)]
+
+    if { $has_feedback_p == 1 } {
+	incr feedback_count
+    }
+}
+
+if { $feedback_only_p && $feedback_count == 0 && [exists_and_not_null next_url] } {
+    ns_log notice "feedback going to $next_url"
+    ad_returnredirect $next_url
+    ad_script_abort
 }
 
 set counter 1

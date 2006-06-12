@@ -16,6 +16,7 @@
     and ism.as_item_id = si.as_item_id
     and si.section_id = :section_id
     and si.session_id = :session_id
+    $items_clause
     order by si.sort_order
     
       </querytext>

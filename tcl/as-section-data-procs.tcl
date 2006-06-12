@@ -12,13 +12,16 @@ ad_proc -public as::section_data::new {
     {-subject_id ""}
     {-staff_id ""}
     {-points ""}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-14
 
     New as_section_data
 } {
-    set package_id [ad_conn package_id]
+    if {$package_id eq ""} {
+	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     if {[db_0or1row section_data_exists {}]} {

@@ -52,7 +52,6 @@ ad_form -name item_edit_display_sb -action item-edit-display-sb -export { assess
     {choice_label_orientation:text(hidden)}
     {sort_order_type:text(select) {label "[_ assessment.Order_Type]"} {options $order_types} {help_text "[_ assessment.Order_Type_help]"}}
     {item_answer_alignment:text(hidden)}
-    {prepend_empty_p:text(select) {label "[_ assessment.Prepend_Empty_Item]"} {options $boolean_options} {help_text "[_ assessment.lt_Prepend_an_empty_item]"}}
     {as_item_display_id:text(hidden)}
 } -edit_request {
     db_1row last_used_display_type {}
@@ -66,7 +65,7 @@ ad_form -name item_edit_display_sb -action item-edit-display-sb -export { assess
 	set sort_order_type "order_of_entry"
 	set item_answer_alignment "besideright"
 	set as_item_display_id 0
-	set prepend_empty_p f
+	set prepend_empty_p t
     }
 } -validate {
     {html_display_options {[as::assessment::check_html_options -options $html_display_options]} "[_ assessment.error_html_options]"}
@@ -83,7 +82,7 @@ ad_form -name item_edit_display_sb -action item-edit-display-sb -export { assess
 					 -choice_label_orientation $choice_label_orientation \
 					 -sort_order_type $sort_order_type \
 					 -item_answer_alignment $item_answer_alignment \
-					 -prepend_empty_p $prepend_empty_p]
+					 -prepend_empty_p t]
 	} else {
 	    # create new display type
 	    set new_item_display_id [as::item_display_sb::new \
@@ -92,7 +91,7 @@ ad_form -name item_edit_display_sb -action item-edit-display-sb -export { assess
 					 -choice_label_orientation $choice_label_orientation \
 					 -sort_order_type $sort_order_type \
 					 -item_answer_alignment $item_answer_alignment \
-					 -prepend_empty_p $prepend_empty_p]
+					 -prepend_empty_p t]
 	}
 
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]

@@ -28,7 +28,7 @@
 </tr>
 
 <tr class="even"><td>#assessment.View_Responses# </td><td>
-	<a href="../sessions?assessment_id=@assessment_id@">#assessment.All#</a> |
+	<a href="sessions?assessment_id=@assessment_id@">#assessment.All#</a> |
 	<a href="results-users?assessment_id=@assessment_id@">#assessment.By_user#</a> |
 <!--	<a href="results-summary?assessment_id=@assessment_id@">#assessment.Summary#</a> | -->
 	<a href="results-export?assessment_id=@assessment_id@">#assessment.CSV_file#</a></td>

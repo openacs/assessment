@@ -479,6 +479,7 @@ ad_proc as::assessment::folder_id {
 
     Returns the folder_id of the package instance. Cached
 } {
+    ns_log notice "assessment folder id  package_id = '${package_id}'"
     return [content::folder::get_folder_from_package -package_id $package_id]
 }
 

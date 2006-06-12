@@ -39,7 +39,7 @@
 <fullquery name="unfinished_section_id">
 	<querytext>
 
-	select section_id
+	select section_id as unfinished_section_id
         from as_session_sections
         where session_id = :session_id
 	and sort_order = :section_order
@@ -53,11 +53,11 @@
 	select min(i.sort_order) as item_order
         from as_session_items i
         where i.session_id = :session_id
-	and i.section_id = :section_id
+	and i.section_id = :unfinished_section_id
         and not exists (select 1
 			from as_item_data d
 			where d.session_id = :session_id
-			and d.section_id = :section_id
+			and d.section_id = :unfinished_section_id
 			and d.as_item_id = i.as_item_id)
 
 	</querytext>

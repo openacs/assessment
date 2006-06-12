@@ -23,13 +23,16 @@ ad_proc -public as::item_data::new {
     {-signed_data ""}
     {-allow_overwrite_p t}
     {-points ""}
+    {-package_id ""}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-12
 
     New as_item_data to the database
 } {
-    set package_id [ad_conn package_id]
+    if {$package_id eq ""} {
+	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
     set name "$as_item_id-$section_id-$session_id"
     set new_p 1
