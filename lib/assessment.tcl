@@ -23,6 +23,11 @@ ad_page_contract {
     page_title:onevalue
 }
 
+if {[info exists section_id]} {
+    # there are too many queries, and db_1rows etc
+    # that could set section_id
+    set passed_section_id $section_id
+}
 set user_id [ad_conn user_id]
 set page_title "[_ assessment.Show_Items]"
 set context [list $page_title]
@@ -107,7 +112,7 @@ db_transaction {
 
 
 	# get all sections of assessment in correct order
-	if {![info exists section_id]} {
+	if {![info exists passed_section_id]} {
 	    set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
 	    if {[empty_string_p $section_order]} {
 		# start at the first section
