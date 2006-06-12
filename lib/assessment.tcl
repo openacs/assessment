@@ -260,7 +260,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}]
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }]
 	ad_script_abort
     } else {
 	# calculate session points at end of session
@@ -275,7 +275,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	} else {
 	    set return_url $assessment_data(return_url)
 	}
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple}]
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple }]
 	ad_script_abort
     }
 }
@@ -372,11 +372,11 @@ foreach one_item $item_list {
                     set response \[list  \$response_to_item(\$response_item_id) \$response_to_item(\${response_item_id}.tmpfile)  \$response_to_item(\${response_item_id}.content-type)\]
                 }
 
-		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id $assessment_package_id
+		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id \$assessment_package_id
 	    }
 	}"
 	set after_submit "{
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }\]
 	    ad_script_abort
 	}"
 	
@@ -450,7 +450,7 @@ if {$display(submit_answer_p) != "t"} {
                     set response \[list  \$response_to_item(\$response_item_id) \$response_to_item(\${response_item_id}.tmpfile)  \$response_to_item(\${response_item_id}.content-type)\]
                 }
 
-		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id $assessment_package_id
+		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id \$assessment_package_id
 	    }
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
@@ -476,7 +476,7 @@ if {$display(submit_answer_p) != "t"} {
 	    set section_order \$new_section_order
             }
 	    set item_order \$new_item_order
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -491,7 +491,7 @@ if {$display(submit_answer_p) != "t"} {
 	} else {
 	    set return_url \$assessment_data(return_url)
 	}
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple }\]
 	    ad_script_abort
 	}
     }"
@@ -516,7 +516,7 @@ if {$display(submit_answer_p) != "t"} {
                     set response \[list  \$response_to_item(\$response_item_id) \$response_to_item(\${response_item_id}.tmpfile)  \$response_to_item(\${response_item_id}.content-type)\]
                 }
 
-		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id $assessment_package_id
+		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id \$assessment_package_id
 
 	    }
 
@@ -536,7 +536,7 @@ if {$display(submit_answer_p) != "t"} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
-	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}]
+	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url}]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -551,7 +551,7 @@ if {$display(submit_answer_p) != "t"} {
 	    } else {
 		set return_url $assessment_data(return_url)
 	    }
-	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple}]
+	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple next_url}]
 	    ad_script_abort
 	}
     }

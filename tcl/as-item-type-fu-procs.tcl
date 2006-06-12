@@ -93,11 +93,13 @@ ad_proc -public as::item_type_fu::process {
     {-response "" }
     {-max_points 0}
     {-allow_overwrite_p t}
+    {-package_id ""}
 } {
     Process a Response to a File Upload Type
 } {
-    
-    set package_id [ad_conn package_id]
+    if {$package_id eq ""} {
+	set package_id [ad_conn package_id]
+    }
     set folder_id [as::assessment::folder_id -package_id $package_id]
     
     # Insert the file in the CR 
@@ -110,7 +112,7 @@ ad_proc -public as::item_type_fu::process {
 
 	db_dml update_revision {}
 	
-	set as_item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p]
+	set as_item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
     }	
     db_dml update_item_data { }
     

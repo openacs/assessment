@@ -117,13 +117,14 @@ ad_proc -public as::item_type_sa::process {
     {-response ""}
     {-max_points 0}
     {-allow_overwrite_p t}
+    {-package_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
 
     Process a Response to a Short Answer Type
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p -package_id $package_id
 }
 
 ad_proc -public as::item_type_sa::results {

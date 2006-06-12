@@ -120,13 +120,14 @@ ad_proc -public as::item_type_swcat::process {
     {-response ""}
     {-max_points 0}
     {-allow_overwrite_p t}
+    {-package_id ""}
 } {
     @author Dave Bauer (dave@solutiongrove.com)
     @creation-date 2005-05-15
 
     Process a Response to a SW Category Answer
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p
+    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p -package_id $package_id
 }
 
 ad_proc -public as::item_type_swcat::results {

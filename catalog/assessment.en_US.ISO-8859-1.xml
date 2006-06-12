@@ -230,7 +230,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="edit_item_display_sb">Edit Question: Selectbox Display</msg>
   <msg key="edit_item_display_ta">Edit Question: Textarea Display</msg>
   <msg key="edit_item_display_tb">Edit Question: Textbox Display</msg>
-  <msg key="edit_item_general">Editar Question</msg>
+  <msg key="edit_item_general">Edit Question</msg>
   <msg key="edit_item_type_mc">Edit Question: Multiple Choice</msg>
   <msg key="edit_item_type_mc_choices">Edit Question: Multiple Choices</msg>
   <msg key="edit_item_type_oq">Edit Question: Open Question</msg>
@@ -291,7 +291,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="history">Change History</msg>
   <msg key="horizontal">Horizontal</msg>
   <msg key="Html_Options">HTML Options</msg>
-  <msg key="Html_Options_help">Additional HTML Options for display (i.e. cols,rows,disabled)</msg>
+  <msg key="Html_Options_help">Additional HTML Options for display (e.g. cols 100, rows 10, disabled)</msg>
   <msg key="immediately">Immediately</msg>
   <msg key="Import_QTI_ZIP_File">Import QTI ZIP File</msg>
   <msg key="Import_Results">Import Results</msg>
@@ -443,6 +443,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Percent_Score_help">Percentage of the points of the question this choice gives. May be larger than 100 and lower than -100.</msg>
   <msg key="performed">Performed</msg>
   <msg key="permissions">Permissions</msg>
+  <msg key="Please_select_one">Please select one</msg>
   <msg key="points">points</msg>
   <msg key="points_answer">Points for Answer</msg>
   <msg key="points_answer_help">How many points is this question answer worth.</msg>
@@ -482,7 +483,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Responding_Users">Responding Users</msg>
   <msg key="Response_Options">Response Options:</msg>
   <msg key="Response_Submitted">Response Submitted</msg>
-  <msg key="Results_by_user">Assessment results by user</msg>
+  <msg key="Results_by_user">Responses by user</msg>
   <msg key="Results_change_display">(on %results.create_date% by &lt;a href=&amp;quot;%results.user_url%&amp;quot;&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
   <msg key="Results_edit">Edit assessment result</msg>
   <msg key="Results_edit_Description">Change explanation</msg>
