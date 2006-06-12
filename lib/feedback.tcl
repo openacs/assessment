@@ -19,6 +19,7 @@ ad_page_contract {
     return_url:optional
     next_asm:optional
     {item_id_list:multiple,optional {}}
+    {next_url ""}
 } -properties {
 } -validate {
 } -errors {
@@ -30,8 +31,11 @@ permission::require_permission -object_id $assessment_id -privilege read
 set page_title "[_ assessment.Show_Items]"
 set context [list $page_title]
 
-if { $return_p && [exists_and_not_null return_url] } {
-    set next_url $return_url
-} else {
-    set next_url [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id}]
+if { $next_url eq "" } {
+    if { $return_p && [exists_and_not_null return_url] } {
+	set next_url $return_url
+	
+    } else {
+	set next_url [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id}]
+    }
 }
