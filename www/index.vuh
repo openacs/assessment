@@ -1,0 +1,12 @@
+set path_info [ad_conn path_info]
+# set a list of includable pages that also may be used standalone
+# this way you can't get to just any includable page by tacking it onto
+# the url
+set valid_pages {assessment feedback finish session}
+if {![lsearch $valid_pages $path_info] \
+    || ![file exists "[acs_root_dir]/packages/assessment/lib/${path_info}.tcl"]} {
+    ns_returnnotfound
+}
+
+
+rp_internal_redirect /packages/assessment/lib/include 

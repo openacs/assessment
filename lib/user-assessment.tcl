@@ -3,7 +3,7 @@ ad_page_contract {
     
     testing background
     
-    @author Natalia Pérez (nperper@it.uc3m.es)
+    @author Natalia PÃ©rez (nperper@it.uc3m.es)
     @creation-date 2004-11-24    
 } {
     

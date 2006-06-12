@@ -2,7 +2,7 @@ ad_page_contract {
 
 	Lists all the assessments that can be taken and their sessions.
 
-	@author Eduardo Pérez Ureta (eperez@it.uc3m.es)
+	@author Eduardo PÃ©rez Ureta (eperez@it.uc3m.es)
 	@creation-date 2004-09-03
 } {
 } -properties {
