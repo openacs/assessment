@@ -30,7 +30,7 @@ as::assessment::data -assessment_id $assessment_id
 permission::require_permission -object_id $assessment_id -privilege read
 set page_title "[_ assessment.Show_Items]"
 set context [list $page_title]
-
+ns_log notice "feedback.tcl '${next_url}' '${return_url}'"
 if { $next_url eq "" } {
     if { $return_p && [exists_and_not_null return_url] } {
 	set next_url $return_url

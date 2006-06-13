@@ -68,6 +68,8 @@
 	and m.session_id = d.session_id
 	and m.item_data_id = d.item_data_id
 
+	order by d.item_data_id desc
+	limit 1
       </querytext>
 </fullquery>
 

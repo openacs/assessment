@@ -5,6 +5,14 @@ if {![exists_and_not_null edit_p]} {
 if {![exists_and_not_null feedback_only_p] } {
     set feedback_only_p 0
 }
+if {[info exists assessment_id]} {
+    # check if this assessment even allows feedback if not, bail out
+    as::assessment::data -assessment_id $assessment_id
+    if {$feedback_only_p && $assessment_data(show_feedback) eq "none"} {
+	ad_returnredirect $next_url
+	ad_script_abort
+    }
+}
 
 set items_clause ""
 if {[info exists item_id_list]} {
