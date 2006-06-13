@@ -17,7 +17,7 @@ ad_page_contract {
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
-    passed_section_id:optional
+    single_section_id:optional
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -107,7 +107,7 @@ db_transaction {
 
 
 	# get all sections of assessment in correct order
-	if {![info exists passed_section_id]} {
+	if {![info exists single_section_id]} {
 	    set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
 	    if {[empty_string_p $section_order]} {
 		# start at the first section
@@ -122,7 +122,8 @@ db_transaction {
 
 	} else {
 	    set section_order 0
-	    set section_list $section_id
+	    set section_id $single_section_id
+	    set section_list $single_section_id
 	}
 
 
