@@ -52,7 +52,7 @@ foreach section_id [db_list sections {
 
 	set stats ""
 
-	if { $display_type eq "rb" || $display_type eq "cb" } {
+	if { $display_type eq "rb" || $display_type eq "cb" || $display_type eq "sb" } {
 	    set total_responses 0
 	    set total_correct 0
 	    set total_choices 0
@@ -97,34 +97,39 @@ foreach section_id [db_list sections {
 		}
 	    }
 
-	    append stats "<table>\n"
-	    set first_p 1
-	    foreach choice $choices {
-		array set r $choice
+	    if { $total_responses } {
+		append stats "<table>\n"
+		set first_p 1
+		foreach choice $choices {
+		    array set r $choice
 
-		append stats "<tr>"
-		if { $r(correct_answer_p) } {
-		    append stats "<td><img src=/resources/assessment/correct.gif /></td>"
-		} else {
-		    append stats "<td>&nbsp;</td>"
-		}
-		append stats "<td width=250>$r(choice_title):</td><td style='text-align: right; padding-right: 10px'>$r(choice_responses)</td><td style='text-align: right; padding-right: 20px'>[expr double($r(choice_responses)) / $total_responses * 100]%</td>\n"
+		    append stats "<tr>"
+		    if { $r(correct_answer_p) } {
+			append stats "<td><img src=/resources/assessment/correct.gif /></td>"
+		    } else {
+			append stats "<td>&nbsp;</td>"
+		    }
+		    append stats "<td width=250>$r(choice_title):</td><td style='text-align: right; padding-right: 10px'>$r(choice_responses)</td><td style='text-align: right; padding-right: 20px'>[format "%.2f" [expr double($r(choice_responses)) / $total_responses * 100]]%</td>\n"
 
-		if { $first_p } {
-		    append stats "
+		    if { $first_p } {
+			append stats "
 <td rowspan=$total_choices>
 <b>[_ assessment.Total_Responses]</b> $total_responses<br />
 <b>[_ assessment.Total_Correct]</b> $total_correct"
-		    
-		    if { $total_correct > 0 } {
-			append stats ", [expr double($total_correct) / $total_responses * 100]%"
-		    }
-		    append stats "</td></tr>\n"
+			
+			if { $total_correct > 0 } {
+			    append stats ", [format "%.2f" [expr double($total_correct) / $total_responses * 100]]%"
+			}
+			append stats "</td></tr>\n"
 
-		    set first_p 0
-		} else {
-		    append stats "</tr>\n"
+			set first_p 0
+		    } else {
+			append stats "</tr>\n"
+		    }
 		}
+		append stats "</table>\n"
+	    } else {
+		append stats "[_ assessment.No_responses]"
 	    }
 	} else {
 	    switch $data_type {
