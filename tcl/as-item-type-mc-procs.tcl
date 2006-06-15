@@ -163,7 +163,7 @@ ad_proc -public as::item_type_mc::render {
 		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
 		set pos [lsearch -exact -integer $defaults $choice_id]
 		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
-		    lappend choice_list [list "$title  <i>$feedback_text</i>" $choice_id]
+		    lappend choice_list [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
 		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
