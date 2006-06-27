@@ -5,9 +5,20 @@ if {![exists_and_not_null edit_p]} {
 if {![exists_and_not_null feedback_only_p] } {
     set feedback_only_p 0
 }
+if {![info exists assessment_id]} {
+    set assessment_id $assessment_data(assessment_id)
+}
+# if we can tell this is the last section, next button should go to feedback for the entire assessment.
+
+set section_list [as::assessment::sections -assessment_id $assessment_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
+
+if {[lsearch $section_list $section_id] eq [expr {[llength $section_list]-1}]} {
+    set next_url [export_vars -base session {session_id next_url}]
+}
+
 if {[info exists assessment_id]} {
     # check if this assessment even allows feedback if not, bail out
-    as::assessment::data -assessment_id $assessment_id
+
     if {$feedback_only_p && $assessment_data(show_feedback) eq "none"} {
 	ad_returnredirect $next_url
 	ad_script_abort
@@ -159,7 +170,6 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 }
 
 if { $feedback_only_p && $feedback_count == 0 && [exists_and_not_null next_url] } {
-    ns_log notice "feedback going to $next_url"
     ad_returnredirect $next_url
     ad_script_abort
 }

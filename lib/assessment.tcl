@@ -17,7 +17,7 @@ ad_page_contract {
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
-    single_section_id:optional
+    {single_section_id ""}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -75,13 +75,13 @@ db_transaction {
 		# set the time when the subject initiated the Assessment
 		db_dml session_start {}
 	    } else {
-		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm}]
+		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm single_section_id}]
 	    }
 	} else {
 	    # pick up old session
 	    db_1row unfinished_section_order {}
 	    if {[empty_string_p $section_order]} {
-#		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm}]
+#		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm single_section_id}]
 	    } else {
 		db_1row unfinished_section_id {}
 		db_1row unfinished_item_order {}
@@ -107,8 +107,8 @@ db_transaction {
 
 
 	# get all sections of assessment in correct order
-	if {![info exists single_section_id]} {
-	    set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
+	set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
+	if {$single_section_id eq ""} {
 	    if {[empty_string_p $section_order]} {
 		# start at the first section
 		set section_order 0
@@ -121,11 +121,17 @@ db_transaction {
 	    }
 
 	} else {
-	    set section_order 0
 	    set section_id $single_section_id
+	    if {$section_order ne "" && $section_order ne [lsearch $section_list $section_id]} {
+		# we had more than one section in the whole assessment
+		# but we are only doing one right now, so go to the next_url
+		# we need to funnel through feedback page, in case there is per page feedback.
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url next_url {return_p 1} item_id_list:multiple }]
+		ad_script_abort		
+	    }
 	    set section_list $single_section_id
+	    set section_order 0
 	}
-	ns_log notice "section_order ${section_order} section_id ${section_id} section_list ${section_list}"
 
 	# check if we just wanted to do one section, if so go to the 
 	# next_url
@@ -261,8 +267,8 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
-	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }]
-#	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }]
+	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
+#	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}]
 	ad_script_abort
     } else {
 	# calculate session points at end of session
@@ -282,7 +288,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
     }
 }
 
-lappend exports next_asm assessment_id section_id section_order item_order password return_url item_id_list
+lappend exports next_asm assessment_id section_id section_order item_order password return_url item_id_list single_section_id
 # form for display an assessment with sections and items
 ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export $exports -form {
     {session_id:text(hidden) {value $session_id}}
@@ -313,7 +319,7 @@ foreach one_item $item_list {
     set submitted_p f
     ns_log notice "ASSESSMENT.TCL display(submit_answer_p)='${display(submit_answer_p)}'"
     if {$display(submit_answer_p) != "t"} {
-	ns_log notice "ASSESSMENT.TCL NO seperate submit"
+#	ns_log notice "ASSESSMENT.TCL NO seperate submit"
 	# no seperate submit of each item
 	if {$assessment_data(reuse_responses_p) == "t"} {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
@@ -381,8 +387,8 @@ foreach one_item $item_list {
 	}"
 	set after_submit "{
         
-	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }\]
-#	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }\]
+	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
+#	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
 	    ad_script_abort
 	}"
 	
@@ -482,7 +488,7 @@ if {$display(submit_answer_p) != "t"} {
 	    set section_order \$new_section_order
             }
 	    set item_order \$new_item_order
-	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }\]
+	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
 #	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url}\]
 	    ad_script_abort
 	} else {
@@ -543,7 +549,7 @@ if {$display(submit_answer_p) != "t"} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
-	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }]
+	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
 #	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url}]
 	    ad_script_abort
 	} else {
@@ -559,7 +565,7 @@ if {$display(submit_answer_p) != "t"} {
 	    } else {
 		set return_url $assessment_data(return_url)
 	    }
-	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple }]
+	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
 #	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple next_url}]
 	    ad_script_abort
 	}

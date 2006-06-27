@@ -7,6 +7,7 @@ ad_page_contract {
     @cvs-id $Id: 
 } {
     session_id:integer
+    {next_url ""}
 } -properties {
     context_bar:onevalue
     page_title:onevalue

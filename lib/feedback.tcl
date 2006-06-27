@@ -20,11 +20,14 @@ ad_page_contract {
     next_asm:optional
     {item_id_list:multiple,optional {}}
     {next_url ""}
+    no_complaint:optional
 } -properties {
 } -validate {
 } -errors {
 }
-
+#if {![info exists no_complain]} {
+#    ad_return_complaint 1 "feedback! [ns_conn query]"
+#}
 set subject_id [ad_conn user_id]
 as::assessment::data -assessment_id $assessment_id
 permission::require_permission -object_id $assessment_id -privilege read
