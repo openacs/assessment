@@ -43,9 +43,6 @@
 <hr>
 <if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none ><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 
-<if @next_url@ not nil>
-  <a href="@next_url;noquote@" class="button">Next</a>
-</if>
 <if @comments_installed_p@>
 <include src="/packages/assessment/lib/comments-chunk" object_id="@session_id@" />
 </if>
