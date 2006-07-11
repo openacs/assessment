@@ -126,7 +126,7 @@ db_transaction {
 		# we had more than one section in the whole assessment
 		# but we are only doing one right now, so go to the next_url
 		# we need to funnel through feedback page, in case there is per page feedback.
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url next_url {return_p 1} item_id_list:multiple }]
+		ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url next_url {return_p 1} item_id_list:multiple }]
 		ad_script_abort		
 	    }
 	    set section_list $single_section_id
@@ -155,6 +155,13 @@ db_transaction {
 	set item_list [as::section::items -section_id $section_id -session_id $session_id -sort_order_type $display(sort_order_type) -num_items $section(num_items) -random_p $assessment_data(random_p)]
 	set item_id_list [list]
 
+	# get total number of items
+	set page_total_items [llength $item_list]
+	# get preference for number of display items per page
+	set page_display_per_page $display(num_items)
+	# determine the total number of pages
+	set page_total [expr $page_total_items / $page_display_per_page]
+
 	set section(num_sections) [llength $section_list]
 	set section(num_items) [llength $item_list]
 	if {![empty_string_p $section(max_time_to_complete)]} {
@@ -170,12 +177,22 @@ db_transaction {
 		# show whole section when picking up a seperate submit section
 		set item_order 0
 	    }
-	    # strip away items on previous section pages
-	    set item_list [lreplace $item_list 0 [expr $item_order-1]]
 	}
+
+	# determine on which page we are right now based on item_order
+	if { ![exists_and_not_null item_order] } { set item_order 0 }
+	# add 1 because we want to compare the 1 indexed display number
+	# to the current page
+	set current_page [expr {$item_order / $page_display_per_page + 1} ]
+
+	# strip away items on previous section pages
+	set item_list [lreplace $item_list 0 [expr $item_order-1]]
+
 
 	if {![empty_string_p $display(num_items)]} {
 	    if {[llength $item_list] > $display(num_items)} {
+		# show only a few items per page
+		set item_list [lreplace $item_list $display(num_items) end]
 		# next page: more items of this section
 		set new_item_order $item_order
 		set new_section_order $section_order
@@ -183,9 +200,6 @@ db_transaction {
 		    set new_item_order 0
 		}
 		set new_item_order [expr $new_item_order + $display(num_items)]
-
-		# show only a few items per page
-		set item_list [lreplace $item_list $display(num_items) end]
 	    } else {
 		# next page: next section
 		set new_item_order ""
@@ -204,6 +218,14 @@ db_transaction {
 
 	foreach one_item $item_list {
 	    lappend item_id_list [lindex $one_item 0]
+	}
+
+	# let's generate the list of page numbers
+	if {![empty_string_p $display(num_items)]} {
+	    set progress_bar_list [template::util::number_list $page_total 1]
+	}
+	if {![info exists show_progress]} {
+	    set show_progress 0
 	}
     }
 }
