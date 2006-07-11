@@ -122,7 +122,8 @@ db_transaction {
 
 	} else {
 	    set section_id $single_section_id
-	    if {$section_order ne "" && $section_order ne [lsearch $section_list $section_id]} {
+	    # we check if the section order is greater than the current section, just in case we are presenting sections out of order
+	    if {$section_order ne "" && $section_order > [lsearch $section_list $section_id]} {
 		# we had more than one section in the whole assessment
 		# but we are only doing one right now, so go to the next_url
 		# we need to funnel through feedback page, in case there is per page feedback.
@@ -160,7 +161,7 @@ db_transaction {
 	# get preference for number of display items per page
 	# since we are dividing here, we need to set per_page to the
 	# total number of questions if its an empty string
-	set page_display_per_page [ad_decode $display(num_items) $page_total_items]
+	set page_display_per_page [expr {[string equal "" $display(num_items)] ? $page_total_items : $display(num_items)}]
 	# determine the total number of pages
 	set page_total [expr $page_total_items / $page_display_per_page]
 
@@ -185,7 +186,7 @@ db_transaction {
 	if { ![exists_and_not_null item_order] } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
-	set current_page [expr {$item_order / $page_display_per_page + 1} ]
+	set current_page [expr {$item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages
 	set item_list [lreplace $item_list 0 [expr $item_order-1]]
