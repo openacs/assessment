@@ -158,7 +158,9 @@ db_transaction {
 	# get total number of items
 	set page_total_items [llength $item_list]
 	# get preference for number of display items per page
-	set page_display_per_page $display(num_items)
+	# since we are dividing here, we need to set per_page to the
+	# total number of questions if its an empty string
+	set page_display_per_page [ad_decode $display(num_items) $page_total_items]
 	# determine the total number of pages
 	set page_total [expr $page_total_items / $page_display_per_page]
 
