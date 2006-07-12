@@ -12,7 +12,6 @@
   <if @section.max_time_to_complete@ not nil><br>#assessment.section_time_remaining#</if>
 
 	<if @progress_bar_list@ defined>
-
 	<list name="progress_bar_list">
 	<if @progress_bar_list:item@ eq @current_page@>
 	<b>[@progress_bar_list:item@] </b>
@@ -33,8 +32,9 @@
        <!-- Item begin -->
        <if @assessment_data.show_item_name_p@ eq t><p><b>@items.name@:</b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></p></if>
        <div class="question-container" style="margin-bottom:25px">
-         <if @items.presentation_type@ ne fitb><b>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
+         <if @items.description@ not nil><p>@items.description;noquote@</p></if>
          <if @items.content@ not nil><p>@items.content;noquote@</p></if>
+         <if @items.presentation_type@ ne fitb><b>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
      
 <group column=title>
          <div class="form-widget">

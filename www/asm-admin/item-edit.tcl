@@ -38,18 +38,21 @@ if {[string eq $display_type "_f"]} {
 }
 
 ad_form -name item_edit -mode display -action item-edit-general -export { assessment_id section_id as_item_id } -form {
-    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {value $title} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {value $description} {help_text "[_ assessment.item_Description_help]"}}
-}
-
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
-    category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit
 }
 
 if {[db_0or1row get_item_content {}]} {
     ad_form -extend -name item_edit -form {
 	{content:text(inform),optional {label "[_ assessment.item_display_Content]"} {value {<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>}} {help_text "[_ assessment.item_Content_help]"}}
     }
+}
+
+ad_form -extend -name item_edit -form {
+    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {value $title} {help_text "[_ assessment.item_Title_help]"}}
+}
+
+if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+    category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit
 }
 
 ad_form -extend -name item_edit -form {

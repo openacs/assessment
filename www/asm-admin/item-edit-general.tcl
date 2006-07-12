@@ -40,31 +40,40 @@ foreach display_type [db_list display_types {}] {
 
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {help_text "[_ assessment.item_Title_help]"}}
 }
 if { $type > 1} {
-    ad_form -extend -name item_edit_general -form {
-	{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
-    }
+	ad_form -extend -name item_edit_general -form {
+		{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+	}
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
-    category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit_general
-}
-
-if {[db_0or1row get_item_content {}]} {
-    ad_form -extend -name item_edit_general -form {
-	{delete_content:text(checkbox),optional {label "[_ assessment.item_Delete_Content]"} {options {{{<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>} t}} }}
-    }
-}
+	if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+	category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit_general
+	}
+	
+	if {[db_0or1row get_item_content {}]} {
+	ad_form -extend -name item_edit_general -form {
+		{delete_content:text(checkbox),optional {label "[_ assessment.item_Delete_Content]"} {options {{{<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>} t}} }}
+	}
+	}
 }
 if { $type > 1} { 
+	ad_form -extend -name item_edit_general -form {
+	{content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
+	}
+}
+
 ad_form -extend -name item_edit_general -form {
-    {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
-    {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
-    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
-    {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
+    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {help_text "[_ assessment.item_Title_help]"}}
 }
+
+if { $type > 1} {
+	ad_form -extend -name item_edit_general -form {
+	{subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
+	{field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
+	{field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
+	}
 }
+
 ad_form -extend -name item_edit_general -form {
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }
