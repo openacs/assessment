@@ -37,6 +37,8 @@
 	  <if @items.presentation_type@ ne fitb>
 	    <b>@items.title;noquote@</b>
 	    @items.content;noquote@
+	    <if @items.correct_p eq 1><if @show_feedback@ eq correct or @show_feedback@ eq all><br />@items.feedback_right;noquote@</if></if>
+	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><br />@items.feedback_wrong;noquote@</if></if>
 	</td><td>
 	  <if @items.title@ ne @items.next_title@>
 	</td></tr>

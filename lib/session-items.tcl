@@ -26,10 +26,10 @@ if {[info exists item_id_list]} {
 ad_form -name session_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
-
+ns_log notice "assessment session-items.tcl show_feedback = '${show_feedback}'"
 # todo: display feedback text
 set feedback_count 0
-db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p } items session_items {} {
+db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p correct_p} items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
     array set item [as::item::item_data -as_item_id $as_item_id]
 
@@ -64,6 +64,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 
 	if { $points != 0 } {
 	    if {$result_points < $points} {
+		set correct_p 0
 		if {$show_feedback != "correct"} {
 		    if { $feedback_wrong ne "" } {
 			set feedback "<font color=red>$feedback_wrong</font>"
@@ -73,6 +74,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		    }
 		}	
 	    } else {
+		set correct_p 1
 		if {$show_feedback != "incorrect"} {
 		    if { $feedback_right ne "" } {
 			set feedback "<font color=green>$feedback_right</font>"
@@ -83,6 +85,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		}
 	    }
 	} else {
+	    set correct_p 1
 	    if {$presentation_type == "rb" || $presentation_type == "cb"} {
 		set user_answers [db_list get_user_choice_answers {}]
 
@@ -92,6 +95,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		    set user_answers [lindex $user_answers 0]
 		 
 		    if { [lsearch $correct_answers $user_answers] == -1 } {
+			set correct_p 0
 			if {$show_feedback != "correct"} {
 			    if { $feedback_wrong ne "" } {
 				set feedback "<font color=red>$feedback_wrong</font>"
@@ -113,6 +117,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		} else {
 		    # Checkbox, all answers must be correct if no
 		    # points are set
+		    
 		    if { [llength $user_answers] != [llength $correct_answers] } {
 			set correct_p 0
 		    } else {
