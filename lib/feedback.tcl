@@ -42,3 +42,12 @@ if { $next_url eq "" } {
 	set next_url [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id}]
     }
 }
+
+if {[info exists assessment_id]} {
+    # check if this assessment even allows feedback if not, bail out
+
+    if {$assessment_data(show_feedback) eq "none"} {
+	ad_returnredirect $next_url
+	ad_script_abort
+    }
+}

@@ -16,15 +16,6 @@ if {[lsearch $section_list $section_id] eq [expr {[llength $section_list]-1}]} {
     set next_url [export_vars -base session {session_id next_url}]
 }
 
-if {[info exists assessment_id]} {
-    # check if this assessment even allows feedback if not, bail out
-
-    if {$feedback_only_p && $assessment_data(show_feedback) eq "none"} {
-	ad_returnredirect $next_url
-	ad_script_abort
-    }
-}
-
 set items_clause ""
 if {[info exists item_id_list]} {
     if {[llength $item_id_list]} {
