@@ -135,9 +135,7 @@ ad_form -extend -name item_edit_general -form {
 	if {[exists_and_not_null category_ids]} {
 	    category::map_object -object_id $new_item_id $category_ids
 	}
-ns_log Notice "HAM : EDITING CONTENT"
 	if {![empty_string_p $content]} {
-ns_log Notice "HAM : content not empty"
 	    set filename [lindex $content 0]
 	    set tmp_filename [lindex $content 1]
 	    set file_mimetype [lindex $content 2]
@@ -162,7 +160,6 @@ ns_log Notice "HAM : content not empty"
 	    db_dml delete_item_content {}
 	    db_dml insert_item_content {}
 	} elseif {[info exists delete_content] && $delete_content == "t" } {
-ns_log Notice "HAM : delete is checked"
 	    db_dml delete_item_content {}
 	}
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
