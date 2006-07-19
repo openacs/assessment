@@ -36,7 +36,7 @@
 </table>      
 
 <blockquote>
-  <include src="/packages/assessment/lib/session-items" edit_p=1 section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@" survey_p="@assessment_data.survey_p@">
+  <include src="/packages/assessment/lib/session-items" edit_p=1 section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" &assessment_data="assessment_data" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@" survey_p="@assessment_data.survey_p@">
 </blockquote>
 
 </multiple>
