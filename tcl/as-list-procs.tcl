@@ -41,12 +41,20 @@ namespace eval as::list {
 	    lappend assessment_ids $option_assessment_id
 	}
 	
+
 	# we just want the questions that are in all the assessments we received
-	set section_ids [db_list section_ids "select distinct section_id from (select m.assessment_id, m.section_id from as_assessment_section_map m where m.assessment_id in ([template::util::tcl_to_sql_list $assessment_ids])) s1 where exists (select null from (select m.assessment_id, m.section_id from as_assessment_section_map m where  m.assessment_id in ([template::util::tcl_to_sql_list $assessment_ids])) s2 where s1.section_id=s2.section_id and s1.assessment_id <> s2.assessment_id)"]	
+	if {[llength $assessments] > 1} {
+	    set multiple_assessment_where "where exists (select null from (select m.assessment_id, m.section_id from as_assessment_section_map m where  m.assessment_id in ([template::util::tcl_to_sql_list $assessment_ids])) s2 where s1.section_id=s2.section_id and s1.assessment_id <> s2.assessment_id)"
+	} else {
+	    set multiple_assessment_where ""
+	}
+	set section_ids [db_list section_ids "select distinct section_id from (select m.assessment_id, m.section_id from as_assessment_section_map m where m.assessment_id in ([template::util::tcl_to_sql_list $assessment_ids])) s1 $multiple_assessment_where"]	
 	if {![llength $section_ids]} {
 	    # no sections are common to all assessments
 	    return [list list_filters {} assessment_search_options {} search_js_array {}]
 	}
+	# don't query the same item more than one
+	array set visited_items [list]
 	foreach section [db_list_of_lists sections "
 		select cr.title as option_section_title, s.section_id as option_section_id
 		from as_sections s, cr_revisions cr, cr_items ci --, as_assessment_section_map asm
@@ -69,85 +77,87 @@ namespace eval as::list {
 		
 		order by ism.sort_order
 	    } {
-		if { ! [exists_and_not_null assessment_id] } {
-		    lappend assessment_search_options [list "...... $option_item_title" $option_item_id]
-		} else {
-		    lappend assessment_search_options [list "... $option_item_title" $option_item_id]
-		}
+		if {![info exists visited_items($option_item_id)]} {
+		    set visited_items($option_item_id) $option_item_id
+		    if { ! [exists_and_not_null assessment_id] } {
+			lappend assessment_search_options [list "...... $option_item_title" $option_item_id]
+		    } else {
+			lappend assessment_search_options [list "... $option_item_title" $option_item_id]
+		    }
 
-		set one_item_type [db_string get_item_type {
-		    select oi.object_type
-		    from cr_items i, as_item_rels it, as_item_rels dt, acs_objects oi
-		    where dt.item_rev_id = it.item_rev_id
-		    and it.rel_type = 'as_item_type_rel'
-		    and dt.rel_type = 'as_item_display_rel'
-		    and oi.object_id = it.target_rev_id
-		    and i.latest_revision = it.item_rev_id
-		    and i.item_id = :option_item_id
-		}]
-
-		set one_item_choices [db_list_of_lists item_choices {
-		    select r.title, c.choice_id
-		    
-		    from cr_revisions r, as_item_choices c
-		    left outer join cr_revisions r2 on (c.content_value = r2.revision_id)
-		    
-		    where r.revision_id = c.choice_id
-		    and c.mc_id = (select max(t.as_item_type_id)
-				   from as_item_type_mc t, cr_revisions c, as_item_rels r
-				   where t.as_item_type_id = r.target_rev_id
-				   and r.item_rev_id = :option_revision_id
-				   and r.rel_type = 'as_item_type_rel'
-				   and c.revision_id = t.as_item_type_id
-				   group by c.title, t.increasing_p, t.allow_negative_p,
-				   t.num_correct_answers, t.num_answers)
-		    
-		    order by c.sort_order
-		}]
-
-		append search_js_array "searchItems\['$option_item_id'\] = '$one_item_type'\n"
-#####
-
-		if { $one_item_type eq "as_item_type_mc" } {
-		    set values $one_item_choices
-		    set search_clause [subst { 
-			exists (select 1
-				from as_item_data_choices dc
-				where dd.item_data_id = dc.item_data_id
-				and dc.choice_id = :as_item_id_$option_item_id)
+		    set one_item_type [db_string get_item_type {
+			select oi.object_type
+			from cr_items i, as_item_rels it, as_item_rels dt, acs_objects oi
+			where dt.item_rev_id = it.item_rev_id
+			and it.rel_type = 'as_item_type_rel'
+			and dt.rel_type = 'as_item_display_rel'
+			and oi.object_id = it.target_rev_id
+			and i.latest_revision = it.item_rev_id
+			and i.item_id = :option_item_id
 		    }]
-		} else {
-		    set values ""; #[set as_item_id_$option_item_id]
-		    set search_clause "lower(dd.text_answer) like '%'||lower(:as_item_id_$option_item_id)||'%' "
+
+		    set one_item_choices [db_list_of_lists item_choices {
+			select r.title, c.choice_id
+			
+			from cr_revisions r, as_item_choices c
+			left outer join cr_revisions r2 on (c.content_value = r2.revision_id)
+			
+			where r.revision_id = c.choice_id
+			and c.mc_id = (select max(t.as_item_type_id)
+				       from as_item_type_mc t, cr_revisions c, as_item_rels r
+				       where t.as_item_type_id = r.target_rev_id
+				       and r.item_rev_id = :option_revision_id
+				       and r.rel_type = 'as_item_type_rel'
+				       and c.revision_id = t.as_item_type_id
+				       group by c.title, t.increasing_p, t.allow_negative_p,
+				       t.num_correct_answers, t.num_answers)
+			
+			order by c.sort_order
+		    }]
+
+		    append search_js_array "searchItems\['$option_item_id'\] = '$one_item_type'\n"
+		    #####
+
+		    if { $one_item_type eq "as_item_type_mc" } {
+			set values $one_item_choices
+			set search_clause [subst { 
+			    exists (select 1
+				    from as_item_data_choices dc
+				    where dd.item_data_id = dc.item_data_id
+				    and dc.choice_id = :as_item_id_$option_item_id)
+			}]
+		    } else {
+			set values ""; #[set as_item_id_$option_item_id]
+			set search_clause "lower(dd.text_answer) like '%'||lower(:as_item_id_$option_item_id)||'%' "
+		    }
+		    
+		    lappend list_filters "as_item_id_$option_item_id" \
+			[list \
+			     label $option_item_title \
+			     values $values \
+			     where_clause [subst {
+				 (:as_item_id_$option_item_id is null
+				  or
+				  exists (select 1
+					  from as_itemsi ii, as_item_data dd,
+					  (select oi.object_type, it.item_rev_id as as_item_id
+					   from as_item_rels it, as_item_rels dt, acs_objects oi
+					   where dt.item_rev_id = it.item_rev_id
+					   and it.rel_type = 'as_item_type_rel'
+					   and dt.rel_type = 'as_item_display_rel'
+					   and oi.object_id = it.target_rev_id) tt,
+					  cr_items ci
+					  
+					  where ii.item_id = $option_item_id
+					  and ii.as_item_id = dd.as_item_id
+					  and ii.as_item_id = tt.as_item_id
+					  and dd.session_id = m.session_id
+					  and ii.as_item_id = ci.latest_revision
+					  and $search_clause
+					  ))
+			     }]]
 		}
-		
-		lappend list_filters "as_item_id_$option_item_id" \
-		    [list \
-			 label $option_item_title \
-			 values $values \
-			 where_clause [subst {
-			     (:as_item_id_$option_item_id is null
-			      or
-			      exists (select 1
-				      from as_itemsi ii, as_item_data dd,
-				      (select oi.object_type, it.item_rev_id as as_item_id
-				       from as_item_rels it, as_item_rels dt, acs_objects oi
-				       where dt.item_rev_id = it.item_rev_id
-				       and it.rel_type = 'as_item_type_rel'
-				       and dt.rel_type = 'as_item_display_rel'
-				       and oi.object_id = it.target_rev_id) tt,
-				      cr_items ci
-				      
-				      where ii.item_id = $option_item_id
-				      and ii.as_item_id = dd.as_item_id
-				      and ii.as_item_id = tt.as_item_id
-				      and dd.session_id = m.session_id
-				      and ii.as_item_id = ci.latest_revision
-				      and $search_clause
-				      ))
-			 }]]
-	    
-	    }	    
+	    }
 	}
     
 	ns_log notice  "as_list_filters returning '[list list_filters $list_filters assessment_search_options $assessment_search_options search_js_array $search_js_array]'"
