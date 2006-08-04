@@ -4,7 +4,8 @@
 <fullquery name="section_items">
       <querytext>
       
-    select i.as_item_id, i.subtext, cr.title, cr.description, i.field_name,asr.item_id as as_item_id_i,
+    select i.as_item_id, i.subtext, cr.title, cr.content as
+           question_text, cr.description, i.field_name,asr.item_id as as_item_id_i,
            ism.required_p, ism.section_id, ism.sort_order,
            ism.max_time_to_complete, ism.points
     from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism, cr_revisions asr

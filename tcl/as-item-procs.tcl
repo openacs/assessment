@@ -41,11 +41,13 @@ ad_proc -public as::item::new {
 	if {[empty_string_p $field_name]} {
 	    set field_name $name
 	}
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -creation_user [ad_conn user_id] -creation_ip [ad_conn peeraddr]]
+        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -creation_user [ad_conn user_id] -creation_ip [ad_conn peeraddr] -storage_type text]
 
         set as_item_id [content::revision::new -item_id $item_item_id \
 			    -content_type {as_items} \
-			    -title $title \
+			    -title [string range $title 0 999] \
+                            -content $title \
+                            -mime_type "text/html" \
 			    -description $description \
 			    -attributes [list [list subtext $subtext] \
 					     [list field_name $field_name] \

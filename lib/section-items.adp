@@ -51,7 +51,7 @@
   </else>
 <td>
   <blockquote>
-    <if @items.presentation_type@ ne fitb>@items.title;noquote@
+    <if @items.presentation_type@ ne fitb>@items.question_text;noquote@
     <img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
     <a href="item-edit?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
     <a href="item-copy?section_id=@section_id@&assessment_id=@assessment_id@&as_item_id=@items.as_item_id@&after=@items.sort_order@">#assessment.Copy#</a>

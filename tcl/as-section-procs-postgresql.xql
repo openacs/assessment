@@ -5,7 +5,8 @@
 <fullquery name="as::section::items.get_sorted_items">
 	<querytext>
 
-	select s.as_item_id, ci.name, r.title, r.description, i.subtext, m.required_p,
+	select s.as_item_id, ci.name, r.title, r.content as
+	       question_text, r.description, i.subtext, m.required_p,
 	       m.max_time_to_complete, r2.revision_id as content_rev_id,
 	       r2.title as content_filename, ci2.content_type,
 	       ir.target_rev_id as as_item_type_id, i.validate_block
@@ -31,7 +32,7 @@
 <fullquery name="as::section::items.section_items">
 	<querytext>
 
-	select i.as_item_id, ci.name, cr.title, cr.description, i.subtext,
+	select i.as_item_id, ci.name, cr.content as question_text, cr.title, cr.description, i.subtext,
 	       m.required_p, m.max_time_to_complete, r2.revision_id as content_rev_id,
 	       r2.title as content_filename, ci2.content_type, m.fixed_position,
 	       ir.target_rev_id as as_item_type_id, i.validate_block

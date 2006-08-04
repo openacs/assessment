@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="0.20" url="http://openacs.org/repository/download/apm/assessment-0.20.apm">
+    <version name="0.21" url="http://openacs.org/repository/download/apm/assessment-0.21.apm">
         <owner url="mailto:eperez@it.uc3m.es">Eduardo Perez Ureta</owner>
         <summary>Assessment package that will replace the survey,
     quizz, complex survey, poll and other data collection packages

@@ -86,8 +86,8 @@ ad_proc -public as::assessment::new {
 						   [list section_navigation $section_navigation] \
 						   [list survey_p $survey_p] \
 						   [list package_id $package_id] \
-                           [list type $type]]]
-			      
+                                                   [list type $type]]]
+        
     }
     db_dml update_clobs {} -clobs [list $instructions $consent_page]
     
@@ -229,9 +229,9 @@ ad_proc -public as::assessment::new_revision {
 					     [list section_navigation $a(section_navigation)]  \
 					     [list type $a(type)]]]
 	
-		set instructions $a(instructions)
-		set consent_page $a(consent_page)
-		db_dml update_clobs {} -clobs [list $a(instructions) $a(consent_page)]
+        set instructions $a(instructions)
+        set consent_page $a(consent_page)
+        db_dml update_clobs {} -clobs [list $a(instructions) $a(consent_page)]
 
 	copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
 	copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
@@ -454,19 +454,23 @@ ad_proc as::assessment::pretty_time {
 
     Returns a pretty string of min:sec
 } {
+    if {$seconds eq "0" || $seconds eq ""} {
+        return $seconds
+    }
     set time ""
     if {![empty_string_p $seconds]} {
 	if {$hours_p} {
 	    set time_hour [expr $seconds / 3600]
 	    set seconds [expr $seconds - ($time_hour * 3600)]
-	}
-	set time_min [expr $seconds / 60]
-	set time_sec [expr $seconds - ($time_min * 60)]
-	set pad "00"
-	if {$hours_p} {
-	    append time "[string range $pad [string length $time_hour] end]$time_hour\:"
-	}
-	append time "[string range $pad [string length $time_min] end]$time_min\:[string range $pad [string length $time_sec] end]$time_sec min"
+            
+            set time_min [expr $seconds / 60]
+            set time_sec [expr $seconds - ($time_min * 60)]
+            set pad "00"
+            if {$hours_p} {
+                append time "[string range $pad [string length $time_hour] end]$time_hour\:"
+            }
+            append time "[string range $pad [string length $time_min] end]$time_min\:[string range $pad [string length $time_sec] end]$time_sec min"
+        }
     }
     return $time
 }
