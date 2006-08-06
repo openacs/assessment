@@ -327,7 +327,6 @@ set required_count 0
 
 foreach one_item $item_list {
     util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id validate_block question_text
-
     if {$required_p == "t"} {
 	# make sure that mandatory items are answered
 	lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
@@ -437,7 +436,8 @@ foreach one_item $item_list {
 	set choice_orientation ""
     }
 
-    multirow append items $as_item_id $name $title $description $subtext $required_p $max_time_to_complete $presentation_type "" $submitted_p [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type] $as_item_type_id $choice_orientation "" "" $question_text
+    multirow append items $as_item_id $name $title $description $subtext $required_p $max_time_to_complete $presentation_type "" $submitted_p [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type] $as_item_type_id $choice_orientation "" "" "" $question_text
+
 }
 
 for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
