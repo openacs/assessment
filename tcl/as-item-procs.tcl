@@ -87,7 +87,8 @@ ad_proc -public as::item::edit {
         set new_item_id [content::revision::new \
 			     -item_id $item_item_id \
 			     -content_type {as_items} \
-			     -title $title \
+			     -title [string range $title 0 999] \
+			     -content $title \
 			     -description $description \
 			     -attributes [list [list subtext $subtext] \
 					      [list field_name $field_name] \
@@ -119,6 +120,7 @@ ad_proc -public as::item::new_revision {
 			     -content_type {as_items} \
 			     -title $title \
 			     -description $description \
+			     -content $content \
 			     -attributes [list [list subtext $subtext] \
 					      [list field_name $field_name] \
 					      [list field_code $field_code] \
@@ -183,6 +185,7 @@ ad_proc -public as::item::copy {
 			     -item_id $item_item_id \
 			     -content_type {as_items} \
 			     -title $title \
+			     -content $content \
 			     -description $description \
 			     -attributes [list [list subtext $subtext] \
 					      [list field_name $field_name] \

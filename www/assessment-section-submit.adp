@@ -34,7 +34,7 @@
        <div class="question-container" style="margin-bottom:25px">
          <if @items.description@ not nil><p>@items.description;noquote@</p></if>
          <if @items.content@ not nil><p>@items.content;noquote@</p></if>
-         <if @items.presentation_type@ ne fitb><b>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
+         <if @items.presentation_type@ ne fitb>*question text* <b>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
      
 <group column=title>
          <div class="form-widget">

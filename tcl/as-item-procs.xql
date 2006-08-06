@@ -14,7 +14,7 @@
 <fullquery name="as::item::new_revision.item_data">
       <querytext>
 
-	select cr.item_id as item_item_id, cr.title, cr.description, i.subtext, i.field_code,
+	select cr.item_id as item_item_id, cr.content, cr.title, cr.description, i.subtext, i.field_code,
 	       i.field_name, i.required_p, i.data_type, i.max_time_to_complete,
 	       i.feedback_right, i.feedback_wrong, i.points, i.validate_block
 	from cr_revisions cr, as_items i
@@ -40,7 +40,7 @@
 <fullquery name="as::item::copy.item_data">
       <querytext>
 
-	select i.subtext, i.field_code, i.required_p, i.data_type,
+	select cr.content, cr.title, cr.description, i.subtext, i.field_code, i.required_p, i.data_type,
 	       i.max_time_to_complete, i.feedback_right,
 	       i.feedback_wrong, i.points, i.validate_block
 	from cr_revisions cr, as_items i
