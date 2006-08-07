@@ -44,7 +44,7 @@ foreach item_type [db_list item_types {}] {
 
 ad_form -name item_add -action item-add -export { assessment_id section_id after type} -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
+    {question_text:richtext {label "[_ assessment.item_Question"} {html {rows 5 cols 80 style {width: 100%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
 if { $type > 1} {
     ad_form -extend -name item_add -form {{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
@@ -98,7 +98,7 @@ ad_form -extend -name item_add -form {
     {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
 } -new_request {
     set name ""
-    set title ""
+    set question_text ""
     set description ""
     set subtext ""
     set field_name ""
@@ -129,12 +129,12 @@ ad_form -extend -name item_add -form {
     } elseif {[string eq $item_type "fu"]} {
 	set data_type "file" 
     } 
-
+    set question_text [template::util::richtext::get_property content $question_text]
     db_transaction {
 	if {![db_0or1row item_exists {}]} {
 	    set as_item_id [as::item::new \
 				-item_item_id $as_item_id \
-				-title $title \
+				-title $question_text \
 				-description $description \
 				-subtext $subtext \
 				-field_name $field_name \
@@ -149,7 +149,7 @@ ad_form -extend -name item_add -form {
 	} else {
 	    set as_item_id [as::item::edit \
 				-as_item_id $as_item_id \
-				-title $title \
+				-title $question_text \
 				-description $description \
 				-subtext $subtext \
 				-field_name $field_name \

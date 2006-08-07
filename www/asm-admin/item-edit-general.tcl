@@ -63,7 +63,7 @@ if { $type > 1} {
 }
 
 ad_form -extend -name item_edit_general -form {
-    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {help_text "[_ assessment.item_Title_help]"}}
+    {question_text:richtext {label "[_ assessment.Question]"} {html {rows 3 cols 80 style {width:100%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
 
 if { $type > 1} {
@@ -109,17 +109,19 @@ ad_form -extend -name item_edit_general -form {
     }
     set data_type_disp "[_ assessment.data_type_$data_type]" 
     set display_type [string range [db_string get_display_type {}] end-1 end]
+    set question_text [template::util::richtext::create $question_text $mime_type]
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {[empty_string_p $points]} {
 	set points 0
     }
 } -edit_data {
+    set question_text [template::util::richtext::get_property contents $question_text]
     db_transaction {
 	set old_display_type [string range [db_string get_display_type {}] end-1 end]
 	set new_item_id [as::item::edit \
 			     -as_item_id $as_item_id \
-			     -title $title \
+			     -title $question_text \
 			     -description $description \
 			     -subtext $subtext \
 			     -field_name $field_name \

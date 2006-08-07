@@ -217,6 +217,7 @@ ad_proc as::section::items {
     set item_list [db_list_of_lists get_sorted_items {}]
 
     if {[llength $item_list] > 0} {
+	ns_log notice "as::section::items returning item_list from get_sorted_items \n $item_list \n"
 	return $item_list
     }
 
