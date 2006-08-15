@@ -7,3 +7,4 @@
 --
 
 update cr_revisions set content=title where item_id in (select item_id from cr_items where content_type='as_items');
+update cr_items set storage_type='text' where content_type='as_items';
