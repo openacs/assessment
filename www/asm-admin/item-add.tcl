@@ -44,7 +44,7 @@ foreach item_type [db_list item_types {}] {
 
 ad_form -name item_add -action item-add -export { assessment_id section_id after type} -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {question_text:richtext {label "[_ assessment.item_Question"} {html {rows 5 cols 80 style {width: 100%}}} {help_text "[_ assessment.item_Question_help]"}}
+    {question_text:richtext {label "[_ assessment.item_Question]"} {html {rows 5 cols 80 style {width: 100%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
 if { $type > 1} {
     ad_form -extend -name item_add -form {{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
