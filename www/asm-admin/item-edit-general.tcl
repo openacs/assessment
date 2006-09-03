@@ -174,6 +174,11 @@ ad_form -extend -name item_edit_general -form {
     }
     set as_item_id $new_item_id
     set section_id $new_section_id
+
+    application_data_link::update_links_from \
+        -object_id $as_item_id \
+        -text $question_text
+
 } -after_submit {
     if {$old_display_type == $display_type} {
 	ad_returnredirect [export_vars -base "item-edit" {assessment_id section_id as_item_id}]
