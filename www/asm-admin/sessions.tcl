@@ -22,6 +22,13 @@ permission::require_permission -object_id $package_id -privilege create
 set folder_id [as::assessment::folder_id -package_id $package_id]
 set user_id [ad_conn user_id]
 
+# hack for dotlrn ideally ad_conn subsite_id would pretend dotlrn was a subsite
+if {![apm_package_installed_p dotlrn] \
+	|| [set members_party_id [dotlrn_community::get_community_id]] eq ""} {
+    set members_party_id [application_group::group_id_from_package_id \
+		     -package_id [ad_conn subsite_id]
+}
+
 set form [rp_getform]
 ns_set delkey $form status
 set base_url [ad_return_url]
@@ -133,29 +140,35 @@ db_multirow sessions get_sessions [subst {
     from (select a.assessment_id, cr.title, cr.item_id, cr.revision_id,
 	  u.user_id, u.first_names, u.last_name
 	  
-	  from as_assessments a, cr_revisions cr, cr_items ci, acs_users_all u
+	  from as_assessments a, cr_revisions cr, cr_items ci, acs_users_all u,
+          group_member_map g
 	  
 	  where a.assessment_id = cr.revision_id
 	  and cr.revision_id = ci.latest_revision
 	  and ci.parent_id = :folder_id
 	  
-	  and acs_permission__permission_p(:package_id, u.user_id, 'read')
+	  and g.group_id = :members_party_id
+	  and g.member_id = u.user_id
 	  and acs_permission__permission_p(cr.item_id, u.user_id, 'read')) a
 
     left join (select *
 	       from as_sessions
 	       where session_id in (select max(session_id)
-				    from as_sessions
+				    from as_sessions, acs_objects o
 				    where not completed_datetime is null
-				    group by subject_id, assessment_id)) cs
+	       and o.object_id = session_id
+               and o.package_id = :package_id
+				    group by subject_id, assessment_id )) cs
     on (a.user_id = cs.subject_id and a.assessment_id = cs.assessment_id)
 
     left join (select *
 	       from as_sessions
 	       where session_id in (select max(session_id)
-				    from as_sessions
+				    from as_sessions, acs_objects o
 				    where completed_datetime is null
-				    group by subject_id, assessment_id)) ns
+	       and o.object_id = session_id
+               and o.package_id = :package_id
+  	    group by subject_id, assessment_id)) ns
     on (a.user_id = ns.subject_id and a.assessment_id = ns.assessment_id)
 
     where true
