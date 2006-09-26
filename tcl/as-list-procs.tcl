@@ -139,7 +139,7 @@ namespace eval as::list {
 				 (:as_item_id_$option_item_id is null
 				  or
 				  exists (select 1
-					  from as_itemsi ii, as_item_data dd,
+					  from as_items ii, as_item_data dd,
 					  (select oi.object_type, it.item_rev_id as as_item_id
 					   from as_item_rels it, as_item_rels dt, acs_objects oi
 					   where dt.item_rev_id = it.item_rev_id
@@ -148,7 +148,7 @@ namespace eval as::list {
 					   and oi.object_id = it.target_rev_id) tt,
 					  cr_items ci
 					  
-					  where ii.item_id = $option_item_id
+					  where ci.item_id = $option_item_id
 					  and ii.as_item_id = dd.as_item_id
 					  and ii.as_item_id = tt.as_item_id
 					  and dd.session_id = m.session_id
@@ -160,7 +160,6 @@ namespace eval as::list {
 	    }
 	}
     
-	ns_log notice  "as_list_filters returning '[list list_filters $list_filters assessment_search_options $assessment_search_options search_js_array $search_js_array]'"
 	return [list list_filters $list_filters assessment_search_options $assessment_search_options search_js_array $search_js_array]
     }
 
@@ -301,7 +300,7 @@ namespace eval as::list {
 				     (:as_item_id_$option_item_id is null
 				      or
 				      exists (select 1
-					      from as_itemsi ii, as_item_data dd,
+					      from as_items ii, as_item_data dd,
 					      (select oi.object_type, it.item_rev_id as as_item_id
 					       from as_item_rels it, as_item_rels dt, acs_objects oi
 					       where dt.item_rev_id = it.item_rev_id
@@ -310,7 +309,7 @@ namespace eval as::list {
 					       and oi.object_id = it.target_rev_id) tt,
 					      cr_items ci
 					      
-					      where ii.item_id = $option_item_id
+					      where ci.item_id = $option_item_id
 					      and ii.as_item_id = dd.as_item_id
 					      and ii.as_item_id = tt.as_item_id
 					      and dd.session_id = m.session_id

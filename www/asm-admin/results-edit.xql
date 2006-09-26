@@ -43,7 +43,7 @@
 </querytext>
 </fullquery>
 
-<fullquery name="update_item_data">
+<fullquery name="update_item_points">
       <querytext>
     update as_item_data
     set points = :points

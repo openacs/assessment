@@ -8,6 +8,11 @@ ad_page_contract {
     d_state
 }
 
+permission::require_permission \
+    -object_id [ad_conn package_id] \
+    -party_id [ad_conn user_id] \
+    -privilege admin
+
 if {[llength $action_log_id] == 1} { 
 set action_log_id [split [lindex $action_log_id  0] " "]
 }

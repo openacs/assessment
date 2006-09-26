@@ -8,6 +8,12 @@ ad_page_contract {
     {return_url "index"}
 }
 
+foreach id $assessment_id {
+    permission::require_permission \
+	-object_id $asessment_id \
+	-privilege admin \
+	-party_id [ad_conn user_id]
+}
 set form_format "[lc_get formbuilder_date_format] [lc_get formbuilder_time_format]"
 set user_id [ad_conn user_id]
 set context [list "[_ assessment.admin]"]

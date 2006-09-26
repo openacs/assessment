@@ -1,53 +1,22 @@
 <formtemplate id="session_results_@section_id@">
-  <table cellspacing=0>
     <if @items:rowcount@ eq 0>
-      <tr><td>#assessment.not_answered#</td></tr>
+      #assessment.not_answered#
     </if>
-
+<ul>
     <multiple name="items">
-      <if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
-
-      <tr>
-	
-	<td valign="top"><if @show_item_name_p@ eq t><b>@items.name@:</b></if></td>
-	<td>&nbsp;</td></tr>
-
-      <tr>
-
-	<td>
-	  <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
-	    <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
-	    <if @items.result_points@ not nil><if @showpoints@ eq 1><b>@items.result_points@ / @items.points@ #assessment.points#</if>
-	      <if @show_feedback@ ne none>
-		<if @items.feedback@ not nil>: @items.feedback;noquote@</if>
-	      </if>
+<li><if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
+     <if @show_item_name_p@ eq t><b>@items.name@:</b></if>
+      <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
+	<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
 	    </b>
-	    </if>
-	    <else>
-	      <if @items.answered_p@ eq t><b>#assessment.not_yet_reviewed#</b> </if>
-	      <else><b>#assessment.not_answered#</b> </else>
-	    </else>
-	    <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
-	    <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
-	  </if>
-	</td><td>&nbsp;</td></tr>
+      </if>
+     </if>
 
-      <tr>
-	<td>
 	  <if @items.presentation_type@ ne fitb>
 	    <b>@items.title;noquote@</b>
 	    @items.content;noquote@
-	    <if @items.correct_p eq 1><if @show_feedback@ eq correct or @show_feedback@ eq all><br />@items.feedback_right;noquote@</if></if>
-	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><br />@items.feedback_wrong;noquote@</if></if>
-	</td><td>
-	  <if @items.title@ ne @items.next_title@>
-	</td></tr>
-
-      <tr>
-	<td colspan=2>
+<br />
 	</if>
-	</if>
-	  <table>
 	    <group column=title>
 	      <td valign=top>@items.description;noquote@
 		<if @survey_p@ ne t>
@@ -74,7 +43,6 @@
 		    <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@"> 
 		  </if>
 		</if>
-	      </td>
 	      <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
 		<fieldset class="radio">
 		  <if @items.choice_orientation@ ne horizontal>
@@ -103,7 +71,7 @@
 	    <a href= "@items.view@" onclick= "var w=window.open(this.href, 'newWindow', 'width=650,height=400'); return !w;"><formwidget id="response_to_item.@items.as_item_id@"></a>
 	  </elseif>
 	  <else>
-	    <td colspan=10><formwidget id="response_to_item.@items.as_item_id@">
+	    <formwidget id="response_to_item.@items.as_item_id@">
 	  </else>
 	  <if @items.subtext@ not nil>
 	    <div class="form-help-text">
@@ -111,10 +79,16 @@
 		<noparse>@items.subtext@</noparse>
 	    </div>
 	  </if>
-	</td></tr>
-    </group></table>
-</td></tr>
+    </group>
 </if>
+	    <if @items.correct_p eq 1><if @show_feedback@ eq correct or @show_feedback@ eq all>@items.feedback_right;noquote@</if></if>
+	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect>@items.feedback_wrong;noquote@</if></if>
+<ul> <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@" &=assessment>	    <if @edit_p@ eq 1 and @items.answered_p@ eq t><li><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Add_Comment#</a></li></if>
+<!-- FIXME TODO move points to indented block with comments -->
+	    <if @assessment_data.type@ ne survey and @items.result_points@ not nil and @showpoints@ eq 1><li><b>@items.result_points@ / @items.points@ #assessment.points#</b></li></if>
+</ul>
+</li>
+<hr>
 </multiple>
-</table>      
+</ul>
 </formtemplate>

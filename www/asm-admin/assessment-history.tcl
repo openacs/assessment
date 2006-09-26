@@ -11,6 +11,11 @@ ad_page_contract {
     page_title:onevalue
 }
 
+permission::require_permission \
+    -object_id $assessment_id \
+    -party_id [ad_conn user_id] \
+    -privilege admin
+
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 

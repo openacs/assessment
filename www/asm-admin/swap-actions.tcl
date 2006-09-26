@@ -12,6 +12,12 @@ ad_page_contract {
     direction
     assessment_id:integer
 }
+
+permission::require_permission \
+    -object_id $assessment_id \
+    -party_id [ad_conn user_id] \
+    -privilege "admin"
+
 as::assessment::check::swap_actions -check_id $check_id -action_perform $action_perform -section_id $section_id -direction $direction -order_by $order_by
 
 

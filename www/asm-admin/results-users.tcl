@@ -13,6 +13,11 @@ ad_page_contract {
     page_title:onevalue
 }
 
+permission::require_permission \
+    -object_id $assessment_id \
+    -party_id [ad_conn user_id] \
+    -privilege "admin"
+
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 
@@ -64,11 +69,11 @@ template::list::create \
     -elements {
 	session_id {
 	    label {[_ assessment.Session]}
-	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.session_id@</a></if><else></else>}
+	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">View</a></if><else></else>}
 	}
 	subject_name {
 	    label {[_ assessment.Subject_Name]}
-	    display_template {<if @results.subject_url@ not nil><a href="@results.subject_url@">@results.subject_name@</a></if><else>@results.subject_name@</else>}
+	    display_template {@results.subject_name@}
 	}
 	completed_datetime {
 	    label {[_ assessment.Finish_Time]}

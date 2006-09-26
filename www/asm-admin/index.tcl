@@ -31,13 +31,13 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
 set actions [list]
 set advanced_options_p [parameter::get -parameter ShowAdvancedOptions -default 1]
 if { $advanced_options_p } {
-    lappend actions "[_ assessment.New_Survey]" {assessment-form?type=1} "[_ assessment.New_Survey]" \
+    lappend actions "[_ assessment.New_Survey]" {assessment-form?type=survey} "[_ assessment.New_Survey]" \
 	"[_ assessment.New_Review_Assessment]" {assessment-form?type=3} "[_ assessment.New_Review_Assessment]" \
 	"[_ assessment.New_Partial_Assessment]" {assessment-form?type=4} "[_ assessment.New_Partial_Assessment]" \
 	"[_ assessment.New_Quick_Assessment]" {assessment-form?type=5} "[_ assessment.New_Quick_Assessment]"
 }
 
-lappend actions "[_ assessment.New_Assessment]" {assessment-form?type=2} "[_ assessment.New_Assessment2]"
+lappend actions "[_ assessment.New_Assessment]" {assessment-form?type=test} "[_ assessment.New_Assessment2]"
 
 if { $sw_admin && $advanced_options_p } {
     lappend actions [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]

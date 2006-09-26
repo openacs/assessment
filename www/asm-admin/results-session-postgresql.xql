@@ -4,8 +4,7 @@
 
 <fullquery name="session_data">
       <querytext>
-    SELECT percent_score, to_char(creation_datetime, :format) AS session_start,
-           to_char(completed_datetime, :format) AS session_finish,
+    SELECT percent_score, creation_datetime, completed_datetime,
            round(date_part('epoch', completed_datetime - creation_datetime)) as session_time
     FROM as_sessions s
     WHERE s.session_id = :session_id

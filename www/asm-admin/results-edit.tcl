@@ -34,26 +34,38 @@ set result_points [db_string result_points {} -default ""]
 set page_title "[_ assessment.Results_edit]"
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base results-users {assessment_id}] [_ assessment.Results_by_user]] [list [export_vars -base results-session {session_id}] [_ assessment.View_Results]] $page_title]
 
-
-ad_form -name results_edit -action results-edit -export { session_id section_id as_item_id } -form {
+# DAVEB removed title, doesn't make sense.
+ad_form -name results-edit -action results-edit -export { session_id section_id as_item_id } -form {
     {result_id:key}
-    {title:text,nospell,optional {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.Results_edit_Title_help]"}}
     {description:text(textarea),optional {label "[_ assessment.Results_edit_Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Results_edit_Description_help]"}}
-    {points:integer,nospell {label "[_ assessment.points_answer]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_answer_help]"}}
-} -new_request {
-    set title ""
+}
+
+# check for type to see if we set points
+if {0} {
+    ad_form -extend -form {
+	{points:integer,nospell {label "[_ assessment.points_answer]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_answer_help]"}}
+    }
+}
+ad_form -extend -new_request {
     set description ""
     set points ""
 } -new_data {
-    db_transaction {
-	as::session_results::new -target_id $item_data_id -title $title -description $description -points $points
-	db_dml update_item_data {}
-	as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
-	as::assessment::calculate -assessment_id $assessment_rev_id -session_id $session_id
+    if {![info exists points]} {
+	set points ""
     }
+    db_transaction {
+	as::session_results::new -target_id $item_data_id -title "" -description $description -points $points
+	if {$points ne ""} {
+	    db_dml update_item_points {}
+	    as::section::calculate -section_id $section_id -assessment_id $assessment_rev_id -session_id $session_id
+	    as::assessment::calculate -assessment_id $assessment_rev_id -session_id $session_id
+	}
+    }
+    ns_log notice "DONE results edit new_data"
 } -after_submit {
+    ns_log notice "DONE results edit after_submit"
     ad_returnredirect [export_vars -base results-session {session_id}]
     ad_script_abort
 }
-
+    ns_log notice "DONE results edit return template"
 ad_return_template

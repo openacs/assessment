@@ -5,7 +5,7 @@
 <querytext>
 
     select cr.title, cr.description, sr.points, p.first_names, p.last_name,
-           to_char(o.creation_date, :format) as create_date, o.creation_user
+           o.creation_date, o.creation_user
     from as_session_results sr, cr_revisions cr, acs_objects o, persons p,
          as_item_data d, as_session_item_map m
     where cr.revision_id = sr.result_id

@@ -26,6 +26,10 @@ template::list::create \
             label "[_ assessment.open_assessments]"
             display_template {<a href="@assessments.assessment_url@">@assessments.title;noquote@</a>}
         }
+	results {
+	    label "[_ assessment.View_results]"
+	    display_template {<a href="asm-admin/results-users?assessment_id=@assessments.assessment_id@">\#assessment.View_results\#</a>}
+	}
     } -main_class {
         narrow
     }

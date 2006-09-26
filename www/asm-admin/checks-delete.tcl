@@ -9,6 +9,12 @@ ad_page_contract {
     by_item_p
     item_id:optional
   }
+
+permission::require_permission \
+    -object_id $assessment_id \
+    -party_id [ad_conn user_id] \
+    -privilege admin
+
 set inter_item_check_id [split [lindex $inter_item_check_id 0] " "]
 
 set count [llength $inter_item_check_id]

@@ -9,6 +9,10 @@ ad_page_contract {
     qti_items_imported_number
     context:onevalue
 }
+permission::require_permission \
+    -object_id [ad_conn package_id] \
+    -party_id [ad_conn user_id] \
+    -privilege "admin"
 
 set context [list "[_ assessment.Import_Results]"]
 

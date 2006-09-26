@@ -6,11 +6,22 @@ ad_page_contract {
     @date   2004-12-24
     @cvs-id $Id: 
 } {
-    session_id:integer
+    {session_id:integer 0}
+    {assessment_id:integer 0}
     {next_url ""}
 } -properties {
     context_bar:onevalue
     page_title:onevalue
+}
+set user_id [ad_conn user_id]
+if {$session_id == 0} {
+    # require assessment_id if session_id is blank
+    if {$assessment_id == 0} {
+	ad_return_complaint 1 "Session_id or Assessment_id is required"
+    }
+    #find the latest session
+    db_1row get_latest_session "" -column_array latest_session
+    set session_id $latest_session(session_id)
 }
 
 db_1row find_assessment {}
@@ -24,7 +35,6 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-set user_id [ad_conn user_id]
 if {$subject_id != $user_id} {
     permission::require_permission -object_id $assessment_id -privilege admin
 }
@@ -39,8 +49,8 @@ db_1row session_data {}
 set session_time [as::assessment::pretty_time -seconds $session_time -hours]
 
 # get the number of attempts
-set session_attempt [db_string session_attempt {}]
 
+db_multirow session_attempts session_attempts {}
 set show_username_p 1
 # only admins are allowed to see responses of other users
 if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {

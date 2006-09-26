@@ -10,6 +10,11 @@ ad_page_contract {
     page_title:onevalue
 }
 
+permission::require_permission \
+    -object_id $assessment_id \
+    -party_id [ad_conn user_id] \
+    -privilege admin
+
 if {[info exists assessment_id]} {
 
     # Get the assessment data
@@ -24,7 +29,7 @@ if {[info exists assessment_id]} {
 }
 set context [list [list index [_ assessment.admin]] $page_title]
 
-set types_list [list [list "[_ assessment.type_s]" 1] [list "[_ assessment.type_ea]" 2 ]]
+set types_list [list [list "[_ assessment.type_s]" survey] [list "[_ assessment.type_test]" test ]]
 
 ad_form -name assessment_type -export {assessment_id permission_p} -form {
     {type:text(radio)

@@ -11,6 +11,11 @@ ad_page_contract {
     section_id
 } 
 
+permission::require_permission \
+    -object_id $assessment_id \
+    -party_id [ad_conn user_id] \
+    -privilege "admin"
+
 set request_count [llength $request_id]
 for { set i 0} { $i < $request_count } { incr i } {
     db_transaction {

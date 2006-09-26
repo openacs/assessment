@@ -33,12 +33,14 @@ if {$subject_id != $user_id} {
 
 set page_title "[_ assessment.View_Results]"
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base results-users {assessment_id}] [_ assessment.Results_by_user]] $page_title]
-set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
+set format "[lc_get d_fmt], [lc_get t_fmt]"
 set session_user_url [acs_community_member_url -user_id $subject_id]
 
 # get start and end times
 db_1row session_data {}
 set session_time [as::assessment::pretty_time -seconds $session_time -hours]
+set session_start [lc_time_fmt $creation_datetime $format]
+set session_finish [lc_time_fmt $completed_datetime $format]
 
 # get the number of attempts
 set session_attempt [db_string session_attempt {}]

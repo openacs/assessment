@@ -1,5 +1,5 @@
 ad_page_contract {
-
+e
     This page allows to display an assessment with sections and items
 
     @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
@@ -13,7 +13,7 @@ ad_page_contract {
     {item_order:integer,optional ""}
     {item_id ""}
     {return_url:optional}
-    response_to_item:array,optional,multiple,html
+    response_to_item:array,optional,multiple
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
