@@ -41,17 +41,4 @@
       </querytext>
 </fullquery>
 
-<fullquery name="get_latest_session">
-     <querytext>
-	select max(o.creation_date), s.session_id 
-        from as_sessions s, 
-        acs_objects o,
-        cr_revisions cr
-	where s.subject_id=:user_id
-	and s.assessment_id=(select latest_revision from cr_items where item_id=:assessment_id)
-	and o.object_id = cr.item_id
-        and s.session_id = cr.revision_id
-	group by s.session_id
-    </querytext>
-</fullquery>
 </queryset>

@@ -170,7 +170,7 @@ ad_proc -public as::item::copy {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
-
+    set new_title $title
     db_transaction {
 	db_1row item_data {}
 
@@ -180,12 +180,12 @@ ad_proc -public as::item::copy {
 	    set field_name $name
 	}
 
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name]
+        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -storage_type text]
         set new_item_id [content::revision::new \
 			     -item_id $item_item_id \
 			     -content_type {as_items} \
-			     -title $title \
-			     -content $content \
+			     -title [string range $new_title 0 999] \
+			     -content $new_title \
 			     -description $description \
 			     -attributes [list [list subtext $subtext] \
 					      [list field_name $field_name] \

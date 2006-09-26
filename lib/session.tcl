@@ -20,7 +20,9 @@ if {$session_id == 0} {
 	ad_return_complaint 1 "Session_id or Assessment_id is required"
     }
     #find the latest session
-    db_1row get_latest_session "" -column_array latest_session
+    if {![db_0or1row get_latest_session "" -column_array latest_session]} {
+	ad_return_complaint 1 "You have not completed this assessment yet."
+    }
     set session_id $latest_session(session_id)
 }
 
