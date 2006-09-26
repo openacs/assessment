@@ -19,7 +19,7 @@
     where s.subject_id = :subject_id
     and s.assessment_id = r.revision_id
     and r.item_id = :assessment_id
-    order by last_mod_datetime
+    order by creation_datetime
       </querytext>
 </fullquery>
 
