@@ -13,6 +13,13 @@ alter table as_assessments rename type to type_int;
 alter table as_assessments add type varchar(1000);
 update as_assessments set type='survey' where type_int = 1;
 update as_assessments set type='test' where type_int = 2;
+
+drop view as_assessmentsx;
+drop view as_assessmentsi;
+
 alter table as_assessments drop type_int;
+
+select content_type__refresh_view('as_assessments');
+
 update acs_attributes set datatype='string' where attribute_name='type' and object_type='as_assessments';
 

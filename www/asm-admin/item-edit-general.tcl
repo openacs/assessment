@@ -41,7 +41,7 @@ foreach display_type [db_list display_types {}] {
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
 }
-if { $type > 1} {
+if { $type ne "survey"} {
 	ad_form -extend -name item_edit_general -form {
 		 {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 	}
@@ -56,7 +56,7 @@ if { $type > 1} {
 	}
 	}
 }
-if { $type > 1} { 
+if { $type ne "survey"} { 
 	ad_form -extend -name item_edit_general -form {
 	{content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
 	}
@@ -66,7 +66,7 @@ ad_form -extend -name item_edit_general -form {
     {question_text:richtext {label "[_ assessment.Question]"} {html {rows 3 cols 80 style {width:100%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
 
-if { $type > 1} {
+if { $type ne "survey"} {
 	ad_form -extend -name item_edit_general -form {
 	{subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
 	{field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
@@ -77,7 +77,7 @@ if { $type > 1} {
 ad_form -extend -name item_edit_general -form {
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }
-if { $type > 1} { 
+if { $type ne "survey"} { 
 ad_form -extend -name item_edit_general -form {
     {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
     {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
