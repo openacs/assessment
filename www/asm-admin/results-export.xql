@@ -33,20 +33,6 @@
 
 <fullquery name="all_sessions">
       <querytext> 
--- 	select s.session_id, s.percent_score, s.subject_id,
--- 	       to_char(s.completed_datetime, 'YYYY-MM-DD HH24:MI:SS') as submission_date
--- 	from as_sessions s,
--- 	     (select max(s2.session_id) as session_id, s2.subject_id
--- 	      from as_sessions s2, cr_revisions r
--- 	      where r.item_id = :assessment_id
--- 	      and s2.assessment_id = r.revision_id
--- 	      and s2.completed_datetime is not null
--- 	      group by s2.subject_id) sub
--- 	where s.session_id = sub.session_id
--- 	$start_date_sql
--- 	$end_date_sql
--- 	order by s.session_id
-
 	select s.session_id, s.percent_score, s.subject_id,
 	       to_char(s.completed_datetime, 'YYYY-MM-DD HH24:MI:SS') as submission_date
 	from as_sessions s, cr_revisions r
