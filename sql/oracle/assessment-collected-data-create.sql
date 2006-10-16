@@ -125,7 +125,7 @@ create table as_item_data (
 create index as_item_data_pk2 on as_item_data (session_id, section_id, as_item_id);
 create index as_item_data_pk3 on as_item_data (as_item_id, section_id, session_id);
 create index as_item_data_subj_idx on as_item_data (subject_id);
-
+create index as_item_data_as_item_id_idx on as_item_data (as_item_id);
 create table as_session_results (
        result_id   integer
                    constraint as_sess_res_res_id_pk
