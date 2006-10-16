@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.20" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.21" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -571,6 +571,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Target_Community_help">Choose the target community</msg>
   <msg key="the_condition_to">The condition to branch or execute the action</msg>
   <msg key="there_are_no_users">There are no users to notify</msg>
+  <msg key="This_comment_is_from_another">is associated with &lt;a href=&quot;%results.session_url%&quot;&gt;a previous attempt&lt;/a&gt;.</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">This question will be corrected by the teacher</msg>
   <msg key="time_for_completion">Seconds allowed for completion</msg>
   <msg key="time_for_response">Minutes allowed for completion</msg>
