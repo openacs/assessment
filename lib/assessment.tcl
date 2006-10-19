@@ -13,7 +13,7 @@ e
     {item_order:integer,optional ""}
     {item_id ""}
     {return_url:optional}
-    response_to_item:array,optional,multiple
+    response_to_item:array,optional,multiple,allhtml
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
@@ -55,6 +55,7 @@ db_1row total_tries {}
 if {![empty_string_p $number_tries] && $number_tries <= $total_tries} {
     ad_returnredirect [export_vars -base sessions {assessment_id}]
 }
+
 set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id -password $password]
 
 if {![empty_string_p $errors]} {
