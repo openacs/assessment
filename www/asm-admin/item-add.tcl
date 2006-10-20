@@ -58,7 +58,6 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 if { $type > 1} {
 ad_form -extend -name item_add -form {
     {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
-    {subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
     {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
 }
@@ -67,8 +66,8 @@ ad_form -extend -name item_add -form {   {required_p:text(select) {label "[_ ass
 }
 if { $type > 1} {
 ad_form -extend -name item_add -form {
-    {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
-    {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
+    {feedback_right:richtext,optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
+    {feedback_wrong:richtext,optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
     {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
     {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
 }
@@ -76,7 +75,6 @@ ad_form -extend -name item_add -form {
 ad_form -extend -name item_add -form {
     {description:text(hidden) {value ""}}
     {content:text(hidden) {value ""}}
-    {subtext:text(hidden) {value ""}}
     {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text(hidden) {value ""}}
     {feedback_right:text(hidden) {value ""}}
@@ -100,7 +98,6 @@ ad_form -extend -name item_add -form {
     set name ""
     set question_text ""
     set description ""
-    set subtext ""
     set field_name ""
     set field_code ""
     set required_p t
@@ -136,7 +133,6 @@ ad_form -extend -name item_add -form {
 				-item_item_id $as_item_id \
 				-title $question_text \
 				-description $description \
-				-subtext $subtext \
 				-field_name $field_name \
 				-field_code $field_code \
 				-required_p $required_p \
@@ -151,7 +147,6 @@ ad_form -extend -name item_add -form {
 				-as_item_id $as_item_id \
 				-title $question_text \
 				-description $description \
-				-subtext $subtext \
 				-field_name $field_name \
 				-field_code $field_code \
 				-required_p $required_p \

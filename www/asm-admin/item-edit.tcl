@@ -36,8 +36,9 @@ set display_type [string range [db_string display_type {}] end-1 end]
 if {[string eq $display_type "_f"]} {
     set display_type f
 }
-
+set question_text [list $title text/html]
 ad_form -name item_edit -mode display -action item-edit-general -export { assessment_id section_id as_item_id } -form {
+    {question_text:richtext {label "[_ assessment.Question]"} {html {rows 3 cols 80}} {value $question_text} {help_text "[_ assessment.item_Question_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {value $description} {help_text "[_ assessment.item_Description_help]"}}
 }
 
@@ -62,10 +63,6 @@ if {[llength $linked_objects]} {
     }
 }
 
-ad_form -extend -name item_edit -form {
-    {title:text(textarea) {label "[_ assessment.Title]"} {html {rows 3 cols 80}} {value $title} {help_text "[_ assessment.item_Title_help]"}}
-}
-
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit
 }
@@ -75,8 +72,8 @@ ad_form -extend -name item_edit -form {
     {field_name:text,optional {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {value $field_name} {help_text "[_ assessment.Field_Name_help]"}}
     {field_code:text,optional {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {value $field_code} {help_text "[_ assessment.Field_Code_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {value $required_p} {help_text "[_ assessment.item_Required_help]"}}
-    {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {value $feedback_right} {help_text "[_ assessment.Feedback_right_help]"}}
-    {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {value $feedback_wrong} {help_text "[_ assessment.Feedback_wrong_help]"}}
+    {feedback_right:richtext,optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {value $feedback_right} {help_text "[_ assessment.Feedback_right_help]"}}
+    {feedback_wrong:richtext,optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {value $feedback_wrong} {help_text "[_ assessment.Feedback_wrong_help]"}}
     {max_time_to_complete:integer,optional {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {value $max_time_to_complete} {help_text "[_ assessment.item_time_help]"}}
     {points:integer,optional {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {value $points} {help_text "[_ assessment.points_item_help]"}}
     {data_type:text {label "[_ assessment.Data_Type]"} {html {size 20 maxlength 20}} {value "[_ assessment.data_type_$data_type]"} {help_text "[_ assessment.Data_Type_help]"}}
