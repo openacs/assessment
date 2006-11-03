@@ -28,7 +28,6 @@
 <table cellspacing=0>
 <tr><td valign="top">#assessment.section# @sections.title@
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
-<if @assessment_data.survey_p@ ne t> <if @showpoints@ eq 1>(@sections.points@ / @sections.max_points@ #assessment.points#) </if></if>
 </td></tr>
 
 <tr><td><i> @sections.description@ </i><br></td></tr>

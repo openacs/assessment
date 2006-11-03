@@ -56,6 +56,8 @@ if {[empty_string_p $assessment_data(show_feedback)]} {
 set session_score 0
 set assessment_score 0
 db_multirow sections sections {} {
+    # TODO section points are not functional, removed from user
+    # interface until fully implemented DAVEB
     if {[empty_string_p $points]} {
 	set points 0
     }
