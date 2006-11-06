@@ -20,7 +20,7 @@
         <provides url="assessment" version="0.22d2"/>
         <requires url="acs-content-repository" version="5.3.0d1"/>
         <requires url="acs-kernel" version="5.3.0d1"/>
-        <requires url="acs-templating" version="5.3.0d11"/>
+        <requires url="acs-templating" version="5.3.0d1"/>
         <requires url="categories" version="1.0d5"/>
         <requires url="notifications" version="0.1"/>
         <callbacks>
