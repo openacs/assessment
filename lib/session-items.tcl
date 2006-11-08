@@ -29,7 +29,7 @@ ad_form -name session_results_$section_id -mode display -form {
 ns_log notice "assessment session-items.tcl show_feedback = '${show_feedback}'"
 # todo: display feedback text
 set feedback_count 0
-db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p correct_p} items session_items {} {
+db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p correct_p view} items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
     array set item [as::item::item_data -as_item_id $as_item_id]
 
