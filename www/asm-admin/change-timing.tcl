@@ -10,7 +10,7 @@ ad_page_contract {
 
 foreach id $assessment_id {
     permission::require_permission \
-	-object_id $asessment_id \
+	-object_id $id \
 	-privilege admin \
 	-party_id [ad_conn user_id]
 }
