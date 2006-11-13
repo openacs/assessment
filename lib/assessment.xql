@@ -69,7 +69,7 @@
 	select max(i.sort_order) as item_order
         from as_session_items i
         where i.session_id = :session_id
-	and i.section_id = :section_id
+	and i.section_id = :unfinished_section_id
 
 	</querytext>
 </fullquery>
