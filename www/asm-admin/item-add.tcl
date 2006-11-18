@@ -1,100 +1,15 @@
-ad_page_contract {
-    Form to add an item.
-
-    @author Timo Hentschel (timo@timohentschel.de)
-    @cvs-id $Id:
-} {
-    assessment_id:integer
-    section_id:integer
-    after:integer
-} -properties {
-    context:onevalue
-    page_title:onevalue
+ style {width:95%}}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
 }
 
-set package_id [ad_conn package_id]
-permission::require_permission -object_id $package_id -privilege create
-permission::require_permission -object_id $assessment_id -privilege admin
-
-# Get the assessment data
-as::assessment::data -assessment_id $assessment_id
-
-if {![info exists assessment_data(assessment_id)]} {
-    ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
-    ad_script_abort
+ad_form -extend -name item-add -form {
+    {formbutton_ok:text(submit) {label "[_ assessment.Save_and_go_to_Question_List]"}}
+    {formbutton_add_another_q:text(submit) {label "[_ assessment.Save_and_add_another_question]"}}
 }
 
-set page_title [_ assessment.add_item]
-set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
-set package_id [ad_conn package_id]
-
-set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
-set type $assessment_data(type)
-
-set data_types [list]
-foreach data_type [list varchar text integer float date timestamp boolean content_type] {
-    lappend data_types [list "[_ assessment.data_type_$data_type]" $data_type]
+ad_form -extend -name item-add -validate {
+    {item_type {$item_type ne "mc" || [array size choice] > [llength [lsearch -all -exact [array get choice] ""]]} "Please enter at least one choice for multiple choice question."}
 }
-
-set item_types [list]
-foreach item_type [db_list item_types {}] {
-    lappend item_types [list "[_ assessment.item_type_$item_type]" $item_type]
-}
-
-
-ad_form -name item_add -action item-add -export { assessment_id section_id after type} -html {enctype multipart/form-data} -form {
-    {as_item_id:key}
-    {question_text:richtext {label "[_ assessment.item_Question]"} {html {rows 5 cols 80 style {width: 100%}}} {help_text "[_ assessment.item_Question_help]"}}
-}
-if { $type > 1} {
-    ad_form -extend -name item_add -form {{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
-    }
-}
-
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
-    category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id 0 -form_name item_add
-}
-
-if { $type > 1} {
-ad_form -extend -name item_add -form {
-    {content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
-    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
-    {field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
-}
-}
-ad_form -extend -name item_add -form {   {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
-}
-if { $type > 1} {
-ad_form -extend -name item_add -form {
-    {feedback_right:richtext,optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
-    {feedback_wrong:richtext,optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
-    {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
-    {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
-}
-} else {
-ad_form -extend -name item_add -form {
-    {description:text(hidden) {value ""}}
-    {content:text(hidden) {value ""}}
-    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
-    {field_code:text(hidden) {value ""}}
-    {feedback_right:text(hidden) {value ""}}
-    {feedback_wrong:text(hidden) {value ""}}
-    {max_time_to_complete:text(hidden) {value ""}}
-    {points:text(hidden) {value ""}}
-    {data_type:text(hidden) {value ""}}
-
-}
-}
-
-if { $type > 1} {
-ad_form -extend -name item_add -form {
-    {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}}
-} 
-ad_form -extend -name item_add -form {
-    {item_type:text(select) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
-    {num_choices:integer,optional,nospell {label "[_ assessment.Num_Choices]"} {html {size 5 maxlength 3}} {help_text "[_ assessment.Num_Choices_help]"}}
-    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
-} -new_request {
+ad_form -extend -name item-add -new_request {
     set name ""
     set question_text ""
     set description ""
@@ -105,27 +20,43 @@ ad_form -extend -name item_add -form {
     set feedback_wrong ""
     set max_time_to_complete ""
     set points ""
-    set data_type "varchar"
-    set item_type "sa"
-    set num_choices 10
-    if { $type == 1} {
-	set num_choices 3
-    }
+    set num_choices 5
+    set ms_label "Choose all that apply"
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {[empty_string_p $points]} {
 	set points 0
     }
 } -new_data {
-    if {[string eq $item_type "sa"]} {
+    if {[info exists add_another_choice] && $add_another_choice ne ""} {
+        ad_return_template
+        break
+    }
+    # map display types to data types
+    switch -exact $item_type {
+        sa {
 	set data_type "varchar" 
-    } elseif {[string eq $item_type "oq"]} {
+	set display_type "tb"
+        }
+        oq {
 	set data_type "text" 
-    } elseif {[string eq $item_type "mc"]} {
+	set display_type "ta"
+        }
+        mc {
 	set data_type "varchar" 
-    } elseif {[string eq $item_type "fu"]} {
+	set display_type "rb"            
+        }
+        ms {
+            #multiple select is just multiple choice with checkboxes
+        set item_type "mc"
+	set data_type "varchar" 
+	set display_type "cb"                        
+        }
+        fu {
 	set data_type "file" 
-    } 
+	set display_type "fu"
+        }
+    }
     set question_text [template::util::richtext::get_property content $question_text]
     db_transaction {
 	if {![db_0or1row item_exists {}]} {
@@ -186,10 +117,54 @@ ad_form -extend -name item_add -form {
 	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
 	    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
 	}
+        # check question type
+
+        switch -exact $item_type {
+            mc {
+                as::item_type_mc::add_to_assessment \
+                    -assessment_id $assessment_id \
+                    -section_id $section_id \
+                    -as_item_id $as_item_id \
+                    -choices [array get choice] \
+                    -correct_choices [array get correct] \
+                    -after $after \
+                    -title $question_text\
+                    -display_type $display_type
+            }
+            oq {
+                as::item_type_oq::add_to_assessment \
+                    -assessment_id $assessment_id \
+                    -section_id $section_id \
+                    -as_item_id $as_item_id \
+                    -after $after \
+                    -title $question_text                    
+            }
+            sa {
+                as::item_type_sa::add_to_assessment \
+                    -assessment_id $assessment_id \
+                    -section_id $section_id \
+                    -as_item_id $as_item_id \
+                    -after $after \
+                    -title $question_text                    
+            }
+            fu {
+                as::item_type_fu::add_to_assessment \
+                    -assessment_id $assessment_id \
+                    -section_id $section_id \
+                    -as_item_id $as_item_id \
+                    -after $after \
+                    -title $question_text                                    
+            }
+        }
     }
+
 } -after_submit {
-    # now go to item-type specific form (i.e. multiple choice)
-    ad_returnredirect [export_vars -base "item-add-$item_type" {assessment_id section_id as_item_id after num_choices}]
+    set return_url [export_vars -base one-section {section_id assessment_id}]
+    if {[info exists formbutton_add_another_q] && $formbutton_add_another_q ne ""} {
+	incr after
+	set return_url [export_vars -base item-add {assessment_id section_id after}]
+    }
+    ad_returnredirect $return_url
     ad_script_abort
 }
 
