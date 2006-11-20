@@ -32,6 +32,7 @@
   <msg key="all">Alle</msg>
   <msg key="Allow_Random">Erlaube Randomisierung</msg>
   <msg key="Anonymous_Responses">Anonyme Antworten</msg>
+  <msg key="Applet">Assessment</msg>
   <msg key="approve">Genehmigen</msg>
   <msg key="approve_actions">Aktionen genehmigen</msg>
   <msg key="approved">Genehmigt</msg>
@@ -59,8 +60,10 @@
   <msg key="as_time_help">Wieviele Minuten darf der User für die Beantwortung des gesamten Assessments benötigen. leeres Feld für unbefristet.</msg>
   <msg key="as_Title_help">Hilfetext für den Titel des Assessments</msg>
   <msg key="Assessment">Assessment </msg>
+  <msg key="Assessment_Administration">Assessment Administration</msg>
   <msg key="assessment_Name_help">Dies erlaubt es Ihnen, Ihrem Assessment einen speziellen einzigartigen Indentifikator zuzuweisen z.B. einen Code.</msg>
   <msg key="Assessment_Title">Titel</msg>
+  <msg key="Assessments">Assessments</msg>
   <msg key="By_user">Nach User</msg>
   <msg key="Change_multiple_timings">Zeitliche Verfügbarkeit ändern (alle)</msg>
   <msg key="Change_timings">Zeitliche Verfügbarkeit ändern</msg>
@@ -101,6 +104,7 @@
   <msg key="One_Assessment_data">Ein Assessment/Test: %assessment_data.title%</msg>
   <msg key="Only_correct">Nur bei korrekten Antworten</msg>
   <msg key="Only_incorrect">Nur bei falschen Antworten</msg>
+  <msg key="open_assessments">Assessment öffnen</msg>
   <msg key="parameter_description">Beschreibung</msg>
   <msg key="performed">ausgeführt</msg>
   <msg key="permissions">Zugriffsberechtigungen</msg>
@@ -114,6 +118,7 @@
   <msg key="Section_Navigation">Navigation auswählen</msg>
   <msg key="Sections">Abschnitte</msg>
   <msg key="Secure_Access_1">Secure Access benötigt</msg>
+  <msg key="Sessions">Sessions</msg>
   <msg key="Show_Feedback">Feedback anzeigen</msg>
   <msg key="Show_Item_Name_1">Namen der Frage anzeigen</msg>
   <msg key="specific_date">Spezifisches Datum</msg>
