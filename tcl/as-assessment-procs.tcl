@@ -462,7 +462,7 @@ ad_proc as::assessment::pretty_time {
 	if {$hours_p} {
 	    set time_hour [expr $seconds / 3600]
 	    set seconds [expr $seconds - ($time_hour * 3600)]
-            
+         } 
             set time_min [expr $seconds / 60]
             set time_sec [expr $seconds - ($time_min * 60)]
             set pad "00"
@@ -470,7 +470,6 @@ ad_proc as::assessment::pretty_time {
                 append time "[string range $pad [string length $time_hour] end]$time_hour\:"
             }
             append time "[string range $pad [string length $time_min] end]$time_min\:[string range $pad [string length $time_sec] end]$time_sec min"
-        }
     }
     return $time
 }
