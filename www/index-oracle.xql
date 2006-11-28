@@ -13,6 +13,7 @@ from as_assessments a, cr_revisions cr, cr_items ci
 where a.assessment_id = cr.revision_id
 and cr.revision_id = ci.latest_revision
 and ci.parent_id = :folder_id
+and ci.publish_status='live'
 and exists (select 1
                    from as_assessment_section_map asm, as_item_section_map ism
                    where asm.assessment_id = a.assessment_id
