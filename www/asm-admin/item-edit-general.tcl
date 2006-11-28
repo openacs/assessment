@@ -40,68 +40,65 @@ foreach display_type [db_list display_types {}] {
 
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
+    {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 9 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
-if { $type ne "survey"} {
-	ad_form -extend -name item_edit_general -form {
-		 {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
-	}
+# if { $type ne "survey"} {
+# 	ad_form -extend -name item_edit_general -form {
+# 		 {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+# 	}
 
-	if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
-	category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit_general
-	}
+# 	if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+# 	category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit_general
+# 	}
 	
-	if {[db_0or1row get_item_content {}]} {
-	ad_form -extend -name item_edit_general -form {
-		{delete_content:text(checkbox),optional {label "[_ assessment.item_Delete_Content]"} {options {{{<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>} t}} }}
-	}
-	}
-}
-if { $type ne "survey"} { 
-	ad_form -extend -name item_edit_general -form {
-	{content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
-	}
-}
+# 	if {[db_0or1row get_item_content {}]} {
+# 	ad_form -extend -name item_edit_general -form {
+# 		{delete_content:text(checkbox),optional {label "[_ assessment.item_Delete_Content]"} {options {{{<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a>} t}} }}
+# 	}
+# 	}
+# }
+# if { $type ne "survey"} { 
+# 	ad_form -extend -name item_edit_general -form {
+# 	{content:file,optional {label "[_ assessment.item_Content]"} {help_text "[_ assessment.item_Content_help]"}}
+# 	}
+# }
 
-ad_form -extend -name item_edit_general -form {
-    {question_text:richtext {label "[_ assessment.Question]"} {html {rows 3 cols 80 style {width:100%}}} {help_text "[_ assessment.item_Question_help]"}}
-}
 
-if { $type ne "survey"} {
-	ad_form -extend -name item_edit_general -form {
-	{subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
-	{field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
-	{field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
-	}
-}
+# if { $type ne "survey"} {
+# 	ad_form -extend -name item_edit_general -form {
+# 	{subtext:text,optional {label "[_ assessment.Subtext]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.item_Subtext_help]"}}
+# 	{field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
+# 	{field_code:text,optional,nospell {label "[_ assessment.Field_Code]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Code_help]"}}
+# 	}
+# }
 
 ad_form -extend -name item_edit_general -form {
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }
+
 if { $type ne "survey"} { 
 ad_form -extend -name item_edit_general -form {
-    {feedback_right:text(textarea),optional {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_right_help]"}}
-    {feedback_wrong:text(textarea),optional {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_wrong_help]"}}
-    {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
     {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+    {feedback_right:richtext,optional,nospell {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_right_help]"}}
+    {feedback_wrong:richtext,optional,nospell {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_wrong_help]"}}
 }
 } else {
 ad_form -extend -name item_edit_general -form {
-    {description:text(hidden) {value ""}}
-    {content:text(hidden) {value ""}}
-    {subtext:text(hidden) {value ""}}
-    {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
-    {field_code:text(hidden) {value ""}}
-    {feedback_right:text(hidden) {value ""}}
-    {max_time_to_complete:text(hidden) {value ""}}
-    {feedback_wrong:text(hidden) {value ""}}
     {points:text(hidden) ""}
+    {feedback_right:text(hidden),optional}
+    {feedback_wrong:text(hidden),optional}
 }
 }
 ad_form -extend -name item_edit_general -form {
-    {data_type_disp:text(inform) {label "[_ assessment.Data_Type]"} {help_text "[_ assessment.Data_Type_help]"}}
-    {data_type:text(hidden)}
-    {display_type:text(select) {label "[_ assessment.Display_Type]"} {options $display_types} {help_text "[_ assessment.Display_Type_help]"}}
-    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}    
+    {description:text(hidden),optional}
+    {content:text(hidden),optional}
+    {subtext:text(hidden),optional}
+    {field_name:text(hidden),optional}
+    {field_code:text(hidden),optional}
+    {validate_block:text(hidden),optional}
+    {data_type:text(hidden),optional}
+    {display_type:text(hidden),optional}
+    {max_time_to_complete:text(hidden),optional}
 } -edit_request {
     db_1row general_item_data {}
     if {[empty_string_p $data_type]} {
@@ -110,6 +107,9 @@ ad_form -extend -name item_edit_general -form {
     set data_type_disp "[_ assessment.data_type_$data_type]" 
     set display_type [string range [db_string get_display_type {}] end-1 end]
     set question_text [template::util::richtext::create $question_text $mime_type]
+
+    set feedback_right [template::util::richtext::create $feedback_right $mime_type]
+    set feedback_wrong [template::util::richtext::create $feedback_wrong $mime_type]
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {[empty_string_p $points]} {
