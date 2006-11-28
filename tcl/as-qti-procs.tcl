@@ -681,44 +681,19 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 			    }
 			}
 		    }
-		    # insert as_item_type_oq (shortanswer)
+		    # insert as_item_type_oq (textarea)
 		    set as_item_type_id [as::item_type_oq::new \
 					     -default_value $aitoq__default_value \
 					     -feedback_text $aitoq__feedback_text]					 
 		    # if render_fib element has not the attribute rows then it's a fill in blank item
 		} else {
-		    # textbox
+		    # textbox (shortanswer)
 		    set as_item_display_id [as::item_display_tb::new \
 						-abs_size $aidtb__abs_size \
 						-item_answer_alignment $aidrb__answer_alignment]
-
-		    # multiple choice
-		    set as_item_type_id [as::item_type_mc::new]
-
-		    foreach node $presentationChildNodes {
-			if {[$node nodeName] == {material}} {
-			    set mattextNodes [$node selectNodes {mattext}]
-			    foreach mattext $mattextNodes {
-				append as_items__title [as::qti::mattext_gethtml $mattext]
-				append as_items__title " "
-			    }
-			} elseif {[$node nodeName] == {response_str} || [$node nodeName] == {response_num} } {
-			    set as_item_choices__ident [$node getAttribute {ident}]
-			    # get the correct response
-			    set as_item_choices__choice_text_nodes [$node selectNodes "//conditionvar/or/varequal\[@respident='$as_item_choices__ident'\]/text()"]
-			    set as_item_choices__choice_text {}
-			    # get the title of each choice
-			    foreach respident $as_item_choices__choice_text_nodes {
-				lappend as_item_choices__choice_text [string trim [$respident nodeValue]]
-			    }
-			    # Insert as_item_choice
-			    set as_item_choice_id [as::item_choice::new -mc_id $as_item_type_id -title $as_item_choices__choice_text -sort_order $sort_order]
-			    # order of the item_choices
-			    incr sort_order
-			    append as_items__title " <textbox as_item_choice_id=$as_item_choice_id> "
-			}
-		    }	
+		    set as_item_type_id [as::item_type_sa::new]
 		}
+	    	
 		# Insert as_item
 		set as_item_id [as::item::new \
 				    -title $as_items__title \
