@@ -5,7 +5,7 @@
 <fullquery name="as::assessment::data.get_data_by_assessment_id">
 <querytext>
 
-	select o.package_id, a.assessment_id as assessment_rev_id, cr.item_id as assessment_id, cr.title, ci.name,
+	select o.package_id, a.assessment_id as assessment_rev_id, cr.item_id as assessment_id, cr.title, ci.name, ci.publish_status,
 	       cr.description, coalesce(o.creation_user, o2.creation_user) as creation_user, o.creation_date, a.instructions, a.run_mode,
 	       a.anonymous_p, a.secure_access_p, a.reuse_responses_p, a.ip_mask, a.password,
 	       a.show_item_name_p, a.entry_page, a.exit_page, a.consent_page, a.return_url,

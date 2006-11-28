@@ -424,7 +424,8 @@ ad_proc -public as::assessment::check_session_conditions {
     if {(![empty_string_p $start_time] && $start_time > $cur_time) || (![empty_string_p $end_time] && $end_time < $cur_time)} {
 	append error_list "<li>[_ assessment.assessment_not_public]</li>"
     }
-    if {![empty_string_p $number_tries] && $number_tries <= $total_tries} {
+
+    if {![empty_string_p $number_tries] && $number_tries >= $total_tries} {
 	append error_list "<li>[_ assessment.assessment_too_many_tries]</li>"
     }
     if {![empty_string_p $wait_between_tries] && $wait_between_tries > $cur_wait_time} {
