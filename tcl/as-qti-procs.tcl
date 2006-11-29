@@ -653,7 +653,7 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
 	    # <render_fib>
 	    set render_fibNodes [$presentation selectNodes {.//render_fib}]
 	    if {[llength $render_fibNodes] > 0} {
-		set as_items__title {}
+
 		# fillinblank or shortanswer
 		set render_fib [lindex $render_fibNodes 0]
 		# fillinblank (textbox)
