@@ -83,9 +83,11 @@
   <msg key="as_End_Time_help">Limite de tempo depois do qual ninguém pode enviar respostas.</msg>
   <msg key="as_Entry_Page_help">Página para exibir antes da avaliação atual</msg>
   <msg key="as_Exit_Page_help">Página para exibir depois de terminada a avaliação</msg>
+  <msg key="as_Feedback_help">Sob quais condições as respostas associadas com &lt;br&gt; cada questão devem ser mostradas ao sujeito.</msg>
   <msg key="as_Instructions_help">Instruções de como usar esta avaliação</msg>
   <msg key="as_ip_mask_help">Máscara de Rede definindo quais endereços IP podem participar nesta avaliação.</msg>
   <msg key="as_Minutes_Retry_help">Quantos minutos devem se passar entre cada tentativa.</msg>
+  <msg key="as_Mode_help">este é um teste solitário ou provê uma integração com outros. Precisa de refinamento, ignore por agora</msg>
   <msg key="as_Navigation_help">Como deve acontecer a navegação entre as seções na avaliação.</msg>
   <msg key="as_Number_Tries_help">Quanto tempo leva para poder refazer o teste. 0 para infinito.</msg>
   <msg key="as_parameter_description_help">Razão da variável (descr. curta)</msg>
@@ -134,6 +136,8 @@
   <msg key="Categorization">Categorização</msg>
   <msg key="Categorization_exact">Exato</msg>
   <msg key="Categorization_sub">Incluir subcategorias</msg>
+  <msg key="Change_multiple_timings">Mudar Disponibilidade (alle)</msg>
+  <msg key="Change_timings">Mudar disponibilidade baseada no tempo</msg>
   <msg key="Choice">Escolha</msg>
   <msg key="choice_Content">Enviar Arquivo</msg>
   <msg key="choice_Content_help">Enviar arquivo com o conteúdo da resposta</msg>
@@ -271,6 +275,7 @@
   <msg key="from">De:</msg>
   <msg key="fu_Title_help">Título da questão</msg>
   <msg key="goes_to_section">Ir para seção</msg>
+  <msg key="help_postcheck_p">Checar o post?</msg>
   <msg key="hide_item_name">Ocultar nome da Questão</msg>
   <msg key="history">Mudar História</msg>
   <msg key="horizontal">Horizontal</msg>
