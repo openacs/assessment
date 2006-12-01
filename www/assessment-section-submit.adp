@@ -21,11 +21,14 @@
 	</else>
 	</list>
 	</if>
-
+  <if @form_is_submit@ true and @form_is_valid@ false>
+  <div class="form-error">#assessment.There_was_a_problem_with_your_answers#</div>
+  </if>
   <fieldset style="padding:10px;margin-bottom:10px"><!-- Section FieldSet -->
     <legend><b>@section.title@</b></legend>
     <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
+
 
      <formtemplate id="show_item_form">
      <multiple name="items">
