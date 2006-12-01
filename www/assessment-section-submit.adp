@@ -53,7 +53,10 @@
              <fieldset class="radio">
                <if @items.choice_orientation@ ne horizontal>
                  <formgroup id="response_to_item.@items.as_item_id@">
-                   @formgroup.widget;noquote@ @formgroup.label;noquote@<br>
+                   @formgroup.widget;noquote@ 
+<label for="show_item_form:elements:response_to_item.@items.as_item_id@:@formgroup.option@">
+@formgroup.label;noquote@<br>
+</label>
                  </formgroup>
                </if>
                <elseif @items.title@ ne @items.next_title@ and @items.groupnum@ eq 1>
