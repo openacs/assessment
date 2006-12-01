@@ -94,6 +94,7 @@
        </div><!-- End "question-container" -->
 
     </multiple>
+	<p>#assessment.This_is_a_required#</p>
     <input type=submit value="#assessment.Submit#">
   </formtemplate>
 </fieldset><!-- End Section FieldSet -->

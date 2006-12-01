@@ -52,8 +52,8 @@ if {![info exists assessment_data(assessment_id)]} {
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set number_tries $assessment_data(number_tries)
 db_1row total_tries {}
-if {![empty_string_p $number_tries] && $number_tries <= $total_tries} {
-    ad_returnredirect [export_vars -base sessions {assessment_id}]
+if {![empty_string_p $number_tries] && $number_tries > 0 && $number_tries <= $total_tries} {
+    ad_returnredirect [export_vars -base session {assessment_id}]
 }
 
 set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id -password $password]
@@ -90,7 +90,11 @@ db_transaction {
 		    db_1row unfinished_last_item {}
 		}
 		incr section_order -1
-		incr item_order -1
+		if {$item_order eq ""} {
+		    set item_order 0
+		} else {
+		    incr item_order -1
+		}
 	    }
 	}
     } else {
@@ -145,6 +149,7 @@ db_transaction {
 	}
 
 	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id -package_id $assessment_package_id
+	ns_log notice "Assessment section_id='${section_id}' session_id='${session_id}' assessnent='${assessment_rev_id}'"
 	db_1row section_data {} -column_array section
 	set display_type_id $section(display_type_id)
 	if {![empty_string_p $display_type_id]} {
@@ -161,7 +166,7 @@ db_transaction {
 	set page_total_items [llength $item_list]
 	# get preference for number of display items per page
 	# since we are dividing here, we need to set per_page to the
-	# total number of questions if its an empty string
+	# total number of questions if its an empty string or 0
 	set page_display_per_page [expr {[string equal "" $display(num_items)] ? $page_total_items : $display(num_items)}]
 	# determine the total number of pages
 	set page_total [expr $page_total_items / $page_display_per_page]
@@ -187,6 +192,7 @@ db_transaction {
 	if { ![exists_and_not_null item_order] } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
+	ns_log notice "page_display_per_page = '${page_display_per_page}'"
 	set current_page [expr {$item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages
@@ -597,4 +603,7 @@ if {$display(submit_answer_p) != "t"} {
 	}
     }
 }
+
+set form_is_submit [template::form::is_submission show_item_form]
+set form_is_valid [template::form::is_valid show_item_form]
 ad_return_template $template
