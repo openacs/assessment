@@ -230,12 +230,18 @@ db_transaction {
 	    lappend item_id_list [lindex $one_item 0]
 	}
 
-	# let's generate the list of page numbers
+	# let's generate the list of page numbers 
+	# for sections with a limited number of items per page
 	if {![empty_string_p $display(num_items)] && $page_total > 1} {
 	    set progress_bar_list [template::util::number_list $page_total 1]
 	}
 	if {![info exists show_progress]} {
 	    set show_progress 0
+	}
+	# if we have multiple sections
+	if {![info exists progress_bar_list] && [llength $section_list] > 1} {
+	    set progress_bar_list [template::util::number_list [llength $section_list] 1]
+	    set current_page [expr {[lsearch $section_list $section_id] +1 }]
 	}
     }
 }
