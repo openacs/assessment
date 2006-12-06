@@ -27,7 +27,7 @@
       <querytext>
 	select grantee_id from acs_permissions where object_id=(select
       assessment_id from as_inter_item_checks where
-      inter_item_check_id=:inter_item_check_id) and privilege='admin'
+      inter_item_check_id=:inter_item_check_id) and privilege='admin' and grantee_id in (select user_id from users)
       </querytext>
 </fullquery>
 <fullquery name="as::assessment::check::manual_action_exec.get_assessment_admin">
