@@ -20,6 +20,8 @@ set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 template::multirow create items item_id revision_id title data_type display_type stats
 
+as::assessment::data -assessment_id $assessment_id
+
 foreach section_id [db_list sections {
     select s.section_id
     from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm, cr_items ai
@@ -58,6 +60,7 @@ foreach section_id [db_list sections {
 	    set total_choices 0
 
 	    set choices [list]
+	    set visited_session_ids [list]
 	    db_foreach item_choices {
 		select r.title as choice_title, c.choice_id, c.correct_answer_p,
 		(select count(*)
@@ -96,6 +99,7 @@ foreach section_id [db_list sections {
 		    incr total_correct $choice_responses
 		}
 	    }
+	    set total_responses [db_string count_responses "select count(*) from (select distinct session_id from as_item_data, cr_revisions cr1, cr_revisions cr2 where cr1.revision_id=:revision_id and cr1.item_id=cr2.item_id and as_item_id = cr2.revision_id ) d"]
 
 	    if { $total_responses } {
 		append stats "<table>\n"
@@ -104,7 +108,7 @@ foreach section_id [db_list sections {
 		    array set r $choice
 
 		    append stats "<tr>"
-		    if { $r(correct_answer_p) } {
+		    if { $r(correct_answer_p) && $assessment_data(type) ne "survey"} {
 			append stats "<td><img src=/resources/assessment/correct.gif /></td>"
 		    } else {
 			append stats "<td>&nbsp;</td>"
@@ -114,11 +118,14 @@ foreach section_id [db_list sections {
 		    if { $first_p } {
 			append stats "
 <td rowspan=$total_choices>
-<b>[_ assessment.Total_Responses]</b> $total_responses<br />
+<b>[_ assessment.Total_Responses]</b> $total_responses<br />"
+			if {$assessment_data(type) ne "survey"} {
+			    append stats "
 <b>[_ assessment.Total_Correct]</b> $total_correct"
 			
 			if { $total_correct > 0 } {
 			    append stats ", [format "%.2f" [expr double($total_correct) / $total_responses * 100]]%"
+			}
 			}
 			append stats "</td></tr>\n"
 
