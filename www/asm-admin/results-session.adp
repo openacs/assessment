@@ -5,7 +5,7 @@
 <div class="result">
 <h1>@assessment_data.title@</h1>
 <p><span><b>#acs-subsite.Name#:</b> <if @show_username_p@><a href="@session_user_url@">@first_names@ @last_name@</a></if><else>#assessment.anonymous_name#</else></span>
-   <span><b>#assessment.Attempt#:</b> @session_attempt@<if @assessment_data.number_tries@ not nil> / @assessment_data.number_tries@</if></span>
+   <span><b>#assessment.Attempt#:</b> @session_attempt@<if @assessment_data.number_tries@ not nil> / @assessment_data.number_tries@</if></span> (<a href="@delete_url@">#assessment.Delete_Attempts#</a>)
    <if @assessment_data.type@ ne survey><span><b>#assessment.Percent_Score#:</b> @assessment_score@</span></if>
  <span><b>#assessment.Started#:</b> @session_start@</span>
  <span><b>#assessment.Finished#:</b> @session_finish@</span>

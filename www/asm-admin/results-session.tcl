@@ -38,6 +38,7 @@ set session_user_url [acs_community_member_url -user_id $subject_id]
 
 # get start and end times
 db_1row session_data {}
+
 set session_time [as::assessment::pretty_time -seconds $session_time -hours]
 set session_start [lc_time_fmt $creation_datetime $format]
 set session_finish [lc_time_fmt $completed_datetime $format]
@@ -75,5 +76,5 @@ db_multirow sections sections {} {
 set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
 
 set comments_installed_p [apm_package_enabled_p "general-comments"]
-
+set delete_url [export_vars -base session-delete {assessment_id subject_id session_id {return_url [ad_return_url]}}]
 ad_return_template
