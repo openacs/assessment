@@ -29,19 +29,19 @@ db_foreach get_sessions "" {
 ad_form -name session-delete -export {assessment_id subject_id return_url} \
     -has_submit 1 \
     -form {
-        {session_id:text(checkbox),multiple {label "[_ assessment.Attempts_to_delete]"} {options $session_id_options}}
+        {session_id:text(checkbox),multiple,optional {label "[_ assessment.Attempts_to_delete]"} {options $session_id_options}}
         {cancel:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
         {ok:text(submit) {label "[_ acs-kernel.common_Delete]"}}
         
     } -on_submit {
-        if {[info exists ok] && $ok ne ""} {
+        if {[info exists ok] && $ok ne "" && [info exists session_id]} {
             #delete sessions
             set message "[_ assessment.Requested_attempts_deleted]"
             foreach id $session_id {
                 as::session::delete -session_id $id
             }
         } else {
-            set message "[_ assessment.Delete_canceled]"
+            set message "[_ assessment.Delete_cancelled]"
         }
 
         if {$return_url eq "" || [set session_count [db_string count_sessions "" -default 0]] == 0} {

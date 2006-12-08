@@ -87,7 +87,7 @@ template::list::create \
 	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.percent_score@</a></if><else></else>}
 	}
         delete {
-            label {[_ assessment.Delete_Attempt]}
+            label {}
             display_template {<a href=\"@results.delete_url@">[_ assessment.Delete_Attempts]</a>}
         }
     } -main_class {
