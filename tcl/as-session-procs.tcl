@@ -85,7 +85,9 @@ ad_proc -private as::session::delete {
         }
         content::item::delete -item_id $item_id
     }
-    
+    foreach comment_id [db_list get_comments ""] {
+	content::item::delete -item_id $comment_id
+    }
     set session_item_id [content::revision::item_id -revision_id $session_id]
     content::revision::delete -revision_id $session_id
 

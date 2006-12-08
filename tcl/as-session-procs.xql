@@ -35,6 +35,13 @@ and d.session_id=:session_id
 </querytext>
 </fullquery>
 
+<fullquery name="as::session::delete.get_comments">
+<querytext>
+select g.comment_id
+from general_comments g
+where object_id=:session_id
+</querytext>
+</fullquery>
 </queryset>
 
 
