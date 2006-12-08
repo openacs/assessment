@@ -63,3 +63,46 @@ ad_proc -public as::session::new {
 #    }
     return $as_session_id
 }
+
+ad_proc -private as::session::delete {
+    -session_id:required
+} {
+    Remove a session and all associated data
+
+    @author Dave Bauer (dave@solutiongrove.com)
+
+    @param session_id
+} {
+    foreach item_id [db_list get_data_ids ""] {
+        foreach result_item_id [db_list get_result_ids ""] {
+            content::item::delete -item_id $result_item_id
+        }
+        content::item::delete -item_id $item_id
+    }
+    foreach item_id [db_list get_section_data_ids ""] {
+        foreach result_item_id [db_list get_result_ids ""] {
+            content::item::delete -item_id $result_item_id
+        }
+        content::item::delete -item_id $item_id
+    }
+    
+    set session_item_id [content::revision::item_id -revision_id $session_id]
+    content::revision::delete -revision_id $session_id
+
+}
+
+ad_proc -private as::session::delete_all_sessions {
+    -subject_id:required
+    -assessment_id:required
+} {
+    Remove a session and all associated data
+
+    @author Dave Bauer (dave@solutiongrove.com)
+
+    @param subject_id
+    @param assessment_id
+} {
+    foreach session_id [db_list get_session_ids "select session_id from as_sessions where assessment_id=:assessment_id"] {
+        as::session::delete -session_id $session_id
+    }
+}
