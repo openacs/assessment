@@ -4,6 +4,7 @@ ad_page_contract {
     assessment_id:integer
     subject_id:integer
     {return_url ""}
+    {session_id:optional,multiple}
 } 
 
 permission::require_permission \
@@ -23,18 +24,27 @@ set session_id_options [list]
 db_foreach get_sessions "" {
     set creation_datetime [lc_time_fmt $creation_datetime "%x %X"]
     set completed_datetime [lc_time_fmt $completed_datetime "%x %X"]
-    lappend session_id_options [list "$session_id [_ assessment.Attempt_started_completed [list creation_datetime $creation_datetime completed_datetime $completed_datetime]]" $session_id]
+    lappend session_id_options [list "[_ assessment.Attempt_started_completed [list creation_datetime $creation_datetime completed_datetime $completed_datetime]]" $session_id]
 }
-
+set check_all_options [list [list [_ assessment.Select_All] ""]]
 ad_form -name session-delete -export {assessment_id subject_id return_url} \
     -has_submit 1 \
     -form {
+        {cancel0:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
+        {ok0:text(submit) {label "[_ acs-kernel.common_Delete]"}}
+	{check_all:text(checkbox),optional {label ""} {options $check_all_options} {html {onClick acs_CheckAll('session-delete:elements:session_id',this.checked)}}}
         {session_id:text(checkbox),multiple,optional {label "[_ assessment.Attempts_to_delete]"} {options $session_id_options}}
         {cancel:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
         {ok:text(submit) {label "[_ acs-kernel.common_Delete]"}}
         
+    } -on_request {
+	if {[info exists session_id]} {
+	    template::element::set_values session-delete session_id $session_id
+	}
     } -on_submit {
-        if {[info exists ok] && $ok ne "" && [info exists session_id]} {
+        if {([info exists ok] && $ok ne "" \
+		 || [info exists ok0] && $ok0 ne "" ) \
+		&& [info exists session_id]} {
             #delete sessions
             set message "[_ assessment.Requested_attempts_deleted]"
             foreach id $session_id {
@@ -51,4 +61,33 @@ ad_form -name session-delete -export {assessment_id subject_id return_url} \
         ad_script_abort
     }
 
+set header_stuff {
+<script type="text/javascript">
+    function acs_CheckAll(elementName, checkP) {
+	var Obj, Type, Name, Id;
+	var Controls = acs_ListFindInput(); if (!Controls) { return; }
+	// Regexp to find name of controls
+	var re = new RegExp('^' + elementName + '.+');
+
+	checkP = checkP ? true : false;
+
+	for (var i = 0; i < Controls.length; i++) {
+						   Obj = Controls[i];
+						   Type = Obj.type ? Obj.type : false;
+						   Name = Obj.name ? Obj.name : false;
+						   Id = Obj.id ? Obj.id : false;
+
+						   if (!Type || !Name || !Id) { continue; }
+
+						   if (Type == "checkbox" && re.exec(Id)) {
+						       Obj.checked = checkP;
+						   }
+					       }
+    }
+
+</script>
+}
+
+set page_title [_ assessment.Delete_Attempts]
+set context [list $page_title]
 ad_return_template
