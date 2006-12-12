@@ -4,7 +4,6 @@ ad_page_contract {
     assessment_id:integer
     subject_id:integer
     {return_url ""}
-    {session_id:optional,multiple}
 } 
 
 permission::require_permission \
@@ -24,7 +23,13 @@ set session_id_options [list]
 db_foreach get_sessions "" {
     set creation_datetime [lc_time_fmt $creation_datetime "%x %X"]
     set completed_datetime [lc_time_fmt $completed_datetime "%x %X"]
-    lappend session_id_options [list "[_ assessment.Attempt_started_completed [list creation_datetime $creation_datetime completed_datetime $completed_datetime]]" $session_id]
+    if {$completed_datetime eq ""} {
+	set message_key assessment.Attempt_started_incomplete
+    } else {
+	set message_key assessment.Attempt_started_completed
+    }
+    set view_session_url [export_vars -base results-session {session_id}]
+    lappend session_id_options [list "[_ $message_key [list creation_datetime $creation_datetime completed_datetime $completed_datetime]] [_ assessment.View_session_in_a_new_window [list view_session_url $view_session_url]]" $session_id]
 }
 set check_all_options [list [list [_ assessment.Select_All] ""]]
 ad_form -name session-delete -export {assessment_id subject_id return_url} \
