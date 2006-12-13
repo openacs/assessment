@@ -44,6 +44,8 @@ ad_proc -public as::item_data::new {
 	db_transaction {
 	    if {[db_0or1row old_item_id {}]} {
 		if {$allow_overwrite_p == "f"} {
+		    set as_item_data_id $latest_revision
+		    set transaction_successful_p 1
 		    return
 		}
 		set new_p 0
