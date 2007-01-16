@@ -50,3 +50,6 @@ alter table as_session_choices add constraint "as_session_choices_section_fk" FO
 
 alter table as_session_choices add constraint "as_session_choices_session_fk" FOREIGN KEY (session_id) REFERENCES as_sessions(session_id) on delete cascade;
 
+alter table as_session_results drop constraint as_session_results_target_id_fk;
+
+alter table as_session_results add constraint "as_session_results_target_id_fk" FOREIGN KEY (target_id) REFERENCES cr_revisions(revision_id) on delete cascade;
