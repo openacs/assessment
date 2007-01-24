@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="item_display">
+<fullquery name="as::item_type_display_rb::item_display">
       <querytext>
 
 	select r.target_rev_id as as_item_display_id, o.object_type
@@ -13,7 +13,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="update_section_in_assessment">
+<fullquery name="as::item_type_display_rb::update_section_in_assessment">
       <querytext>
 
 		update as_assessment_section_map
@@ -24,7 +24,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="move_down_items">
+<fullquery name="as::item_type_display_rb::move_down_items">
       <querytext>
 
 	    update as_item_section_map
@@ -35,7 +35,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="insert_new_item">
+<fullquery name="as::item_type_display_rb::insert_new_item">
       <querytext>
 
 	    insert into as_item_section_map
@@ -50,7 +50,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="update_item_display">
+<fullquery name="as::item_type_display_rb::update_item_display">
       <querytext>
 
 		update as_item_rels
@@ -61,7 +61,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="item_data">
+<fullquery name="as::item_type_display_rb::item_data">
       <querytext>
 
 	    select required_p, max_time_to_complete, points
@@ -71,7 +71,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="update_item">
+<fullquery name="as::item_type_display_rb::update_item">
       <querytext>
 
 	    update as_item_section_map

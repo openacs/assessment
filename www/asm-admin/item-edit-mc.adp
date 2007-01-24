@@ -3,5 +3,5 @@
 <property name="context">@context;noquote@</property>
 
 <blockquote>
-  <formtemplate id="item_edit_mc"></formtemplate>
+  <formtemplate id="item_edit_mc" style="accessible-forms"></formtemplate>
 </blockquote>

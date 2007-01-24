@@ -119,7 +119,7 @@ set on_submit "{
 set edit_data "{
     db_transaction {
 	if {!\[db_0or1row item_type {}\] || \$object_type != \"as_item_type_mc\"} {
-	    set mc_id \[as::item_type_mc::new \\
+5~	    set mc_id \[as::item_type_mc::new \\
 			   -title \$title \\
 			   -increasing_p \$increasing_p \\
 			   -allow_negative_p \$negative_p \\

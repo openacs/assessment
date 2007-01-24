@@ -20,7 +20,7 @@ set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 set categories_url [db_string get_category_url {}]
 set user_id [ad_conn user_id]
-set sw_admin [acs_user::site_wide_admin_p -user_id $user_id]
+set sw_admin_p [acs_user::site_wide_admin_p -user_id $user_id]
 set package_admin_p [permission::permission_p -party_id $user_id -object_id $package_id -privilege "admin"]
 
 #form to upload a QTI ZIP file
@@ -39,7 +39,7 @@ if { $advanced_options_p } {
 
 lappend actions "[_ assessment.New_Assessment]" {assessment-form?type=test} "[_ assessment.New_Assessment2]"
 
-if { $sw_admin && $advanced_options_p } {
+if { $sw_admin_p && $advanced_options_p } {
     lappend actions [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]
 }
 
@@ -53,6 +53,15 @@ db_multirow -extend { export permissions admin_request} assessments get_all_asse
     set export "[_ assessment.Export]"
     set permissions "[_ assessment.permissions]"
     set admin_request "[_ assessment.Request] [_ assessment.Administration]"
+    switch -- $publish_status {
+	live {
+	    set publish_status "[_ assessment.Live]"
+	} 
+	default {
+	    set publish_status "[_ assessment.Not_Live]"
+	}
+    }
+	    
 }
 
 # Bulk action for mass setting the start and endtime of assessments.
@@ -71,6 +80,9 @@ list::create \
 	    label "[_ assessment.Title]"
 	    display_template {<a href="one-a?assessment_id=@assessments.assessment_id@">@assessments.title;noquote@</a>} 
 	}
+	publish_status {
+	    label "[_ assessment.Publish_Status]"
+        }
 	export {
 	    label "[_ assessment.Export]"
 	    link_url_eval "[export_vars -base export { assessment_id }]"

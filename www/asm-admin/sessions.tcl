@@ -26,7 +26,7 @@ set user_id [ad_conn user_id]
 if {![apm_package_installed_p dotlrn] \
 	|| [set members_party_id [dotlrn_community::get_community_id]] eq ""} {
     set members_party_id [application_group::group_id_from_package_id \
-		     -package_id [ad_conn subsite_id]
+			      -package_id [ad_conn subsite_id]]
 }
 
 set form [rp_getform]
@@ -176,3 +176,10 @@ db_multirow sessions get_sessions [subst {
 
     order by lower(a.title), lower(a.last_name), lower(a.first_names)
 }]
+
+
+
+
+
+
+

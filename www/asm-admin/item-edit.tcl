@@ -37,6 +37,8 @@ if {[string eq $display_type "_f"]} {
     set display_type f
 }
 set question_text [list $title text/html]
+set feedback_right [list $feedback_right text/html]
+set feedback_wrong [list $feedback_wrong text/html]
 ad_form -name item_edit -mode display -action item-edit-general -export { assessment_id section_id as_item_id } -form {
     {question_text:richtext {label "[_ assessment.Question]"} {html {rows 3 cols 80}} {value $question_text} {help_text "[_ assessment.item_Question_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {value $description} {help_text "[_ assessment.item_Description_help]"}}

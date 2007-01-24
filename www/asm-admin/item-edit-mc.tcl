@@ -78,13 +78,13 @@ foreach one_choice $choices {
 	    set correct($choice_id) t
 	}
     }
-    append ad_form_code "\{choice.$choice_id:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($choice_id)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+    append ad_form_code "\{choice.$choice_id:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice($choice_id)\"\} \}\n"
 
     if { $type > 1} {
     if {[info exists correct($choice_id)]} {
-	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \}\n"
     } else {
-	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+	append ad_form_code "\{correct.$choice_id:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \}\n"
     }
     # lappend validate_list "correct.$choice_id {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
     }
@@ -94,15 +94,15 @@ foreach one_choice $choices {
 for {set i 1} {$i <= $num_choices} {incr i} {
     incr count
     if {[info exists choice(_$i)]} {
-	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(_$i)\"\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{value \"\$choice(_$i)\"\} \}\n"
     } else {
-	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\} \{help_text \"[_ assessment.Choice_help]\"\}\}\n"
+	append ad_form_code "\{choice._$i:text,optional,nospell \{label \"[_ assessment.Choice] $count\"\} \{html \{size 80 maxlength 1000\}\}\}\n"
     }
     if { $type > 1} {
     if {[info exists correct(_$i)]} {
-	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{values t\}\}\n"
     } else {
-	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
+	append ad_form_code "\{correct._$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $count\"\} \{options \$correct_options\} \}\n"
     }
     }
 }
