@@ -10,13 +10,12 @@
     and s.section_id = asm.section_id
     and cr.revision_id = ci.latest_revision
     and asm.assessment_id = :assessment_rev_id
-    order by s.section_id, asm.sort_order
+    order by asm.sort_order, s.section_id
 --    select s.section_id, cr.title
 --    from as_sections s, cr_revisions cr, as_assessment_section_map asm
 --    where cr.revision_id = s.section_id
 --    and s.section_id = asm.section_id
 --    and asm.assessment_id = :assessment_rev_id
---    order by asm.sort_order
       </querytext>
 </fullquery>
 
