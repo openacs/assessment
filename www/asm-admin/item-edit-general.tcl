@@ -117,6 +117,8 @@ ad_form -extend -name item_edit_general -form {
     }
 } -edit_data {
     set question_text [template::util::richtext::get_property contents $question_text]
+    set feedback_right [template::util::richtext::get_property content $feedback_right]
+    set feedback_wrong [template::util::richtext::get_property content $feedback_wrong]
     db_transaction {
 	set old_display_type [string range [db_string get_display_type {}] end-1 end]
 	set new_item_id [as::item::edit \

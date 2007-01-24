@@ -118,42 +118,9 @@
             </p>
           
 </fieldset>
-      <br>
-        
-              <if @formerror.run_mode@ not nil>
-                <span class="form-label-error">
-              </if>
-              <else>
-                <span class="form-label">
-              </else>
-            
-            <label for="run_mode">
-              Mode
-            </label>
-            
-          </span>
-          
-            <if @formerror.run_mode@ not nil>
-              <span class="form-widget-error">
-            </if>
-            <else>
-              <span class="form-widget">                  
-            </else>
           
               <formwidget id="run_mode">
-            
-            <formerror id="run_mode">
-              <br>
-                  @formerror.run_mode;noquote@
-            </formerror>
           
-            <p class="form-help-text">
-              
-                <formhelp id="run_mode">
-              
-            </p>
-          
-      <br>
 <fieldset>
 <legend>#assessment.assessment_form_response_options#</legend>
         

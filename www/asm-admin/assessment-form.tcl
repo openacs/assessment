@@ -63,16 +63,10 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 }
 
 if { $edit_p } {
-    ad_form -extend -name assessment_form -form {{instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Instructions_help]"}}}
+    ad_form -extend -name assessment_form -form {{instructions:text(textarea),optional {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}}}}
 
 
-    if { $type eq "test" } {
-        ad_form -extend -name assessment_form -form {
-            {run_mode:text,optional,nospell {label "[_ assessment.Mode]"} {html {size 25 maxlength 25}} {help_text "[_ assessment.as_Mode_help]"}}
-        }
-    } else {
-        ad_form -extend -name assessment_form -form { {run_mode:text(hidden) {value {}}} }
-    }
+    ad_form -extend -name assessment_form -form { {run_mode:text(hidden) {value {}}} }
 
     if { !$permission_p } { 
         ad_form -extend -name assessment_form  -form {

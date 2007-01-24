@@ -108,12 +108,11 @@ ad_form -extend -name item-add -form {
 
 ad_form -extend -name item-add -form {
     {ms_label:text,optional}
-    {add_another_choice:text(submit)}
+    {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
 }
-
 if {[template::form::is_submission item-add] \
         && [template::element::get_value item-add add_another_choice] \
-        eq "add_another_choice"} {
+        eq [_ assessment.Add_another_choice]} {
     set num_choices [element::get_value item-add num_choices]
     incr num_choices
     element::set_value item-add num_choices $num_choices
@@ -142,8 +141,8 @@ ad_form -extend -name item-add -form {
 }
 
 ad_form -extend -name item-add -form {
-    {formbutton_ok:text(submit)}
-    {formbutton_add_another_question:text(submit)}
+    {formbutton_ok:text(submit) {label "[_ assessment.Save_and_finish]"}}
+    {formbutton_add_another_question:text(submit) {label "[_ assessment.Save_and_add_another_question]"}}
 }
 
 ad_form -extend -name item-add -validate {
@@ -195,6 +194,8 @@ ad_form -extend -name item-add -new_request {
         }
     }
     set question_text [template::util::richtext::get_property content $question_text]
+    set feedback_right [template::util::richtext::get_property content $feedback_right]
+    set feedback_wrong [template::util::richtext::get_property content $feedback_wrong]
     db_transaction {
 	if {![db_0or1row item_exists {}]} {
 

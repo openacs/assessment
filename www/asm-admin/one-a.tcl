@@ -59,6 +59,8 @@ if { $assessment_id eq $registration_id } {
     # This is the user-registration assessment
     set is_reg_asm_p 1
     set p_title "[_ assessment.Reg_Assessment_title]"
+} else {
+    set p_title [_ assessment.One_Assessment_data]
 }
 
 if {![info exists assessment_data(assessment_id)]} {
