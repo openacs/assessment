@@ -299,7 +299,7 @@ ad_form -extend -name item-add -new_request {
 }
 } -after_submit {
     if {[exists_and_not_null formbutton_ok]} {
-	ad_returnredirect [export_vars -base one-section {assessment_id section_id}]&\#$as_item_id
+	ad_returnredirect [export_vars -base questions {assessment_id}]&\#$as_item_id
 	ad_script_abort
     } elseif {[exists_and_not_null formbutton_add_another_question]} {
 	set after [expr {$after + 1}]
