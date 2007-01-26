@@ -31,9 +31,9 @@
 <a class=button href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a> (<a href="../asm-admin/checks-admin?section_id=@items.section_id@&assessment_id=@assessment_id@&item_id=@items.as_item_id@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 </if>
 
-    <if @items.presentation_type@ ne fitb>@items.question_text;noquote@
+    <if @items.presentation_type@ ne fitb><p>@items.question_text;noquote@</p>
 
-<br><br><if @items.description@ not nil>@items.description;noquote@<br></if></if>
+<if @items.description@ not nil>@items.description;noquote@<br></if></if>
 
     <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
       <if @items.choice_orientation@ ne horizontal>
