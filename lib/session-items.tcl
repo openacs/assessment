@@ -26,8 +26,7 @@ if {[info exists item_id_list]} {
 ad_form -name session_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
-ns_log notice "assessment session-items.tcl show_feedback = '${show_feedback}'"
-# todo: display feedback text
+
 set feedback_count 0
 db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p correct_p view} items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
@@ -61,7 +60,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 	set item_data_id $values(item_data_id)
 	array unset values
 	set answered_p t
-
+#ns_log notice "points = $points result_points= $result_points"
 	if { $points != 0 } {
 	    if {$result_points < $points} {
 		set correct_p 0
@@ -75,7 +74,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		}	
 	    } else {
 		set correct_p 1
-		if {$show_feedback != "incorrect"} {
+		if {$show_feedback ne "incorrect"} {
 		    if { $feedback_right ne "" } {
 			set feedback "<font color=green>$feedback_right</font>"
 			set has_feedback_p 1

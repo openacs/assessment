@@ -14,7 +14,7 @@
 
 	  <if @items.presentation_type@ ne fitb>
 	    <b>@items.title;noquote@</b>
-	    @items.content;noquote@
+	     @items.content;noquote@
 <br />
 	</if>
 	    <group column=title>
@@ -81,7 +81,8 @@
 	  </if>
     </group>
 </if>
-	    <if @items.correct_p eq 1><if @show_feedback@ eq correct or @show_feedback@ eq all>@items.feedback_right;noquote@</if></if>
+
+	    <if @items.correct_p@ eq 1><if @show_feedback@ eq correct or @show_feedback@ eq all>@items.feedback_right;noquote@</if></if>
 	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect>@items.feedback_wrong;noquote@</if></if>
 <ul> <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@" &=assessment>	    <if @edit_p@ eq 1 and @items.answered_p@ eq t><li><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Add_Comment#</a></li></if>
 <!-- FIXME TODO move points to indented block with comments -->

@@ -149,7 +149,7 @@ db_transaction {
 	}
 
 	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id -package_id $assessment_package_id
-	ns_log notice "Assessment section_id='${section_id}' session_id='${session_id}' assessnent='${assessment_rev_id}'"
+#	ns_log notice "Assessment section_id='${section_id}' session_id='${session_id}' assessnent='${assessment_rev_id}'"
 	db_1row section_data {} -column_array section
 	set display_type_id $section(display_type_id)
 	if {![empty_string_p $display_type_id]} {
@@ -192,7 +192,7 @@ db_transaction {
 	if { ![exists_and_not_null item_order] } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
-	ns_log notice "page_display_per_page = '${page_display_per_page}'"
+#	ns_log notice "page_display_per_page = '${page_display_per_page}'"
 	set current_page [expr {$item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages

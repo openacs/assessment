@@ -1,5 +1,5 @@
 <if @results:rowcount@ gt 0>
     <multiple name="results">
-      <li>@results.description@ #assessment.Results_change_display#</li>
+      <li>@results.description@ <if @results.session_id@ eq @session_id@>#assessment.Results_change_display#</if><else>#assessment.Results_change_display_previous#</else></li>
       </multiple>
 </if>
