@@ -14,6 +14,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
 permission::require_permission -object_id $assessment_id -privilege admin
+set admin_trigger_p [acs_user::site_wide_admin_p -user_id [ad_conn user_id]]
 set title "Questions"
 set context [list [list index [_ assessment.admin]] $title]
 set tab "questions"
