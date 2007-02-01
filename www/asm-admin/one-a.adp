@@ -132,11 +132,3 @@
 <font color=red><b>#assessment.add_section_first#</b></font>
 </p>
 </if>
-
-<table cellspacing=0>
-  <tr class="odd">
-  <td></td><td>
-    <a href="section-form?assessment_id=@assessment_id@&after=@sections:rowcount@">#assessment.add_new_section#</a>
-    <a href="catalog-search?assessment_id=@assessment_id@&after=@sections:rowcount@">#assessment.Search_Section#</a>
-  </td></tr>
-</table>
