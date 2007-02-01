@@ -104,7 +104,7 @@ ad_proc -private as::session::delete_all_sessions {
     @param subject_id
     @param assessment_id
 } {
-    foreach session_id [db_list get_session_ids "select session_id from as_sessions where assessment_id=:assessment_id"] {
+    foreach session_id [db_list get_session_ids "select session_id from as_sessions where assessment_id=:assessment_id and subject_id=:subject_id"] {
         as::session::delete -session_id $session_id
     }
 }
