@@ -86,12 +86,6 @@
 </tr>
 
 <tr class="odd">
-	<td><if @assessment_data.show_item_name_p@> #assessment.show_item_name#</if><else>#assessment.hide_item_name#</else> -
-	[ <a href="@toggle_show_name_url@">
-	<if @assessment_data.show_item_name_p@>#assessment.make_hide_item_name#</if><else>#assessment.make_show_item_name#</else></a> ]</td>
-</tr>
-
-<tr class="odd">
 	<td><if @assessment_data.number_tries@ not nil> #assessment.limited_tries#</if><else>#assessment.unlimited_tries#</else> -
 	[ <a href="@edit_url@">#assessment.Edit#</a> ]</td>
 </tr>
