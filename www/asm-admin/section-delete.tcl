@@ -48,7 +48,7 @@ ad_form -name section_delete_confirm -action section-delete -export { assessment
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base questions {assessment_id}]
     ad_script_abort
 }
 

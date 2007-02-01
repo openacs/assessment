@@ -36,4 +36,4 @@ db_transaction {
     ad_script_abort
 }
 
-ad_returnredirect [export_vars -base one-a {assessment_id}]\#$as_item_id
+ad_returnredirect [export_vars -base questions {assessment_id}]\#$as_item_id

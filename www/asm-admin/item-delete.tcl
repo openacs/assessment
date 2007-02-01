@@ -51,7 +51,7 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base questions {assessment_id}]
     ad_script_abort
 }
 
