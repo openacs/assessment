@@ -483,6 +483,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
   <msg key="Question_not_answered">Question not answered</msg>
+  <msg key="Question_Number">Question %items.rownum%</msg>
   <msg key="Question_Statistics">Question Statistics</msg>
   <msg key="Question_Type">Question Type</msg>
   <msg key="Questions">Questions</msg>
@@ -551,6 +552,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Section_Navigation">Section Navigation</msg>
   <msg key="section_new_display"> -- New -- </msg>
   <msg key="section_num_Items">Number of questions per page</msg>
+  <msg key="Section_Number">Section %sections.sort_order%</msg>
   <msg key="Section_Order">Order of questions</msg>
   <msg key="section_order_help">In which order will the questions be displayed in this section.</msg>
   <msg key="section_preview">Preview Section</msg>
