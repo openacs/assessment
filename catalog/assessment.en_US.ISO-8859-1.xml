@@ -479,6 +479,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="post_check">Post Check</msg>
   <msg key="Prepend_Empty_Item">Prepend Empty Item</msg>
   <msg key="Preview">Preview</msg>
+  <msg key="Preview_link_and_message">&lt;a href=&quot;../assessment?assessment_id=%assessment_id%&quot;&gt;Preview&lt;/a&gt; (your response will be recorded)</msg>
   <msg key="publish_status">Publish Status</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
@@ -507,6 +508,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Request">Request</msg>
   <msg key="request_notif">Request Notification for </msg>
   <msg key="Requested_assess_does">Requested assessment does not exist</msg>
+  <msg key="Requested_assess_is_no_longer_available">Requested assessment is no longer available.</msg>
   <msg key="Requested_attempts_deleted">Requested attempts deleted.</msg>
   <msg key="Required">Required</msg>
   <msg key="Responding_Users">Responding Users</msg>

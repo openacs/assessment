@@ -55,7 +55,7 @@
   </tr>
   <tr class="odd">
     <td>&nbsp;</td><td>
-	<a href="../assessment?assessment_id=@assessment_id@">Preview Assessment</a> (your responses will be recorded)
+	#assessment.Preview_link_and_message#
     </td>
   </tr>
 
