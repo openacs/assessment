@@ -165,9 +165,9 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 		    set as_assessments__show_feedback "all"
 		}
 		set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
-		set as_assessments__survey_p {f}				
+		set as_assessments__type test			
 		if { [llength $resprocessNodes] == 0 } {				     
-		    set as_assessments__survey_p {t}
+		    set as_assessments__type survey
 		    #if it's a survey don't show feedback
 		    set as_assessments__show_feedback "none"				     
 		}			
@@ -246,7 +246,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						       -ip_mask $as_assessments__ip_mask \
 						       -show_feedback $as_assessments__show_feedback \
 						       -section_navigation $as_assessments__section_navigation \
-						       -survey_p $as_assessments__survey_p ]			
+						       -type $as_assessments__type ]			
 		
 		# Section
 		set sectionNodes [$assessment selectNodes {section}]
