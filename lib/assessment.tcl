@@ -43,7 +43,10 @@ set return_url "$url"
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 permission::require_permission -object_id $assessment_id -privilege read
-
+if {$assessment_data(publish_status) ne "live" && ![permission::permission_p -object_id $assessment_id -party_id [ad_conn user_id] -privilege "admin"]} {
+    ad_return_complaint 1 "[_ assessment.Requested_assess_is_no_longer_available]"
+    ad_script_abort
+}
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
