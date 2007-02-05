@@ -10,7 +10,7 @@
 
 <if @assessment_data.type@ ne 1>
 
-    <a class="button" href="item-edit?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
+    <a class="button" href="item-edit-general?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
     <a class="button" href="item-copy?section_id=@section_id@&assessment_id=@assessment_id@&as_item_id=@items.as_item_id@&after=@items.sort_order@">#assessment.Copy#</a>
 <a class=button href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
 
@@ -60,9 +60,6 @@
       <noparse>@items.subtext@</noparse>
       </div>
     </if>
-
-    <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Add_New#</a>
-    <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items:rowcount@">#assessment.Search_Item#</a>
 </if>
 </multiple>
 </formtemplate>
