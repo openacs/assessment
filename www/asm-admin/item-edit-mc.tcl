@@ -141,7 +141,10 @@ set edit_data "{
 	set as_item_id \[as::item::latest -as_item_id \$as_item_id -section_id \$new_section_id\]
 	as::assessment::check::copy_item_checks -assessment_id \$assessment_id -section_id \$new_section_id -as_item_id \$as_item_id -new_item_id \$new_item_id
 
-	db_dml update_section_in_assessment {}
+	as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	db_dml update_item_in_section {}
 	db_dml update_item_type {}
 
@@ -160,7 +163,7 @@ set edit_data "{
 
 	# add new choices
 	foreach i \[lsort \[array names choice\]\] {
-	
+
 	    if {\[string range  \$i 0 0\] == \"_\" && !\[empty_string_p \$choice(\$i)\]} {
 		incr count
 		set new_choice_id \[as::item_choice::new -mc_id \$new_item_type_id \\

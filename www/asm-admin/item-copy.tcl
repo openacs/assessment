@@ -50,7 +50,10 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
 	    set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	    set new_item_id [as::item::copy -as_item_id $as_item_id -title $title -description $description -field_name $field_name]
 
-	    db_dml update_section_in_assessment {}
+	    as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	    db_dml move_down_items {}
 	    incr after
 	    db_dml insert_new_item {}

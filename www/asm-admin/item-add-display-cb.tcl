@@ -41,7 +41,10 @@ if {$type == 1} {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-	db_dml update_section_in_assessment {}
+	as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
 	if {![db_0or1row item_display {}] || $object_type != "as_item_display_cb"} {
@@ -51,7 +54,7 @@ if {$type == 1} {
 					-choice_label_orientation $label_orientation \
 					-sort_order_type $order_type \
 					-item_answer_alignment $answer_alignment]
-	    
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
@@ -130,7 +133,10 @@ ad_form -name item_add_display_cb -action item-add-display-cb -export { assessme
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-	db_dml update_section_in_assessment {}
+	as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
 	if {![db_0or1row item_display {}] || $object_type != "as_item_display_cb"} {
@@ -140,7 +146,7 @@ ad_form -name item_add_display_cb -action item-add-display-cb -export { assessme
 					-choice_label_orientation $label_orientation \
 					-sort_order_type $order_type \
 					-item_answer_alignment $answer_alignment]
-	    
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel

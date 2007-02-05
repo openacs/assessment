@@ -8,7 +8,7 @@ ad_page_contract {
 
     @author timo@timohentschel.de
     @date   2004-12-08
-    @cvs-id $Id: 
+    @cvs-id $Id:
 } {
     assessment_id:integer
     section_id:integer
@@ -56,7 +56,10 @@ ad_form -name catalog_item_add -action catalog-item-add -export { assessment_id 
 	    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
 
 	    set item_count [llength $item_ids]
-	    db_dml update_section_in_assessment {}
+	    as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	    db_dml move_down_items {}
 
 	    foreach as_item_id $item_ids {
