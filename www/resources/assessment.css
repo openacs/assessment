@@ -1,0 +1,18 @@
+.feedback-message {
+    clear: both;
+    padding: 10px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.right {
+	display: block;
+	padding: 5px;
+	background: #cce3e3;
+}
+
+.wrong {
+	display: block;
+	padding: 5px;
+	background: #ffe3e3;
+}
