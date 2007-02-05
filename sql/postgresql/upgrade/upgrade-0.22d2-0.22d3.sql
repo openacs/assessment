@@ -55,3 +55,7 @@ alter table as_assessment_section_map drop constraint as_assessment_section_map_
 
 alter table as_assessment_section_map add constraint "as_assessment_section_map_assessment_id_fk" FOREIGN KEY (assessment_id) REFERENCES as_assessments(assessment_id) ON DELETE CASCADE;
 alter table as_assessment_section_map add constraint "as_assessment_section_map_section_id_fk" FOREIGN KEY (section_id) REFERENCES as_sections(section_id) ON DELETE CASCADE;
+alter table as_session_results drop constraint "as_session_results_result_id_fk";
+alter table as_session_results add constraint "as_session_results_result_id_fk" FOREIGN KEY (result_id) REFERENCES cr_revisions(revision_id) on delete cascade;
+alter table as_session_results drop constraint "as_session_results_target_id_fk";
+alter table as_session_results add constraint "as_session_results_target_id_fk" FOREIGN KEY (target_id) REFERENCES cr_revisions(revision_id) on delete cascade;
