@@ -37,6 +37,8 @@ set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]
 set type $assessment_data(type)
 
 set item_type [string range [db_string get_item_type {}] end-1 end]
+set display_type [string range [db_string get_display_type {}] end-1 end]
+
 set display_types [list]
 foreach display_type [db_list display_types {}] {
     lappend display_types [list "[_ assessment.item_display_$display_type]" $display_type]
@@ -81,7 +83,6 @@ switch -- $item_type {
     "mc" {
     ad_form -extend -name item_edit_general -form {
         {num_choices:text(hidden)}
-        {ms_label:text,optional}
         {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
     }
 ns_log notice "Add Another = '[template::element::get_value item_edit_general add_another_choice]'"
@@ -94,6 +95,11 @@ ns_log notice "Add Another = '[template::element::get_value item_edit_general ad
     } 
 
 #####
+	if {$display_type eq "cb"} {
+	    ad_form -extend -name item_edit_general -form {
+		{ms_label:text,optional {label "Multiple Selection Instruction"}}		
+	    }
+	}
 #####
     set as_item_type_id [as::item::get_item_type_id -as_item_id $as_item_id]
     if {[array exists move_up]} {
@@ -195,7 +201,6 @@ ad_form -extend -name item_edit_general -edit_request {
 	set data_type varchar
     }
     set data_type_disp "[_ assessment.data_type_$data_type]" 
-    set display_type [string range [db_string get_display_type {}] end-1 end]
     set question_text [template::util::richtext::create $question_text $mime_type]
 
     set feedback_right [template::util::richtext::create $feedback_right $mime_type]

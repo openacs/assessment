@@ -107,7 +107,6 @@ ad_form -extend -name item-add -form {
 ##############################################################################
 
 ad_form -extend -name item-add -form {
-    {ms_label:text,optional}
     {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
 }
 if {[template::form::is_submission item-add] \

@@ -1,7 +1,7 @@
 <master>
 <property name="title">@page_title;noquote@</property>
 <property name="context">@context;noquote@</property>
-
+<h1>@display_type@</h1>
 <formtemplate id="item_edit_general">
   <formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id">
       <br/>
@@ -199,8 +199,7 @@
 <switch @item_type@>
 <case value="mc">
 <formwidget id="num_choices">
-<formwidget id="ms_label">
-          
+         
        <p><span class="form-label">Correct<br>Answer</span><br>
         <multiple name="choice_elements">
     

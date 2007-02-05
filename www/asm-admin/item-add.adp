@@ -177,11 +177,11 @@
               </span>
             </formerror>
 
-<div style="float:right">        <fieldset>
+<div style="float:right; width: 40%;">        <fieldset>
         <legend>Multiple Choice</legend>
 <p class="form-help-text">       #assessment.item_type_multiple_choice_help#</p>
         <formgroup-widget id="item_type" row=2></formgroup-widget><br />
-        <formgroup-widget id="item_type" row=5></formgroup-widget><formwidget id="ms_label">
+        <formgroup-widget id="item_type" row=5></formgroup-widget>
            
        <p><span class="form-label">Correct<br>Answer</span><br>
         <multiple name="choice_elements">
