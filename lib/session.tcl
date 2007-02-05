@@ -40,7 +40,10 @@ if {![info exists assessment_data(assessment_id)]} {
 if {$subject_id != $user_id} {
     permission::require_permission -object_id $assessment_id -privilege admin
 }
-
+set admin_p [permission::permission_p \
+                 -object_id $session_id \
+                 -privilege admin \
+                 -party_id $user_id]
 set page_title "[_ assessment.View_Results]"
 set context_bar [ad_context_bar [list [export_vars -base sessions {assessment_id}] "[_ assessment.Show_Sessions]"] $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
@@ -83,5 +86,7 @@ db_multirow sections sections {} {
 set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
 
 set comments_installed_p [apm_package_enabled_p "general-comments"]
+
+set delete_url [export_vars -base asm-admin/session-delete {assessment_id subject_id session_id {return_url [ad_return_url]}}]
 
 ad_return_template
