@@ -57,4 +57,13 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_type_mc::choices_swap.swap_choices">
+      <querytext>
+update as_item_choices
+set sort_order = (case when sort_order = :sort_order then :next_sort_order when sort_order = :next_sort_order then :sort_order end)
+where mc_id = :new_mc_id
+and sort_order in (:sort_order, :next_sort_order)
+      </querytext>
+</fullquery>
+
 </queryset>

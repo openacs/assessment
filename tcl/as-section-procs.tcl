@@ -391,3 +391,13 @@ ad_proc -private as::section::checks_list_not_cached {
 } {
     return [db_list_of_lists checks_related { } ] 
 }
+
+ad_proc -private as::section::update_section_in_assessment {
+    -new_section_id
+    -old_section_id
+    -new_assessment_rev_id
+} {
+    Update links to section
+} {
+    db_dml update_section_in_assessment {}
+}

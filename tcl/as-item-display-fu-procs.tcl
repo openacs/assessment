@@ -1,5 +1,5 @@
 ad_library {
-    Item display short answer Type procs
+    Item display file upload type procs
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-06-24
 }
@@ -138,4 +138,57 @@ ad_proc -public as::item_display_f::view {
 	return 
     }
     return "view?revision_id=$file_id"
+}
+
+ad_proc -private as::item_display_f::set_item_display_type {
+    -assessment_id
+    -section_id
+    -as_item_id
+    -after
+    {-type ""}
+    {-html_options {size 50 maxlength 1000}}
+    {-abs_size "1000"}
+    {-box_orientation "vertical"}
+} {
+
+} {
+	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
+	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+	db_dml update_section_in_assessment {}
+	set old_item_id $as_item_id
+
+	if {![db_0or1row item_display {}] || $object_type != "as_item_display_f"} {
+	    set as_item_display_id [as::item_display_f::new \
+					-html_display_options $html_options \
+					-abs_size $abs_size \
+					-box_orientation $box_orientation]
+	    
+	    if {![info exists object_type]} {
+		# first item display mapped
+		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
+	    } else {
+		# old item display existing
+		set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+	    }
+	} else {
+	    # old f item display existing
+	    set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+	    set as_item_display_id [as::item_display_f::edit \
+					-as_item_display_id $as_item_display_id \
+					-html_display_options $html_options \
+					-abs_size $abs_size \
+					-box_orientation $box_orientation]
+	}
+
+	set old_item_id [as::item::latest -as_item_id $old_item_id -section_id $new_section_id -default 0]
+	if {$old_item_id == 0} {
+	    db_dml move_down_items {}
+	    incr after
+	    db_dml insert_new_item {}
+	} else {
+	    db_dml update_item_display {}
+	    db_1row item_data {}
+	    db_dml update_item {}
+	}
 }

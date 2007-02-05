@@ -114,4 +114,71 @@
       </querytext>
 </fullquery>
 
+
+<fullquery name="as::item_type_mc::add_to_assessment.iitem_type">
+      <querytext>
+
+	select r.target_rev_id as as_item_type_id, o.object_type
+	from as_item_rels r, acs_objects o
+	where r.item_rev_id = :as_item_id
+	and r.rel_type = 'as_item_type_rel'
+	and o.object_id = r.target_rev_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::add_to_assessment.update_item_type">
+      <querytext>
+
+		update as_item_rels
+		set target_rev_id = :mc_id
+		where item_rev_id = :as_item_id
+		and rel_type = 'as_item_type_rel'
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::existing_choices.existing_choices">
+        <querytext>
+            select r.title, c.choice_id, c.correct_answer_p
+            from as_item_choices c, cr_revisions r, as_item_rels i
+            where r.revision_id = c.choice_id
+            and c.mc_id = i.target_rev_id
+            and i.item_rev_id = :as_item_id
+            and i.rel_type = 'as_item_type_rel'
+            order by c.sort_order
+        </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::choice_delete.get_sort_order_to_be_removed">
+      <querytext>
+
+		select mc_id, sort_order
+		from as_item_choices
+		where choice_id = :choice_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::choice_delete.get_choices">
+      <querytext>
+
+	    select choice_id
+	    from as_item_choices
+	    where mc_id = :mc_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item_type_mc::choice_delete.move_up_choices">
+      <querytext>
+
+		update as_item_choices
+		set sort_order = sort_order-1
+		where mc_id = :new_mc_id
+		and sort_order > :sort_order
+
+      </querytext>
+</fullquery>
+
 </queryset>

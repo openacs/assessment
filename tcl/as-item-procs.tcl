@@ -272,3 +272,65 @@ ad_proc -private as::item::generate_unique_name {
 	return "[clock seconds]-[expr round([ns_rand]*100000)]"
     }
 }
+
+ad_proc -private as::item::get_item_type_info {
+    -as_item_id
+    {-array_name item_type_info}
+} {
+    An array of revision_id, item_type, object_type of a certain as_item
+    
+    @param as_item_id Revision_id of as_item object
+    @param array_name Name of array to create in caller's scope via upvar
+
+    @return 0 if as_item does not exists, 1 if it does
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    @creaton-date 2006-10-26
+} {
+    upvar column_array $array_name
+    db_0or1row get_item_type_info {} -column_array column_array
+}
+
+ad_proc -private as::item::update_item_type {
+    -item_type_id
+    -as_item_id
+} {
+    Update the item_type of an as_item object. This could happen if you chang ethe type of a question (as_item), and the assoicated as_item_type object that was related changed.
+    @param item_type_id revision_id of as_item_type_* object
+    @parma as_item_id revision_id of as_item_object
+   
+    @return does not return anything interesting
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    @creation-date 2006-10-26
+} {
+    db_dml update_item_type {}
+}
+
+ad_proc -private as::item::update_item_in_section {
+    -new_item_id
+    -old_item_id
+    -new_section_id
+} {
+    Update new item in section
+} {
+    db_dml update_item_in_section {}
+}
+
+ad_proc -private as::item::update_item_type_in_item {
+    -new_item_id
+    -new_item_type_id
+    -old_item_type_id
+} {
+    Update new item type in item
+} {
+    db_dml update_item_type_in_item {}
+}
+
+ad_proc -private as::item::get_item_type_id {
+    -as_item_id 
+} {
+    Get the item type id
+} {
+    return [db_string item_type_id {}]    
+}
