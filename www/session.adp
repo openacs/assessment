@@ -1,5 +1,7 @@
 <master>
 <property name="title">@page_title;noquote@</property>
 <property name="context_bar">@context_bar;noquote@</property>
-
+<property name="header_stuff">
+      <link rel="stylesheet" type="text/css" href="/resources/assessment/assessment.css" media="all">
+</property>
 <include src="/packages/assessment/lib/session">

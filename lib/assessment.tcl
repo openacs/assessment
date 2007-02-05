@@ -237,6 +237,7 @@ db_transaction {
 	# for sections with a limited number of items per page
 	if {![empty_string_p $display(num_items)] && $page_total > 1} {
 	    set progress_bar_list [template::util::number_list $page_total 1]
+	    set total_pages [llength $progress_bar_list]
 	}
 	if {![info exists show_progress]} {
 	    set show_progress 0
@@ -245,6 +246,7 @@ db_transaction {
 	if {![info exists progress_bar_list] && [llength $section_list] > 1} {
 	    set progress_bar_list [template::util::number_list [llength $section_list] 1]
 	    set current_page [expr {[lsearch $section_list $section_id] +1 }]
+	    set total_pages [llength $progress_bar_list]
 	}
     }
 }
@@ -309,7 +311,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	set section_order $new_section_order
 	set item_order $new_item_order
 #	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}]
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple total_pages current_page}]
 	ad_script_abort
     } else {
 	# calculate session points at end of session
@@ -324,7 +326,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	} else {
 	    set return_url $assessment_data(return_url)
 	}
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple }]
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple total_pages current_page}]
 	ad_script_abort
     }
 }
@@ -428,7 +430,7 @@ foreach one_item $item_list {
 	set after_submit "{
         
 \#	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id total_pages current_page}\]
 	    ad_script_abort
 	}"
 	
@@ -530,7 +532,7 @@ if {$display(submit_answer_p) != "t"} {
             }
 	    set item_order \$new_item_order
 \#	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url total_pages current_page}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -545,7 +547,7 @@ if {$display(submit_answer_p) != "t"} {
 	} else {
 	    set return_url \$assessment_data(return_url)
 	}
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple }\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple total_pages current_page}\]
 	    ad_script_abort
 	}
     }"
@@ -591,7 +593,7 @@ if {$display(submit_answer_p) != "t"} {
 	    set section_order $new_section_order
 	    set item_order $new_item_order
 \#	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
-	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url}]
+	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url total_pages current_page}]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -607,7 +609,7 @@ if {$display(submit_answer_p) != "t"} {
 		set return_url $assessment_data(return_url)
 	    }
 #	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
-	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple next_url}]
+	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple next_url total_pages current_page}]
 	    ad_script_abort
 	}
     }
@@ -616,3 +618,4 @@ if {$display(submit_answer_p) != "t"} {
 set form_is_submit [template::form::is_submission show_item_form]
 set form_is_valid [template::form::is_valid show_item_form]
 ad_return_template $template
+

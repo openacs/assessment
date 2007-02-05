@@ -21,6 +21,8 @@ ad_page_contract {
     {item_id_list:multiple,optional {}}
     {next_url ""}
     no_complaint:optional
+    total_pages:optional
+    current_page:optional
 } -properties {
 } -validate {
 } -errors {
@@ -34,6 +36,9 @@ permission::require_permission -object_id $assessment_id -privilege read
 set page_title "[_ assessment.Show_Items]"
 set context [list $page_title]
 ns_log notice "feedback.tcl '${next_url}' '${return_url}'"
+
+set section_title [db_string section_title "select title from cr_revisions where revision_id=:section_id"]
+
 if { $next_url eq "" } {
     if { $return_p && [exists_and_not_null return_url] } {
 	set next_url $return_url

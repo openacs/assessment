@@ -22,10 +22,9 @@
 <multiple name="sections">
 
   <fieldset style="padding:10px;margin-bottom:10px"><!-- Section FieldSet -->
-    <legend><b>@sections.title@</b></legend>
+    <legend><b>@sections.title@   <if @assessment_data.survey_p@ ne t> <if @showpoints@ eq 1>(@sections.points@ / @sections.max_points@ #assessment.points#)</p></if> </if></b></legend>
 
   <if @sections.max_time_to_complete@ not nil><p>(#assessment.max_time# @sections.max_time_to_complete@)</p></if>
-  <if @assessment_data.survey_p@ ne t> <if @showpoints@ eq 1><p>(@sections.points@ / @sections.max_points@ #assessment.points#)</p></if> </if>
 
     <if @sections.description@ not nil><p>@sections.description;noquote@</p></if>    
     <if @assessment_data.show_feedback@ ne none><p>@sections.feedback_text@</p></if>
