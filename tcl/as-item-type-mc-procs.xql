@@ -114,7 +114,6 @@
       </querytext>
 </fullquery>
 
-
 <fullquery name="as::item_type_mc::add_to_assessment.iitem_type">
       <querytext>
 

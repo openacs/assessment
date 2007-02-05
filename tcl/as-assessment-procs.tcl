@@ -592,3 +592,19 @@ ad_proc -private as::assessment::title {
 
 
 }
+
+ad_proc -private as::assessment::delete {
+    -assessment_id:required
+} {
+    Remove an assessment and all associated data
+
+    @author Dave Bauer (dave@solutiongrove.com)
+
+    @param assessment_id
+} {
+    foreach session_id [db_list get_subject_ids "select session_id from as_sessions,cr_revisions where assessment_id=revision_id and item_id=:assessment_id"] {
+        as::session::delete -session_id $session_id
+    }
+
+    content::item::delete -item_id $assessment_id
+}

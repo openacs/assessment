@@ -668,3 +668,4 @@ db_transaction {
 }
 return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
 }
+

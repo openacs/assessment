@@ -65,6 +65,15 @@ if {[llength $linked_objects]} {
     }
 }
 
+# old image links
+
+if {[db_0or1row get_item_content {}]} {
+    set remove_url [export_vars -base remove-content {as_item_id content_rev_id {return_url [ad_return_url]}}]
+    ad_form -extend -name item_edit -form {
+	{content2:text(inform),optional {label "OLD UI [_ assessment.item_display_Content]"} {value {<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a> \[<a href="${remove_url}">Remove File</a>\]}} {help_text "[_ assessment.item_Content_help]"}}
+    }
+}
+
 if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit
 }
