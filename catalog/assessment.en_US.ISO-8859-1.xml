@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.22d2" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.21" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -34,7 +34,7 @@
   <msg key="add_item_type_oq">Add new question: Open Question</msg>
   <msg key="add_item_type_sa">Add new question: Short Answer</msg>
   <msg key="Add_Items">Add items to section</msg>
-  <msg key="Add_New">Add a new question</msg>
+  <msg key="Add_New">Insert new question</msg>
   <msg key="add_new_action">Add new Action</msg>
   <msg key="add_new_section">Add a new section</msg>
   <msg key="add_new_section_display">Add new section display</msg>
@@ -480,7 +480,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Prepend_Empty_Item">Prepend Empty Item</msg>
   <msg key="Preview">Preview</msg>
   <msg key="Preview_link_and_message">&lt;a href=&quot;../assessment?assessment_id=%assessment_id%&quot;&gt;Preview&lt;/a&gt; (your response will be recorded)</msg>
-  <msg key="publish_status">Publish Status</msg>
+  <msg key="Publish_Status">Status</msg>
+  <msg key="publish_status">Status</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
   <msg key="Question_not_answered">Question not answered</msg>
@@ -533,7 +534,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Save_and_finish">Save and finish</msg>
   <msg key="Score">Score</msg>
   <msg key="Search">Search</msg>
-  <msg key="Search_Item">Search for questions</msg>
+  <msg key="Search_Item">Search for question</msg>
   <msg key="Search_Item_1">Search and add questions to section &quot;%section_title%&quot;</msg>
   <msg key="Search_Results">Search Results</msg>
   <msg key="Search_Section">Search for sections</msg>
@@ -554,7 +555,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Section_Navigation">Section Navigation</msg>
   <msg key="section_new_display"> -- New -- </msg>
   <msg key="section_num_Items">Number of questions per page</msg>
-  <msg key="Section_Number">Section %sections.sort_order%</msg>
+  <msg key="Section_Number">Section %sections.rownum%</msg>
   <msg key="Section_Order">Order of questions</msg>
   <msg key="section_order_help">In which order will the questions be displayed in this section.</msg>
   <msg key="section_preview">Preview Section</msg>
