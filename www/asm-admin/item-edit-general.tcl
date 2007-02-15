@@ -162,7 +162,7 @@ ns_log notice "Add Another = '[template::element::get_value item_edit_general ad
     foreach c $existing_choices {
         set id [lindex $c 1]
         template::multirow append choice_elements $id f
-        if {[lindex $c 2] eq "t"} {
+        if {[lindex $c 2] eq "t" && ![template::form::is_submission item_edit_general]} {
             set correct($id) t
         }
     }
@@ -307,6 +307,7 @@ ad_form -extend -name item_edit_general -edit_request {
                             set new_choice_id [as::item_choice::new_revision -choice_id $i -mc_id $new_item_type_id]
                             set title $choice($i)
                             set correct_answer_p [ad_decode [info exists correct($i)] 0 f t]
+
                             db_dml update_title {}
                             db_dml update_correct_and_sort_order {}
                         }
