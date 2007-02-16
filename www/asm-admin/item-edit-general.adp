@@ -1,7 +1,7 @@
 <master>
 <property name="title">@page_title;noquote@</property>
 <property name="context">@context;noquote@</property>
-<h1>@display_type@</h1>
+
 <formtemplate id="item_edit_general">
   <formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id">
       <br/>
@@ -233,3 +233,4 @@
 <formwidget id="formbutton_ok">
 </p>
 </formtemplate>
+<a href="item-edit?as_item_id=@as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">Advanced Options</a>
