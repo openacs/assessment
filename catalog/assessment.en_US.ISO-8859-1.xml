@@ -370,6 +370,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="limited_tries">Number of tries allowed: %assessment_data.number_tries%</msg>
   <msg key="Live">Live</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br /&gt;your name will not be included in the results.</msg>
+  <msg key="lt_default_entry_page"></msg>
+  <msg key="lt_default_instructions"></msg>
   <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
@@ -436,6 +438,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="num_Correct_help">Number of correct answers that have to be displayed</msg>
   <msg key="num_items">Number of Items displayed&lt;br&gt;(Optional)</msg>
   <msg key="num_items_help">Number of items displayed per page.</msg>
+  <msg key="Number_of_page_plural">(%total_pages% pages)</msg>
+  <msg key="Number_of_page_singular">(%total_pages% page)</msg>
   <msg key="Number_of_Tries">Number of Tries allowed</msg>
   <msg key="numerical">Numerical</msg>
   <msg key="on_creation_date">, on %creation_date%</msg>
@@ -521,6 +525,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Results_edit">Edit assessment result</msg>
   <msg key="Results_edit_Description">Comment</msg>
   <msg key="Results_edit_Description_help">Enter your comment for this question here</msg>
+  <msg key="Resume_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Finish Assessment&quot;&gt;Finish %assessment_data.title%&lt;/a&gt;</msg>
+  <msg key="Retake_Assessment_Title">Previously Completed. &lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Retake Assessment&quot;&gt;Retake %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="return">Return</msg>
   <msg key="Return_Url">Return URL</msg>
   <msg key="reuse_responses">Old responses displayed</msg>
