@@ -40,7 +40,7 @@ db_foreach open_asssessments {} {
     set title [as::assessment::title -title $title]
     if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
 	if {[empty_string_p $password]} {
-	    set assessment_url [export_vars -base "assessment" {assessment_id}]
+	    set assessment_url [export_vars -base "instructions" {assessment_id}]
 	} else {
 	    set assessment_url [export_vars -base "assessment-password" {assessment_id}]
 	}

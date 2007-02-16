@@ -403,8 +403,78 @@
             </p>
           
 </fieldset>
-      <br>
+<fieldset>
+
         
+              <if @formerror.entry_page@ not nil>
+                <span class="form-label-error">
+              </if>
+              <else>
+                <span class="form-label">
+              </else>
+            
+            <label for="entry_page">
+              Entry Page
+            </label>
+            
+          </span>
+          
+            <if @formerror.entry_page@ not nil>
+              <span class="form-widget-error">
+            </if>
+            <else>
+              <span class="form-widget">                  
+            </else>
+          
+              <formwidget id="entry_page">
+            
+            <formerror id="entry_page">
+              <br>
+                  @formerror.entry_page;noquote@
+            </formerror>
+          
+            <p class="form-help-text">
+              
+                <formhelp id="entry_page">
+              
+            </p>
+<!-- ENTRY END -->
+
+        
+              <if @formerror.exit_page@ not nil>
+                <span class="form-label-error">
+              </if>
+              <else>
+                <span class="form-label">
+              </else>
+            
+            <label for="exit_page">
+              Exit Page
+            </label>
+            
+          </span>
+          
+            <if @formerror.exit_page@ not nil>
+              <span class="form-widget-error">
+            </if>
+            <else>
+              <span class="form-widget">                  
+            </else>
+          
+              <formwidget id="exit_page">
+            
+            <formerror id="exit_page">
+              <br>
+                  @formerror.exit_page;noquote@
+            </formerror>
+          
+            <p class="form-help-text">
+              
+                <formhelp id="exit_page">
+              
+            </p>
+<!-- EXIT END -->
+        <p>
               <if @formerror.consent_page@ not nil>
                 <span class="form-label-error">
               </if>
@@ -417,7 +487,7 @@
             </label>
             
           </span>
-          
+          </p>
             <if @formerror.consent_page@ not nil>
               <span class="form-widget-error">
             </if>
@@ -437,8 +507,7 @@
                 <formhelp id="consent_page">
               
             </p>
-          
-      <br>
+
         
               <if @formerror.return_url@ not nil>
                 <span class="form-label-error">
@@ -472,8 +541,8 @@
                 <formhelp id="return_url">
               
             </p>
-          
-      <br>
+</fieldset>                    
+
 <fieldset>
 <legend>#assessment.assessment_form_time_options#</legend>
         

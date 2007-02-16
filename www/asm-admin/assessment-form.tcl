@@ -93,6 +93,8 @@ if { $edit_p } {
     }
 
     ad_form -extend -name assessment_form -form {
+	{entry_page:richtext,optional {label "[_ assessment.Entry_Page]"}  {html {rows 9 cols 80 style {width: 95%}}} {help_text "[_ assessment.Entry_Page_help]"}}
+	{exit_page:richtext,optional {label "[_ assessment.Exit_Page]"}  {html {rows 9 cols 80 style {width: 95%}}} {help_text "[_ assessment.Exit_Page_help]"}}
         {consent_page:text(textarea),optional,nospell {label "[_ assessment.Consent_Page]"} {html {rows 5 cols 80}} {help_text "[_ assessment.as_Consent_Page_help]"}}
     }
 
@@ -225,6 +227,10 @@ ad_form -extend -name assessment_form -new_request {
     if {![empty_string_p $end_time]} {
 	set end_time [util::date::acquire ansi $end_time]
     }
+
+    set entry_page [template::util::richtext::create $entry_page text/html]
+    set exit_page [template::util::richtext::create $exit_page text/html]
+
 } -on_submit {
     if {$start_time == "NULL"} {
 	set start_time ""
@@ -251,8 +257,8 @@ ad_form -extend -name assessment_form -new_request {
 				   -reuse_responses_p $reuse_responses_p \
 				   -show_item_name_p $show_item_name_p \
 				   -random_p $random_p \
-				   -entry_page "" \
-				   -exit_page "" \
+				   -entry_page [template::util::richtext get_property content $entry_page] \
+				   -exit_page [template::util::richtext get_property content $exit_page] \
 				   -consent_page $consent_page \
 				   -return_url $return_url \
 				   -start_time "" \
@@ -307,8 +313,8 @@ ad_form -extend -name assessment_form -new_request {
 				   -reuse_responses_p $reuse_responses_p \
 				   -show_item_name_p $show_item_name_p \
 				   -random_p $random_p \
-				   -entry_page "" \
-				   -exit_page "" \
+				   -entry_page [template::util::richtext get_property content $entry_page] \
+				   -exit_page [template::util::richtext get_property content $exit_page] \
 				   -consent_page $consent_page \
 				   -return_url $return_url \
 				   -start_time "" \

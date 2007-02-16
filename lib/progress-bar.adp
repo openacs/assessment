@@ -1,4 +1,4 @@
-<if @total@ gt 2>
+<if @total@ gt 1>
 <table width="100%" border="0" cellpadding="2" cellspacing="3">
   <tr style="color: @header_color@; font-weight: bold;">
     <td>Percentage complete</td>

@@ -9,6 +9,8 @@ ad_page_contract {
     assessment_id:integer,notnull
     return_url:optional
     next_asm:optional
+    total_pages:optional
+    current_page:optional
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -22,6 +24,11 @@ if { ![string eq $user_id 0]} {
     db_dml update_session {update as_item_data set subject_id=:user_id where session_id=:session_id}
 }
 
+as::assessment::data -assessment_id $assessment_id
+
+if {$assessment_data(exit_page) eq ""} {
+    set assessment_data(exit_page) "[_ assessment.lt_default_exit_page]"
+}
 
 set page_title "[_ assessment.Response_Submitted]"
 set context [list $page_title]

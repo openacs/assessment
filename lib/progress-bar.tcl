@@ -8,13 +8,18 @@
 #
 # params: total (int) - number of pages in entire assessment
 #         current (int) - current page being shown
-
+#         finish (optional,boolean) - if supplied, then this is the final page
+#
 # NOTE: shows progress in terms of pages, NOT questions
 
 foreach required_param {total current} {
     if {![info exists $required_param]} {
         return -code error "$required_param is a required parameter."
     }
+}
+
+if {![info exists finish]} {
+    set finish 0
 }
 
 if {![info exists bgcolor]} {
@@ -33,8 +38,10 @@ if {![info exists header_color]} {
     set header_color "black"
 }
 
-if {$total == 0} {
+if { ($total == 0) || [string is true $finish] } {
     set percentage_done 100
 } else {
-    set percentage_done [expr {round($current * 100.0 / $total)}]
+    # subtract 1 from current, since we haven't completed this page yet
+    set percentage_done [expr {round(($current - 1) * 100.0 / $total)}]
 }
+
