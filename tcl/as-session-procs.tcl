@@ -108,3 +108,10 @@ ad_proc -private as::session::delete_all_sessions {
         as::session::delete -session_id $session_id
     }
 }
+
+ad_proc -private as::session::unfinished_session_id {
+    -assessment_id:required
+    -subject_id:required
+} {
+    return [db_string unfinished_session_id {} -default ""]
+}
