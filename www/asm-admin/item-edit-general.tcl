@@ -47,15 +47,15 @@ foreach display_type [db_list display_types {}] {
 
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 9 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
+    {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 12 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }
 
 if { $type ne "survey"} { 
     ad_form -extend -name item_edit_general -form {
         {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
-        {feedback_right:richtext,optional,nospell {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_right_help]"}}
-        {feedback_wrong:richtext,optional,nospell {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_wrong_help]"}}
+        {feedback_right:richtext,optional,nospell {label "[_ assessment.Feedback_right]"} {html {rows 12 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_right_help]"}}
+        {feedback_wrong:richtext,optional,nospell {label "[_ assessment.Feedback_wrong]"} {html {rows 12 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_wrong_help]"}}
     }
 } else {
     ad_form -extend -name item_edit_general -form {
@@ -217,6 +217,22 @@ ad_form -extend -name item_edit_general -edit_request {
         set question_text [template::util::richtext::get_property contents $question_text]
         set feedback_right [template::util::richtext::get_property content $feedback_right]
         set feedback_wrong [template::util::richtext::get_property content $feedback_wrong]
+
+	# strip full urls when saving, due to bug in Firefox and workaround
+	# in Xinha
+	# we want to make sure the URL is formatted EXACTLY as we want
+	# for the following regsub
+	# in case the ad_url is https we strip https and then we
+	# add it back in for the https url just in case
+	set site_url [string trimright [string map {https http} "[ad_url]"] /]
+	set site_https_url [string map {http https} $site_url]
+	foreach var {question_text feedback_right feedback_wrong} {
+	    # find leading quote so we can make sure its not in the
+	    # text, its in a tag href or src
+	    set $var [regsub -all "\"$site_url" [set $var] {"}]
+	    set $var [regsub -all "\"$site_https_url" [set $var] {"}]
+	}
+	
         db_transaction {
             set old_display_type [string range [db_string get_display_type {}] end-1 end]
             set new_item_id [as::item::edit \
@@ -315,7 +331,7 @@ ad_form -extend -name item_edit_general -edit_request {
 
                     # add new choices
                     foreach i [lsort [array names choice]] {
-                        
+                       
                         if {[string range  $i 0 0] == "_" && ![empty_string_p $choice($i)]} {
                             incr count
                             set new_choice_id [as::item_choice::new -mc_id $new_item_type_id \
