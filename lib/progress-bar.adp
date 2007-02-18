@@ -1,8 +1,8 @@
 <if @total@ gt 1>
 <table width="100%" border="0" cellpadding="2" cellspacing="3">
   <tr style="color: @header_color@; font-weight: bold;">
-    <td>Percentage complete</td>
-    <td align="right">Page @current@ of @total@</td>
+    <td>#assessment.Percentage_complete#</td>
+    <td align="right">#assessment.Page_current_of_total#</td>
   </tr>
   <tr>
     <td colspan="2" bgcolor="@bgcolor@">

@@ -30,14 +30,6 @@ ad_page_contract {
 #if {![info exists no_complain]} {
 #    ad_return_complaint 1 "feedback! [ns_conn query]"
 #}
-set subject_id [ad_conn user_id]
-as::assessment::data -assessment_id $assessment_id
-permission::require_permission -object_id $assessment_id -privilege read
-set page_title "[_ assessment.Show_Items]"
-set context [list $page_title]
-ns_log notice "feedback.tcl '${next_url}' '${return_url}'"
-
-set section_title [db_string section_title "select title from cr_revisions where revision_id=:section_id"]
 
 if { $next_url eq "" } {
     if { $return_p && [exists_and_not_null return_url] } {
@@ -48,6 +40,21 @@ if { $next_url eq "" } {
     }
 }
 
+ad_form -name next -export {next_url assessment_id section_id session_id} -form {
+    {next_button:text(submit) {label "[_ assessment.Next]"}}
+} -on_submit {
+    ad_returnredirect $next_url
+}
+
+set subject_id [ad_conn user_id]
+as::assessment::data -assessment_id $assessment_id
+permission::require_permission -object_id $assessment_id -privilege read
+set page_title "[_ assessment.Show_Items]"
+set context [list $page_title]
+
+
+set section_title [db_string section_title "select title from cr_revisions where revision_id=:section_id"]
+
 if {[info exists assessment_id]} {
     # check if this assessment even allows feedback if not, bail out
 
@@ -56,3 +63,10 @@ if {[info exists assessment_id]} {
 	ad_script_abort
     }
 }
+
+# we already finished the page, we are just looking at the feedback
+# so we are at the next page
+if {[info exists current_page]} {
+    set finished_page $current_page
+}
+

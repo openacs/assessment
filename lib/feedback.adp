@@ -4,7 +4,7 @@
 <if @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@: Feedback</h2></if>
 
 <if @total_pages@ defined>
-  <include src="/packages/assessment/lib/progress-bar" total="@total_pages@" current="@current_page@" />
+  <include src="/packages/assessment/lib/progress-bar" total="@total_pages@" current="@current_page@" finished_page="@finished_page@"/>
 </if>
 
 <fieldset style="padding:10px;margin-bottom:10px"><!-- Section FieldSet -->
@@ -14,6 +14,6 @@
 
   <p />
 
-  <a href="@next_url;noquote@" class="button">Next</a>
+	<formtemplate id="next"></formtemplate>
 
 </fieldset><!-- End Section FieldSet -->
