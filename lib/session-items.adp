@@ -4,6 +4,7 @@
     </if>
 
     <multiple name="items">
+<if @admin_p@><p><a href="asm-admin/item-edit-general?as_item_id=@items.as_item_id@&assessment_id=@assessment_id@&section_id=@items.section_id@" target="_new">Edit this question</a></p></if>
 <if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
      <if @show_item_name_p@ eq t><b>@items.name@:</b></if>
       <if @survey_p@ ne t and @items.title@ ne @items.next_title@>

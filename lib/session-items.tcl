@@ -8,6 +8,13 @@ if {![exists_and_not_null feedback_only_p] } {
 if {![info exists assessment_id]} {
     set assessment_id $assessment_data(assessment_id)
 }
+
+set admin_p [permission::permission_p \
+		 -party_id [ad_conn user_id] \
+		 -privilege admin \
+		 -object_id $assessment_id]
+
+
 # if we can tell this is the last section, next button should go to feedback for the entire assessment.
 
 set section_list [as::assessment::sections -assessment_id $assessment_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
