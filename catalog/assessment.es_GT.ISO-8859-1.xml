@@ -119,17 +119,13 @@
   <msg key="below">Abajo</msg>
   <msg key="besideleft">Al lado-a la izquierda</msg>
   <msg key="besideright">Al lado-a la derecha</msg>
-  <msg key="boolean_ref_not_set_error">Debe de proveer una expresión válida del carácter para este campo</msg>
-  <msg key="boolean_ref_value">Valor Booleano de Referencia</msg>
   <msg key="bottom">Abajo</msg>
-  <msg key="bounded_numeric">La entrada del usuario debe ser un número (real o entero) limitado por un valor de referencia</msg>
   <msg key="Box_Orientation">Orientación del cuadro</msg>
   <msg key="branch">Rama</msg>
   <msg key="branches">Ramas</msg>
   <msg key="bulk_mail_send">Correo a todos</msg>
   <msg key="By_user">Por usuario</msg>
   <msg key="cancel_and_return">Cancelar y Volver a Cuestionario</msg>
-  <msg key="cannot_find_item">El objecto solicitado no existe</msg>
   <msg key="Categories_combine">Combinar categorías por</msg>
   <msg key="Categories_select_help">Para seleccionar o deseleccionar múltiples categorías usar la tecla Control de tu teclado.</msg>
   <msg key="Categorization">Categorización</msg>
@@ -227,14 +223,11 @@
   <msg key="End_Time">Hora de Finalización</msg>
   <msg key="Enter_Message">Introducir mensaje</msg>
   <msg key="Entry_Page">Página de Entrada</msg>
-  <msg key="equal">igual a</msg>
   <msg key="error_enter_tcl_code">Debes introducir el código tcl a ejecutar</msg>
   <msg key="error_html_options">Necesario para ser pares de \&quot;clave - valor\&quot;</msg>
-  <msg key="error_msg">Mensaje de Error</msg>
   <msg key="Exit_Page">Página de Salida</msg>
   <msg key="Export">Exportar</msg>
   <msg key="Extreme_Actions">Acciones Extremas:</msg>
-  <msg key="false">Falso</msg>
   <msg key="Feedback">Feedback</msg>
   <msg key="Feedback_help">Feedback mostrado al usuario.</msg>
   <msg key="Feedback_right">Feedback para respuesta correcta</msg>
@@ -272,8 +265,6 @@
   <msg key="form_element_required">Es requerido</msg>
   <msg key="from">De:</msg>
   <msg key="goes_to_section">Ir a sección</msg>
-  <msg key="greater">mayor que</msg>
-  <msg key="greater_equal">mayor o igual que</msg>
   <msg key="hide_item_name">Nombre de la pregunta oculto</msg>
   <msg key="history">Cambiar Historia</msg>
   <msg key="horizontal">Horizontal</msg>
@@ -287,7 +278,6 @@
 Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuestas correctas, o 0% en otro caso.</msg>
   <msg key="Instructions">Instrucciones</msg>
   <msg key="ip_mask">Máscara IP</msg>
-  <msg key="item">Objeto</msg>
   <msg key="item_Content">Subir Archivo</msg>
   <msg key="item_Content_help">Suba un archivo con el contenido</msg>
   <msg key="item_counter">Preguntas %section.cur_first_item% - %section.cur_last_item% de %section.num_items%</msg>
@@ -323,8 +313,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="last_week">Última semana</msg>
   <msg key="lead_you">La sección a la que te llevará la condición</msg>
   <msg key="left">Izquierda</msg>
-  <msg key="less">menor que</msg>
-  <msg key="less_equal">menor o igual que</msg>
   <msg key="Lets_you_use_this_a">- Te permite usar este cuestionario como una plantilla para crear un nuevo cuestionario.</msg>
   <msg key="Letter">Primera letra</msg>
   <msg key="Letter_all">Todo</msg>
@@ -345,11 +333,8 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="make_show_item_name">Mostrar el nombre de la pregunta</msg>
   <msg key="make_unsecure">Permitir una conexión no segura</msg>
   <msg key="manually">Manualmente</msg>
-  <msg key="matching_boolean">El valor ingresado debe coincidir con un valor booleano</msg>
-  <msg key="matching_text">El valor ingresado debe coincidir con un texto en específico</msg>
   <msg key="max_time">Máx. tiempo permitido: </msg>
   <msg key="mc_Title_help">Un nombre para un conjunto de respuestas (para reutilización)</msg>
-  <msg key="Message">Mensaje</msg>
   <msg key="message">Mensaje</msg>
   <msg key="Message_Subject">Mensaje</msg>
   <msg key="message_to_display_to">Mensaje que ve el usuario cuando se ejecuta la acción (por ejemplo, te has unido a &quot;Mi Comunidad&quot;)</msg>
@@ -361,11 +346,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
   <msg key="Multiple_help">Desea permitir múltiples respuestas?</msg>
-  <msg key="must_be_alpha">El valor ingresado debe contener letras solamente</msg>
-  <msg key="must_be_alphanumeric">El valor ingresado debe ser de tipo alfanumérico</msg>
-  <msg key="must_be_boolean">El valor ingresado debe ser de tipo booleano</msg>
-  <msg key="must_be_integer">El valor ingresado debe ser de tipo entero</msg>
-  <msg key="must_be_numeric">El valor ingresado debe ser de tipo numérico</msg>
   <msg key="Name">Nombre</msg>
   <msg key="Name_help">Nombre de la nueva copia del cuestionario</msg>
   <msg key="name_of_trigger">Nombre de la condición.</msg>
@@ -379,12 +359,10 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="None">Ninguno</msg>
   <msg key="not_answered">no contestada</msg>
   <msg key="not_approved">No aprobado</msg>
-  <msg key="not_equal">no igual a</msg>
   <msg key="not_yet_reviewed">sin revisar</msg>
   <msg key="Notification">Notificación</msg>
   <msg key="notified_users">Usuarios notificados</msg>
   <msg key="notify_user">Notificar al usuario</msg>
-  <msg key="null_value">El valor ingresado debe ser nulo</msg>
   <msg key="num_Answers">Número total de respuestas a visualizar</msg>
   <msg key="num_Answers_help">Si este número es más pequeño que el número de respuestas añadidas, se cogerán las respuestas aleatoriamente.</msg>
   <msg key="Num_Choices">Número de Opciones</msg>
@@ -393,9 +371,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="num_Correct_help">Número de respuestas correctas que se tienen que visualizar</msg>
   <msg key="num_items">Número de preguntas visualizadas</msg>
   <msg key="num_items_help">N?mero de preguntas visualizadas</msg>
-  <msg key="num_ref_value">Valor Númerico de Referencia</msg>
   <msg key="Number_of_Tries">Número de Intentos permitidos</msg>
-  <msg key="numeric_ref_not_set_error">Debe proveer un número válido para este campo</msg>
   <msg key="numerical">Numérico</msg>
   <msg key="on_creation_date">Fecha de creación</msg>
   <msg key="One_Assessment_data">Datos de un cuestionario</msg>
@@ -479,7 +455,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="right">Derecha</msg>
   <msg key="Rulebased_branching">Branching según una regla</msg>
   <msg key="sa_Title_help">Título para esta característica de short answer para que pueda reutilizarse en el futuro.</msg>
-  <msg key="Save">Grabar</msg>
   <msg key="Score">Puntuación</msg>
   <msg key="Search">Buscar</msg>
   <msg key="Search_Item">Buscar y añadir preguntas</msg>
@@ -519,7 +494,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="secure_access_require">Requiere acceso seguro</msg>
   <msg key="Selected_Sections">Secciones Seleccionadas</msg>
   <msg key="Send_bulkmail">Enviar e-mail</msg>
-  <msg key="Send_Date">Fecha de Envio</msg>
   <msg key="Send_Mail">Enviar correo</msg>
   <msg key="Send_mail_to">Enviar correo a </msg>
   <msg key="Session">Sesión</msg>
@@ -531,7 +505,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Show_Item_Name_1">Mostrar el nombre de la pregunta</msg>
   <msg key="Show_Items">Ver Preguntas</msg>
   <msg key="Show_Sessions">Ver sesiones</msg>
-  <msg key="Spam">Spam</msg>
   <msg key="specific_date">Fecha específica</msg>
   <msg key="Start_Time">Hora de comienzo</msg>
   <msg key="Started">Hora de comienzo</msg>
@@ -544,8 +517,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Subtext">Subtexto</msg>
   <msg key="Summary">Resumen</msg>
   <msg key="Target_Community">Comunidad Destino</msg>
-  <msg key="text_ref_not_set_error">Usted necesita proporcionar una expresión válida de caracteres para este campo</msg>
-  <msg key="text_ref_value">Valor del Texto de Referencia</msg>
   <msg key="the_condition_to">La condición para saltar o ejecutar la acción</msg>
   <msg key="there_are_no_users">No hay usuarios a notificar</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">Esta pregunta será corregida por el profesor</msg>
@@ -562,7 +533,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="trigger_delete">Borrar condición</msg>
   <msg key="Triggers">Disparadores</msg>
   <msg key="triggers">Condición</msg>
-  <msg key="true">Verdadero</msg>
   <msg key="try_again">Intentar de nuevo</msg>
   <msg key="two_days">Hace dos días</msg>
   <msg key="type_of_trigger">Tipo de condición</msg>
@@ -584,7 +554,6 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="View_Responses">Ver Respuestas: </msg>
   <msg key="View_Results">Ver Resultados</msg>
   <msg key="View_results">Ver resultados</msg>
-  <msg key="warning_msg">Mensaje de Alerta</msg>
   <msg key="when_this_action">Cuando esta acción se ejecutará (por ejemplo, al final de esta sección)</msg>
   <msg key="when_this_will">¿cuando se ejecutará?</msg>
   <msg key="yes">Si</msg>
