@@ -43,10 +43,6 @@ set return_url "$url"
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 permission::require_permission -object_id $assessment_id -privilege read
-if {$assessment_data(publish_status) ne "live" && ![permission::permission_p -object_id $assessment_id -party_id [ad_conn user_id] -privilege "admin"]} {
-    ad_return_complaint 1 "[_ assessment.Requested_assess_is_no_longer_available]"
-    ad_script_abort
-}
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
@@ -322,7 +318,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
         as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {[empty_string_p $assessment_data(return_url)]} {
-	    set return_url [export_vars -base finish {session_id assessment_id return_url next_asm}]
+	    set return_url [export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}]
 	} else {
 	    set return_url $assessment_data(return_url)
 	}
@@ -543,7 +539,7 @@ if {$display(submit_answer_p) != "t"} {
             as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {\[empty_string_p \$assessment_data(return_url)\]} {
-	    set return_url \[export_vars -base finish {session_id assessment_id return_url next_asm}\]
+	    set return_url \[export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}\]
 	} else {
 	    set return_url \$assessment_data(return_url)
 	}
@@ -604,7 +600,7 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {[empty_string_p $assessment_data(return_url)]} {
-		set return_url [export_vars -base finish {session_id assessment_id return_url next_asm}]
+		set return_url [export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}]
 	    } else {
 		set return_url $assessment_data(return_url)
 	    }
