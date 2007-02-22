@@ -103,7 +103,7 @@ template::list::create \
 		<img src="/resources/right.gif" border=0 /></a>
 		</if>
 	    }
-	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) != 2}]}
+	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) != "test"}]}
 	}
     } \
     -filters {
@@ -136,7 +136,7 @@ db_multirow sessions get_sessions [subst {
     coalesce(cs.subject_id, ns.subject_id) as subject_id,
     coalesce(cs.session_id, ns.session_id) as session_id,
     cs.percent_score
-
+ 
     from (select a.assessment_id, cr.title, cr.item_id, cr.revision_id,
 	  u.user_id, u.first_names, u.last_name
 	  
