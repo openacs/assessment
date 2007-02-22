@@ -18,8 +18,8 @@
   <if @form_is_submit@ true and @form_is_valid@ false>
   <div class="form-error">#assessment.There_was_a_problem_with_your_answers#</div>
   </if>
-  <fieldset style="padding:10px;margin-bottom:10px"><!-- Section FieldSet -->
-    <legend><b>@section.title@</b></legend>
+
+    <h2>@section.title@</h2>
     <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
 
@@ -91,5 +91,5 @@
 	<p>#assessment.This_is_a_required#</p>
     <input type=submit value="#assessment.Submit#">
   </formtemplate>
-</fieldset><!-- End Section FieldSet -->
+
 <!--<div style="clear: both;" />-->
