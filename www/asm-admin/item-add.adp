@@ -146,9 +146,88 @@
             <p class="form-help-text">
               
                 <formhelp id="feedback_wrong">
-              
+              </span>
             </p>
-          <formwidget id=points><formwidget id=field_code><formwidget id=field_name><formwidget id=max_time_to_complete><formwidget id=validate_block><formwidget id=content><formwidget id=description>
+
+           <if @formerror.points@ not nil>
+            <span class="form-label-error">
+          </if>
+          <else>
+            <span class="form-label">
+          </else>
+             <label for="points">
+              Points
+             </label>
+           </span>
+           <if @formerror.points@ not nil>
+             <span class="form-widget-error">
+           </if>
+           <else>
+            <span class="form-widget">
+           </else>
+             <formwidget id=points>
+             <formerror id="points">
+             <br>
+               @formerror.points;noquote@
+            </formerror>
+            <p class="form-help-text">
+              <formhelp id="points">
+           </p>
+          </br>
+         </span>
+
+
+<formwidget id=field_code>
+        
+
+          <if @formerror.field_name@ not nil>
+            <span class="form-label-error">
+          </if>
+          <else>
+             <span class="form-label">
+           </else>
+              <label for="field_name">
+                Field name
+              </label>
+            </span>
+            <br>					      
+           <if @formerror.field_name@ not nil>
+              <span class="form-widget-error">
+           </if>
+           <else>
+             <span class="form-widget">
+           </else>        
+           <formwidget id=field_name>
+           <formerror id="feedback_wrong">
+             <br>
+               @formerror.field_name;noquote@
+            </formerror>    
+         <br>
+	     <p class="form-help-text">
+               <formhelp id="field_name"></p>
+          </br>
+         </span>  
+       
+
+
+       <formwidget id=max_time_to_complete>
+           <br />
+
+        <if @formerror.validate_block@ not nil>
+            <span class="form-label-error">
+        </if>
+        <else>
+            <span class="form-label">
+        </else>
+	   <label for="validate_block">
+              Validate block
+           </label>
+          </span>
+          <br />
+           <formwidget id=validate_block>
+            <p class="form-help-text">
+                <formhelp id="validate_block"></p>
+            </p><formwidget id=content><formwidget id=description>
       <br>
 </fieldset>        
 <fieldset>              <if @formerror.item_type@ not nil>
@@ -163,13 +242,17 @@
             </label>
             <span class="form-required-mark">*</span>
           </span>
-          
+
             <if @formerror.item_type@ not nil>
               <div class="form-widget-error">
             </if>
             <else>
               <div class="form-widget">                  
             </else>
+
+	<formgroup id=item_type>
+         <tr><td>@formgroup.widget;noquote@</td><td>@formgroup.label;noquote@</td></tr>
+      </formgroup>
             <formerror id="item_type">
               <span class="form-error">
                   <br>

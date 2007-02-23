@@ -86,21 +86,27 @@ ad_form -extend -name item-add -form {
     {feedback_right:text(hidden),optional {value ""}}
     {feedback_wrong:text(hidden),optional {value ""}}
     {max_time_to_complete:text(hidden),optional {value ""}}
-    {points:text(hidden),ptional {value ""}}
+    {points:text(hidden),optional {value ""}}
     {data_type:text(hidden),optional {value ""}}
-
+    {validate_block:text(textarea),optional \
+	 {label "[_ assessment.Validation_Block]"} \
+	 {help_text "[_ assessment.lt_This_field_is_used_to]"} \
+	 {html {cols 70 rows 6}}}
 }
 }
 
 if { $type ne "survey"} {
-#ad_form -extend -name item-add -form {
-#    {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}}
-#} 
+    #ad_form -extend -name item-add -form {
+    #    {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}}
+} 
+
 ad_form -extend -name item-add -form {
     {item_type:text(radio) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
-#    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
+    #	    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
     {num_choices:text(hidden)}
 }
+
+
 
 ##############################################################################
 # Multiple Choice Section
@@ -110,15 +116,15 @@ ad_form -extend -name item-add -form {
     {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
 }
 if {[template::form::is_submission item-add] \
-        && [template::element::get_value item-add add_another_choice] \
-        eq [_ assessment.Add_another_choice]} {
+	&& [template::element::get_value item-add add_another_choice] \
+	eq [_ assessment.Add_another_choice]} {
     set num_choices [element::get_value item-add num_choices]
     incr num_choices
     element::set_value item-add num_choices $num_choices
 } 
 
 if {![template::form::is_submission item-add] \
-        && ![info exists num_choices]} {
+	&& ![info exists num_choices]} {
     set num_choices 5
 } else {
     set num_choices [template::element::get_value item-add num_choices]
@@ -299,11 +305,13 @@ ad_form -extend -name item-add -new_request {
 } -after_submit {
     if {[exists_and_not_null formbutton_ok]} {
 	ad_returnredirect [export_vars -base questions {assessment_id}]&\#$as_item_id
+	
 	ad_script_abort
     } elseif {[exists_and_not_null formbutton_add_another_question]} {
 	set after [expr {$after + 1}]
 	ad_returnredirect [export_vars -base item-add {after assessment_id section_id}]&\#$as_item_id	    
     }
 }
+
 
 ad_return_template
