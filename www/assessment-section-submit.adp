@@ -12,7 +12,7 @@
   <if @section.max_time_to_complete@ not nil><br>#assessment.section_time_remaining#</if>
 
   <if @progress_bar_list@ defined>
-  <include src="/packages/assessment/lib/progress-bar" total="@total_pages@" current="@current_page@" />
+  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages@" current="@current_page@" />
   </if>
 
   <if @form_is_submit@ true and @form_is_valid@ false>
