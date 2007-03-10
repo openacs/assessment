@@ -188,6 +188,8 @@ if { $edit_p } {
         {password:text(hidden) {value ""}}
         {show_feedback:text(hidden) {value ""}}
         {section_navigation:text(hidden) {value ""}}
+        {entry_page:text(hidden) {value ""}}
+        {exit_page:text(hidden) {value ""}}
     }
 }
 
