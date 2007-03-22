@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.20" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.22d3" locale="es_ES" charset="ISO-8859-1">
 
   <msg key="above">Arriba</msg>
   <msg key="Absolute_Size">Tamaño Absoluto</msg>
@@ -233,9 +233,11 @@
   <msg key="End_Time">Hora de Finalización</msg>
   <msg key="Enter_Message">Introducir mensaje</msg>
   <msg key="Entry_Page">Página de Entrada</msg>
+  <msg key="Entry_Page_help">Introduzca el texto a mostrar al usuario antes de iniciar el cuestionario</msg>
   <msg key="error_enter_tcl_code">Debes introducir el código tcl a ejecutar</msg>
   <msg key="error_html_options">Necesario para ser pares de \&quot;clave - valor\&quot;</msg>
   <msg key="Exit_Page">Página de Salida</msg>
+  <msg key="Exit_Page_help">Introduzca el texto a mostrar al usuario una vez finalizado el cuestionario</msg>
   <msg key="Export">Exportar</msg>
   <msg key="Extreme_Actions">Acciones Extremas:</msg>
   <msg key="Feedback">Feedback</msg>
@@ -334,6 +336,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Letter_other">Otro</msg>
   <msg key="limited_tries">Número de intentos permitidos</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Nota:&lt;/b&gt; Se trata de un cuestionario anónimo por lo que su nombre no aparecerá en los resultados.</msg>
+  <msg key="lt_default_exit_page">¡Enhorabuena, ha terminado! Siga el enlace para revisar sus respuestas.</msg>
   <msg key="lt_Everyone_eligible_to_">Alguien que hace este cuestionario</msg>
   <msg key="lt_Everyone_who_has_alre">Alguien que ya haya completado este cuestionario</msg>
   <msg key="lt_Everyone_who_has_not_">Alguien que todavía no ha completado este cuestionario</msg>
@@ -439,6 +442,8 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="post_check">Chequeo Posterior</msg>
   <msg key="Prepend_Empty_Item">Añadir un elemento vacío</msg>
   <msg key="Preview">Visualización previa</msg>
+  <msg key="Preview_link_and_message">&lt;a href=&quot;../instructions?assessment_id=%assessment_id%&quot;&gt;Vista previa&lt;/a&gt; (sus respuestas serán grabadas)</msg>
+  <msg key="publish_status">Estado de publicación</msg>
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
   <msg key="Question_not_answered">Pregunta no contestada</msg>
@@ -502,6 +507,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Section_Navigation">Sección de Navegación</msg>
   <msg key="section_new_display">-- Nuevo --</msg>
   <msg key="section_num_Items">Número de preguntas por página</msg>
+  <msg key="Section_Number">Sección %sections.rownum%</msg>
   <msg key="Section_Order">Orden de las preguntas</msg>
   <msg key="section_order_help">En qué orden se verán las preguntas en esta sección.</msg>
   <msg key="section_preview">Vista Previa</msg>
