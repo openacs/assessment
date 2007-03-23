@@ -263,7 +263,7 @@
             </p>
           
       <br>
-        
+        <if @type@ eq "test">
               <if @formerror.random_p@ not nil>
                 <span class="form-label-error">
               </if>
@@ -296,9 +296,8 @@
                 <formhelp id="random_p">
               
             </p>
-
+</if>
       <br>
-        
               <if @formerror.number_tries@ not nil>
                 <span class="form-label-error">
               </if>
@@ -542,7 +541,7 @@
               
             </p>
 </fieldset>                    
-
+<if @type@ eq "test">
 <fieldset>
 <legend>#assessment.assessment_form_time_options#</legend>
         
@@ -753,6 +752,7 @@
                 <formhelp id="section_navigation">
               
             </p>
+</if>
           <formwidget id=type>
       <br>
 </if>

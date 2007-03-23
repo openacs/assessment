@@ -114,27 +114,14 @@ if { $edit_p } {
         }
     }
     
-    if { $type eq "test" } {
         ad_form -extend -name assessment_form -form {
             {number_tries:integer,optional,nospell {label "[_ assessment.Number_of_Tries]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Number_Tries_help]"}}
             {wait_between_tries:integer,optional,nospell {label "[_ assessment.Minutes_for_Retry]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_Minutes_Retry_help]"}}
         }
-    } else {
-        ad_form -extend -name assessment_form -form {
-            {number_tries:text(hidden) {value ""}}
-            {wait_between_tries:text(hidden) {value ""}}
-        }
-    }
 
-    if { $type eq "test" } {
         ad_form -extend -name assessment_form -form {
             {time_for_response:integer,optional,nospell {label "[_ assessment.time_for_response]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.as_time_help]"}}
         }
-    } else {
-        ad_form -extend -name assessment_form -form {
-            {time_for_response:text(hidden) {value ""}}
-        }
-    }
 
     if { $type eq "test" } {
         ad_form -extend -name assessment_form -form {
