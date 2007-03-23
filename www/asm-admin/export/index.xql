@@ -8,7 +8,7 @@
 	WHERE s.section_id = asm.section_id
 	     AND asm.assessment_id = a.assessment_id
 	     AND a.assessment_id = :assessment_id1
-	ORDER BY s.section_id	    	
+	ORDER BY asm.sort_order
 </querytext>
 </fullquery>
 
