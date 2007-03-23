@@ -425,9 +425,9 @@ ad_proc -public as::assessment::check_session_conditions {
 	append error_list "<li>[_ assessment.assessment_not_public]</li>"
     }
 
-#    if {![empty_string_p $number_tries] && $number_tries > 0 && $number_tries >= $total_tries} {
-#	append error_list "<li>[_ assessment.assessment_too_many_tries]</li>"
-#    }
+    if {![empty_string_p $number_tries] && $number_tries > 0 && $number_tries <= $total_tries} {
+	append error_list "<li>[_ assessment.assessment_too_many_tries]</li>"
+    }
     if {![empty_string_p $wait_between_tries] && $wait_between_tries > $cur_wait_time} {
 	set pretty_wait_time [pretty_time -seconds [expr $wait_between_tries - $cur_wait_time]]
 	append error_list "<li>[_ assessment.assessment_wait_retry]</li>"
