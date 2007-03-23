@@ -390,4 +390,6 @@ ad_form -extend -name item_edit_general -edit_request {
     }
 }
 
+set advanced_options_url [export_vars -base item-edit {as_item_id section_id assessment_id}]
+
 ad_return_template

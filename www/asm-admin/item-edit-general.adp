@@ -233,4 +233,5 @@
 <formwidget id="formbutton_ok">
 </p>
 </formtemplate>
-<a href="item-edit?as_item_id=@as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">Advanced Options</a>
+
+<a href="@advanced_options_url@">Advanced Options</a>
