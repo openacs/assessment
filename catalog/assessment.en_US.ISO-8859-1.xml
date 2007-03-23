@@ -92,7 +92,7 @@ each question be shown to the subject.</msg>
   <msg key="as_Minutes_Retry_help">How many minutes have to pass between each retry.</msg>
   <msg key="as_Mode_help">is this a standalone assessment or does it provide an integrated assessment. Needs refinement, ignore for now</msg>
   <msg key="as_Navigation_help">How shall the navigation between sections happen in the assessment.</msg>
-  <msg key="as_Number_Tries_help">How often can a subject retake the test. 0 for infinite.</msg>
+  <msg key="as_Number_Tries_help">Number of attempts allowed (leave blank for unlimited)</msg>
   <msg key="as_parameter_description_help">Purpouse of the variable (short desc.)</msg>
   <msg key="as_parameter_help">Name of the variable that you going to call on the tcl code (ie. student_id) without &quot;$&quot;</msg>
   <msg key="as_parameter_query_help">Just put the query that retrive the info desired (Syntax: select name,id from table_name where condition)</msg>
