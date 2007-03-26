@@ -168,7 +168,7 @@ db_transaction {
 	# total number of questions if its an empty string or 0
 	set page_display_per_page [expr {[string equal "" $display(num_items)] ? $page_total_items : $display(num_items)}]
 	# determine the total number of pages
-	set page_total [expr $page_total_items / $page_display_per_page]
+	set page_total [expr {$page_total_items == 0 ? 0 : $page_total_items / $page_display_per_page}]
 
 	set section(num_sections) [llength $section_list]
 	set section(num_items) [llength $item_list]
@@ -180,7 +180,7 @@ db_transaction {
 	    # show next items on section page
 	    if {![empty_string_p $display(num_items)]} {
 		# make sure to display correct section page
-		set item_order [expr $item_order - ($item_order % $display(num_items))]
+		set item_order [expr {$item_order - ($item_order % $display(num_items))}]
 	    } elseif {$display(submit_answer_p) == "t"} {
 		# show whole section when picking up a seperate submit section
 		set item_order 0
@@ -192,7 +192,7 @@ db_transaction {
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
 #	ns_log notice "page_display_per_page = '${page_display_per_page}'"
-	set current_page [expr {$item_order / $page_display_per_page + 1}]
+	set current_page [expr {$item_order == 0 ? 0 : $item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages
 	set item_list [lreplace $item_list 0 [expr $item_order-1]]
