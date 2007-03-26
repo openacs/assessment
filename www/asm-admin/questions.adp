@@ -5,7 +5,7 @@
 <include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="@tab@">
 
 <multiple name="sections">
-<h3>#assessment.Section_Number#</h3>
+<a name="@sections.sort_order@"><h3>#assessment.Section_Number#</h3>
   <a class="button" href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a> 
 
   <a class=button href="section-form?assessment_id=@assessment_id@&after=@sections.sort_order@">#assessment.add_new_section#</a>
