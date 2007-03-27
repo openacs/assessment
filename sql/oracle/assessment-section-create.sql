@@ -123,7 +123,7 @@ create table as_assessments (
 	survey_p 	char(1) default 'f'
 			constraint as_assessments_survey_p_ck
 			check (survey_p in ('t', 'f')),
-	type 		integer
+	type 		varchar(1000)
 );
 
 -- Style Options 
