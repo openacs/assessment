@@ -232,7 +232,7 @@ ad_form -extend -name item_edit_general -edit_request {
 	    set $var [regsub -all "\"$site_url" [set $var] {"}]
 	    set $var [regsub -all "\"$site_https_url" [set $var] {"}]
 	}
-	
+
         db_transaction {
             set old_display_type [string range [db_string get_display_type {}] end-1 end]
             set new_item_id [as::item::edit \
@@ -290,9 +290,10 @@ ad_form -extend -name item_edit_general -edit_request {
                 -old_section_id $section_id \
                 -new_section_id $new_section_id \
                 -new_assessment_rev_id $new_assessment_rev_id
+	    
+	    set title [string range $question_text 0 999]	
 
             db_dml update_item_in_section {}
-
             switch -- $item_type {
                 mc {
                     set num_answers 0
@@ -309,7 +310,7 @@ ad_form -extend -name item_edit_general -edit_request {
                     }
                     set new_item_type_id [as::item_type_mc::edit \
                                               -as_item_type_id $as_item_type_id \
-                                              -title $question_text \
+                                              -title $title \
                                               -increasing_p f \
                                               -allow_negative_p f \
                                               -num_correct_answers $num_correct_answers \
@@ -350,7 +351,7 @@ ad_form -extend -name item_edit_general -edit_request {
                 "oq" {
                     set new_item_type_id [as::item_type_oq::edit \
                                               -as_item_type_id $as_item_type_id \
-                                              -title $question_text \
+                                              -title $title \
                                               -default_value "" \
                                               -feedback_text "" \
                                               -reference_answer $reference_answer \
@@ -361,13 +362,13 @@ ad_form -extend -name item_edit_general -edit_request {
                 "fu" {
                     set new_item_type_id [as::item_type_fu::edit \
 				  -as_item_type_id $as_item_type_id \
-				  -title $question_text]
+				  -title $title]
                     db_dml update_item_type {}
                 }
                 "sa" {
                     set new_item_type_id [as::item_type_sa::edit \
                                               -as_item_type_id $as_item_type_id \
-                                              -title $question_text \
+                                              -title $title \
                                               -increasing_p f\
                                               -allow_negative_p f]
                     db_dml update_item_type {}

@@ -262,7 +262,7 @@ ad_form -extend -name item-add -new_request {
 	    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
 	}
         # check question type
-
+	set title [string range $question_text 0 999]
         switch -exact $item_type {
             mc {
                 as::item_type_mc::add_to_assessment \
@@ -272,7 +272,7 @@ ad_form -extend -name item-add -new_request {
                     -choices [array get choice] \
                     -correct_choices [array get correct] \
                     -after $after \
-                    -title $question_text\
+                    -title $title\
                     -display_type $display_type
             }
             oq {
@@ -281,7 +281,7 @@ ad_form -extend -name item-add -new_request {
                     -section_id $section_id \
                     -as_item_id $as_item_id \
                     -after $after \
-                    -title $question_text                    
+                    -title $title                    
             }
             sa {
                 as::item_type_sa::add_to_assessment \
@@ -289,7 +289,7 @@ ad_form -extend -name item-add -new_request {
                     -section_id $section_id \
                     -as_item_id $as_item_id \
                     -after $after \
-                    -title $question_text                    
+                    -title $title                    
             }
             fu {
                 as::item_type_fu::add_to_assessment \
@@ -297,7 +297,7 @@ ad_form -extend -name item-add -new_request {
                     -section_id $section_id \
                     -as_item_id $as_item_id \
                     -after $after \
-                    -title $question_text                                    
+                    -title $title                                    
             }
         }
     }
