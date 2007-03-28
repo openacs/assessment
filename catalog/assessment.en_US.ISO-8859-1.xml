@@ -141,7 +141,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Categorization_exact">Exact</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
   <msg key="Change_multiple_timings">Change Availability (alle)</msg>
+  <msg key="Change_status">Change status</msg>
   <msg key="Change_timings">Change time based availability</msg>
+  <msg key="Change_type">Change type</msg>
   <msg key="Choice">Choice</msg>
   <msg key="choice_Content">Upload File</msg>
   <msg key="choice_Content_help">Upload a file with the content of the anwser</msg>
@@ -339,6 +341,8 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Letter_help">First letter to limit the search to.</msg>
   <msg key="Letter_other">Other</msg>
   <msg key="limited_tries">Number of tries allowed: %assessment_data.number_tries%</msg>
+  <msg key="Live">Live
+</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br /&gt;your name will not be included in the results.</msg>
   <msg key="lt_default_entry_page"></msg>
   <msg key="lt_default_exit_page">Congratulations, you're done! Use the link below to review your answers.</msg>
@@ -390,6 +394,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="None">None</msg>
   <msg key="not_answered">not answered</msg>
   <msg key="not_approved">Not Approved</msg>
+  <msg key="Not_Live">Not Live</msg>
   <msg key="not_yet_reviewed">not yet reviewed</msg>
   <msg key="Notification">Notification</msg>
   <msg key="notified_users">Notified Users</msg>
@@ -402,6 +407,8 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="num_Correct_help">Number of correct answers that have to be displayed</msg>
   <msg key="num_items">Number of Items displayed</msg>
   <msg key="num_items_help">Number of Items displayed</msg>
+  <msg key="Number_of_page_singular">Number of page
+</msg>
   <msg key="Number_of_Tries">Number of Tries allowed</msg>
   <msg key="numerical">Numerical</msg>
   <msg key="on_creation_date">, on %creation_date%</msg>
@@ -409,6 +416,8 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="one_correct_choice_req">At least one correct choice required</msg>
   <msg key="Only_correct">Only correct Responses</msg>
   <msg key="Only_incorrect">Only incorrect Responses</msg>
+  <msg key="Open_Assessments">Open Assessments
+</msg>
   <msg key="open_assessments">Open Assessments</msg>
   <msg key="oq_Keywords">Keywords</msg>
   <msg key="oq_Keywords_help">Keywords used for automatic grading</msg>
@@ -444,6 +453,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Prepend_Empty_Item">Prepend Empty Item</msg>
   <msg key="Preview">Preview</msg>
   <msg key="Preview_link_and_message">&lt;a href=&quot;../instructions?assessment_id=%assessment_id%&quot;&gt;Preview&lt;/a&gt; (your response will be recorded)</msg>
+  <msg key="Publish_Status">Publish Status</msg>
   <msg key="publish_status">Publish Status</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
@@ -473,6 +483,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Responding_Users">Responding Users</msg>
   <msg key="Response_Options">Response Options:</msg>
   <msg key="Response_Submitted">Response Submitted</msg>
+  <msg key="Results">Results</msg>
   <msg key="Results_by_user">Assessment results by user</msg>
   <msg key="Results_change_display">(on %results.create_date% by &lt;a href=&amp;quot;%results.user_url%&amp;quot;&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
   <msg key="Results_edit">Edit assessment result</msg>
@@ -481,6 +492,7 @@ Increasing (false) will either give 100%, if all correct answers are given, or 0
   <msg key="Return_Url">Return URL</msg>
   <msg key="reuse_responses">Old responses displayed</msg>
   <msg key="Reuse_Responses_1">Reuse Responses</msg>
+  <msg key="Review">Review</msg>
   <msg key="Review_Asessment">Review Assessment</msg>
   <msg key="right">Right</msg>
   <msg key="Rulebased_branching">Rule-based Branching</msg>
@@ -539,8 +551,10 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Show_Items">Show Items</msg>
   <msg key="Show_Sessions">Show Sessions</msg>
   <msg key="specific_date">Specific Date</msg>
+  <msg key="Start_Assessment_Title">Start Assessment</msg>
   <msg key="Start_Time">Start Time</msg>
   <msg key="Started">Started</msg>
+  <msg key="Status">Status</msg>
   <msg key="Student_Response">Student Response</msg>
   <msg key="Subject">Subject</msg>
   <msg key="Subject_Name">Subject Name</msg>
@@ -576,6 +590,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="type_ea">Expert Assessment</msg>
   <msg key="type_of_trigger">Type of the trigger</msg>
   <msg key="type_s">Survey</msg>
+  <msg key="type_test">Test</msg>
   <msg key="unhappy_search">Unhappy with your search result?</msg>
   <msg key="unlimited_time">Unlimited time for response</msg>
   <msg key="unlimited_tries">Unlimited number of tries allowed</msg>
@@ -595,6 +610,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="View_Responses">View Responses:</msg>
   <msg key="View_Results">View Results</msg>
   <msg key="View_results">View results</msg>
+  <msg key="View_Sessions">View Sessions</msg>
   <msg key="when_this_action">When this action will be executed (ie. At the end of this section)</msg>
   <msg key="when_this_will">When this will be executed?</msg>
   <msg key="yes">Yes</msg>
