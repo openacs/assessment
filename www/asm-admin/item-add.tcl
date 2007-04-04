@@ -42,10 +42,10 @@ set item_types [as_item_type::get_item_types]
 
 ad_form -name item-add -action item-add -export { assessment_id section_id after type } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {question_text:richtext,nospell {label "[_ assessment.item_Question]"} {html {rows 5 cols 80 style {width: 99%}}} {help_text "[_ assessment.item_Question_help]"}}
+    {question_text:richtext,nospell {label "[_ assessment.item_Question]"} {html {rows 12 cols 80 style {width: 99%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
 if { $type ne "survey"} {
-#    ad_form -extend -name item-add -form {{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
+#    ad_form -extend -name item-add -form {{description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 12 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
 #    }
 }
 
@@ -65,8 +65,8 @@ ad_form -extend -name item-add -form {   {required_p:text(select) {label "[_ ass
 if { $type ne "survey"} {
 ad_form -extend -name item-add -form {
     {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
-    {feedback_right:richtext,optional,nospell {label "[_ assessment.Feedback_right]"} {html {rows 5 cols 80 style {width: 99%}}} {help_text "[_ assessment.Feedback_right_help]"}}
-    {feedback_wrong:richtext,optional,nospell {label "[_ assessment.Feedback_wrong]"} {html {rows 5 cols 80 style {width: 99%}}} {help_text "[_ assessment.Feedback_wrong_help]"}}
+    {feedback_right:richtext,optional,nospell {label "[_ assessment.Feedback_right]"} {html {rows 12 cols 80 style {width: 99%}}} {help_text "[_ assessment.Feedback_right_help]"}}
+    {feedback_wrong:richtext,optional,nospell {label "[_ assessment.Feedback_wrong]"} {html {rows 12 cols 80 style {width: 99%}}} {help_text "[_ assessment.Feedback_wrong_help]"}}
 #    {max_time_to_complete:integer,optional,nospell {label "[_ assessment.time_for_completion]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.item_time_help]"}}
 #    {points:integer,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
     {field_code:text(hidden),optional}
@@ -172,7 +172,8 @@ ad_form -extend -name item-add -new_request {
 	set points 0
     }
 
-    if {[exists_and_not_null formbutton_ok] || [exists_and_not_null formbutton_add_another_question]} {
+		    
+    if {![exists_and_not_null formbutton_add_another_choice]} {
     # map display types to data types
     switch -exact $item_type {
         sa {
@@ -303,7 +304,8 @@ ad_form -extend -name item-add -new_request {
     }
 }
 } -after_submit {
-    if {[exists_and_not_null formbutton_ok]} {
+    if {![exists_and_not_null formbutton_add_another_question] \
+	    && ![exists_and_not_null formbutton_add_another_choice]} {
 	ad_returnredirect [export_vars -base questions {assessment_id}]&\#$as_item_id
 	
 	ad_script_abort
