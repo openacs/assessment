@@ -5,7 +5,7 @@
 
 
 <!-- Pretty output starts here -->
-  <if @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@</h2></if>
+<if @show_title_p@ true and @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@</h2></if>
   <if @assessment_data.instructions@ not nil><p>@assessment_data.instructions;noquote@</p></if>
 
   <if @assessment_data.time_for_response@ not nil><br>#assessment.session_time_remaining#</if>
@@ -19,7 +19,7 @@
   <div class="form-error">#assessment.There_was_a_problem_with_your_answers#</div>
   </if>
 
-    <h2>@section.title@</h2>
+<if @show_title_p@ true><h2>@section.title@</h2></if>
     <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
 

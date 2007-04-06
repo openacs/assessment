@@ -18,6 +18,7 @@ e
     {response:multiple,optional}
     {next_url ""}
     {single_section_id ""}
+    {show_title_p 1}
 } -properties {
     context:onevalue
     page_title:onevalue
