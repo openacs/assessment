@@ -193,7 +193,6 @@
               
 
         </span>   
-        <formwidget id="description"><formwidget id="content"><formwidget id="subtext"><formwidget id="field_name"><formwidget id="field_code"><formwidget id="validate_block"><formwidget id="data_type"><formwidget id="display_type"><formwidget id="max_time_to_complete">
       <br/>
 
 <switch @item_type@>
