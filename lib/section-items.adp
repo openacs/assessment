@@ -6,7 +6,7 @@
 
 <multiple name="items">
 
-<a name=@items.as_item_id@><h4>#assessment.Question_Number#</h4>
+<a name="Q@items.as_item_id@"><h4>#assessment.Question_Number#</h4>
 
 <if @assessment_data.type@ ne 1>
 

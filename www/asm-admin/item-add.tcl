@@ -306,12 +306,12 @@ ad_form -extend -name item-add -new_request {
 } -after_submit {
     if {![exists_and_not_null formbutton_add_another_question] \
 	    && ![exists_and_not_null formbutton_add_another_choice]} {
-	ad_returnredirect [export_vars -base questions {assessment_id}]&\#$as_item_id
+	ad_returnredirect "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
 	
 	ad_script_abort
     } elseif {[exists_and_not_null formbutton_add_another_question]} {
 	set after [expr {$after + 1}]
-	ad_returnredirect [export_vars -base item-add {after assessment_id section_id}]&\#$as_item_id	    
+	ad_returnredirect "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
     }
 }
 

@@ -213,10 +213,10 @@ create unique index as_sess_choices_pk2 on as_session_choices (choice_id, as_ite
 create table as_session_item_map (
 	session_id	integer
 			constraint as_sess_imap_session_fk
-			references as_sessions,
+			references as_sessions on delete cascade,
 	item_data_id	integer
 			constraint as_sess_imap_item_data_fk
-			references as_item_data,
+			references as_item_data on delete cascade,
 	constraint as_sess_imap_pk
 	primary key (session_id, item_data_id)
 );
