@@ -401,3 +401,15 @@ ad_proc -private as::section::update_section_in_assessment {
 } {
     db_dml update_section_in_assessment {}
 }
+
+ad_proc -public as::section::add_to_assessment {
+    -assessment_rev_id
+    -section_id
+    {-max_time_to_complete ""}
+    {-sort_order ""}
+    {-points ""}
+} {
+    Link a section to an assessment
+} {
+    db_dml add {}
+}

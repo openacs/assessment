@@ -134,4 +134,15 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::section::add_to_assessment.add">
+      <querytext>
+
+	    insert into as_assessment_section_map 
+        (assessment_id, section_id, max_time_to_complete, sort_order, points)
+	    values 
+        (:assessment_rev_id, :section_id, :max_time_to_complete, :sort_order, :points)
+
+      </querytext>
+</fullquery>
+
 </queryset>
