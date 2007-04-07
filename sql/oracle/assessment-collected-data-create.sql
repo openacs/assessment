@@ -11,19 +11,23 @@ create table as_sessions (
 		constraint as_sessions_session_id_pk
 		primary key
 		constraint as_sessions_session_id_fk
-		references cr_revisions(revision_id),
+		references cr_revisions(revision_id)
+                on delete cascade,
 	assessment_id integer
 		constraint as_sessions_assessment_id_fk
-		references as_assessments(assessment_id),
+		references as_assessments(assessment_id)
+                on delete cascade,
 	-- References a Subjects entity that we don't define in this package.
 	-- if subjects can't be "persons" then Assessment will have to define an as_subjects table for its own use.
 	subject_id integer
 		constraint as_sessions_subject_id_fk
-		references persons(person_id),
+		references persons(person_id)
+                on delete cascade,
 	-- references Users if someone is doing the Assessment as a proxy for the real subject
 	staff_id integer
 		constraint as_sessions_staff_id_fk
-		references users(user_id),
+		references users(user_id)
+                on delete cascade,
 	-- when the subject should do the Assessment
 	target_datetime		date,
 	-- when the subject initiated the Assessment
@@ -51,20 +55,25 @@ create table as_section_data (
 		constraint as_section_data_id_pk
 		primary key
 		constraint as_section_data_id_fk
-		references cr_revisions(revision_id),
+		references cr_revisions(revision_id)
+                on delete cascade,
 	session_id integer
 		constraint as_section_data_sess_id_fk
-		references as_sessions(session_id),
+		references as_sessions(session_id)
+                on delete cascade,
 	section_id integer
 		constraint as_section_data_sect_id_fk
-		references as_sections(section_id),
+		references as_sections(section_id)
+                on delete cascade,
 -- if subjects can't be "persons" then Assessment will have to define an as_subjects table for its own use.
 	subject_id integer
 		constraint as_section_data_subj_id_fk
-		references persons(person_id),
+		references persons(person_id)
+                on delete cascade,
 	staff_id integer
 		constraint as_section_data_staff_id_fk
-		references users(user_id),
+		references users(user_id)
+                on delete cascade,
 	points integer,
 	-- when the subject initiated the section
 	creation_datetime date,
@@ -82,24 +91,30 @@ create table as_item_data (
 		constraint as_item_data_id_pk
 		primary key
 		constraint as_item_data_id_fk
-		references cr_revisions(revision_id),
+		references cr_revisions(revision_id)
+                on delete cascade,
 	session_id integer
 		constraint as_item_data_sess_id_fk
-		references as_sessions(session_id),
+		references as_sessions(session_id)
+                on delete cascade,
 	-- if subjects can't be "persons" then Assessment will have to define an as_subjects table for its own use
 	subject_id integer
 		constraint as_item_data_subj_id_fk
-		references persons(person_id),
+		references persons(person_id)
+                on delete cascade,
 	-- missing foreign key
 	staff_id integer
 		constraint as_item_data_staff_id_fk
-		references users(user_id),
+		references users(user_id)
+                on delete cascade,
 	as_item_id integer
 		constraint as_item_data_item_id
-		references as_items(as_item_id),
+		references as_items(as_item_id)
+                on delete cascade,
  	section_id integer
 		constraint as_item_data_section_id
-		references as_sections(section_id),
+		references as_sections(section_id)
+                on delete cascade,
 	is_unknown_p char(1) default 'f'
 		constraint as_item_data_unknown_p_ck
 		check (is_unknown_p in ('t','f')),
@@ -115,7 +130,8 @@ create table as_item_data (
 	-- references cr_revisions
 	content_answer	integer
 		constraint as_item_data_content_fk
-		references cr_revisions,
+		references cr_revisions
+                on delete cascade,
 	-- This field stores the signed entered data
 	signed_data varchar(500),
 	points integer
@@ -131,10 +147,12 @@ create table as_session_results (
                    constraint as_sess_res_res_id_pk
                    primary key
                    constraint as_sess_res_res_id_fk
-                   references cr_revisions(revision_id),
+                   references cr_revisions(revision_id)
+                   on delete cascade,
        target_id   integer
                    constraint as_sess_res_tgt_id_fk
-                   references cr_revisions(revision_id),
+                   references cr_revisions(revision_id)
+                   on delete cascade,
        points      integer
 );
 
@@ -144,11 +162,13 @@ create index as_sess_res_tgt_idx on as_session_results (target_id);
 create table as_item_data_choices (
 	item_data_id	integer
 			constraint as_idata_cho_data_id_fk
-			references as_item_data,
+			references as_item_data
+                        on delete cascade,
 	-- references as_item_choices
 	choice_id	integer
 			constraint as_idata_cho_choice_id_fk
-			references as_item_choices,
+			references as_item_choices
+                        on delete cascade,
 	constraint as_idata_choices_pk
 	primary key (item_data_id, choice_id)
 );
@@ -159,10 +179,12 @@ create unique index as_idata_choices_pk2 on as_item_data_choices (choice_id, ite
 create table as_session_sections (
 	session_id	integer
 			constraint as_sess_sect_session_fk
-			references as_sessions,
+			references as_sessions
+                        on delete cascade,
 	section_id	integer
 			constraint as_sess_sect_section_fk
-			references as_sections,
+			references as_sections
+                        on delete cascade,
 	sort_order	integer,
 	constraint as_sess_sections_pk
 	primary key (session_id, section_id)
@@ -174,13 +196,16 @@ create unique index as_sess_sections_pk2 on as_session_sections (section_id, ses
 create table as_session_items (
 	session_id	integer
 			constraint as_sess_items_session_fk
-			references as_sessions,
+			references as_sessions
+                        on delete cascade,
 	section_id	integer
 			constraint as_sess_items_section_fk
-			references as_sections,
+			references as_sections
+                        on delete cascade,
 	as_item_id	integer
 			constraint as_sess_items_item_fk
-			references as_items,
+			references as_items
+                        on delete cascade,
 	sort_order	integer,
 	constraint as_sess_items_pk
 	primary key (session_id, section_id, as_item_id)
@@ -192,16 +217,20 @@ create unique index as_sess_items_pk2 on as_session_items (as_item_id, section_i
 create table as_session_choices (
 	session_id	integer
 			constraint as_sess_cho_session_fk
-			references as_sessions,
+			references as_sessions
+                        on delete cascade,
 	section_id	integer
 			constraint as_sess_cho_section_fk
-			references as_sections,
+			references as_sections
+                        on delete cascade,
 	as_item_id	integer
 			constraint as_sess_cho_item_fk
-			references as_items,
+			references as_items
+                        on delete cascade,
 	choice_id	integer
 			constraint as_sess_cho_choice_fk
-			references as_item_choices,
+			references as_item_choices
+                        on delete cascade,
 	sort_order	integer,
 	constraint as_sess_choices_pk
 	primary key (session_id, section_id, as_item_id, choice_id)

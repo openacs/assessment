@@ -444,9 +444,10 @@ ad_proc -public as::install::before_uninstantiate {
 } { 
     # reset the RegistrationId parameter
     as::parameter::reset_parameter -package_id $package_id -node_id $node_id
-
+ns_log notice "delete assessment package $package_id"
     # delete actions
     db_foreach get_package_actions {} {
+        ns_log notice "delte action $object_id"
         db_exec_plsql delete_action {}
     }
 }
