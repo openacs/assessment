@@ -11,7 +11,8 @@ create table as_item_type_mc (
 				constraint as_item_type_mc_type_id_pk
 				primary key
 				constraint as_item_type_mc_type_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- (number of correct matches / number of total matches) *100% points. All or nothing will either give 100%, if all correct answers are given, or 0% else.
 	increasing_p		char(1) default 'f'
 				constraint as_item_type_mc_incr_p_ck
@@ -32,7 +33,8 @@ create table as_item_type_oq (
 				constraint as_item_type_oq_type_id_pk
 				primary key
 				constraint as_item_type_oq_type_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- the content of this field will be prefilled in the response of the user taking the survey
 	default_value		varchar(500),
 	-- the person correcting the answers will see the contents of this box as correct answer for comparison with the user response
@@ -49,7 +51,8 @@ create table as_item_display_rb (
 				constraint as_item_display_rb_displ_id_pk
 				primary key
 				constraint as_item_display_rb_displ_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- field to specify other stuff like textarea dimensions 
 	html_display_options	varchar(50),
 	-- the pattern by which 2..n Item Choices are laid out when displayed (horizontal, vertical) 
@@ -68,7 +71,8 @@ create table as_item_display_cb (
 				constraint as_item_display_cb_displ_id_pk
 				primary key
 				constraint as_item_display_cb_displ_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- field to specify other stuff like textarea dimensions 
 	html_display_options	varchar(50),
 	-- the pattern by which 2..n Item Choices are laid out when displayed (horizontal, vertical) 
@@ -87,7 +91,8 @@ create table as_item_display_sb (
 				constraint as_item_display_sb_displ_id_pk
 				primary key
 				constraint as_item_display_sb_displ_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- field to specify other stuff like textarea dimensions 
 	html_display_options	varchar(50),
 	-- if multiple answers are allowed
@@ -110,7 +115,8 @@ create table as_item_display_tb (
 				constraint as_item_display_tb_displ_id_pk
 				primary key
 				constraint as_item_display_tb_displ_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- field to specify other stuff like textarea dimensions
 	html_display_options	varchar(50),
 	-- an abstraction of the real size value in "small","medium","large" 
@@ -125,7 +131,8 @@ create table as_item_display_sa (
 				constraint as_item_display_sa_displ_id_pk
 				primary key
 				constraint as_item_display_sa_displ_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- field to specify other stuff like textarea dimensions
 	html_display_options	varchar(50),
 	-- an abstraction of the real size value in "small","medium","large"
@@ -140,7 +147,8 @@ create table as_item_type_sa (
 				constraint as_item_type_sa_type_id_pk
 				primary key
 				constraint as_item_type_sa_type_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- (number of correct matches / number of total matches) *100% points. All or nothing will either give 100%, if all correct answers are given, or 0% else.
 	increasing_p		char(1) default 'f'
 				constraint as_item_type_sa_incr_p_ck
@@ -157,7 +165,8 @@ create table as_item_display_ta (
 				constraint as_item_display_ta_displ_id_pk
 				primary key
 				constraint as_item_display_ta_displ_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- field to specify other stuff like textarea dimensions
 	html_display_options	varchar(50),
 	-- an abstraction of the real size value in "small","medium","large"
