@@ -39,7 +39,12 @@ set type $assessment_data(type)
 #}
 
 set item_types [as_item_type::get_item_types]
-
+ns_log notice "
+DB --------------------------------------------------------------------------------
+DB DAVE debugging /var/lib/aolserver/openacs-5-3/packages/assessment/www/asm-admin/item-add.tcl
+DB --------------------------------------------------------------------------------
+DB item_types = '${item_types}'
+DB --------------------------------------------------------------------------------"
 ad_form -name item-add -action item-add -export { assessment_id section_id after type } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
     {question_text:richtext,nospell {label "[_ assessment.item_Question]"} {html {rows 12 cols 80 style {width: 99%}}} {help_text "[_ assessment.item_Question_help]"}}

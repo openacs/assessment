@@ -12,7 +12,9 @@
   -- group sections with item_counts, then select those sections with 0 items
   select title
     from (select asm.section_id, count(ism.as_item_id) as count, cr.title 
-            from cr_items i, cr_revisions cr, as_assessment_section_map asm left join as_item_section_map ism using (section_id) 
+            from cr_items i, cr_revisions cr,
+    as_assessment_section_map asm left join as_item_section_map ism
+    on asm.section_id = ism.section_id
            where i.item_id=:assessment_id 
              and asm.assessment_id=i.latest_revision 
              and cr.revision_id = asm.section_id

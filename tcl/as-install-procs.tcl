@@ -448,7 +448,11 @@ ns_log notice "delete assessment package $package_id"
     # delete actions
     db_foreach get_package_actions {} {
         ns_log notice "delte action $object_id"
-        db_exec_plsql delete_action {}
+        package_exec_plsql -var_list [list [list action_id $object_id]] \
+            as_action del
+    }
+    foreach folder_id [db_list get_folders ""] {
+        content::folder::delete -folder_id $folder_id -cascade_p t
     }
 }
 

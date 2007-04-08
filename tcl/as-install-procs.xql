@@ -15,4 +15,10 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::install::before_uninstantiate.get_folders">
+      <querytext>
+        select folder_id from cr_folders where package_id = :package_id
+      </querytext>
+</fullquery>
+
 </queryset>

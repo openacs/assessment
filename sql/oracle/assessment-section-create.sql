@@ -11,7 +11,8 @@ create table as_section_display_types (
 				constraint as_section_display_types_id_pk
 				primary key
 				constraint as_section_display_types_id_fk
-				references cr_revisions(revision_id),
+				references cr_revisions(revision_id)
+                                on delete cascade,
 	-- number of items displayed per page
 	num_items		integer,
 	-- adp template
@@ -38,10 +39,12 @@ create table as_sections (
 			constraint as_sections_section_id_pk
 			primary key
 			constraint as_sections_section_id_fk
-			references cr_revisions(revision_id),
+			references cr_revisions(revision_id)
+                        on delete cascade,
 	display_type_id	integer
 			constraint as_sections_display_type_id_fk
-			references as_section_display_types (display_type_id),
+			references as_section_display_types (display_type_id)
+                        on delete cascade,
 	-- text displayed on user pages
 	instructions	clob,
 	-- number of items displayed
@@ -63,7 +66,8 @@ create table as_assessments (
 			constraint as_assessments_id_pk
 			primary key
 			constraint as_assessments_id_fk
-			references cr_revisions(revision_id),
+			references cr_revisions(revision_id)
+                        on delete cascade,
 	-- who is the "main" author and creator of this assessment
 	creator_id integer,
 	-- text that explains any specific steps the subject needs to follow
@@ -149,10 +153,12 @@ create table as_assessment_styles (
 create table as_assessment_section_map (
 	assessment_id	integer
 			constraint as_assessment_smap_a_id_fk
-			references as_assessments (assessment_id),
+			references as_assessments (assessment_id)
+                        on delete cascade,
 	section_id	integer
 			constraint as_assessment_smap_s_id_fk
-			references as_sections (section_id),
+			references as_sections (section_id)
+                        on delete cascade,
 	-- maximum time to complete a section
 	max_time_to_complete	integer,
 	-- order in which a section will be displayed
@@ -169,10 +175,12 @@ create index as_assessment_smap_ord_idx on as_assessment_section_map (assessment
 create table as_item_section_map (
 	as_item_id	integer
 		constraint as_item_smap_i_id_fk
-		references as_items (as_item_id),
+		references as_items (as_item_id)
+                on delete cascade,
 	section_id	integer
 			constraint as_item_smap_s_id_fk
-			references as_sections (section_id),
+			references as_sections (section_id)
+                        on delete cascade,
 	-- whether Item must be answered
 	required_p	char(1) default 'f'
 			constraint as_item_smap_required_p_ck

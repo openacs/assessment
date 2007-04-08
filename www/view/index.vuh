@@ -17,13 +17,26 @@ db_1row revision_info { *SQL* }
 set the_url $name
 set content_root [as::assessment::folder_id -package_id $package_id]
 
-set template_root [db_1row template_root {}]
+set template_root [content::template::get_root_folder]
 
 # Serve the page
 #ad_return_complaint 1 "$the_url $the_root $content_root $template_root "
-if { [content::init the_url the_root $content_root $template_root public $revision_id $content_type] } {
-  set file "$the_root/$the_url"
+
+# DAVEB 2007-04-08 This is a bad idea but I am doing it anyway. What
+# really should happen is, all of the duplications of this type of
+# code should be replaces with acs-subsite/www/file.vuh or image.vuh
+# (they do the same thing but are different for pretty urls. that
+# should be fixed too.
+# since oracle NEVER has the default template created since openacs
+# 4.6! there is no way the index.vuh would work with content::init. 
+if {[string match "Oracle*" [db_name]]} {
+    ad_returnredirect /file/[content::revision::item_id -revision_id $revision_id]
+    ad_script_abort
+}
+if {[content::init the_url the_root $content_root $template_root public $revision_id $content_type]} {
+    set file "$the_root/$the_url"
   rp_internal_redirect -absolute_path $file
+    
 } else {
   # ns_returnnotfound
   set page "[ad_header {Content Item Not Found}]"

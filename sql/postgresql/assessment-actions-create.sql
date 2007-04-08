@@ -135,7 +135,7 @@ end;' language 'plpgsql';
 
 
 
-create or replace function as_action__delete (integer)
+create or replace function as_action__del (integer)
 returns integer as '
 declare 
 	del__action_id     alias for $1;

@@ -94,3 +94,23 @@ alter table as_item_data drop constraint as_item_data_staff_id_fk;
 alter table as_item_data add constraint as_item_data_staff_id_fk foreign key (staff_id) references users(user_id) on delete cascade;
 alter table as_item_data drop constraint as_item_data_subject_id_fk;
 alter table as_item_data add constraint as_item_data_subject_id_fk foreign key (subject_id) references persons(person_id) on delete cascade;
+
+drop function as_action__delete(integer);
+
+select define_function_args ('as_action__del','action_id');
+
+create or replace function as_action__del (integer)
+returns integer as '
+declare 
+        del__action_id     alias for $1;
+begin
+        
+                
+        delete from as_action_params where action_id=del__action_id;
+        
+        delete from as_actions where action_id = del__action_id;
+
+        PERFORM acs_object__delete (del__action_id);    
+        return del__action_id;  
+
+end;' language 'plpgsql';       

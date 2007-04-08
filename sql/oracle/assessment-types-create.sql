@@ -25,6 +25,8 @@ insert into as_item_types_map (item_type, display_type)
 values ('mc', 'cb');
 insert into as_item_types_map (item_type, display_type)
 values ('mc', 'sb');
+insert into as_item_types_map (item_type, display_type)
+values ('fu', 'f');
 -- insert into as_item_types_map (item_type, display_type)
 -- values ('ca', 'tb');
 -- insert into as_item_types_map (item_type, display_type)
@@ -46,10 +48,12 @@ values ('mc', 'sb');
 create table as_item_rels (
 	item_rev_id	integer
 			constraint as_item_rels_item_fk
-			references acs_objects,
+			references acs_objects
+                        on delete cascade,
 	target_rev_id	integer
 			constraint as_item_rels_target_fk
-			references acs_objects,
+			references acs_objects
+                        on delete cascade,
 	rel_type	varchar(20),
 	constraint as_item_rels_pk
 	primary key (item_rev_id, rel_type, target_rev_id)

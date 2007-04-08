@@ -39,14 +39,6 @@
 </fullquery>
 
 
-<fullquery name="as::item_type_fu::process.update_revision">
- <querytext>
-	update cr_revisions 
-        set content=:content_file, mime_type =:mime_type,content_length=:tmp_size  
-        where revision_id = :file_revision_id
- </querytext>
-</fullquery>
-
 <fullquery name="as::item_type_fu::process.update_item_data">
  <querytext>
 	update as_item_data 

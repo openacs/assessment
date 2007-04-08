@@ -94,7 +94,7 @@ aa_register_case -cats api as_instantiate {
 
         set item_list [as::section::items -section_id $section_id -session_id $session_id]
 
-        db_dml update_session "update as_sessions set last_mod_datetime=now() where session_id=:session_id"
+        db_dml update_session ""
 
     } -teardown_code {
         # unmount and uninstantiate
