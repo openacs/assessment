@@ -136,8 +136,8 @@ create table as_item_data (
 	file_id integer
 		constraint as_item_data_file_id_fk
 		references cr_revisions(revision_id)
-                on delete cascade,
-	-- to do: figure out how attachment answers should be supported; the Attachment package is still in need of considerable help. Can we rely on it here?
+                on delete cascade
+-- to do: figure out how attachment answers should be supported; the Attachment package is still in need of considerable help. Can we rely on it here?
 );
 
 create index as_item_data_pk2 on as_item_data (session_id, section_id, as_item_id);
