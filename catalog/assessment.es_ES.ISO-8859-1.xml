@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.22d3" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.22d4" locale="es_ES" charset="ISO-8859-1">
 
   <msg key="above">Arriba</msg>
   <msg key="Absolute_Size">Tamaño Absoluto</msg>
@@ -39,8 +39,8 @@
   <msg key="add_section_first">Para agregar una pregunta, agregue una sección primero.</msg>
   <msg key="add_section_trigger">Añadir un disparador para la sección</msg>
   <msg key="Add_Sections">Añadir secciones al cuestionario</msg>
-  <msg key="Add_to_assessment">Añadir al cuestionario</msg>
-  <msg key="Add_to_section">Añadir a la sección</msg>
+  <msg key="Add_to_assessment">Añadir al cuestionario &quot;%assessment_data.title%&quot;</msg>
+  <msg key="Add_to_section">Añadir a la sección &quot;%section_title%&quot;</msg>
   <msg key="add_trigger">Añadir condición</msg>
   <msg key="admin">Administración</msg>
   <msg key="admin_actions">Administración de acciones</msg>
@@ -56,7 +56,7 @@
   <msg key="Allow_Negative">Permitir Negativo</msg>
   <msg key="Allow_Negative_help">Si se permite un porcentaje negativo (como resultado total).</msg>
   <msg key="Allow_Random">Permitir Selección Aleatoria</msg>
-  <msg key="allow_tries">permitir varios intentos</msg>
+  <msg key="allow_tries">permite %assessment_data.number_tries%</msg>
   <msg key="alphabetical">Alfabéticamente</msg>
   <msg key="and">Y</msg>
   <msg key="anonymous_name">Anónimo</msg>
@@ -336,7 +336,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Letter_all">Todo</msg>
   <msg key="Letter_help">Primera letra para limitar la búsqueda.</msg>
   <msg key="Letter_other">Otro</msg>
-  <msg key="limited_tries">Número de intentos permitidos</msg>
+  <msg key="limited_tries">Número de intentos permitidos: %assessment_data.number_tries%</msg>
   <msg key="Live">Activo</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Nota:&lt;/b&gt; Se trata de un cuestionario anónimo por lo que su nombre no aparecerá en los resultados.</msg>
   <msg key="lt_default_exit_page">¡Enhorabuena, ha terminado! Siga el enlace para revisar sus respuestas.</msg>
@@ -400,11 +400,12 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="num_Correct_help">Número de respuestas correctas que se tienen que visualizar</msg>
   <msg key="num_items">Número de preguntas visualizadas</msg>
   <msg key="num_items_help">Número de preguntas visualizadas</msg>
-  <msg key="Number_of_page_singular">Número de página</msg>
+  <msg key="Number_of_page_plural">(%total_pages% páginas)</msg>
+  <msg key="Number_of_page_singular">(%total_pages% página)</msg>
   <msg key="Number_of_Tries">Número de Intentos permitidos</msg>
   <msg key="numerical">Numérico</msg>
-  <msg key="on_creation_date">Fecha de creación</msg>
-  <msg key="One_Assessment_data">Datos de un cuestionario</msg>
+  <msg key="on_creation_date">, el %creation_date%</msg>
+  <msg key="One_Assessment_data">Un cuestionario: %assessment_data.title%</msg>
   <msg key="one_correct_choice_req">Se requiere que al menos una respuesta sea correcta
 </msg>
   <msg key="Only_correct">Solo las respuestas correctas</msg>
@@ -458,7 +459,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Randomized">Aleatoria</msg>
   <msg key="randomized">Aleatorio</msg>
   <msg key="reg_asm">Usando en el proceso de Registro</msg>
-  <msg key="Reg_Assessment_title">Cuestionario de Registro de personalización del Sitio Principal: &quot;%assessment_data.title&quot;</msg>
+  <msg key="Reg_Assessment_title">Cuestionario de Registro de personalización del Sitio Principal: &quot;%assessment_data.title%&quot;</msg>
   <msg key="reg_users_required">Se requiere que los usuarios estén registrados</msg>
   <msg key="regarding_this_assess">En relación con esta encuesta</msg>
   <msg key="regexp">el comando regexp debe retornar 1 con este patrón:</msg>
@@ -495,10 +496,10 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Score">Puntuación</msg>
   <msg key="Search">Buscar</msg>
   <msg key="Search_Item">Buscar y añadir preguntas</msg>
-  <msg key="Search_Item_1">Buscar y añadir preguntas a la sección </msg>
+  <msg key="Search_Item_1">Buscar y añadir preguntas a la sección &quot;%section_title%&quot;</msg>
   <msg key="Search_Results">Resultados de la Búsqueda</msg>
   <msg key="Search_Section">Buscar y añadir secciones</msg>
-  <msg key="Search_Section_1">Buscar y añadir secciones al cuestionario</msg>
+  <msg key="Search_Section_1">Buscar y añadir secciones al cuestionario &quot;%assessment_data.title%&quot;</msg>
   <msg key="sect_disp_Description_help">Descripción del tipo de visualización de esta sección</msg>
   <msg key="sect_disp_Title_help">Título de la visualización de la sección, se usará en la barra de selección.</msg>
   <msg key="sect_num_items_help">Cuantas preguntas se verán en una página para una sección de este tipo. Dejarlo vacío si se quieren ver todas las preguntas en una página, o poner &quot;1&quot; si se quiere ver una pregunta por página.</msg>
@@ -545,7 +546,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Show_Items">Ver Preguntas</msg>
   <msg key="Show_Sessions">Ver sesiones</msg>
   <msg key="specific_date">Fecha específica</msg>
-  <msg key="Start_Assessment_Title">Empezar el cuestionario</msg>
+  <msg key="Start_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Empezar Cuestionario&quot;&gt;Empezar %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="Start_Time">Hora de comienzo</msg>
   <msg key="Started">Hora de comienzo</msg>
   <msg key="Status">Estado</msg>
@@ -565,9 +566,9 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="This_question_will_be_corrected_by_the_teacher">Esta pregunta será corregida por el profesor</msg>
   <msg key="time_for_completion">Segundos permitidos para realizar el examen</msg>
   <msg key="time_for_response">Minutos permitidos para completar</msg>
-  <msg key="time_response">Número máximo de segundos en responder una pregunta</msg>
+  <msg key="time_response">Tiempo máximo de respuesta: %assessment_data.time_for_response% minutos</msg>
   <msg key="Time_spent">Tiempo de realización</msg>
-  <msg key="time_to_wait">Minutos a esperar entre intentos</msg>
+  <msg key="time_to_wait">Reintento permitido pasados %assessment_data.wait_between_tries% minutos</msg>
   <msg key="Title">Título</msg>
   <msg key="today">Hoy</msg>
   <msg key="top">Encima</msg>
