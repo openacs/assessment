@@ -15,6 +15,9 @@
   <msg key="action_tcl_code">Código TCL</msg>
   <msg key="action_that_will">La acción se hará.</msg>
   <msg key="action_to_perform">Acción a realizar</msg>
+  <msg key="Add_another_choice">Añadir otra selección</msg>
+  <msg key="Add_another_question">Añadir otra pregunta</msg>
+  <msg key="Add_Comment">Añadir comentario</msg>
   <msg key="add_item">Añadir nueva pregunta</msg>
   <msg key="add_item_display_cb">Añadir nueva pregunta: Checkbox</msg>
   <msg key="add_item_display_f">Visualización</msg>
@@ -52,6 +55,8 @@
   <msg key="after_this_asm">Después de este cuestionario:</msg>
   <msg key="All">Todos</msg>
   <msg key="all">Todo</msg>
+  <msg key="All_Assessments">Todos los cuestionarios</msg>
+  <msg key="All_Users">Todos los usuarios</msg>
   <msg key="allow_multiple">permitir múltiple</msg>
   <msg key="Allow_Negative">Permitir Negativo</msg>
   <msg key="Allow_Negative_help">Si se permite un porcentaje negativo (como resultado total).</msg>
@@ -62,6 +67,7 @@
   <msg key="anonymous_name">Anónimo</msg>
   <msg key="Anonymous_Responses">Respuestas anónimas</msg>
   <msg key="anonymous_users_allow">Permitir que sea respondido por anónimos</msg>
+  <msg key="Answer">Respuesta</msg>
   <msg key="Answer_Alignment">Alineación de las respuestas</msg>
   <msg key="Answer_Alignment_help">Alinear la respuesta en relación a la pregunta.</msg>
   <msg key="Answer_Choices">Respuestas</msg>
@@ -105,6 +111,10 @@
   <msg key="as_Title_help">Texto de ayuda para el título del cuestionario</msg>
   <msg key="Assessment">Cuestionario</msg>
   <msg key="Assessment_Administration">Administración de Cuestionario</msg>
+  <msg key="assessment_form_instructions">Intrucciones</msg>
+  <msg key="assessment_form_response_options">Opciones de respuesta</msg>
+  <msg key="assessment_form_time_options">Opciones de tiempo</msg>
+  <msg key="assessment_form_title_description">Título y Descripción</msg>
   <msg key="Assessment_Imported_Correctly">Cuestionario importado correctamente</msg>
   <msg key="assessment_Name_help">Te permite dar un identificador único al cuestionario, que puede ser un código.</msg>
   <msg key="assessment_not_public">El cuestionario no es público.</msg>
@@ -117,9 +127,14 @@
   <msg key="Assessments">Cuestionarios</msg>
   <msg key="at_the_end">Al final de este cuestionario</msg>
   <msg key="Attempt">Número de intentos</msg>
+  <msg key="Attempt_started_completed">Empezado: %creation_datetime% Terminado: %completed_datetime%</msg>
+  <msg key="Attempt_started_incomplete">Empezado: %creation_datetime% Incompleto</msg>
+  <msg key="Attempts_to_delete">Seleccionar los intentos a borrar</msg>
   <msg key="Author">Autor</msg>
   <msg key="Back_Button">Permitir botón de Volver</msg>
   <msg key="back_button_help">Se puede pulsar el botón Anterior para ver las respuestas previas de esta sección</msg>
+  <msg key="Back_to_Sessions">Volver a Sesiones</msg>
+  <msg key="Back_to_Summary">Volver al Resumen</msg>
   <msg key="below">Abajo</msg>
   <msg key="besideleft">Al lado-a la izquierda</msg>
   <msg key="besideright">Al lado-a la derecha</msg>
@@ -155,10 +170,12 @@
   <msg key="Choice_Sets">Conjunto de Opciones existente</msg>
   <msg key="choose_action">Elegir la acción a hacer</msg>
   <msg key="choose_type">¿Qué tipo de cuestionario desea crear?</msg>
+  <msg key="Closed_Assessments">Cuestionarios Cerrados</msg>
   <msg key="comparator">Comparador</msg>
   <msg key="comparator_not_set_error">Ud. debe ingresar un Comparador para este Tipo de Comparador</msg>
   <msg key="comparison_type">Tipo de Comparación</msg>
   <msg key="comparison_type_help">Diferentes campos serán requeridos más adelante dependiendo de este valor</msg>
+  <msg key="Complete">Completado</msg>
   <msg key="condition">Condición</msg>
   <msg key="Confirm_Consent">Confirmación</msg>
   <msg key="Consent_Page">Página de Consentimiento</msg>
@@ -204,6 +221,8 @@
   <msg key="Default_Value">Valor por defecto</msg>
   <msg key="Definition">Definición</msg>
   <msg key="Delete">Borrar</msg>
+  <msg key="Delete_Attempts">Borrar Intentos</msg>
+  <msg key="Delete_cancelled">Borrar Cancelados</msg>
   <msg key="delete_checked">Borrar preguntas seleccionadas</msg>
   <msg key="delete_parameter">Borrar parámetro</msg>
   <msg key="Delete_this_assess">Borrar este cuestionario</msg>
@@ -289,6 +308,7 @@
   <msg key="immediately">Inmediatamente</msg>
   <msg key="Import_QTI_ZIP_File">Importar un fichero QTI ZIP</msg>
   <msg key="Import_Results">Resultados de la importación</msg>
+  <msg key="Incomplete">Incompleto</msg>
   <msg key="Increasing">Incrementar</msg>
   <msg key="Increasing_help">Si ha elegido &quot;Sí&quot; en &quot;incrementar&quot;, se obtendrán (número de respuestas correctas/número total de respuestas)*100% puntos. 
 Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respuestas esten correctas, 0% en otro caso.</msg>
@@ -309,7 +329,10 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="item_display_ta">Área de texto</msg>
   <msg key="item_display_tb">Caja de texto</msg>
   <msg key="item_Name_help">Nombre de la pregunta, identificador a buscar en el catálogo</msg>
+  <msg key="item_Question">Pregunta</msg>
+  <msg key="item_Question_help">Introduzca la pregunta que el usuario verá (puede incluir imágenes y enlaces)</msg>
   <msg key="item_Required_help">¿Tiene que contestarse obligatoriamente esta pregunta?</msg>
+  <msg key="Item_Responses">Respuestas</msg>
   <msg key="item_Subtext_help">Un etiqueta secundaria, necesaria para muchos tipos de preguntas</msg>
   <msg key="item_time_help">Segundos permitidos para completar esta pregunta</msg>
   <msg key="item_Title">Pregunta</msg>
@@ -320,6 +343,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="item_type_fu">Subir fichero</msg>
   <msg key="Item_Type_help">El tipo de pregunta usada.</msg>
   <msg key="item_type_mc">Elección múltiple</msg>
+  <msg key="item_type_ms">Selección Múltiple</msg>
   <msg key="item_type_oq">Pregunta Abierta</msg>
   <msg key="item_type_sa">Texto corto</msg>
   <msg key="Items">Preguntas</msg>
@@ -328,6 +352,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Label_Orientation">Orientación de la etiqueta</msg>
   <msg key="Label_Orientation_help">Posición de la respuesta en relación a su casilla de selección.</msg>
   <msg key="last_month">Último mes</msg>
+  <msg key="Last_Updated">Última Actualización</msg>
   <msg key="last_week">Última semana</msg>
   <msg key="lead_you">La sección a la que te llevará la condición</msg>
   <msg key="left">Izquierda</msg>
@@ -344,6 +369,8 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="lt_Everyone_who_has_alre">Alguien que ya haya completado este cuestionario</msg>
   <msg key="lt_Everyone_who_has_not_">Alguien que todavía no ha completado este cuestionario</msg>
   <msg key="lt_Prepend_an_empty_item">Añadir un elemento vacío al principio de la lista</msg>
+  <msg key="lt_Responses_for_assessm">Respuestas para: %assessment_data.html_title%</msg>
+  <msg key="lt_Responses_of_user_per">Respuestas para: %person_name%</msg>
   <msg key="lt_This_field_is_used_to">Este bloque será utilizado para validar la respuesta introducida. Debe contener un número par de líneas donde la primera línea es una expresión TCL que será utilizada para la validación y la segunda el texto de error mostrado. La cadena %%answer%% será reemplazada por la respuesta introducida.</msg>
   <msg key="make_anonymous">Hacer anónimo</msg>
   <msg key="make_editable">Hacer editable</msg>
@@ -358,6 +385,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="manually">Manualmente</msg>
   <msg key="max_time">Máx. tiempo permitido: </msg>
   <msg key="mc_Title_help">Un nombre para un conjunto de respuestas (para reutilización)</msg>
+  <msg key="Mean">Promedio:</msg>
   <msg key="message">Mensaje</msg>
   <msg key="Message_Subject">Mensaje</msg>
   <msg key="message_to_display_to">Mensaje que ve el usuario cuando se ejecuta la acción (por ejemplo, te has unido a &quot;Mi Comunidad&quot;)</msg>
@@ -383,11 +411,15 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Next">Siguiente</msg>
   <msg key="no">No</msg>
   <msg key="no_display">-- Ninguno --</msg>
+  <msg key="No_open_assessments">Sin Cuestionarios Abiertos</msg>
+  <msg key="No_responses">Sin respuestas</msg>
+  <msg key="No_sessions_found">Sin Sesiones</msg>
   <msg key="no_waiting">Permitir reintentar el cuestionario de forma inmediata</msg>
   <msg key="None">Ninguno</msg>
   <msg key="not_answered">no contestada</msg>
   <msg key="not_approved">No aprobado</msg>
   <msg key="Not_Live">No activo</msg>
+  <msg key="Not_Taken">Sin Empezar</msg>
   <msg key="not_yet_reviewed">sin revisar</msg>
   <msg key="Notification">Notificación</msg>
   <msg key="notified_users">Usuarios notificados</msg>
@@ -425,6 +457,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="other_asm">Administrar otro cuestionario</msg>
   <msg key="Other_Sessions">Otras Sesiones</msg>
   <msg key="Out_of">Máxima puntuación</msg>
+  <msg key="Page_current_of_total">Página %current% de %total%</msg>
   <msg key="parameter_description">Descripción</msg>
   <msg key="parameter_query">Consulta</msg>
   <msg key="parameter_type">Tipo</msg>
@@ -435,8 +468,10 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
 </msg>
   <msg key="Percent_Score">Puntuación (en porcentaje)</msg>
   <msg key="Percent_Score_help">Porcentaje de puntos que supone responder esta respuesta para la puntuación total de la pregunta. Puede ser mayor que 100 y menor que 100.</msg>
+  <msg key="Percentage_complete">Porcentaje completado</msg>
   <msg key="performed">Realizado</msg>
   <msg key="permissions">Permisos</msg>
+  <msg key="Please_select_one">Por favor, seleccione uno</msg>
   <msg key="points">puntos</msg>
   <msg key="points_answer">Puntos para la respuesta</msg>
   <msg key="points_answer_help">Los puntos que vale responder esta pregunta.
@@ -455,6 +490,9 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="query">Consulta</msg>
   <msg key="Question">Pregunta</msg>
   <msg key="Question_not_answered">Pregunta no contestada</msg>
+  <msg key="Question_Number">Pregunta %items.rownum%</msg>
+  <msg key="Question_Statistics">Estadísticas de pregunta</msg>
+  <msg key="Question_Type">Tipo de Pregunta</msg>
   <msg key="Questions">Preguntas</msg>
   <msg key="Randomized">Aleatoria</msg>
   <msg key="randomized">Aleatorio</msg>
@@ -476,6 +514,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Request">Petición</msg>
   <msg key="request_notif">Pedir notificación para</msg>
   <msg key="Requested_assess_does">El cuestionario solicitado no existe</msg>
+  <msg key="Requested_assess_is_no_longer_available">El cuestionario no está disponible</msg>
   <msg key="Required">Obligatorio</msg>
   <msg key="Responding_Users">Respondiendo a usuarios</msg>
   <msg key="Response_Options">Opciones de la respuesta: </msg>
@@ -485,14 +524,20 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Results_change_display">(el %results.create_date% por &lt;a href=&quot;%results.user_url%&quot;&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
   <msg key="Results_edit">Editar el resultado del cuestionario</msg>
   <msg key="Results_edit_Description">Cambiar explicación</msg>
+  <msg key="Results_edit_Description_help">Introduzca su comentario para esta pregunta aquí</msg>
+  <msg key="Resume_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Empezar&quot;&gt;Empezar %assessment_data.title%&lt;/a&gt;</msg>
+  <msg key="Retake_Assessment_Title">Ya completado. &lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Reempezar cuestionario&quot;&gt;Reempezar %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="return">Volver</msg>
   <msg key="Return_Url">URL de Finalización</msg>
   <msg key="reuse_responses">Visualizar las respuestas anteriores</msg>
   <msg key="Reuse_Responses_1">Reutilizar Respuestas</msg>
+  <msg key="Review">Revisar</msg>
   <msg key="Review_Asessment">Revisión del Examen</msg>
   <msg key="right">Derecha</msg>
   <msg key="Rulebased_branching">Branching según una regla</msg>
   <msg key="sa_Title_help">Título para esta característica de short answer para que pueda reutilizarse en el futuro.</msg>
+  <msg key="Save_and_add_another_question">Salvar y añadir otra pregunta</msg>
+  <msg key="Save_and_finish">Salvar y terminar</msg>
   <msg key="Score">Puntuación</msg>
   <msg key="Search">Buscar</msg>
   <msg key="Search_Item">Buscar y añadir preguntas</msg>
@@ -531,6 +576,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Sections">Secciones</msg>
   <msg key="Secure_Access_1">Requiere Acceso Seguro</msg>
   <msg key="secure_access_require">Requiere acceso seguro</msg>
+  <msg key="Select_All">Seleccionar todo</msg>
   <msg key="Selected_Sections">Secciones Seleccionadas</msg>
   <msg key="Send_bulkmail">Enviar e-mail</msg>
   <msg key="Send_Mail">Enviar correo</msg>
@@ -546,6 +592,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Show_Items">Ver Preguntas</msg>
   <msg key="Show_Sessions">Ver sesiones</msg>
   <msg key="specific_date">Fecha específica</msg>
+  <msg key="Standard_Deviation">Desviación estándar:</msg>
   <msg key="Start_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Empezar Cuestionario&quot;&gt;Empezar %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="Start_Time">Hora de comienzo</msg>
   <msg key="Started">Hora de comienzo</msg>
@@ -563,6 +610,9 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Target_Community_help">Elija la comunidad destino</msg>
   <msg key="the_condition_to">La condición para saltar o ejecutar la acción</msg>
   <msg key="there_are_no_users">No hay usuarios a notificar</msg>
+  <msg key="There_was_a_problem_with_your_answers">Ha ocurrido un problema con sus respuestas. Por favor, reviselas y vuelva a intentarlo.</msg>
+  <msg key="This_comment_is_from_another">está asociado a &lt;a href=&quot;%results.session_url%&quot;&gt;un intento previo&lt;/a&gt;.</msg>
+  <msg key="This_is_a_required">&lt;span style=&quot;color: #f00;&quot;&gt;*&lt;/span&gt; Preguntas obligatorias.</msg>
   <msg key="This_question_will_be_corrected_by_the_teacher">Esta pregunta será corregida por el profesor</msg>
   <msg key="time_for_completion">Segundos permitidos para realizar el examen</msg>
   <msg key="time_for_response">Minutos permitidos para completar</msg>
@@ -572,6 +622,8 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Title">Título</msg>
   <msg key="today">Hoy</msg>
   <msg key="top">Encima</msg>
+  <msg key="Total_Correct">Total correcto:</msg>
+  <msg key="Total_Responses">Total preguntas:</msg>
   <msg key="Total_score">Puntuación total</msg>
   <msg key="trigger">Condición</msg>
   <msg key="trigger_delete">Borrar condición</msg>
@@ -604,8 +656,10 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="View_all_responses">Todas las respuestas</msg>
   <msg key="View_Other_Sessions">Ver otras sesiones</msg>
   <msg key="View_Responses">Ver Respuestas: </msg>
+  <msg key="View_Responses_1">Ver Respuestas</msg>
   <msg key="View_Results">Ver Resultados</msg>
   <msg key="View_results">Ver resultados</msg>
+  <msg key="View_session_in_a_new_window">(&lt;a href=&quot;%view_session_url%&quot; title=&quot;Ver sesiones en una nueva ventana&quot; target=&quot;new&quot;&gt;Ver Sesiones&lt;/a&gt;)</msg>
   <msg key="View_Sessions">Ver Sesiones</msg>
   <msg key="when_this_action">Cuando esta acción se ejecutará (por ejemplo, al final de esta sección)</msg>
   <msg key="when_this_will">¿cuando se ejecutará?</msg>
