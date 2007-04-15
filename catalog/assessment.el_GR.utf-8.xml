@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message_catalog package_key="assessment" package_version="0.22d3" locale="el_GR" charset="utf-8">
+
+  <msg key="Assessment">Αξιολόγηση</msg>
+  <msg key="Assessments">Αξιολογήσεις</msg>
+  <msg key="open_assessments">Προβολή αξιολογήσεων</msg>
+  <msg key="Sessions">Ενότητες</msg>
+</message_catalog>
