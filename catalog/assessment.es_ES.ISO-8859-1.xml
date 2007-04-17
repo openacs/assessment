@@ -457,7 +457,6 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="other_asm">Administrar otro cuestionario</msg>
   <msg key="Other_Sessions">Otras Sesiones</msg>
   <msg key="Out_of">Máxima puntuación</msg>
-  <msg key="Page_current_of_total">Página %current% de %total%</msg>
   <msg key="parameter_description">Descripción</msg>
   <msg key="parameter_query">Consulta</msg>
   <msg key="parameter_type">Tipo</msg>
@@ -468,7 +467,6 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
 </msg>
   <msg key="Percent_Score">Puntuación (en porcentaje)</msg>
   <msg key="Percent_Score_help">Porcentaje de puntos que supone responder esta respuesta para la puntuación total de la pregunta. Puede ser mayor que 100 y menor que 100.</msg>
-  <msg key="Percentage_complete">Porcentaje completado</msg>
   <msg key="performed">Realizado</msg>
   <msg key="permissions">Permisos</msg>
   <msg key="Please_select_one">Por favor, seleccione uno</msg>

@@ -465,7 +465,6 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="other_asm">Manage another assessment</msg>
   <msg key="Other_Sessions">Other Sessions</msg>
   <msg key="Out_of">Out of</msg>
-  <msg key="Page_current_of_total">Page %current% of %total%</msg>
   <msg key="parameter_description">Description</msg>
   <msg key="parameter_query">Query</msg>
   <msg key="parameter_type">Type</msg>
@@ -475,7 +474,6 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Password_Enter">Enter assessment password</msg>
   <msg key="Percent_Score">Percent Score</msg>
   <msg key="Percent_Score_help">Percentage of the points of the question this choice gives. May be larger than 100 and lower than -100.</msg>
-  <msg key="Percentage_complete">Percentage complete</msg>
   <msg key="performed">Performed</msg>
   <msg key="permissions">Permissions</msg>
   <msg key="Please_select_one">Please select one</msg>
