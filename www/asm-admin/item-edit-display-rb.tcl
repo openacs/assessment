@@ -100,7 +100,10 @@ ad_form -name item_edit_display_rb -action item-edit-display-rb -export { assess
 	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id $new_section_id -as_item_id $as_item_id -new_item_id $new_item_id
 
-	db_dml update_section_in_assessment {}
+	as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	db_dml update_item_in_section {}
 	db_dml update_display_of_item {}
     }

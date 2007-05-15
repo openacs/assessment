@@ -37,6 +37,8 @@ if {[string eq $display_type "_f"]} {
     set display_type f
 }
 set question_text [list $title text/html]
+set feedback_right [list $feedback_right text/html]
+set feedback_wrong [list $feedback_wrong text/html]
 ad_form -name item_edit -mode display -action item-edit-general -export { assessment_id section_id as_item_id } -form {
     {question_text:richtext {label "[_ assessment.Question]"} {html {rows 3 cols 80}} {value $question_text} {help_text "[_ assessment.item_Question_help]"}}
     {description:text(textarea) {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {value $description} {help_text "[_ assessment.item_Description_help]"}}
@@ -60,6 +62,15 @@ if {[llength $linked_objects]} {
     }
     ad_form -extend -name item_edit -form {
 	{content:text(inform),optional {label "[_ assessment.item_display_Content]"} {value {$links}} {help_text "[_ assessment.item_Content_help]"}}
+    }
+}
+
+# old image links
+
+if {[db_0or1row get_item_content {}]} {
+    set remove_url [export_vars -base remove-content {as_item_id content_rev_id {return_url [ad_return_url]}}]
+    ad_form -extend -name item_edit -form {
+	{content2:text(inform),optional {label "OLD UI [_ assessment.item_display_Content]"} {value {<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a> \[<a href="${remove_url}">Remove File</a>\]}} {help_text "[_ assessment.item_Content_help]"}}
     }
 }
 

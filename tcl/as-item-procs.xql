@@ -96,4 +96,62 @@
 	</querytext>
 </fullquery>
 
+<fullquery name="as::item::get_item_type_info.get_item_type_info">
+      <querytext>
+	select r.target_rev_id as as_item_type_id, o.object_type
+	from as_item_rels r, acs_objects o
+	where r.item_rev_id = :as_item_id
+	and r.rel_type = 'as_item_type_rel'
+	and o.object_id = r.target_rev_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="as::item::update_item_type.update_item_type">
+      <querytext>
+		update as_item_rels
+		set target_rev_id = :item_type_id
+		where item_rev_id = :as_item_id
+		and rel_type = 'as_item_type_rel'
+
+      </querytext>
+</fullquery>
+
+
+<fullquery name="as::item::update_item_in_section.update_item_in_section">
+      <querytext>
+
+		update as_item_section_map
+		set as_item_id = :new_item_id
+		where section_id = :new_section_id
+		and as_item_id = :old_item_id
+
+      </querytext>
+</fullquery>
+
+
+<fullquery name="as::item::update_item_type_in_item.update_item_type_in_item">
+      <querytext>
+
+		update as_item_rels
+		set target_rev_id = :new_item_type_id
+		where item_rev_id = :new_item_id
+		and target_rev_id = :old_item_type_id
+		and rel_type = 'as_item_type_rel'
+
+      </querytext>
+</fullquery>
+
+
+<fullquery name="as::item::get_item_type_id.item_type_id">
+      <querytext>
+
+	select target_rev_id
+	from as_item_rels
+	where item_rev_id = :as_item_id
+	and rel_type = 'as_item_type_rel'
+
+      </querytext>
+</fullquery>
+
 </queryset>

@@ -105,13 +105,11 @@ ad_proc -public as::item_type_fu::process {
     # Insert the file in the CR 
     db_transaction {
         set file_item_id [content::item::new -parent_id $folder_id -name "[lindex $response 0]$session_id"]
-        set file_revision_id [content::revision::new  -item_id $file_item_id  -title [lindex $response 0]]
-	set content_file [cr_create_content_file $file_item_id $file_revision_id [lindex $response 1]]
+        set file_revision_id [content::revision::new  -item_id $file_item_id  -title [lindex $response 0] -tmp_filename [lindex $response 1]]
 	set mime_type [cr_filename_to_mime_type -create [lindex $response 0]]
 	set tmp_size [file size [lindex $response 1]]
 
-	db_dml update_revision {}
-	
+        content::item::set_live_revision -revision_id $file_revision_id
 	set as_item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
     }	
     db_dml update_item_data { }

@@ -27,7 +27,10 @@ db_transaction {
     set mc_id [db_string "get_mc_id" "select mc_id from as_item_choices where choice_id=:choice_id"]
     #  ***********
     set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id -with_choices_p f]
-    db_dml update_section_in_assessment {}
+    as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
     db_dml update_item_in_section {}
     db_dml update_item_type_in_item {}
 

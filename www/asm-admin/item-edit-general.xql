@@ -114,4 +114,41 @@
       </querytext>
 </fullquery>
 
+<fullquery name="update_title">
+      <querytext>
+
+		    update cr_revisions
+		    set title = :title
+		    where revision_id = :new_choice_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="update_correct_and_sort_order">
+      <querytext>
+
+		    update as_item_choices
+		    set correct_answer_p = :correct_answer_p,
+		        sort_order = :count
+		    where choice_id = :new_choice_id
+
+      </querytext>
+</fullquery>
+
+<fullquery name="update_item_type">
+      <querytext>
+
+		update as_item_rels
+		set target_rev_id = :new_item_type_id
+		where item_rev_id = :new_item_id
+		and rel_type = 'as_item_type_rel'
+
+      </querytext>
+</fullquery>
+
+<fullquery name="get_sort_order">
+        <querytext>
+        select sort_order from as_item_choices where choice_id=:n
+        </querytext>
+</fullquery>
 </queryset>

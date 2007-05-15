@@ -51,7 +51,10 @@ ad_form -name item_add_display_tb -action item-add-display-tb -export { assessme
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-	db_dml update_section_in_assessment {}
+	as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
 	if {![db_0or1row item_display {}] || $object_type != "as_item_display_tb"} {
@@ -59,7 +62,7 @@ ad_form -name item_add_display_tb -action item-add-display-tb -export { assessme
 					-html_display_options $html_options \
 					-abs_size $abs_size \
 					-item_answer_alignment $answer_alignment]
-	    
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel

@@ -47,7 +47,10 @@ ad_form -name item_edit_fu -action item-edit-fu -export { assessment_id section_
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
 	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
 	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
-	db_dml update_section_in_assessment {}
+	as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	db_dml update_item_in_section {}
 	db_dml update_item_type {}
     }

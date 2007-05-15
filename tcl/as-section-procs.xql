@@ -124,4 +124,25 @@
       </querytext>
 </fullquery>
 
+
+<fullquery name="as::section::update_section_in_assessment.update_section_in_assessment">
+      <querytext>
+		update as_assessment_section_map
+		set section_id = :new_section_id
+		where assessment_id = :new_assessment_rev_id
+		and section_id in (select revision_id from cr_revisions where item_id = (select item_id from cr_revisions where revision_id=:old_section_id))
+      </querytext>
+</fullquery>
+
+<fullquery name="as::section::add_to_assessment.add">
+      <querytext>
+
+	    insert into as_assessment_section_map 
+        (assessment_id, section_id, max_time_to_complete, sort_order, points)
+	    values 
+        (:assessment_rev_id, :section_id, :max_time_to_complete, :sort_order, :points)
+
+      </querytext>
+</fullquery>
+
 </queryset>

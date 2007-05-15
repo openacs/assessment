@@ -42,6 +42,21 @@ from general_comments g
 where object_id=:session_id
 </querytext>
 </fullquery>
+
+
+<fullquery name="as::session::unfinished_session_id.unfinished_session_id">
+	<querytext>
+
+	select max(s.session_id) as session_id
+        from as_sessions s, cr_revisions cr
+        where s.completed_datetime is null
+        and cr.item_id = :assessment_id 
+        and s.assessment_id = cr.revision_id
+        and s.subject_id = :subject_id and s.subject_id <> 0
+
+	</querytext>
+</fullquery>
+
 </queryset>
 
 

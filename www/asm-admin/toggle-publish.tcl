@@ -9,6 +9,21 @@ permission::require_permission \
     -object_id $assessment_id \
     -privilege "admin"
 
-db_dml toggle_publish ""
+# find current publish_status
+set publish_status [db_string get_publish_status ""]
+if { $publish_status ne "live" } {
+    set publish_status ""
+}
 
-ad_returnredirect [export_vars -base one-a {assessment_id}]
+# returns list of empty sections
+set empty_sections [db_list count_questions ""]
+
+if { ($empty_sections eq "") || ($publish_status eq "live") } {
+    # if no empty sections, or if we're un-publishing, then proceed
+    db_dml toggle_publish ""
+    set message ""
+} else {
+    set message "Publish failed. Following section(s) have no questions: ${empty_sections}"
+}
+
+ad_returnredirect -message $message [export_vars -base one-a {assessment_id}]

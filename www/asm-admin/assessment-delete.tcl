@@ -36,7 +36,7 @@ ad_form -name assessment_delete_confirm -action assessment-delete -form {
 -on_submit {
     if {$confirmation} {
 	as::assessment::check::delete_assessment_checks -assessment_id $assessment_id
-	db_dml remove_assessment {}
+	as::assessment::delete -assessment_id $assessment_id
     }
 } -after_submit {
     if {$confirmation} {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.20" locale="de_DE" charset="ISO-8859-1">
+<message_catalog package_key="assessment" package_version="0.22d4" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="above">Über</msg>
   <msg key="Absolute_Size">Absolute Größe</msg>
@@ -21,6 +21,7 @@
   <msg key="add_item_display_sa">Neue Frage vom Anzeigetyp &quot;Short Anwer&quot; hinzufügen</msg>
   <msg key="add_item_display_sb">Neue Frage vom Anzeigetyp &quot;Selectbox&quot; hinzufügen</msg>
   <msg key="add_item_display_ta">Neue Frage vom Anzeigetyp &quot;Textarea&quot; hinzufügen</msg>
+  <msg key="add_item_type_oq">Neue offene Frage hinzufügen</msg>
   <msg key="add_new_action">Neue Aktion hinzufügen</msg>
   <msg key="add_new_section">Neuen Abschnitt hinzufügen</msg>
   <msg key="admin_actions">Administration Aktionen</msg>
@@ -29,7 +30,9 @@
   <msg key="Administration">Administration </msg>
   <msg key="All">Immer Feedback anzeigen</msg>
   <msg key="all">Alle</msg>
+  <msg key="Allow_Random">Erlaube Randomisierung</msg>
   <msg key="Anonymous_Responses">Anonyme Antworten</msg>
+  <msg key="Applet">Assessment</msg>
   <msg key="approve">Genehmigen</msg>
   <msg key="approve_actions">Aktionen genehmigen</msg>
   <msg key="approved">Genehmigt</msg>
@@ -37,6 +40,7 @@
   <msg key="as_action_description_help">Beschreibung der Aktion (Besp. was löst sie aus?)</msg>
   <msg key="as_action_help">Der Name auf den Sie sich beziehen wollen, wenn Sie eine Aktion aufrufen</msg>
   <msg key="as_action_tcl_code_help">Tcl-Code der ausgeführt wird, wenn die Aktion gestartet wird. (Bsp: Call to function oder jede Art an tcl-code Validierung)</msg>
+  <msg key="as_Allow_Random_help">Erlaube eine zufällige Auswahl?</msg>
   <msg key="as_Anonymous_help">Ist es möglich, eine anynoyme Antwort zu geben &lt;br&gt; Der Autor des Assessments kann dann nicht erkennen, wer die Antworten gegeben hat.</msg>
   <msg key="as_Consent_Page_help">Einwilligungserklärung, die ein User geben muss, bevor er mit dem Assessment fortfahren kann.</msg>
   <msg key="as_Description_help">Beschreibung des Assessments</msg>
@@ -56,8 +60,10 @@
   <msg key="as_time_help">Wieviele Minuten darf der User für die Beantwortung des gesamten Assessments benötigen. leeres Feld für unbefristet.</msg>
   <msg key="as_Title_help">Hilfetext für den Titel des Assessments</msg>
   <msg key="Assessment">Assessment </msg>
+  <msg key="Assessment_Administration">Assessment Administration</msg>
   <msg key="assessment_Name_help">Dies erlaubt es Ihnen, Ihrem Assessment einen speziellen einzigartigen Indentifikator zuzuweisen z.B. einen Code.</msg>
   <msg key="Assessment_Title">Titel</msg>
+  <msg key="Assessments">Assessments</msg>
   <msg key="By_user">Nach User</msg>
   <msg key="Change_multiple_timings">Zeitliche Verfügbarkeit ändern (alle)</msg>
   <msg key="Change_timings">Zeitliche Verfügbarkeit ändern</msg>
@@ -71,15 +77,18 @@
   <msg key="Description">Beschreibung</msg>
   <msg key="Edit">Ändern</msg>
   <msg key="edit_item">Frage bearbeiten</msg>
+  <msg key="edit_item_type_oq">Offene Frage bearbeiten</msg>
   <msg key="Email_Options">e-Mail Optionen:</msg>
   <msg key="End_Time">Ende Assessment</msg>
   <msg key="Export">Export</msg>
+  <msg key="fu_Title_help">Fragentitel</msg>
   <msg key="Html_Options">HTML Optionen</msg>
   <msg key="Html_Options_help">Zusätzliche HTML Optionen welche innerhalb des FORM Tags verwendet werden können. Diese sind als Name/Wert Paare anzugeben welche durch Leerzeichen getrennt sind, zb.:&lt;br /&gt;
 &lt;i&gt;cols 50 rows 10&lt;/i&gt;</msg>
   <msg key="Import_QTI_ZIP_File">Importieren QTI ZIP Datei</msg>
   <msg key="Instructions">Anleitung</msg>
   <msg key="ip_mask">IP Maske</msg>
+  <msg key="item_type_oq">Offene Frage</msg>
   <msg key="last_month">Letzter Monat</msg>
   <msg key="last_week">Letzte Woche</msg>
   <msg key="Minutes_for_Retry">Zeitlicher Abstand &lt;br&gt;vor neuem Versuch</msg>
@@ -95,6 +104,7 @@
   <msg key="One_Assessment_data">Ein Assessment/Test: %assessment_data.title%</msg>
   <msg key="Only_correct">Nur bei korrekten Antworten</msg>
   <msg key="Only_incorrect">Nur bei falschen Antworten</msg>
+  <msg key="open_assessments">Assessment öffnen</msg>
   <msg key="parameter_description">Beschreibung</msg>
   <msg key="performed">ausgeführt</msg>
   <msg key="permissions">Zugriffsberechtigungen</msg>
@@ -108,6 +118,7 @@
   <msg key="Section_Navigation">Navigation auswählen</msg>
   <msg key="Sections">Abschnitte</msg>
   <msg key="Secure_Access_1">Secure Access benötigt</msg>
+  <msg key="Sessions">Sessions</msg>
   <msg key="Show_Feedback">Feedback anzeigen</msg>
   <msg key="Show_Item_Name_1">Namen der Frage anzeigen</msg>
   <msg key="specific_date">Spezifisches Datum</msg>

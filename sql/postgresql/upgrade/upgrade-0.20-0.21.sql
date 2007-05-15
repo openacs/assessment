@@ -15,7 +15,7 @@ update as_assessments set type='survey' where type_int = 1;
 update as_assessments set type='test' where type_int = 2;
 
 drop view as_assessmentsx;
-drop view as_assessmentsi;
+drop view as_assessmentsi cascade;
 
 alter table as_assessments drop type_int;
 

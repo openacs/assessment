@@ -32,7 +32,8 @@ ad_proc -public as::actionparam::actiondelete {
     db_1row select_actions ""
    
     if { $maps == 0 } {
-	db_exec_plsql delete_action {} 
+        package_exec_plsql -var_list [list [list action_id $action_id]] \
+            as_action del
     } else {
 	ad_return_complaint 1 "You have information stored on the db related to this action"
     }

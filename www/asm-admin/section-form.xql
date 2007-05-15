@@ -17,11 +17,10 @@
 <fullquery name="section_data">
       <querytext>
 
-	select ci.name, cr.title, cr.description, s.instructions, s.display_type_id,
+	select cr.title, cr.description, s.instructions, s.display_type_id,
 	       s.feedback_text, s.max_time_to_complete, s.points, s.num_items
-	from as_sections s, cr_revisions cr, cr_items ci
+	from as_sections s, cr_revisions cr
 	where cr.revision_id = s.section_id
-	and ci.item_id = cr.item_id
 	and s.section_id = :section_id
 
       </querytext>
@@ -41,8 +40,8 @@
 <fullquery name="add_section_to_assessment">
       <querytext>
 
-	    insert into as_assessment_section_map (assessment_id, section_id, max_time_to_complete, sort_order, points)
-	    values (:new_assessment_rev_id, :new_section_id, :max_time_to_complete, :sort_order, :points)
+	    insert into as_assessment_section_map (assessment_id, section_id, max_time_to_complete, sort_order)
+	    values (:new_assessment_rev_id, :new_section_id, :max_time_to_complete, :sort_order)
 
       </querytext>
 </fullquery>
@@ -52,7 +51,6 @@
 
 	    update as_assessment_section_map
 	    set max_time_to_complete = :max_time_to_complete,
-	        points = :points,
 	        section_id = :new_section_id
 	    where assessment_id = :new_assessment_rev_id
 	    and section_id = :section_id

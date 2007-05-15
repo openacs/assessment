@@ -380,3 +380,292 @@ ad_proc -public as::item_type_mc::results {
 	return
     }
 }
+
+ad_proc -private as::item_type_mc::add_choices_to_form {
+    -form_id 
+    -num_choices
+    -choice_array_name
+    -correct_choice_array_name
+} {
+    Add form elements for multiple choice question choices
+
+    @param form_id Form builder form_id of the form to add the elements to. Error if form does not exist
+    @param num_choices Number of choice form elements to add
+    @param choice_array_name Name of array in callers scope to look for existing choices
+    @param correct_choice_array_name Name of array in the caller's scope to check for correct choices
+
+    @return empty string
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    @creation-date 2006-10-25
+
+} {
+    upvar choice $choice_array_name
+    upvar correct $correct_choice_array_name
+
+    set correct_options [list [list "[_ assessment.yes]" t]]
+
+    for {set i 1} {$i <= $num_choices} {incr i} {
+        if {[info exists choice($i)]} {
+            ad_form -extend -name $form_id  -form [list [list choice.$i:text,optional,nospell {label "[_ assessment.Choice] $i"} {html {style {width: 80%;} maxlength 1000}} {value "$choice($i)"}]]
+        } else {
+            ad_form -extend -name $form_id -form [list [list choice.$i:text,optional,nospell {label "[_ assessment.Choice] $i"} {html {style {width: 80%;} maxlength 1000}}]]
+        }
+        
+        if {[info exists correct($i)]} {
+            ad_form -extend -name $form_id -form [list [list correct.$i:text(checkbox),optional {label "[_ assessment.Correct_Answer_Choice] $i"} {options $correct_options} {values t }]]
+        } else {
+            ad_form -extend -name $form_id -form [list [list correct.$i:text(checkbox),optional {label "[_ assessment.Correct_Answer_Choice] $i"} {options $correct_options}]]
+        }
+    }
+}
+
+ad_proc -private as::item_type_mc::add_to_assessment {
+    -choices
+    -correct_choices
+    -assessment_id
+    -section_id
+    -as_item_id
+    -title
+    -after
+    {-display_type "rb"}
+    {-increasing_p "f"}
+    {-allow_negative_p "f"}
+} {
+    Add the multiple choice item to an assessment. The creates the 
+    as_item_type_mc object and all the choices and associates the as_item_id
+    with an assessment, or updates the assessment with the latest version
+
+    @param choices List in array get format of choice number/choice
+    @param correct_choices List in array get format of choice number/t. Elements appear in this list if choice number is one of the correct choices
+    @param assessment_id Assessment to attach question to
+    @param section_id Section the question is in
+    @oaram as_item_id Item object this multiple choice belongs to
+    @param title Title of question/choice set for question library
+    @param after Add this question after the queston number in the section
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    @creation-date 2006-10-25
+} {
+    array set choice $choices
+    array set correct $correct_choices
+
+    set num_answers 0
+    set num_correct_answers 0
+
+    foreach c [array names choice] {
+        if {$choice($c) ne ""} {
+            incr num_answers
+        }
+    }
+    foreach c [array names correct] {
+        if {$correct($c) eq "t"} {
+            incr num_correct_answers 
+        }
+    }
+    
+    if {![as::item::get_item_type_info -as_item_id $as_item_id] \
+            || $item_type_info(object_type) != "as_item_type_mc"} {
+        set mc_id [as::item_type_mc::new \
+                       -title $title \
+                       -increasing_p $increasing_p \
+                       -allow_negative_p $allow_negative_p \
+                       -num_correct_answers $num_correct_answers \
+                       -num_answers $num_answers]
+        
+        if {![info exists item_type_info(object_type)]} {
+            # first item type mapped
+            as::item_rels::new -item_rev_id $as_item_id -target_rev_id $mc_id -type as_item_type_rel
+        } else {
+            # old item type existing
+            set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+            db_dml update_item_type {}
+        }
+    } else {
+        # old mc item type existing
+        set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+        set mc_id [as::item_type_mc::edit \
+                       -as_item_type_id $as_item_type_id \
+                       -title $title \
+                       -increasing_p $increasing_p \
+                       -allow_negative_p $allow_negative_p \
+                       -num_correct_answers $num_correct_answers \
+                       -num_answers $num_answers]
+        
+        as::item::update_item_type -item_type_id $mc_id -as_item_id $as_item_id
+    }
+    ns_log notice "item-add inserting choices!! as_item_id = '${as_item_id}' mc_id='${mc_id}'"
+    set count 0
+    foreach i [lsort -integer [array names choice]] {
+        if {![empty_string_p $choice($i)]} {
+            incr count
+            set choice_id [as::item_choice::new -mc_id $mc_id \
+                               -title $choice($i) \
+                               -numeric_value "" \
+                               -text_value "" \
+                               -content_value "" \
+                               -feedback_text "" \
+                               -selected_p "" \
+                               -correct_answer_p [ad_decode [info exists correct($i)] 0 f t] \
+                               -sort_order $count \
+                               -percent_score ""]
+            ns_log notice "choice $count added for choice $i $choice($i) choice_id=${choice_id}"
+        }
+    }
+    #FIXME add a select one/select all that apply option
+    as::item_display_${display_type}::set_item_display_type \
+        -assessment_id $assessment_id \
+        -section_id $section_id \
+        -as_item_id $as_item_id \
+        -after $after
+
+    return $mc_id
+}
+
+ad_proc -public as::item_type_mc::existing_choices {
+    as_item_id
+} {
+    Get choices to fill edit form
+} {
+    return [db_list_of_lists existing_choices {}]
+}
+
+ad_proc -private as::item_type_mc::add_existing_choices_to_edit_form {
+    -form_id 
+    -existing_choices
+    -choice_array_name
+    -correct_choice_array_name
+} {
+    Add form elements for multiple choice question choices
+
+    @param form_id Form builder form_id of the form to add the elements to. Error if form does not exist
+    @param num_choices Number of choice form elements to add
+    @param choice_array_name Name of array in callers scope to look for existing choices
+    @param correct_choice_array_name Name of array in the caller's scope to check for correct choices
+
+    @return empty string
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    @creation-date 2006-10-25
+
+} {
+    upvar choice $choice_array_name
+    upvar correct $correct_choice_array_name
+
+    set correct_options [list [list "[_ assessment.yes]" t]]
+    set i 0
+    foreach c $existing_choices {
+        foreach {value id correct_p} $c {break}
+        if {![string match "__new*" $id]} {
+            if {$i > 0} {
+                ad_form -extend -name $form_id -form \
+                    [list \
+                         [list move_up.$id:text(submit) {label "Move Up"}]]
+            }
+            if {$i < [llength $existing_choices]} {
+                ad_form -extend -name $form_id -form \
+                    [list \
+                         [list move_down.$id:text(submit) {label "Move Down"}]]
+            }
+            ad_form -extend -name $form_id -form \
+                [list \
+                     [list delete.$id:text(submit) {label "Delete"}]]
+        }
+         ad_form -extend -name $form_id  -form [list [list choice.$id:text,optional,nospell {label "[_ assessment.Choice] $id"} {html {style {width: 60%;} maxlength 1000}} {value "$value"} ]]
+ns_log notice "--- $id ---"        
+        if {[info exists correct($id)]} {
+            ad_form -extend -name $form_id -form [list [list correct.$id:text(checkbox),optional {label "[_ assessment.Correct_Answer_Choice] $id"} {options $correct_options} {values t} ]]
+        } else {
+            ad_form -extend -name $form_id -form [list [list correct.$id:text(checkbox),optional {label "[_ assessment.Correct_Answer_Choice] $id"} {options $correct_options} ]]
+        }
+        incr i
+    }
+}
+
+ad_proc -private as::item_type_mc::choices_swap {
+    -assessment_id
+    -section_id
+    -as_item_id
+    -mc_id
+    -sort_order
+    -direction
+} {
+    Switch order of two choices
+} {
+
+if { $direction=="up" } {
+     set next_sort_order [expr { $sort_order - 1 }]
+} else {
+     set next_sort_order [expr { $sort_order + 1 }]
+}
+
+db_transaction {
+    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+    set new_item_id [as::item::new_revision -as_item_id $as_item_id]
+    as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id $new_section_id -as_item_id $as_item_id -new_item_id $new_item_id
+    set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id]
+
+    as::section::update_section_in_assessment \
+        -old_section_id $section_id \
+        -new_section_id $new_section_id \
+        -new_assessment_rev_id $new_assessment_rev_id
+
+    as::item::update_item_in_section \
+        -new_section_id $new_section_id \
+        -old_item_id $as_item_id \
+        -new_item_id $new_item_id
+
+    as::item::update_item_type_in_item \
+        -new_item_id $new_item_id \
+        -old_item_type_id $mc_id \
+        -new_item_type_id $new_mc_id
+
+    db_dml swap_choices {}
+}
+return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
+}
+
+ad_proc -private as::item_type_mc::choice_delete {
+    -assessment_id
+    -section_id
+    -as_item_id
+    -choice_id
+} {
+    Delete a choice
+} {
+db_transaction {
+    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+    set new_item_id [as::item::new_revision -as_item_id $as_item_id]
+    # HAM : querried the mc_id for the given choice id
+    set mc_id [db_string "get_mc_id" "select mc_id from as_item_choices where choice_id=:choice_id"]
+    #  ***********
+    set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id -with_choices_p f]
+    as::section::update_section_in_assessment \
+        -old_section_id $section_id \
+        -new_section_id $new_section_id \
+        -new_assessment_rev_id $new_assessment_rev_id
+
+    as::item::update_item_in_section \
+        -new_section_id $new_section_id \
+        -old_item_id $as_item_id \
+        -new_item_id $new_item_id
+
+    as::item::update_item_type_in_item \
+        -new_item_id $new_item_id \
+        -old_item_type_id $mc_id \
+        -new_item_type_id $new_mc_id
+
+    db_1row get_sort_order_to_be_removed {}
+    set choices [db_list get_choices {}]
+    foreach old_choice_id $choices {
+	if {$old_choice_id != $choice_id} {
+	    set new_choice_id [as::item_choice::new_revision -choice_id $old_choice_id -mc_id $new_mc_id]
+	}
+    }
+    db_dml move_up_choices {}
+}
+return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
+}
+

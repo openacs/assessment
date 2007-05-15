@@ -18,6 +18,7 @@ e
     {response:multiple,optional}
     {next_url ""}
     {single_section_id ""}
+    {show_title_p 1}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -43,7 +44,6 @@ set return_url "$url"
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 permission::require_permission -object_id $assessment_id -privilege read
-
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
@@ -149,7 +149,7 @@ db_transaction {
 	}
 
 	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id -package_id $assessment_package_id
-	ns_log notice "Assessment section_id='${section_id}' session_id='${session_id}' assessnent='${assessment_rev_id}'"
+#	ns_log notice "Assessment section_id='${section_id}' session_id='${session_id}' assessnent='${assessment_rev_id}'"
 	db_1row section_data {} -column_array section
 	set display_type_id $section(display_type_id)
 	if {![empty_string_p $display_type_id]} {
@@ -169,7 +169,7 @@ db_transaction {
 	# total number of questions if its an empty string or 0
 	set page_display_per_page [expr {[string equal "" $display(num_items)] ? $page_total_items : $display(num_items)}]
 	# determine the total number of pages
-	set page_total [expr $page_total_items / $page_display_per_page]
+	set page_total [expr {$page_total_items == 0 ? 0 : $page_total_items / $page_display_per_page}]
 
 	set section(num_sections) [llength $section_list]
 	set section(num_items) [llength $item_list]
@@ -181,7 +181,7 @@ db_transaction {
 	    # show next items on section page
 	    if {![empty_string_p $display(num_items)]} {
 		# make sure to display correct section page
-		set item_order [expr $item_order - ($item_order % $display(num_items))]
+		set item_order [expr {$item_order - ($item_order % $display(num_items))}]
 	    } elseif {$display(submit_answer_p) == "t"} {
 		# show whole section when picking up a seperate submit section
 		set item_order 0
@@ -192,8 +192,8 @@ db_transaction {
 	if { ![exists_and_not_null item_order] } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
-	ns_log notice "page_display_per_page = '${page_display_per_page}'"
-	set current_page [expr {$item_order / $page_display_per_page + 1}]
+#	ns_log notice "page_display_per_page = '${page_display_per_page}'"
+	set current_page [expr {$item_order == 0 ? 0 : $item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages
 	set item_list [lreplace $item_list 0 [expr $item_order-1]]
@@ -234,6 +234,7 @@ db_transaction {
 	# for sections with a limited number of items per page
 	if {![empty_string_p $display(num_items)] && $page_total > 1} {
 	    set progress_bar_list [template::util::number_list $page_total 1]
+	    set total_pages [llength $progress_bar_list]
 	}
 	if {![info exists show_progress]} {
 	    set show_progress 0
@@ -242,6 +243,7 @@ db_transaction {
 	if {![info exists progress_bar_list] && [llength $section_list] > 1} {
 	    set progress_bar_list [template::util::number_list [llength $section_list] 1]
 	    set current_page [expr {[lsearch $section_list $section_id] +1 }]
+	    set total_pages [llength $progress_bar_list]
 	}
     }
 }
@@ -306,7 +308,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	set section_order $new_section_order
 	set item_order $new_item_order
 #	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple}]
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple total_pages current_page}]
 	ad_script_abort
     } else {
 	# calculate session points at end of session
@@ -317,11 +319,11 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
         as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {[empty_string_p $assessment_data(return_url)]} {
-	    set return_url [export_vars -base finish {session_id assessment_id return_url next_asm}]
+	    set return_url [export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}]
 	} else {
 	    set return_url $assessment_data(return_url)
 	}
-	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple }]
+	ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple total_pages current_page}]
 	ad_script_abort
     }
 }
@@ -425,7 +427,7 @@ foreach one_item $item_list {
 	set after_submit "{
         
 \#	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id total_pages current_page}\]
 	    ad_script_abort
 	}"
 	
@@ -527,7 +529,7 @@ if {$display(submit_answer_p) != "t"} {
             }
 	    set item_order \$new_item_order
 \#	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url total_pages current_page}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -538,11 +540,11 @@ if {$display(submit_answer_p) != "t"} {
             as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	if {\[empty_string_p \$assessment_data(return_url)\]} {
-	    set return_url \[export_vars -base finish {session_id assessment_id return_url next_asm}\]
+	    set return_url \[export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}\]
 	} else {
 	    set return_url \$assessment_data(return_url)
 	}
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple }\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple total_pages current_page}\]
 	    ad_script_abort
 	}
     }"
@@ -588,7 +590,7 @@ if {$display(submit_answer_p) != "t"} {
 	    set section_order $new_section_order
 	    set item_order $new_item_order
 \#	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
-	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url}]
+	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url total_pages current_page}]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -599,12 +601,12 @@ if {$display(submit_answer_p) != "t"} {
 	    as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
 	    if {[empty_string_p $assessment_data(return_url)]} {
-		set return_url [export_vars -base finish {session_id assessment_id return_url next_asm}]
+		set return_url [export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}]
 	    } else {
 		set return_url $assessment_data(return_url)
 	    }
 #	ad_returnredirect [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}]
-	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple next_url}]
+	    ad_returnredirect [export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple next_url total_pages current_page}]
 	    ad_script_abort
 	}
     }
@@ -613,3 +615,4 @@ if {$display(submit_answer_p) != "t"} {
 set form_is_submit [template::form::is_submission show_item_form]
 set form_is_valid [template::form::is_valid show_item_form]
 ad_return_template $template
+

@@ -29,11 +29,14 @@ if { $direction=="up" } {
 db_transaction {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-    db_dml update_section_in_assessment {}
+    as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
     db_dml swap_items {}
 } on_error {
     ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
     ad_script_abort
 }
 
-ad_returnredirect [export_vars -base one-a {assessment_id}]\#$as_item_id
+ad_returnredirect [export_vars -base questions {assessment_id}]\#$as_item_id

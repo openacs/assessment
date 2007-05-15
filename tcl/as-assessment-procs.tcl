@@ -425,7 +425,7 @@ ad_proc -public as::assessment::check_session_conditions {
 	append error_list "<li>[_ assessment.assessment_not_public]</li>"
     }
 
-    if {![empty_string_p $number_tries] && $number_tries >= $total_tries} {
+    if {![empty_string_p $number_tries] && $number_tries > 0 && $number_tries <= $total_tries} {
 	append error_list "<li>[_ assessment.assessment_too_many_tries]</li>"
     }
     if {![empty_string_p $wait_between_tries] && $wait_between_tries > $cur_wait_time} {
@@ -591,4 +591,20 @@ ad_proc -private as::assessment::title {
     return $title
 
 
+}
+
+ad_proc -private as::assessment::delete {
+    -assessment_id:required
+} {
+    Remove an assessment and all associated data
+
+    @author Dave Bauer (dave@solutiongrove.com)
+
+    @param assessment_id
+} {
+    foreach session_id [db_list get_subject_ids "select session_id from as_sessions,cr_revisions where assessment_id=revision_id and item_id=:assessment_id"] {
+        as::session::delete -session_id $session_id
+    }
+
+    content::item::delete -item_id $assessment_id
 }

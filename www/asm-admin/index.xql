@@ -3,7 +3,7 @@
 
 <fullquery name="get_all_assessments">
       <querytext>
-    select ci.item_id as assessment_id, cr.title
+    select ci.item_id as assessment_id, cr.title, ci.publish_status
     from cr_items ci, cr_revisions cr
     where cr.revision_id = ci.latest_revision
     and ci.content_type = 'as_assessments'

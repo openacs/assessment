@@ -85,8 +85,10 @@ ad_proc -private as::session::delete {
         }
         content::item::delete -item_id $item_id
     }
-    foreach comment_id [db_list get_comments ""] {
-	content::item::delete -item_id $comment_id
+    if {[apm_package_enabled_p "general-comments"]} {
+        foreach comment_id [db_list get_comments ""] {
+            content::item::delete -item_id $comment_id
+        }
     }
     set session_item_id [content::revision::item_id -revision_id $session_id]
     content::revision::delete -revision_id $session_id
@@ -104,7 +106,14 @@ ad_proc -private as::session::delete_all_sessions {
     @param subject_id
     @param assessment_id
 } {
-    foreach session_id [db_list get_session_ids "select session_id from as_sessions where assessment_id=:assessment_id"] {
+    foreach session_id [db_list get_session_ids "select session_id from as_sessions where assessment_id=:assessment_id and subject_id=:subject_id"] {
         as::session::delete -session_id $session_id
     }
+}
+
+ad_proc -private as::session::unfinished_session_id {
+    -assessment_id:required
+    -subject_id:required
+} {
+    return [db_string unfinished_session_id {} -default ""]
 }

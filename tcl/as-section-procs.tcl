@@ -391,3 +391,25 @@ ad_proc -private as::section::checks_list_not_cached {
 } {
     return [db_list_of_lists checks_related { } ] 
 }
+
+ad_proc -private as::section::update_section_in_assessment {
+    -new_section_id
+    -old_section_id
+    -new_assessment_rev_id
+} {
+    Update links to section
+} {
+    db_dml update_section_in_assessment {}
+}
+
+ad_proc -public as::section::add_to_assessment {
+    -assessment_rev_id
+    -section_id
+    {-max_time_to_complete ""}
+    {-sort_order ""}
+    {-points ""}
+} {
+    Link a section to an assessment
+} {
+    db_dml add {}
+}

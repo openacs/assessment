@@ -48,10 +48,12 @@ values ('fu', 'f');
 create table as_item_rels (
 	item_rev_id	integer
 			constraint as_item_rels_item_fk
-			references acs_objects,
+			references acs_objects
+            on delete cascade,
 	target_rev_id	integer
 			constraint as_item_rels_target_fk
-			references acs_objects,
+			references acs_objects
+            on delete cascade,
 	rel_type	varchar(20),
 	constraint as_item_rels_pk
 	primary key (item_rev_id, rel_type, target_rev_id)

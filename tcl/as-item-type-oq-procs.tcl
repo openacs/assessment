@@ -184,3 +184,66 @@ ad_proc -public as::item_type_oq::results {
 	return
     }
 }
+
+ad_proc -private as::item_type_oq::add_to_assessment {
+    -assessment_id
+    -section_id
+    -as_item_id
+    -title
+    -after
+    {-feedback_text ""}
+    {-reference_answer ""}
+    {-keywords ""}
+    {-default_value ""}
+} {
+    Add the open question (long answer/essay) item to an assessment. 
+    This creates the  as_item_type_oq object and 
+    associates the as_item_id
+    with an assessment, or updates the assessment with the latest version
+
+    @param assessment_id Assessment to attach question to
+    @param section_id Section the question is in
+    @oaram as_item_id Item object this multiple choice belongs to
+    @param title Title of question/choice set for question library
+    @param after Add this question after the queston number in the section
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    @creation-date 2006-10-25
+} {
+    if {![as::item::get_item_type_info -as_item_id $as_item_id] \
+            || $item_type_info(object_type) != "as_item_type_oq"} {
+        set as_item_type_id [as::item_type_oq::new \
+                                 -title $title \
+                                 -default_value $default_value \
+                                 -feedback_text $feedback_text \
+                                 -reference_answer $reference_answer \
+                                 -keywords $keywords]
+	
+        if {![info exists item_type_info(object_type)]} {
+            # first item type mapped
+            as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
+        } else {
+            # old item type existing
+            set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+            db_dml update_item_type {}
+        }
+    } else {
+        # old oq item type existing
+        set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+        set as_item_type_id [as::item_type_oq::edit \
+                                 -as_item_type_id $as_item_type_id \
+                                 -title $title \
+                                 -default_value $default_value \
+                                 -feedback_text $feedback_text \
+                                 -reference_answer $reference_answer \
+                                 -keywords $keywords]
+	
+        as::item::update_item_type -item_type_id $as_item_type_id -as_item_id $as_item_id
+    }
+    as::item_display_ta::set_item_display_type \
+        -as_item_id $as_item_id \
+        -assessment_id $assessment_id \
+        -section_id $section_id \
+        -after $after
+
+}

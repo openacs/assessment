@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+as<?xml version="1.0"?>
 <queryset>
 
 <fullquery name="display_types">

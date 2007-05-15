@@ -21,5 +21,4 @@
 	order by s.completed_datetime
 	</querytext>
 </fullquery>
-
 </queryset>

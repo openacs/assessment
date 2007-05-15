@@ -13,8 +13,9 @@
     <fullquery name="count_sessions">
         <querytext>
             select count(*) 
-            from as_sessions 
-            where assessment_id=:assessment_id
+            from as_sessions, cr_revisions
+            where item_id=:assessment_id
+            and assessment_id=revision_id
             and subject_id=:subject_id
         </querytext>
     </fullquery>

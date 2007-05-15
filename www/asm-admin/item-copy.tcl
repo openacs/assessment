@@ -30,18 +30,19 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 
 set confirm_options [list [list "[_ assessment.continue_with_copy]" t] [list "[_ assessment.cancel_and_return]" f]]
 
-ad_form -name item_copy_confirm -action item-copy -export { assessment_id section_id after } -form {
+ad_form -name item_copy_confirm -action item-copy -export { assessment_id section_id after } -has_submit 1 -form {
     {as_item_id:key}
     {item_title:text(inform) {label "[_ assessment.copy_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
     {title:text(textarea) {label "[_ assessment.item_Title]"} {html {rows 3 cols 80 maxlength 1000}} {help_text "[_ assessment.item_Title_help]"}}
     {description:text(textarea),optional {label "[_ assessment.Description]"} {html {rows 5 cols 80}} {help_text "[_ assessment.item_Description_help]"}}
     {field_name:text,optional,nospell {label "[_ assessment.Field_Name]"} {html {size 80 maxlength 500}} {help_text "[_ assessment.Field_Name_help]"}}
-    {confirmation:text(radio) {label " "} {options $confirm_options} {value f}}
+    {submit_ok:text(submit) {label "[_ acs-kernel.common_Copy]"}}
+    {submit_cancel:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
 } -edit_request {
     db_1row item_data {}
 } -on_submit {
-    if {$confirmation} {
+    if {[exists_and_not_null submit_ok]} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
@@ -49,14 +50,17 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
 	    set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 	    set new_item_id [as::item::copy -as_item_id $as_item_id -title $title -description $description -field_name $field_name]
 
-	    db_dml update_section_in_assessment {}
+	    as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	    db_dml move_down_items {}
 	    incr after
 	    db_dml insert_new_item {}
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base questions {assessment_id}]
     ad_script_abort
 }
 

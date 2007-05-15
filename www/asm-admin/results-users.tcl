@@ -133,4 +133,15 @@ if {$assessment_data(anonymous_p) == "t"} {
 	} 
 }
 
+# FIXME 
+set dotlrn_installed_p [apm_package_installed_p dotlrn]
+if {$dotlrn_installed_p} {
+    set count_all_users [llength [dotlrn_community::list_users [dotlrn_community::get_community_id]]]
+} else {
+    # TODO get count from subsite
+    set count_all_users 0
+}
+                         
+set count_complete [template::multirow size subjects]
+set count_incomplete [expr {$count_all_users - $count_complete}]
 ad_return_template

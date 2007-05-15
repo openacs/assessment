@@ -165,9 +165,9 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 		    set as_assessments__show_feedback "all"
 		}
 		set resprocessNodes [$root selectNodes {/questestinterop/assessment/section/item/resprocessing}]
-		set as_assessments__survey_p {f}				
+		set as_assessments__type test			
 		if { [llength $resprocessNodes] == 0 } {				     
-		    set as_assessments__survey_p {t}
+		    set as_assessments__type survey
 		    #if it's a survey don't show feedback
 		    set as_assessments__show_feedback "none"				     
 		}			
@@ -246,7 +246,7 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						       -ip_mask $as_assessments__ip_mask \
 						       -show_feedback $as_assessments__show_feedback \
 						       -section_navigation $as_assessments__section_navigation \
-						       -survey_p $as_assessments__survey_p ]			
+						       -type $as_assessments__type ]			
 		
 		# Section
 		set sectionNodes [$assessment selectNodes {section}]
@@ -414,448 +414,449 @@ return $as_assessments__assessment_id
 }
 
 ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML QTI file } {
-    set as_items__ident ""
-    set as_items__description ""
-    set as_items__subtext ""
-    set as_items__field_code ""
-    set as_items__required_p t
-    set as_items__data_type "varchar"	
-    set as_items__duration ""
-    set aitmc__increasing_p f
-    set aitmc__allow_negative_p f
-    set aitmc__num_correct_answers ""
-    set aitmc__num_answers ""
-    set aitoq__default_value ""
-    set aitoq__feedback_text ""
-    set aidrb__html_options ""
-    set aidrb__choice_orientation "vertical"
-    set aidrb__label_orientation "top"
-    set aidrb__order_type "order_of_entry"
-    set aidrb__answer_alignment "besideright"
-    set aidta__abs_size 1000
-    set aidtb__abs_size 20
-    
+
     #get all <item> elements
     set itemNodes [$qtiNode selectNodes {item}]
     foreach item $itemNodes {
+	set as_items__ident ""
+	set as_items__description ""
+	set as_items__subtext ""
+	set as_items__field_code ""
+	set as_items__required_p t
+	set as_items__data_type "varchar"   
+	set as_items__duration ""
+	set aitmc__increasing_p f
+	set aitmc__allow_negative_p f
+	set aitmc__num_correct_answers ""
+	set aitmc__num_answers ""
+	set aitoq__default_value ""
+	set aitoq__feedback_text ""
+	set aidrb__html_options ""
+	set aidrb__choice_orientation "vertical"
+	set aidrb__label_orientation "top"
+	set aidrb__order_type "order_of_entry"
+	set aidrb__answer_alignment "besideright"
+	set aidta__abs_size 1000
+	set aidtb__abs_size 20
+    
         #item's child
-        set nodesList [$item childNodes]	
-	#for each item's child
-	foreach node $nodesList {
-	    set nodeName [$node nodeName]
-	    #as_items.max_time_to_complete = <duration> 
-	    if {$nodeName == "duration"} {
-	        set durationNodes [$item selectNodes {duration/text()}]
-		if {[llength $durationNodes] != 0} {
-		    set duration [lindex $durationNodes 0]
-		    set as_items__duration [as::qti::duration [$duration nodeValue]]
-		}
-		#as_items.description = <qticomment> 	
-	    } elseif {$nodeName == "qticomment"} {
-	        set qticommentNodes [$item selectNodes {qticomment/text()}]
-		if {[llength $qticommentNodes] != 0} {
-		    set qticomment [lindex $qticommentNodes 0]
-		    set as_items__description [$qticomment nodeValue]
-		}
-		#as_items.subtext = <rubric>
-	    } elseif {$nodeName == "rubric"} {
-		set instructionNodes [$item selectNodes {rubric/material/mattext}]
-		if {[llength $instructionNodes] != 0} {
-		    set instruction [lindex $instructionNodes 0]
-		    set as_items__subtext [as::qti::mattext_gethtml $instruction]
-		}
-	    }		 	    
-	}   
-	
-	set itemmetadataNodes [$item selectNodes {itemmetadata}]
+        set nodesList [$item childNodes]        
+        #for each item's child
+        foreach node $nodesList {
+            set nodeName [$node nodeName]
+            #as_items.max_time_to_complete = <duration> 
+            if {$nodeName == "duration"} {
+                set durationNodes [$item selectNodes {duration/text()}]
+                if {[llength $durationNodes] != 0} {
+                    set duration [lindex $durationNodes 0]
+                    set as_items__duration [as::qti::duration [$duration nodeValue]]
+                }
+                #as_items.description = <qticomment>    
+            } elseif {$nodeName == "qticomment"} {
+                set qticommentNodes [$item selectNodes {qticomment/text()}]
+                if {[llength $qticommentNodes] != 0} {
+                    set qticomment [lindex $qticommentNodes 0]
+                    set as_items__description [$qticomment nodeValue]
+                }
+                #as_items.subtext = <rubric>
+            } elseif {$nodeName == "rubric"} {
+                set instructionNodes [$item selectNodes {rubric/material/mattext}]
+                if {[llength $instructionNodes] != 0} {
+                    set instruction [lindex $instructionNodes 0]
+                    set as_items__subtext [as::qti::mattext_gethtml $instruction]
+                }
+            }                       
+        }   
+        
+        set itemmetadataNodes [$item selectNodes {itemmetadata}]
 
-	if { [llength $itemmetadataNodes] > 0 } {
+        if { [llength $itemmetadataNodes] > 0 } {
 
-	    set qtimetadataNodes [$itemmetadataNodes selectNodes {qtimetadata}]
-	    if {[llength $qtimetadataNodes] > 0} {
-		#nodes qtimetadatafield
-		set qtimetadatafieldNodes [$qtimetadataNodes selectNodes {qtimetadatafield}]
-		foreach qtimetadatafieldnode $qtimetadatafieldNodes {
-		    set label [$qtimetadatafieldnode selectNodes {fieldlabel/text()}]
-		    set label [$label nodeValue]
-		    set value [$qtimetadatafieldnode selectNodes {fieldentry/text()}]
-		    if { $value ne "" } { set value [$value nodeValue] }
+            set qtimetadataNodes [$itemmetadataNodes selectNodes {qtimetadata}]
+            if {[llength $qtimetadataNodes] > 0} {
+                #nodes qtimetadatafield
+                set qtimetadatafieldNodes [$qtimetadataNodes selectNodes {qtimetadatafield}]
+                foreach qtimetadatafieldnode $qtimetadatafieldNodes {
+                    set label [$qtimetadatafieldnode selectNodes {fieldlabel/text()}]
+                    set label [$label nodeValue]
+                    set value [$qtimetadatafieldnode selectNodes {fieldentry/text()}]
+                    if { $value ne "" } { set value [$value nodeValue] }
 
-		    switch -exact -- $label {
-			field_code {
-			    set as_items__field_code $value			
-			}
-			required_p {
-			    set as_items__required_p $value
-			}
-			data_type {
-			    set as_items__data_type $value 
-			}
-			increasing_p {
-			    set aitmc__increasing_p $value
-			}
-			allow_negative_p {
-			    set aitmc__allow_negative_p $value
-			}
-			num_correct_answers {
-			    set aitmc__num_correct_answers $value
-			}		
-			num_answers {
-			    set aitmc__num_answers $value
-			}	
-			default_value {
-			    set aitoq__default_value $value
-			}
-			feedback_text {
-			    set aitoq__feedback_text $value
-			}
-			html_display_options {
-			    set aidrb__html_options $value
-			}
-			choice_orientation {
-			    set aidrb__choice_orientation $value
-			}
-			choice_label_orientation {
-			    set aidrb__label_orientation $value
-			}
-			sort_order_type {
-			    set aidrb__order_type $value
-			}
-			item_answer_alignment {
-			    set aidrb__answer_alignment $value
-			}	
-			abs_size {
-			    set aidta__abs_size $value
-			}	
-			tb_abs_size {
-			    set aidtb__abs_size $value
-			}    				     
-		    }   
-		}					 
-	    }
-	}
-	
-	# Order of the item_choices
-	set sort_order 0
-	set as_items__title [$item getAttribute {title} {Item}]
-	set as_items__ident [$item getAttribute {ident} {Item}]
+                    switch -exact -- $label {
+                        field_code {
+                            set as_items__field_code $value                     
+                        }
+                        required_p {
+                            set as_items__required_p $value
+                        }
+                        data_type {
+                            set as_items__data_type $value 
+                        }
+                        increasing_p {
+                            set aitmc__increasing_p $value
+                        }
+                        allow_negative_p {
+                            set aitmc__allow_negative_p $value
+                        }
+                        num_correct_answers {
+                            set aitmc__num_correct_answers $value
+                        }               
+                        num_answers {
+                            set aitmc__num_answers $value
+                        }       
+                        default_value {
+                            set aitoq__default_value $value
+                        }
+                        feedback_text {
+                            set aitoq__feedback_text $value
+                        }
+                        html_display_options {
+                            set aidrb__html_options $value
+                        }
+                        choice_orientation {
+                            set aidrb__choice_orientation $value
+                        }
+                        choice_label_orientation {
+                            set aidrb__label_orientation $value
+                        }
+                        sort_order_type {
+                            set aidrb__order_type $value
+                        }
+                        item_answer_alignment {
+                            set aidrb__answer_alignment $value
+                        }       
+                        abs_size {
+                            set aidta__abs_size $value
+                        }       
+                        tb_abs_size {
+                            set aidtb__abs_size $value
+                        }                                    
+                    }   
+                }                                        
+            }
+        }
+        
+        # Order of the item_choices
+        set sort_order 0
+        set as_items__title [$item getAttribute {title} {Item}]
+        set as_items__ident [$item getAttribute {ident} {Item}]
 
-	array set as_item_choices__correct_answer_p {}
-	array set as_item_choices__score {}
-	array set as_item_choices__feedback_text {}
-	set as_items__points 0
-	set as_items__feedback_right {}
-	set as_items__feedback_wrong {}	
-	# <objectives> 
-	set objectivesNodes [$item selectNodes {objectives}]
-	foreach objectives $objectivesNodes {
-	    set mattextNodes [$objectives selectNodes {material/mattext}]
-	    foreach mattext $mattextNodes {
-		set as_items__description [as::qti::mattext_gethtml $mattext]
-	    }
-	}
-	
-	# <resprocessing>
-	set resprocessingNodes [$item selectNodes {resprocessing}]
-	foreach resprocessing $resprocessingNodes {
-	    # <respcondition>
-	    set respconditionNodes [$resprocessing selectNodes {respcondition}]
-	    foreach respcondition $respconditionNodes {
-		set resp_cond_varNodes {}
-		set scoreNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
-		foreach choice $scoreNodes {
-		    set choice_id ""
-		    set choice_id [string trim [$choice nodeValue]]
-		    
-		    if {[info exists choice_id]} {
-			set score 0
-			# get score
-			set scoreNodes [$respcondition selectNodes {setvar/text()}]
-			foreach scorenode $scoreNodes {
-			    set score [expr int([string trim [$scorenode nodeValue]])]
-			    if {$score>0} {
-				set as_item_choices__correct_answer_p($choice_id) {t}
-			    }
-			}
-			set as_item_choices__score($choice_id) $score
-			incr as_items__points $score
-		    }
-		}
-		
-		set scoreNodes [$respcondition selectNodes {conditionvar/and/varequal/text()}]
-		foreach choice $scoreNodes {
-		    set choice_id ""
-		    set choice_id [string trim [$choice nodeValue]]
-		    
-		    if {[info exists choice_id]} {
-			set score 0
-			# get score
-			set scoreNodes [$respcondition selectNodes {setvar/text()}]
-			foreach scorenode $scoreNodes {
-			    set score [expr int([string trim [$scorenode nodeValue]])]
-			    if {$score>0} {
-				set as_item_choices__correct_answer_p($choice_id) {t}
-			    }
-			}
-			set scoreNodes1 [$respcondition selectNodes {conditionvar/and/varequal}]
-			if {[llength $scoreNodes1]>0} {
-			    set score1 [expr ($score*1.0/[llength $scoreNodes1])]
-			}		    
-			set as_item_choices__score($choice_id) $score1
-			set as_items__points $score		    
-		    }
-		}
-		
-		set resp_cond_varNodes [$respcondition selectNodes {conditionvar/varequal/text()}]		
-		if {[llength $resp_cond_varNodes]==1} { } else {	
-		    set resp_cond_or_varNodes [$respcondition selectNodes {conditionvar/or/not/and/varequal/text() | conditionvar/not/or/varequal/text() | conditionvar/not/and/or/varequal/text()}]
-		    if {[llength $resp_cond_or_varNodes]>0} {
-		        set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
-			if {[llength $displayfeedbackNode]>0} {
-			    set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]			
-			    set as_items__feedback_wrong [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
-			    if {[llength $as_items__feedback_wrong]>0} {
-				set as_items__feedback_wrong [$as_items__feedback_wrong nodeValue]		        
-			    }
- 			}
-		    } else {
-			set resp_cond_and_varNodes [$respcondition selectNodes {conditionvar/and/varequal/text()| conditionvar/or/varequal/text()}]
-			if {[llength $resp_cond_and_varNodes]>0} {		    
-			    set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
-			    if {[llength $displayfeedbackNode]>0} {
-			        set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]			    
-			        set as_items__feedback_right [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
-			        if {[llength $as_items__feedback_right]>0} {
-			            set as_items__feedback_right [$as_items__feedback_right nodeValue]		        
-			        }	
-			    }
-			}
-		    }
-		}    	 
-	    }
-	}
-	
-	# <presentation> element
-	set presentationNodes [$item selectNodes {presentation}]
-	foreach presentation $presentationNodes {
-	    # <material> or <response_str> or <response_num> (some presentation's children)
-	    set presentationChildNodes [$presentation selectNodes {.//material|.//response_str|.//response_num}]
-	    # <material>
-	    set materialNodes [$presentation selectNodes {.//material}]
-	    set material [lindex $materialNodes 0]
-	    # Initialize in case it doesn't exist
-	    set as_items__title {}
-	    if {$material ne "" && [$material nodeName] == {material}} {
-		set mattextNodes [$material selectNodes {mattext}]
-		set mattext [lindex $mattextNodes 0]
-		set as_items__title [as::qti::mattext_gethtml $mattext]
-	    }
-	    # <render_fib>
-	    set render_fibNodes [$presentation selectNodes {.//render_fib}]
-	    if {[llength $render_fibNodes] > 0} {
+        array set as_item_choices__correct_answer_p {}
+        array set as_item_choices__score {}
+        array set as_item_choices__feedback_text {}
+        set as_items__points 0
+        set as_items__feedback_right {}
+        set as_items__feedback_wrong {} 
+        # <objectives> 
+        set objectivesNodes [$item selectNodes {objectives}]
+        foreach objectives $objectivesNodes {
+            set mattextNodes [$objectives selectNodes {material/mattext}]
+            foreach mattext $mattextNodes {
+                set as_items__description [as::qti::mattext_gethtml $mattext]
+            }
+        }
+        
+        # <resprocessing>
+        set resprocessingNodes [$item selectNodes {resprocessing}]
+        foreach resprocessing $resprocessingNodes {
+            # <respcondition>
+            set respconditionNodes [$resprocessing selectNodes {respcondition}]
+            foreach respcondition $respconditionNodes {
+                set resp_cond_varNodes {}
+                set scoreNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
+                foreach choice $scoreNodes {
+                    set choice_id ""
+                    set choice_id [string trim [$choice nodeValue]]
+                    
+                    if {[info exists choice_id]} {
+                        set score 0
+                        # get score
+                        set scoreNodes [$respcondition selectNodes {setvar/text()}]
+                        foreach scorenode $scoreNodes {
+                            set score [expr int([string trim [$scorenode nodeValue]])]
+                            if {$score>0} {
+                                set as_item_choices__correct_answer_p($choice_id) {t}
+                            }
+                        }
+                        set as_item_choices__score($choice_id) $score
+                        incr as_items__points $score
+                    }
+                }
+                
+                set scoreNodes [$respcondition selectNodes {conditionvar/and/varequal/text()}]
+                foreach choice $scoreNodes {
+                    set choice_id ""
+                    set choice_id [string trim [$choice nodeValue]]
+                    
+                    if {[info exists choice_id]} {
+                        set score 0
+                        # get score
+                        set scoreNodes [$respcondition selectNodes {setvar/text()}]
+                        foreach scorenode $scoreNodes {
+                            set score [expr int([string trim [$scorenode nodeValue]])]
+                            if {$score>0} {
+                                set as_item_choices__correct_answer_p($choice_id) {t}
+                            }
+                        }
+                        set scoreNodes1 [$respcondition selectNodes {conditionvar/and/varequal}]
+                        if {[llength $scoreNodes1]>0} {
+                            set score1 [expr ($score*1.0/[llength $scoreNodes1])]
+                        }                   
+                        set as_item_choices__score($choice_id) $score1
+                        set as_items__points $score                 
+                    }
+                }
+                
+                set resp_cond_varNodes [$respcondition selectNodes {conditionvar/varequal/text()}]              
+                if {[llength $resp_cond_varNodes]==1} { } else {        
+                    set resp_cond_or_varNodes [$respcondition selectNodes {conditionvar/or/not/and/varequal/text() | conditionvar/not/or/varequal/text() | conditionvar/not/and/or/varequal/text()}]
+                    if {[llength $resp_cond_or_varNodes]>0} {
+                        set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
+                        if {[llength $displayfeedbackNode]>0} {
+                            set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]                  
+                            set as_items__feedback_wrong [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
+                            if {[llength $as_items__feedback_wrong]>0} {
+                                set as_items__feedback_wrong [$as_items__feedback_wrong nodeValue]                      
+                            }
+                        }
+                    } else {
+                        set resp_cond_and_varNodes [$respcondition selectNodes {conditionvar/and/varequal/text()| conditionvar/or/varequal/text()}]
+                        if {[llength $resp_cond_and_varNodes]>0} {                  
+                            set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
+                            if {[llength $displayfeedbackNode]>0} {
+                                set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]                          
+                                set as_items__feedback_right [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
+                                if {[llength $as_items__feedback_right]>0} {
+                                    set as_items__feedback_right [$as_items__feedback_right nodeValue]                  
+                                }       
+                            }
+                        }
+                    }
+                }        
+            }
+        }
+        
+        # <presentation> element
+        set presentationNodes [$item selectNodes {presentation}]
+        foreach presentation $presentationNodes {
+            # <material> or <response_str> or <response_num> (some presentation's children)
+            set presentationChildNodes [$presentation selectNodes {.//material|.//response_str|.//response_num}]
+            # <material>
+            set materialNodes [$presentation selectNodes {.//material}]
+            set material [lindex $materialNodes 0]
+            # Initialize in case it doesn't exist
+            set as_items__title {}
+            if {$material ne "" && [$material nodeName] == {material}} {
+                set mattextNodes [$material selectNodes {mattext}]
+                set mattext [lindex $mattextNodes 0]
+                set as_items__title [as::qti::mattext_gethtml $mattext]
+            }
+            # <render_fib>
+            set render_fibNodes [$presentation selectNodes {.//render_fib}]
+            if {[llength $render_fibNodes] > 0} {
 
-		# fillinblank or shortanswer
-		set render_fib [lindex $render_fibNodes 0]
-		# fillinblank (textbox)
-		# this is the default
-		set as_item_display_id {}
-		#if render_fib element has the attribute rows then we suppose it's a shortanswer item
-		if {[$render_fib hasAttribute {rows}]} {
-		    # shortanswer (textarea)
-		    set rows [$render_fib getAttribute {rows} {15}]
-		    set cols [$render_fib getAttribute {columns} {55}]
-		    # we need the size of textarea (values of rows and cols)
-		    set html "rows $rows cols $cols"
-		    # insert as_item_display_ta in the CR (and in the as_item_display_ta table) getting the revision_id (item_display_id)					
-		    set as_item_display_id [as::item_display_ta::new \
-						-html_display_options $html \
-						-abs_size $aidta__abs_size \
-						-item_answer_alignment $aidrb__answer_alignment]
-		    foreach node $presentationChildNodes {
-			# get the title of item
-			if {[$node nodeName] == {material}} {
-			    set mattextNodes [$node selectNodes {mattext}]
-			    foreach mattext $mattextNodes {
-				append as_items__title [as::qti::mattext_gethtml $mattext]
-				append as_items__title " "
-			    }
-			}
-		    }
-		    # insert as_item_type_oq (textarea)
-		    set as_item_type_id [as::item_type_oq::new \
-					     -default_value $aitoq__default_value \
-					     -feedback_text $aitoq__feedback_text]					 
-		    # if render_fib element has not the attribute rows then it's a fill in blank item
-		} else {
-		    # textbox (shortanswer)
-		    set as_item_display_id [as::item_display_tb::new \
-						-abs_size $aidtb__abs_size \
-						-item_answer_alignment $aidrb__answer_alignment]
-		    set as_item_type_id [as::item_type_sa::new]
-		}
-	    	
-		# Insert as_item
-		set as_item_id [as::item::new \
-				    -title $as_items__title \
-				    -description $as_items__description \
-				    -subtext $as_items__subtext \
-				    -field_code $as_items__field_code \
-				    -field_name $as_items__ident \
-				    -required_p $as_items__required_p \
-				    -data_type $as_items__data_type \
-				    -feedback_right $as_items__feedback_right \
-				    -feedback_wrong $as_items__feedback_wrong \
-				    -max_time_to_complete $as_items__duration \
-				    -points $as_items__points]
-		# set the relation between as_items and as_item_type tables
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
-		# set the relation between as_items and as_item_display tables
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
-		set as_item(as_item_id) $as_item_id
-		set as_item(points) $as_items__points
-		set as_item(duration) $as_items__duration
-		set as_item(required_p) $as_items__required_p
-		lappend as_items [array get as_item]
-	    } else {
-		set response_lidNodes [$presentation selectNodes {.//response_lid}]
-		# The first node of the list. It may not be a good idea if it doesn't exist
-		set response_lid [lindex $response_lidNodes 0]
-		if { $response_lid ne "" } {
-		    set as_items__rcardinality [$response_lid getAttribute {rcardinality} {Single}]
-		} else {
-		    set as_items__rcardinality ""
-		}
+                # fillinblank or shortanswer
+                set render_fib [lindex $render_fibNodes 0]
+                # fillinblank (textbox)
+                # this is the default
+                set as_item_display_id {}
+                #if render_fib element has the attribute rows then we suppose it's a shortanswer item
+                if {[$render_fib hasAttribute {rows}]} {
+                    # shortanswer (textarea)
+                    set rows [$render_fib getAttribute {rows} {15}]
+                    set cols [$render_fib getAttribute {columns} {55}]
+                    # we need the size of textarea (values of rows and cols)
+                    set html "rows $rows cols $cols"
+                    # insert as_item_display_ta in the CR (and in the as_item_display_ta table) getting the revision_id (item_display_id)                                       
+                    set as_item_display_id [as::item_display_ta::new \
+                                                -html_display_options $html \
+                                                -abs_size $aidta__abs_size \
+                                                -item_answer_alignment $aidrb__answer_alignment]
+                    foreach node $presentationChildNodes {
+                        # get the title of item
+                        if {[$node nodeName] == {material}} {
+                            set mattextNodes [$node selectNodes {mattext}]
+                            foreach mattext $mattextNodes {
+                                set as_items__title [as::qti::mattext_gethtml $mattext]
+                                append as_items__title " "
+                            }
+                        }
+                    }
+                    # insert as_item_type_oq (textarea)
+                    set as_item_type_id [as::item_type_oq::new \
+                                             -default_value $aitoq__default_value \
+                                             -feedback_text $aitoq__feedback_text]                                       
+                    # if render_fib element has not the attribute rows then it's a fill in blank item
+                } else {
+                    # textbox (shortanswer)
+                    set as_item_display_id [as::item_display_tb::new \
+                                                -abs_size $aidtb__abs_size \
+                                                -item_answer_alignment $aidrb__answer_alignment]
+                    set as_item_type_id [as::item_type_sa::new]
+                }
+                
+                # Insert as_item
+                set as_item_id [as::item::new \
+                                    -title $as_items__title \
+                                    -description $as_items__description \
+                                    -subtext $as_items__subtext \
+                                    -field_code $as_items__field_code \
+                                    -field_name $as_items__ident \
+                                    -required_p $as_items__required_p \
+                                    -data_type $as_items__data_type \
+                                    -feedback_right $as_items__feedback_right \
+                                    -feedback_wrong $as_items__feedback_wrong \
+                                    -max_time_to_complete $as_items__duration \
+                                    -points $as_items__points]
+                # set the relation between as_items and as_item_type tables
+                as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
+                # set the relation between as_items and as_item_display tables
+                as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
+                set as_item(as_item_id) $as_item_id
+                set as_item(points) $as_items__points
+                set as_item(duration) $as_items__duration
+                set as_item(required_p) $as_items__required_p
+                lappend as_items [array get as_item]
+            } else {
+                set response_lidNodes [$presentation selectNodes {.//response_lid}]
+                # The first node of the list. It may not be a good idea if it doesn't exist
+                set response_lid [lindex $response_lidNodes 0]
+                if { $response_lid ne "" } {
+                    set as_items__rcardinality [$response_lid getAttribute {rcardinality} {Single}]
+                } else {
+                    set as_items__rcardinality ""
+                }
 
-		# multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
-		# this is the default
-		set as_item_display_id {}
-		if {$as_items__rcardinality == {Multiple}} {
-		    # multiple response (checkbox) either text (remember it can be internationalized or changed), images, sounds, videos
-		    # insert as_item_display_cb
-		    set as_item_display_id [as::item_display_cb::new \
-						-html_display_options $aidrb__html_options \
-						-choice_orientation $aidrb__choice_orientation \
-						-choice_label_orientation $aidrb__label_orientation \
-						-sort_order_type $aidrb__order_type \
-						-item_answer_alignment $aidrb__answer_alignment]
-		} else {
-		    # multiple choice (radiobutton)
-		    # insert as_item_display_rb
-		    set as_item_display_id [as::item_display_rb::new \
-						-html_display_options $aidrb__html_options \
-						-choice_orientation $aidrb__choice_orientation \
-						-choice_label_orientation $aidrb__label_orientation \
-						-sort_order_type $aidrb__order_type \
-						-item_answer_alignment $aidrb__answer_alignment]
-		}
-		
-		# insert as_item_type_mc
-		set as_item_type_id [as::item_type_mc::new \
-					 -increasing_p $aitmc__increasing_p \
-					 -allow_negative_p $aitmc__allow_negative_p \
-					 -num_correct_answers $aitmc__num_correct_answers \
-					 -num_answers $aitmc__num_answers]		           
-		
-		# Insert as_item
-		set as_item_id [as::item::new \
-				    -title $as_items__title \
-				    -description $as_items__description \
-				    -subtext $as_items__subtext \
-				    -field_code $as_items__field_code \
-				    -field_name $as_items__ident \
-				    -required_p $as_items__required_p \
-				    -data_type $as_items__data_type \
-				    -feedback_right $as_items__feedback_right \
-				    -feedback_wrong $as_items__feedback_wrong \
-				    -max_time_to_complete $as_items__duration \
-				    -points $as_items__points]		
-		# set the relation between as_items and as_item_type tables
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
-		# set the relation between as_items and as_item_display tables
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
-		set as_item(as_item_id) $as_item_id
-		set as_item(points) $as_items__points
-		set as_item(duration) $as_items__duration
-		set as_item(required_p) $as_items__required_p
-		lappend as_items [array get as_item]
-		# <response_label> (each choice)
-		set response_labelNodes [$presentation selectNodes {.//response_label}]
-		foreach response_label $response_labelNodes {
-		    set selected_p f
-		    set as_item_choices__ident [$response_label getAttribute {ident}]
-		    set mattextNodes [$response_label selectNodes {material/mattext}]
-		    set as_item_choices__choice_text [db_null]
-		    # get the title of each choice
-		    foreach mattext $mattextNodes {
-			set as_item_choices__choice_text [as::qti::mattext_gethtml $mattext]
-		    }
-		    # for multimedia items
-		    set matmediaNodes [$response_label selectNodes {material/matimage[@uri]}]
-		    set as_item_choices__content_value [db_null]
-		    foreach matmedia $matmediaNodes {
-			set mediabasepath [file join $basepath [$matmedia getAttribute {uri}]]
-			# insert as_file in the CR (and in the as_file table) getting the content value
-			set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
-		    }
-		    # Insert as_item_choice
-		    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
-		    if {[info exists as_item_choices__score($as_item_choices__ident)]} {
-		        if {$as_items__points== 0} {
-			    #if <setvar> is missing
-			    set as_items__points 1			
-			}
-			set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)]
-		    } else {
-			set as_item_choices__score($as_item_choices__ident) 0
-		    }
-		    set as_item_choices__feedback_text($as_item_choices__ident) ""    
-		    
-		    set resprocessingNodes [$item selectNodes {resprocessing}]
-	            foreach resprocessing $resprocessingNodes {
-			# <respcondition>
-			set respconditionNodes [$resprocessing selectNodes {respcondition}]		    
-			foreach respcondition $respconditionNodes {
-			    set displayfeedbackNode ""
-			    set resp_cond_varNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
-			    if {[llength $resp_cond_varNodes]==1} {		    
-				set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]		    
-				set choice_identifier [$resp_cond_varNodes nodeValue]
-				if {[llength $displayfeedbackNode]>0} {
-				    set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]		    
-				    set choice_identifier [$resp_cond_varNodes nodeValue]		        
-				    if {$as_item_choices__ident == $choice_identifier} {   		        
-					set choices__feedback_text [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
-					if {[llength $choices__feedback_text]>0} {
-					    set as_item_choices__feedback_text($as_item_choices__ident) [$choices__feedback_text nodeValue]
-					}		        
-				    }
-				}  
-			    } 
-			}
-		    }
-		    # insert as_item_choice
-		    as::item_choice::new \
-			-mc_id $as_item_type_id \
-			-title $as_item_choices__choice_text \
-			-sort_order $sort_order \
-			-selected_p $selected_p \
-			-feedback_text $as_item_choices__feedback_text($as_item_choices__ident) \
-			-correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) \
-			-percent_score $as_item_choices__score($as_item_choices__ident) \
-			-content_value $as_item_choices__content_value
-		    # order of the item_choices
-		    incr sort_order
-		}
-	    }
-	    #import an image as title of item
-	    set matmediaNodes [$presentation selectNodes {material/matimage[@uri]}]
-	    if {[llength $matmediaNodes]>0} {  				    
-		set mediabasepath [file join $basepath [$matmediaNodes getAttribute {uri}]]
-		# insert as_file in the CR (and in the as_file table) getting the content value
-		set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_choices__content_value -type as_item_content_rel
-	    }     
-	}
+                # multiple choice either text (remember it can be internationalized or changed), images, sounds, videos
+                # this is the default
+                set as_item_display_id {}
+                if {$as_items__rcardinality == {Multiple}} {
+                    # multiple response (checkbox) either text (remember it can be internationalized or changed), images, sounds, videos
+                    # insert as_item_display_cb
+                    set as_item_display_id [as::item_display_cb::new \
+                                                -html_display_options $aidrb__html_options \
+                                                -choice_orientation $aidrb__choice_orientation \
+                                                -choice_label_orientation $aidrb__label_orientation \
+                                                -sort_order_type $aidrb__order_type \
+                                                -item_answer_alignment $aidrb__answer_alignment]
+                } else {
+                    # multiple choice (radiobutton)
+                    # insert as_item_display_rb
+                    set as_item_display_id [as::item_display_rb::new \
+                                                -html_display_options $aidrb__html_options \
+                                                -choice_orientation $aidrb__choice_orientation \
+                                                -choice_label_orientation $aidrb__label_orientation \
+                                                -sort_order_type $aidrb__order_type \
+                                                -item_answer_alignment $aidrb__answer_alignment]
+                }
+                
+                # insert as_item_type_mc
+                set as_item_type_id [as::item_type_mc::new \
+                                         -increasing_p $aitmc__increasing_p \
+                                         -allow_negative_p $aitmc__allow_negative_p \
+                                         -num_correct_answers $aitmc__num_correct_answers \
+                                         -num_answers $aitmc__num_answers]                         
+                
+                # Insert as_item
+                set as_item_id [as::item::new \
+                                    -title $as_items__title \
+                                    -description $as_items__description \
+                                    -subtext $as_items__subtext \
+                                    -field_code $as_items__field_code \
+                                    -field_name $as_items__ident \
+                                    -required_p $as_items__required_p \
+                                    -data_type $as_items__data_type \
+                                    -feedback_right $as_items__feedback_right \
+                                    -feedback_wrong $as_items__feedback_wrong \
+                                    -max_time_to_complete $as_items__duration \
+                                    -points $as_items__points]          
+                # set the relation between as_items and as_item_type tables
+                as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
+                # set the relation between as_items and as_item_display tables
+                as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
+                set as_item(as_item_id) $as_item_id
+                set as_item(points) $as_items__points
+                set as_item(duration) $as_items__duration
+                set as_item(required_p) $as_items__required_p
+                lappend as_items [array get as_item]
+                # <response_label> (each choice)
+                set response_labelNodes [$presentation selectNodes {.//response_label}]
+                foreach response_label $response_labelNodes {
+                    set selected_p f
+                    set as_item_choices__ident [$response_label getAttribute {ident}]
+                    set mattextNodes [$response_label selectNodes {material/mattext}]
+                    set as_item_choices__choice_text [db_null]
+                    # get the title of each choice
+                    foreach mattext $mattextNodes {
+                        set as_item_choices__choice_text [as::qti::mattext_gethtml $mattext]
+                    }
+                    # for multimedia items
+                    set matmediaNodes [$response_label selectNodes {material/matimage[@uri]}]
+                    set as_item_choices__content_value [db_null]
+                    foreach matmedia $matmediaNodes {
+                        set mediabasepath [file join $basepath [$matmedia getAttribute {uri}]]
+                        # insert as_file in the CR (and in the as_file table) getting the content value
+                        set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
+                    }
+                    # Insert as_item_choice
+                    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
+                    if {[info exists as_item_choices__score($as_item_choices__ident)]} {
+                        if {$as_items__points== 0} {
+                            #if <setvar> is missing
+                            set as_items__points 1                      
+                        }
+                        set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)]
+                    } else {
+                        set as_item_choices__score($as_item_choices__ident) 0
+                    }
+                    set as_item_choices__feedback_text($as_item_choices__ident) ""    
+                    
+                    set resprocessingNodes [$item selectNodes {resprocessing}]
+                    foreach resprocessing $resprocessingNodes {
+                        # <respcondition>
+                        set respconditionNodes [$resprocessing selectNodes {respcondition}]                 
+                        foreach respcondition $respconditionNodes {
+                            set displayfeedbackNode ""
+                            set resp_cond_varNodes [$respcondition selectNodes {conditionvar/varequal/text()}]
+                            if {[llength $resp_cond_varNodes]==1} {                 
+                                set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]              
+                                set choice_identifier [$resp_cond_varNodes nodeValue]
+                                if {[llength $displayfeedbackNode]>0} {
+                                    set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]              
+                                    set choice_identifier [$resp_cond_varNodes nodeValue]                       
+                                    if {$as_item_choices__ident == $choice_identifier} {                        
+                                        set choices__feedback_text [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
+                                        if {[llength $choices__feedback_text]>0} {
+                                            set as_item_choices__feedback_text($as_item_choices__ident) [$choices__feedback_text nodeValue]
+                                        }                       
+                                    }
+                                }  
+                            } 
+                        }
+                    }
+                    # insert as_item_choice
+                    as::item_choice::new \
+                        -mc_id $as_item_type_id \
+                        -title $as_item_choices__choice_text \
+                        -sort_order $sort_order \
+                        -selected_p $selected_p \
+                        -feedback_text $as_item_choices__feedback_text($as_item_choices__ident) \
+                        -correct_answer_p $as_item_choices__correct_answer_p($as_item_choices__ident) \
+                        -percent_score $as_item_choices__score($as_item_choices__ident) \
+                        -content_value $as_item_choices__content_value
+                    # order of the item_choices
+                    incr sort_order
+                }
+            }
+            #import an image as title of item
+            set matmediaNodes [$presentation selectNodes {material/matimage[@uri]}]
+            if {[llength $matmediaNodes]>0} {                               
+                set mediabasepath [file join $basepath [$matmediaNodes getAttribute {uri}]]
+                # insert as_file in the CR (and in the as_file table) getting the content value
+                set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
+                as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_choices__content_value -type as_item_content_rel
+            }     
+        }
     }
     return $as_items
 }

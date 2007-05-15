@@ -28,6 +28,7 @@ ad_proc -public as_item_type::get_item_types {
     foreach item_type [db_list item_types {}] {
         lappend item_types [list "[_ assessment.item_type_$item_type]" $item_type]
     }
+    lappend item_types [list "[_ assessment.item_type_ms]" ms]
     return $item_types
 }
 

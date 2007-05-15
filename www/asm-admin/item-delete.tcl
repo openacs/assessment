@@ -37,21 +37,24 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
 } -select_query_name {item_title} -on_submit {
     if {$confirmation} {
 	db_transaction {
-	    as::assessment::check::delete_item_checks -assessment_id $assessment_id -as_item_id $as_item_id -section_id $section_id 
+	    as::assessment::check::delete_item_checks -assessment_id $assessment_id -as_item_id $as_item_id -section_id $section_id
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
-	    
+
 	    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
 	    set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
 
-	    db_dml update_section_in_assessment {}
+	    as::section::update_section_in_assessment\
+                -old_section_id $section_id \
+                -new_section_id $new_section_id \
+                -new_assessment_rev_id $new_assessment_rev_id
 	    db_1row get_sort_order_to_be_removed {}
 	    db_dml remove_item_from_section {}
 	    db_dml move_up_items {}
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    ad_returnredirect [export_vars -base questions {assessment_id}]
     ad_script_abort
 }
 

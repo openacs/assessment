@@ -1,6 +1,9 @@
 <master>
 <property name="title">@page_title;noquote@</property>
 <property name="context">@context;noquote@</property>
+<property name="header_stuff">
+      <link rel="stylesheet" type="text/css" href="/resources/assessment/assessment.css" media="all">
+</property>
 
 <div class="result">
 <h1>@assessment_data.title@</h1>

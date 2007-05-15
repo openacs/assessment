@@ -11,7 +11,8 @@ create table as_items (
 			constraint as_items_item_id_pk
                         primary key
 			constraint as_items_item_id_fk
-			references cr_revisions(revision_id),
+			references cr_revisions(revision_id)
+                        on delete cascade,
 	-- a secondary label, needed for many kinds of questions
 	subtext		varchar(500),
 	-- a short label for use in cvs export
@@ -40,10 +41,12 @@ create table as_item_choices (
                         constraint as_item_choices_id_pk
                         primary key
 			constraint as_item_choices_id_fk
-			references cr_revisions(revision_id),
+			references cr_revisions(revision_id)
+                        on delete cascade,                        
 	mc_id		integer
 			constraint as_item_choices_parent_id_fk
-			references as_item_type_mc(as_item_type_id),
+			references as_item_type_mc(as_item_type_id)
+                        on delete cascade,                        
 	-- which of the value columns has the information this Choice conveys
 	data_type	varchar(20),
 	-- we can stuff both integers and real numbers here
@@ -55,7 +58,8 @@ create table as_item_choices (
 	-- references an item in the CR -- for an image, audio file, or video file
 	content_value	integer
 			constraint as_item_choices_content_fk
-                        references cr_revisions,
+                        references cr_revisions
+                        on delete cascade,                        
 	-- where optionally some preset feedback can be specified by the author
 	feedback_text	varchar(500),	
 	-- when the item is presented to the user this choice is selected by default
@@ -84,10 +88,12 @@ create table as_item_sa_answers (
                         constraint as_item_sa_answ_id_pk
                         primary key
 			constraint as_item_sa_answ_id_fk
-			references cr_revisions(revision_id),
+			references cr_revisions(revision_id)
+                        on delete cascade,
 	answer_id	integer
 			constraint as_item_sa_answ_parent_id_fk
-			references as_item_type_sa(as_item_type_id),
+			references as_item_type_sa(as_item_type_id)
+                        on delete cascade,
 	-- integer vs. real number vs. text
 	data_type	varchar(20),
 	-- shall the match be case sensitive
@@ -119,10 +125,12 @@ create table as_messages (
 create table as_item_help_map (
 	as_item_id		integer
 		constraint as_item_help_map_as_item_id_fk
-		references as_items (as_item_id),
+		references as_items (as_item_id)
+                on delete cascade,
 	message_id	integer
 		constraint as_item_help_map_message_id_fk
-		references as_messages (message_id),
+		references as_messages (message_id)
+                on delete cascade,
 	-- order in which the messages appear
 	sort_order	integer
 );

@@ -436,6 +436,32 @@ ad_proc -public as::install::after_upgrade {
 	}    
 }
 
+ad_proc -public as::install::before_uninstantiate {  
+    {-package_id}
+    {-node_id ""}
+} { 
+    before-uninstantiate callback.
+} { 
+    # reset the RegistrationId parameter
+    as::parameter::reset_parameter -package_id $package_id -node_id $node_id
+ns_log notice "delete assessment package $package_id"
+    # delete actions
+    db_foreach get_package_actions {} {
+        ns_log notice "delte action $object_id"
+        package_exec_plsql -var_list [list [list action_id $object_id]] \
+            as_action del
+    }
+    foreach folder_id [db_list get_folders ""] {
+        content::folder::delete -folder_id $folder_id -cascade_p t
+    }
+}
 
-
-    
+ad_proc -public as::install::before_unmount {  
+    {-package_id}
+    {-node_id ""}
+} { 
+    before-unmount callback.
+} { 
+    # reset the RegistrationId parameter
+    as::parameter::reset_parameter -package_id $package_id -node_id $node_id
+}

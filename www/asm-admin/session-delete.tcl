@@ -3,6 +3,7 @@ ad_page_contract {
 } {
     assessment_id:integer
     subject_id:integer
+    orig_session_id:integer,optional
     {return_url ""}
 } 
 
@@ -31,28 +32,29 @@ db_foreach get_sessions "" {
     set view_session_url [export_vars -base results-session {session_id}]
     lappend session_id_options [list "[_ $message_key [list creation_datetime $creation_datetime completed_datetime $completed_datetime]] [_ assessment.View_session_in_a_new_window [list view_session_url $view_session_url]]" $session_id]
 }
+
 set check_all_options [list [list [_ assessment.Select_All] ""]]
-ad_form -name session-delete -export {assessment_id subject_id return_url} \
+ad_form -name session-delete -export {assessment_id subject_id return_url orig_session_id} \
     -has_submit 1 \
     -form {
         {cancel0:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
         {ok0:text(submit) {label "[_ acs-kernel.common_Delete]"}}
 	{check_all:text(checkbox),optional {label ""} {options $check_all_options} {html {onClick acs_CheckAll('session-delete:elements:session_id',this.checked)}}}
-        {session_id:text(checkbox),multiple,optional {label "[_ assessment.Attempts_to_delete]"} {options $session_id_options}}
+        {session_ids_to_delete:text(checkbox),multiple,optional {label "[_ assessment.Attempts_to_delete]"} {options $session_id_options}}
         {cancel:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
         {ok:text(submit) {label "[_ acs-kernel.common_Delete]"}}
         
     } -on_request {
-	if {[info exists session_id]} {
-	    template::element::set_values session-delete session_id $session_id
+	if {[info exists orig_session_id]} {
+	    template::element::set_values session-delete session_ids_to_delete $orig_session_id
 	}
     } -on_submit {
         if {([info exists ok] && $ok ne "" \
 		 || [info exists ok0] && $ok0 ne "" ) \
-		&& [info exists session_id]} {
+		&& [info exists session_ids_to_delete]} {
             #delete sessions
             set message "[_ assessment.Requested_attempts_deleted]"
-            foreach id $session_id {
+            foreach id $session_ids_to_delete {
                 as::session::delete -session_id $id
             }
         } else {

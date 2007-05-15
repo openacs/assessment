@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="0.22d2" url="http://openacs.org/repository/download/apm/assessment-0.22d2.apm">
+    <version name="0.22d4" url="http://openacs.org/repository/download/apm/assessment-0.22d4.apm">
         <owner url="mailto:eperez@it.uc3m.es">Eduardo Perez Ureta</owner>
         <summary>Assessment package that will replace the survey,
     quizz, complex survey, poll and other data collection packages
@@ -17,20 +17,21 @@
         <description format="text/plain">Create assessments and evaluate.</description>
         <maturity>0</maturity>
 
-        <provides url="assessment" version="0.22d2"/>
-        <requires url="acs-content-repository" version="5.3.0d1"/>
-        <requires url="acs-kernel" version="5.3.0d1"/>
-        <requires url="acs-templating" version="5.3.0d1"/>
-        <requires url="categories" version="1.0d5"/>
-        <requires url="notifications" version="0.1"/>
+        <provides url="assessment" version="0.22d4"/>
+        <requires url="acs-content-repository" version="5.3.1a1"/>
+        <requires url="acs-kernel" version="5.3.1a1"/>
+        <requires url="acs-templating" version="5.3.1a1"/>
+        <requires url="categories" version="1.1"/>
+        <requires url="notifications" version="5.3.0d1"/>
+
         <callbacks>
             <callback type="after-install"  proc="as::install::assessment_create_install"/>
             <callback type="after-instantiate"  proc="as::install::package_instantiate"/>
             <callback type="after-mount"  proc="as::actions::insert_actions"/>
             <callback type="after-upgrade"  proc="as::install::after_upgrade"/>
             <callback type="before-uninstall"  proc="inter_item_checks::apm_callback::package_uninstall"/>
-            <callback type="before-uninstantiate"  proc="as::parameter::reset_parameter"/>
-            <callback type="before-unmount"  proc="as::parameter::reset_parameter"/>
+            <callback type="before-uninstantiate"  proc="as::install::before_uninstantiate"/>
+            <callback type="before-unmount"  proc="as::install::before_unmount"/>
         </callbacks>
         <parameters>
             <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="NotifyAdminOfActions"  default="1" description="This parameter controls whether to allow notifications of triggered actions. This affects all assessments in the system."/>

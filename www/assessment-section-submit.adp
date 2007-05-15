@@ -5,27 +5,21 @@
 
 
 <!-- Pretty output starts here -->
-  <if @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@</h2></if>
+<if @show_title_p@ true and @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@</h2></if>
   <if @assessment_data.instructions@ not nil><p>@assessment_data.instructions;noquote@</p></if>
 
   <if @assessment_data.time_for_response@ not nil><br>#assessment.session_time_remaining#</if>
   <if @section.max_time_to_complete@ not nil><br>#assessment.section_time_remaining#</if>
 
-	<if @progress_bar_list@ defined>
-	<list name="progress_bar_list">
-	<if @progress_bar_list:item@ eq @current_page@>
-	<b>[@progress_bar_list:item@] </b>
-	</if>
-	<else>
-	[@progress_bar_list:item@] 
-	</else>
-	</list>
-	</if>
+  <if @progress_bar_list@ defined>
+  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages@" current="@current_page@" />
+  </if>
+
   <if @form_is_submit@ true and @form_is_valid@ false>
   <div class="form-error">#assessment.There_was_a_problem_with_your_answers#</div>
   </if>
-  <fieldset style="padding:10px;margin-bottom:10px"><!-- Section FieldSet -->
-    <legend><b>@section.title@</b></legend>
+
+<if @show_title_p@ true><h2>@section.title@</h2></if>
     <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
 
@@ -97,5 +91,5 @@
 	<p>#assessment.This_is_a_required#</p>
     <input type=submit value="#assessment.Submit#">
   </formtemplate>
-</fieldset><!-- End Section FieldSet -->
+
 <!--<div style="clear: both;" />-->

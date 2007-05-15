@@ -26,7 +26,7 @@ set user_id [ad_conn user_id]
 if {![apm_package_installed_p dotlrn] \
 	|| [set members_party_id [dotlrn_community::get_community_id]] eq ""} {
     set members_party_id [application_group::group_id_from_package_id \
-		     -package_id [ad_conn subsite_id]
+			      -package_id [ad_conn subsite_id]]
 }
 
 set form [rp_getform]
@@ -103,7 +103,7 @@ template::list::create \
 		<img src="/resources/right.gif" border=0 /></a>
 		</if>
 	    }
-	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) != 2}]}
+	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) != "test"}]}
 	}
     } \
     -filters {
@@ -136,7 +136,7 @@ db_multirow sessions get_sessions [subst {
     coalesce(cs.subject_id, ns.subject_id) as subject_id,
     coalesce(cs.session_id, ns.session_id) as session_id,
     cs.percent_score
-
+ 
     from (select a.assessment_id, cr.title, cr.item_id, cr.revision_id,
 	  u.user_id, u.first_names, u.last_name
 	  
@@ -151,15 +151,16 @@ db_multirow sessions get_sessions [subst {
 	  and g.member_id = u.user_id
 	  and acs_permission__permission_p(cr.item_id, u.user_id, 'read')) a
 
-    left join (select *
-	       from as_sessions
+    left join (select as_sessions.*, cr.item_id
+	       from as_sessions, cr_revisions cr
 	       where session_id in (select max(session_id)
 				    from as_sessions, acs_objects o
 				    where not completed_datetime is null
 	       and o.object_id = session_id
                and o.package_id = :package_id
-				    group by subject_id, assessment_id )) cs
-    on (a.user_id = cs.subject_id and a.assessment_id = cs.assessment_id)
+				    group by subject_id, assessment_id )
+               and revision_id=assessment_id) cs
+    on (a.user_id = cs.subject_id and a.item_id = cs.item_id)
 
     left join (select *
 	       from as_sessions
@@ -176,3 +177,10 @@ db_multirow sessions get_sessions [subst {
 
     order by lower(a.title), lower(a.last_name), lower(a.first_names)
 }]
+
+
+
+
+
+
+

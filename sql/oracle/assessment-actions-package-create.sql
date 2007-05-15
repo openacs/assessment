@@ -56,8 +56,8 @@ as
 	context_id	in acs_objects.context_id%TYPE,
 	creation_user	in acs_objects.creation_user%TYPE
 		     ) return as_actions.action_id%TYPE;
-	procedure delete (
-	 	v_action_id 	in as_actions.action_id%TYPE
+	procedure del (
+	 	action_id 	in as_actions.action_id%TYPE
 	);
 	procedure default_actions (
 		context_id	in acs_objects.context_id%TYPE,
@@ -98,16 +98,16 @@ as
 
 
 
-        procedure delete (
-		v_action_id  as_actions.action_id%TYPE 
+        procedure del (
+		action_id  as_actions.action_id%TYPE 
 		) is
 	begin
 
-		delete from as_action_params where action_id=v_action_id;
-		delete from as_actions where action_id = v_action_id;
-        	acs_object.del(as_action.delete.v_action_id);	
+		delete from as_action_params where action_id=as_action.del.action_id;
+		delete from as_actions where action_id = as_action.del.action_id;
+        	acs_object.del(as_action.del.action_id);	
 
-	end delete;	
+	end del;	
 	
 
 	procedure default_actions (
