@@ -65,15 +65,15 @@ namespace eval as::list {
 	    set option_section_title [lindex $section 0]
 	    set option_section_id [lindex $section 1]
 	    db_foreach items {
-		select ci.item_id as option_item_id, cr.title as option_item_title, cr.revision_id as option_revision_id
+		select ci.item_id as option_item_id, cr.title as option_item_title, ir.revision_id as option_revision_id
 		
-		from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism, cr_revisions asr
+		from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism, cr_revisions ir
 		
 		where ci.item_id = cr.item_id
+                and ir.revision_id = ci.latest_revision
 		and cr.revision_id = i.as_item_id
 		and i.as_item_id = ism.as_item_id
 		and ism.section_id = :option_section_id
-		and asr.revision_id = i.as_item_id
 		
 		order by ism.sort_order
 	    } {
