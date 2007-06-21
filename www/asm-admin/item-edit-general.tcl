@@ -85,10 +85,9 @@ switch -- $item_type {
         {num_choices:text(hidden)}
         {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
     }
-ns_log notice "Add Another = '[template::element::get_value item_edit_general add_another_choice]'"
+ns_log notice "Add Another = '[template::element::get_value item_edit_general add_another_choice]' == '[_ assessment.Add_another_choice]'"
     if {[template::form::is_submission item_edit_general] \
-            && [template::element::get_value item_edit_general add_another_choice] \
-            eq [_ assessment.Add_another_choice]} {
+            && [template::element::get_value item_edit_general add_another_choice] eq [_ assessment.Add_another_choice]} {
         set num_choices [element::get_value item_edit_general num_choices]
         incr num_choices
         element::set_value item_edit_general num_choices $num_choices
@@ -150,7 +149,10 @@ ns_log notice "Add Another = '[template::element::get_value item_edit_general ad
 
 
     set existing_choices [as::item_type_mc::existing_choices $as_item_id]
-
+	if {[llength $existing_choices] && ![info exists num_choices]} {
+	    set num_choices [llength $existing_choices]
+	    template::element::set_value item_edit_general num_choices $num_choices
+	}	
     if {![template::form::is_submission item_edit_general] \
             && ![info exists num_choices]} {
         set num_choices 5
