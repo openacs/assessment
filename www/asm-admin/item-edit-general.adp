@@ -41,9 +41,7 @@
               
 
         </span>   
-        
-      <br/>
-        
+         
               <if @formerror.required_p@ not nil>
                 <span class="form-label-error">
               </if>
@@ -193,7 +191,27 @@
               
 
         </span>   
-      <br/>
+       <br />
+<if @item_type@ eq "mc">
+                      
+            <br /><formgroup-widget id="display_type" row=1></formgroup-widget>
+            <br /><formgroup-widget id="display_type" row=2></formgroup-widget>
+
+            <if @formerror.display_type@ not nil>
+              <span class="form-widget-error">
+            </if>
+            <else>
+              <span class="form-widget">                  
+            </else>
+                     
+            <formerror id="display_type">
+                  @formerror.data_type;noquote@
+            </formerror>
+          
+            <p class="form-help-text">
+              
+                <formhelp id="display_type">
+</if>                      
 
 <switch @item_type@>
 <case value="mc">
@@ -218,11 +236,15 @@
 </if>
     <br />
 </multiple>
-<formwidget id="add_another_choice">
+<formwidget id="save_answer_set"> <label for="save_answer_set">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br />
+<formwidget id="add_another_choice"><br />
+<if @choice_sets@ not nil><p>#assessment.OrUseChoices#<br />
+<formwidget id="add_existing_mc_id">
+</p></if>
 </case>
 <case value="oq">
             <label for="reference_answer">
-              Reference Answer
+              #assessment.oq_Reference_Answer#
             </label>
 	<formwidget id="reference_answer">
 <p class="form-help-text">        <formhelp id="reference_answer"></p>

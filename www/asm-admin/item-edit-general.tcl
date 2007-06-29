@@ -36,19 +36,31 @@ set package_id [ad_conn package_id]
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set type $assessment_data(type)
 
-set item_type [string range [db_string get_item_type {}] end-1 end]
-set display_type [string range [db_string get_display_type {}] end-1 end]
-
-set display_types [list]
-foreach display_type [db_list display_types {}] {
-    lappend display_types [list "[_ assessment.item_display_$display_type]" $display_type]
-}
-
-
 ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
     {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 12 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
+}
+
+set item_type [string range [db_string get_item_type {}] end-1 end]
+set display_type [string range [db_string get_display_type {}] end-1 end]
+
+if { $item_type == "mc"  } {
+	 ad_form -extend -name item_edit_general -form {
+	    {display_type:text(radio),optional
+	    	{label "[_ assessment.singleanswermultipleanswer]"} 
+	    	{options {{"[_ assessment.item_type_mc]" "rb"} {"[_ assessment.item_type_ms]" "cb"}}}
+	    }
+    }
+} else {
+	ad_form -extend -name item_edit_general -form { 
+		{display_type:text(hidden),optional}
+	}
+}
+
+set display_types [list]
+foreach display_type [db_list display_types {}] {
+    lappend display_types [list "[_ assessment.item_display_$display_type]" $display_type]
 }
 
 if { $type ne "survey"} { 
@@ -73,7 +85,6 @@ ad_form -extend -name item_edit_general -form {
     {field_code:text(hidden),optional}
     {validate_block:text(hidden),optional}
     {data_type:text(hidden),optional}
-    {display_type:text(hidden),optional}
     {max_time_to_complete:text(hidden),optional}
     {formbutton_ok:text(submit) {label "[_ assessment.Save_and_finish]"}}
 }
@@ -81,8 +92,24 @@ ad_form -extend -name item_edit_general -form {
 
 switch -- $item_type {
     "mc" {
+	set folder_id [as::assessment::folder_id -package_id $package_id]
+	set choice_sets [list [list "--" ""]]
+db_foreach existing_choice_sets {} {
+    set set_title [string trim [regsub {\[.*?\]} [ad_html_to_text $title] {}]]
+    lappend choice_sets [list [expr {$set_title eq "" ? $section_title : $set_title}] $revision_id]
+}
+if {[llength $choice_sets]} {
+    ad_form -extend -name item_edit_general -form {
+    {add_existing_mc_id:text(select),optional {label "[_ assessment.Choice_Sets]"} {options $choice_sets} {help_text "[_ assessment.Choice_Sets_help]"}}
+    }
+} else {
+    ad_form -extend -name item_edit_general -form {
+	{add_existing_mc_id:text(hidden),optional}
+    }
+}
     ad_form -extend -name item_edit_general -form {
         {num_choices:text(hidden)}
+	{save_answer_set:text(checkbox),optional {label "[_ assessment.Save_this_set_of_answers_for_reuse_later]"} {options {{"" t}}}}
         {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
     }
 ns_log notice "Add Another = '[template::element::get_value item_edit_general add_another_choice]' == '[_ assessment.Add_another_choice]'"
@@ -208,7 +235,8 @@ ad_form -extend -name item_edit_general -edit_request {
     set feedback_right [template::util::richtext::create $feedback_right $mime_type]
     set feedback_wrong [template::util::richtext::create $feedback_wrong $mime_type]
     # FIXME fill in reference answer 
-
+} -on_request {
+	set display_type [string range [db_string get_display_type {}] end-1 end]
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {[empty_string_p $points]} {
@@ -292,63 +320,95 @@ ad_form -extend -name item_edit_general -edit_request {
                 -old_section_id $section_id \
                 -new_section_id $new_section_id \
                 -new_assessment_rev_id $new_assessment_rev_id
+                
+           ns_log notice "HAM : $old_display_type : $display_type **********"
+           if { ![string match $old_display_type $display_type] } {
+         	  as::item_display_${display_type}::set_item_display_type -assessment_id $assessment_id \
+           														 -section_id $section_id \
+           														 -as_item_id $as_item_id
+		   }
 	    
 	    set title [string range $question_text 0 999]	
 
             db_dml update_item_in_section {}
             switch -- $item_type {
                 mc {
-                    set num_answers 0
-                    set num_correct_answers 0
-                    foreach c [array names choice] {
-                        if {$choice($c) ne ""} {
-                            incr num_answers
-                        }
-                    }
-                    foreach c [array names correct] {
-                        if {$correct($c) eq "t"} {
-                            incr num_correct_answers 
-                        }
-                    }
-                    set new_item_type_id [as::item_type_mc::edit \
-                                              -as_item_type_id $as_item_type_id \
-                                              -title $title \
-                                              -increasing_p f \
-                                              -allow_negative_p f \
-                                              -num_correct_answers $num_correct_answers \
-                                              -num_answers $num_answers]
-                    db_dml update_item_type {}
-                    # edit existing choices
-                    set count 0
-                    foreach i [lsort [array names choice]] {
-                        if {[string range  $i 0 0] != "_" && ![empty_string_p $choice($i)]} {
-                            incr count
-                            set new_choice_id [as::item_choice::new_revision -choice_id $i -mc_id $new_item_type_id]
-                            set title $choice($i)
-                            set correct_answer_p [ad_decode [info exists correct($i)] 0 f t]
 
-                            db_dml update_title {}
-                            db_dml update_correct_and_sort_order {}
-                        }
-                    }
+		    if {[info exists add_existing_mc_id] && $add_existing_mc_id ne ""} {
+			set new_item_type_id [as::item_type_mc::copy -type_id $add_existing_mc_id -copy_correct_answer_p "f" -new_title ""]
+			if {![db_0or1row get_item_type {}] || $object_type != "as_item_type_mc"} {
+			    if {![info exists object_type]} {
+				# first item type mapped
+				as::item_rels::new -item_rev_id $as_item_id -target_rev_id $add_existing_mc_id -type as_item_type_rel
+			    } else {
+				# old item type existing
+				db_dml update_item_type {}
+			    }
+			} else {
+			    # old mc item type existing
+			    db_dml update_item_type {}
+			}
+		    } else {
 
-                    # add new choices
-                    foreach i [lsort [array names choice]] {
-                       
-                        if {[string range  $i 0 0] == "_" && ![empty_string_p $choice($i)]} {
-                            incr count
-                            set new_choice_id [as::item_choice::new -mc_id $new_item_type_id \
-                                                   -title $choice($i) \
-                                                   -numeric_value "" \
-                                                   -text_value "" \
-                                                   -content_value "" \
-                                                   -feedback_text "" \
-                                                   -selected_p "" \
-                                                   -correct_answer_p [ad_decode [info exists correct($i)] 0 f t] \
-                                                   -sort_order $count \
-                                                   -percent_score ""]
-                        }
-                    }
+			set num_answers 0
+			set num_correct_answers 0
+			foreach c [array names choice] {
+			    if {$choice($c) ne ""} {
+				incr num_answers
+			    }
+			}
+			foreach c [array names correct] {
+			    if {$correct($c) eq "t"} {
+				incr num_correct_answers 
+			    }
+			}
+			# set title to blank for mc answer set
+			# if they unchecked save for reuse
+			# we don't ask for a title, if they did check it
+			# we set it on save-answer-set
+			# with each revision of the mc we decide if its
+			# reusable or not
+
+			set new_item_type_id [as::item_type_mc::edit \
+						  -as_item_type_id $as_item_type_id \
+						  -title "" \
+						  -increasing_p f \
+						  -allow_negative_p f \
+						  -num_correct_answers $num_correct_answers \
+						  -num_answers $num_answers]
+			db_dml update_item_type {}
+			# edit existing choices
+			set count 0
+			foreach i [lsort [array names choice]] {
+			    if {[string range  $i 0 0] != "_" && ![empty_string_p $choice($i)]} {
+				incr count
+				set new_choice_id [as::item_choice::new_revision -choice_id $i -mc_id $new_item_type_id]
+				set title $choice($i)
+				set correct_answer_p [ad_decode [info exists correct($i)] 0 f t]
+
+				db_dml update_title {}
+				db_dml update_correct_and_sort_order {}
+			    }
+			}
+
+			# add new choices
+			foreach i [lsort [array names choice]] {
+			    
+			    if {[string range  $i 0 0] == "_" && ![empty_string_p $choice($i)]} {
+				incr count
+				set new_choice_id [as::item_choice::new -mc_id $new_item_type_id \
+						       -title $choice($i) \
+						       -numeric_value "" \
+						       -text_value "" \
+						       -content_value "" \
+						       -feedback_text "" \
+						       -selected_p "" \
+						       -correct_answer_p [ad_decode [info exists correct($i)] 0 f t] \
+						       -sort_order $count \
+						       -percent_score ""]
+			    }
+			}
+		    }
                 } 
                 "oq" {
                     set new_item_type_id [as::item_type_oq::edit \
@@ -388,7 +448,11 @@ ad_form -extend -name item_edit_general -edit_request {
     }
 } -after_submit {
     if {[exists_and_not_null formbutton_ok]} {
-	ad_returnredirect [export_vars -base "questions" {assessment_id section_id }]&\#${as_item_id}
+	set return_url [export_vars -base "questions" {assessment_id section_id }]&\#${as_item_id}
+	if {[info exists save_answer_set] && $save_answer_set eq "on" && (![info exists add_existing_mc_id] || $add_existing_mc_id eq "")} {
+	    set return_url [export_vars -base save-answer-set {assessment_id as_item_id return_url {mc_id $new_item_type_id}}]
+	}
+	ad_returnredirect $return_url
 	ad_script_abort
     }
 }

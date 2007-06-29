@@ -21,6 +21,7 @@ permission::require_permission -object_id $assessment_id -privilege admin
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 
+set folder_id [as::assessment::folder_id -package_id $package_id]
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
@@ -39,12 +40,7 @@ set type $assessment_data(type)
 #}
 
 set item_types [as_item_type::get_item_types]
-ns_log notice "
-DB --------------------------------------------------------------------------------
-DB DAVE debugging /var/lib/aolserver/openacs-5-3/packages/assessment/www/asm-admin/item-add.tcl
-DB --------------------------------------------------------------------------------
-DB item_types = '${item_types}'
-DB --------------------------------------------------------------------------------"
+
 ad_form -name item-add -action item-add -export { assessment_id section_id after type } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
     {question_text:richtext,nospell {label "[_ assessment.item_Question]"} {html {rows 12 cols 80 style {width: 99%}}} {help_text "[_ assessment.item_Question_help]"}}
@@ -116,12 +112,24 @@ ad_form -extend -name item-add -form {
 ##############################################################################
 # Multiple Choice Section
 ##############################################################################
+set choice_sets [db_list_of_lists existing_choice_sets {}]
+if {[llength $choice_sets]} {
+    set choice_sets [concat [list [list "--" ""]] $choice_sets]
+    ad_form -extend -name item-add -form {
+	{add_existing_mc_id:text(select),optional {label "[_ assessment.Choice_Sets]"} {options $choice_sets} {help_text "[_ assessment.Choice_Sets_help]"}}
+    }
+} else {
+    ad_form -extend -name item-add -form {
+	{add_existing_mc_id:text(hidden),optional}
+    }
+}
 
 ad_form -extend -name item-add -form {
-    {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
+    {save_answer_set:text(checkbox),optional {label "[_ assessment.Save_this_set_of_answers_for_reuse_later]"} {options {{"" t}}}}
+    {formbutton_add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
 }
 if {[template::form::is_submission item-add] \
-	&& [template::element::get_value item-add add_another_choice] \
+	&& [template::element::get_value item-add formbutton_add_another_choice] \
 	eq [_ assessment.Add_another_choice]} {
     set num_choices [element::get_value item-add num_choices]
     incr num_choices
@@ -156,7 +164,7 @@ ad_form -extend -name item-add -form {
 }
 
 ad_form -extend -name item-add -validate {
-    {item_type {$item_type ne "mc" || [array size choice] > [llength [lsearch -all -exact [array get choice] ""]]} "Please enter at least one choice for multiple choice question."}
+    {item_type {$item_type ne "mc" || [exists_and_not_null add_existing_mc_id] || [array size choice] > [llength [lsearch -all -exact [array get choice] ""]]} "Please enter at least one choice for multiple choice question."}
 }
 ad_form -extend -name item-add -new_request {
     set name ""
@@ -177,7 +185,6 @@ ad_form -extend -name item-add -new_request {
 	set points 0
     }
 
-		    
     if {![exists_and_not_null formbutton_add_another_choice]} {
     # map display types to data types
     switch -exact $item_type {
@@ -263,7 +270,6 @@ ad_form -extend -name item-add -new_request {
 		return
 	    }
 
-	    set folder_id [as::assessment::folder_id -package_id $package_id]
 	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
 	    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
 	}
@@ -271,16 +277,35 @@ ad_form -extend -name item-add -new_request {
 	set title [string range $question_text 0 999]
         switch -exact $item_type {
             mc {
-                as::item_type_mc::add_to_assessment \
-                    -assessment_id $assessment_id \
-                    -section_id $section_id \
-                    -as_item_id $as_item_id \
-                    -choices [array get choice] \
-                    -correct_choices [array get correct] \
-                    -after $after \
-                    -title $title\
-                    -display_type $display_type
-            }
+		# title for MC is the name of a saved answer set
+		# always set to empty on a new question and
+		# ask for the title seperately in save-answer-set page
+                set new_mc_id [as::item_type_mc::add_to_assessment \
+				   -assessment_id $assessment_id \
+				   -section_id $section_id \
+				   -as_item_id $as_item_id \
+				   -choices [array get choice] \
+				   -correct_choices [array get correct] \
+				   -after $after \
+				   -title "" \
+				   -display_type $display_type]
+
+		if {[info exists add_existing_mc_id] && $add_existing_mc_id ne ""} {
+		    set add_existing_mc_id [as::item_type_mc::copy -type_id $add_existing_mc_id -copy_correct_answer_p "f" -new_title ""]
+		    if {![db_0or1row item_type {}] || $object_type != "as_item_type_mc"} {
+			if {![info exists object_type]} {
+			    # first item type mapped
+			    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $add_existing_mc_id -type as_item_type_rel
+			} else {
+			    # old item type existing
+			    db_dml update_item_type {}
+			}
+		    } else {
+			# old mc item type existing
+			db_dml update_item_type {}
+		    }
+		}
+	    }
             oq {
                 as::item_type_oq::add_to_assessment \
                     -assessment_id $assessment_id \
@@ -311,12 +336,17 @@ ad_form -extend -name item-add -new_request {
 } -after_submit {
     if {![exists_and_not_null formbutton_add_another_question] \
 	    && ![exists_and_not_null formbutton_add_another_choice]} {
-	ad_returnredirect "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
-	
-	ad_script_abort
+	set return_url "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
     } elseif {[exists_and_not_null formbutton_add_another_question]} {
 	set after [expr {$after + 1}]
-	ad_returnredirect "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
+	set return_url  "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
+    }
+    if {[info exists return_url] && $return_url ne ""} {
+	if {[info exists save_answer_set] && $save_answer_set eq "on" && (![info exists add_existing_mc_id] || $add_existing_mc_id eq "")} {
+	    set return_url [export_vars -base save-answer-set {assessment_id as_item_id return_url {mc_id $new_mc_id}}]
+	}
+	ad_returnredirect $return_url
+	ad_script_abort	
     }
 }
 

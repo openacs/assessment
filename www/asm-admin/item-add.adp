@@ -216,11 +216,13 @@
                 @formgroup.widget;noquote@
            </formgroup>
 &nbsp;&nbsp;<formwidget id="choice.@choice_elements.id@"><br />
-</multiple>
-            </p>
-
-      <br>
-<formwidget id="add_another_choice">
+</multiple></p>
+<formwidget id="save_answer_set"> <label for="save_answer_set">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br />
+<formwidget id="formbutton_add_another_choice"><br />
+<if @choice_sets@ not nil><p>Or use choices from an existing question<br />
+<formwidget id="add_existing_mc_id">
+</p></if>
+<br />
 </fieldset>        
 </div>
 <div>

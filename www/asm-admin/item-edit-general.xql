@@ -151,4 +151,41 @@
         select sort_order from as_item_choices where choice_id=:n
         </querytext>
 </fullquery>
+
+
+<fullquery name="existing_choice_sets_old">
+      <querytext>
+	select substring(title from 1 for 50) as title, revision_id from (select r.title, r.revision_id, case when m.target_rev_id is not null then 0 else 1 end as sort_key
+    from cr_items i, cr_revisions r
+    left join 
+    (select r1.target_rev_id from
+     as_item_section_map m1, as_item_rels r1, as_assessment_section_map m2,
+     cr_items i2, cr_items i3, cr_items i4
+     where m1.as_item_id = r1.item_rev_id and r1.rel_type = 'as_item_type_rel'
+     and m1.section_id = m2.section_id 
+     and m2.assessment_id = i2.latest_revision
+     and m1.as_item_id = i3.latest_revision
+     and m1.section_id = i4.latest_revision
+     and i2.item_id = :assessment_id) m
+    on m.target_rev_id = r.revision_id
+    where 
+    i.parent_id = :folder_id
+    and r.revision_id = i.latest_revision
+    and i.content_type like 'as_item_type_mc') q order by sort_key
+
+      </querytext>
+</fullquery>
+
+<fullquery name="existing_choice_sets">
+      <querytext>
+    select distinct title, revision_id from (select substr(title,1,50) as title, revision_id 
+    from cr_items i, cr_revisions r
+    where 
+    i.parent_id = :folder_id
+    and r.title is not NULL
+    and r.revision_id = i.latest_revision
+    and i.content_type = 'as_item_type_mc') c
+      </querytext>
+</fullquery>
+
 </queryset>
