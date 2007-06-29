@@ -92,6 +92,7 @@ ad_proc -public as::item_choice::new_revision {
 ad_proc -public as::item_choice::copy {
     -choice_id:required
     -mc_id:required
+    {-copy_correct_answer_p "t"}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -104,7 +105,9 @@ ad_proc -public as::item_choice::copy {
     # Insert as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     db_transaction {
 	db_1row choice_data {}
-
+	if {![string is true $copy_correct_answer_p]} {
+	    set correct_answer_p ""
+	}
 	set new_choice_id [new -title $title \
 			       -mc_id $mc_id \
 			       -data_type $data_type \

@@ -102,6 +102,8 @@ ad_proc -public as::item_type_mc::new_revision {
 
 ad_proc -public as::item_type_mc::copy {
     -type_id:required
+    {-copy_correct_answer_p "t"}
+    -new_title
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -114,7 +116,12 @@ ad_proc -public as::item_type_mc::copy {
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
 	db_1row item_type_data {}
-
+        if {[info exists new_title]} {
+	    set title $new_title
+	}
+	if {[string is false $copy_correct_answer_p]} {
+	    set num_correct_answers 0
+	}
 	set new_item_type_id [new -title $title \
 				  -increasing_p $increasing_p \
 				  -allow_negative_p $allow_negative_p \
@@ -123,7 +130,7 @@ ad_proc -public as::item_type_mc::copy {
 
 	set choices [db_list get_choices {}]
 	foreach choice_id $choices {
-	    set new_choice_id [as::item_choice::copy -choice_id $choice_id -mc_id $new_item_type_id]
+	    set new_choice_id [as::item_choice::copy -choice_id $choice_id -mc_id $new_item_type_id -copy_correct_answer_p $copy_correct_answer_p]
 	}
     }
 
@@ -466,6 +473,9 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     
     if {![as::item::get_item_type_info -as_item_id $as_item_id] \
             || $item_type_info(object_type) != "as_item_type_mc"} {
+	# always set mc title to empty on new mc question
+	# we ask for a title for the mc answer set seperately if
+	# required
         set mc_id [as::item_type_mc::new \
                        -title $title \
                        -increasing_p $increasing_p \
@@ -483,7 +493,6 @@ ad_proc -private as::item_type_mc::add_to_assessment {
         }
     } else {
         # old mc item type existing
-        set as_item_id [as::item::new_revision -as_item_id $as_item_id]
         set mc_id [as::item_type_mc::edit \
                        -as_item_type_id $as_item_type_id \
                        -title $title \
