@@ -42,7 +42,7 @@
 <fullquery name="as::item_type_mc::render.choices">
       <querytext>
 
-	select c.choice_id, r.title, c.correct_answer_p, c.selected_p, c.fixed_position,
+	select c.choice_id, r.title, c.correct_answer_p, c.selected_p, c.fixed_position,  c.feedback_text,
 	       r2.revision_id as content_rev_id, r2.title as content_filename,
 	       i.content_type
 	from cr_revisions r, as_item_choices c
