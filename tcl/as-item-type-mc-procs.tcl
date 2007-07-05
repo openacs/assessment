@@ -197,7 +197,6 @@ ad_proc -public as::item_type_mc::render {
     db_foreach choices {} {
 	incr total
 	set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
-selected_p = '${selected_p}' correct_answer_p = '${correct_answer_p}'"
 	if {$show_feedback ne "" && $show_feedback ne "none"} {
 		set pos [lsearch -exact -integer $defaults $choice_id]
 	    if {$pos > -1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
