@@ -10,7 +10,7 @@ ad_page_contract {
 
 } -query {
     {assessment_id ""}
-    {session_id ""}
+    {session_id:multiple ""}
     {return_url ""}
 } -properties {
     context:onevalue
@@ -39,6 +39,9 @@ ad_form -name send-mail -has_submit 1 -form {
 }
 
 if {[llength $session_id]} {
+    if {[llength $session_id] == 1} {
+	set session_id [split [lindex $session_id 0]]
+    }
     set options [db_list_of_lists get_session_user_options "select u.last_name || ', ' || u.first_names,user_id  from acs_users_all u, as_sessions s where s.session_id in ([template::util::tcl_to_sql_list $session_id]) and u.user_id = s.subject_id"]
     ad_form -extend -name send-mail -form {
         {user_ids:text(checkbox) {label "[_ assessment.Send_mail_to_the_selected_users]"} {options $options}}
@@ -118,5 +121,3 @@ ad_form -extend -name send-mail -on_request {
 
     
 }
-
-m
