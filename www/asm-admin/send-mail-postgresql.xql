@@ -3,7 +3,7 @@
 <queryset>
    <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
-    <partialquery name="dotlrn_all">
+    <partialquery name="all">
 	<querytext>
             select '[db_quote $sender_email]' as from_addr,
                '[db_quote $sender_first_names]' as sender_first_names,
@@ -31,17 +31,24 @@
 		     else '' end) as last_name,
                '[db_quote $community_name]' as community_name,
                '[db_quote $community_url]' as community_url
-            from party_approved_member_map,
+            from
                  parties,
-                 acs_objects
-            where party_approved_member_map.party_id = $segment_id
-            and party_approved_member_map.member_id <> $segment_id
-            and party_approved_member_map.member_id = parties.party_id
+                 acs_objects,
+                 users
+            where
+            parties.party_id <> 0
+            and parties.party_id = users.user_id        
             and parties.party_id = acs_objects.object_id
+            and exists (select 1 from acs_object_party_privilege_map m
+                        where m.object_id = $assessment_id
+                        and m.party_id = parties.party_id
+                        and m.privilege = 'read')
+        
+               
 	</querytext>
     </partialquery>
 
-    <partialquery name="dotlrn_responded">
+    <partialquery name="responded">
 	<querytext>
  		select '[db_quote $sender_email]' as from_addr,
                '[db_quote $sender_first_names]' as sender_first_names,
@@ -69,12 +76,12 @@
 		     else '' end) as last_name,
                '[db_quote $community_name]' as community_name,
                '[db_quote $community_url]' as community_url
-            from party_approved_member_map,
+            from 
                  parties,
-                 acs_objects
-            where party_approved_member_map.party_id = $segment_id
-            and party_approved_member_map.member_id <> $segment_id
-            and party_approved_member_map.member_id = parties.party_id
+                 acs_objects,
+                 users
+            where
+            parties.party_id = users.user_id                 
             and parties.party_id = acs_objects.object_id
 	    and parties.party_id in (
 		select s.subject_id
@@ -85,7 +92,7 @@
 	</querytext>
     </partialquery>
 
-    <partialquery name="dotlrn_not_responded">
+    <partialquery name="not_responded">
 	<querytext>
 		select '[db_quote $sender_email]' as from_addr,
                '[db_quote $sender_first_names]' as sender_first_names,
@@ -113,12 +120,13 @@
 		     else '' end) as last_name,
                '[db_quote $community_name]' as community_name,
                '[db_quote $community_url]' as community_url
-            from party_approved_member_map,
+            from 
                  parties,
-                 acs_objects
-            where party_approved_member_map.party_id = $segment_id
-            and party_approved_member_map.member_id <> $segment_id
-            and party_approved_member_map.member_id = parties.party_id
+                 acs_objects,
+                 users 
+            where
+            parties.party_id <> 0
+            and parties.party_id = users.user_id
             and parties.party_id = acs_objects.object_id
 	    and parties.party_id not in (
 		select s.subject_id
@@ -126,6 +134,10 @@
 		where s.assessment_id = r.revision_id
 		and s.completed_datetime is not null
 		and r.item_id = $assessment_id)
+                and exists (select 1 from acs_object_party_privilege_map m
+                        where m.object_id = $assessment_id
+                        and m.party_id = parties.party_id
+                        and m.privilege = 'read')
 	</querytext>
     </partialquery>
 
@@ -136,7 +148,8 @@
                '[db_quote $sender_last_name]' as sender_last_name,
                parties.email
             from parties
-            where parties.party_id in (
+            where
+                parties.party_id in (
 		select s.subject_id
 		from as_sessions s, cr_revisions r
 		where s.assessment_id = r.revision_id
@@ -145,4 +158,17 @@
 	</querytext>
     </partialquery>
 
+    <partialquery name="list_of_user_ids">
+	<querytext>
+ 		select '[db_quote $sender_email]' as from_addr,
+               '[db_quote $sender_first_names]' as sender_first_names,
+               '[db_quote $sender_last_name]' as sender_last_name,
+               parties.email
+            from parties
+            where
+                parties.party_id in ([template::util::tcl_to_sql_list $user_ids])
+
+	</querytext>
+    </partialquery>
+    
 </queryset>

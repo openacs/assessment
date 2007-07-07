@@ -8,6 +8,7 @@ ad_page_contract {
     assessment_id
     {start_time:optional ""}
     {end_time:optional ""}
+    status:optional,notnull
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -21,13 +22,15 @@ permission::require_permission \
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
 
+set package_id [ad_conn package_id]
+set folder_id [as::assessment::folder_id -package_id $package_id]
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
     ad_script_abort
 }
 
 set user_id [ad_conn user_id]
-set assessment_rev_id $assessment_data(assessment_rev_id)
+
 set page_title "[_ assessment.Results_by_user]"
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 set format "[lc_get formbuilder_date_format], [lc_get formbuilder_time_format]"
@@ -53,19 +56,19 @@ ad_form -name assessment_results -action results-users -form {
 	regsub -all -- {to_date} $end_time {to_timestamp} end_time
     }
 
+    
     if {![empty_string_p $start_time]} {
 	set start_date_sql [db_map restrict_start_date]
     }
     if {![empty_string_p $end_time]} {
 	set end_date_sql [db_map restrict_end_date]
     }
-    #ad_returnredirect [export_vars -base results-users {assessment_id start_time end_time}]
 }
 
 template::list::create \
     -name results \
     -multirow results \
-    -key sessions_id \
+    -key session_id \
     -elements {
 	session_id {
 	    label {[_ assessment.View_Results]}
@@ -75,7 +78,7 @@ template::list::create \
 	    label {[_ assessment.Name]}
 	}
         status {
-            label {#assessment.Status#}
+            label {\#assessment.Status\#}
         }
 	completed_datetime {
 	    label {[_ assessment.Finish_Time]}
@@ -88,17 +91,37 @@ template::list::create \
 	}
         delete {
             label {}
-            display_template {<a href=\"@results.delete_url@">[_ assessment.Delete_Attempts]</a>}
+            display_template {<a href="@results.delete_url@">[_ assessment.Delete_Attempts]</a>
+            }
         }
-    } -main_class {
-	narrow
-    } 
+    } -filters {
+	assessment_id {
+	    where_clause {
+		a.item_id = :assessment_id
+	    }
+	}
+	subject_id {
+	    where_clause {
+		cs.subject_id = :subject_id
+	    }
+	}
+	status {
+	    values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
+	    where_clause {
+		(case when :status = 'complete'
+		 then not cs.completed_datetime is null
+		 when :status = 'incomplete'
+		 then cs.completed_datetime is null and ns.session_id is not null
+		 else cs.completed_datetime is null and ns.session_id is null end)
+	    }
+	}
+    } -bulk_actions {"#assessment.Send_Email#" send-mail "#assessment.Send_an_email_to_the_selected users#"} \
+    -bulk_action_export_vars {assessment_id}
 
 
 template::multirow create subjects subject_id subject_url subject_name
 
-db_multirow -extend { result_url subject_url status delete_url } results assessment_results {
-} {
+db_multirow -extend { result_url subject_url status delete_url } results assessment_results {} {
     # to display list of users who answered the assessment if anonymous
     template::multirow append subjects $subject_id [acs_community_member_url -user_id $subject_id] $subject_name
 
@@ -133,15 +156,13 @@ if {$assessment_data(anonymous_p) == "t"} {
 	} 
 }
 
-# FIXME 
-set dotlrn_installed_p [apm_package_installed_p dotlrn]
-if {$dotlrn_installed_p} {
-    set count_all_users [llength [dotlrn_community::list_users [dotlrn_community::get_community_id]]]
-} else {
-    # TODO get count from subsite
-    set count_all_users 0
-}
-                         
+set count_all_users [db_string q "select count(*) from users u
+                                  where u.user_id <> 0 
+                                  and exists (select 1
+                                      from acs_object_party_privilege_map
+                                      where party_id = u.user_id
+                                      and object_id = :assessment_id
+                                      and privilege = 'read')" -default 0]                 
 set count_complete [template::multirow size subjects]
 set count_incomplete [expr {$count_all_users - $count_complete}]
 ad_return_template
