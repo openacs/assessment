@@ -28,9 +28,7 @@
                       (select last_name
                        from persons
                        where person_id = parties.party_id)
-		     else '' end) as last_name,
-               '[db_quote $community_name]' as community_name,
-               '[db_quote $community_url]' as community_url
+		     else '' end) as last_name
             from
                  parties,
                  acs_objects,
@@ -43,8 +41,6 @@
                         where m.object_id = $assessment_id
                         and m.party_id = parties.party_id
                         and m.privilege = 'read')
-        
-               
 	</querytext>
     </partialquery>
 
@@ -73,9 +69,7 @@
                       (select last_name
                        from persons
                        where person_id = parties.party_id)
-		     else '' end) as last_name,
-               '[db_quote $community_name]' as community_name,
-               '[db_quote $community_url]' as community_url
+		     else '' end) as last_name
             from 
                  parties,
                  acs_objects,
@@ -167,7 +161,6 @@
             from parties
             where
                 parties.party_id in ([template::util::tcl_to_sql_list $user_ids])
-
 	</querytext>
     </partialquery>
     
