@@ -89,11 +89,6 @@ template::list::create \
 	    html {align right nowrap}
 	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.percent_score@</a></if><else></else>}
 	}
-        delete {
-            label {}
-            display_template {<a href="@results.delete_url@">[_ assessment.Delete_Attempts]</a>
-            }
-        }
     } -filters {
 	assessment_id {
 	    where_clause {
