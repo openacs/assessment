@@ -124,9 +124,3 @@
 
 
 </table>
-
-<if @sections:rowcount@ eq 0>
-<p>
-<font color=red><b>#assessment.add_section_first#</b></font>
-</p>
-</if>
