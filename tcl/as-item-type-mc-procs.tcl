@@ -174,7 +174,7 @@ ad_proc -public as::item_type_mc::render {
 		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
-		    if {$correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		    if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
 		        lappend choice_list [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		    } else {
 		        lappend choice_list [list $title $choice_id]
