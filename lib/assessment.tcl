@@ -1,5 +1,5 @@
 ad_page_contract {
-e
+
     This page allows to display an assessment with sections and items
 
     @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
@@ -34,7 +34,6 @@ set url ""
 if { [info exists return_url] } {
     
     set url $return_url
-#    ns_log notice "$return_url"
 } 
 
 set return_url "$url"
@@ -66,10 +65,11 @@ set assessment_package_id $assessment_data(package_id)
 
 db_transaction {
     if {[empty_string_p $session_id]} {
-	
+
 	# Check if there is an unfinished session lying around
 	set session_id [db_string unfinished_session_id {}]
-	if {[empty_string_p $session_id]} {
+    }
+    	if {[empty_string_p $session_id]} {
 	    # start new session
 	    set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id -package_id $assessment_package_id]
 	    if {[empty_string_p $assessment_data(consent_page)]} {
@@ -80,27 +80,25 @@ db_transaction {
 	    }
 	} else {
 	    # pick up old session
-	    db_1row unfinished_section_order {}
-	    if {[empty_string_p $section_order]} {
-#		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm single_section_id}]
-	    } else {
-		db_1row unfinished_section_id {}
-		db_1row unfinished_item_order {}
-		if {[empty_string_p $item_order]} {
-		    db_1row unfinished_last_item {}
-		}
-		incr section_order -1
-		if {$item_order eq ""} {
-		    set item_order 0
+	    if {$section_order eq ""} {
+		db_1row unfinished_section_order {}
+		if {[empty_string_p $section_order]} {
+		    #		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm single_section_id}]
 		} else {
-		    incr item_order -1
+		    db_1row unfinished_section_id {}
+		    db_1row unfinished_item_order {}
+		if {![empty_string_p $item_order]} {
+		    incr section_order -1
+		    if {$item_order eq ""} {
+			set item_order 0
+		    } else {
+			incr item_order -1
+		    }		    
 		}
+		}
+
 	    }
 	}
-    } else {
-	# set time the subject initiated the assessment, if not already done
-	db_dml session_start {}
-    }
 
     if {![info exists consent_url]} {
 	db_1row session_time {}
@@ -149,7 +147,6 @@ db_transaction {
 	}
 
 	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id -package_id $assessment_package_id
-#	ns_log notice "Assessment section_id='${section_id}' session_id='${session_id}' assessnent='${assessment_rev_id}'"
 	db_1row section_data {} -column_array section
 	set display_type_id $section(display_type_id)
 	if {![empty_string_p $display_type_id]} {
@@ -192,7 +189,6 @@ db_transaction {
 	if { ![exists_and_not_null item_order] } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
-#	ns_log notice "page_display_per_page = '${page_display_per_page}'"
 	set current_page [expr {$item_order == 0 ? 0 : $item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages
@@ -356,9 +352,7 @@ foreach one_item $item_list {
 
     set default_value ""
     set submitted_p f
-#    ns_log notice "ASSESSMENT.TCL display(submit_answer_p)='${display(submit_answer_p)}'"
     if {$display(submit_answer_p) != "t"} {
-#	ns_log notice "ASSESSMENT.TCL NO seperate submit"
 	# no seperate submit of each item
 	if {$assessment_data(reuse_responses_p) == "t"} {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
@@ -366,7 +360,6 @@ foreach one_item $item_list {
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p -random_p $assessment_data(random_p)]
 	
     } else {
-#	ns_log notice "ASSESSMENT.TCL YES seperate submit"
 	# submit each item seperately
 	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id]
 	if {![empty_string_p $default_value]} {
@@ -397,7 +390,6 @@ foreach one_item $item_list {
 	set on_submit "{
 	    db_transaction {
 		db_dml session_updated {}
-
 		# save answer
 		set response_item_id \$item_id
                 
@@ -477,8 +469,12 @@ if {$display(submit_answer_p) != "t"} {
 
     set on_submit "{
 	db_transaction {
-	    db_dml session_updated {}
+            \# check if we already submitted this section!
+            if {\[db_string count_submitted_session \"select count(*) from as_section_data where session_id = :session_id and section_id = :section_id and completed_datetime is not null\" -default 0\] == 0} {
+\#                ad_return_complaint 1 \"Double click detected\"
 
+            as::session::update_elapsed_time -session_id $session_id -section_id $section_id
+	    db_dml session_updated {}
 	    # save answers
 	    foreach one_response \$item_list {
 		util_unlist \$one_response response_item_id
@@ -504,6 +500,7 @@ if {$display(submit_answer_p) != "t"} {
 
 		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id \$assessment_package_id
 	    }
+        } 
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
@@ -614,5 +611,9 @@ if {$display(submit_answer_p) != "t"} {
 
 set form_is_submit [template::form::is_submission show_item_form]
 set form_is_valid [template::form::is_valid show_item_form]
+
+# we are viewing the questions, so start the timer by recording a view
+views::record_view -object_id $section_id -viewer_id $user_id
+views::record_view -object_id $assessment_id -viewer_id $user_id
 ad_return_template $template
 
