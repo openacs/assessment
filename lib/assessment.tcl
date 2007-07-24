@@ -517,7 +517,10 @@ if {$display(submit_answer_p) != "t"} {
     }"
 
     set after_submit "{
-	if {!\[empty_string_p \$new_section_order\]} {
+\# NOTE the code just incrementes section order so when the section order
+\# is greate than the number of items in the list of sections
+\# we know we are done and should finish the assessment
+	if {!\[empty_string_p \$new_section_order\] && \$new_section_order <= [llength \$section_list]} {
 	    # go to next section
             if { \$section_to != \"\"} {
                 set section_order \$section_to
