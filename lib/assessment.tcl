@@ -520,7 +520,7 @@ if {$display(submit_answer_p) != "t"} {
 \# NOTE the code just incrementes section order so when the section order
 \# is greate than the number of items in the list of sections
 \# we know we are done and should finish the assessment
-	if {!\[empty_string_p \$new_section_order\] && \$new_section_order <= [llength \$section_list]} {
+	if {!\[empty_string_p \$new_section_order\] && \$new_section_order <= \[llength \$section_list\]} {
 	    # go to next section
             if { \$section_to != \"\"} {
                 set section_order \$section_to
@@ -529,7 +529,7 @@ if {$display(submit_answer_p) != "t"} {
             }
 	    set item_order \$new_item_order
 \#	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple nxt_url total_pages current_page}\]
+	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url total_pages current_page}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
