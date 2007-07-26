@@ -155,6 +155,11 @@ ad_proc -public as::item_type_mc::render {
 	array set values $default_value
 	set defaults $values(choice_answer)
     }
+    db_1row item_type_data {}
+    ns_log notice "
+render mc
+num_correct_answers '${num_correct_answers}'
+"
     if {![empty_string_p $session_id]} {
 	if {[empty_string_p $show_feedback] || $show_feedback == "none"} {
 	    set choice_list ""
@@ -169,12 +174,12 @@ ad_proc -public as::item_type_mc::render {
 	    db_foreach get_sorted_choices_with_feedback {} {
 		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
 		set pos [lsearch -exact -integer $defaults $choice_id]
-		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+		if {$num_correct_answers > 0 && $pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
-		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+		} elseif {$num_correct_answers > 0 && $pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
-		    if {[llength $defaults] && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		    if {$num_correct_answers > 0 && [llength $defaults] && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
 		        lappend choice_list [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		    } else {
 		        lappend choice_list [list $title $choice_id]
@@ -188,7 +193,6 @@ ad_proc -public as::item_type_mc::render {
 	}
     }
 
-    db_1row item_type_data {}
 
     set display_choices [list]
     set correct_choices [list]
