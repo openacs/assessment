@@ -42,7 +42,7 @@ set type $assessment_data(type)
 
 ad_form -name item_edit_mc -action item-edit-mc -export { assessment_id section_id num_choices } -form {
     {as_item_id:key}
-    {title:text {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
+    {title:text,optional {label "[_ assessment.Title]"} {html {size 80 maxlength 1000}} {help_text "[_ assessment.mc_Title_help]"}}
 }
 
 if {$type > 1} {
@@ -142,9 +142,9 @@ set edit_data "{
 	as::assessment::check::copy_item_checks -assessment_id \$assessment_id -section_id \$new_section_id -as_item_id \$as_item_id -new_item_id \$new_item_id
 
 	as::section::update_section_in_assessment\
-                -old_section_id $section_id \
-                -new_section_id $new_section_id \
-                -new_assessment_rev_id $new_assessment_rev_id
+                -old_section_id \$section_id \
+                -new_section_id \$new_section_id \
+                -new_assessment_rev_id \$new_assessment_rev_id
 	db_dml update_item_in_section {}
 	db_dml update_item_type {}
 
