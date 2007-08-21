@@ -124,7 +124,7 @@ ad_form -extend -name section_form -new_request {
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base questions {assessment_id}]
+    ad_returnredirect [export_vars -base questions {assessment_id}]&\#S${new_section_id}
     ad_script_abort
 }
 
