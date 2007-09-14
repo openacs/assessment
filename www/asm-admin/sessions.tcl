@@ -27,6 +27,7 @@ set form [rp_getform]
 ns_set delkey $form status
 set page_title [_ assessment.All_Users]
 if {[info exists assessment_id]} {
+    as::assessment::data -assessment_id $assessment_id
     set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
 } else {
     set context [list [list index [_ assessment.admin]] $page_title]
@@ -171,7 +172,7 @@ db_multirow sessions get_sessions [subst {
                                     group by subject_id, assessment_id)) ns
     on (a.user_id = ns.subject_id and a.assessment_id = ns.assessment_id)
 
-    where true
+    where 1=1
     [list::filter_where_clauses -and -name "sessions"]
 
     order by lower(a.title), lower(a.last_name), lower(a.first_names)
