@@ -297,3 +297,9 @@ end as_action;
 /
 show errors;
 	
+alter table as_session_items drop constraint as_session_items_item_fk;
+alter table as_session_items drop constraint as_session_items_section_fk;
+alter table as_session_items drop constraint as_session_items_session_fk;
+alter table as_session_items add constraint "as_session_items_item_fk" FOREIGN KEY (as_item_id) REFERENCES as_items(as_item_id) on delete cascade;
+alter table as_session_items add constraint "as_session_items_section_fk" FOREIGN KEY (section_id) REFERENCES as_sections(section_id) on delete cascade;
+alter table as_session_items add constraint "as_session_items_session_fk" FOREIGN KEY (session_id) REFERENCES as_sessions(session_id) on delete cascade;
