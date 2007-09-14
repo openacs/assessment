@@ -65,6 +65,18 @@ ad_form -name assessment_results -action results-users -form {
     }
 }
 
+if { [exists_and_not_null status] } {
+    if { $status == "complete" } {
+        set whereclause "cs.completed_datetime is not null"
+    } elseif { $status == "incomplete" } {
+        set whereclause "cs.completed_datetime is null and ns.session_id is not null"
+    } else {
+        set whereclause "cs.completed_datetime is null and ns.session_id is null"
+    }
+} else {
+    set whereclause "cs.completed_datetime is null and ns.session_id is null"
+}
+
 template::list::create \
     -name results \
     -multirow results \
@@ -103,11 +115,7 @@ template::list::create \
 	status {
 	    values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
 	    where_clause {
-		(case when :status = 'complete'
-		 then not cs.completed_datetime is null
-		 when :status = 'incomplete'
-		 then cs.completed_datetime is null and ns.session_id is not null
-		 else cs.completed_datetime is null and ns.session_id is null end)
+            $whereclause
 	    }
 	}
     } -bulk_actions {"#assessment.Send_Email#" send-mail "#assessment.Send_an_email_to_the_selected users#"} \
