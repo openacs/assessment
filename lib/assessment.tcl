@@ -473,7 +473,6 @@ if {$display(submit_answer_p) != "t"} {
             if {\[db_string count_submitted_session \"select count(*) from as_section_data where session_id = :session_id and section_id = :section_id and completed_datetime is not null\" -default 0\] == 0} {
 \#                ad_return_complaint 1 \"Double click detected\"
 
-            as::session::update_elapsed_time -session_id $session_id -section_id $section_id
 	    db_dml session_updated {}
 	    # save answers
 	    foreach one_response \$item_list {
@@ -615,8 +614,5 @@ if {$display(submit_answer_p) != "t"} {
 set form_is_submit [template::form::is_submission show_item_form]
 set form_is_valid [template::form::is_valid show_item_form]
 
-# we are viewing the questions, so start the timer by recording a view
-views::record_view -object_id $section_id -viewer_id $user_id
-views::record_view -object_id $assessment_id -viewer_id $user_id
 ad_return_template $template
 
