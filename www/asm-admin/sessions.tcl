@@ -54,6 +54,18 @@ if { [info exists assessment_id] } {
     lappend actions "[_ assessment.Summary]" [export_vars -base item-stats { assessment_id {return_url [ad_return_url]} }] "[_ assessment.Summary]"
 }
 
+if { [exists_and_not_null status] } {
+        if { $status == "complete" } {
+                set whereclause "cs.completed_datetime is not null"
+        } elseif { $status == "incomplete" } {
+                set whereclause "cs.completed_datetime is null and ns.session_id is not null"
+        } else {
+                set whereclause "cs.completed_datetime is null and ns.session_id is null"
+        }
+} else {
+        set whereclause "cs.completed_datetime is null and ns.session_id is null"
+}
+
 # Check membership
 
 template::list::create \
@@ -121,11 +133,7 @@ template::list::create \
 	status {
 	    values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
 	    where_clause {
-		(case when :status = 'complete'
-		 then not cs.completed_datetime is null
-		 when :status = 'incomplete'
-		 then cs.completed_datetime is null and ns.session_id is not null
-		 else cs.completed_datetime is null and ns.session_id is null end)
+			$whereclause
 	    }
 	}
     }
