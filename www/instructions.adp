@@ -6,7 +6,7 @@
   @assessment_data.instructions;noquote@
 </p>
 <p>
-  <if @assessment_data.number_tries@ eq "" or @completed_session_count@ lt @assessment_data.number_tries@>
+  <if @assessment_data.number_tries@ eq "" or @assessment_data.number_tries@ lt 1 or @completed_session_count@ lt @assessment_data.number_tries@>
   <if @unfinished_session_id@ not nil>
     #assessment.Resume_Assessment_Title#
   </if> 

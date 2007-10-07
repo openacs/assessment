@@ -12,7 +12,7 @@ ad_page_contract {
 permission::require_permission \
     -object_id [ad_conn package_id] \
     -party_id [ad_conn user_id] \
-    -privilege "admin"
+    -privilege "create"
 
 set context [list "[_ assessment.Import_Results]"]
 

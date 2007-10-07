@@ -12,7 +12,6 @@
 	    </b>
       </if>
      </if>
-
 <div class="feedback-message"><if @items.correct_p@ eq 1>
 <if @show_feedback@ eq correct or @show_feedback@ eq all><div class="right">@items.feedback_right;noquote@</div></if></if>
 	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><div class="wrong">@items.feedback_wrong;noquote@</div></if></if>
@@ -87,7 +86,7 @@
 </if>
 
 <ul> <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@" &=assessment>    <if @edit_p@ eq 1 and @items.answered_p@ eq t><li><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Add_Comment#</a></li></if>
-	    <if @feedback_only_p@ ne "t" and @assessment_data.type@ ne survey and @items.result_points@ not nil and @showpoints@ eq 1><li><b>@items.result_points@ / @items.points@ #assessment.points#</b></li></if>
+	    <if @feedback_only_p@ ne "t" and @assessment_data.type@ ne survey and @items.result_points@ not nil and @showpoints@ true and @items.points@ gt 0><li><b>@items.result_points@ / @items.points@ #assessment.points#</b></li></if>
 </ul>
 <hr>
 </multiple>

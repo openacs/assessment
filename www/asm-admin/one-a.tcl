@@ -81,7 +81,7 @@ set notification_chunk [notification::display::request_widget \
 			    -type assessment_response_notif \
 			    -object_id $assessment_id \
 			    -pretty_name   $title \
-			    -url [export_vars -base one-a {assessment_id reg_p}] ]
+			    -url [ad_return_url] ]
 
 db_multirow -extend { section_url } sections assessment_sections {} {
     if {[empty_string_p $points]} {

@@ -2,6 +2,7 @@ ad_page_contract {
     Publish or unpublish an assessment
 } {
     assessment_id:integer,notnull
+    {return_url ""}
 }
 
 permission::require_permission \
@@ -26,4 +27,7 @@ if { ($empty_sections eq "") || ($publish_status eq "live") } {
     set message "Publish failed. Following section(s) have no questions: ${empty_sections}"
 }
 
-ad_returnredirect -message $message [export_vars -base one-a {assessment_id}]
+if {$return_url eq ""} {
+    set return_url [export_vars -base one-a {assessment_id}]
+}
+ad_returnredirect -message $message $return_url

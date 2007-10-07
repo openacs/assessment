@@ -199,13 +199,16 @@ create unique index as_session_sections_pk2 on as_session_sections (section_id, 
 create table as_session_items (
 	session_id	integer
 			constraint as_session_items_session_fk
-			references as_sessions,
+			references as_sessions
+                        on delete cascade,
 	section_id	integer
 			constraint as_session_items_section_fk
-			references as_sections,
+			references as_sections
+                        on delete cascade,
 	as_item_id	integer
 			constraint as_session_items_item_fk
-			references as_items,
+			references as_items
+                        on delete cascade,
 	sort_order	integer,
 	constraint as_session_items_pk
 	primary key (session_id, section_id, as_item_id)

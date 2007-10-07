@@ -9,7 +9,7 @@ ad_page_contract {
 
 permission::require_permission \
     -party_id [ad_conn user_id] \
-    -object_id [ad_conn package_id] \
+    -object_id $assessment_id \
     -privilege admin
 as::assessment::data -assessment_id $assessment_id
 set assessment_name $assessment_data(name)

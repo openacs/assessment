@@ -9,6 +9,7 @@
         where item_id = :assessment_id
         and assessment_id = revision_id
         and subject_id = :user_id
+        and completed_datetime is not null
     </querytext>
 </fullquery>
 

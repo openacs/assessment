@@ -45,7 +45,8 @@ set admin_p [permission::permission_p \
                  -privilege admin \
                  -party_id $user_id]
 
-set delete_url [export_vars -base asm-admin/session-delete {assessment_id subject_id {orig_session_id $session_id} {return_url [ad_return_url]}}]
+set delete_return_url [export_vars -base ../session {assessment_id}]
+set delete_url [export_vars -base asm-admin/session-delete {assessment_id subject_id {orig_session_id $session_id} {return_url $delete_return_url}}]
 
 set page_title "[_ assessment.View_Results]"
 set context_bar [ad_context_bar [list [export_vars -base sessions {assessment_id}] "[_ assessment.Show_Sessions]"] $page_title]

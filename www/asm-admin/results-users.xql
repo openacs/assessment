@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="assessment_results">
+<fullquery name="assessment_results_orig">
 	<querytext>
 	select s.session_id, s.subject_id, s.percent_score,
 	       to_char(s.completed_datetime, :format) as completed_datetime,
@@ -21,4 +21,5 @@
 	order by s.completed_datetime
 	</querytext>
 </fullquery>
+
 </queryset>

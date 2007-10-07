@@ -19,7 +19,7 @@ set admin_p [permission::permission_p \
 
 set section_list [as::assessment::sections -assessment_id $assessment_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
 
-if {[lsearch $section_list $section_id] eq [expr {[llength $section_list]-1}]} {
+if {(![info exists next_url] || $next_url eq "") && [lsearch $section_list $section_id] eq [expr {[llength $section_list]-1}]} {
     set next_url [export_vars -base session {session_id next_url}]
 }
 
@@ -33,14 +33,15 @@ if {[info exists item_id_list]} {
 ad_form -name session_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
-
+ad_form -name Xsession_results_$section_id -mode display -form {
+    {section_id:text(hidden) {value $section_id}}
+}
 set feedback_count 0
 db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p correct_p view} items session_items {} {
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
     array set item [as::item::item_data -as_item_id $as_item_id]
 
-    set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback]
-    
+    set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback -random_p $assessment_data(random_p)]
 
     if {$presentation_type == "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
@@ -99,7 +100,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 
 		if { $presentation_type == "rb" } {
 		    set user_answers [lindex $user_answers 0]
-		 
+
 		    if { [lsearch $correct_answers $user_answers] == -1 } {
 			set correct_p 0
 			if {$show_feedback != "correct"} {
@@ -192,5 +193,5 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
 	set this(next_pr_type) ""
     }
 }
-
 set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
+

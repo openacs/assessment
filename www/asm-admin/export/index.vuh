@@ -384,12 +384,12 @@ db_multirow sections query_all_sections {} {
 		$presentation appendChild $response_str	    
 	        #get rows and cols for painting a textarea (in abs_size is stored as "rows value cols value", we need to add the symbol =) 
                 db_0or1row html_rows_cols "SELECT html_display_options FROM as_item_display_ta WHERE as_item_display_id=:item_display_id"
-                if {![empty_string_p $html_display_options]} {
-		    set rows "[lindex $html_display_options 3]"
-		    set columns "[lindex $html_display_options 1]"
+	        if {![catch {array set html_array $html_display_options} errMsg] && [info exists html_array(rows)] && [info exists html_array(cols)]} {
+		    set rows $html_array(rows)
+		    set columns $html_array(cols)
 		} else {
-		    set rows 5
-		    set columns 25
+		    set rows 15
+		    set columns 55
 		}   
 		#<render_fib>
 		set render_fib [$doc createElement render_fib]
@@ -473,7 +473,7 @@ db_multirow sections query_all_sections {} {
 		    #<or>
 		    set or [$doc createElement or]
 		    $conditionvar appendChild $or
-		    set list_choice_title $choice_title
+		    set list_choice_title [list $choice_title]
 		    for {set j 0} {$j < [llength $list_choice_title]} {incr j 1} {
 			#<varequal>
 			set varequal [$doc createElement varequal]
@@ -564,7 +564,8 @@ db_multirow sections query_all_sections {} {
 		    #<or>
 		    set or [$doc createElement or]
 		    $and appendChild $or
-		    set list_choice_title $choice_title
+	            set list_choice_title [list $choice_title]
+                    
 		    for {set j 0} {$j < [llength $list_choice_title]} {incr j 1} {
 			#<varequal>
 			set varequal [$doc createElement varequal]
@@ -628,7 +629,9 @@ db_multirow sections query_all_sections {} {
 		    set i 0
 		    # [info exists tb__display_id] because for fib item choice_correct_answer_p is null
 		    if { $choice_correct_answer_p == "t" || [info exists tb__display_id] } {
-			set list_choice_title $choice_title
+
+                    set list_choice_title [list $choice_title]
+                    
 			set length_list_choice_title [llength $list_choice_title]
 			
 			if {![info exists tb__display_id]} {

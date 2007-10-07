@@ -102,6 +102,8 @@ ad_proc -public as::item_type_mc::new_revision {
 
 ad_proc -public as::item_type_mc::copy {
     -type_id:required
+    {-copy_correct_answer_p "t"}
+    -new_title
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -114,7 +116,12 @@ ad_proc -public as::item_type_mc::copy {
     # Insert as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
 	db_1row item_type_data {}
-
+        if {[info exists new_title]} {
+	    set title $new_title
+	}
+	if {[string is false $copy_correct_answer_p]} {
+	    set num_correct_answers 0
+	}
 	set new_item_type_id [new -title $title \
 				  -increasing_p $increasing_p \
 				  -allow_negative_p $allow_negative_p \
@@ -123,7 +130,7 @@ ad_proc -public as::item_type_mc::copy {
 
 	set choices [db_list get_choices {}]
 	foreach choice_id $choices {
-	    set new_choice_id [as::item_choice::copy -choice_id $choice_id -mc_id $new_item_type_id]
+	    set new_choice_id [as::item_choice::copy -choice_id $choice_id -mc_id $new_item_type_id -copy_correct_answer_p $copy_correct_answer_p]
 	}
     }
 
@@ -148,7 +155,11 @@ ad_proc -public as::item_type_mc::render {
 	array set values $default_value
 	set defaults $values(choice_answer)
     }
-
+    db_1row item_type_data {}
+    ns_log notice "
+render mc
+num_correct_answers '${num_correct_answers}'
+"
     if {![empty_string_p $session_id]} {
 	if {[empty_string_p $show_feedback] || $show_feedback == "none"} {
 	    set choice_list ""
@@ -159,15 +170,16 @@ ad_proc -public as::item_type_mc::render {
 	} else {
 	    # incorrect correct
 	    set choice_list ""
+
 	    db_foreach get_sorted_choices_with_feedback {} {
 		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
 		set pos [lsearch -exact -integer $defaults $choice_id]
-		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+		if {$num_correct_answers > 0 && $pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
-		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+		} elseif {$num_correct_answers > 0 && $pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
-		    if {$correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		    if {$num_correct_answers > 0 && [llength $defaults] && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
 		        lappend choice_list [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		    } else {
 		        lappend choice_list [list $title $choice_id]
@@ -181,7 +193,6 @@ ad_proc -public as::item_type_mc::render {
 	}
     }
 
-    db_1row item_type_data {}
 
     set display_choices [list]
     set correct_choices [list]
@@ -190,7 +201,24 @@ ad_proc -public as::item_type_mc::render {
     db_foreach choices {} {
 	incr total
 	set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
-	lappend display_choices [list $title $choice_id]
+	if {$show_feedback ne "" && $show_feedback ne "none"} {
+		set pos [lsearch -exact -integer $defaults $choice_id]
+	    if {$pos > -1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+		lappend display_choices [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
+	    } elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+		lappend display_choices [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
+	    } else {		    
+		if {$correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		    lappend display_choices [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
+		} else {
+		    lappend display_choices [list $title $choice_id]
+		}	
+	    }
+	} else {
+	    lappend display_choices [list $title $choice_id]
+	}
+    
+#	lappend display_choices [list $title $choice_id]
 	if {$selected_p == "t"} {
 	    lappend defaults $choice_id
 	}
@@ -237,7 +265,6 @@ ad_proc -public as::item_type_mc::render {
 	set display_choices [concat $display_choices [lrange $wrong_choices 0 [expr $num_answers - [llength $display_choices] -1]]]
 	set display_choices [util::randomize_list $display_choices]
     }
-    
     # now add fixed positions in result list
     if {[array exists fixed_pos]} {
 	set max_pos [expr $num_answers + [array size fixed_pos]]
@@ -466,6 +493,9 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     
     if {![as::item::get_item_type_info -as_item_id $as_item_id] \
             || $item_type_info(object_type) != "as_item_type_mc"} {
+	# always set mc title to empty on new mc question
+	# we ask for a title for the mc answer set seperately if
+	# required
         set mc_id [as::item_type_mc::new \
                        -title $title \
                        -increasing_p $increasing_p \
@@ -483,7 +513,6 @@ ad_proc -private as::item_type_mc::add_to_assessment {
         }
     } else {
         # old mc item type existing
-        set as_item_id [as::item::new_revision -as_item_id $as_item_id]
         set mc_id [as::item_type_mc::edit \
                        -as_item_type_id $as_item_type_id \
                        -title $title \
@@ -494,7 +523,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
         
         as::item::update_item_type -item_type_id $mc_id -as_item_id $as_item_id
     }
-    ns_log notice "item-add inserting choices!! as_item_id = '${as_item_id}' mc_id='${mc_id}'"
+
     set count 0
     foreach i [lsort -integer [array names choice]] {
         if {![empty_string_p $choice($i)]} {
@@ -509,7 +538,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
                                -correct_answer_p [ad_decode [info exists correct($i)] 0 f t] \
                                -sort_order $count \
                                -percent_score ""]
-            ns_log notice "choice $count added for choice $i $choice($i) choice_id=${choice_id}"
+
         }
     }
     #FIXME add a select one/select all that apply option
@@ -572,7 +601,7 @@ ad_proc -private as::item_type_mc::add_existing_choices_to_edit_form {
                      [list delete.$id:text(submit) {label "Delete"}]]
         }
          ad_form -extend -name $form_id  -form [list [list choice.$id:text,optional,nospell {label "[_ assessment.Choice] $id"} {html {style {width: 60%;} maxlength 1000}} {value "$value"} ]]
-ns_log notice "--- $id ---"        
+
         if {[info exists correct($id)]} {
             ad_form -extend -name $form_id -form [list [list correct.$id:text(checkbox),optional {label "[_ assessment.Correct_Answer_Choice] $id"} {options $correct_options} {values t} ]]
         } else {
