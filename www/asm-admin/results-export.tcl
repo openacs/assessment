@@ -130,30 +130,25 @@ ad_form -name assessment_export -action results-export -form {
     }
 
     foreach item_id $item_list {
-	lappend csv_first_row_list $csv_first_row($item_id)
+	lappend csv_first_row_list "\"$csv_first_row($item_id)\""
     }
-    set csv_text "[join $csv_first_row_list ";"]\r\n"
+    set csv_text "[join $csv_first_row_list ","]\r\n"
 
     foreach session_id $session_list {
 	foreach item_id $item_list {
 	    if {[exists_and_not_null csv_${item_id}($session_id)]} {
-		lappend csv_result_list($session_id) "[set csv_${item_id}($session_id)]"
+		lappend csv_result_list($session_id) "\"[set csv_${item_id}($session_id)]\""
 	    } else {
 		lappend csv_result_list($session_id) ""
 	    }
 	}
-	append csv_text "[join $csv_result_list($session_id) ";"]\r\n"
+	append csv_text "[join $csv_result_list($session_id) ","]\r\n"
     }
     set csv_text [string map {\xe4 ä \xfc ü \xf6 ö \xdf ß \xc4 Ä \xdc Ü \xd6 Ö} $csv_text]
 } -after_submit {
-    set tmp_filename [ns_tmpnam]                                                                                                                                                            
-    set tmp_csv_filename "$tmp_filename.csv"
-    set fp [open $tmp_csv_filename w]
-    puts $fp "$csv_text"
-    close $fp 
     ns_set put [ad_conn outputheaders] Content-Disposition "attachment;filename=results.csv"
-    ns_return 200 "text/plain" [encoding convertfrom iso8859-1 "$csv_text"]
-    ns_returnfile 200 text/csv $tmp_csv_filename
+    ns_return 200 "text/csv" [encoding convertfrom iso8859-1 "$csv_text"]
+#    ns_returnfile 200 text/csv $tmp_csv_filename
      # iso-8859-1
 }
 
