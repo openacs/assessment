@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<message_catalog package_key="assessment" package_version="0.22d4" locale="el_GR" charset="utf-8">
+<message_catalog package_key="assessment" package_version="0.22d5" locale="el_GR" charset="utf-8">
 
   <msg key="Assessment">Αξιολόγηση</msg>
   <msg key="Assessments">Αξιολογήσεις</msg>
+  <msg key="Number_of_page_singular">(%total_pages% Σελίδα/ες)</msg>
+  <msg key="Open_Assessments">Ανοικτές Αξιολογήσεις</msg>
   <msg key="open_assessments">Προβολή αξιολογήσεων</msg>
+  <msg key="Results">Αποτελέσματα</msg>
+  <msg key="Resume_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Start&quot;&gt;Έναρξη μαθήματος: %assessment_data.title%&lt;/a&gt;</msg>
+  <msg key="Review">Επιθεώρηση</msg>
   <msg key="Sessions">Ενότητες</msg>
+  <msg key="Status">Κατάσταση</msg>
+  <msg key="Submit">Υποβολλή</msg>
+  <msg key="This_is_a_required">&lt;span style=&quot;color: #f00;&quot;&gt;*&lt;/span&gt; Απαιτούμενες ερωτήσεις.</msg>
+  <msg key="Title">Τίτλος</msg>
 </message_catalog>
