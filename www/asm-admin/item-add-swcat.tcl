@@ -33,7 +33,6 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set page_title [_ assessment.add_item_type_sa]
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] $page_title]
-set header_stuff ""
 set focus ""
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]

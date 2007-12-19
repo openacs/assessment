@@ -15,5 +15,6 @@
  set page_title "[_ assessment.View_Results]"
  set context_bar [ad_context_bar [list [export_vars -base sessions {assessment_id}] "[_ assessment.Show_Sessions]"] $page_title]
 
+template::head::add_css -href="/resources/assessment/assessment.css"
 
 ad_return_template

@@ -1,7 +1,6 @@
 <master>
 <property name="title">@page_title;noquote@</property>
 <property name="context">@context;noquote@</property>
-<property name="header_stuff"><style>.form-label {text-align:left;} .form-label label {font-weight:bold;}</style></property>
 <formtemplate id="item-add" style="accessible-forms">
 <!-- Form elements -->
 <fieldset>

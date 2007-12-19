@@ -33,6 +33,7 @@ if {$subject_id != $user_id} {
 
 set page_title "[_ assessment.View_Results]"
 set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base results-users {assessment_id}] [_ assessment.Results_by_user]] $page_title]
+template::head::add_css -href "/resources/assessment/assessment.css"
 set format "[lc_get d_fmt], [lc_get t_fmt]"
 set session_user_url [acs_community_member_url -user_id $subject_id]
 

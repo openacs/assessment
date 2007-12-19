@@ -68,8 +68,7 @@ ad_form -name session-delete -export {assessment_id subject_id return_url orig_s
         ad_script_abort
     }
 
-set header_stuff {
-<script type="text/javascript">
+template::head::add_javascript -script "
     function acs_CheckAll(elementName, checkP) {
 	var Obj, Type, Name, Id;
 	var Controls = acs_ListFindInput(); if (!Controls) { return; }
@@ -91,9 +90,7 @@ set header_stuff {
 						   }
 					       }
     }
-
-</script>
-}
+"
 
 set page_title [_ assessment.Delete_Attempts]
 set context [list $page_title]

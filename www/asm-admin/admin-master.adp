@@ -26,14 +26,6 @@
   <if @doc_type@ not nil><property
   name="doc_type">@doc_type;noquote@</property></if>
   <if @title@ not nil><property name="title">@title;noquote@</property></if>
-  <property name="header_stuff">
-<style type="text/css">
-/* Re-enable the breadcrumb bar -- useful for site-wide admins */
-#breadcrumbs {
-  display: inline;
-}
-</style>
-  </property>
 
 <slave>
 
