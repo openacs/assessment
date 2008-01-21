@@ -70,4 +70,4 @@ if {[info exists current_page]} {
     set finished_page $current_page
 }
 
-template::head::add_css -href="/resources/assessment/assessment.css"
+template::head::add_css -href "/resources/assessment/assessment.css"
