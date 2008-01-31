@@ -4,14 +4,14 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3">@assessment_data.title@</th></tr>
-<tr><td><i><font size="1">@assessment_data.instructions;noquote@</font></i></td></tr>
+<tr><td><i style="font-size: 1pt;">@assessment_data.instructions;noquote@</i></td></tr>
 <tr>
 <td colspan="3"><hr></td>
 </tr>
 </table>
 
 <table border="0">
-  <tr bgcolor="#d0d0d0"><td><b>@section.title@</b></td></tr>
+  <tr style="background-color: #d0d0d0;"><td><b>@section.title@</b></td></tr>
   <tr><td><i>@section.description@</i></td></tr>
   <tr><td>@section.instructions@</td></tr>
 </table>

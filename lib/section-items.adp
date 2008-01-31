@@ -1,38 +1,39 @@
 <formtemplate id="admin_section">
 <if @items:rowcount@ eq 0>
-    <a href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Add_New#</a>
-    <a href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=0">#assessment.Search_Item#</a>
+    <div>
+    <a href="@item_add_url@">#assessment.Add_New#</a>
+    <a href="@catalog_search_url@">#assessment.Search_Item#</a>
+    </div>
 </if>
 
 <multiple name="items">
 
-<a name="Q@items.as_item_id@"><h4>#assessment.Question_Number#</h4>
+<h4><a name="Q@items.as_item_id@">#assessment.Question_Number#</a></h4>
 
 <if @assessment_data.type@ ne 1>
 
-    <a class="button" href="item-edit-general?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a>
-    <a class="button" href="item-copy?section_id=@section_id@&assessment_id=@assessment_id@&as_item_id=@items.as_item_id@&after=@items.sort_order@">#assessment.Copy#</a>
-<a class=button href="item-add?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Add_New#</a>
-
-<a class=button href="catalog-search?section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.Search_Item#</a>
-    <img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
-<if @items.rownum@ lt @items:rowcount@>
-    <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=down"><img src="/resources/assessment/down.gif" border="0" alt="#assessment.Move_Down#"></a>
-</if>
+    <div><a class="button" href="@item_edit_general_url@">#assessment.Edit#</a>
+    <a class="button" href="@item_copy_url@">#assessment.Copy#</a>
+    <a class=button href="@item_add_url@">#assessment.Add_New#</a>
+    <a class=button href="@catalog_search_url@">#assessment.Search_Item#</a>
+    <img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
+    <if @items.rownum@ lt @items:rowcount@>
+        <a href="@item_swap_down_url@"><img src="/resources/assessment/down.gif" style="border: 0;" alt="#assessment.Move_Down#"></a>
+    </if>
     <if @items.rownum@ gt 1>
-   <a href="item-swap?section_id=@section_id@&assessment_id=@assessment_id@&sort_order=@items.sort_order@&direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
- </if>
-<a href="item-delete?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@"><img src="/resources/acs-subsite/Delete16.gif" border="0" alt="#assessment.remove_item#"></a>
+        <a href="@item_swap_up_url"><img src="/resources/assessment/up.gif" style="border: 0;" alt="#assessment.Move_Up#"></a>
+    </if>
+    <a href="@item_delete_url@"><img src="/resources/acs-subsite/Delete16.gif" style="border: 0;" alt="#assessment.remove_item#"></a>
 
-
-<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
-(@items.points@ #assessment.points#)
-<if @items.item_type@ eq "mc" and @admin_trigger_p@>
-<a class=button href="../asm-admin/add-edit-check?as_item_id=@items.as_item_id@&section_id=@section_id@&assessment_id=@assessment_id@&after=@items.sort_order@">#assessment.add_trigger#</a> (<a href="../asm-admin/checks-admin?section_id=@items.section_id@&assessment_id=@assessment_id@&item_id=@items.as_item_id@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
-</if>
+    <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
+    (@items.points@ #assessment.points#)
+    <if @items.item_type@ eq "mc" and @admin_trigger_p@>
+    <a class=button href="@add_edit_check_url@">#assessment.add_trigger#</a> (<a href="@check_admin_url@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
+    </if>
+    </div>
 
     <if @items.presentation_type@ ne fitb><p>@items.question_text;noquote@</p>
-
+<div>
 <if @items.description@ not nil>@items.description;noquote@<br></if></if>
 
     <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
@@ -54,9 +55,10 @@
     <else>
       <formwidget id="response_to_item.@items.as_item_id@">
     </else>
+</div>
     <if @items.subtext@ not nil>
       <div class="form-help-text">
-      <img src="/shared/images/info.gif" width="12" height="9" alt="[i]" title="Help text" border="0">
+      <img src="/shared/images/info.gif" width="12" height="9" alt="[i]" title="Help text" style="border: 0;">
       <noparse>@items.subtext@</noparse>
       </div>
     </if>

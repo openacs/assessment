@@ -94,11 +94,11 @@ template::list::create \
         }
 	completed_datetime {
 	    label {[_ assessment.Finish_Time]}
-	    html {nowrap}
+	    html {style white-space:nowrap}
 	}
 	percent_score {
 	    label {[_ assessment.Percent_Score]}
-	    html {align right nowrap}
+	    html {align right style white-space:nowrap}
 	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.percent_score@</a></if><else></else>}
 	}
     } -filters {

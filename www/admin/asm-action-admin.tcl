@@ -22,8 +22,8 @@ template::list::create \
 	    label {[_ assessment.action_edit]}
 	    display_template {
 
-		<a href=asm-action-new?action_id=@actions.action_id@>[_ assessment.Edit]</a>
-		| <a href=asm-action-delete?action_id=@actions.action_id@>[_ assessment.Delete]</a>
+		<a href="asm-action-new?action_id=@actions.action_id@">[_ assessment.Edit]</a>
+		| <a href="asm-action-delete?action_id=@actions.action_id@">[_ assessment.Delete]</a>
 	    }
 	}
     }

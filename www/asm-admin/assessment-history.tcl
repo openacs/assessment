@@ -40,7 +40,7 @@ template::list::create \
 	}
 	creation_date {
 	    label {[_ assessment.Modified_Time]}
-	    html {nowrap}
+	    html {style white-space:nowrap}
 	}
     } -main_class {
 	narrow

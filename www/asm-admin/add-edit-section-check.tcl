@@ -69,7 +69,7 @@ ad_form \
         }
         {description:text(textarea)
             {label "[_ assessment.action_description]"}
-            {html {cols 40} {rows 20}}
+            {html {cols 40 rows 20}}
             {help_text "[_ assessment.description_trigger]"}
         }
         {action_p:text(hidden)

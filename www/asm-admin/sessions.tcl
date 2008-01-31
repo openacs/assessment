@@ -106,7 +106,7 @@ template::list::create \
 	}
 	percent_score {
 	    label {[_ assessment.Percent_Score]}
-	    html {align right nowrap}
+	    html {align right}
 	    display_template {
 		<if @sessions.session_id@ not nil>
 		<a href="../session?session_id=@sessions.session_id@">

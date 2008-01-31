@@ -3,16 +3,16 @@
 <property name="context">@context;noquote@</property>
 
 <formtemplate id="item_edit_general">
-  <formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id">
-      <br/>
-        
+  <div><formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id">
+      <br></div>
+            <div>
               <if @formerror.question_text@ not nil>
                 <span class="form-label-error">
               </if>
               <else>
                 <span class="form-label">
               </else>
-            
+
             <label for="question_text">
               Question
             </label>
@@ -34,14 +34,13 @@
               <br>
                   @formerror.question_text;noquote@
             </formerror>
-          
+         </span></div>
             <p class="form-help-text">
               
                 <formhelp id="question_text">
-              
+            </p>
 
-        </span>   
-         
+        <div>
               <if @formerror.required_p@ not nil>
                 <span class="form-label-error">
               </if>
@@ -70,15 +69,14 @@
               <br>
                   @formerror.required_p;noquote@
             </formerror>
-          
+        </span></div>
             <p class="form-help-text">
               
                 <formhelp id="required_p">
-              
+            </p>
 
-        </span>   
         
-      <br/>
+      <div><br>
         
               <if @formerror.points@ not nil>
                 <span class="form-label-error">
@@ -108,15 +106,13 @@
               <br>
                   @formerror.points;noquote@
             </formerror>
-          
+          </span></div>
             <p class="form-help-text">
               
                 <formhelp id="points">
-              
+            </p>
 
-        </span>   
-        
-      <br/>
+      <div><br>
         
               <if @formerror.feedback_right@ not nil>
                 <span class="form-label-error">
@@ -146,15 +142,14 @@
               <br>
                   @formerror.feedback_right;noquote@
             </formerror>
-          
+        </span></div>
             <p class="form-help-text">
               
                 <formhelp id="feedback_right">
-              
+            </p>
 
-        </span>   
-        
-      <br/>
+
+      <div><br>
         
               <if @formerror.feedback_wrong@ not nil>
                 <span class="form-label-error">
@@ -184,33 +179,32 @@
               <br>
                   @formerror.feedback_wrong;noquote@
             </formerror>
-          
+        </span></div>
             <p class="form-help-text">
               
                 <formhelp id="feedback_wrong">
-              
-
-        </span>   
-       <br />
+            </p>
+       <div><br></div>
 <if @item_type@ eq "mc">
                       
-            <br /><formgroup-widget id="display_type" row=1></formgroup-widget>
-            <br /><formgroup-widget id="display_type" row=2></formgroup-widget>
+            <div><br><formgroup-widget id="display_type" row=1></formgroup-widget></div>
+            <div><br><formgroup-widget id="display_type" row=2></formgroup-widget></div>
 
             <if @formerror.display_type@ not nil>
-              <span class="form-widget-error">
+              <span class="form-widget-error"></span>
             </if>
             <else>
-              <span class="form-widget">                  
+              <span class="form-widget"></span>
             </else>
                      
             <formerror id="display_type">
                   @formerror.data_type;noquote@
             </formerror>
-          
+
             <p class="form-help-text">
               
                 <formhelp id="display_type">
+            </p>
 </if>                      
 
 <switch @item_type@>
@@ -234,11 +228,11 @@
         </if>
         <formwidget id="delete.@choice_elements.id@">
 </if>
-    <br />
+    <br>
 </multiple>
-<formwidget id="save_answer_set"> <label for="save_answer_set">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br />
-<formwidget id="add_another_choice"><br />
-<if @choice_sets@ not nil><p>#assessment.OrUseChoices#<br />
+<formwidget id="save_answer_set"> <label for="save_answer_set">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br>
+<formwidget id="add_another_choice"><br>
+<if @choice_sets@ not nil><p>#assessment.OrUseChoices#<br>
 <formwidget id="add_existing_mc_id">
 </p></if>
 </case>

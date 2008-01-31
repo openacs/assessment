@@ -2,7 +2,7 @@
 <property name="title">#assessment.Request# #assessment.Administration#</property>
 <property name="context_bar">@context;noquote@</property>
 
-<script language="JavaScript">
+<script type="text/javascript">
 
 function get_interval() {
         interval=document.interval.date.value; 
@@ -33,9 +33,9 @@ function get_specific_date() {
 }
 
 </script>
-      <table bgcolor="#cccccc" cellpadding="5" width="95%">
-	<tr bgcolor="#eeeeee">
-       	  <th align="left" width="50%">
+      <table style="background-color: #cccccc;" cellpadding="5" width="95%">
+	<tr style="background-color: #eeeeee;">
+       	  <th align="left" style="width:50%">
            <formtemplate id="assessments"></formtemplate>
           </th>
           <th>

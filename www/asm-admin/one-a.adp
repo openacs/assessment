@@ -11,7 +11,7 @@
 </tr>
 </table>
 
-<br />
+<br>
 
 <table class="table-display" cellpadding="2" cellspacing="0">
 
@@ -69,7 +69,7 @@
 </tr>
 
 <tr class="odd">
-  <td valign="top" rowspan="7"><nobr>#assessment.Response_Options# </nobr></td>
+  <td valign="top" rowspan="7"><div>#assessment.Response_Options# </div></td>
 </tr>
 
 <tr class="odd">
@@ -106,7 +106,7 @@
 	[ <a href="@edit_url@">#assessment.Edit#</a> ]</td>
 </tr>
 
-<tr class="even"><td valign="top">#assessment.Email_Options#</td><td >@notification_chunk;noquote@ <br /><a href="send-mail?assessment_id=@assessment_id@">#assessment.Send_bulkmail#</a> #assessment.regarding_this_assess# </td></tr>
+<tr class="even"><td valign="top">#assessment.Email_Options#</td><td >@notification_chunk;noquote@ <br><a href="send-mail?assessment_id=@assessment_id@">#assessment.Send_bulkmail#</a> #assessment.regarding_this_assess# </td></tr>
 	
 <tr class="odd">
 	<td>#assessment.Extreme_Actions# </td>
