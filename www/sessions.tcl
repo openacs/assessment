@@ -66,7 +66,6 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}
-		html {nowrap}
 	    }
 	} -main_class {
 	    narrow
@@ -91,11 +90,10 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    completed_datetime {
 		label {[_ assessment.Finish_Time]}
-		html {nowrap}
 	    }
 	    percent_score {
 		label {[_ assessment.Percent_Score]}
-		html {align right nowrap}
+		html {align right}
 	    }
 	} -main_class {
 	    narrow

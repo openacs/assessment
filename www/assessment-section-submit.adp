@@ -46,7 +46,6 @@
            </if>
 
            <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
-             <fieldset class="radio">
                <if @items.choice_orientation@ ne horizontal>
                  <formgroup id="response_to_item.@items.as_item_id@">
                    @formgroup.widget;noquote@ 
@@ -66,7 +65,6 @@
                    @formgroup.widget;noquote@
                  </formgroup>
                </else>
-             </fieldset>
            </if>
          
            <elseif @items.presentation_type@ eq fitb>
@@ -88,7 +86,7 @@
 
     </multiple>
 	<p>#assessment.This_is_a_required#</p>
-    <input type=submit value="#assessment.Submit#">
+    <div><input type=submit value="#assessment.Submit#"></div>
   </formtemplate>
 
 <!--<div style="clear: both;" />-->

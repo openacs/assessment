@@ -4,12 +4,11 @@
     </if>
 
     <multiple name="items">
-<if @admin_p@><p><a href="asm-admin/item-edit-general?as_item_id=@items.as_item_id@&assessment_id=@assessment_id@&section_id=@items.section_id@" target="_new">Edit this question</a></p></if>
+<if @admin_p@><p><a href="asm-admin/item-edit-general?as_item_id=@items.as_item_id@&assessment_id=@assessment_id@&section_id=@items.section_id@">Edit this question</a></p></if>
 <if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
      <if @show_item_name_p@ eq t><b>@items.name@:</b></if>
       <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
 	<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
-	    </b>
       </if>
      </if>
 <div class="feedback-message"><if @items.correct_p@ eq 1>
@@ -19,7 +18,7 @@
 	  <if @items.presentation_type@ ne fitb>
 	    <b>@items.title;noquote@</b>
 	     @items.content;noquote@
-<br />
+<br>
 	</if>
 	    <group column=title>
 	      <td valign=top>@items.description;noquote@

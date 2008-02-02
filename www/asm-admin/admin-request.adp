@@ -26,7 +26,7 @@ function get_state() {
 }
 
 function get_specific_date() {
-        date=document.specific_date.specific_date.value; 
+        date=document.specific_date_form.specific_date.value; 
         destination = "admin-request?state=@d_state@&assessment=@d_assessment@&date="+date;
         if (destination) location.href = destination;
       
@@ -40,7 +40,7 @@ function get_specific_date() {
           </th>
           <th>
            <formtemplate id="interval"></formtemplate>
-           <formtemplate id="specific_date"></formtemplate>
+           <formtemplate id="specific_date_form"></formtemplate>
           </th>
         </tr>
       </table>

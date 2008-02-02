@@ -113,7 +113,7 @@ ad_form -name interval  -form {
 } -has_submit 1
 
 
-ad_form -name  specific_date  -form {
+ad_form -name  specific_date_form  -form {
     {assessment:text(hidden)
 	{value $d_assessment}
     }
