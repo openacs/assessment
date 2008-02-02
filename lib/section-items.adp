@@ -1,11 +1,11 @@
-<formtemplate id="admin_section">
 <if @items:rowcount@ eq 0>
     <div>
-    <a href="@item_add_url@">#assessment.Add_New#</a>
-    <a href="@catalog_search_url@">#assessment.Search_Item#</a>
+    <a href="@item_add_url@" class="button">#assessment.Add_New#</a>
+    <a href="@catalog_search_url@" class="button">#assessment.Search_Item#</a>
     </div>
 </if>
-
+<else>
+ <formtemplate id="admin_section_@section_id@">
 <multiple name="items">
 
 <h4><a name="Q@items.as_item_id@">#assessment.Question_Number#</a></h4>
@@ -65,3 +65,4 @@
 </if>
 </multiple>
 </formtemplate>
+</else>

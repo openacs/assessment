@@ -1,5 +1,5 @@
 as::assessment::data -assessment_id $assessment_id
-ad_form -name admin_section -form {
+ad_form -name admin_section_${section_id} -form {
     {section_id:text(hidden) {value $section_id}}
 }
 
@@ -20,7 +20,7 @@ db_multirow -extend { checks_related presentation_type html item_type choice_ori
     set check_admin_url [export_vars -base ../asm-admin/checks-admin {section_id assessment_id {item_id $as_item_id}}]
 
 
-    set presentation_type [as::item_form::add_item_to_form -name admin_section -section_id $section_id -item_id $as_item_id -random_p f]
+    set presentation_type [as::item_form::add_item_to_form -name admin_section_${section_id} -section_id $section_id -item_id $as_item_id -random_p f]
     if {$presentation_type == "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }

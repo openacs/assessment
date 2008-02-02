@@ -5,7 +5,7 @@
 <include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="@tab@">
 
 <multiple name="sections">
-<h3><a name="@sections.sort_order@">#assessment.Section_Number#</a></h3>
+<h3><a name="@sections.sort_order@">#assessment.Section_Number#: @sections.title@</a></h3>
   <a class="button" href="@section_form_edit_url@">#assessment.Edit#</a> 
 
   <a class=button href="@section_form_add_url@">#assessment.add_new_section#</a>
@@ -29,10 +29,10 @@
   <a class=button href="@add_edit_section_check_url@">#assessment.add_section_trigger#</a>
 </if>
 
-<p>  @sections.title@ </p>
   <img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
-<fieldset><legend>#assessment.Items#</legend>
-  <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@sections.section_id@" admin_trigger_p="@admin_trigger_p@">
-</fieldset>
+ <fieldset> 
+   <legend>#assessment.Items#</legend>
+   <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@sections.section_id@" admin_trigger_p="@admin_trigger_p@">
+ </fieldset>
 </multiple>
 
