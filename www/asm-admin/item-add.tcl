@@ -126,7 +126,9 @@ if {[llength $choice_sets]} {
 }
 
 ad_form -extend -name item-add -form {
-    {save_answer_set:text(checkbox),optional {label "[_ assessment.Save_this_set_of_answers_for_reuse_later]"} {options {{"" t}}}}
+    {save_answer_set:text(checkbox),optional 
+        {options {{"#assessment.Save_this_set_of_answers_for_reuse_later#" t}}}
+    }
     {formbutton_add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
 }
 if {[template::form::is_submission item-add] \
@@ -156,7 +158,7 @@ as::item_type_mc::add_choices_to_form \
 
 # for open questions
 ad_form -extend -name item-add -form {
-    {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 style {width:95%}}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
+    {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 30 style {width:95%}}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
 }
 
 ad_form -extend -name item-add -form {

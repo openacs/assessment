@@ -29,7 +29,7 @@
             </else>
           
               <formwidget id="question_text">
-            
+            </span>
               <formerror id="question_text">
               <span class="form-error">
               <br>
@@ -66,7 +66,7 @@
             </else>
           
               <formwidget id="required_p">
-            
+            </span>
             <formerror id="required_p">
               <br>
                   @formerror.required_p;noquote@
@@ -101,7 +101,7 @@
             </else>
           
               <formwidget id="feedback_right">
-            
+            </span>
             <formerror id="feedback_right">
               <br>
                   @formerror.feedback_right;noquote@
@@ -136,7 +136,7 @@
             </else>
           
               <formwidget id="feedback_wrong">
-            
+            </span>
             <formerror id="feedback_wrong">
               <br>
                   @formerror.feedback_wrong;noquote@
@@ -145,7 +145,6 @@
             <p class="form-help-text">
               
                 <formhelp id="feedback_wrong">
-              </span>
             </p>
 
            <if @formerror.points@ not nil>
@@ -165,6 +164,7 @@
             <span class="form-widget">
            </else>
              <formwidget id=points>
+             </span>
              <formerror id="points">
              <br>
                @formerror.points;noquote@
@@ -172,22 +172,14 @@
             <p class="form-help-text">
               <formhelp id="points">
            </p>
-          </br>
-         </span>
+          <br>
 
 </fieldset>        
-<fieldset>              <if @formerror.item_type@ not nil>
-                <span class="form-label-error">
-              </if>
-              <else>
-                <span class="form-label">
-              </else>
-            
-            <label for="item_type">
+<fieldset>
+        <legend>
               #assessment.Question_Type#
-            </label>
             <span class="form-required-mark">*</span>
-          </span>
+        </legend>
 
             <if @formerror.item_type@ not nil>
               <div class="form-widget-error">
@@ -206,35 +198,39 @@
 <div style="float:right; width: 40%;">        <fieldset>
         <legend>Multiple Choice</legend>
 <p class="form-help-text">       #assessment.item_type_multiple_choice_help#</p>
-        <formgroup-widget id="item_type" row=2></formgroup-widget><br />
-        <formgroup-widget id="item_type" row=5></formgroup-widget>
+        <formgroup-widget id="item_type"></formgroup-widget><br>
+        <formgroup-widget id="item_type"></formgroup-widget>
            
        <p><span class="form-label">Correct<br>Answer</span><br>
         <multiple name="choice_elements">
        <formgroup id="correct.@choice_elements.id@">
                 @formgroup.widget;noquote@
            </formgroup>
-&nbsp;&nbsp;<formwidget id="choice.@choice_elements.id@"><br />
+&nbsp;&nbsp;<formwidget id="choice.@choice_elements.id@"><br>
 </multiple></p>
-<formwidget id="save_answer_set"> <label for="save_answer_set">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br />
-<formwidget id="formbutton_add_another_choice"><br />
-<if @choice_sets@ not nil><p>Or use choices from an existing question<br />
+       <formgroup id="save_answer_set">
+                @formgroup.widget;noquote@
+                <label for="item-add:elements:save_answer_set:t">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br>
+           </formgroup>
+
+<formwidget id="formbutton_add_another_choice"><br>
+<if @choice_sets@ not nil><p>Or use choices from an existing question<br>
 <formwidget id="add_existing_mc_id">
 </p></if>
-<br />
+<br>
 </fieldset>        
 </div>
 <div>
 <fieldset>
 <legend>Short Answer</legend>
 <p class="form-help-text">       #assessment.item_type_short_answer_help#</p>
-        <formgroup-widget id="item_type" row=4></formgroup-widget>
+        <formgroup-widget id="item_type"></formgroup-widget>
 </fieldset>
 <fieldset>
 <legend>Long Answer</legend>
 <p class="form-help-text">       #assessment.item_type_long_answer_help#</p>
-        <formgroup-widget id="item_type" row=3></formgroup-widget>
-<br />
+        <formgroup-widget id="item_type"></formgroup-widget>
+<br>
             <label for="reference_answer">
               Reference Answer
             </label>	<formwidget id="reference_answer">
@@ -243,15 +239,13 @@
 <fieldset>
 <legend>File Upload</legend>
 <p class="form-help-text">        #assessment.item_type_file_upload_help#</p>
-<formgroup-widget id="item_type" row=1></formgroup-widget>
+<formgroup-widget id="item_type"></formgroup-widget>
 </fieldset>
 </div>
 </div>
 </fieldset>
-          <span class="form-element">
+          <div class="form-element">
             <formwidget id="formbutton_ok">            <formwidget id="formbutton_add_another_question">
-            <br>
-              <br>
-          </span>
+          </div>
 
 </formtemplate>
