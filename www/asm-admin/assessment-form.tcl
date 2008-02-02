@@ -42,15 +42,30 @@ if {![info exists assessment_id] || $__new_p} {
 set context [list [list index [_ assessment.admin]] $page_title]
 set form_format "[lc_get formbuilder_date_format] [lc_get formbuilder_time_format]"
 
-set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
-set feedback_options [list [list "[_ assessment.None]" none] [list "[_ assessment.All]" all] [list "[_ assessment.Only_incorrect]" incorrect] [list "[_ assessment.Only_correct]" correct]]
-set navigation_options [list [list "[_ assessment.Default_Path]" "default path"] [list "[_ assessment.Randomized]" randomized] [list "[_ assessment.Rulebased_branching]" "rule-based branching"]]
+set boolean_options [list \
+                         [list "[_ assessment.yes]" t] \
+                         [list "[_ assessment.no]" f]]
+
+set feedback_options [list \
+                          [list "[_ assessment.None]" none] \
+                          [list "[_ assessment.All]" all] \
+                          [list "[_ assessment.Only_incorrect]" incorrect] \
+                          [list "[_ assessment.Only_correct]" correct]]
+
+set navigation_options [list \
+                            [list "[_ assessment.Default_Path]" "default path"] \
+                            [list "[_ assessment.Randomized]" randomized] \
+                            [list "[_ assessment.Rulebased_branching]" "rule-based branching"]]
 
 ad_form -name assessment_form \
-    -export {permission_p after} \
+    -export {permission_p after type} \
     -action assessment-form \
     -form {
         {assessment_id:key}
+        {-section       
+            title_desc
+            {legendtext "#assessment.assessment_form_title_description#"}
+        }
         {title:text,nospell 
             {label "[_ assessment.Title]"} 
             {html {size 80 maxlength 1000}} 
@@ -68,7 +83,11 @@ if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
 }
 
 if { $edit_p } {
+    # Instructions section
     ad_form -extend -name assessment_form -form {
+        {-section instructions
+            {legendtext "#assessment.assessment_form_instructions#"}
+        }
         {instructions:text(textarea),optional 
             {label "[_ assessment.Instructions]"} {html {rows 5 cols 80}}
         }
@@ -77,6 +96,12 @@ if { $edit_p } {
         } 
     }
 
+    # Response Options and Extra Information sections
+    ad_form -extend -name assessment_form  -form {
+        {-section response_options
+            {legendtext "#assessment.assessment_form_response_options#"}
+        }
+    }
     if { !$permission_p } { 
         ad_form -extend -name assessment_form  -form {
             {anonymous_p:text(select) 
@@ -112,6 +137,24 @@ if { $edit_p } {
             {options $boolean_options} 
             {help_text "[_ assessment.as_Allow_Random_help]"}
         }
+        {number_tries:integer,optional,nospell 
+            {label "[_ assessment.Number_of_Tries]"} 
+            {html {size 10 maxlength 10}} 
+            {help_text "[_ assessment.as_Number_Tries_help]"}
+        }
+        {wait_between_tries:integer,optional,nospell 
+            {label "[_ assessment.Minutes_for_Retry]"} 
+            {html {size 10 maxlength 10}} 
+            {help_text "[_ assessment.as_Minutes_Retry_help]"}
+        }
+        {time_for_response:integer,optional,nospell 
+            {label "[_ assessment.time_for_response]"} 
+            {html {size 10 maxlength 10}} 
+            {help_text "[_ assessment.as_time_help]"}
+        }
+        {-section extra_info
+            {legendtext "Extra Information"}
+        }
         {entry_page:richtext,optional 
             {label "[_ assessment.Entry_Page]"}  
             {html {rows 9 cols 80 style {width: 95%}}} 
@@ -134,8 +177,12 @@ if { $edit_p } {
         }
     }
     
+    # Time Options and Extra Options sections
     if { $type eq "test" } {
         ad_form -extend -name assessment_form -form {
+            {-section time_options
+                {legendtext "#assessment.assessment_form_time_options#"}
+            }
             {start_time:date,to_sql(sql_date),to_html(display_date),optional 
                 {label "[_ assessment.Start_Time]"} 
                 {format $form_format} 
@@ -146,34 +193,9 @@ if { $edit_p } {
                 {format $form_format} {help} 
                 {help_text "[_ assessment.as_End_Time_help]"}
             }
-        }
-    } else  {
-        ad_form -extend -name assessment_form -form {
-            {start_time:date(hidden) {value ""}}
-            {end_time:date(hidden) {value ""}}
-        }
-    }
-    
-    ad_form -extend -name assessment_form -form {
-        {number_tries:integer,optional,nospell 
-            {label "[_ assessment.Number_of_Tries]"} 
-            {html {size 10 maxlength 10}} 
-            {help_text "[_ assessment.as_Number_Tries_help]"}
-        }
-        {wait_between_tries:integer,optional,nospell 
-            {label "[_ assessment.Minutes_for_Retry]"} 
-            {html {size 10 maxlength 10}} 
-            {help_text "[_ assessment.as_Minutes_Retry_help]"}
-        }
-        {time_for_response:integer,optional,nospell 
-            {label "[_ assessment.time_for_response]"} 
-            {html {size 10 maxlength 10}} 
-            {help_text "[_ assessment.as_time_help]"}
-        }
-    }
-
-    if { $type eq "test" } {
-        ad_form -extend -name assessment_form -form {
+            {-section extra_options
+                {legendtext "Other Options"}
+            }
             {ip_mask:text,optional,nospell 
                 {label "[_ assessment.ip_mask]"} 
                 {html {size 20 maxlength 100}} 
@@ -195,20 +217,14 @@ if { $edit_p } {
                 {help_text "[_ assessment.as_Navigation_help]"}
             }
         }
-    } else {
+    } else  {
         ad_form -extend -name assessment_form -form {
-            {ip_mask:text(hidden) 
-                {value ""}
-            }
-            {password:text(hidden) 
-                {value ""}
-            }
-            {show_feedback:text(hidden) 
-                {value ""}
-            }
-            {section_navigation:text(hidden) 
-                {value ""}
-            }
+            {start_time:date(hidden) {value ""}}
+            {end_time:date(hidden) {value ""}}
+            {ip_mask:text(hidden) {value ""}}
+            {password:text(hidden) {value ""}}
+            {show_feedback:text(hidden) {value ""}}
+            {section_navigation:text(hidden) {value ""}}
         } 
     }
     
@@ -238,9 +254,7 @@ if { $edit_p } {
     }
 }
 
-ad_form -extend -name assessment_form -form {
-    {type:text(hidden) {value $type}}
-} -new_request {
+ad_form -extend -name assessment_form -new_request {
     set new ""
     set title ""
     set description ""
