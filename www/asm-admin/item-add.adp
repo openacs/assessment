@@ -198,8 +198,8 @@
 <div style="float:right; width: 40%;">        <fieldset>
         <legend>Multiple Choice</legend>
 <p class="form-help-text">       #assessment.item_type_multiple_choice_help#</p>
-        <formgroup-widget id="item_type"></formgroup-widget><br>
-        <formgroup-widget id="item_type"></formgroup-widget>
+        <formgroup-widget id="item_type" row=2></formgroup-widget><br>
+        <formgroup-widget id="item_type" row=5></formgroup-widget>
            
        <p><span class="form-label">Correct<br>Answer</span><br>
         <multiple name="choice_elements">
@@ -224,12 +224,12 @@
 <fieldset>
 <legend>Short Answer</legend>
 <p class="form-help-text">       #assessment.item_type_short_answer_help#</p>
-        <formgroup-widget id="item_type"></formgroup-widget>
+        <formgroup-widget id="item_type" row=4></formgroup-widget>
 </fieldset>
 <fieldset>
 <legend>Long Answer</legend>
 <p class="form-help-text">       #assessment.item_type_long_answer_help#</p>
-        <formgroup-widget id="item_type"></formgroup-widget>
+        <formgroup-widget id="item_type" row=3></formgroup-widget>
 <br>
             <label for="reference_answer">
               Reference Answer
@@ -239,7 +239,7 @@
 <fieldset>
 <legend>File Upload</legend>
 <p class="form-help-text">        #assessment.item_type_file_upload_help#</p>
-<formgroup-widget id="item_type"></formgroup-widget>
+<formgroup-widget id="item_type" row=1></formgroup-widget>
 </fieldset>
 </div>
 </div>

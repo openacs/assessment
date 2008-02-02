@@ -371,7 +371,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Letter_other">Other</msg>
   <msg key="limited_tries">Number of tries allowed: %assessment_data.number_tries%</msg>
   <msg key="Live">Live</msg>
-  <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br /&gt;your name will not be included in the results.</msg>
+  <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br&gt;your name will not be included in the results.</msg>
   <msg key="lt_default_entry_page"></msg>
   <msg key="lt_default_exit_page">Congratulations, you're done! Use the link below to review your answers.</msg>
   <msg key="lt_default_instructions"></msg>

@@ -16,9 +16,9 @@
             <label for="question_text">
               Question
             </label>
+            </span>
 
             <span class="form-required-mark">*</span>
-          </span>
           
             <if @formerror.question_text@ not nil>
               <span class="form-widget-error">
@@ -191,11 +191,12 @@
             <div><br><formgroup-widget id="display_type" row=2></formgroup-widget></div>
 
             <if @formerror.display_type@ not nil>
-              <span class="form-widget-error"></span>
+              <div class="form-widget-error">
             </if>
             <else>
-              <span class="form-widget"></span>
+              <div class="form-widget">
             </else>
+            </div>
                      
             <formerror id="display_type">
                   @formerror.data_type;noquote@
@@ -209,7 +210,7 @@
 
 <switch @item_type@>
 <case value="mc">
-<formwidget id="num_choices">
+<div><formwidget id="num_choices"></div>
          
        <p><span class="form-label">Correct<br>Answer</span><br>
         <multiple name="choice_elements">
@@ -230,7 +231,12 @@
 </if>
     <br>
 </multiple>
-<formwidget id="save_answer_set"> <label for="save_answer_set">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br>
+
+  <formgroup id="save_answer_set">
+    @formgroup.widget;noquote@
+    <label for="item_edit_general:elements:save_answer_set:t">#assessment.Save_this_set_of_answers_for_reuse_later#</label><br>
+  </formgroup>
+
 <formwidget id="add_another_choice"><br>
 <if @choice_sets@ not nil><p>#assessment.OrUseChoices#<br>
 <formwidget id="add_existing_mc_id">
