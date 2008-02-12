@@ -22,7 +22,7 @@
 </div> <!-- section -->
 </multiple>
 <hr>
-<if @assessment_data.type@ ne survey and @assessment_data.show_feedback@ ne none ><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
+<if @assessment_data.type@ ne survey><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 <if @comments_installed_p@>
 <include src="/packages/assessment/lib/comments-chunk" object_id="@session_id@" />
 </if>

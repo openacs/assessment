@@ -12,8 +12,8 @@
       </if>
      </if>
 <div class="feedback-message"><if @items.correct_p@ eq 1>
-<if @show_feedback@ eq correct or @show_feedback@ eq all><div class="right">@items.feedback_right;noquote@</div></if></if>
-	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><div class="wrong">@items.feedback_wrong;noquote@</div></if></if>
+<if @show_feedback@ eq correct or @show_feedback@ eq all><if @items.feedback_right@ ne ""><div class="right">@items.feedback_right;noquote@</div></if></if></if>
+	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><if @items.feedback_wrong@ ne ""><div class="wrong">@items.feedback_wrong;noquote@</div></if></if></if>
 </div>
 	  <if @items.presentation_type@ ne fitb>
 	    <p style="font-weight:bold;">@items.title;noquote@</p>
