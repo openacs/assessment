@@ -59,7 +59,7 @@ template::list::create \
             display_template {@sessions.title;noquote@}
         }
         session {
-            label {[_ assessment.Sessions]}
+            label "[_ assessment.Sessions]"
             link_url_eval {[export_vars -base "sessions" {assessment_id}]}
         }
     } -main_class {
@@ -68,7 +68,7 @@ template::list::create \
 
 # get the information of all assessments store in the database
 db_multirow -extend { session } sessions answered_asssessments {} {
-    set session {Sessions}
+    set session [_ assessment.Sessions]
 }
 
 set admin_p [ad_permission_p $package_id create]

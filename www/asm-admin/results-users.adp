@@ -3,7 +3,7 @@
 <property name="context">@context;noquote@</property>
 
 <include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="results">
-<p>@count_all_users@ users in community, @count_complete@ complete responses, @count_incomplete@ incomplete responses</p>
+<p>@count_all_users@ #assessment.users_in_community#, @count_complete@ #assessment.complete_responses#, @count_incomplete@ #assessment.incomplete_responses#</p>
 <listfilters name="results" style="inline-filters"></listfilters>
 <listtemplate name="results"></listtemplate>
 

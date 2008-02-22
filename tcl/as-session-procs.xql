@@ -35,6 +35,18 @@ and d.session_id=:session_id
 </querytext>
 </fullquery>
 
+<fullquery name="as::session::delete.delete_choices">
+<querytext>
+DELETE FROM as_session_choices WHERE  session_id = :session_id;
+</querytext>
+</fullquery>
+
+<fullquery name="as::session::delete.delete_session_items">
+<querytext>
+delete from as_session_items where session_id =  :session_id;
+</querytext>
+</fullquery>
+
 <fullquery name="as::session::delete.get_comments">
 <querytext>
 select g.comment_id

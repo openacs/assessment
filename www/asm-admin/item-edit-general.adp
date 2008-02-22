@@ -14,7 +14,7 @@
               </else>
 
             <label for="question_text">
-              Question
+              #assessment.Question#
             </label>
             </span>
 
@@ -49,7 +49,7 @@
               </else>
             
             <label for="required_p">
-              Required
+              #assessment.Required#
             </label>
 
             
@@ -86,7 +86,7 @@
               </else>
             
             <label for="points">
-              Points for Question<br>(Optional)
+              #assessment.Points_for_Question_Optional#
             </label>
 
             
@@ -122,7 +122,7 @@
               </else>
             
             <label for="feedback_right">
-              Feedback right<br>(Optional)
+	     #assessment.Feedback_right_Optional#
             </label>
 
             
@@ -159,7 +159,7 @@
               </else>
             
             <label for="feedback_wrong">
-              Feedback wrong<br>(Optional)
+	     #assessment.Feedback_wrong_Optional#
             </label>
 
             
@@ -212,7 +212,7 @@
 <case value="mc">
 <div><formwidget id="num_choices"></div>
          
-       <p><span class="form-label">Correct<br>Answer</span><br>
+       <p><span class="form-label">#assessment.Correct_Answer#</span><br>
         <multiple name="choice_elements">
     
            <formgroup id="correct.@choice_elements.id@">
@@ -255,4 +255,4 @@
 </p>
 </formtemplate>
 
-<a href="@advanced_options_url@">Advanced Options</a>
+<a href="@advanced_options_url@">#assessment.Advanced_Options#</a>

@@ -90,6 +90,10 @@ ad_proc -private as::session::delete {
             content::item::delete -item_id $comment_id
         }
     }
+
+    db_dml delete_choices {}
+    db_dml delete_session_items {}
+
     set session_item_id [content::revision::item_id -revision_id $session_id]
     content::revision::delete -revision_id $session_id
 

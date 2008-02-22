@@ -24,7 +24,7 @@ if { ($empty_sections eq "") || ($publish_status eq "live") } {
     db_dml toggle_publish ""
     set message ""
 } else {
-    set message "Publish failed. Following section(s) have no questions: ${empty_sections}"
+    set message [_ assessment.Publish_failed_Following_section_s_have_no_questions]
 }
 
 if {$return_url eq ""} {
