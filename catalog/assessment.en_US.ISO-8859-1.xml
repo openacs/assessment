@@ -681,9 +681,9 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Short_Answer">Short Answer</msg>
   <msg key="Long_Answer">Long Answer</msg>
   <msg key="File_Upload">File Upload</msg>
-  <msg key="Points_for_Question_Optional">Points for Question<br>(Optional)</msg>
-  <msg key="Feedback_right_Optional">Feedback right<br>(Optional)</msg>
-  <msg key="Feedback_wrong_Optional">Feedback wrong<br>(Optional)</msg>
+  <msg key="Points_for_Question_Optional">Points for Question<br />(Optional)</msg>
+  <msg key="Feedback_right_Optional">Feedback right<br />(Optional)</msg>
+  <msg key="Feedback_wrong_Optional">Feedback wrong<br />(Optional)</msg>
   <msg key="Advanced_Options">Advanced Options</msg>
   <msg key="users_in_community">users in community</msg>
   <msg key="complete_responses">complete responses</msg>
