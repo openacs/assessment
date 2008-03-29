@@ -15,6 +15,7 @@
   <msg key="action_tcl_code">Código TCL</msg>
   <msg key="action_that_will">La acción se hará.</msg>
   <msg key="action_to_perform">Acción a realizar</msg>
+  <msg key="Actions_Performed">Acción Realizada</msg>
   <msg key="Add_another_choice">Añadir otra selección</msg>
   <msg key="Add_another_question">Añadir otra pregunta</msg>
   <msg key="Add_Comment">Añadir comentario</msg>
@@ -45,6 +46,7 @@
   <msg key="Add_to_assessment">Añadir al cuestionario &quot;%assessment_data.title%&quot;</msg>
   <msg key="Add_to_section">Añadir a la sección &quot;%section_title%&quot;</msg>
   <msg key="add_trigger">Añadir condición</msg>
+  <msg key="Admin">Admin</msg>
   <msg key="admin">Administración</msg>
   <msg key="admin_actions">Administración de acciones</msg>
   <msg key="Admin_catalog">Administración del catálogo de preguntas</msg>
@@ -52,6 +54,7 @@
   <msg key="admin_requests">Administración de peticiones</msg>
   <msg key="admin_triggers">Administrar condiciones</msg>
   <msg key="Administration">Administración</msg>
+  <msg key="Advanced_Options">Opciones Avanzadas</msg>
   <msg key="after_this_asm">Después de este cuestionario:</msg>
   <msg key="All">Todos</msg>
   <msg key="all">Todo</msg>
@@ -64,6 +67,7 @@
   <msg key="allow_tries">permite %assessment_data.number_tries%</msg>
   <msg key="alphabetical">Alfabéticamente</msg>
   <msg key="and">Y</msg>
+  <msg key="anonymous">este cuestionario es anónimo</msg>
   <msg key="anonymous_name">Anónimo</msg>
   <msg key="Anonymous_Responses">Respuestas anónimas</msg>
   <msg key="anonymous_users_allow">Permitir que sea respondido por anónimos</msg>
@@ -176,6 +180,7 @@
   <msg key="comparison_type">Tipo de Comparación</msg>
   <msg key="comparison_type_help">Diferentes campos serán requeridos más adelante dependiendo de este valor</msg>
   <msg key="Complete">Completado</msg>
+  <msg key="complete_responses">complete las respuestas</msg>
   <msg key="condition">Condición</msg>
   <msg key="Confirm_Consent">Confirmación</msg>
   <msg key="Consent_Page">Página de Consentimiento</msg>
@@ -189,6 +194,7 @@
   <msg key="copy_item">Copiar Pregunta</msg>
   <msg key="copy_section">Copiar Sección</msg>
   <msg key="Copy_this_assess">Copiar este cuestionario</msg>
+  <msg key="Correct_Answer">Respuesta Correcta</msg>
   <msg key="Correct_Answer_Choice">Elegir Respuesta Correcta</msg>
   <msg key="Correct_Answer_help">¿es esta respuesta la correcta?</msg>
   <msg key="Created_by">Creado por</msg>
@@ -265,13 +271,16 @@
   <msg key="Feedback_help">Feedback mostrado al usuario.</msg>
   <msg key="Feedback_right">Feedback para respuesta correcta</msg>
   <msg key="Feedback_right_help">Feedback dado al alumno si ha contestado correctamente la pregunta.</msg>
+  <msg key="Feedback_right_Optional">Feedback para respuesta correcta (opcional)</msg>
   <msg key="Feedback_wrong">Feedback para respuesta errónea</msg>
   <msg key="Feedback_wrong_help">Feedback dado al alumno si ha contestado erróneamente</msg>
+  <msg key="Feedback_wrong_Optional">Feedback para respuesta incorrecta (opcional)</msg>
   <msg key="Field_Code">Código QTI para el Campo</msg>
   <msg key="Field_Code_help">Breve etiqueta usada cuando se exporta una pregunta (por ejemplo, el nombre de una columna o una fila en una hoja de cálculo)</msg>
   <msg key="Field_Name">CSV Nombre del Campo</msg>
   <msg key="Field_Name_help">Nombre corto usado en la exportación de preguntas y respuestas en archivo CSV</msg>
   <msg key="file_too_large">Tu archivo es demasiado grande. El tamaño de los archivos está limitado a %pretty_max_size% bytes.</msg>
+  <msg key="File_Upload">Fichero Subido</msg>
   <msg key="file_zero_size">Tu archivo tiene 0 bytes. Puede que hayas intentado subir un archivo de 0 bytes, un archivo que no exista o puede que haya ocurrido un error durante la transferencia.</msg>
   <msg key="filter">Filtro</msg>
   <msg key="filter_add">Agregar nuevo Filtro</msg>
@@ -292,6 +301,7 @@
   <msg key="filters_available">Filtros Disponibles</msg>
   <msg key="filters_currently_mapped">Filtros actualmente mapeados a este objecto</msg>
   <msg key="filters_none">No hay filtros que cumplan este criterio.</msg>
+  <msg key="Finish">Terminar</msg>
   <msg key="Finish_Time">Hora de finalización</msg>
   <msg key="Finished">Hora de finalización</msg>
   <msg key="Fixed_Position">Orden fijo</msg>
@@ -309,6 +319,7 @@
   <msg key="Import_QTI_ZIP_File">Importar un fichero QTI ZIP</msg>
   <msg key="Import_Results">Resultados de la importación</msg>
   <msg key="Incomplete">Incompleto</msg>
+  <msg key="incomplete_responses">Respuestas Incompletas</msg>
   <msg key="Increasing">Incrementar</msg>
   <msg key="Increasing_help">Si ha elegido &quot;Sí&quot; en &quot;incrementar&quot;, se obtendrán (número de respuestas correctas/número total de respuestas)*100% puntos. 
 Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respuestas esten correctas, 0% en otro caso.</msg>
@@ -329,6 +340,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="item_display_ta">Área de texto</msg>
   <msg key="item_display_tb">Caja de texto</msg>
   <msg key="item_Name_help">Nombre de la pregunta, identificador a buscar en el catálogo</msg>
+  <msg key="Item_Question">Pregunta</msg>
   <msg key="item_Question">Pregunta</msg>
   <msg key="item_Question_help">Introduzca la pregunta que el usuario verá (puede incluir imágenes y enlaces)</msg>
   <msg key="item_Required_help">¿Tiene que contestarse obligatoriamente esta pregunta?</msg>
@@ -363,6 +375,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Letter_other">Otro</msg>
   <msg key="limited_tries">Número de intentos permitidos: %assessment_data.number_tries%</msg>
   <msg key="Live">Activo</msg>
+  <msg key="Long_Answer">Respuesta de texto largo</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Nota:&lt;/b&gt; Se trata de un cuestionario anónimo por lo que su nombre no aparecerá en los resultados.</msg>
   <msg key="lt_default_exit_page">¡Enhorabuena, ha terminado! Siga el enlace para revisar sus respuestas.</msg>
   <msg key="lt_Everyone_eligible_to_">Alguien que hace este cuestionario</msg>
@@ -396,6 +409,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Move_Down">Bajar</msg>
   <msg key="Move_Up">Subir</msg>
   <msg key="Multiple">Permitir múltiples respuestas</msg>
+  <msg key="Multiple_Choice">Selección múltiple</msg>
   <msg key="Multiple_help">Desea permitir múltiples respuestas?</msg>
   <msg key="Name">Nombre</msg>
   <msg key="Name_help">Nombre de la nueva copia del cuestionario</msg>
@@ -413,6 +427,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="no_display">-- Ninguno --</msg>
   <msg key="No_open_assessments">Sin Cuestionarios Abiertos</msg>
   <msg key="No_responses">Sin respuestas</msg>
+  <msg key="No_reviewer_comments_have_been_added_to_this_assessment_yet">No hay comentarios de los revisores todavía</msg>
   <msg key="No_sessions_found">Sin Sesiones</msg>
   <msg key="no_waiting">Permitir reintentar el cuestionario de forma inmediata</msg>
   <msg key="None">Ninguno</msg>
@@ -451,6 +466,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="oq_Reference_Answer_help">Texto para la Respuesta de Referencia.</msg>
   <msg key="oq_Title_help">Título para esta Pregunta Abierta. Usado para busquedas en un futuro.</msg>
   <msg key="or">O</msg>
+  <msg key="Or_use_choices_from_an_existing_question">O utilice las opciones de una pregunta existente</msg>
   <msg key="order_of_entry">Orden de entrada</msg>
   <msg key="Order_Type">Tipo de orden</msg>
   <msg key="Order_Type_help">Orden de las respuestas</msg>
@@ -470,10 +486,12 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="performed">Realizado</msg>
   <msg key="permissions">Permisos</msg>
   <msg key="Please_select_one">Por favor, seleccione uno</msg>
+  <msg key="Points">Puntos</msg>
   <msg key="points">puntos</msg>
   <msg key="points_answer">Puntos para la respuesta</msg>
   <msg key="points_answer_help">Los puntos que vale responder esta pregunta.
 </msg>
+  <msg key="Points_for_Question_Optional">Puntos para la pregunta (opcional)</msg>
   <msg key="points_item">Puntos por pregunta</msg>
   <msg key="points_item_help">Cuántos puntos vale esta pregunta en una sección. Ésta es una medida de la dificultad relativa.</msg>
   <msg key="points_section">Puntos por Sección</msg>
@@ -483,6 +501,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Prepend_Empty_Item">Añadir un elemento vacío</msg>
   <msg key="Preview">Visualización previa</msg>
   <msg key="Preview_link_and_message">&lt;a href=&quot;../instructions?assessment_id=%assessment_id%&quot;&gt;Vista previa&lt;/a&gt; (sus respuestas serán grabadas)</msg>
+  <msg key="Publish_failed_Following_section_s_have_no_questions">La publicación ha fallado. Las secciones a continuación no contienen preguntas: %empty_sections%</msg>
   <msg key="Publish_Status">Estado de publicación</msg>
   <msg key="publish_status">Estado de publicación</msg>
   <msg key="query">Consulta</msg>
@@ -494,6 +513,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Questions">Preguntas</msg>
   <msg key="Randomized">Aleatoria</msg>
   <msg key="randomized">Aleatorio</msg>
+  <msg key="Reference_Answer">Respuesta de Referencia</msg>
   <msg key="reg_asm">Usando en el proceso de Registro</msg>
   <msg key="Reg_Assessment_title">Cuestionario de Registro de personalización del Sitio Principal: &quot;%assessment_data.title%&quot;</msg>
   <msg key="reg_users_required">Se requiere que los usuarios estén registrados</msg>
@@ -513,6 +533,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="request_notif">Pedir notificación para</msg>
   <msg key="Requested_assess_does">El cuestionario solicitado no existe</msg>
   <msg key="Requested_assess_is_no_longer_available">El cuestionario no está disponible</msg>
+  <msg key="Requested_attempts_deleted">Intentos borrados.</msg>
   <msg key="Required">Obligatorio</msg>
   <msg key="Responding_Users">Respondiendo a usuarios</msg>
   <msg key="Response_Options">Opciones de la respuesta: </msg>
@@ -524,6 +545,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Results_edit_Description">Cambiar explicación</msg>
   <msg key="Results_edit_Description_help">Introduzca su comentario para esta pregunta aquí</msg>
   <msg key="Resume_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Empezar&quot;&gt;Empezar %assessment_data.title%&lt;/a&gt;</msg>
+  <msg key="Retake">Volver a responder</msg>
   <msg key="Retake_Assessment_Title">Ya completado. &lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Reempezar cuestionario&quot;&gt;Reempezar %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="return">Volver</msg>
   <msg key="Return_Url">URL de Finalización</msg>
@@ -531,11 +553,13 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Reuse_Responses_1">Reutilizar Respuestas</msg>
   <msg key="Review">Revisar</msg>
   <msg key="Review_Asessment">Revisión del Examen</msg>
+  <msg key="Reviewer_Comments">Comentarios de los Revisores</msg>
   <msg key="right">Derecha</msg>
   <msg key="Rulebased_branching">Branching según una regla</msg>
   <msg key="sa_Title_help">Título para esta característica de short answer para que pueda reutilizarse en el futuro.</msg>
   <msg key="Save_and_add_another_question">Salvar y añadir otra pregunta</msg>
   <msg key="Save_and_finish">Salvar y terminar</msg>
+  <msg key="Save_this_set_of_answers_for_reuse_later">Guardar este conjunto de respuestas para ser reutilizadas</msg>
   <msg key="Score">Puntuación</msg>
   <msg key="Search">Buscar</msg>
   <msg key="Search_Item">Buscar y añadir preguntas</msg>
@@ -577,12 +601,14 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Select_All">Seleccionar todo</msg>
   <msg key="Selected_Sections">Secciones Seleccionadas</msg>
   <msg key="Send_bulkmail">Enviar e-mail</msg>
+  <msg key="Send_Email">Enviar correo</msg>
   <msg key="Send_Mail">Enviar correo</msg>
   <msg key="Send_mail_to">Enviar correo a </msg>
   <msg key="Session">Sesión</msg>
   <msg key="session_time_remaining">Tiempo restante de la sesión: %assessment_data.pretty_remaining_time%</msg>
   <msg key="Sessions">Sesiones</msg>
   <msg key="set_reg_asm">Nuevo Cuestionario de Suscripción</msg>
+  <msg key="Short_Answer">Respuesta de texto corto</msg>
   <msg key="Show_Assessments">Ver Cuestionarios</msg>
   <msg key="Show_Feedback">Mostrar Feedback</msg>
   <msg key="show_item_name">Visualizar el nombre de la pregunta</msg>
@@ -604,6 +630,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Subtext">Subtexto</msg>
   <msg key="Summary">Resumen</msg>
   <msg key="survey_section">Sección 1</msg>
+  <msg key="Take">Responder</msg>
   <msg key="Target_Community">Comunidad Destino</msg>
   <msg key="Target_Community_help">Elija la comunidad destino</msg>
   <msg key="the_condition_to">La condición para saltar o ejecutar la acción</msg>
@@ -643,9 +670,11 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="unsecure_access_allow">Permitir acceso no seguro</msg>
   <msg key="unsubscribe">Desuscribirse</msg>
   <msg key="unsubscribe_user">Desuscribir al usuario de esta regla</msg>
+  <msg key="Untaken">Sin responder</msg>
   <msg key="Upload_files">Subir ficheros</msg>
   <msg key="User_Answer">Respuesta del usuario</msg>
   <msg key="User_ID">Usuario</msg>
+  <msg key="users_in_community">usuarios en la comunidad</msg>
   <msg key="Users_may_edit_their_">Los usuarios pueden editar sus respuestas</msg>
   <msg key="Users_may_not_edit_th">Los usuarios no pueden editar sus respuestas</msg>
   <msg key="Validation_Block">Bloque de Validación</msg>
