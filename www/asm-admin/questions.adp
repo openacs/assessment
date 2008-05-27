@@ -14,13 +14,13 @@
   <a class=button href="@section_preview_url@">#assessment.section_preview#</a>
 
   <if @sections.sort_order@ lt @max_sort_order@>
-  <a  href="@section_swap_down_url@"><img src="/resources/assessment/down.gif" style="border: 0;" alt="#assessment.Move_Down#"></a>
+  <a  href="@sections.section_swap_down_url@"><img src="/resources/assessment/down.gif" style="border: 0;" alt="#assessment.Move_Down#"></a>
   </if>
   <if @sections.sort_order@ gt 1>
-  <a href="@section_swap_up_url@"><img src="/resources/assessment/up.gif" style="border: 0;" alt="#assessment.Move_Up#"></a>
+  <a href="@sections.section_swap_up_url@"><img src="/resources/assessment/up.gif" style="border: 0;" alt="#assessment.Move_Up#"></a>
   </if>
 
-  <a href="@section_delete_url@"><img src="/resources/acs-subsite/Delete16.gif" style="border: 0;" alt="#assessment.remove_section#"></a>
+  <a href="@sections.section_delete_url@"><img src="/resources/acs-subsite/Delete16.gif" style="border: 0;" alt="#assessment.remove_section#"></a>
   <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
   (@sections.points@ #assessment.points#)
 
