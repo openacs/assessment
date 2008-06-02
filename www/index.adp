@@ -2,7 +2,7 @@
 <property name="title">@page_title;noquote@</property>
 <property name="context_bar">@context_bar;noquote@</property>
 
-<if @admin_p@ eq "1"><p style="text-align: right;"><a href="asm-admin/"><img src="/resources/assessment/admin.gif" border="0" alt="Administer Assessments"></a></p></if>
+<if @admin_p@ eq "1"><p style="text-align: right;"><a href="asm-admin/"><img src="/resources/assessment/admin.gif" style="border:0" alt="#acs-kernel.common_Administration#"></a></p></if>
 
 <listtemplate name="assessments"></listtemplate>
 
