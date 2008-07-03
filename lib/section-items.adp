@@ -12,23 +12,23 @@
 
 <if @assessment_data.type@ ne 1>
 
-    <div><a class="button" href="@item_edit_general_url@">#assessment.Edit#</a>
-    <a class="button" href="@item_copy_url@">#assessment.Copy#</a>
-    <a class=button href="@item_add_url@">#assessment.Add_New#</a>
-    <a class=button href="@catalog_search_url@">#assessment.Search_Item#</a>
+    <div><a class="button" href="@items.item_edit_general_url@">#assessment.Edit#</a>
+    <a class="button" href="@items.item_copy_url@">#assessment.Copy#</a>
+    <a class=button href="@items.item_add_url@">#assessment.Add_New#</a>
+    <a class=button href="@items.catalog_search_url@">#assessment.Search_Item#</a>
     <img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
     <if @items.rownum@ lt @items:rowcount@>
-        <a href="@item_swap_down_url@"><img src="/resources/assessment/down.gif" style="border: 0;" alt="#assessment.Move_Down#"></a>
+        <a href="@items.item_swap_down_url@"><img src="/resources/assessment/down.gif" style="border: 0;" alt="#assessment.Move_Down#"></a>
     </if>
     <if @items.rownum@ gt 1>
-        <a href="@item_swap_up_url"><img src="/resources/assessment/up.gif" style="border: 0;" alt="#assessment.Move_Up#"></a>
+        <a href="@items.item_swap_up_url@"><img src="/resources/assessment/up.gif" style="border: 0;" alt="#assessment.Move_Up#"></a>
     </if>
-    <a href="@item_delete_url@"><img src="/resources/acs-subsite/Delete16.gif" style="border: 0;" alt="#assessment.remove_item#"></a>
+    <a href="@items.item_delete_url@"><img src="/resources/acs-subsite/Delete16.gif" style="border: 0;" alt="#assessment.remove_item#"></a>
 
     <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
     (@items.points@ #assessment.points#)
     <if @items.item_type@ eq "mc" and @admin_trigger_p@>
-    <a class=button href="@add_edit_check_url@">#assessment.add_trigger#</a> (<a href="@check_admin_url@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
+    <a class=button href="@items.add_edit_check_url@">#assessment.add_trigger#</a> (<a href="@items.check_admin_url@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
     </if>
     </div>
 

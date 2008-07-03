@@ -6,7 +6,7 @@ ad_form -name admin_section_${section_id} -form {
 set item_add_url [export_vars -base item-add {section_id assessment_id {after 0}}]
 set catalog_search_url [export_vars -base catalog-search {section_id assessment_id {after 0}}]
 
-db_multirow -extend { checks_related presentation_type html item_type choice_orientation item_edit_general_url item_copy_url catalog_search_url item_swap_url add_edit_check_url check_admin_url } items section_items {} {
+db_multirow -extend { checks_related presentation_type html item_type choice_orientation item_edit_general_url item_copy_url catalog_search_url item_swap_url add_edit_check_url check_admin_url item_swap_down_url item_swap_up_url item_add_url item_delete_url} items section_items {} {
 
     # Build URLs
     set item_edit_general_url [export_vars -base item-edit-general {as_item_id section_id assessment_id}]
