@@ -8,12 +8,12 @@
 
 <multiple name="sections">
 <h3><a name="@sections.sort_order@">#assessment.Section_Number#: @sections.title@</a></h3>
-  <a class="button" href="@section_form_edit_url@">#assessment.Edit#</a> 
+  <a class="button" href="@sections.section_form_edit_url@">#assessment.Edit#</a> 
 
-  <a class=button href="@section_form_add_url@">#assessment.add_new_section#</a>
-  <a class=button href="@catalog_section_url@">#assessment.Search_Section#</a>
-  <if @sections.display_type_id@ not nil><a class=button href="@section_display_form_url@">#assessment.edit_section_display#</a></if>
-  <a class=button href="@section_preview_url@">#assessment.section_preview#</a>
+  <a class="button" href="@sections.section_form_add_url@">#assessment.add_new_section#</a>
+  <a class="button" href="@sections.catalog_section_url@">#assessment.Search_Section#</a>
+  <if @sections.display_type_id@ not nil><a class="button" href="@sections.section_display_form_url@">#assessment.edit_section_display#</a></if>
+  <a class="button" href="@sections.section_preview_url@">#assessment.section_preview#</a>
 
   <if @sections.sort_order@ lt @max_sort_order@>
   <a  href="@sections.section_swap_down_url@"><img src="/resources/assessment/down.gif" style="border: 0;" alt="#assessment.Move_Down#"></a>
@@ -27,8 +27,8 @@
   (@sections.points@ #assessment.points#)
 
 <if @admin_trigger_p@>
-  <a class=button href="@checks_admin_url@">#assessment.admin_triggers#</a>
-  <a class=button href="@add_edit_section_check_url@">#assessment.add_section_trigger#</a>
+  <a class="button" href="@sections.checks_admin_url@">#assessment.admin_triggers#</a>
+  <a class="button" href="@sections.add_edit_section_check_url@">#assessment.add_section_trigger#</a>
 </if>
 
   <img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">

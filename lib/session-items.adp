@@ -4,7 +4,7 @@
     </if>
 
     <multiple name="items">
-<if @admin_p@><p><a href="@item_edit_general_url@">Edit this question</a></p></if>
+<if @admin_p@><p><a href="@items.item_edit_general_url@">Edit this question</a></p></if>
 <if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
      <if @show_item_name_p@ eq t><p style="font-weight:bold;">@items.name@:</p></if>
       <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
@@ -33,7 +33,7 @@
 			<if @items.answered_p@ eq t><p style="font-weight:bold;">#assessment.not_yet_reviewed#</p> </if>
 			<else><p style="font-weight:bold;">#assessment.not_answered#</p></else>
 		      </else>
-		      <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="results-edit?session_id=@session_id@&section_id=@section_id@&as_item_id=@items.as_item_id@">#assessment.Edit#</a></if>
+		      <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="@items.results_edit_url@">#assessment.Edit#</a></if>
 		      <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
 		    </if>
 		    <else>
@@ -41,7 +41,7 @@
 		      <else><p style="font-weight:bold">#assessment.not_answered#</p> </else>
 		    </else>
 		    <if @edit_p@ eq 1 and @items.answered_p@ eq t>
-              <a href="@results_edit_url@">#assessment.Edit#</a>
+              <a href="@items.results_edit_url@">#assessment.Edit#</a>
             </if>
 		    <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@"> 
 		  </if>
@@ -83,7 +83,7 @@
 
   <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@" &=assessment>    
   <if @edit_p@ eq 1 and @items.answered_p@ eq t>
-    <p><a href="@results_edit_url@" class="button">#assessment.Add_Comment#</a></p>
+    <p><a href="@items.results_edit_url@" class="button">#assessment.Add_Comment#</a></p>
   </if>
   <if @feedback_only_p@ ne "t" and @assessment_data.type@ ne survey and @items.result_points@ not nil and @showpoints@ true and @items.points@ gt 0>
     <p style="font-weight: bold">@items.result_points@ / @items.points@ #assessment.points#</p>
