@@ -45,7 +45,12 @@ as::assessment::data -assessment_id $assessment_id
 permission::require_permission -object_id $assessment_id -privilege read
 if {![info exists assessment_data(assessment_id)]} {
     ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
-    ad_script_abort
+    return
+}
+
+if { $assessment_data(publish_status) ne "live" } {
+    ad_return_complaint 1 [_ assessment.Requested_assess_is_no_longer_available]
+    return
 }
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
