@@ -152,7 +152,7 @@ if {[exists_and_not_null session_id_list]} {
 
 		    append stats "<tr>"
 		    if { $r(correct_answer_p) && $assessment_data(type) ne "survey"} {
-			append stats "<td><img src=/resources/assessment/correct.gif /></td>"
+			append stats "<td><img src=\"/resources/assessment/correct.gif\"></td>"
 		    } else {
 			append stats "<td>&nbsp;</td>"
 		    }
