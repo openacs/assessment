@@ -4,7 +4,7 @@
 
 <include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="@tab@">
 
-<if @sections:rowcount@ eq 0><br/><a class="button" href="section-form?assessment_id=@assessment_id@">#assessment.add_new_section#</a></if>
+<if @sections:rowcount@ eq 0><br><a class="button" href="section-form?assessment_id=@assessment_id@">#assessment.add_new_section#</a></if>
 
 <multiple name="sections">
 <h3><a name="@sections.sort_order@">#assessment.Section_Number#: @sections.title@</a></h3>
