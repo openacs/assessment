@@ -7,6 +7,7 @@ ad_page_contract {
     assessment_id:integer
     section_id:integer
     as_item_id:integer
+    return_url:optional
 } -properties {
     context_bar:onevalue
     page_title:onevalue
@@ -29,7 +30,7 @@ set context_bar [ad_context_bar [list [export_vars -base one-a {assessment_id}] 
 
 set confirm_options [list [list "[_ assessment.continue_with_remove]" t] [list "[_ assessment.cancel_and_return]" f]]
 
-ad_form -name item_delete_confirm -action item-delete -export { assessment_id section_id } -form {
+ad_form -name item_delete_confirm -action item-delete -export { assessment_id section_id return_url } -form {
     {as_item_id:key}
     {item_title:text(inform) {label "[_ assessment.remove_1]"}}
     {from:text(inform) {label "[_ assessment.from]"} {value $assessment_data(title)}}
@@ -54,7 +55,11 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
 	}
     }
 } -after_submit {
-    ad_returnredirect [export_vars -base questions {assessment_id}]
+    if { [info exists return_url] && $return_url ne "" } {
+	ad_returnredirect $return_url
+    } else {
+	ad_returnredirect [export_vars -base questions {assessment_id}]
+    }
     ad_script_abort
 }
 
