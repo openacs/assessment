@@ -11,18 +11,18 @@ permission::require_permission \
     -privilege "admin"
 
 # find current publish_status
-set publish_status [db_string get_publish_status ""]
-if { $publish_status ne "live" } {
-    set publish_status ""
+set old_publish_status [db_string get_publish_status ""]
+if { $old_publish_status ne "live" } {
+    set old_publish_status ""
 }
 
 # returns list of empty sections
 set empty_sections [db_list count_questions ""]
 
-if { ($empty_sections eq "") || ($publish_status eq "live") } {
+if { ($empty_sections eq "") || ($old_publish_status eq "live") } {
     # if no empty sections, or if we're un-publishing, then proceed
     db_dml toggle_publish ""
-    set message ""
+    set message "Set to [ad_decode $old_publish_status "live" invisible visible]"
 } else {
     set message [_ assessment.Publish_failed_Following_section_s_have_no_questions]
 }
