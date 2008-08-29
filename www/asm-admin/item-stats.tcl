@@ -44,7 +44,7 @@ if { [exists_and_not_null catalog_section_id] } {
 #    set session_id_list [split $session_id_list]
 #}
 permission::require_permission -object_id $package_id -privilege create
-template::multirow create items item_id revision_id title data_type display_type stats
+template::multirow create items item_id revision_id title data_type display_type stats section_id section_title
 if {[info exists assessment_id_list]} {
     set assessment_id_list [db_list get_assessment_id_list "select distinct item_id from cr_revisions where revision_id in ([template::util::tcl_to_sql_list [split $assessment_id_list]])"]
 }
@@ -56,8 +56,8 @@ if {![info exists assessment_id] && [info exists assessment_id_list] && [llength
 #ad_return_complaint 1 "'${assessment_id}' '${assessment_id_list}'"
 as::assessment::data -assessment_id $assessment_id
 
-foreach section_id [db_list sections "
-    select distinct s.section_id, asm.sort_order
+db_multirow sections get_sections "
+	    select distinct s.section_id, asm.sort_order, cr.title as section_title
     from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm, cr_items ai
     where ci.item_id = cr.item_id
     and cr.revision_id = s.section_id
@@ -65,18 +65,20 @@ foreach section_id [db_list sections "
     and asm.assessment_id = ai.latest_revision
     and ai.item_id in ([template::util::tcl_to_sql_list $assessment_id_list])
     order by asm.sort_order
-"] {
+	    "
+template::multirow foreach sections {
     db_foreach items {
-	select ci.item_id, cr.title, cr.revision_id, i.data_type
-
-	from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism
-
-	where ci.latest_revision = cr.revision_id
-	and cr.revision_id = i.as_item_id
-	and i.as_item_id = ism.as_item_id
-	and ism.section_id = :section_id
-
-	order by ism.sort_order
+select i.as_item_id, i.subtext, ci.item_id, cr.title, cr.revision_id, cr.content as
+       question_text, cr.description, i.field_name,asr.item_id as as_item_id_i,
+       ism.required_p, ism.section_id, ism.sort_order,
+       ism.max_time_to_complete, ism.points, i.data_type
+from as_items i, cr_revisions cr, cr_items ci, as_item_section_map ism, cr_revisions asr
+where ci.item_id = cr.item_id
+and cr.revision_id = i.as_item_id
+and i.as_item_id = ism.as_item_id
+and ism.section_id = :section_id
+and asr.revision_id = i.as_item_id
+order by ism.sort_order
     } {
 	set display_type [string range [db_string get_display_type {
 	    select o.object_type
@@ -104,12 +106,12 @@ if {[exists_and_not_null session_id_list]} {set item_choices_limit_session " and
 			 from as_item_data_choices
 			 where choice_id = c.choice_id
 			 and item_data_id in (select item_data_id
-					      from as_item_data d, as_sessions s
-					      where d.session_id = s.session_id
-						  $item_choices_limit_session
-					      and s.assessment_id = (select latest_revision
-								     from cr_items
-								     where item_id = :assessment_id))) as choice_responses		
+				    from as_item_data d, as_sessions s, cr_revisions a
+				    where d.session_id = s.session_id
+				    and s.assessment_id = a.revision_id
+                                    and s.completed_datetime is not null
+                                    and a.item_id = :assessment_id
+                                    $item_choices_limit_session)) as choice_responses		
 			
 			from cr_revisions r, as_item_choices c
 			left outer join cr_revisions r2 on (c.content_value = r2.revision_id)		
@@ -137,12 +139,12 @@ if {[exists_and_not_null session_id_list]} {set item_choices_limit_session " and
 	    }
     
 	    set total_responses_limit_session ""
-	    if { [exists_and_not_null limit_to_section_clause] } { set total_responses_limit_session "and session_id in $limit_to_section_clause" }
+	    if { [exists_and_not_null limit_to_section_clause] } { set total_responses_limit_session "and s.session_id in $limit_to_section_clause" }
 
 if {[exists_and_not_null session_id_list]} {
-    set total_responses_limit_session " and session_id in ([template::util::tcl_to_sql_list $session_id_list]) "
+    set total_responses_limit_session " and s.session_id in ([template::util::tcl_to_sql_list $session_id_list]) "
 }
-	    set total_responses [db_string count_responses "select count(*) from (select distinct session_id from as_item_data, cr_revisions cr1, cr_revisions cr2 where cr1.revision_id=:revision_id and cr1.item_id=cr2.item_id and as_item_id = cr2.revision_id $total_responses_limit_session ) d"]
+	    set total_responses [db_string count_responses "select count(*) from (select distinct s.session_id from as_sessions s, as_item_data, cr_revisions cr1, cr_revisions cr2 where cr1.revision_id=:revision_id and cr1.item_id=cr2.item_id and as_item_id = cr2.revision_id and s.session_id = as_item_data.session_id and s.completed_datetime is not null $total_responses_limit_session ) d"]
 
 	    if { $total_responses } {
 		append stats "<table>\n"
@@ -248,6 +250,6 @@ if {[exists_and_not_null session_id_list]} {
 	    }
 	}
 	
-	template::multirow append items $item_id $revision_id $title $data_type $display_type $stats
+	template::multirow append items $item_id $revision_id $title $data_type $display_type $stats $section_id $section_title
     }
 }
