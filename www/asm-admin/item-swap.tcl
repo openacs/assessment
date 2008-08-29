@@ -14,6 +14,7 @@ ad_page_contract {
     section_id:integer,notnull
     sort_order:integer,notnull
     direction:notnull
+    return_url:optional
 }
 
 set package_id [ad_conn package_id]
@@ -39,4 +40,10 @@ db_transaction {
     ad_script_abort
 }
 
-ad_returnredirect [export_vars -base questions {assessment_id}]\#$as_item_id
+if {![info exists return_url] || $return_url eq ""} {
+    set return_url [export_vars -base questions {return_url assessment_id}]\#$as_item_id
+}
+
+ad_returnredirect $return_url
+ad_script_abort
+
