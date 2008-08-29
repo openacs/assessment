@@ -246,8 +246,11 @@ ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
 						       -ip_mask $as_assessments__ip_mask \
 						       -show_feedback $as_assessments__show_feedback \
 						       -section_navigation $as_assessments__section_navigation \
-						       -type $as_assessments__type ]			
+						       -type $as_assessments__type \
+						       -package_id [ad_conn package_id]]			
 		
+		set assessment_item_id [content::revision::item_id -revision_id $as_assessments__assessment_id]
+		permission::grant -party_id [ad_conn user_id] -object_id $assessment_item_id -privilege "admin"
 		# Section
 		set sectionNodes [$assessment selectNodes {section}]
 		set as_asmt_sect_map__sort_order 0
@@ -614,9 +617,9 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
                         set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
                         if {[llength $displayfeedbackNode]>0} {
                             set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]                  
-                            set as_items__feedback_wrong [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
-                            if {[llength $as_items__feedback_wrong]>0} {
-                                set as_items__feedback_wrong [$as_items__feedback_wrong nodeValue]                      
+                            set as_items__feedback_wrong [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext"]
+                            if {$as_items__feedback_wrong ne ""} {
+                                set as_items__feedback_wrong [$as_items__feedback_wrong text]                      
                             }
                         }
                     } else {
@@ -625,9 +628,9 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
                             set displayfeedbackNode [$respcondition selectNodes {displayfeedback}]
                             if {[llength $displayfeedbackNode]>0} {
                                 set displayfeedback__ident [$displayfeedbackNode getAttribute {linkrefid}]                          
-                                set as_items__feedback_right [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext/text()"]
-                                if {[llength $as_items__feedback_right]>0} {
-                                    set as_items__feedback_right [$as_items__feedback_right nodeValue]                  
+                                set as_items__feedback_right [$item selectNodes "//itemfeedback\[@ident='$displayfeedback__ident'\]/flow_mat/material/mattext"]
+                                if {$as_items__feedback_right ne ""} {
+                                    set as_items__feedback_right [$as_items__feedback_right text]                  
                                 }       
                             }
                         }
