@@ -432,7 +432,12 @@ ad_proc -public as::install::after_upgrade {
 	    0.16 0.17 {
 		content::type::attribute::new -content_type {as_items} -attribute_name {validate_block} -datatype {text} -pretty_name {Validation Block} -column_spec {text}
 	    }
-	    
+	    0.22d5 0.22d6 {
+		# upgrade already done in SQL just add the attributes for
+		# completeness
+		content::type::attribute::new -content_type {as_item_data} -attribute_name {as_item_cr_item_id} -datatype {number} -pretty_name {as_item cr_item_id} -column_spec {integer}
+		content::type::attribute::new -content_type {as_item_data} -attribute_name {choice_value} -datatype {text} -pretty_name {Choice Value}
+	    }	    
 	}    
 }
 
