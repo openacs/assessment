@@ -66,7 +66,11 @@
                  </formgroup>
                </else>
            </if>
-         
+          <elseif @items.presentation_type@ eq "rbo" or @items.presentation_type@ eq "cbo">
+	<fieldset class="radio">
+             <formwidget id="response_to_item.@items.as_item_id@">
+	</fieldset>
+	</elseif>
            <elseif @items.presentation_type@ eq fitb>
              @items.html;noquote@
            </elseif>
