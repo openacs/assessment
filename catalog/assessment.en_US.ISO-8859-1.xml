@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="assessment" package_version="0.22d4" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="assessment" locale="en_US" charset="ISO-8859-1">
 
   <msg key="above">Above</msg>
   <msg key="Absolute_Size">Absolute Size</msg>
@@ -39,6 +39,8 @@
   <msg key="add_new_section">Add a new section</msg>
   <msg key="add_new_section_display">Add new section display</msg>
   <msg key="add_parameter">Add parameter</msg>
+  <msg key="Add_Question">Add Question</msg>
+  <msg key="Add_Question_1">is-visible</msg>
   <msg key="add_section_first">To add a question, add a section first.</msg>
   <msg key="add_section_trigger">Add section trigger</msg>
   <msg key="Add_Sections">Add sections to assessment</msg>
@@ -52,6 +54,7 @@
   <msg key="admin_requests">Requests Administration</msg>
   <msg key="admin_triggers">Administer triggers</msg>
   <msg key="Administration">Administration</msg>
+  <msg key="Advanced_Options">Advanced Options</msg>
   <msg key="after_this_asm">After this Assessment:</msg>
   <msg key="All">All</msg>
   <msg key="all">All</msg>
@@ -60,6 +63,9 @@
   <msg key="allow_multiple">allow multiple</msg>
   <msg key="Allow_Negative">Allow Negative</msg>
   <msg key="Allow_Negative_help">When set to yes this will subtract points for incorrect answers.</msg>
+  <msg key="Allow_Other">Allow other?</msg>
+  <msg key="Allow_other">Allow other</msg>
+  <msg key="Allow_other_help">This will add &quot;Other&quot; to the list of answer choices for this question</msg>
   <msg key="Allow_Random">Allow Randomizing</msg>
   <msg key="allow_tries">allow %assessment_data.number_tries%</msg>
   <msg key="alphabetical">Alphabetical</msg>
@@ -68,9 +74,13 @@
   <msg key="Anonymous_Responses">Anonymous Responses</msg>
   <msg key="anonymous_users_allow">Anonymous respondents allowed</msg>
   <msg key="Answer">Answer</msg>
+  <msg key="Answer_1">Answer?</msg>
   <msg key="Answer_Alignment">Answer Alignment</msg>
   <msg key="Answer_Alignment_help">Alignment of the answer in relation to the question.</msg>
   <msg key="Answer_Choices">Answer Choices</msg>
+  <msg key="Answer_Required">Answer Required?</msg>
+  <msg key="Answer_Set">Answer Set</msg>
+  <msg key="answer_set_title_help_text">Enter a title for this answer set</msg>
   <msg key="Answer_Value">Answer Value</msg>
   <msg key="Answer_Value_help">Value of this answer</msg>
   <msg key="answered_assessments">Answered Assessments</msg>
@@ -139,6 +149,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="back_button_help">Is it possible to use the backbutton for this section to see previous answers</msg>
   <msg key="Back_to_Sessions">Back to Sessions</msg>
   <msg key="Back_to_Summary">Back to Summary</msg>
+  <msg key="Begin">Begin</msg>
   <msg key="below">Below</msg>
   <msg key="besideleft">Beside-Left</msg>
   <msg key="besideright">Beside-Right</msg>
@@ -172,6 +183,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="choice_set">Title</msg>
   <msg key="choice_set_title">Title</msg>
   <msg key="Choice_Sets">Existing Choice Set</msg>
+  <msg key="Choice_Sets_help">Choose previously saved multiple choice answers for this question or use the answer choices below</msg>
   <msg key="choose_action">Choose the action to perform</msg>
   <msg key="choose_type">What kind of assessment you want to create?</msg>
   <msg key="Closed_Assessments">Closed Assessments</msg>
@@ -183,6 +195,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="condition">Condition</msg>
   <msg key="Confirm_Consent">Confirmation</msg>
   <msg key="Consent_Page">Consent Page</msg>
+  <msg key="Continue">Continue</msg>
   <msg key="continue_with_copy">Continue with Copy</msg>
   <msg key="continue_with_insert">Continue with Insert</msg>
   <msg key="continue_with_remove">Continue with Remove</msg>
@@ -193,6 +206,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="copy_item">Copy Question</msg>
   <msg key="copy_section">Copy Section</msg>
   <msg key="Copy_this_assess">Copy this assessment</msg>
+  <msg key="Correct">Correct</msg>
+  <msg key="correct_answer">correct answer?</msg>
   <msg key="Correct_Answer_Choice">Correct Answer Choice</msg>
   <msg key="Correct_Answer_help">Is this the correct answer?</msg>
   <msg key="Created_by">Created by</msg>
@@ -251,9 +266,11 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="edit_item_type_oq">Edit Question: Open Question</msg>
   <msg key="edit_item_type_sa">Edit Question: Short Answer</msg>
   <msg key="edit_parameter">Edit parameter</msg>
+  <msg key="Edit_Question">Edit Question</msg>
   <msg key="edit_section">Edit Section</msg>
   <msg key="edit_section_display">Edit display type</msg>
   <msg key="Editable">Editable</msg>
+  <msg key="Email_History">Email History</msg>
   <msg key="Email_Options">Email Options:</msg>
   <msg key="End_Time">End Time</msg>
   <msg key="Enter_Message">Enter Message</msg>
@@ -348,8 +365,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="item_type_fu">File Upload</msg>
   <msg key="Item_Type_help">Question type used.</msg>
   <msg key="item_type_long_answer_help"></msg>
-  <msg key="item_type_mc">Multiple Choice</msg>
-  <msg key="item_type_ms">Multiple Selection</msg>
+  <msg key="item_type_mc">Single Response Allowed</msg>
+  <msg key="item_type_ms">Multiple Responses Allowed</msg>
   <msg key="item_type_multiple_choice_help"></msg>
   <msg key="item_type_oq">Open Question</msg>
   <msg key="item_type_sa">Short Answer</msg>
@@ -372,15 +389,25 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="limited_tries">Number of tries allowed: %assessment_data.number_tries%</msg>
   <msg key="Live">Live</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br /&gt;your name will not be included in the results.</msg>
+  <msg key="lt_Choice_choice_element">Choice %choice_elements.id%</msg>
+  <msg key="lt_Correct_Response_Feed">Correct Response Feedback</msg>
   <msg key="lt_default_entry_page"></msg>
   <msg key="lt_default_exit_page">Congratulations, you're done! Use the link below to review your answers.</msg>
   <msg key="lt_default_instructions"></msg>
   <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
+  <msg key="lt_Hide_feedback_options">Hide feedback options</msg>
+  <msg key="lt_Incorrect_Response_Fe">Incorrect Response Feedback</msg>
+  <msg key="lt_Insert_new_question_h">Insert new question here</msg>
+  <msg key="lt_Multiple_Choice_Optio">Multiple Choice Options</msg>
   <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
+  <msg key="lt_Question_Type_and_Ans">Question Type and Answers</msg>
   <msg key="lt_Responses_for_assessm">Responses for: %assessment_data.html_title;noquote%</msg>
   <msg key="lt_Responses_of_user_per">Responses of user: %person_name%</msg>
+  <msg key="lt_Save_choices_answer_s">Save choices answer set</msg>
+  <msg key="lt_Save_choices_as_answe">Save choices as answer set</msg>
+  <msg key="lt_Show_feedback_options">Show feedback options</msg>
   <msg key="lt_This_field_is_used_to">This field is used to validate the answer entered. This must have a multiple of 2 lines. The first line is a TCL expression to be used to check the answer and the second line is the error message. The string %%answer%% will be replaced by the answer entered.</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
@@ -399,6 +426,8 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="message">Message</msg>
   <msg key="Message_Subject">Message Subject</msg>
   <msg key="message_to_display_to">Message to display to the user when the action is executed (ie. You have joined &quot;My Community&quot;)</msg>
+  <msg key="message_type_help_text">Check if this email contains the results of this assessment.</msg>
+  <msg key="Minimum_Score">Minimum Score</msg>
   <msg key="Minutes_for_Retry">Minutes required for Retry</msg>
   <msg key="Mode">Mode</msg>
   <msg key="Modified_Time">Time Modified</msg>
@@ -420,6 +449,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="New_Survey">New Survey</msg>
   <msg key="Next">Next</msg>
   <msg key="no">No</msg>
+  <msg key="No_answered_assessments">No answered assessments</msg>
   <msg key="no_display">-- None --</msg>
   <msg key="No_open_assessments">No open assessments</msg>
   <msg key="No_responses">No responses</msg>
@@ -453,6 +483,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Only_incorrect">Only incorrect Responses</msg>
   <msg key="Open_Assessments">Open Assessments</msg>
   <msg key="open_assessments">Open Assessments</msg>
+  <msg key="Optional">(Optional)</msg>
   <msg key="oq_Keywords">Keywords</msg>
   <msg key="oq_Keywords_help">Keywords used for automatic grading</msg>
   <msg key="oq_Reference_Answer">Reference Answer</msg>
@@ -462,9 +493,11 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="order_of_entry">Order of Entry</msg>
   <msg key="Order_Type">Order Type</msg>
   <msg key="Order_Type_help">Ordering of choices</msg>
+  <msg key="OrUseChoices">Or use choices from an existing question</msg>
   <msg key="other_asm">Manage another assessment</msg>
   <msg key="Other_Sessions">Other Sessions</msg>
   <msg key="Out_of">Out of</msg>
+  <msg key="Page_current_of_total">Page %current% of %total%</msg>
   <msg key="parameter_description">Description</msg>
   <msg key="parameter_query">Query</msg>
   <msg key="parameter_type">Type</msg>
@@ -474,9 +507,11 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Password_Enter">Enter assessment password</msg>
   <msg key="Percent_Score">Percent Score</msg>
   <msg key="Percent_Score_help">Percentage of the points of the question this choice gives. May be larger than 100 and lower than -100.</msg>
+  <msg key="Percentage_complete">Percentage complete</msg>
   <msg key="performed">Performed</msg>
   <msg key="permissions">Permissions</msg>
   <msg key="Please_select_one">Please select one</msg>
+  <msg key="Points">Points</msg>
   <msg key="points">points</msg>
   <msg key="points_answer">Points for Answer</msg>
   <msg key="points_answer_help">How many points is this question answer worth.</msg>
@@ -492,16 +527,20 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="publish_status">Publish Status</msg>
   <msg key="query">Query</msg>
   <msg key="Question">Question</msg>
+  <msg key="Question_1">not-visible</msg>
+  <msg key="Question_2">Choice %choice_elements.id%</msg>
   <msg key="Question_not_answered">Question not answered</msg>
   <msg key="Question_Number">Question %items.rownum%</msg>
   <msg key="Question_Statistics">Question Statistics</msg>
   <msg key="Question_Type">Question Type</msg>
+  <msg key="Question_Type_and_Answers">Question Type and Answers</msg>
   <msg key="Questions">Questions</msg>
   <msg key="Randomized">Randomized</msg>
   <msg key="randomized">Randomized</msg>
+  <msg key="Reference_Answer">Reference Answer</msg>
   <msg key="reg_asm">Used in the Registration Process</msg>
   <msg key="Reg_Assessment_title">Main Site Custom Registration Questionnaire: &quot;%assessment_data.title%&quot;</msg>
-  <msg key="reg_users_required">Registrated respondents required</msg>
+  <msg key="reg_users_required">Registered respondents required</msg>
   <msg key="regarding_this_assess">regarding this survey</msg>
   <msg key="regexp">regexp of user input must return 1 against this pattern:</msg>
   <msg key="regexp_not_set_error">You must provide a regular expression against which user input will be matched</msg>
@@ -520,6 +559,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Requested_assess_is_no_longer_available">Requested assessment is no longer available.</msg>
   <msg key="Requested_attempts_deleted">Requested attempts deleted.</msg>
   <msg key="Required">Required</msg>
+  <msg key="required">(required)</msg>
   <msg key="Responding_Users">Responding Users</msg>
   <msg key="Response_Options">Response Options:</msg>
   <msg key="Response_Submitted">Response Submitted</msg>
@@ -529,6 +569,9 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Results_edit">Edit assessment result</msg>
   <msg key="Results_edit_Description">Comment</msg>
   <msg key="Results_edit_Description_help">Enter your comment for this question here</msg>
+  <msg key="Results_Email">Results Email</msg>
+  <msg key="Results_email">Results Email?</msg>
+  <msg key="Results_Email_Sent">Results Email Sent</msg>
   <msg key="Resume_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Start&quot;&gt;Start %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="Retake_Assessment_Title">Previously Completed. &lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Retake Assessment&quot;&gt;Retake %assessment_data.title%&lt;/a&gt;</msg>
   <msg key="return">Return</msg>
@@ -542,6 +585,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="sa_Title_help">A title for this short answer feature set so it can be reused in the future.</msg>
   <msg key="Save_and_add_another_question">Save and add another question</msg>
   <msg key="Save_and_finish">Save and finish</msg>
+  <msg key="Save_this_set_of_answers_for_reuse_later">Save this set of answers for reuse later</msg>
   <msg key="Score">Score</msg>
   <msg key="Search">Search</msg>
   <msg key="Search_Item">Search for questions</msg>
@@ -584,6 +628,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Select_All">Select All</msg>
   <msg key="Selected_Sections">Selected Sections</msg>
   <msg key="Send_bulkmail">Send bulk mail</msg>
+  <msg key="Send_Email">Send Email</msg>
   <msg key="Send_Mail">Send Mail</msg>
   <msg key="Send_mail_to">Send mail to</msg>
   <msg key="Session">Session</msg>
@@ -595,7 +640,11 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="show_item_name">Question name displayed</msg>
   <msg key="Show_Item_Name_1">Show Question Name</msg>
   <msg key="Show_Items">Show Items</msg>
+  <msg key="Show_Other_option">Show &quot;Other&quot; option?</msg>
   <msg key="Show_Sessions">Show Sessions</msg>
+  <msg key="Showing_filtered">Showing %filtered_by%</msg>
+  <msg key="Single_Response_Allowed_Dropdown_Box">Multiple choice (select one answer from a drop-down menu)</msg>
+  <msg key="singleanswermultipleanswer">Single Answer possible /Multiple Answers possible</msg>
   <msg key="specific_date">Specific Date</msg>
   <msg key="Standard_Deviation">Standard Deviation:</msg>
   <msg key="Start_Assessment_Title">&lt;a href=&quot;%assessment_data.url%&quot; title=&quot;Start Assessment&quot;&gt;Start %assessment_data.title%&lt;/a&gt;</msg>
@@ -603,6 +652,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Started">Started</msg>
   <msg key="Status">Status</msg>
   <msg key="Student_Response">Student Response</msg>
+  <msg key="Subgroup">Subgroup</msg>
   <msg key="Subject">Subject</msg>
   <msg key="Subject_Name">Subject Name</msg>
   <msg key="Submit">Submit</msg>
@@ -622,6 +672,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="time_for_completion">Seconds allowed for completion&lt;br&gt;(Optional)</msg>
   <msg key="time_for_response">Minutes allowed for completion</msg>
   <msg key="time_response">%assessment_data.time_for_response% minutes maximum response time</msg>
+  <msg key="Time_Spent">Time Spent</msg>
   <msg key="Time_spent">Time spent</msg>
   <msg key="time_to_wait">Retry allowed after %assessment_data.wait_between_tries% minutes</msg>
   <msg key="Title">Title</msg>
@@ -663,10 +714,12 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="View_Responses_1">View Responses</msg>
   <msg key="View_Results">View Results</msg>
   <msg key="View_results">View Answers</msg>
+  <msg key="View_Results_Summary">View Results Summary</msg>
   <msg key="View_session_in_a_new_window">(&lt;a href=&quot;%view_session_url%&quot; target=&quot;new&quot;&gt;View Session&lt;/a&gt;)</msg>
   <msg key="View_Sessions">View Sessions</msg>
   <msg key="when_this_action">When this action will be executed (ie. At the end of this section)</msg>
   <msg key="when_this_will">When this will be executed?</msg>
   <msg key="yes">Yes</msg>
   <msg key="yesterday">Yesterday</msg>
+  <msg key="You_have_completed_the_maximum_number_of_attempts">You have completed the maximum number of attempts</msg>
 </message_catalog>
