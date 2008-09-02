@@ -51,13 +51,14 @@ content::type::attribute::new -content_type {as_item_display_rb} -attribute_name
 content::type::attribute::new -content_type {as_item_display_rb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_rb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_rb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
-
+content::type::attribute::new -content_type {as_item_display_rb} -attribute_name {allow_other_p} -datatype {boolean}    -pretty_name {Allow Other?} -column_spec {char(1) default 'f'}
 # Checkbox display type
 content::type::attribute::new -content_type {as_item_display_cb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_item_display_cb} -attribute_name {choice_orientation} -datatype {string}    -pretty_name {Choice Orientation} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_cb} -attribute_name {choice_label_orientation} -datatype {string}    -pretty_name {Choice Label Orientation} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_cb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_cb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
+content::type::attribute::new -content_type {as_item_display_cb} -attribute_name {allow_other_p} -datatype {boolean}    -pretty_name {Allow Other?} -column_spec {char(1) default 'f'}
 
 # Selectbox display type
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
@@ -66,7 +67,7 @@ content::type::attribute::new -content_type {as_item_display_sb} -attribute_name
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {sort_order_type} -datatype {string}    -pretty_name {Sort Order Type} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {item_answer_alignment} -datatype {string}    -pretty_name {Item Answer Alignment} -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
-
+content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {allow_other_p} -datatype {boolean}    -pretty_name {Allow Other?} -column_spec {char(1) default 'f'}
 # Textbox display type
 content::type::attribute::new -content_type {as_item_display_tb} -attribute_name {html_display_options} -datatype {string}    -pretty_name {HTML display Options} -column_spec {varchar(50)}
 content::type::attribute::new -content_type {as_item_display_tb} -attribute_name {abs_size} -datatype {string}    -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
@@ -88,6 +89,7 @@ content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {i
 content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {allow_negative_p} -datatype {boolean}  -pretty_name {Allow Negative} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {num_correct_answers} -datatype {number}  -pretty_name {Number of Correct Answers} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {num_answers} -datatype {number}    -pretty_name {Number of Answers} -column_spec {integer}
+content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {allow_other_p} -datatype {boolean}    -pretty_name {Allow Other?} -column_spec {char(1) default 'f'}
 
 # Item choices
 content::type::attribute::new -content_type {as_item_choices} -attribute_name {mc_id}     -datatype {number}  -pretty_name {Parent ID}     -column_spec {integer}
@@ -187,6 +189,7 @@ content::type::attribute::new -content_type {as_sessions} -attribute_name {compl
 content::type::attribute::new -content_type {as_sessions} -attribute_name {session_status}            -datatype {string}  -pretty_name {Session Status}  -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_sessions} -attribute_name {assessment_status}            -datatype {string}  -pretty_name {Assessment Status}  -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_sessions} -attribute_name {percent_score}            -datatype {number}  -pretty_name {Percent Score}  -column_spec {integer}
+content::type::attribute::new -content_type {as_sessions} -attribute_name {elapsed_seconds}            -datatype {number}  -pretty_name {Elapsed Seconds}  -column_spec {integer}
 
 # Section data
 content::type::attribute::new -content_type {as_section_data} -attribute_name {session_id}            -datatype {number}  -pretty_name {Session ID}  -column_spec {integer}
@@ -213,6 +216,9 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {time
 content::type::attribute::new -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {integer}
+
+content::type::attribute::new -content_type {as_item_data} -attribute_name {as_item_cr_item_id} -datatype {number} -pretty_name {as_item cr_item_id} -column_spec {integer}
+content::type::attribute::new -content_type {as_item_data} -attribute_name {choice_value} -datatype {text} -pretty_name {Choice Value}
 
 # Session results
 content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
@@ -456,7 +462,7 @@ ad_proc -public as::install::before_uninstantiate {
 ns_log notice "delete assessment package $package_id"
     # delete actions
     db_foreach get_package_actions {} {
-        ns_log notice "delte action $object_id"
+        ns_log debug "delete action $object_id"
         package_exec_plsql -var_list [list [list action_id $object_id]] \
             as_action del
     }
