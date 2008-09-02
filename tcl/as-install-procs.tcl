@@ -437,7 +437,11 @@ ad_proc -public as::install::after_upgrade {
 		# completeness
 		content::type::attribute::new -content_type {as_item_data} -attribute_name {as_item_cr_item_id} -datatype {number} -pretty_name {as_item cr_item_id} -column_spec {integer}
 		content::type::attribute::new -content_type {as_item_data} -attribute_name {choice_value} -datatype {text} -pretty_name {Choice Value}
-	    }	    
+	    }
+	    0.22d7 0.22d8 {
+                content::type::attribute::new -content_type {as_sessions} -attribute_name {elapsed_seconds}            -datatype {number}  -pretty_name {Elapsed Seconds}  -column_spec {integer}
+		content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {allow_other_p} -datatype {boolean}    -pretty_name {Allow Other?} -column_spec {char(1) default 'f'}
+	    }
 	}    
 }
 
