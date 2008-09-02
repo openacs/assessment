@@ -22,7 +22,8 @@
         and s.assessment_id in (select revision_id from cr_revisions where item_id= :assessment_id)
 	and o.object_id = cr.item_id
         and s.session_id = cr.revision_id
-	group by assessment_id, subject_id, session_id
+	group by assessment_id, subject_id, session_id, o.creation_date
+	order by o.creation_date desc
 	limit 1
     </querytext>
 </fullquery>

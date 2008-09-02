@@ -36,11 +36,11 @@
       </fieldset><!-- End Section FieldSet -->
 
 </multiple>
+</p>
 
-<include src="/packages/assessment/lib/actions-results" session_id="@session_id@">
 
 <hr>
-<if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none and @assessment_score@ gt 0><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
+<if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none and @assessment_score@ not nil and @assessment_score@ gt 0><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 
 <if @comments_installed_p@>
 <include src="/packages/assessment/lib/comments-chunk" object_id="@session_id@" />

@@ -55,7 +55,7 @@ set session_user_url [acs_community_member_url -user_id $subject_id]
 
 # get start and end times
 db_1row session_data {}
-set session_time [as::assessment::pretty_time -seconds $session_time -hours]
+set session_time [as::assessment::pretty_time_hours_minutes -seconds $session_time]
 
 # get the number of attempts
 
@@ -72,22 +72,22 @@ if {[empty_string_p $assessment_data(show_feedback)]} {
 
 # show_feedback: none, all, incorrect, correct
 
-
-set session_score 0
-set assessment_score 0
-db_multirow sections sections {} {
-    if {[empty_string_p $points]} {
-	set points 0
-    }
-    if {[empty_string_p $max_points]} {
-	set max_points 0
-    }
-    set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
-    incr session_score $points
-    incr assessment_score $max_points
+db_multirow sections sections {}
+if {$session_finish ne ""} {
+    set session_score [db_string get_session_score "select sum(coalesce(points,0)) from as_item_data where session_id=:session_id" -default ""]
+    set assessment_score [db_string get_max_points "select sum(coalesce(i.points,0)) from as_items i, as_item_data d where d.session_id = :session_id and i.as_item_id = d.as_item_id" -default ""]
+    #set max_time_to_complete [as::assessment::pretty_time -seconds $assessment_data(max_time_to_complete)]
+    set max_time_to_complete ""
+    if {$session_score ne "" && $assessment_score ne "" && $assessment_score > 0} {
+	set percent_score "[format "%3.2f" [expr {$session_score / ($assessment_score + 0.0) * 100}]]%"
+    } else {
+	set percent_score ""
+    } 
+    set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
+} else {
+    set percent_score ""
+    set showpoints 0
 }
-
-set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
 
 set comments_installed_p [apm_package_enabled_p "general-comments"]
 

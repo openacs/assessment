@@ -24,6 +24,7 @@
 	and o.object_id = cr.item_id
         and s.session_id = cr.revision_id
 	group by assessment_id, subject_id, session_id)
+	order by o.creation_date desc
 	where rownum=1
     </querytext>
 </fullquery>
