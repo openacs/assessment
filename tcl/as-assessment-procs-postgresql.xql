@@ -32,7 +32,7 @@
 	and m.section_id = s.section_id
 	and m.assessment_id = :assessment_id
 	and d.points is null
-
+and (select sum(i.points) from as_items i, as_item_section_map m where m.as_item_id=i.as_item_id and m.section_id = s.section_id) > 0
 	</querytext>
 </fullquery>
 	

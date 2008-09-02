@@ -33,17 +33,22 @@ ad_proc -public as::item_form::add_item_to_form  {
 
     util_unlist $item_data default_value data
 
-    as::item_display_$item(display_type)\::render \
-	-form $name \
-	-element $element_name \
-	-type_id $item(display_type_id) \
-	-datatype $item(data_type) \
-	-title $item(title) \
-	-subtext $item(subtext) \
-	-required_p $required_p \
-	-random_p $random_p \
-	-default_value $default_value \
-	-data $data
+    if {$item(item_type) eq "mc"} {
+	set item(allow_other_p) [as::item_type_mc::allow_other_p -item_type_id $item(item_type_id)]
+    }
 
-    return $item(display_type)
+    set presentation_type [as::item_display_$item(display_type)\::render \
+                               -form $name \
+                               -element $element_name \
+                               -type_id $item(display_type_id) \
+                               -datatype $item(data_type) \
+                               -title $item(title) \
+                               -subtext $item(subtext) \
+                               -required_p $required_p \
+                               -random_p $random_p \
+                               -default_value $default_value \
+                               -data $data \
+			       -item [array get item]]
+
+    return $presentation_type
 }

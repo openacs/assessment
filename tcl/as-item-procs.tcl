@@ -287,7 +287,7 @@ ad_proc -private as::item::get_item_type_info {
     @author Dave Bauer (dave@solutiongrove.com)
     @creaton-date 2006-10-26
 } {
-    upvar column_array $array_name
+    upvar $array_name column_array
     db_0or1row get_item_type_info {} -column_array column_array
 }
 

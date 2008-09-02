@@ -103,6 +103,7 @@ ad_proc -public as::item_display_rb::render {
     {-random_p ""}
     {-default_value ""}
     {-data ""}
+    -item:required
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
@@ -118,6 +119,9 @@ ad_proc -public as::item_display_rb::render {
 	set type(sort_order_type) "order_of_entry"
     }
 
+    array set item_array $item
+    set allow_other_p $item_array(allow_other_p)
+
     # numerical alphabetical randomized order_of_entry
     switch -exact $type(sort_order_type) {
 	alphabetical {
@@ -132,10 +136,20 @@ ad_proc -public as::item_display_rb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list options \$data] [list html \$type(html_display_options)]]
-    set element_params [concat [list "$element\:text(radio)$optional"] $param_list]
 
+    if {[string is true $allow_other_p]} {
+        set widget radio_text
+        set datatype radio_text
+    } else {
+        set widget radio
+        set datatype text
+    }
+    
+    set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list options \$data] [list html \$type(html_display_options)]]
+    set element_params [concat [list "$element\:${datatype}($widget)$optional"] $param_list]
     ad_form -extend -name $form -form [list $element_params]
+
+    return [expr {$allow_other_p ? "rbo" : "rb"}]
 }
 
 ad_proc -public as::item_display_rb::data {

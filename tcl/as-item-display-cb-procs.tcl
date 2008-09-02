@@ -103,6 +103,7 @@ ad_proc -public as::item_display_cb::render {
     {-random_p ""}
     {-default_value ""}
     {-data ""}
+    -item:required
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
@@ -132,10 +133,24 @@ ad_proc -public as::item_display_cb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
+    
+    array set item_array $item
+    set allow_other_p $item_array(allow_other_p)
+
+    if {[string is true $allow_other_p]} {
+        set widget checkbox_text
+        set datatype checkbox_text
+    } else {
+        set widget checkbox
+        set datatype text
+    }
+        
     set param_list [list [list label \$title] [list help_text \$subtext] [list values \$default_value] [list options \$data] [list html \$type(html_display_options)]]
-    set element_params [concat [list "$element\:text(checkbox)$optional"] $param_list]
+    set element_params [concat [list "$element\:${datatype}($widget)$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]
+
+    return [expr {$allow_other_p ? "cbo" : "cb"}]    
 }
 
 ad_proc -public as::item_display_cb::data {

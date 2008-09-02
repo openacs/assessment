@@ -14,6 +14,7 @@ ad_proc -public as::item_type_mc::new {
     {-num_correct_answers ""}
     {-num_answers ""}
     {-choices ""}
+    {-allow_other_p "f"}
 } {
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
@@ -31,9 +32,10 @@ ad_proc -public as::item_type_mc::new {
 				-content_type {as_item_type_mc} \
 				-title $title \
 				-attributes [list [list increasing_p $increasing_p] \
-						[list allow_negative_p $allow_negative_p] \
-						[list num_correct_answers $num_correct_answers] \
-						[list num_answers $num_answers] ] ]
+                                                 [list allow_negative_p $allow_negative_p] \
+                                                 [list num_correct_answers $num_correct_answers] \
+                                                 [list num_answers $num_answers] \
+                                                 [list allow_other_p $allow_other_p] ] ]
     }
 
     return $as_item_type_mc_id
@@ -46,6 +48,7 @@ ad_proc -public as::item_type_mc::edit {
     {-allow_negative_p ""}
     {-num_correct_answers ""}
     {-num_answers ""}
+    {-allow_other_p "f"}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
@@ -62,7 +65,8 @@ ad_proc -public as::item_type_mc::edit {
 				  -attributes [list [list increasing_p $increasing_p] \
 						   [list allow_negative_p $allow_negative_p] \
 						   [list num_correct_answers $num_correct_answers] \
-						   [list num_answers $num_answers] ] ]
+						   [list num_answers $num_answers] \
+                                                   [list allow_other_p $allow_other_p] ] ]
     }
 
     return $new_item_type_id
@@ -87,7 +91,8 @@ ad_proc -public as::item_type_mc::new_revision {
 				  -attributes [list [list increasing_p $increasing_p] \
 						   [list allow_negative_p $allow_negative_p] \
 						   [list num_correct_answers $num_correct_answers] \
-						   [list num_answers $num_answers] ] ]
+						   [list num_answers $num_answers] \
+                                                   [list allow_other_p $allow_other_p] ] ]
 
 	if {$with_choices_p == "t"} {
 	    set choices [db_list get_choices {}]
@@ -126,7 +131,8 @@ ad_proc -public as::item_type_mc::copy {
 				  -increasing_p $increasing_p \
 				  -allow_negative_p $allow_negative_p \
 				  -num_correct_answers $num_correct_answers \
-				  -num_answers $num_answers]
+				  -num_answers $num_answers \
+                                  -allow_other_p $allow_other_p]
 
 	set choices [db_list get_choices {}]
 	foreach choice_id $choices {
@@ -150,21 +156,24 @@ ad_proc -public as::item_type_mc::render {
 
     Render a Multiple Choice Type
 } {
+    set allow_other_p [as::item_type_mc::allow_other_p -item_type_id $type_id]
+    
     set defaults ""
     if {![empty_string_p $default_value]} {
-	array set values $default_value
+        array set values $default_value
 	set defaults $values(choice_answer)
+        if {$allow_other_p} {
+            set defaults [list $defaults $values(clob_answer)]
+        }
     }
-    db_1row item_type_data {}
-    ns_log notice "
-render mc
-num_correct_answers '${num_correct_answers}'
-"
     if {![empty_string_p $session_id]} {
 	if {[empty_string_p $show_feedback] || $show_feedback == "none"} {
 	    set choice_list ""
 	    db_foreach get_sorted_choices {} {
-		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
+		if {$content_value ne ""} {
+		    db_1row get_content_value ""
+		    set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
+		}
 		lappend choice_list [list $title $choice_id]
 	    }
 	} else {
@@ -172,14 +181,17 @@ num_correct_answers '${num_correct_answers}'
 	    set choice_list ""
 
 	    db_foreach get_sorted_choices_with_feedback {} {
-		set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
-		set pos [lsearch -exact -integer $defaults $choice_id]
-		if {$num_correct_answers > 0 && $pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+		if {$content_value ne ""} {
+		    db_1row get_content_value ""
+		    set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
+		}
+		set pos [lsearch -exact $defaults $choice_id]
+		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
-		} elseif {$num_correct_answers > 0 && $pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
-		    if {$num_correct_answers > 0 && [llength $defaults] && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		    if {[llength $defaults] && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
 		        lappend choice_list [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		    } else {
 		        lappend choice_list [list $title $choice_id]
@@ -193,6 +205,7 @@ num_correct_answers '${num_correct_answers}'
 	}
     }
 
+    db_1row item_type_data {}
 
     set display_choices [list]
     set correct_choices [list]
@@ -200,9 +213,12 @@ num_correct_answers '${num_correct_answers}'
     set total 0
     db_foreach choices {} {
 	incr total
-	set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
+	if {$content_value ne ""} {
+	    db_1row get_content_value ""
+	    set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
+	}
 	if {$show_feedback ne "" && $show_feedback ne "none"} {
-		set pos [lsearch -exact -integer $defaults $choice_id]
+		set pos [lsearch -exact $defaults $choice_id]
 	    if {$pos > -1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
 		lappend display_choices [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
 	    } elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
@@ -334,21 +350,36 @@ ad_proc -public as::item_type_mc::process {
 	}
     } else {
 	# award 100% points if and only if all correct answers are given
+	set count_correct 0
 	if {[array exists correct_choices] && [lsort -integer $response] == [lsort -integer [array names correct_choices]]} {
-	    set percent 100
+	    set points $max_points
+	} elseif {[array size correct_choices] > 0} {
+	    # FIXME !! create setting for partial credit or use existing one
+	    foreach elm $response {
+		if {[lsearch [array names correct_choices] $elm] > -1} {
+		    incr count_correct
+		}
+	    }
+	    set points [expr {$count_correct / (0.0 + [array size correct_choices]) * $max_points}]
 	} else {
-	    set percent 0
+	    set points 0
 	}
     }
 
-    if {$type(allow_negative_p) == "f" && $percent < 0} {
+    if {$type(allow_negative_p) == "f" && $points < 0} {
 	# don't allow negative percentage
-	set percent 0
+	set points 0
     }
-	
-    set points [expr round($max_points * $percent / 100)]
 
-    set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
+    if {$type(allow_other_p)} {
+        # this is a pain we need display type to get the value
+        set widget [as::item_type_mc::form_widget -type_id $type_id]
+        set response_value [template::util::${widget}_text::get_property ${widget}_value $response]
+        set response_text [template::util::${widget}_text::get_property text_value $response]
+        set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response_value -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id -clob_answer $response_text]
+    } else {
+        set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
+    }
     as::session_results::new -target_id $item_data_id -points $points -package_id $package_id
 }
 
@@ -458,6 +489,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     {-display_type "rb"}
     {-increasing_p "f"}
     {-allow_negative_p "f"}
+    {-allow_other_p "f"}
 } {
     Add the multiple choice item to an assessment. The creates the 
     as_item_type_mc object and all the choices and associates the as_item_id
@@ -501,7 +533,8 @@ ad_proc -private as::item_type_mc::add_to_assessment {
                        -increasing_p $increasing_p \
                        -allow_negative_p $allow_negative_p \
                        -num_correct_answers $num_correct_answers \
-                       -num_answers $num_answers]
+                       -num_answers $num_answers \
+                       -allow_other_p $allow_other_p]
         
         if {![info exists item_type_info(object_type)]} {
             # first item type mapped
@@ -698,3 +731,26 @@ db_transaction {
 return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
 }
 
+
+ad_proc -private as::item_type_mc::allow_other_p {
+    {-display_type_id ""}
+    {-item_type_id ""}
+} {
+    Find out if we allow the user to enter a text option as other
+} {
+    if {$item_type_id ne ""} {
+        return [db_string allow_other_p "select mc.allow_other_p from as_item_type_mc mc where as_item_type_id=:item_type_id" -default "f"]
+    }
+    return [db_string allow_other_p "select mc.allow_other_p from as_item_type_mc mc, as_item_rels r1, as_item_rels r2, cr_items ci where ci.latest_revision = r1.item_rev_id and r1.item_rev_id=r2.item_rev_id and r1.target_rev_id=mc.as_item_type_id and r1.rel_type = 'as_item_type_rel' and r2.target_rev_id=:display_type_id and r2.rel_type='as_item_display_rel'" -default "f"]
+}
+
+ad_proc -private as::item_type_mc::form_widget {
+    -type_id
+} {
+    Get what form widget we used
+} {
+    set display_type [db_string allow_other_p "select object_type from acs_objects, as_item_rels r1, as_item_rels r2, cr_items ci where r1.item_rev_id = ci.latest_revision and r1.item_rev_id=r2.item_rev_id and r1.target_rev_id=:type_id and r1.rel_type='as_item_type_rel' and r2.target_rev_id=object_id and r2.rel_type='as_item_display_rel'"]
+    set display_type [string range $display_type [expr {[string length $display_type] - 2}] end]
+
+    return [string map {rb radio cb checkbox sb selet} $display_type]
+}

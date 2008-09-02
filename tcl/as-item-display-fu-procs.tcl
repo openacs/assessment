@@ -85,6 +85,7 @@ ad_proc -public as::item_display_f::render {
     {-random_p ""}
     {-default_value ""}
     {-data ""}
+    -item:required
 } {
     Render an Item Display File Upload Type
 } {

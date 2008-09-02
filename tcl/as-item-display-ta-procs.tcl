@@ -97,6 +97,7 @@ ad_proc -public as::item_display_ta::render {
     {-random_p ""}
     {-default_value ""}
     {-data ""}
+    -item:required
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10

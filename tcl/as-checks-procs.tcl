@@ -259,11 +259,10 @@ ad_proc -public as::assessment::check::action_exec {
     }
     
     set tcl_code_p [db_1row select_tcl {}]
-    set failed_p "t"
-    set failed [catch $tcl_code errorMsg]
-    
-    if { $failed > 0 } {
-	set failed_p "f"
+    set failed_p "f"
+    if {[catch $tcl_code errorMsg]} {
+	set failed_p "t"
+	ns_log error "Error running assessment action $action_name '${errorMsg}'"
     }
     set admin [db_list_of_lists get_assessment_admin {}]
     
@@ -272,8 +271,9 @@ ad_proc -public as::assessment::check::action_exec {
 	lappend to $notify_user
     }
     
-    notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message $error_txt" -subset $to -force -action_id $inter_item_check_id
-    
+    if {$failed_p} {
+	notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has encountered an error: $errorMsg" -subset $to -force -action_id $inter_item_check_id
+    }
 
     
     

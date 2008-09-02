@@ -14,7 +14,7 @@
 <fullquery name="as::item_type_mc::copy.item_type_data">
       <querytext>
 
-	select cr.title, i.increasing_p, i.allow_negative_p, i.num_correct_answers,
+	select cr.title, i.increasing_p, i.allow_negative_p, i.num_correct_answers, allow_other_p,
 	       i.num_answers
 	from cr_revisions cr, as_item_type_mc i
 	where cr.revision_id = :type_id
@@ -27,7 +27,7 @@
       <querytext>
 
 	select cr.item_id as type_item_id, cr.title, i.increasing_p,
-	       i.allow_negative_p, i.num_correct_answers, i.num_answers
+	       i.allow_negative_p, i.num_correct_answers, i.num_answers, allow_other_p
 	from cr_revisions cr, as_item_type_mc i
 	where cr.revision_id = :as_item_type_id
 	and i.as_item_type_id = cr.revision_id
@@ -77,7 +77,7 @@
 <fullquery name="as::item_type_mc::data.item_type_data">
       <querytext>
 
-	select increasing_p, allow_negative_p
+	select increasing_p, allow_negative_p, allow_other_p
 	from as_item_type_mc
 	where as_item_type_id = :type_id
 
@@ -97,7 +97,7 @@
 <fullquery name="as::item_type_mc::results.get_results">
       <querytext>
 
-	select d.session_id, d.item_data_id, c.text_value, rc.title
+	select d.session_id, d.item_data_id, c.text_value, rc.title, d.clob_answer
 	from as_item_data d, as_session_item_map m, cr_revisions ri, cr_revisions rs,
 	     as_item_data_choices dc, as_item_choices c, cr_revisions rc
 	where d.session_id in ([join $sessions ,])

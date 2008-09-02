@@ -93,3 +93,68 @@ ad_proc -callback application-track::getSpecificInfo -impl assessments {} {
         return "OK"
     }       
  
+ad_proc -callback learning_materials_portlet::portlet_multirow_data -impl assessment {
+    -user_id
+    -multirow
+    {-community_id ""}
+} {
+    Get assessment data for aggregate learning portlet
+} {
+    set list_of_package_ids [list]
+    set package_id_clause ""
+
+    if {$community_id ne ""} {
+	set node_id [dotlrn_community::get_community_node_id $community_id]
+	set list_of_package_ids [site_node::get_children -node_id $node_id -element package_id -package_key assessment]
+	if {[llength $list_of_package_ids]} {
+	    set package_id_clause "and ass.package_id in ([join $list_of_package_ids ", "])"
+	} else {
+	    return
+	}
+    }
+
+    db_foreach get_assessments {} {
+	if {$in_progress_p > 0 } {
+	    set status "\#assessment.Incomplete\#"
+	    set action "\#assessment.Continue\#"
+	} elseif {$completed_p >0} {
+	    set status "\#assessment.Complete\#"
+	    set action "\#assessment.Begin\#"
+	} else {
+	    set status "\#assessment.Not_Taken\#"
+	    set action "\#assessment.Begin\#"
+	}
+	template::multirow append $multirow $assessment_id "$title" [export_vars -base assessment/assessment {assessment_id}] $status "Status URL" $action [export_vars -base assessment/assessment {assessment_id}] "admin_url"  $percent_score [export_vars -base ../assessment/session {assessment_id}]
+    }
+}
+
+ad_proc -callback learning_materials_portlet::portlet_multirow_admin_data -impl assessment {
+    -user_id
+    -multirow
+    {-community_id ""}
+} {
+    Get assessment data for aggregate learning portlet
+} {
+    set list_of_package_ids [list]
+    if {$community_id ne ""} {
+	set node_id [dotlrn_community::get_community_node_id $community_id]
+	set list_of_package_ids [site_node::get_children -node_id $node_id -element package_id -package_key assessment]
+    }
+    set list_of_folder_ids [list]
+    foreach package_id $list_of_package_ids {
+	lappend list_of_folder_ids [as::assessment::folder_id -package_id $package_id]
+    }
+    set folder_id_clause ""
+    if {[llength $list_of_folder_ids]} {
+	set folder_id_clause "and ci.parent_id in ([join $list_of_folder_ids ", "])"
+    } else {
+	return
+    }
+
+
+    set return_url [ad_return_url]
+    db_foreach get_assessments {} {
+	set publish_status [string map {live "\#assessment.Live\#"} $publish_status]
+	template::multirow append $multirow $assessment_id $title [export_vars -base "assessment/asm-admin/one-a" {assessment_id}] [expr {$publish_status ne "" ? $publish_status : "\#assessment.Not_Live\#"}] [export_vars -base "assessment/asm-admin/toggle-publish" {assessment_id return_url}] $completed_number [export_vars -base assessment/asm-admin/results-users {assessment_id}] [export_vars -base "assessment/asm-admin/one-a" {assessment_id}]
+    }
+}

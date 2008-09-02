@@ -133,7 +133,7 @@ ad_proc -public as::item_type_oq::process {
     Process a Response to an Open Question Type
 } {
     array set type [util_memoize [list as::item_type_oq::data -type_id $type_id]]
-    set response [lindex $response 0]
+
 
     if {[llength $type(keywords)] > 0} {
 	set points 0
