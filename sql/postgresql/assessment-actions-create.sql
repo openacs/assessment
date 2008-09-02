@@ -134,6 +134,7 @@ begin
 end;' language 'plpgsql';
 
 
+select define_function_args('as_action__del','action_id');
 
 create or replace function as_action__del (integer)
 returns integer as '
