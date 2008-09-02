@@ -134,6 +134,54 @@ ad_proc -private as::session::unfinished_session_id {
     return [db_string unfinished_session_id {} -default ""]
 }
 
+ad_proc -private as::session::update_elapsed_time {
+    -session_id
+    -section_id
+} {
+    Update the total elapsed time in seconds for a session
+    based on how long the user took to submit the specified section
+
+    @author Dave Bauer (dave@solutiongrove.com)
+    
+    @param session_id
+    @param section_id 
+
+} {
+    set last_viewed ""
+    set last_mod_datetime ""
+    db_0or1row get_last_viewed "select to_char(last_viewed,'YYYY-MM-DD HH24:MI:SS') as last_viewed, to_char(last_mod_datetime, 'YYYY-MM-DD HH24:MI:SS') as last_mod_datetime from views_views, as_sessions where subject_id = viewer_id and session_id = :session_id and object_id = :section_id"
+
+    if {$last_viewed eq ""} {
+	if {$last_mod_datetime ne ""} {
+	    set last_viewed $last_mod_datetime
+	} else {
+	    set elapsed_seconds 600
+	}
+    } 
+
+    if {$last_viewed ne ""} {
+	set last_seconds [clock scan $last_viewed]
+	set last_mod_seconds [clock scan $last_mod_datetime]
+	set current_seconds [clock seconds]
+	set elapsed_seconds [expr {$current_seconds - $last_seconds}]
+	set elapsed_mod_seconds [expr {$current_seconds - $last_mod_seconds}]
+
+	if { $elapsed_mod_seconds < 600} {
+	    set elapsed_seconds $elapsed_mod_seconds
+	}
+
+	if { $elapsed_seconds > 600} {
+	    set elapsed_seconds 600
+	}
+
+    }
+
+    db_dml update_elapsed_time "update as_sessions set elapsed_seconds = coalesce(elapsed_seconds,0) + :elapsed_seconds where session_id = :session_id"
+    as::session::call_update_callback \
+	-session_id $session_id
+    return $elapsed_seconds
+}
+
 
 ad_proc as::session::response_as_email {
     -session_id

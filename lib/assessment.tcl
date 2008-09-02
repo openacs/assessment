@@ -338,11 +338,6 @@ set required_count 0
 
 foreach one_item $item_list {
     util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id validate_block question_text
-    if {$required_p == "t"} {
-	# make sure that mandatory items are answered
-	lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
-	incr required_count
-    }
 
     foreach {check_expr check_message} [split $validate_block \n] {
 	regsub -all {%answer%} $check_expr \$response_to_item($as_item_id) check_expr
@@ -358,7 +353,16 @@ foreach one_item $item_list {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p -random_p $assessment_data(random_p)]
-	
+        if {$required_p == "t"} {
+            # make sure that mandatory items are answered
+            if {[lsearch {rbo sbo cbo} $presentation_type] > -1} {
+                lappend validate_list "response_to_item.$as_item_id {\$\{response_to_item.$as_item_id\} ne \"\" || \[ns_queryget response_to_item.${as_item_id}\.text\] ne \"\"} \"\[_ assessment.form_element_required\]\""                
+            } else {
+               lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
+            }
+            incr required_count
+        }
+
     } else {
 	# submit each item seperately
 	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id]
@@ -385,6 +389,15 @@ foreach one_item $item_list {
 	    {item_id:text(hidden) {value $as_item_id}}
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form_$as_item_id -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
+        if {$required_p == "t"} {
+            # make sure that mandatory items are answered
+            if {[lsearch {rbo sbo cbo} $presentation_type] > -1} {
+                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\] || \[exists_and_not_null response_to_item($as_item_id)\.text\]} \"\[_ assessment.form_element_required\]\""                
+            } else {
+               lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
+            }
+            incr required_count
+        }
 	
 	# process single submit
 	set on_submit "{
@@ -472,7 +485,6 @@ if {$display(submit_answer_p) != "t"} {
 	db_transaction {
             \# check if we already submitted this section!
             if {\[db_string count_submitted_session \"select count(*) from as_section_data where session_id = :session_id and section_id = :section_id and completed_datetime is not null\" -default 0\] == 0} {
-\#                ad_return_complaint 1 \"Double click detected\"
 
 	    db_dml session_updated {}
 	    # save answers
@@ -500,7 +512,11 @@ if {$display(submit_answer_p) != "t"} {
 
 		as::item_type_\$item_type\\::process -type_id \$item_type_id -session_id \$session_id -as_item_id \$response_item_id -section_id \$section_id -subject_id \$user_id -response \$response -max_points \$points -allow_overwrite_p \$display(back_button_p) -package_id \$assessment_package_id
 	    }
-        } 
+            as::session::update_elapsed_time -session_id $session_id -section_id $section_id
+            set message \"\"
+        } else {
+            set message \"\#assessment.Section_previously_submitted\#\"
+        }
 	    if {\$section_order != \$new_section_order} {
 		# calculate section points at end of section
 		as::section::calculate -section_id \$section_id -assessment_id \$assessment_rev_id -session_id \$session_id
@@ -529,7 +545,7 @@ if {$display(submit_answer_p) != "t"} {
             }
 	    set item_order \$new_item_order
 \#	ad_returnredirect \[export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple single_section_id}\]
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url total_pages current_page}\]
+	ad_returnredirect -message \$message \[export_vars -base feedback {assessment_id session_id section_order item_order password return_url next_asm section_id item_id_list:multiple next_url total_pages current_page}\]
 	    ad_script_abort
 	} else {
 	    # calculate session points at end of session
@@ -544,7 +560,7 @@ if {$display(submit_answer_p) != "t"} {
 	} else {
 	    set return_url \$assessment_data(return_url)
 	}
-	ad_returnredirect \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple total_pages current_page}\]
+	ad_returnredirect -message \$message \[export_vars -base feedback {assessment_id session_id section_id return_url {return_p 1} item_id_list:multiple total_pages current_page}\]
 	    ad_script_abort
 	}
     }"
