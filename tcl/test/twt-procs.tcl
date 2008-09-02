@@ -53,7 +53,7 @@ aa_register_case assessment_create_and_respond {
     ::tclwebtest::form find ~n {show_item_form}
     ::tclwebtest::field fill {{}[]} ;# ~n {response_to_item.727726} ;# type of field = text 
 ::tclwebtest::form submit 
-    ::tclwebtest::link follow {View results} ;# ~u {/${assessment_url}/session?session_id=727735}
+    ::tclwebtest::link follow ~u {session} ;# ~u {/${assessment_url}/session?session_id=727735}
 
 #    twt::user::login $admin_user(email) $admin_user(password) $admin_user(username)
     twt::do_request "/${assessment_url}/asm-admin"
