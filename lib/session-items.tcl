@@ -164,13 +164,18 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		}
 	    }
 	}
+	if {[string is double -strict]} {
+	    set result_points [format "%3.2f" $result_points]
+	}
+	# result points here
     } else {
 	set result_points ""
 	set feedback ""
 	set answered_p f
     }
 
-    set content [as::assessment::display_content -content_id $item(content_rev_id) -filename $item(content_filename) -content_type $item(content_type)]
+#    set content [as::assessment::display_content -content_id $item(content_rev_id) -filename $item(content_filename) -content_type $item(content_type)]
+    set content $question_text
 
     if { $has_feedback_p == 1 } {
 	incr feedback_count

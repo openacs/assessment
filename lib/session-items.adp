@@ -16,7 +16,6 @@
 	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><if @items.feedback_wrong@ ne ""><div class="wrong">@items.feedback_wrong;noquote@</div></if></if></if>
 </div>
 	  <if @items.presentation_type@ ne fitb>
-	    <p style="font-weight:bold;">@items.title;noquote@</p>
 	     @items.content;noquote@
 	</if>
 	    <group column=title>
