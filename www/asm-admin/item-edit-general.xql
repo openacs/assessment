@@ -124,12 +124,11 @@
       </querytext>
 </fullquery>
 
-<fullquery name="update_correct_and_sort_order">
+<fullquery name="update_correct">
       <querytext>
 
 		    update as_item_choices
-		    set correct_answer_p = :correct_answer_p,
-		        sort_order = :count
+		    set correct_answer_p = :correct_answer_p
 		    where choice_id = :new_choice_id
 
       </querytext>
