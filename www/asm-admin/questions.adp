@@ -4,9 +4,16 @@
 
 <include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="@tab@">
 
+<if @sections:rowcount@ eq 0>
+<p>
+<font color=red><b>#assessment.add_section_first#</b></font>
+<br><a class="button" href="section-form?assessment_id=@assessment_id@&after=0">Create a new section</a>
+</p>
+</if>
+<else>
 <multiple name="sections">
-<h3><a name="@sections.sort_order@">#assessment.Section_Number#: @sections.title@</a></h3>
-  <a class="button" href="@section_form_edit_url@">#assessment.Edit#</a> 
+<a name="S@sections.section_id@"><h3>#assessment.Section_Number#</h3>
+  <a class="button" href="section-form?section_id=@sections.section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a> 
 
   <a class=button href="@section_form_add_url@">#assessment.add_new_section#</a>
   <a class=button href="@catalog_section_url@">#assessment.Search_Section#</a>
@@ -35,4 +42,4 @@
    <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@sections.section_id@" admin_trigger_p="@admin_trigger_p@">
  </fieldset>
 </multiple>
-
+</else>
