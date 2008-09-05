@@ -2,20 +2,6 @@
     <property name="title">@page_title;noquote@</property>
     <property name="context">@context;noquote@</property>
     <property name="body(class)">yui-skin-sam</property>
-    <property name="header_stuff">
-      <style>
-        .form-label {text-align:left;} 
-        .form-label label {font-weight:bold;}
-	.is-visible { display: block; }
-	.not-visible { display: none; }
-	form .form-item-wrapper-asm {
-	padding: 5px;
-	border: 1px solid #ccc;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	}
-      </style>
-    </property>
     <h1>#assessment.Add_Question#</h1>
     <formtemplate id="item-add">
       <!-- wrap the form item in the form-item-wrapper class -->
@@ -110,7 +96,9 @@
 	  </div>
 	  <!-- /form-help-text -->
 	</div>
-	  <!-- wrap the form item in the form-item-wrapper-asm class -->
+       <if @type@ ne "survey">
+	    <formwidget id="field_name" />
+	    <formwidget id="validate_block" />
 	  <div class="form-item-wrapper form-item-wrapper-asm">
 	    <if @formerror.points@ not nil>
 	      <div class="form-label form-label-error">
@@ -153,13 +141,27 @@
 	    </div>
 	    <!-- /form-help-text -->
 	  </div>
+       </if>
+       <else>
+       	  <!-- wrap the form item in the form-item-wrapper-asm class -->
+	  <div class="form-item-wrapper form-item-wrapper-asm">
+            <div class="form-label form-label-error">
+            <label for="field_name">Field Name</label>
+            </div>
+            <div class="form-widget"><formwidget id="field_name" /></div>
+            <div class="form-label form-label-error">
+            <label for="field_name">Validate Block</label>
+            </div>
+            <div class="form-widget"><formwidget id="validate_block" /></div>
+	    <formwidget id="points" />
+     </else>
+	  <div class="form-item-wrapper form-item-wrapper-asm">
 	    <formwidget id="field_code" />
-	      <formwidget id="field_name" />
-		<formwidget id="max_time_to_complete" />
-		  <formwidget id="validate_block" />
-		    <formwidget id="content" />
-		      <formwidget id="description" />
-			<formwidget id="data_type" />
+            <formwidget id="max_time_to_complete" />
+	    <formwidget id="content" />
+	    <formwidget id="description" />
+	    <formwidget id="data_type" />
+         </div>
 			  <!-- wrap the form item in the form-item-wrapper-asm class -->
 			  <div class="form-item-wrapper form-item-wrapper-asm">
 			    <if @formerror.item_type@ not nil>

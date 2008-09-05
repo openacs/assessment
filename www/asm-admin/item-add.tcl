@@ -500,5 +500,18 @@ append javascript [ah::yui::cssclass -action remove -element link-add-feedback -
 append javascript [ah::yui::cssclass -element link-add-feedback -classname is-visible]
 append js_listeners [ah::yui::addlistener -element link-hide-feedback -event click -callback "function()\{$javascript\}"]
 
+template::head::add_style \
+    -style "
+        .form-label {text-align:left;} 
+        .form-label label {font-weight:bold;}
+	.is-visible { display: block; }
+	.not-visible { display: none; }
+	form .form-item-wrapper-asm {
+	padding: 5px;
+	border: 1px solid #ccc;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	}
+      "
 ad_return_template
 
