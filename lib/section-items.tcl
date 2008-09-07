@@ -15,7 +15,7 @@ db_multirow -extend { checks_related presentation_type html item_type choice_ori
     set catalog_search_url [export_vars -base catalog-search {section_id assessment_id {after $sort_order}}]
     set item_swap_down_url [export_vars -base item-swap {section_id assessment_id sort_order {direction down}}]
     set item_swap_up_url [export_vars -base item-swap {section_id assessment_id sort_order {direction up}}]
-    set item_delete_url [export_vars -base item-swap {as_item_id section_id assessment_id}]
+    set item_delete_url [export_vars -base item-delete {as_item_id section_id assessment_id}]
     set add_edit_check_url [export_vars -base ../asm-admin/add-edit-check {as_item_id section_id assessment_id {after $sort_order}}]
     set check_admin_url [export_vars -base ../asm-admin/checks-admin {section_id assessment_id {item_id $as_item_id}}]
 
