@@ -37,15 +37,14 @@ ad_form -name Xsession_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
 set feedback_count 0
-db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_title next_pr_type num content has_feedback_p correct_p view item_edit_general_url results_edit_url } items session_items {} {
-
+db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_as_item_id next_pr_type num content has_feedback_p correct_p view item_edit_general_url results_edit_url} items session_items {} {
     # build URLs
     set item_edit_general_url [export_vars -base "asm-admin/item-edit-general" {as_item_id assessment_id section_id}]
     set results_edit_url [export_vars -base "results-edit" {session_id section_id as_item_id}]
 
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
     array set item [as::item::item_data -as_item_id $as_item_id]
-
+    
     set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback -random_p $assessment_data(random_p)]
 
     if {$presentation_type == "fitb"} {
@@ -188,13 +187,13 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
     set this(num) $counter
     if {$i < ${items:rowcount}} {
 	upvar 0 items:$j next
-	set this(next_title) $next(title)
+	set this(next_as_item_id) $next(as_item_id)
 	set this(next_pr_type) $next(presentation_type)
-	if {$this(title) != $next(title)} {
+	if {$this(as_item_id) != $next(as_item_id)} {
 	    incr counter
 	}
     } else {
-	set this(next_title) ""
+	set this(next_as_item_id) ""
 	set this(next_pr_type) ""
     }
 }

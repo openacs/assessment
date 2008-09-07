@@ -7,7 +7,7 @@
 <if @admin_p@><p><a href="@items.item_edit_general_url@">Edit this question</a></p></if>
 <if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
      <if @show_item_name_p@ eq t><p style="font-weight:bold;">@items.name@:</p></if>
-      <if @survey_p@ ne t and @items.title@ ne @items.next_title@>
+      <if @survey_p@ ne t and @items.as_item_id@ ne @items.next_as_item_id@>
 	<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
       </if>
      </if>
@@ -19,16 +19,16 @@
 	    <p style="font-weight:bold;">@items.title;noquote@</p>
 	     @items.content;noquote@
 	</if>
-	    <group column=title>
+	    <group column=as_item_id>
 	      @items.description;noquote@
 		<if @survey_p@ ne t>
-		  <if @items.title@ eq @items.next_title@ or @items.groupnum@ gt 1>
+		  <if @items.as_item_id@ eq @items.next_as_item_id@ or @items.groupnum@ gt 1>
 		    <if @items.presentation_type@ eq @items.next_pr_type@ or @items.choice_orientation@ eq horizontal>
 
 			    <if @show_feedback@ ne none>
 			      <if @items.feedback@ not nil>:<br>@items.feedback;noquote@</if>
 			    </if>
-		      <~--- fixme --->
+		      <!--- fixme --->
 		      <else>
 			<if @items.answered_p@ eq t><p style="font-weight:bold;">#assessment.not_yet_reviewed#</p> </if>
 			<else><p style="font-weight:bold;">#assessment.not_answered#</p></else>
@@ -52,7 +52,7 @@
 		      <div>@formgroup.widget;noquote@ @formgroup.label;noquote@</div>
 		    </formgroup>
 		  </if>
-		  <elseif @items.title@ ne @items.next_title@ and @items.groupnum@ eq 1>
+		  <elseif @items.as_item_id@ ne @items.next_as_item_id@ and @items.groupnum@ eq 1>
 		    <formgroup id="response_to_item.@items.as_item_id@">
 		      @formgroup.widget;noquote@ @formgroup.label;noquote@
 		    </formgroup>
