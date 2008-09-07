@@ -133,7 +133,7 @@ content::type::attribute::new -content_type {as_items} -attribute_name {data_typ
 content::type::attribute::new -content_type {as_items} -attribute_name {max_time_to_complete} -datatype {number}  -pretty_name {Item Max Time to Complete} -column_spec {integer}
 content::type::attribute::new -content_type {as_items} -attribute_name {feedback_wrong}    -datatype {text} -pretty_name {Item Right Feedback} -column_spec {text}
 content::type::attribute::new -content_type {as_items} -attribute_name {feedback_right}    -datatype {text} -pretty_name {Item Wrong Feedback} -column_spec {text}
-content::type::attribute::new -content_type {as_items} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this item} -column_spec {integer}
+content::type::attribute::new -content_type {as_items} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this item} -column_spec {float}
 content::type::attribute::new -content_type {as_items} -attribute_name {validate_block} -datatype {text} -pretty_name {Validation Block} -column_spec {text}
 
 # Sections
@@ -142,7 +142,7 @@ content::type::attribute::new -content_type {as_sections} -attribute_name {instr
 content::type::attribute::new -content_type {as_sections} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed in this section}  -column_spec {integer}
 content::type::attribute::new -content_type {as_sections} -attribute_name {feedback_text}      -datatype {text}  -pretty_name {Section Feedback}  -column_spec {text}
 content::type::attribute::new -content_type {as_sections} -attribute_name {max_time_to_complete}      -datatype {number}  -pretty_name {Section Max Time to Complete}  -column_spec {integer}
-content::type::attribute::new -content_type {as_sections} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this section} -column_spec {integer}
+content::type::attribute::new -content_type {as_sections} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded for this section} -column_spec {float}
 
 # Section Display Types
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed per page}  -column_spec {integer}
@@ -196,7 +196,7 @@ content::type::attribute::new -content_type {as_section_data} -attribute_name {s
 content::type::attribute::new -content_type {as_section_data} -attribute_name {section_id}            -datatype {number}  -pretty_name {Section ID}  -column_spec {integer}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {subject_id}            -datatype {number}  -pretty_name {Subject ID}  -column_spec {integer}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {staff_id}            -datatype {number}  -pretty_name {Staff ID}  -column_spec {integer}
-content::type::attribute::new -content_type {as_section_data} -attribute_name {points}            -datatype {number}  -pretty_name {Points Awarded}  -column_spec {integer}
+content::type::attribute::new -content_type {as_section_data} -attribute_name {points}            -datatype {number}  -pretty_name {Points Awarded}  -column_spec {float}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime}     -datatype {number}  -pretty_name {Creation Date Time}     -column_spec {timestamptz}
 content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime}     -datatype {number}  -pretty_name {Final Submission}     -column_spec {timestamptz}
 
@@ -215,14 +215,14 @@ content::type::attribute::new -content_type {as_item_data} -attribute_name {text
 content::type::attribute::new -content_type {as_item_data} -attribute_name {timestamp_answer}    -datatype {number}  -pretty_name {TimeStamp Answer}    -column_spec {timestamptz}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {content_answer} -datatype {number}  -pretty_name {Content Answer} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {signed_data}    -datatype {string}  -pretty_name {Signed Data}    -column_spec {varchar(500)}
-content::type::attribute::new -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {integer}
+content::type::attribute::new -content_type {as_item_data} -attribute_name {points} -datatype {number}  -pretty_name {Points awarded} -column_spec {float}
 
 content::type::attribute::new -content_type {as_item_data} -attribute_name {as_item_cr_item_id} -datatype {number} -pretty_name {as_item cr_item_id} -column_spec {integer}
 content::type::attribute::new -content_type {as_item_data} -attribute_name {choice_value} -datatype {text} -pretty_name {Choice Value}
 
 # Session results
 content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
-content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
+content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {float}
 
 #File Upload Ansers
 content::type::new -content_type {as_item_type_fu} -supertype {content_revision} -pretty_name {Assessment Item Type File Upload} -pretty_plural {Assessment Item Type File Upload} -table_name {as_item_type_fu} -id_column {as_item_type_id}

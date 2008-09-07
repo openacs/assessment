@@ -96,7 +96,7 @@ ad_form -extend -name item-add -form {
 
 if { $type ne "survey"} {
     ad_form -extend -name item-add -form {
-	{points:integer,optional,nospell 
+	{points:float,optional,nospell 
 	    {label "[_ assessment.points_item]"} 
 	    {html {size 10 maxlength 10}} 
 	    {value 1}

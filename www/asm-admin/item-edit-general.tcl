@@ -81,7 +81,7 @@ foreach display_type [db_list display_types {}] {
 
 if { $type ne "survey"} { 
     ad_form -extend -name item_edit_general -form {
-        {points:integer,optional,nospell 
+        {points:float,optional,nospell 
 	    {label "[_ assessment.points_item]"} 
 	    {html {size 10 maxlength 10}} 
 	    {help_text "[_ assessment.points_item_help]"}
