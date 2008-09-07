@@ -32,11 +32,11 @@
          <if @items.content@ not nil><p>@items.content;noquote@</p></if>
          <if @items.presentation_type@ ne fitb><b>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
      
-<group column=title>
+<group column=as_item_id>
          <div class="form-widget">
 
            <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
-             <if @items.title@ eq @items.next_title@ and @items.groupnum@ eq 1>
+             <if @items.as_item_id@ eq @items.next_as_item_id@ and @items.groupnum@ eq 1>
                <if @items.presentation_type@ eq @items.next_pr_type@ or @items.choice_orientation@ eq horizontal>
                  <formgroup id="response_to_item.@items.as_item_id@">
                    <label for="show_item_form:elements:response_to_item.@items.as_item_id@:@formgroup.option@">@formgroup.label;noquote@</label>
@@ -54,7 +54,7 @@
 </label>
                  </formgroup>
                </if>
-               <elseif @items.title@ ne @items.next_title@ and @items.groupnum@ eq 1>
+               <elseif @items.as_item_id@ ne @items.next_as_item_id@ and @items.groupnum@ eq 1>
                  <formgroup id="response_to_item.@items.as_item_id@">
                    @formgroup.widget;noquote@ <label for="show_item_form:elements:response_to_item.@items.as_item_id@:@formgroup.option@">@formgroup.label;noquote@</label>
                  </formgroup>
