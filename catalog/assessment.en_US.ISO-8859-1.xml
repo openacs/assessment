@@ -387,6 +387,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Note:&lt;/b&gt; This assessment is set to be anonymous and&lt;br&gt;your name will not be included in the results.</msg>
   <msg key="lt_default_entry_page"></msg>
   <msg key="lt_default_exit_page">Congratulations, you're done! Use the link below to review your answers.</msg>
+  <msg key="lt_default_exit_page_anonymous_user">Congratulations, you're done!</msg>
   <msg key="lt_default_instructions"></msg>
   <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>

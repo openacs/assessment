@@ -27,7 +27,11 @@ if { ![string eq $user_id 0]} {
 as::assessment::data -assessment_id $assessment_id
 
 if {$assessment_data(exit_page) eq ""} {
-    set assessment_data(exit_page) "[_ assessment.lt_default_exit_page]"
+    if {$user_id == 0} {
+      set assessment_data(exit_page) "[_ assessment.lt_default_exit_page_anonymous_user]"
+    } else {
+      set assessment_data(exit_page) "[_ assessment.lt_default_exit_page]"
+    }
 }
 
 set page_title "[_ assessment.Response_Submitted]"
