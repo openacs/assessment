@@ -475,6 +475,32 @@ ad_proc as::assessment::pretty_time {
     return $time
 }
 
+ad_proc as::assessment::pretty_time_hours_minutes {
+    {-seconds}
+} {
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-12-14
+
+    Returns a pretty string of min:sec
+} {
+    if {$seconds eq "0" || $seconds eq ""} {
+        return $seconds
+    }
+    set time ""
+    if {![empty_string_p $seconds]} {
+	set time_hour [expr {$seconds / 3600}]
+	set seconds [expr {$seconds - ($time_hour * 3600)}]
+	
+	set time_min [expr {$seconds / 60}]
+	set time_sec [expr {$seconds - ($time_min * 60)}]
+	if {$time_hour > 0} {
+	    append time "$time_hour \#acs-templating.hours\#"
+	}
+	append time " $time_min \#acs-templating.minutes\#"
+    }
+    return $time
+}
+
 ad_proc as::assessment::folder_id {
     -package_id:required
 } {
