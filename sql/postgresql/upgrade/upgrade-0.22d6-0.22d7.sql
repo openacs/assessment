@@ -22,3 +22,6 @@ drop view as_section_datax;
 drop view as_section_datai cascade;
 alter table as_section_data alter points type float;
 select content_type__refresh_view('as_section_data');
+
+alter table as_assessment_section_map alter points type float;
+alter table as_item_section_map alter points type float;

@@ -50,7 +50,7 @@ create table as_sections (
 	-- number of items displayed
 	num_items	integer,
 	-- number of points for section; might be used for defining difficulty levels
-	points		integer,
+	points		float,
 	-- preset text to show user
 	feedback_text	text,
 	-- max number of seconds to perform Section
@@ -164,7 +164,7 @@ create table as_assessment_section_map (
 	-- order in which a section will be displayed
 	sort_order	integer,
 	-- this is the relative weight of a section in an assessment
-	points		integer,
+	points		float,
 	constraint as_assessment_section_map_pk primary key (assessment_id, section_id)
 );
 
@@ -192,7 +192,7 @@ create table as_item_section_map (
 	-- fixed position in display. 0 for default, negative values relative to section end
 	fixed_position	integer,
 	-- this is the relative weight of an item in a section
-	points		integer,
+	points		float,
 	constraint as_item_section_map_pk primary key (section_id, as_item_id)
 );
 

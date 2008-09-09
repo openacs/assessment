@@ -50,7 +50,7 @@ create table as_sections (
 	-- number of items displayed
 	num_items	integer,
 	-- number of points for section; might be used for defining difficulty levels
-	points		integer,
+	points		float,
 	-- preset text to show user
 	feedback_text	clob,
 	-- max number of seconds to perform Section

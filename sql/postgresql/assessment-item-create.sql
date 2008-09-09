@@ -32,7 +32,7 @@ create table as_items (
 	-- wrong feedback
 	feedback_wrong	text,
 	-- number of points for item; might be used for defining difficulty levels
-	points		integer,
+	points		float,
 	-- ad_form validation block
 	validate_block	text
 );

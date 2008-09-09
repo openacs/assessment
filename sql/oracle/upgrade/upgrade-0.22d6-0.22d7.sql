@@ -53,3 +53,12 @@ end;
 /
 show errors;
 
+alter table as_assessment_section_map rename column points to points_int;
+alter table as_assessment_section_map add points type float;
+update as_assessment_section_map set points=points_int;
+alter table as_assessment_section_map drop column points_int;
+alter table as_item_section_map alter points type float;
+alter table as_item_section_map add points type float;
+update as_item_section_map set points=points_int;
+alter table as_item_section_map drop column points_int;
+

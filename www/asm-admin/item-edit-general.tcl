@@ -12,7 +12,6 @@ ad_page_contract {
     move_up:optional,array
     move_down:optional,array
     delete:optional,array
-    return_url:optional
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -37,18 +36,10 @@ set package_id [ad_conn package_id]
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set type $assessment_data(type)
 
-ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id return_url } -html {enctype multipart/form-data} -form {
+ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
     {as_item_id:key}
-    {question_text:richtext,nospell 
-	{label "[_ assessment.Question]"}
-	{html {rows 12 cols 80 style {width: 95%}}}
-	{help_text "[_ assessment.item_Question_help]"}
-    }
-    {required_p:text(select) 
-	{label "[_ assessment.Required]"}
-	{options $boolean_options} 
-	{help_text "[_ assessment.item_Required_help]"}
-    }
+    {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 12 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
+    {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }
 
 set item_type [string range [db_string get_item_type {}] end-1 end]
@@ -56,22 +47,15 @@ set display_type [string range [db_string get_display_type {}] end-1 end]
 
 if { $item_type == "mc"  } {
 	 ad_form -extend -name item_edit_general -form {
-	     {display_type:text(radio),optional
-		 {label "[_ assessment.singleanswermultipleanswer]"} 
-		 {options {{"[_ assessment.item_type_mc]" "rb"} 
-		     {"[_ assessment.Single_Response_Allowed_Dropdown_Box]" "sb"} 
-		     {"[_ assessment.item_type_ms]" "cb"}}
-		}
-	     }
-	     {allow_other_p:text(checkbox),optional 
-		 {label "[_ assessment.Allow_other]"} 
-		 {options {{"[_ assessment.Allow_Other]" "t"}}}
-	     }
-	 }
-} else {
-    ad_form -extend -name item_edit_general -form { 
-	{display_type:text(hidden),optional}
+	    {display_type:text(radio),optional
+	    	{label "[_ assessment.singleanswermultipleanswer]"} 
+	    	{options {{"[_ assessment.item_type_mc]" "rb"} {"[_ assessment.item_type_ms]" "cb"}}}
+	    }
     }
+} else {
+	ad_form -extend -name item_edit_general -form { 
+		{display_type:text(hidden),optional}
+	}
 }
 
 set display_types [list]
@@ -81,21 +65,9 @@ foreach display_type [db_list display_types {}] {
 
 if { $type ne "survey"} { 
     ad_form -extend -name item_edit_general -form {
-        {points:float,optional,nospell 
-	    {label "[_ assessment.points_item]"} 
-	    {html {size 10 maxlength 10}} 
-	    {help_text "[_ assessment.points_item_help]"}
-	}
-        {feedback_right:richtext,optional,nospell 
-	    {label "[_ assessment.Feedback_right]"} 
-	    {html {rows 12 cols 80 style {width:95%}}} 
-	    {help_text "[_ assessment.Feedback_right_help]"}
-	}
-        {feedback_wrong:richtext,optional,nospell 
-	    {label "[_ assessment.Feedback_wrong]"} 
-	    {html {rows 12 cols 80 style {width:95%}}}
-	    {help_text "[_ assessment.Feedback_wrong_help]"}
-	}
+        {points:float,optional,nospell {label "[_ assessment.points_item]"} {html {size 10 maxlength 10}} {help_text "[_ assessment.points_item_help]"}}
+        {feedback_right:richtext,optional,nospell {label "[_ assessment.Feedback_right]"} {html {rows 12 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_right_help]"}}
+        {feedback_wrong:richtext,optional,nospell {label "[_ assessment.Feedback_wrong]"} {html {rows 12 cols 80 style {width:95%}}} {help_text "[_ assessment.Feedback_wrong_help]"}}
     }
 } else {
     ad_form -extend -name item_edit_general -form {
@@ -119,121 +91,138 @@ ad_form -extend -name item_edit_general -form {
 
 
 switch -- $item_type {
-
     "mc" {
 	set folder_id [as::assessment::folder_id -package_id $package_id]
 	set choice_sets [list [list "--" ""]]
-	db_foreach existing_choice_sets {} {
-	    set set_title [string trim [regsub {\[.*?\]} [ad_html_to_text $title] {}]]
-	    lappend choice_sets [list [expr {$set_title eq "" ? $section_title : $set_title}] $revision_id]
-	}
-	if {[llength $choice_sets]} {
-	    ad_form -extend -name item_edit_general -form {
-		{add_existing_mc_id:text(select),optional
-		    {label "[_ assessment.Choice_Sets]"} 
-		    {options $choice_sets} 
-		    {help_text "[_ assessment.Choice_Sets_help]"}
-		}
-	    }
-	} else {
-	    ad_form -extend -name item_edit_general -form {
-		{add_existing_mc_id:text(hidden),optional}
-	    }
-	}
+db_foreach existing_choice_sets {} {
+    set set_title [string trim [regsub {\[.*?\]} [ad_html_to_text $title] {}]]
+    lappend choice_sets [list [expr {$set_title eq "" ? $section_title : $set_title}] $revision_id]
+}
+if {[llength $choice_sets]} {
+    ad_form -extend -name item_edit_general -form {
+    {add_existing_mc_id:text(select),optional {label "[_ assessment.Choice_Sets]"} {options $choice_sets} {help_text "[_ assessment.Choice_Sets_help]"}}
+    }
+} else {
+    ad_form -extend -name item_edit_general -form {
+	{add_existing_mc_id:text(hidden),optional}
+    }
+}
+    ad_form -extend -name item_edit_general -form {
+        {num_choices:text(hidden)}
+	{save_answer_set:text(checkbox),optional {label "[_ assessment.Save_this_set_of_answers_for_reuse_later]"} {options {{"" t}}}}
+        {add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
+    }
+ns_log notice "Add Another = '[template::element::get_value item_edit_general add_another_choice]' == '[_ assessment.Add_another_choice]'"
+    if {[template::form::is_submission item_edit_general] \
+            && [template::element::get_value item_edit_general add_another_choice] eq [_ assessment.Add_another_choice]} {
+        set num_choices [element::get_value item_edit_general num_choices]
+        incr num_choices
+        element::set_value item_edit_general num_choices $num_choices
+    } 
 
-	ad_form -extend -name item_edit_general -form {
-	    {num_choices:text(hidden)}
-	    {save_answer_set:text(checkbox),optional 
-		{label "[_ assessment.Save_this_set_of_answers_for_reuse_later]"} 
-		{options {{"" t}}}
-	    }
-	    {add_another_choice:text(submit) 
-		{label "[_ assessment.Add_another_choice]"}
-	    }
-	}
-
-	if {[template::form::is_submission item_edit_general] \
-		&& [template::element::get_value item_edit_general add_another_choice] eq [_ assessment.Add_another_choice]} {
-	    set num_choices [element::get_value item_edit_general num_choices]
-	    incr num_choices
-	    element::set_value item_edit_general num_choices $num_choices
-	} 
-	
+#####
 	if {$display_type eq "cb"} {
 	    ad_form -extend -name item_edit_general -form {
 		{ms_label:text,optional {label "Multiple Selection Instruction"}}		
 	    }
 	}
+#####
+    set as_item_type_id [as::item::get_item_type_id -as_item_id $as_item_id]
+    if {[array exists move_up]} {
+        foreach n [array names move_up] {
+            array set new_array [as::item_type_mc::choices_swap \
+                -assessment_id $assessment_id \
+                -section_id $section_id \
+                -as_item_id $as_item_id \
+                -mc_id  $as_item_type_id \
+                -sort_order [db_string get_sort_order {}] \
+                                     -direction up]
+            foreach var {as_item_id section_id} {
+                set $var $new_array($var)
+                template::element::set_value item_edit_general $var [set $var]
+            }
+        }
+    }
+    if {[array exists move_down]} {
+        foreach n [array names move_down] {
+            array set new_array [as::item_type_mc::choices_swap \
+                -assessment_id $assessment_id \
+                -section_id $section_id \
+                -as_item_id $as_item_id \
+                -mc_id $as_item_type_id \
+                -sort_order [db_string get_sort_order {}] \
+                                     -direction down]
+        }
+            foreach var {as_item_id section_id} {
+                set $var $new_array($var)
+                template::element::set_value item_edit_general $var [set $var]
+            }
+    }
+    if {[array exists delete]} {
+        foreach n [array names delete] {
+            array set new_array [as::item_type_mc::choice_delete \
+                -assessment_id $assessment_id \
+                -section_id $section_id \
+                -as_item_id $as_item_id \
+                                     -choice_id $n]
+        }
+            foreach var {as_item_id section_id} {
+                set $var $new_array($var)
+            }
+    }
 
-	set existing_choices [as::item_type_mc::existing_choices $as_item_id]
+#######
+#######
+
+
+    set existing_choices [as::item_type_mc::existing_choices $as_item_id]
 	if {[llength $existing_choices] && ![info exists num_choices]} {
 	    set num_choices [llength $existing_choices]
 	    template::element::set_value item_edit_general num_choices $num_choices
 	}	
-	if {![template::form::is_submission item_edit_general] \
-		&& ![info exists num_choices]} {
-	    set num_choices 5
-	} elseif {![info exists num_choices]} {
+    if {![template::form::is_submission item_edit_general] \
+            && ![info exists num_choices]} {
+        set num_choices 5
+    } elseif {![info exists num_choices]} {
             set num_choices [expr {[set num_choices [template::element::get_value item_edit_general num_choices]] eq "" ? $num_choices : 5}]
-	}
-	
-	template::multirow create choice_elements id new_p
-	foreach c $existing_choices {
-	    set id [lindex $c 1]
-	    template::multirow append choice_elements $id f
-	    if {[lindex $c 2] eq "t" && ![template::form::is_submission item_edit_general]} {
-		set correct($id) t
-	    }
-	}
+    }
 
-	if {$num_choices > [llength $existing_choices]} {
-	    set new_choices [expr {$num_choices - [llength $existing_choices] }]
-	    for {set i 1} {$i <= $new_choices} {incr i} {
-		set id __new_${i}
-		set correct_p f
-		if {[info exists correct($id)]} {
-		    set correct_p t
-		}
-		lappend existing_choices [list "" $id $correct_p]
-		template::multirow append choice_elements $id t
-	    }
-	}
-	as::item_type_mc::add_existing_choices_to_edit_form \
-	    -form_id item_edit_general \
-	    -existing_choices $existing_choices \
-	    -choice_array_name choice \
-	    -correct_choice_array_name correct
-	
+    template::multirow create choice_elements id new_p
+    foreach c $existing_choices {
+        set id [lindex $c 1]
+        template::multirow append choice_elements $id f
+        if {[lindex $c 2] eq "t" && ![template::form::is_submission item_edit_general]} {
+            set correct($id) t
+        }
+    }
+
+    if {$num_choices > [llength $existing_choices]} {
+        set new_choices [expr {$num_choices - [llength $existing_choices] }]
+        for {set i 1} {$i <= $new_choices} {incr i} {
+            set id __new_${i}
+            set correct_p f
+            if {[info exists correct($id)]} {
+                set correct_p t
+            }
+            lappend existing_choices [list "" $id $correct_p]
+            template::multirow append choice_elements $id t
+        }
+    }
+    as::item_type_mc::add_existing_choices_to_edit_form \
+        -form_id item_edit_general \
+        -existing_choices $existing_choices \
+        -choice_array_name choice \
+        -correct_choice_array_name correct
+
     }
     "oq" {
         ad_form -extend -name item_edit_general -form {
-            {reference_answer:text(textarea),optional
-		{label "[_ assessment.oq_Reference_Answer]"}
-		{html {rows 5 cols 80}} 
-		{help_text "[_ assessment.oq_Reference_Answer_help]"}
-	    }
+            {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
         }
     }
     "sa" {
     }
 }
-
-# feedback listener
-set javascript [ah::yui::cssclass -element feedback-options -classname is-visible]
-append javascript [ah::yui::cssclass -action remove -element feedback-options -classname not-visible]
-append javascript [ah::yui::cssclass -element link-add-feedback -classname not-visible]
-append javascript [ah::yui::cssclass -action remove -element link-add-feedback -classname is-visible]
-append javascript [ah::yui::cssclass -action remove -element link-hide-feedback -classname not-visible]
-append javascript [ah::yui::cssclass -element link-hide-feedback -classname is-visible]
-append js_listeners [ah::yui::addlistener -element link-add-feedback -event click -callback "function()\{$javascript\}"]
-# feedback listener
-set javascript [ah::yui::cssclass -element feedback-options -classname not-visible]
-append javascript [ah::yui::cssclass -action remove -element feedback-options -classname is-visible]
-append javascript [ah::yui::cssclass -element link-hide-feedback -classname not-visible]
-append javascript [ah::yui::cssclass -action remove -element link-hide-feedback -classname is-visible]
-append javascript [ah::yui::cssclass -action remove -element link-add-feedback -classname not-visible]
-append javascript [ah::yui::cssclass -element link-add-feedback -classname is-visible]
-append js_listeners [ah::yui::addlistener -element link-hide-feedback -event click -callback "function()\{$javascript\}"]
     
 ad_form -extend -name item_edit_general -edit_request {
     db_1row general_item_data {}
@@ -243,21 +232,9 @@ ad_form -extend -name item_edit_general -edit_request {
     set data_type_disp "[_ assessment.data_type_$data_type]" 
     set question_text [template::util::richtext::create $question_text $mime_type]
 
-    if {$item_type eq "oq"} {
-	set reference_answer [db_string get_ra {
-	    select reference_answer 
-	      from as_item_type_oq t join as_item_rels r on (r.target_rev_id = t.as_item_type_id) 
-	     where r.item_rev_id = :as_item_id 
-	       and rel_type = 'as_item_type_rel'
-	} -default ""]
-    }
-
     set feedback_right [template::util::richtext::create $feedback_right $mime_type]
     set feedback_wrong [template::util::richtext::create $feedback_wrong $mime_type]
-
-    if {$item_type eq "mc"} {
-	element set_values item_edit_general allow_other_p [as::item_type_mc::allow_other_p -item_type_id [as::item::get_item_type_id -as_item_id $as_item_id]]
-    }
+    # FIXME fill in reference answer 
 } -on_request {
 	set display_type [string range [db_string get_display_type {}] end-1 end]
 } -on_submit {
@@ -266,7 +243,7 @@ ad_form -extend -name item_edit_general -edit_request {
 	set points 0
     }
 } -edit_data {
-    if {![exists_and_not_null add_another_choice]} {
+    if {[exists_and_not_null formbutton_ok] || [exists_and_not_null formbutton_add_another_question]} {
         set question_text [template::util::richtext::get_property contents $question_text]
         set feedback_right [template::util::richtext::get_property content $feedback_right]
         set feedback_wrong [template::util::richtext::get_property content $feedback_wrong]
@@ -344,10 +321,11 @@ ad_form -extend -name item_edit_general -edit_request {
                 -new_section_id $new_section_id \
                 -new_assessment_rev_id $new_assessment_rev_id
                 
+           ns_log notice "HAM : $old_display_type : $display_type **********"
            if { ![string match $old_display_type $display_type] } {
          	  as::item_display_${display_type}::set_item_display_type -assessment_id $assessment_id \
-		      -section_id $section_id \
-		      -as_item_id $as_item_id
+           														 -section_id $section_id \
+           														 -as_item_id $as_item_id
 		   }
 	    
 	    set title [string range $question_text 0 999]	
@@ -391,18 +369,13 @@ ad_form -extend -name item_edit_general -edit_request {
 			# with each revision of the mc we decide if its
 			# reusable or not
 
-			if {$allow_other_p ne "t"} {
-			    set allow_other_p "f"
-			}
-
 			set new_item_type_id [as::item_type_mc::edit \
 						  -as_item_type_id $as_item_type_id \
 						  -title "" \
 						  -increasing_p f \
 						  -allow_negative_p f \
 						  -num_correct_answers $num_correct_answers \
-						  -num_answers $num_answers \
-						  -allow_other_p $allow_other_p]
+						  -num_answers $num_answers]
 			db_dml update_item_type {}
 			# edit existing choices
 			set count 0
@@ -415,7 +388,6 @@ ad_form -extend -name item_edit_general -edit_request {
 
 				db_dml update_title {}
 				db_dml update_correct {}
-                                set new_choices($i) $new_choice_id
 			    }
 			}
 
@@ -470,72 +442,13 @@ ad_form -extend -name item_edit_general -edit_request {
         set as_item_id $new_item_id
         set section_id $new_section_id
 
-#####
-    set as_item_type_id [as::item::get_item_type_id -as_item_id $as_item_id]
-    if {[array exists move_up]} {
-        foreach n [array names move_up] {
-            set new_choice_id $new_choices($n)
-            array set new_array [as::item_type_mc::choices_swap \
-                -assessment_id $assessment_id \
-                -section_id $section_id \
-                -as_item_id $as_item_id \
-                -mc_id  $as_item_type_id \
-                -sort_order [db_string get_sort_order {}] \
-                                     -direction up]
-            foreach var {as_item_id section_id} {
-                set $var $new_array($var)
-                template::element::set_value item_edit_general $var [set $var]
-            }
-        }
-    }
-    if {[array exists move_down]} {
-
-        foreach n [array names move_down] {
-            set new_choice_id $new_choices($n)
-            array set new_array [as::item_type_mc::choices_swap \
-                -assessment_id $assessment_id \
-                -section_id $section_id \
-                -as_item_id $as_item_id \
-                -mc_id $as_item_type_id \
-                -sort_order [db_string get_sort_order {}] \
-                                     -direction down]
-        }
-            foreach var {as_item_id section_id} {
-                set $var $new_array($var)
-                template::element::set_value item_edit_general $var [set $var]
-            }
-    }
-    if {[array exists delete]} {
-        foreach n [array names delete] {
-            set new_choice_id $new_choices($n)
-
-            array set new_array [as::item_type_mc::choice_delete \
-                -assessment_id $assessment_id \
-                -section_id $section_id \
-                -as_item_id $as_item_id \
-                                     -choice_id $new_choice_id]
-        }
-            foreach var {as_item_id section_id} {
-                set $var $new_array($var)
-            }
-    }
-
-#######
-
-
         application_data_link::update_links_from \
             -object_id $as_item_id \
             -text $question_text
     }
 } -after_submit {
-    if {[array exists move_up] || [array exists move_down] || [array exists delete]} { 
-        ad_returnredirect [export_vars -base item-edit-general {as_item_id assessment_id section_id return_url}]
-        ad_script_abort
-    }
     if {[exists_and_not_null formbutton_ok]} {
-	if {![info exists return_url] || $return_url eq ""} {
-	    set return_url [export_vars -base "questions" {assessment_id section_id}]&\#Q${as_item_id}
-	}
+	set return_url [export_vars -base "questions" {assessment_id section_id }]&\#${as_item_id}
 	if {[info exists save_answer_set] && $save_answer_set eq "on" && (![info exists add_existing_mc_id] || $add_existing_mc_id eq "")} {
 	    set return_url [export_vars -base save-answer-set {assessment_id as_item_id return_url {mc_id $new_item_type_id}}]
 	}
@@ -545,6 +458,5 @@ ad_form -extend -name item_edit_general -edit_request {
 }
 
 set advanced_options_url [export_vars -base item-edit {as_item_id section_id assessment_id}]
-set error_p [expr {[template::form::is_submission item_edit_general] && ![template::form::is_valid item_edit_general]}]
-#as::assessment::notify_response_on_edit -assessment_id $assessment_id -return_url "[export_vars -base questions {assessment_id}]"
+
 ad_return_template

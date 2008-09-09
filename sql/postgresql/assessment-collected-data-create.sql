@@ -74,7 +74,7 @@ create table as_section_data (
 		constraint as_section_data_staff_id_fk
 		references users(user_id)
                 on delete cascade,
-	points integer,
+	points float,
 	-- when the subject initiated the section
 	creation_datetime timestamptz,
 	-- when the final submission produced a complete section

@@ -78,3 +78,4 @@ end;
 /
 show errors;
 drop procedure as_item_data_choices_upd_trg;
+

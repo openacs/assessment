@@ -32,7 +32,7 @@ create table as_items (
 	-- wrong feedback
 	feedback_wrong	clob,
 	-- number of points for item; might be used for defining difficulty levels
-	points		integer
+	points		float
 );
 
 -- contains additional information for all multiple choices (radiobutton, checkbox)
