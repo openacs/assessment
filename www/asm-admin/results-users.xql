@@ -22,4 +22,17 @@
 	</querytext>
 </fullquery>
 
+<fullquery name="get_session_score">
+    <querytext>
+        select sum(coalesce(points,0))
+         from as_item_data where session_id=:session_id
+    </querytext>
+</fullquery>
+
+<fullquery name="get_max_points">
+    <querytext>
+        select sum(coalesce(i.points,0)) from as_items i, as_item_data d where d.session_id = :session_id and i.as_item_id = d.as_item_id
+    </querytext>
+</fullquery>
+
 </queryset>
