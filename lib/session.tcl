@@ -57,7 +57,7 @@ db_multirow sections sections {}
 if {$session_finish ne ""} {
     set session_score [db_string get_session_score "" -default ""]
     set assessment_score [db_string get_max_points "" -default ""]
-    set max_time_to_complete [as::assessment::pretty_time -seconds $assessment_data(max_time_to_complete)]
+    set max_time_to_complete ""
     if {$session_score ne "" && $assessment_score ne "" && $assessment_score > 0} {
 	set percent_score "[format "%3.2f" [expr {$session_score / ($assessment_score + 0.0) * 100}]]%"
     } else {
