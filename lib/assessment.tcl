@@ -350,7 +350,7 @@ foreach one_item $item_list {
     if {$display(submit_answer_p) != "t"} {
 	# no seperate submit of each item
 	if {$assessment_data(reuse_responses_p) == "t"} {
-	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
+	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -section_id $section_id]
 	}
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p -random_p $assessment_data(random_p)]
         if {$required_p == "t"} {
@@ -365,7 +365,7 @@ foreach one_item $item_list {
 
     } else {
 	# submit each item seperately
-	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id]
+	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id -section_id $section_id]
 	if {![empty_string_p $default_value]} {
 	    # value already submitted
 	    set submitted_p t
@@ -378,7 +378,7 @@ foreach one_item $item_list {
 	    # value not submitted yet. get older submitted value if necessary
 	    set mode edit
 	    if {$assessment_data(reuse_responses_p) == "t"} {
-		set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id]
+		set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -section_id $section_id]
 	    }
 	    lappend unsubmitted_list $as_item_id
 	}

@@ -48,6 +48,7 @@
 	from as_item_data d, cr_revisions r, cr_revisions r2
 	where d.subject_id = :subject_id
 	and d.as_item_id = r.revision_id
+        and d.section_id = :section_id
 	and r2.revision_id = :as_item_id
 	and r.item_id = r2.item_id
 	order by d.session_id desc

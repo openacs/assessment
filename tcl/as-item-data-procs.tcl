@@ -96,6 +96,7 @@ ad_proc -public as::item_data::get {
     {-subject_id:required}
     {-as_item_id:required}
     {-session_id ""}
+    {-section_id ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-24
