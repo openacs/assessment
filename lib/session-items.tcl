@@ -37,10 +37,11 @@ ad_form -name Xsession_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
 set feedback_count 0
+set admin_package_url [ad_conn package_url]asm-admin/
 db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_as_item_id next_pr_type num content has_feedback_p correct_p view item_edit_general_url results_edit_url} items session_items {} {
     # build URLs
-    set item_edit_general_url [export_vars -base "item-edit-general" {as_item_id assessment_id section_id}]
-    set results_edit_url [export_vars -base "results-edit" {session_id section_id as_item_id}]
+    set item_edit_general_url [export_vars -base "${admin_package_url}item-edit-general" {as_item_id assessment_id section_id}]
+    set results_edit_url [export_vars -base "${admin_package_url}results-edit" {session_id section_id as_item_id}]
 
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
     array set item [as::item::item_data -as_item_id $as_item_id]
