@@ -5,11 +5,8 @@ ad_page_contract {
     @author timo@timohentschel.de
     @date   2004-12-24
     @cvs-id $Id: 
-} {
-} -properties {
-    context_bar:onevalue
-    page_title:onevalue
 }
+
 set user_id [ad_conn user_id]
 
 db_1row find_assessment {}

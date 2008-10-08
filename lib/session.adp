@@ -1,6 +1,3 @@
-<property name="title">@page_title;noquote@</property>
-<property name="context_bar">@context_bar;noquote@</property>
-
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr>
 <th colspan="3" align=left>#assessment.Assessment#: <a href="assessment?assessment_id=@assessment_id@">@assessment_data.title@</a></th></tr>
