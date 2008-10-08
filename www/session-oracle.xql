@@ -12,4 +12,19 @@
       </querytext>
 </fullquery>
 
+  <fullquery name="get_latest_session">
+    <querytext>
+      select * from (select max(o.creation_date), s.session_id 
+        from as_sessions s, 
+        acs_objects o,
+        cr_revisions cr
+      where s.subject_id=:user_id
+        and s.assessment_id in (select revision_id from cr_revisions where item_id= :assessment_id)
+        and o.object_id = cr.item_id
+        and s.session_id = cr.revision_id
+      group by assessment_id, subject_id, session_id)
+      where rownum=1
+    </querytext>
+  </fullquery>
+
 </queryset>
