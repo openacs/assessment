@@ -84,7 +84,7 @@ template::list::create \
     -elements {
 	session_id {
 	    label {[_ assessment.View_Results]}
-	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">View</a></if><else></else>}
+	    display_template {<if @results.session_id@ not nil><a href="@results.result_url@">View</a></if><else></else>}
 	}
 	subject_name {
 	    label {[_ assessment.Name]}
@@ -135,12 +135,14 @@ db_multirow -extend { result_url subject_url status delete_url session_score ass
 	set subject_url [acs_community_member_url -user_id $subject_id]
     }
     set result_url [export_vars -base "results-session" {session_id}]
-    if {$completed_datetime eq ""} {
-        set status "Incomplete"
+    if { $completed_datetime eq "" && $session_id eq "" } {
+        set status [_ assessment.Not_Taken]
+    } elseif { $completed_datetime eq "" && $session_id ne "" } {
+        set status [_ assessment.Incomplete]
         set session_score ""
         set assessment_score ""
     } else {
-        set status "Complete"
+        set status [_ assessment.Complete]
         set session_score [db_string get_session_score {} -default ""]
         set assessment_score [db_string get_max_points {}]
         if { $assessment_score > 0 } {
