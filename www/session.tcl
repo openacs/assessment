@@ -10,7 +10,7 @@
     {assessment_id:integer 0}
     {next_url ""}
  } -properties {
-     context_bar:onevalue
+     context:onevalue
      page_title:onevalue
  }
 
