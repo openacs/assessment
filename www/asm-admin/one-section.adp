@@ -33,7 +33,6 @@
     <tr class="odd">
     <tr class="even">
 <td colspan="3">
-  <blockquote>
     @title@ 
 <img src="/resources/assessment/spacer.gif" border="0" alt="" width="10">
 <a href="section-form?section_id=@section_id@&assessment_id=@assessment_id@">#assessment.Edit#</a> 
@@ -47,13 +46,9 @@
 
 <a href="section-delete?section_id=@section_id@&assessment_id=@assessment_id@"><img src="/resources/acs-subsite/Delete16.gif" border="0" alt="#assessment.remove_section#"></a>
 
-  </blockquote>
-
 </td></tr>
 </table>      
 
-<blockquote>
   <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@section_id@">
-</blockquote>
 
 </multiple>

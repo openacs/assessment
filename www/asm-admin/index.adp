@@ -1,6 +1,7 @@
 <master>
 <property name="context">@context;noquote@</property>
 
+<p>
 <if @package_admin_p@ eq 1>
 <a
 href="@categories_url@cadmin/one-object?object_id=@package_id@">#assessment.admin_categories#</a>
@@ -8,9 +9,8 @@ href="@categories_url@cadmin/one-object?object_id=@package_id@">#assessment.admi
 </if> <else>
 <a href="../asm-admin/admin-request">#assessment.admin_requests#</a>
 </else>
-
-<p>
+</p>
 
 <formtemplate id="form_upload_file"></formtemplate>
-<p>
+
 <listtemplate name="assessments"></listtemplate>
