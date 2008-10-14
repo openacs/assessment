@@ -79,7 +79,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		set correct_p 0
 		if {$show_feedback != "correct"} {
 		    if { $feedback_wrong ne "" } {
-			set feedback "<font color=red>$feedback_wrong</font>"
+			set feedback "<span style=\"color:red\">$feedback_wrong</span>"
 			set has_feedback_p 1
 		    } else {
 			set feedback ""
@@ -89,7 +89,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		set correct_p 1
 		if {$show_feedback ne "incorrect"} {
 		    if { $feedback_right ne "" } {
-			set feedback "<font color=green>$feedback_right</font>"
+			set feedback "<span style=\"color:green\">$feedback_right</span>"
 			set has_feedback_p 1
 		    } else {
 			set feedback ""
@@ -110,7 +110,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 			set correct_p 0
 			if {$show_feedback != "correct"} {
 			    if { $feedback_wrong ne "" } {
-				set feedback "<font color=red>$feedback_wrong</font>"
+				set feedback "<span style=\"color:red\">$feedback_wrong</span>"
 				set has_feedback_p 1
 			    } else {
 				set feedback ""
@@ -119,7 +119,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		    } else {
 			if {$show_feedback != "incorrect"} {
 			    if { $feedback_right ne "" } {
-				set feedback "<font color=green>$feedback_right</font>"
+				set feedback "<span style=\"color:green\">$feedback_right</span>"
 				set has_feedback_p 1
 			    } else {
 				set feedback ""
@@ -145,7 +145,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		    if { !$correct_p } {
 			if {$show_feedback != "correct"} {
 			    if { $feedback_wrong ne "" } {
-				set feedback "<font color=red>$feedback_wrong</font>"
+				set feedback "<span style=\"color:red\">$feedback_wrong</span>"
 				set has_feedback_p 1
 			    } else {
 				set feedback ""
@@ -154,7 +154,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		    } else {
 			if {$show_feedback != "incorrect"} {
 			    if { $feedback_right ne "" } {
-				set feedback "<font color=green>$feedback_right</font>"
+				set feedback "<span style=\"color:green\">$feedback_right</span>"
 				set has_feedback_p 1
 			    } else {
 				set feedback ""

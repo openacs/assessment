@@ -4,7 +4,7 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3"><!-- @assessment_data.html_title;noquote@ --></th></tr>
-<tr><td><i><font size="1">@assessment_data.instructions;noquote@</font></i></td></tr>
+<tr><td><em>@assessment_data.instructions;noquote@</em></td></tr>
 <tr><td align=right>
 <!--#assessment.section_counter#
 <br>#assessment.item_counter#-->

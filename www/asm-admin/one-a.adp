@@ -18,7 +18,7 @@
 <if @is_reg_asm_p@ not nil>
   <tr class="even">
     <th colspan="2">
-      <font color="red">#assessment.reg_asm#</font>
+      <span style="color:red">#assessment.reg_asm#</span>
     </th>
   </tr>
 </if>
