@@ -34,7 +34,7 @@ if {![empty_string_p $errors]} {
 
 ad_form -name assessment_password -action assessment -form {
     {assessment_id:key}
-    {password:text,nospell {label "[_ assessment.password]"} {html {size 20 maxlength 100}} {help_text "[_ assessment.as_password_user_help]"}}
+    {password:text(password),nospell {label "[_ assessment.password]"} {html {size 20 maxlength 100}} {help_text "[_ assessment.as_password_user_help]"}}
 } -edit_request {
 }
 
