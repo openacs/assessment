@@ -26,7 +26,7 @@ return NEW;
 end;' language 'plpgsql';
 
 create or replace function as_item_data_choices_upd_trg() returns trigger as '
-declare v_choice_value text default '';
+declare v_choice_value text default '''';
 declare v_row record;
 begin
 
@@ -36,7 +36,7 @@ for v_row in select title as text_value from
     where dc.item_data_id = new.item_data_id and
     c.choice_id = dc.choice_id
 loop
-    v_choice_value := v_choice_value || ' ' || coalesce(v_row.text_value,'');
+    v_choice_value := v_choice_value || '' '' || coalesce(v_row.text_value,'''');
 end loop;
 
 update as_item_data set choice_value = coalesce(choice_value,'''') || '' '' || coalesce(v_choice_value,'''') where item_data_id = new.item_data_id;
@@ -54,4 +54,4 @@ update as_item_data_choices set item_data_id = item_data_id;
 
 drop trigger as_item_data_choices_upd_trigger on as_item_data_choices;
 drop trigger as_item_data_upd_trigger on as_item_data;
-drop functon as_item_data_choices_upd_trg();
+drop function as_item_data_choices_upd_trg();
