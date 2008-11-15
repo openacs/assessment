@@ -38,14 +38,50 @@ ad_proc -public as::qti::register {
     return $url_assessment
 }
 
+ad_proc -public as::qti::register_object_id {
+    {-tmp_dir:required}
+    {-community_id:required}
+    {-prop ""}
+} {
+    Relation with assessment
+
+} {
+
+    if {[regexp -nocase -- {\.zip$} $tmp_dir]} {
+        # Generate a random directory name
+        set tmpdirectory [ns_tmpnam]
+        # Create a temporary directory
+        file mkdir $tmpdirectory
+        # UNZIP the zip file in the temporary directory
+        catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+
+        set assessment_id {}
+        # Read the content of the temporary directory
+        foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
+            set assessment_id [as::qti::register_xml_object_id -xml_file $file_i -community_id $community_id -prop $prop]
+            ns_log notice $assessment_id
+        }
+
+        # Delete the temporary directory
+        file delete -force $tmpdirectory
+    } else {
+        set assessment_id [as::qti::register_xml_object_id -xml_file $tmp_dir -community_id $community_id -prop $prop]
+    }
+
+    return $assessment_id
+}
+
+
+
 ad_proc -public as::qti::register_xml {
     {-xml_file:required}
     {-community_id:required}
+    {-prop ""}
 } {
     Relation with assessment of QTI XML files returning the relative url to it
 
 } {
-    set assessment_id [as::qti::register_xml_object_id -xml_file $xml_file -community_id $community_id]
+    set assessment_id [as::qti::register_xml_object_id -xml_file $xml_file -community_id $community_id -prop $prop]
 
     set url_assessment "../../assessment/assessment?assessment_id=$assessment_id"
     
@@ -55,6 +91,7 @@ ad_proc -public as::qti::register_xml {
 ad_proc -public as::qti::register_xml_object_id {
     {-xml_file:required}
     {-community_id:required}
+    {-prop ""}
 } {
     Relation with assessment of QTI XML files returning the object_id
 
@@ -68,7 +105,7 @@ ad_proc -public as::qti::register_xml_object_id {
     # package_id of the assessment of the current community
     ad_conn -set package_id [db_string get_assessment_package_id {select dotlrn_community_applets.package_id from dotlrn_community_applets join apm_packages on (dotlrn_community_applets.package_id=apm_packages.package_id) where community_id = :community_id and package_key='assessment'}]
     
-    set assessment_revision_id [as::qti::parse_qti_xml $xml_file]
+    set assessment_revision_id [as::qti::parse_qti_xml -prop $prop  $xml_file]
     content::item::set_live_revision -revision_id $assessment_revision_id
     set assessment_id [db_string items_items_as_item_id "SELECT item_id FROM cr_revisions WHERE revision_id = :assessment_revision_id"]
 
@@ -87,7 +124,7 @@ ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a ma
     }
 }
 
-ad_proc -public as::qti::parse_qti_xml { xmlfile } { Parse a XML QTI file } {
+ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI file } {
     set as_assessments__assessment_id {}
 
     # Parser
@@ -390,7 +427,7 @@ DB -----------------------------------------------------------------------------
 		    incr as_asmt_sect_map__sort_order
 		    set as_item_sect_map__sort_order 0
 		    # Process the items
-		    set as_items [as::qti::parse_item $section [file dirname $xmlfile]]
+		    set as_items [as::qti::parse_item -prop $prop $section [file dirname $xmlfile]]
 		    # Relation between as_items and as_sections
 		    foreach as_item_list $as_items {
 			array set as_item $as_item_list
@@ -410,13 +447,13 @@ DB -----------------------------------------------------------------------------
 	    }
 	} else {
 	    # Just items (no assessments)
-	    as::qti::parse_item $questestinterop [file dirname $xmlfile]]
+	    as::qti::parse_item -prop $prop $questestinterop [file dirname $xmlfile]]
     }
 }
 return $as_assessments__assessment_id
 }
 
-ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML QTI file } {
+ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items from a XML QTI file } {
 
     #get all <item> elements
     set itemNodes [$qtiNode selectNodes {item}]
@@ -562,6 +599,30 @@ ad_proc -private as::qti::parse_item {qtiNode basepath} { Parse items from a XML
         # <resprocessing>
         set resprocessingNodes [$item selectNodes {resprocessing}]
         foreach resprocessing $resprocessingNodes {
+
+            # <outcomes>
+            set outcomesNode [$resprocessing selectNodes {outcomes}]
+            set badprop 0
+            foreach outcome $outcomesNode {
+                set decvarNode [$outcome selectNodes {decvar}]
+                foreach var $decvarNode {
+                        set varname [$var getAttribute {varname} {Decvar}]
+                        # now we have to see if the variable name exists in the list
+                        if { $prop != ""} {
+                                set aux [lindex [split $prop .] 1]
+                                if { [string compare $aux $varname] != 0 } {
+                                        set badprop 1
+                                        set res $varname
+                                }
+                        }
+                }
+            }
+            if { $badprop == 1 } {
+                ns_write "<hr /><p><font color=\"red\"><b><center>-- WARNING --</center></b></font></p>"
+                ns_write "<p> QTI Variable Definition doesn't match Property Definition following the <b>IMS Question and Test Interoperability Integration Guide</b>.</p>"
+                ns_write "<p> The variable is: <b>$res</b> and the property <b>$prop</b>.</p><hr />"
+            }
+
             # <respcondition>
             set respconditionNodes [$resprocessing selectNodes {respcondition}]
             foreach respcondition $respconditionNodes {

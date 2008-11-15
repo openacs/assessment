@@ -19,9 +19,18 @@ ad_proc -public -callback imsld::import -impl qti {} {
     this is the imsld qti importer
 } {
 	if {$res_type == "imsqti_xmlv1p0" || $res_type == "imsqti_xmlv1p1" || $res_type =="imsqti_item_xmlv2p0"} {
-	    return [as::qti::register_xml_object_id \
-			-xml_file $tmp_dir/$res_href \
-			-community_id $community_id]
+            set extension [string tolower [file extension $tmp_dir/$res_href]]
+            if {$extension == ".xml"} {
+                return [as::qti::register_xml_object_id \
+                            -xml_file $tmp_dir/$res_href \
+                            -community_id $community_id \
+                            -prop $prop]
+            } else {
+                return [as::qti::register_object_id \
+                            -tmp_dir $tmp_dir/$res_href \
+                            -community_id $community_id \
+                            -prop $prop]
+            }
 	}
 }
 
