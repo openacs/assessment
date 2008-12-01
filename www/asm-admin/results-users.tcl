@@ -84,7 +84,7 @@ template::list::create \
     -elements {
 	session_id {
 	    label {[_ assessment.View_Results]}
-	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">View</a></if><else></else>}
+	    display_template {<if @results.session_id@ not nil><a href="@results.result_url@">View</a></if><else></else>}
 	}
 	subject_name {
 	    label {[_ assessment.Name]}
@@ -99,7 +99,7 @@ template::list::create \
 	percent_score {
 	    label {[_ assessment.Percent_Score]}
 	    html {align right style white-space:nowrap}
-	    display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.percent_score@</a></if><else></else>}
+        display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.percent@<if @results.percent@ not nil>%</if></a></if><else></else>}
 	}
     } -filters {
 	assessment_id {
@@ -124,7 +124,7 @@ template::list::create \
 
 template::multirow create subjects subject_id subject_url subject_name
 
-db_multirow -extend { result_url subject_url status delete_url } results assessment_results {} {
+db_multirow -extend { result_url subject_url status delete_url session_score assessment_score percent } results assessment_results {} {
     # to display list of users who answered the assessment if anonymous
     template::multirow append subjects $subject_id [acs_community_member_url -user_id $subject_id] $subject_name
 
@@ -135,10 +135,23 @@ db_multirow -extend { result_url subject_url status delete_url } results assessm
 	set subject_url [acs_community_member_url -user_id $subject_id]
     }
     set result_url [export_vars -base "results-session" {session_id}]
-    if {$completed_datetime eq ""} {
-        set status "Incomplete"
+    if { $completed_datetime eq "" && $session_id eq "" } {
+        set status [_ assessment.Not_Taken]
+    } elseif { $completed_datetime eq "" && $session_id ne "" } {
+        set status [_ assessment.Incomplete]
+        set session_score ""
+        set assessment_score ""
     } else {
-        set status "Complete"
+        set status [_ assessment.Complete]
+        set session_score [db_string get_session_score {} -default ""]
+        set assessment_score [db_string get_max_points {}]
+        if { $assessment_score > 0 } {
+            set percent [format "%3.2f" [expr double([expr double($session_score)*100] / [expr double($assessment_score)])]]
+        } else {
+            set percent ""
+        }
+
+
     }
     set delete_url [export_vars -base session-delete {assessment_id subject_id session_id}]
 }

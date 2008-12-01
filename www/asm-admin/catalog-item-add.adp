@@ -19,7 +19,7 @@
     <tr class="even">
   </else>
 
-<td valign="top">@items.rownum@. @items.field_name@<if @items.required_p@ eq t> <font color=red>*</font> </if>
+<td valign="top">@items.rownum@. @items.field_name@<if @items.required_p@ eq t> <span style="color:red">*</span> </if>
 <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
 (@items.points@ #assessment.points#)
 </td></tr>
@@ -32,7 +32,6 @@
   </else>
 
 <td>
-  <blockquote>
     <if @items.presentation_type@ ne fitb>@items.title;noquote@<br><if @items.description@ not nil>@items.description;noquote@<br></if></if>
     <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
       <if @items.choice_orientation@ ne horizontal>
@@ -55,11 +54,10 @@
     </else>
     <if @items.subtext@ not nil>
       <div class="form-help-text">
-      <img src="/shared/images/info.gif" width="12" height="9" alt="[i]" title="Help text" border="0">
+      <img src="/shared/images/info.gif" width="12" height="9" alt="[i]" title="Help text" style="border:0">
       <noparse>@items.subtext@</noparse>
       </div>
     </if>
-  </blockquote>
 </td></tr>
 
 </multiple>

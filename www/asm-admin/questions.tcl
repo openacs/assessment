@@ -35,8 +35,8 @@ db_multirow -extend { section_url section_form_edit_url section_form_add_url cat
     set section_delete_url [export_vars -base section-delete {section_id assessment_id}]
     set checks_admin_url [export_vars -base checks-admin {assessment_id section_id}]
     set add_edit_section_check_url [export_vars -base add-edit-section-checks {assessment_id section_id}]
-    set section_swap_down_url [export_vars -base section-swap {assessment_id section_id {direction down}}]
-    set section_swap_up_url [export_vars -base section-swap {assessment_id section_id {direction up}}]
+    set section_swap_down_url [export_vars -base section-swap {assessment_id section_id {direction down} sort_order}]
+    set section_swap_up_url [export_vars -base section-swap {assessment_id section_id {direction up} sort_order}]
 }
 
 

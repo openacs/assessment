@@ -63,15 +63,22 @@ if {[empty_string_p $assessment_data(show_feedback)]} {
 set session_score 0
 set assessment_score 0
 db_multirow sections sections {} {
-    if {[empty_string_p $points]} {
-	set points 0
+    if {$session_finish ne ""} {
+        set session_score [db_string get_session_score {} -default ""]
+        set assessment_score [db_string get_max_points {} -default ""]
+        #set max_time_to_complete [as::assessment::pretty_time -seconds $assessment_data(max_time_to_complete)]
+        set max_time_to_complete ""
+        if {$session_score ne "" && $assessment_score ne "" && $assessment_score > 0} {
+            set percent_score "[format "%3.2f" [expr {$session_score / ($assessment_score + 0.0) * 100}]]"
+        } else {
+            set percent_score ""
+        }
+        set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
+    } else {
+        set percent_score ""
+        set showpoints 0
     }
-    if {[empty_string_p $max_points]} {
-	set max_points 0
-    }
-    set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
-    incr session_score $points
-    incr assessment_score $max_points
+
 }
 
 set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]

@@ -12,12 +12,25 @@ ad_library {
 namespace eval as::install {}
 
 
+ad_proc -public as::install::after_install {  
+} { 
+    Create content types and implementations
+} { 
+
+    # Create implementation for notifications of type "inter_item"
+    inter_item_checks::apm_callback::package_install
+
+    # Create content types and attributes
+    as::install::assessment_create_install
+
+    # Create implementation for notifications of type "assessment_response"
+    as::install::notifications
+}
+
 ad_proc -public as::install::assessment_create_install {  
 } { 
     Creates the content type and adds in attributes.
 } { 
-
-inter_item_checks::apm_callback::package_install
 
 set value [parameter::get -parameter "AsmForRegisterId" -package_id [subsite::main_site_id]]
 
@@ -281,170 +294,154 @@ ad_proc -public as::install::after_upgrade {
         -spec {
             0.08d 0.09d1 {
                 db_transaction {
-		    content::type::attribute::new -content_type {as_sections} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed in this section}  -column_spec {integer}
-		    content::type::attribute::new -content_type {as_item_choices} -attribute_name {fixed_position}         -datatype {number}  -pretty_name {Fixed Position} -column_spec {integer}
-		    set packages [db_list packages {select package_id from apm_packages where package_key = 'assessment'}]
-		    foreach package_id $packages {
-			set folder_id [as::assessment::folder_id -package_id $package_id]
-			content::folder::register_content_type -folder_id $folder_id -content_type {image} -include_subtypes t
-			content::folder::register_content_type -folder_id $folder_id -content_type {content_revision} -include_subtypes t
-		    }
+                    content::type::attribute::new -content_type {as_sections} -attribute_name {num_items}      -datatype {number}  -pretty_name {Number of items displayed in this section}  -column_spec {integer}
+                    content::type::attribute::new -content_type {as_item_choices} -attribute_name {fixed_position}         -datatype {number}  -pretty_name {Fixed Position} -column_spec {integer}
+                    set packages [db_list packages {select package_id from apm_packages where package_key = 'assessment'}]
+                    foreach package_id $packages {
+                        set folder_id [as::assessment::folder_id -package_id $package_id]
+                        content::folder::register_content_type -folder_id $folder_id -content_type {image} -include_subtypes t
+                        content::folder::register_content_type -folder_id $folder_id -content_type {content_revision} -include_subtypes t
+                    }
                 }
             }
             0.09d1 0.10d1 {
-		content::type::attribute::new -content_type {as_section_data} -attribute_name {points} -datatype {number} -pretty_name {Points Awarded} -column_spec {integer}
+                content::type::attribute::new -content_type {as_section_data} -attribute_name {points} -datatype {number} -pretty_name {Points Awarded} -column_spec {integer}
             }
             0.10d1 0.10d2 {
-		content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id} -datatype {number} -pretty_name {Section ID} -column_spec {integer}
+                content::type::attribute::new -content_type {as_item_data} -attribute_name {section_id} -datatype {number} -pretty_name {Section ID} -column_spec {integer}
             }
             0.10d2 0.10d3 {
-		db_transaction {
-		    content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime} -datatype {number} -pretty_name {Creation Date Time} -column_spec {timestamptz}
-		    content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime} -datatype {number} -pretty_name {Final Submission} -column_spec {timestamptz}
-		    content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask} -datatype {string} -pretty_name {IP Mask} -column_spec {varchar(100)}
-		}
-	    }
+                db_transaction {
+                    content::type::attribute::new -content_type {as_section_data} -attribute_name {creation_datetime} -datatype {number} -pretty_name {Creation Date Time} -column_spec {timestamptz}
+                    content::type::attribute::new -content_type {as_section_data} -attribute_name {completed_datetime} -datatype {number} -pretty_name {Final Submission} -column_spec {timestamptz}
+                    content::type::attribute::new -content_type {as_assessments} -attribute_name {ip_mask} -datatype {string} -pretty_name {IP Mask} -column_spec {varchar(100)}
+                }
+            }
             0.10d3 0.10d4 {
-		db_transaction {
-		    set impl_id [acs_sc::impl::new -contract_name NotificationType -name assessment_response_notif_type -owner assessment]
-		    acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation GetURL -alias as::notification::get_url -language TCL
-		    acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation ProcessReply -alias as::notification::process_reply -language TCL
-		    acs_sc::impl::binding::new -contract_name NotificationType -impl_name assessment_response_notif_type
+                as::install::notifications
+            }
+            0.10d6 0.10d7 {
+                as::actions::insert_actions_after_upgrade
+            }
+            0.10d8 0.10d9 {
+                db_transaction {
+                    content::type::new -content_type {as_session_results} -supertype {content_revision} -pretty_name {Assessment Session Result} -pretty_plural {Assessment Session Results} -table_name {as_session_results} -id_column {result_id}
+                    content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
+                    content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
 
-		    set type_id [notification::type::new -sc_impl_id $impl_id -short_name assessment_response_notif -pretty_name "Survey Response Notification" -description "Notifications for Assessment"]
+                    set packages [db_list packages {select package_id from apm_packages where package_key = 'assessment'}]
+                    foreach package_id $packages {
+                        set folder_id [as::assessment::folder_id -package_id $package_id]
+                        content::folder::register_content_type -folder_id $folder_id -content_type {as_session_results} -include_subtypes t
+                    }
 
-		    db_dml insert_intervals {
-			insert into notification_types_intervals
-			(type_id, interval_id)
-			select :type_id as type_id, interval_id
-			from notification_intervals
-			where name in ('instant','hourly','daily')
-		    }
-		    db_dml insert_delivery_method {
-			insert into notification_types_del_methods
-			(type_id, delivery_method_id)
-			select :type_id as type_id, delivery_method_id
-			from notification_delivery_methods
-			where short_name = 'email'
-		    }
-		}
-	    }
-	    0.10d6 0.10d7 {
-		as::actions::insert_actions_after_upgrade
-	    }
-	    0.10d8 0.10d9 {
-		db_transaction {
-		    content::type::new -content_type {as_session_results} -supertype {content_revision} -pretty_name {Assessment Session Result} -pretty_plural {Assessment Session Results} -table_name {as_session_results} -id_column {result_id}
-		    content::type::attribute::new -content_type {as_session_results} -attribute_name {target_id} -datatype {number} -pretty_name {Target Answer} -column_spec {integer}
-		    content::type::attribute::new -content_type {as_session_results} -attribute_name {points} -datatype {number} -pretty_name {Points} -column_spec {integer}
+                    set item_data_list [db_list_of_lists get_all_item_data_ids {
+                        select item_data_id, points
+                        from as_item_data
+                        where points is not null
+                    }]
+                    foreach item_data $item_data_list {
+                        as::session_results::new -target_id [lindex $item_data 0] -points [lindex $item_data 1]
+                    }
 
-		    set packages [db_list packages {select package_id from apm_packages where package_key = 'assessment'}]
-		    foreach package_id $packages {
-			set folder_id [as::assessment::folder_id -package_id $package_id]
-			content::folder::register_content_type -folder_id $folder_id -content_type {as_session_results} -include_subtypes t
-		    }
+                    set section_data_list [db_list_of_lists get_all_section_data_ids {
+                        select section_data_id, points
+                        from as_section_data
+                        where points is not null
+                    }]
+                    foreach section_data $section_data_list {
+                        as::session_results::new -target_id [lindex $section_data 0] -points [lindex $section_data 1]
+                    }
 
-		    set item_data_list [db_list_of_lists get_all_item_data_ids {
-			select item_data_id, points
-			from as_item_data
-			where points is not null
-		    }]
-		    foreach item_data $item_data_list {
-			as::session_results::new -target_id [lindex $item_data 0] -points [lindex $item_data 1]
-		    }
+                    set session_list [db_list_of_lists get_all_session_ids {
+                        select session_id, percent_score
+                        from as_sessions
+                        where percent_score is not null
+                    }]
+                    foreach session $session_list {
+                        as::session_results::new -target_id [lindex $session 0] -points [lindex $session 1]
+                    }
 
-		    set section_data_list [db_list_of_lists get_all_section_data_ids {
-			select section_data_id, points
-			from as_section_data
-			where points is not null
-		    }]
-		    foreach section_data $section_data_list {
-			as::session_results::new -target_id [lindex $section_data 0] -points [lindex $section_data 1]
-		    }
+                    content::type::attribute::new -content_type {as_assessments} -attribute_name {password} -datatype {string} -pretty_name {Password} -column_spec {varchar(100)}
 
-		    set session_list [db_list_of_lists get_all_session_ids {
-			select session_id, percent_score
-			from as_sessions
-			where percent_score is not null
-		    }]
-		    foreach session $session_list {
-			as::session_results::new -target_id [lindex $session 0] -points [lindex $session 1]
-		    }
-
-		    content::type::attribute::new -content_type {as_assessments} -attribute_name {password} -datatype {string} -pretty_name {Password} -column_spec {varchar(100)}
-
-		    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {reference_answer} -datatype {text} -pretty_name {Reference Answer} -column_spec {text}
-		    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {keywords} -datatype {string} -pretty_name {Keywords} -column_spec {varchar(4000)}
-		}
-	    }
-	    0.10d9 0.10d10 {
-		as::actions::update_checks_after_upgrade
-	    }
-	    0.10d10 0.10d11 {
-		content::type::attribute::new -content_type {as_assessments} -attribute_name {random_p} -datatype {boolean} -pretty_name {Assessment Allow Random} -column_spec {char(1)}
-	    }
-	    0.10d11 0.10d12 {
-		content::type::attribute::new -content_type {as_items} -attribute_name {field_name} -datatype {string} -pretty_name {Item Field Name} -column_spec {varchar(500)}
-	    }
-    
-	    0.11 0.12 {
-		#File Upload new type
-		content::type::new -content_type {as_item_type_fu} -supertype {content_revision} -pretty_name {Assessment Item Type File Upload} -pretty_plural {Assessment Item Type File Upload} -table_name {as_item_type_fu} -id_column {as_item_type_id}
-		content::type::new -content_type {as_item_display_f} -supertype {content_revision} -pretty_name {Assessment Item Display File} -pretty_plural {Assessment Item Display File} -table_name {as_item_display_f} -id_column {as_item_display_id}
-		# File Upload display type
-		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {html_display_options} -datatype {string} -pretty_name {HTML display Options} -column_spec {varchar(50)}
-		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {abs_size} -datatype {string} -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
-		content::type::attribute::new -content_type {as_item_display_f} -attribute_name {box_orientation} -datatype {string} -pretty_name {Box Orientation} -column_spec {varchar(20)}
-		
-	        db_foreach packages { select package_id from apm_packages where package_key = 'assessment'} { 
-		    set folder_id [as::assessment::folder_id -package_id $package_id]
-		    
-		    # File Upload registration
-		    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
-		    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_f} -include_subtypes t
-		}
-		
-	    }
-	    0.12 0.13 {
-		content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
-		
-	    }
-	    0.13 0.14 {
-		# update as_param_map table to set the item_id  as a cr_item and not a cr_revision id
-		
-		db_foreach as_parameter { select cr.item_id, pm.parameter_id from as_param_map pm, cr_revisions cr where cr.revision_id = pm.item_id} {
-		    db_dml  update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
-		}
-		
-	    }
-	    0.14 0.15 {
-		# update as_inter_item_check_id table to set the check_sql condition using the item_id of a choice instead of using the revision_id
-		
-		db_foreach check  { select inter_item_check_id, check_sql from as_inter_item_checks } {
-		    set cond_list  [split $check_sql "="]
-		    set item_id [lindex [split [lindex $cond_list 2] " "] 0]
-		    set choice_id [lindex [split [lindex $cond_list 1] " "] 0]
-		    set condition [db_string get_item_id {select item_id from cr_revisions where revision_id=:choice_id} -default -1]
-		    set check_sql_updated [as::assessment::check::get_sql -item_id $item_id -condition $condition]
-		    if { $condition != -1 } {
-			db_dml update_check_sql { update as_inter_item_checks set check_sql = :check_sql_updated where inter_item_check_id=:inter_item_check_id}
-		    }
-		}
-		
-	    }
-	    0.15 0.16 {
-		content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
-	    }
-	    0.16 0.17 {
-		content::type::attribute::new -content_type {as_items} -attribute_name {validate_block} -datatype {text} -pretty_name {Validation Block} -column_spec {text}
-	    }
+                    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {reference_answer} -datatype {text} -pretty_name {Reference Answer} -column_spec {text}
+                    content::type::attribute::new -content_type {as_item_type_oq} -attribute_name {keywords} -datatype {string} -pretty_name {Keywords} -column_spec {varchar(4000)}
+                }
+            }
+            0.10d9 0.10d10 {
+                as::actions::update_checks_after_upgrade
+            }
+            0.10d10 0.10d11 {
+                content::type::attribute::new -content_type {as_assessments} -attribute_name {random_p} -datatype {boolean} -pretty_name {Assessment Allow Random} -column_spec {char(1)}
+            }
+            0.10d11 0.10d12 {
+                content::type::attribute::new -content_type {as_items} -attribute_name {field_name} -datatype {string} -pretty_name {Item Field Name} -column_spec {varchar(500)}
+            }
+            
+            0.11 0.12 {
+                #File Upload new type
+                content::type::new -content_type {as_item_type_fu} -supertype {content_revision} -pretty_name {Assessment Item Type File Upload} -pretty_plural {Assessment Item Type File Upload} -table_name {as_item_type_fu} -id_column {as_item_type_id}
+                content::type::new -content_type {as_item_display_f} -supertype {content_revision} -pretty_name {Assessment Item Display File} -pretty_plural {Assessment Item Display File} -table_name {as_item_display_f} -id_column {as_item_display_id}
+                # File Upload display type
+                content::type::attribute::new -content_type {as_item_display_f} -attribute_name {html_display_options} -datatype {string} -pretty_name {HTML display Options} -column_spec {varchar(50)}
+                content::type::attribute::new -content_type {as_item_display_f} -attribute_name {abs_size} -datatype {string} -pretty_name {Abstraction Real Size} -column_spec {varchar(20)}
+                content::type::attribute::new -content_type {as_item_display_f} -attribute_name {box_orientation} -datatype {string} -pretty_name {Box Orientation} -column_spec {varchar(20)}
+                
+                db_foreach packages { select package_id from apm_packages where package_key = 'assessment'} { 
+                    set folder_id [as::assessment::folder_id -package_id $package_id]
+                    
+                    # File Upload registration
+                    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_type_fu} -include_subtypes t
+                    content::folder::register_content_type -folder_id $folder_id -content_type {as_item_display_f} -include_subtypes t
+                }
+                
+            }
+            0.12 0.13 {
+                content::type::attribute::new -content_type {as_assessments} -attribute_name {type}            -datatype {number}  -pretty_name {Type}  -column_spec {integer}
+                
+            }
+            0.13 0.14 {
+                # update as_param_map table to set the item_id  as a cr_item and not a cr_revision id
+                
+                db_foreach as_parameter { select cr.item_id, pm.parameter_id from as_param_map pm, cr_revisions cr where cr.revision_id = pm.item_id} {
+                    db_dml  update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
+                }
+                
+            }
+            0.14 0.15 {
+                # update as_inter_item_check_id table to set the check_sql condition using the item_id of a choice instead of using the revision_id
+                
+                db_foreach check  { select inter_item_check_id, check_sql from as_inter_item_checks } {
+                    set cond_list  [split $check_sql "="]
+                    set item_id [lindex [split [lindex $cond_list 2] " "] 0]
+                    set choice_id [lindex [split [lindex $cond_list 1] " "] 0]
+                    set condition [db_string get_item_id {select item_id from cr_revisions where revision_id=:choice_id} -default -1]
+                    set check_sql_updated [as::assessment::check::get_sql -item_id $item_id -condition $condition]
+                    if { $condition != -1 } {
+                        db_dml update_check_sql { update as_inter_item_checks set check_sql = :check_sql_updated where inter_item_check_id=:inter_item_check_id}
+                    }
+                }
+                
+            }
+            0.15 0.16 {
+                content::type::attribute::new -content_type {as_item_display_sb} -attribute_name {prepend_empty_p} -datatype {string}    -pretty_name {Prepend Empty Item} -column_spec {char(1)}
+            } 
+            0.16 0.17 {
+                content::type::attribute::new -content_type {as_items} -attribute_name {validate_block} -datatype {text} -pretty_name {Validation Block} -column_spec {text}
+            }
 	    0.22d5 0.22d6 {
 		# upgrade already done in SQL just add the attributes for
 		# completeness
 		content::type::attribute::new -content_type {as_item_data} -attribute_name {as_item_cr_item_id} -datatype {number} -pretty_name {as_item cr_item_id} -column_spec {integer}
 		content::type::attribute::new -content_type {as_item_data} -attribute_name {choice_value} -datatype {text} -pretty_name {Choice Value}
 	    }
-	    0.22d7 0.22d8 {
+   
+            0.22d6 0.22d7 {
+                if { ![acs_sc_binding_exists_p NotificationType assessment_response_notif_type] } {
+                    as::install::notifications
+                }
+            }
+    	    0.22d7 0.22d8 {
                 content::type::attribute::new -content_type {as_sessions} -attribute_name {elapsed_seconds}            -datatype {number}  -pretty_name {Elapsed Seconds}  -column_spec {integer}
 		content::type::attribute::new -content_type {as_item_type_mc} -attribute_name {allow_other_p} -datatype {boolean}    -pretty_name {Allow Other?} -column_spec {char(1) default 'f'}
 	    }
@@ -479,4 +476,34 @@ ad_proc -public as::install::before_unmount {
 } { 
     # reset the RegistrationId parameter
     as::parameter::reset_parameter -package_id $package_id -node_id $node_id
+}
+
+ad_proc -private as::install::notifications {  
+} { 
+    Create notif implementation for type assessment_response
+} { 
+
+    db_transaction {
+        set impl_id [acs_sc::impl::new -contract_name NotificationType -name assessment_response_notif_type -owner assessment]
+        acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation GetURL -alias as::notification::get_url -language TCL
+        acs_sc::impl::alias::new -contract_name NotificationType -impl_name assessment_response_notif_type -operation ProcessReply -alias as::notification::process_reply -language TCL
+        acs_sc::impl::binding::new -contract_name NotificationType -impl_name assessment_response_notif_type
+
+        set type_id [notification::type::new -sc_impl_id $impl_id -short_name assessment_response_notif -pretty_name "Survey Response Notification" -description "Notifications for Assessment"]
+
+        db_dml insert_intervals {
+            insert into notification_types_intervals
+            (type_id, interval_id)
+            select :type_id as type_id, interval_id
+            from notification_intervals
+            where name in ('instant','hourly','daily')
+        }
+        db_dml insert_delivery_method {
+            insert into notification_types_del_methods
+            (type_id, delivery_method_id)
+            select :type_id as type_id, delivery_method_id
+            from notification_delivery_methods
+            where short_name = 'email'
+        }
+    }
 }

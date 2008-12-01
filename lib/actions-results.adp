@@ -2,6 +2,6 @@
 <multiple name="actions">
  @actions.user_message@
 <if @actions.error_txt@ ne nil>
-	<font color=red>@actions.error_txt@</font>
+	<span style="color:red">@actions.error_txt@</span>
 </if>
 </multiple>

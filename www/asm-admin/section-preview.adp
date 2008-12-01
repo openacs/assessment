@@ -29,10 +29,10 @@
       <if @items.title@ ne @items.next_title@>
         </td></tr>
         <tr class="form-widget"><if @assessment_data.show_item_name_p@ eq t><td colspan=4></if><else><td colspan=3></else>
-          <blockquote><table>
+          <table>
       </if>
       <else>
-        <td><blockquote><table>
+        <td><table>
       </else>
 <group column=title>
           <tr class="form-widget">
@@ -83,7 +83,6 @@
 </td></tr>
 </group></table>
 
-        </blockquote>
         </td></tr>
         <tr><td colspan=4><hr></td></tr>
       </multiple>

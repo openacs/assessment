@@ -30,8 +30,6 @@ template::list::create \
 	    label "[_ assessment.View_results]"
 	    display_template {<a href="asm-admin/results-users?assessment_id=@assessments.assessment_id@">\#assessment.View_results\#</a>}
 	}
-    } -main_class {
-        narrow
     }
 
 # get the information of all open assessments
@@ -62,8 +60,6 @@ template::list::create \
             label "[_ assessment.Sessions]"
             link_url_eval {[export_vars -base "sessions" {assessment_id}]}
         }
-    } -main_class {
-        narrow
     }
 
 # get the information of all assessments store in the database

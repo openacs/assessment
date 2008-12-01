@@ -58,7 +58,7 @@ if {[llength $linked_objects]} {
 	if {$object(object_type) eq "content_revision"} {
 	    set link_type file
 	}
-	append links "<a href='/${link_type}/$l'>$object(title)</a><br />"
+	append links "<a href='/${link_type}/$l'>$object(title)</a><br>"
     }
     ad_form -extend -name item_edit -form {
 	{content:text(inform),optional {label "[_ assessment.item_display_Content]"} {value {$links}} {help_text "[_ assessment.item_Content_help]"}}

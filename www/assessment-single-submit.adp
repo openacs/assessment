@@ -4,7 +4,7 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3"><!-- @assessment_data.html_title;noquote@ --></th></tr>
-<tr><td><i><font size="1">@assessment_data.instructions;noquote@</font></i></td></tr>
+<tr><td><em>@assessment_data.instructions;noquote@</em></td></tr>
 <tr><td align=right>
 <!--#assessment.section_counter#
 <br>#assessment.item_counter#-->
@@ -37,7 +37,7 @@
       <if @items.content@ not nil><tr><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>@items.content;noquote@</td></tr></if>
 
       <tr><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>
-        <blockquote><table>
+        <table>
           <tr class="form-widget">
           <if @items.description@ not nil><td valign=top>@items.description;noquote@</td></if><td>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
@@ -68,7 +68,6 @@
           </td></tr><tr class="form-widget"><td>
             <if @items.submitted_p@ eq f><br><input type=submit value="#assessment.Submit#"></if>
           </td></tr></table>
-        </blockquote>
         <hr>
       </td></tr>
     </formtemplate>

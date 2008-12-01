@@ -4,4 +4,4 @@
 
 <listtemplate name="objects"></listtemplate>
 
-#assessment.unhappy_search# <a href=@search_again_url@>#assessment.try_again#</a>
+<p>#assessment.unhappy_search# <a href="@search_again_url@">#assessment.try_again#</a></p>

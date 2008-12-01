@@ -113,7 +113,7 @@ template::list::create \
 		<if @sessions.percent_score@ not nil>
 		@sessions.percent_score@%
 		</if>
-		<img src="/resources/right.gif" border=0 /></a>
+		<img src="/resources/right.gif" style="border:0"></a>
 		</if>
 	    }
 	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) != "test"}]}

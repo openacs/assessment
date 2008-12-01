@@ -8,5 +8,7 @@
 
 @assessment_data.exit_page;noquote@
 
+<if @user_id@ ne 0>
   <p><a href="session?session_id=@session_id@">#assessment.View_results#</a></p>
+</if>
 

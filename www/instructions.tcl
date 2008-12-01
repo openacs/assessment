@@ -16,6 +16,11 @@ permission::require_permission \
     -privilege read
 
 as::assessment::data -assessment_id $assessment_id
+if { $assessment_data(publish_status) ne "live" } {
+    ad_return_complaint 1 [_ assessment.Requested_assess_is_no_longer_available]
+    return
+}
+
 if {$assessment_data(instructions) eq ""} {
     set assessment_data(instructions) "[_ assessment.lt_default_instructions]"
 }

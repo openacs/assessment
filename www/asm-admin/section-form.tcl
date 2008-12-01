@@ -6,7 +6,7 @@ ad_page_contract {
 } {
     assessment_id:integer
     section_id:integer,optional
-    after:integer,optional
+    {after:integer,optional 1}
     {__new_p 0}
 } -properties {
     context:onevalue

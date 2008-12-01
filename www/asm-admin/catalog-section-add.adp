@@ -21,17 +21,12 @@
     <tr class="even">
   </else>
 <td>
-  <blockquote>
     @sections.title@
-  </blockquote>
 </td></tr>
 </table>      
 
-<blockquote>
   <include src="/packages/assessment/lib/section-show" assessment_id="@assessment_id@" section_id="@sections.section_id@">
-</blockquote>
 
 </multiple>
 
-<formtemplate id="catalog_section_add">
-</formtemplate>
+<formtemplate id="catalog_section_add"></formtemplate>

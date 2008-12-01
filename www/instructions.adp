@@ -11,7 +11,7 @@
     #assessment.Resume_Assessment_Title#
   </if> 
   <else>
-    <if @completed_session_count@ gt 0>
+    <if @completed_session_count@ gt 0 and @user_id@ ne 0>
       #assessment.Retake_Assessment_Title#
     </if>
     <else>

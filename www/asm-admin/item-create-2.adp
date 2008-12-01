@@ -4,7 +4,3 @@
 
 
 <formtemplate id="item-add-2"></formtemplate>
-
-
-
-</master>

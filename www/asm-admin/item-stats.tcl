@@ -154,7 +154,7 @@ if {[exists_and_not_null session_id_list]} {
 
 		    append stats "<tr>"
 		    if { $r(correct_answer_p) && $assessment_data(type) ne "survey"} {
-			append stats "<td><img src=/resources/assessment/correct.gif /></td>"
+			append stats "<td><img src=\"/resources/assessment/correct.gif\"></td>"
 		    } else {
 			append stats "<td>&nbsp;</td>"
 		    }
@@ -163,7 +163,7 @@ if {[exists_and_not_null session_id_list]} {
 		    if { $first_p } {
 			append stats "
 <td rowspan=$total_choices>
-<b>[_ assessment.Total_Responses]</b> $total_responses<br />"
+<b>[_ assessment.Total_Responses]</b> $total_responses<br>"
 			if {$assessment_data(type) ne "survey"} {
 			    append stats "
 <b>[_ assessment.Total_Correct]</b> $total_correct"
@@ -239,7 +239,7 @@ if {[exists_and_not_null session_id_list]} {
 
 			    append stats "
 <td rowspan=$total_responses valign=\"middle\">
-[_ assessment.Mean] $mean<br />
+[_ assessment.Mean] $mean<br>
 [_ assessment.Standard_Deviation] $standard_deviation
 </td>
 "
