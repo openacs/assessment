@@ -1,7 +1,7 @@
 set package_url [ad_conn package_url]
 as::assessment::data -assessment_id $assessment_id
 
-set item_add_top_url [export_vars -base item-add {as_item_id section_id assessment_id return_url}]
+set item_add_top_url [export_vars -base item-add {as_item_id section_id assessment_id return_url {after 0}}]
 ad_form -name admin_section_${section_id} -form {
     {section_id:text(hidden) {value $section_id}}
 }
