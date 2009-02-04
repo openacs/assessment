@@ -137,7 +137,7 @@ create table as_item_data (
 		constraint as_item_data_file_id_fk
 		references cr_revisions(revision_id)
                 on delete cascade,
-        as_cr_item_id integer,
+        as_item_cr_item_id integer,
         choice_value text
 -- to do: figure out how attachment answers should be supported; the Attachment package is still in need of considerable help. Can we rely on it here?
 );
