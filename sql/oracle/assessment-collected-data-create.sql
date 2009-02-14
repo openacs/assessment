@@ -128,7 +128,6 @@ create table as_item_data (
 	text_answer	varchar(500),
 	timestamp_answer	date,
 	-- references cr_revisions
-
 	content_answer	integer
 		constraint as_item_data_content_fk
 		references cr_revisions
