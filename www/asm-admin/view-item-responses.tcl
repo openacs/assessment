@@ -29,6 +29,8 @@ set data_type [db_string get_data_type {
 
 if { $data_type eq "date" || $data_type eq "timestamp" } {
     set answer_field timestamp_field
+} elseif { $data_type eq "text" } {
+    set answer_field clob_answer
 } else {
     set answer_field text_answer
 }
@@ -39,7 +41,7 @@ db_multirow -extend { session_url user_url file_url } responses responses [subst
 
     from as_item_data
     where as_item_id = :as_item_id
-    and not $answer_field is null
+    and $answer_field is not null
 }] {
     set user_url [export_vars -base sessions { subject_id }]
     set session_url [export_vars -base ../session { session_id }]
@@ -68,13 +70,6 @@ template::list::create \
 	}
 	answer {
 	    label "[_ assessment.Answer]"
-	    display_template {
-		<if @data_type@ eq "file">		
-		<a href="@responses.file_url;noquote@">@responses.answer;noquote@</a>
-		</if>
-		<else>
-		@responses.answer@
-		</else>
-	    }
+        link_url_col file_url
 	}
     }
