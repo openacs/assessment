@@ -30,9 +30,7 @@ ad_proc -public as::session_results::new {
 #	db_transaction {
 	    if {![db_0or1row result_exists {}]} {
 		set result_item_id [content::item::new -parent_id $folder_id -content_type {as_session_results} -name [as::item::generate_unique_name]]
-		ns_log notice "DAVEB101 session rsults new new item $result_item_id"
 	    }
-		ns_log notice "DAVEB101 session rsults new new revision $result_item_id"
 	    set result_id [content::revision::new \
 			       -item_id $result_item_id \
 			       -content_type {as_session_results} \
