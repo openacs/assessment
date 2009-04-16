@@ -84,6 +84,11 @@ ad_proc -callback merge::MergePackageUser -impl as {
 
 
 ad_proc -public -callback imsld::finish_object {
-    -object_id
+    -object_id:required
+    -user_id
+    -session_id
 } {
-}
+    @param object_id  The assessment_id that has been completed by the user
+    @param user_id    User identifier
+    @param session_id Session identifier
+} -
