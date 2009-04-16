@@ -196,7 +196,7 @@ declare v_choice_value text default '''';
 begin
 
 select title into v_choice_value
-from as_item_choices
+from as_item_choicesx
 where choice_id = NEW.choice_id;
 
 update as_item_data set choice_value = coalesce(choice_value,'''') || '' '' || coalesce(v_choice_value,'''') where item_data_id = new.item_data_id;
