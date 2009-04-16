@@ -37,4 +37,4 @@
    <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@sections.section_id@" admin_trigger_p="@admin_trigger_p@">
  </fieldset>
 </multiple>
-</else>
+
