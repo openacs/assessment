@@ -39,7 +39,7 @@
 	    @items.html;noquote@
 	  </elseif>
 	  <else>
-	    <formwidget id="response_to_item.@items.as_item_id@" />
+	    <formwidget id="response_to_item.@items.as_item_id@">
 	  </else>
 	  <if @items.subtext@ not nil>
 	    <div class="form-help-text">
