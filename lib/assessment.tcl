@@ -484,7 +484,6 @@ ad_form -extend -name show_item_form -on_request {
 if {$display(submit_answer_p) != "t"} {
     # process multiple submit
     set template "/packages/assessment/www/assessment-section-submit"
-    template::head::add_css -href "/resources/assessment/crbForms.css"
 
     set on_submit "{
 	db_transaction {
