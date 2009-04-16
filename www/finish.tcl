@@ -37,9 +37,10 @@ if {$assessment_data(exit_page) eq ""} {
 set page_title "[_ assessment.Response_Submitted]"
 set context [list $page_title]
 
-callback imsld::finish_object -object_id $assessment_id 
+# Raise finish_object event
+ns_log Debug "Assessment (www/finish): callback imsld::finish_object called with object_id($assessment_id), user_id($user_id), session_id($session_id)"
 
-
+callback imsld::finish_object -object_id $assessment_id -user_id $user_id -session_id $session_id
 
 if { [exists_and_not_null next_asm ] } {
     ad_returnredirect "assessment?assessment_id=$next_asm"
