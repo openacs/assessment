@@ -26,7 +26,10 @@ if { ![string eq $user_id 0]} {
 set page_title "[_ assessment.Response_Submitted]"
 set context [list $page_title]
 
-callback imsld::finish_object -object_id $assessment_id 
+# Raise finish_object event
+ns_log Debug "Assessment (lib/finish): callback imsld::finish_object called with object_id($assessment_id), user_id($user_id), session_id($session_id)"
+
+callback imsld::finish_object -object_id $assessment_id -user_id $user_id -session_id $session_id
 
 
 
