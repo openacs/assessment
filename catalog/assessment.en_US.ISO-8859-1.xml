@@ -392,6 +392,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="lt_Everyone_eligible_to_">Everyone eligible to take this assessment</msg>
   <msg key="lt_Everyone_who_has_alre">Everyone who has already completed this assessment</msg>
   <msg key="lt_Everyone_who_has_not_">Everyone who has not yet completed this assessment</msg>
+  <msg key="lt_Insert_new_question_h">Insert a new question</msg>
   <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
   <msg key="lt_Responses_for_assessm">Responses for: %assessment_data.html_title;noquote%</msg>
   <msg key="lt_Responses_of_user_per">Responses of user: %person_name%</msg>

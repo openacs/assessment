@@ -378,9 +378,11 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Long_Answer">Respuesta de texto largo</msg>
   <msg key="lt_bNoteb_This_assessmen">&lt;b&gt;Nota:&lt;/b&gt; Se trata de un cuestionario anónimo por lo que su nombre no aparecerá en los resultados.</msg>
   <msg key="lt_default_exit_page">¡Enhorabuena, ha terminado! Siga el enlace para revisar sus respuestas.</msg>
+  <msg key="lt_default_exit_page_anonymous_user">Enhorabuena, ha terminado</msg>
   <msg key="lt_Everyone_eligible_to_">Alguien que hace este cuestionario</msg>
   <msg key="lt_Everyone_who_has_alre">Alguien que ya haya completado este cuestionario</msg>
   <msg key="lt_Everyone_who_has_not_">Alguien que todavía no ha completado este cuestionario</msg>
+  <msg key="lt_Insert_new_question_h">Insertar una nueva pregunta</msg>
   <msg key="lt_Prepend_an_empty_item">Añadir un elemento vacío al principio de la lista</msg>
   <msg key="lt_Responses_for_assessm">Respuestas para: %assessment_data.html_title%</msg>
   <msg key="lt_Responses_of_user_per">Respuestas para: %person_name%</msg>
