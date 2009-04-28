@@ -41,27 +41,37 @@ set end_date_sql ""
 
 ad_form -name assessment_results -action results-users -form {
     {assessment_id:key}
-    {start_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_Start_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_Start_Time_help]"}}
-    {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_End_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_End_Time_help]"}}
+    {start_time:date,to_sql(sql_date),to_html(display_date),optional 
+        {label "[_ assessment.csv_Start_Time]"} 
+        {format $form_format} 
+        {help} 
+        {help_text "[_ assessment.csv_Start_Time_help]"}
+    }
+    {end_time:date,to_sql(sql_date),to_html(display_date),optional 
+        {label "[_ assessment.csv_End_Time]"} 
+        {format $form_format} 
+        {help} 
+        {help_text "[_ assessment.csv_End_Time_help]"}
+    }
 } -edit_request {
 } -on_submit {
     if {$start_time == "NULL"} {
-	set start_time ""
+        set start_time ""
     }
     if {$end_time == "NULL"} {
-	set end_time ""
+        set end_time ""
     }
     if {[db_type] == "postgresql"} {
-	regsub -all -- {to_date} $start_time {to_timestamp} start_time
-	regsub -all -- {to_date} $end_time {to_timestamp} end_time
+        regsub -all -- {to_date} $start_time {to_timestamp} start_time
+        regsub -all -- {to_date} $end_time {to_timestamp} end_time
     }
 
     
     if {![empty_string_p $start_time]} {
-	set start_date_sql [db_map restrict_start_date]
+        set start_date_sql [db_map restrict_start_date]
     }
     if {![empty_string_p $end_time]} {
-	set end_date_sql [db_map restrict_end_date]
+        set end_date_sql [db_map restrict_end_date]
     }
 }
 
@@ -82,42 +92,53 @@ template::list::create \
     -multirow results \
     -key session_id \
     -elements {
-	session_id {
-	    label {[_ assessment.View_Results]}
-	    display_template {<if @results.session_id@ not nil><a href="@results.result_url@">View</a></if><else></else>}
-	}
-	subject_name {
-	    label {[_ assessment.Name]}
-	}
-        status {
-            label {\#assessment.Status\#}
+        session_id {
+            label {[_ assessment.View_Results]}
+            display_template {
+                <if @results.session_id@ not nil>
+                  <a href="@results.result_url@">View</a>
+                </if>
+            }
         }
-	completed_datetime {
-	    label {[_ assessment.Finish_Time]}
-	    html {style white-space:nowrap}
-	}
-	percent_score {
-	    label {[_ assessment.Percent_Score]}
-	    html {align right style white-space:nowrap}
-        display_template {<if @results.result_url@ not nil><a href="@results.result_url@">@results.percent@<if @results.percent@ not nil>%</if></a></if><else></else>}
-	}
+        subject_name {
+            label {[_ assessment.Name]}
+        }
+        status {
+            label {[_ assessment.Status]}
+        }
+        completed_datetime {
+            label {[_ assessment.Finish_Time]}
+            html {style white-space:nowrap}
+        }
+        percent_score {
+            label {[_ assessment.Percent_Score]}
+            html {align right style "white-space:nowrap;"}
+            display_template {
+                <if @results.result_url@ not nil>
+                  <a href="@results.result_url@">
+                    @results.percent@
+                    <if @results.percent@ not nil>%</if>
+                  </a>
+                </if>
+            }
+        }
     } -filters {
-	assessment_id {
-	    where_clause {
-		a.item_id = :assessment_id
-	    }
-	}
-	subject_id {
-	    where_clause {
-		cs.subject_id = :subject_id
-	    }
-	}
-	status {
-	    values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
-	    where_clause {
-            $whereclause
-	    }
-	}
+        assessment_id {
+            where_clause {
+                a.item_id = :assessment_id
+            }
+        }
+        subject_id {
+            where_clause {
+                cs.subject_id = :subject_id
+            }
+        }
+        status {
+            values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
+            where_clause {
+                $whereclause
+            }
+        }
     } -bulk_actions {"#assessment.Send_Email#" send-mail "#assessment.Send_an_email_to_the_selected users#"} \
     -bulk_action_export_vars {assessment_id}
 
@@ -125,16 +146,19 @@ template::list::create \
 template::multirow create subjects subject_id subject_url subject_name
 
 db_multirow -extend { result_url subject_url status delete_url session_score assessment_score percent } results assessment_results {} {
+
     # to display list of users who answered the assessment if anonymous
     template::multirow append subjects $subject_id [acs_community_member_url -user_id $subject_id] $subject_name
 
     if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
-	set subject_name "[_ assessment.anonymous_name]"
-	set subject_url "" 
+        set subject_name "[_ assessment.anonymous_name]"
+        set subject_url "" 
     } else {
-	set subject_url [acs_community_member_url -user_id $subject_id]
+        set subject_url [acs_community_member_url -user_id $subject_id]
     }
+
     set result_url [export_vars -base "results-session" {session_id}]
+
     if { $completed_datetime eq "" && $session_id eq "" } {
         set status [_ assessment.Not_Taken]
     } elseif { $completed_datetime eq "" && $session_id ne "" } {
@@ -151,25 +175,28 @@ db_multirow -extend { result_url subject_url status delete_url session_score ass
             set percent ""
         }
 
-
     }
+
     set delete_url [export_vars -base session-delete {assessment_id subject_id session_id}]
 }
 
 template::multirow sort subjects subject_name
-if {$assessment_data(anonymous_p) == "t"} {
+
+if { $assessment_data(anonymous_p) eq "t" } {
     template::list::create \
-	-name subjects \
-	-multirow subjects \
-	-key subject_id \
-	-elements {
-	    subject_name {
-		label {[_ assessment.Subject_Name]}
-		display_template {<a href="@subjects.subject_url@">@subjects.subject_name@</a>}
-	    }
-	} -main_class {
-	    narrow
-	} 
+        -name subjects \
+        -multirow subjects \
+        -key subject_id \
+        -elements {
+            subject_name {
+                label {[_ assessment.Subject_Name]}
+                display_template {
+                    <a href="@subjects.subject_url@">@subjects.subject_name@</a>
+                }
+            }
+        } -main_class {
+            narrow
+        } 
 }
 
 set count_all_users [db_string q "select count(*) from users u
@@ -181,4 +208,5 @@ set count_all_users [db_string q "select count(*) from users u
                                       and privilege = 'read')" -default 0]                 
 set count_complete [template::multirow size subjects]
 set count_incomplete [expr {$count_all_users - $count_complete}]
+
 ad_return_template
