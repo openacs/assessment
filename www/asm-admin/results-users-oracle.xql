@@ -24,7 +24,8 @@
                       select 1 from acs_object_party_privilege_map
                       where object_id = :assessment_id
                       and party_id = u.user_id
-                      and privilege = 'read')) a
+                      and privilege = 'read')
+      and acs_group.member_p(u.user_id, :group_id, 't')) a
     left join (select as_sessions.*, cr.item_id
 	       from as_sessions, cr_revisions cr
 	       where session_id in (select max(session_id)
@@ -51,5 +52,6 @@
 
     order by lower(a.title), lower(a.last_name), lower(a.first_names)          
 	</querytext>
-</fullquery>
+  </fullquery>
+
 </queryset>
