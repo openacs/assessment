@@ -132,7 +132,7 @@ create table as_item_data (
                 on delete cascade,
 	-- This field stores the signed entered data
 	signed_data varchar(500),
-	points integer,
+	points float,
 	file_id integer
 		constraint as_item_data_file_id_fk
 		references cr_revisions(revision_id)
@@ -169,7 +169,7 @@ create table as_session_results (
                    constraint as_session_results_target_id_fk
                    references cr_revisions(revision_id)
                    on delete cascade,
-       points      integer
+       points      float
 );
 
 create index as_session_results_target_idx on as_session_results (target_id);
