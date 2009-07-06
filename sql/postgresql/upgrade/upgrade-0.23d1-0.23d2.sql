@@ -52,6 +52,6 @@ create trigger as_item_data_choices_upd_trg after update on as_item_data_choices
 update as_item_data set item_data_id=item_data_id;
 update as_item_data_choices set item_data_id = item_data_id;
 
-drop trigger as_item_data_choices_upd_trigger on as_item_data_choices;
-drop trigger as_item_data_upd_trigger on as_item_data;
+-- drop trigger as_item_data_choices_upd_trigger on as_item_data_choices;
+-- drop trigger as_item_data_upd_trigger on as_item_data;
 drop function as_item_data_choices_upd_trg();
