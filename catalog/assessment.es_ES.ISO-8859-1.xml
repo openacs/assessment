@@ -542,7 +542,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="Response_Submitted">Respuesta Enviada</msg>
   <msg key="Results">Resultados</msg>
   <msg key="Results_by_user">Resultados del cuestionario por usuario</msg>
-  <msg key="Results_change_display">(el %results.create_date% por &lt;a href=&quot;%results.user_url%&quot;&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
+  <msg key="Results_change_display">(el %results.creation_date% por &lt;a href=&quot;%results.user_url%&quot;&gt;%results.first_names% %results.last_name%&lt;/a&gt;)</msg>
   <msg key="Results_edit">Editar el resultado del cuestionario</msg>
   <msg key="Results_edit_Description">Cambiar explicación</msg>
   <msg key="Results_edit_Description_help">Introduzca su comentario para esta pregunta aquí</msg>

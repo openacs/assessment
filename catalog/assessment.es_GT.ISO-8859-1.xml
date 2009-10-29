@@ -444,7 +444,7 @@ Si incrementar vale false se obtendrá 100% si se seleccionan todas las respuesta
   <msg key="Response_Options">Opciones de la respuesta: </msg>
   <msg key="Response_Submitted">Respuesta Enviada</msg>
   <msg key="Results_by_user">Resultados del cuestionario por usuario</msg>
-  <msg key="Results_change_display">(el %results.date% por &amp;lt;a href=&amp;quot;%results.user_url%&amp;quot;&amp;gt;%results.first_names% %results.last_name%&amp;lt;/a&amp;gt;)</msg>
+  <msg key="Results_change_display">(el %results.creation_date% por &amp;lt;a href=&amp;quot;%results.user_url%&amp;quot;&amp;gt;%results.first_names% %results.last_name%&amp;lt;/a&amp;gt;)</msg>
   <msg key="Results_edit">Editar el resultado del cuestionario</msg>
   <msg key="Results_edit_Description">Cambiar explicación</msg>
   <msg key="return">Volver</msg>
