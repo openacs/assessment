@@ -180,4 +180,12 @@
       </querytext>
 </fullquery>
 
+<fullquery name="as::item_type_mc::render.get_content_value">
+    <querytext>
+      select title as content_filename
+      from cr_reivisons
+      where revision_id = :content_value
+    </querytext>
+</fullquery>
+
 </queryset>
