@@ -180,12 +180,15 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::item_type_mc::render.get_content_value">
+  <fullquery name="as::item_type_mc::render.get_content_value">
     <querytext>
-      select title as content_filename
-      from cr_reivisons
-      where revision_id = :content_value
+      select cr.title as content_filename,
+             cr.revision_id as content_rev_id,
+             cr.description as title,
+             ci.content_type
+      from cr_revisions cr join cr_items ci on (cr.item_id = ci.item_id)
+      where cr.revision_id = :content_value
     </querytext>
-</fullquery>
+  </fullquery>
 
 </queryset>
