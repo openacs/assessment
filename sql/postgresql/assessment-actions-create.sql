@@ -155,7 +155,7 @@ end;' language 'plpgsql';
 	
 
 create or replace function as_action__default_actions (integer,integer,integer)
-returns integer as '
+returns integer as $$
 declare 
 	new__context_id		alias for $1;
 	new__creation_user	alias for $2;
@@ -167,14 +167,14 @@ begin
 	
 	v_action_id := as_action__new (
 		null,
-		''Register User'',
-		''Register new users'',
-		''set password [ad_generate_random_string] 
+		'Register User',
+		'Register new users',
+		'set password [ad_generate_random_string] 
 db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
 set admin_user_id [as::actions::get_admin_user_id]
-set administration_name [db_string admin_name "select first_names || \'\' \'\' || last_name from 
+set administration_name [db_string admin_name "select first_names || '' '' || last_name from 
 persons where person_id = :admin_user_id"]
 set system_name [ad_system_name]
 set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
@@ -188,40 +188,40 @@ Password: $password
 (you may change your password after you log in)
 Thank you,
 $administration_name"
-ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"'',
+ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"',
 	new__package_id,
 	new__creation_user,
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''first_names'',''First Names of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''last_name'',''Last Name of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''email'',''Email of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''user_name'',''User name of the User'');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','first_names','First Names of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','last_name','Last Name of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','email','Email of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','user_name','User name of the User');
 
 v_action_id:= as_action__new (
 	null,
-	''Event Registration'',
-	''Register user to event'',
-	''set user_id [ad_conn user_id]
-events::registration::new -event_id $event_id -user_id $user_id'',
+	'Event Registration',
+	'Register user to event',
+	'set user_id [ad_conn user_id]
+events::registration::new -event_id $event_id -user_id $user_id',
 	new__package_id,
 	new__creation_user,
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''event_id'',''Event to add the user'', ''select event_id,event_id from acs_events'');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','event_id','Event to add the user', 'select event_id,event_id from acs_events');
 
 v_action_id:= as_action__new (
 	null,
-	''Add to Community'',
-	''Add user to a community'',
-	''set user_id [ad_conn user_id]
+	'Add to Community',
+	'Add user to a community',
+	'set user_id [ad_conn user_id]
 if { [exists_and_not_null subject_id] } {
 	set user_id $subject_id
 } 
@@ -242,14 +242,14 @@ if [catch {ns_sendmail $email $email_from $subject $message} errmsg] {
          ad_return_error \
         "Error sending mail" \
         "There was an error sending email to $email."
-}'',
+}',
 	new__package_id,
 	new__creation_user,
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''community_id'',''Community to add the user'', ''select pretty_name,community_id from dotlrn_communities where community_id in (select object_id from acs_permissions_all where grantee_id=:user_id)'');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities where community_id in (select object_id from acs_permissions_all where grantee_id=:user_id)');
 
 	return v_action_id;
-end;' language 'plpgsql';
+end; $$ language 'plpgsql';
