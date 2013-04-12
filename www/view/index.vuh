@@ -8,7 +8,7 @@ ad_page_contract {
 }
 
 # Get the paths
-set the_root [ns_info pageroot]
+set the_root $::acs::pageroot
 set package_id [ad_conn package_id]
 
 # Get the IDs
