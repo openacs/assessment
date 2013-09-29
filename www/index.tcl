@@ -67,6 +67,6 @@ db_multirow -extend { session } sessions answered_asssessments {} {
     set session [_ assessment.Sessions]
 }
 
-set admin_p [ad_permission_p $package_id create]
+set admin_p [permission::permission_p -object_id $package_id -privilege create]
 
 ad_return_template

@@ -106,7 +106,7 @@ if {$assessment_data(survey_p) == "t"} {
 
 
 #if the user is admin he will display all sessions from all subjects
-if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
+if {[permission::permission_p -object_id [acs_magic_object "security_context_root"] -privilege "admin"]} {
     set query "sessions_of_assessment_of_subject"
 } else {
     set query "sessions_of_assessment"

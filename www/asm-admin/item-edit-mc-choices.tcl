@@ -46,7 +46,7 @@ set ad_form_code "-form \{\n"
 set count_correct 0
 set choices [db_list_of_lists get_choices {}]
 foreach one_choice $choices {
-    util_unlist $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score fixed_position answer_value content_rev_id content_filename content_name
+    lassign $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score fixed_position answer_value content_rev_id content_filename content_name
     if {$correct_answer_p == "t"} {
 	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $title\"\} \{value \"<img src=/resources/assessment/correct.gif>\"\}\}\n"
     } else {
@@ -84,7 +84,7 @@ eval ad_form -extend -name item_edit_mc_choices $ad_form_code
 
 ad_form -extend -name item_edit_mc_choices -edit_request {
     foreach one_choice $choices {
-	util_unlist $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score fixed_position answer_value
+	lassign $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score fixed_position answer_value
 	set feedback($choice_id) $feedback_text
 	set percent($choice_id) $percent_score
 	set fixed_pos($choice_id) $fixed_position
@@ -96,7 +96,7 @@ ad_form -extend -name item_edit_mc_choices -edit_request {
 } -edit_data {
     db_transaction {
 	set max_file_size 10000000
-	# [ad_parameter MaxAttachmentSize]
+	# [parameter::get -parameter MaxAttachmentSize]
 	set pretty_max_size [util_commify_number $max_file_size]
 	set folder_id [as::assessment::folder_id -package_id $package_id]
 

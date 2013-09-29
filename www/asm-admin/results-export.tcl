@@ -80,7 +80,7 @@ ad_form -name assessment_export -action results-export -form {
 	set section_list [db_list_of_lists all_sections {}]
 
 	foreach one_section $section_list {
-	    util_unlist $one_section section_id section_item_id
+	    lassign $one_section section_id section_item_id
 	    set mc_item_list [list]
 	    db_foreach all_section_items {} {
 		lappend item_list $section_id $as_item_id

@@ -29,7 +29,7 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
-set admin_p [ad_permission_p $assessment_id admin]
+set admin_p [permission::permission_p -object_id $assessment_id -privilege admin]
 
 #if the user is admin he will display all sessions from all subjects
 if {$admin_p && [empty_string_p $subject_id]} {

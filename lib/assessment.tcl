@@ -342,7 +342,7 @@ set validate_list [list]
 set required_count 0
 
 foreach one_item $item_list {
-    util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id validate_block question_text
+    lassign $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id validate_block question_text
 
     foreach {check_expr check_message} [split $validate_block \n] {
 	regsub -all {%answer%} $check_expr \$response_to_item($as_item_id) check_expr

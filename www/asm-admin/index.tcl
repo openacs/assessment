@@ -43,7 +43,7 @@ if { $sw_admin_p && $advanced_options_p } {
     lappend actions [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]
 }
 
-if {[ad_permission_p [acs_magic_object "security_context_root"] "admin"]} {
+if {[permission::permission_p -object_id [acs_magic_object "security_context_root"] -privilege "admin"]} {
     # lappend actions "[_ assessment.Admin_catalog]" "catalog/" "[_ assessment.Admin_catalog]"
 }
 

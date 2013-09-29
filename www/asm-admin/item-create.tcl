@@ -14,8 +14,8 @@ ad_page_contract {
 set context [list "Create a new Item"]
 
 set package_id [ad_conn package_id]
-set user_id [ad_get_user_id]
-ad_require_permission $package_id admin
+set user_id [ad_conn user_id]
+permission::require_permission -object_id $package_id -privilege admin
 
 
 

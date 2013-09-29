@@ -31,7 +31,7 @@ ad_proc -public as::item_form::add_item_to_form  {
 	set item_data [as::item_type_$item(item_type)\::render -type_id $item(item_type_id) -session_id $session_id -section_id $section_id -as_item_id $item_id -default_value $default_value -show_feedback $show_feedback]
     }
 
-    util_unlist $item_data default_value data
+    lassign $item_data default_value data
 
     if {$item(item_type) eq "mc"} {
 	set item(allow_other_p) [as::item_type_mc::allow_other_p -item_type_id $item(item_type_id)]

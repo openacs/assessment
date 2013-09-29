@@ -104,7 +104,7 @@ ad_proc -public as::item_type_swcat::render {
     set tree_id [db_string get_tree_id "" -default ""]
     set categories [category_tree::get_tree -all $tree_id]
     foreach cat $categories {
-        foreach {category_id category_name deprecated_p level} $cat {break}
+        lassign $cat category_id category_name deprecated_p level
         lappend display_choices [list $category_name $category_id]
     }
     return [list $default $display_choices]

@@ -70,7 +70,7 @@ set count 0
 set validate_list [list]
 set count_correct [array exists correct]
 foreach one_choice $choices {
-    util_unlist $one_choice choice_title choice_id choice_correct_p
+    lassign $one_choice choice_title choice_id choice_correct_p
     incr count
     if {![info exists choice($choice_id)]} {
 	set choice($choice_id) $choice_title

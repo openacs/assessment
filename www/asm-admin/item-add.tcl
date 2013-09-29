@@ -261,7 +261,7 @@ ad_form -extend -name item-add -new_request {
 	    set file_mimetype [lindex $content 2]
 	    set n_bytes [file size $tmp_filename]
 	    set max_file_size 10000000
-	    # [ad_parameter MaxAttachmentSize]
+	    # [parameter::get -parameter MaxAttachmentSize]
 	    set pretty_max_size [util_commify_number $max_file_size]
 
 	    if { $n_bytes > $max_file_size && $max_file_size > 0 } {

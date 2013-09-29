@@ -310,7 +310,7 @@ ad_proc -public as::item_type_mc::render {
     if {![empty_string_p $session_id]} {
 	set count 0
 	foreach one_choice $display_choices {
-	    util_unlist $one_choice title choice_id
+	    lassign $one_choice title choice_id
 	    incr count
 	    db_dml save_order {}
 	}
@@ -617,7 +617,7 @@ ad_proc -private as::item_type_mc::add_existing_choices_to_edit_form {
     set correct_options [list [list "[_ assessment.yes]" t]]
     set i 0
     foreach c $existing_choices {
-        foreach {value id correct_p} $c {break}
+        lassign $c value id correct_p
         if {![string match "__new*" $id]} {
             if {$i > 0} {
                 ad_form -extend -name $form_id -form \

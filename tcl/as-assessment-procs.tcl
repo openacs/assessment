@@ -367,7 +367,7 @@ ad_proc as::assessment::sections {
     set count 0
     foreach one_section $all_sections {
 	incr count
-	util_unlist $one_section section_id title
+	lassign $one_section section_id title
 	lappend section_list $section_id
 	db_dml save_order {}
     }

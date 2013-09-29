@@ -41,7 +41,7 @@ ad_form -name section_preview_form -action section-preview -html {enctype multip
 multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html content as_item_type_id choice_orientation next_title
 
 foreach one_item $item_list {
-    util_unlist $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id
+    lassign $one_item as_item_id name title description subtext required_p max_time_to_complete content_rev_id content_filename content_type as_item_type_id
 
     set presentation_type [as::item_form::add_item_to_form -name section_preview_form -session_id "" -section_id $section_id -item_id $as_item_id -default_value "" -required_p $required_p]
 

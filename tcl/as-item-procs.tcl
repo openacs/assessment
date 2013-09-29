@@ -202,7 +202,7 @@ ad_proc -public as::item::copy {
 
 	set subtypes [db_list_of_lists item_subtypes {}]
 	foreach subtype $subtypes {
-	    util_unlist $subtype type_id type
+	    lassign $subtype type_id type
 	    set new_type_id [eval as::[string range $type 3 end]::copy -type_id $type_id]
 	    as::item_rels::new -item_rev_id $new_item_id -target_rev_id $new_type_id -type "[string range $type 0 end-2]rel"
 	}

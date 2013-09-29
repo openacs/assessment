@@ -17,8 +17,8 @@ ad_page_contract {
 set context [list "Create a new Item"]
 
 set package_id [ad_conn package_id]
-set user_id [ad_get_user_id]
-ad_require_permission $package_id admin
+set user_id [ad_conn user_id]
+permission::require_permission -object_id $package_id -privilege admin
 
 
 set item_title [db_string item_title {SELECT as_itemsx.title FROM as_itemsx WHERE as_itemsx.as_item_id=:as_item_id1}]
