@@ -102,7 +102,7 @@ Password: $password
 (you may change your password after you log in)
 Thank you,
 $administration_name"
-ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"'',
+acs_mail_lite::send -to_addr "$email" -from_addr "$admin_email" -subject "You have been added as a user to [ad_system_name] at [ad_url]" -body "$message"'',
 	new__context_id,
 	new__creation_user
 	);

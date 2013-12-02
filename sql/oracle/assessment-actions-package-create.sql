@@ -144,7 +144,7 @@ Password: $password
 (you may change your password after you log in)
 Thank you,
 $administration_name"
-ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"',
+acs_mail_lite::send -to_addr "$email" -from_addr "$admin_email" -subject "You have been added as a user to [ad_system_name] at [ad_url]" -body "$message"',
 	context_id	=>	context_id,
 	creation_user	=>	creation_user
 	);
@@ -196,7 +196,7 @@ set email_from [ad_parameter -package_id [ad_acs_kernel_id] SystemOwner]
 
 db_1row select_user_info { select email, first_names, last_name from registered_users where user_id = :user_id}
 
-if [catch {ns_sendmail $email $email_from $subject $message} errmsg] {
+if [catch {acs_mail_lite::send -to_addr $email -from_addr $email_from -subject $subject -body $message} errmsg] {
          ad_return_error \
         "Error sending mail" \
         "There was an error sending email to $email."

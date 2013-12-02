@@ -33,7 +33,7 @@ Password: $password
 
 Thank you,
 $administration_name"
-ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"');
+acs_mail_lite::send -to_addr "$email" -from_addr "$admin_email" -subject "You have been added as a user to [ad_system_name] at [ad_url]" -body "$message"');
 
 
 insert into as_action_params (parameter_id, action_id,type, varname, description) values (1,1,'n','first_names',
