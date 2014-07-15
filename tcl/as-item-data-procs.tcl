@@ -85,7 +85,7 @@ ad_proc -public as::item_data::new {
 
 	    set transaction_successful_p 1
 	} on_error {
-	    ns_log notice "as::item_data::new: Transaction Error: $errmsg"
+	    ns_log notice "as::item_data::new: Transaction Error: $errmsg\nFull info: $::errorInfo"
 	}
     }
 
