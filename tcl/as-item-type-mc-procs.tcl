@@ -750,7 +750,7 @@ ad_proc -private as::item_type_mc::form_widget {
     Get what form widget we used
 } {
     set display_type [db_string allow_other_p "select object_type from acs_objects, as_item_rels r1, as_item_rels r2, cr_items ci where r1.item_rev_id = ci.latest_revision and r1.item_rev_id=r2.item_rev_id and r1.target_rev_id=:type_id and r1.rel_type='as_item_type_rel' and r2.target_rev_id=object_id and r2.rel_type='as_item_display_rel'"]
-    set display_type [string range $display_type [expr {[string length $display_type] - 2}] end]
+    set display_type [string range $display_type [string length $display_type]-2 end]
 
     return [string map {rb radio cb checkbox sb selet} $display_type]
 }

@@ -44,7 +44,7 @@ if {([info exists item_id] && $item_id ne "")} {
     if {$count == 0} {
 	append check_list "0,"
     }
-    set check_list [string range $check_list 0 [expr {[string length $check_list] -2}]]
+    set check_list [string range $check_list 0 [string length $check_list]-2]
     append  check_list ")"
 } 
 

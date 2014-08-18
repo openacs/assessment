@@ -105,8 +105,8 @@ ad_proc -public as::item_data::get {
 } {
     if {$session_id eq ""} {
 	set last_sessions [db_list_of_lists last_sessions {}]
-	set session_id [lindex [lindex $last_sessions 0] 0]
-	set as_item_id [lindex [lindex $last_sessions 0] 1]
+	set session_id [lindex $last_sessions 0 0]
+	set as_item_id [lindex $last_sessions 0 1]
     }
 
     if {$session_id ne "" && [db_0or1row response {} -column_array response]} {

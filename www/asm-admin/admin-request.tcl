@@ -31,8 +31,8 @@ set context [list "[_ assessment.Request] [_ assessment.Administration]"]
 # set default values
 
 set d_state "f"
-set d_assessment [lindex [lindex $assessment_list 0] 1]
-set d_interval [lindex [lindex $intervals 0] 1]
+set d_assessment [lindex $assessment_list 0 1]
+set d_interval [lindex $intervals 0 1]
 set d_date ""
 set date_query ""
 set interval_query ""

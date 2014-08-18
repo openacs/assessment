@@ -100,7 +100,7 @@ ad_form -extend -name get_params -new_data {
     db_foreach get_params {} {
 	set param_$parameter_id [as::assessment::check::get_parameter_value -parameter_id $parameter_id -type $type -check_id $inter_item_check_id]
 	if { [set param_$parameter_id] eq ""} {
-	    set param_$parameter_id [lindex [lindex $choices 0] 1]
+	    set param_$parameter_id [lindex $choices 0 1]
 	}
 	
     }

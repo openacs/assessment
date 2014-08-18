@@ -260,7 +260,7 @@ ad_proc as::section::items {
 	    lappend sorted_items $fixed_position($position)
 	    array unset fixed_position $position
 	} elseif {[llength $open_positions] > 0} {
-	    lappend sorted_items [lindex [lindex $open_positions 0] 0]
+	    lappend sorted_items [lindex $open_positions 0 0]
 	    set open_positions [lreplace $open_positions 0 0]
 	}
     }

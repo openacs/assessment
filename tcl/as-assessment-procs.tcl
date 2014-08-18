@@ -592,8 +592,8 @@ ad_proc -private as::assessment::compare_numbers {a b} {
 
     Compares the first part of a pair of strings as numbers
 } {
-    set a0 [expr double([lindex [lindex $a 0] 0])]
-    set b0 [expr double([lindex [lindex $b 0] 0])]
+    set a0 [expr double([lindex $a 0 0])]
+    set b0 [expr double([lindex $b 0 0])]
     if {$a0 > $b0} {
 	return 1
     } elseif {$a0 == $b0} {
