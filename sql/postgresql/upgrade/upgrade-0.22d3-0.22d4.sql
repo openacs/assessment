@@ -99,11 +99,16 @@ drop function as_action__delete(integer);
 
 select define_function_args ('as_action__del','action_id');
 
-create or replace function as_action__del (integer)
-returns integer as '
-declare 
-        del__action_id     alias for $1;
-begin
+
+
+--
+-- procedure as_action__del/1
+--
+CREATE OR REPLACE FUNCTION as_action__del(
+   del__action_id integer
+) RETURNS integer AS $$
+DECLARE 
+BEGIN
         
                 
         delete from as_action_params where action_id=del__action_id;
@@ -113,7 +118,8 @@ begin
         PERFORM acs_object__delete (del__action_id);    
         return del__action_id;  
 
-end;' language 'plpgsql';       
+END;
+$$ LANGUAGE plpgsql;       
 
 alter table as_session_items drop constraint as_session_items_item_fk;
 alter table as_session_items drop constraint as_session_items_section_fk;

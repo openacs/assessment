@@ -20,7 +20,7 @@ db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
 set admin_user_id [as::actions::get_admin_user_id]
-set administration_name [db_string admin_name "select first_names || '' '' || last_name from 
+set administration_name [db_string admin_name "select first_names || ' ' || last_name from 
 persons where person_id = :admin_user_id"]
 set system_name [ad_system_name]
 set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
@@ -98,4 +98,4 @@ v_parameter_id:= nextval('as_action_params_parameter_id');
 insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities where community_id in (select object_id from acs_permissions_all where grantee_id=:user_id)');
 
 	return v_action_id;
-end; $$ language 'plpgsql';
+END; $$ language 'plpgsql';

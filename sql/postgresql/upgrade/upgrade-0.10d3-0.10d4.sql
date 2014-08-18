@@ -127,25 +127,33 @@ create table as_actions_log (
 
 create sequence as_actions_log_action_log_id;
 
-create or replace function as_inter_item_check__new (integer,boolean,integer,integer,varchar,varchar,varchar,boolean,integer,integer,integer)
-returns integer as '
-declare 
-	new__inter_item_check_id     alias for $1;
-        new__action_p                alias for $2;
-        new__section_id_from         alias for $3;
-        new__section_id_to           alias for $4;
-        new__check_sql               alias for $5;
-        new__name	  	     alias for $6;
-        new__description	     alias for $7;
-        new__postcheck_p	     alias for $8;
-        new__item_id                 alias for $9;
-	new__creation_user           alias for $10; 
-	new__context_id              alias for $11; 
+
+
+-- added
+select define_function_args('as_inter_item_check__new','inter_item_check_id,action_p,section_id_from,section_id_to,check_sql,name,description,postcheck_p,item_id,creation_user,context_id');
+
+--
+-- procedure as_inter_item_check__new/11
+--
+CREATE OR REPLACE FUNCTION as_inter_item_check__new(
+   new__inter_item_check_id integer,
+   new__action_p boolean,
+   new__section_id_from integer,
+   new__section_id_to integer,
+   new__check_sql varchar,
+   new__name varchar,
+   new__description varchar,
+   new__postcheck_p boolean,
+   new__item_id integer,
+   new__creation_user integer,
+   new__context_id integer
+) RETURNS integer AS $$
+DECLARE 
 	v_inter_item_check_id	     integer;
-begin
+BEGIN
 	v_inter_item_check_id := acs_object__new (
 		new__inter_item_check_id,
-		''as_inter_item_check'',
+		'as_inter_item_check',
 		now(),
 		new__creation_user,
 		null,
@@ -156,13 +164,22 @@ begin
         values (v_inter_item_check_id,new__action_p,new__section_id_from,new__section_id_to,new__check_sql,new__name,new__description,new__postcheck_p,new__item_id);
 
          return v_inter_item_check_id;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
-create or replace function as_inter_item_check__delete (integer)
-returns integer as '
-declare 
-	del__inter_item_check_id     alias for $1;
-begin
+
+
+-- added
+select define_function_args('as_inter_item_check__delete','inter_item_check_id');
+
+--
+-- procedure as_inter_item_check__delete/1
+--
+CREATE OR REPLACE FUNCTION as_inter_item_check__delete(
+   del__inter_item_check_id integer
+) RETURNS integer AS $$
+DECLARE 
+BEGIN
 	delete from as_actions_log where 
 	inter_item_check_id = del__inter_item_check_id;
 	
@@ -174,6 +191,7 @@ begin
         PERFORM acs_object__delete (del__inter_item_check_id);	
 	return del__inter_item_check_id;	
 
-end;' language 'plpgsql';	
+END;
+$$ LANGUAGE plpgsql;	
 	
 	
