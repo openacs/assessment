@@ -38,12 +38,12 @@ ad_form -name assessment_type -export {assessment_id permission_p} -form {
 	{value $type}
     }
 } -on_submit {
-    if { [exists_and_not_null assessment_id]} {
+    if { ([info exists assessment_id] && $assessment_id ne "")} {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     db_dml update_asm { update as_assessments set type=:type where assessment_id=:new_assessment_rev_id}
     ad_returnredirect [export_vars -base one-a {assessment_id}]
     } else {
-	if { ![empty_string_p $permission_p]} {
+	if { $permission_p ne ""} {
 	    ad_returnredirect [export_vars -base assessment-form {type assessment_id permission_p}]
 	} else {
 	    ad_returnredirect [export_vars -base assessment-form {type assessment_id}]

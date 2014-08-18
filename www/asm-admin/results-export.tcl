@@ -36,13 +36,13 @@ ad_form -name assessment_export -action results-export -form {
     {end_time:date,to_sql(sql_date),to_html(display_date),optional {label "[_ assessment.csv_End_Time]"} {format $form_format} {help} {help_text "[_ assessment.csv_End_Time_help]"}}
 } -edit_request {
 } -on_submit {
-    if {$start_time == "NULL"} {
+    if {$start_time eq "NULL"} {
 	set start_time ""
     }
-    if {$end_time == "NULL"} {
+    if {$end_time eq "NULL"} {
 	set end_time ""
     }
-    if {[db_type] == "postgresql"} {
+    if {[db_type] eq "postgresql"} {
 	regsub -all -- {to_date} $start_time {to_timestamp} start_time
 	regsub -all -- {to_date} $end_time {to_timestamp} end_time
     }
@@ -55,10 +55,10 @@ ad_form -name assessment_export -action results-export -form {
     
     set start_date_sql ""
     set end_date_sql ""
-    if {![empty_string_p $start_time]} {
+    if {$start_time ne ""} {
 	set start_date_sql [db_map restrict_start_date]
     }
-    if {![empty_string_p $end_time]} {
+    if {$end_time ne ""} {
 	set end_date_sql [db_map restrict_end_date]
     }
 
@@ -75,7 +75,7 @@ ad_form -name assessment_export -action results-export -form {
     }
 	
     set item_list [list]
-    if {![empty_string_p $session_list]} {
+    if {$session_list ne ""} {
 
 	set section_list [db_list_of_lists all_sections {}]
 
@@ -84,17 +84,17 @@ ad_form -name assessment_export -action results-export -form {
 	    set mc_item_list [list]
 	    db_foreach all_section_items {} {
 		lappend item_list $section_id $as_item_id
-		if {$column_format == "name"} {
+		if {$column_format eq "name"} {
 		    set csv_first_row($as_item_id) [as::assessment::quote_export -text "$as_item_id __ $field_name"]
 		} else {
-		    if {[empty_string_p $description]} {
+		    if {$description eq ""} {
 			set csv_first_row($as_item_id) [as::assessment::quote_export -text $title]
 		    } else {
 			set csv_first_row($as_item_id) [as::assessment::quote_export -text "$title / $description"]
 		    }
 		}
 		set item_type [string range $object_type end-1 end]
-		if {$item_type == "mc"} {
+		if {$item_type eq "mc"} {
 		    lappend mc_item_list $as_item_id		    
 		} else {
 		    array set results [as::item_type_$item_type\::results -as_item_item_id $as_item_item_id -section_item_id $section_item_id -data_type $data_type -sessions $session_list]
@@ -110,9 +110,9 @@ ad_form -name assessment_export -action results-export -form {
 	    }
 
 	    # Now get all MC items in one go
-	    if {![empty_string_p $mc_item_list]} {
+	    if {$mc_item_list ne ""} {
 		db_foreach mc_items {} {
-		    if {[empty_string_p $text_value]} {
+		    if {$text_value eq ""} {
 			if {[exists_and_not_null csv_${section_id}_${as_item_id}($session_id)]} {
 			    # append list of choices seperated with comma
 			    append csv_${section_id}_${as_item_id}($session_id) ",[as::assessment::quote_export -text $title]"

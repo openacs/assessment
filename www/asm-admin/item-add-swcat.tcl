@@ -49,7 +49,7 @@ ad_form -name item-add-swcat -export { assessment_id section_id after } -form {
     set display_type "sb"
 } -edit_data {
     db_transaction {
-	if {![db_0or1row item_type {}] || $object_type != "as_item_type_swcat"} {
+	if {![db_0or1row item_type {}] || $object_type ne "as_item_type_swcat"} {
 	    set as_item_type_id [as::item_type_sa::new \
                                      -tree_id $tree_id]
 	

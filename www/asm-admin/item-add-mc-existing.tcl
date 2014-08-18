@@ -45,7 +45,7 @@ ad_form -name item_add_mc_existing -action item-add-mc-existing -export { assess
     set mc_id ""
 } -edit_data {
     db_transaction {
-	if {![db_0or1row item_type {}] || $object_type != "as_item_type_mc"} {
+	if {![db_0or1row item_type {}] || $object_type ne "as_item_type_mc"} {
 	    if {![info exists object_type]} {
 		# first item type mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $mc_id -type as_item_type_rel

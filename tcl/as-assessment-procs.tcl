@@ -40,15 +40,15 @@ ad_proc -public as::assessment::new {
 
     New assessment to the database
 } {
-    if { ![exists_and_not_null package_id] } { set package_id [ad_conn package_id] }
+    if { (![info exists package_id] || $package_id eq "") } { set package_id [ad_conn package_id] }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
-    if { [empty_string_p $creator_id] } { set creator_id [ad_conn user_id]}
+    if { $creator_id eq "" } { set creator_id [ad_conn user_id]}
 
     # Insert as_assessment in the CR (and as_assessments table) getting the revision_id (as_assessment_id)
     db_transaction {
 	set assessment_item_id [db_nextval acs_object_id_seq]
-	if {[empty_string_p $name]} {
+	if {$name eq ""} {
 	    set name "ASS_$assessment_item_id"
 	}
 	set assessment_item_id [content::item::new \
@@ -251,14 +251,14 @@ ad_proc -public as::assessment::copy {
 
     Copies an assessment with all sections and items
 } {
-    if {[empty_string_p $folder_id]} {
+    if {$folder_id eq ""} {
 	set package_id [ad_conn package_id]
 	set folder_id [as::assessment::folder_id -package_id $package_id]
     }
 
     data -assessment_id $assessment_id
     array set a [array get assessment_data]
-    if {[empty_string_p $new_title]} {
+    if {$new_title eq ""} {
         append a(title) "[_ assessment.copy_appendix]"
     } else {
         set a(title) $new_title
@@ -266,7 +266,7 @@ ad_proc -public as::assessment::copy {
 
     db_transaction {
 	set new_assessment_id [db_nextval acs_object_id_seq]
-	if {[empty_string_p $name]} {
+	if {$name eq ""} {
 	    set name "ASS_$new_assessment_id"
 	}
 	set new_assessment_id [content::item::new -item_id $new_assessment_id -parent_id $folder_id -content_type {as_assessments} -name $name]
@@ -390,11 +390,11 @@ ad_proc -public as::assessment::calculate {
 
     db_1row sum_of_section_points {}
 
-    if {![exists_and_not_null section_max_points] || $section_max_points==0} {
+    if {(![info exists section_max_points] || $section_max_points eq "") || $section_max_points==0} {
 	set section_max_points 100
     }
 
-    set percent_score [expr round(100 * $section_points / $section_max_points)]
+    set percent_score [expr {round(100 * $section_points / $section_max_points)}]
     as::session_results::new -target_id $session_id -points $percent_score
     db_dml update_assessment_percent {}
 }
@@ -411,8 +411,8 @@ ad_proc -public as::assessment::check_session_conditions {
 } {
     db_1row assessment_data {}
     db_1row total_tries {}
-    if {![empty_string_p $wait_between_tries]} {
-	set wait_between_tries [expr 60 * $wait_between_tries]
+    if {$wait_between_tries ne ""} {
+	set wait_between_tries [expr {60 * $wait_between_tries}]
     }
     if {$total_tries > 0} {
 	db_1row cur_wait_time {}
@@ -421,21 +421,21 @@ ad_proc -public as::assessment::check_session_conditions {
     }
 
     set error_list ""
-    if {(![empty_string_p $start_time] && $start_time > $cur_time) || (![empty_string_p $end_time] && $end_time < $cur_time)} {
+    if {($start_time ne "" && $start_time > $cur_time) || ($end_time ne "" && $end_time < $cur_time)} {
 	append error_list "<li>[_ assessment.assessment_not_public]</li>"
     }
 
-    if {![empty_string_p $number_tries] && $number_tries > 0 && $number_tries <= $total_tries} {
+    if {$number_tries ne "" && $number_tries > 0 && $number_tries <= $total_tries} {
 	append error_list "<li>[_ assessment.assessment_too_many_tries]</li>"
     }
-    if {![empty_string_p $wait_between_tries] && $wait_between_tries > $cur_wait_time} {
-	set pretty_wait_time [pretty_time -seconds [expr $wait_between_tries - $cur_wait_time]]
+    if {$wait_between_tries ne "" && $wait_between_tries > $cur_wait_time} {
+	set pretty_wait_time [pretty_time -seconds [expr {$wait_between_tries - $cur_wait_time}]]
 	append error_list "<li>[_ assessment.assessment_wait_retry]</li>"
     }
-    if {![empty_string_p $as_password] && ![string equal $password $as_password]} {
+    if {$as_password ne "" && $password ne $as_password } {
 	append error_list "<li>[_ assessment.assessment_wrong_password]</li>"
     }
-    if {![empty_string_p $ip_mask]} {
+    if {$ip_mask ne ""} {
 	regsub -all {\.} "^$ip_mask" {\\.} ip_mask
 	regsub -all {\*} $ip_mask {.*} ip_mask
 	if {![regexp $ip_mask [ad_conn peeraddr]]} {
@@ -459,13 +459,13 @@ ad_proc as::assessment::pretty_time {
         return $seconds
     }
     set time ""
-    if {![empty_string_p $seconds]} {
+    if {$seconds ne ""} {
 	if {$hours_p} {
-	    set time_hour [expr $seconds / 3600]
-	    set seconds [expr $seconds - ($time_hour * 3600)]
+	    set time_hour [expr {$seconds / 3600}]
+	    set seconds [expr {$seconds - ($time_hour * 3600)}]
          } 
-            set time_min [expr $seconds / 60]
-            set time_sec [expr $seconds - ($time_min * 60)]
+            set time_min [expr {$seconds / 60}]
+            set time_sec [expr {$seconds - ($time_min * 60)}]
             set pad "00"
             if {$hours_p} {
                 append time "[string range $pad [string length $time_hour] end]$time_hour\:"
@@ -487,7 +487,7 @@ ad_proc as::assessment::pretty_time_hours_minutes {
         return $seconds
     }
     set time ""
-    if {![empty_string_p $seconds]} {
+    if {$seconds ne ""} {
 	set time_hour [expr {$seconds / 3600}]
 	set seconds [expr {$seconds - ($time_hour * 3600)}]
 	
@@ -523,8 +523,8 @@ ad_proc as::assessment::unique_name {
 
     Checks if a name string is unique or empty, excluding a given item
 } {
-    if {$new_p && ![empty_string_p $name]} {
-	if {[empty_string_p $item_id]} {
+    if {$new_p && $name ne ""} {
+	if {$item_id eq ""} {
 	    set count [db_string check_unique {}]
 	} else {
 	    set count [db_string check_unique_excluding_item {}]
@@ -562,10 +562,10 @@ ad_proc as::assessment::display_content {
 
     Returns a html snippet to display a content item (i.e. image)
 } {
-    if {[empty_string_p $content_id]} {
+    if {$content_id eq ""} {
 	return $title
     }
-    if {$content_type == "image"} {
+    if {$content_type eq "image"} {
 	return "<img src=\"view/$filename?revision_id=$content_id\" alt=\"$title\">"
     } else {
 	return "<a href=\"view/$filename?revision_id=$content_id\">$title</a>"

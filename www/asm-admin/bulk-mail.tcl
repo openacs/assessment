@@ -25,7 +25,7 @@ for {set i 0} {$i < [llength  $action_log_id]} {incr i} {
     append users_list "$subject_id,"
 }
 
-set users_list [string range $users_list 0 [expr [string length $users_list] -2]]
+set users_list [string range $users_list 0 [expr {[string length $users_list] -2}]]
 append users_list ")"
 
 set query "select email from cc_users where object_id in $users_list"

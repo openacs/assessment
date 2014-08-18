@@ -73,7 +73,7 @@ ad_proc -public as::item_type_fu::render {
 
     Render a File Upload Type
 } {
-    if {![empty_string_p $default_value]} {
+    if {$default_value ne ""} {
 	array set values $default_value
 	set default $values(text_answer)
     } else {
@@ -161,7 +161,7 @@ ad_proc -private as::item_type_fu::add_to_assessment {
     @creation-date 2006-10-25
 } {
 	if {![as::item::get_item_type_info -as_item_id $as_item_id] \
-                || $item_type_info(object_type) != "as_item_type_fu"} {
+                || $item_type_info(object_type) ne "as_item_type_fu"} {
 	    set as_item_type_id [as::item_type_fu::new -title $title ]
 	
 	    if {![info exists object_type]} {

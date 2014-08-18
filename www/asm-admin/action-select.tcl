@@ -120,7 +120,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     ad_returnredirect "${url}$return_url"
     
 } -after_submit {
-    if {  $action_perform == "m" } {
+    if {  $action_perform eq "m" } {
 	as::assessment::check::add_manual_check -assessment_id $assessment_rev_id -inter_item_check_id  $inter_item_check_id
     }
     

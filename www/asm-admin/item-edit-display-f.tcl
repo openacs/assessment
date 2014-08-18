@@ -41,7 +41,7 @@ ad_form -name item_edit_display_f -action item-edit-display-f -export { assessme
     {as_item_display_id:text(hidden)}
 } -edit_request {
     db_1row last_used_display_type {}
-    if {![empty_string_p $as_item_display_id]} {
+    if {$as_item_display_id ne ""} {
 	db_1row display_type_data {}
     } else {
 	# default data if display newly mapped

@@ -46,7 +46,7 @@ ad_form -name parameter_admin -form {
 } -edit_request {
     db_1row get_param_info {}
 } -new_data {
-    if { $type == "q" } {
+    if { $type eq "q" } {
 	
 	set user_id [ad_conn user_id]	
 	set count_query_record [db_list_of_lists get_records "$query" ]
@@ -61,7 +61,7 @@ ad_form -name parameter_admin -form {
     }
 } -edit_data {
 
-    if { $type == "q" } {
+    if { $type eq "q" } {
 	set user_id [ad_conn user_id]	
 	set count_query_record [db_list_of_lists get_records "$query" ]
 	

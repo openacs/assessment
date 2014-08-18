@@ -39,10 +39,10 @@ set section_id_from $section_id
 
 set as_item_id $item_id
 
-if {[exists_and_not_null edit_check]} {
+if {([info exists edit_check] && $edit_check ne "")} {
     set return_url "&check_id=$inter_item_check_id&edit_check=t"
 }
-if {[exists_and_not_null by_item_p]} {
+if {([info exists by_item_p] && $by_item_p ne "")} {
     if {$by_item_p==1} {
 	    append return_url "&item_id=$item_id&by_item_p=$by_item_p"
 	} else  {

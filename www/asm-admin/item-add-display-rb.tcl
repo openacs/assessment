@@ -48,7 +48,7 @@ if { $type == 1} {
                 -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_rb"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_rb"} {
 	    set as_item_display_id [as::item_display_rb::new \
 					-html_display_options $html_options \
 					-choice_orientation $choice_orientation \
@@ -136,7 +136,7 @@ ad_form -name item_add_display_rb -action item-add-display-rb -export { assessme
                 -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_rb"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_rb"} {
 	    set as_item_display_id [as::item_display_rb::new \
 					-html_display_options $html_options \
 					-choice_orientation $choice_orientation \

@@ -35,7 +35,7 @@ if {![info exists assessment_data(assessment_id)]} {
 set title $assessment_data(title)
 set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$assessment_id" $title] "$title Triggers"]
 
-if {![exists_and_not_null as_item_id] } {
+if {(![info exists as_item_id] || $as_item_id eq "") } {
     set condition_sql [db_string get_item_id {}] 
     #parse condition_sql to get item_id
     set cond_list  [split $condition_sql "="]
@@ -47,7 +47,7 @@ if {![exists_and_not_null as_item_id] } {
     set item_id $as_item_id
 }
 
-if {[exists_and_not_null section_id]} {
+if {([info exists section_id] && $section_id ne "")} {
     set section_id_from $section_id
 }
 
@@ -58,13 +58,13 @@ set as_item_type_id [db_string item_type_id {}]
 set choices [db_list_of_lists get_choices {} ] 
 set question_text [db_string get_question {}]
 
-if {[exists_and_not_null edit_check]} {
-    if { ![exists_and_not_null type]} {
+if {([info exists edit_check] && $edit_check ne "")} {
+    if { (![info exists type] || $type eq "")} {
     set return_url "&check_id=$inter_item_check_id&edit_check=t"
     } 
     
 }
-if {[exists_and_not_null by_item_p]} {
+if {([info exists by_item_p] && $by_item_p ne "")} {
     if {$by_item_p==1} {
 	    append return_url "&item_id=$item_id&by_item_p=$by_item_p"
 	} else  {
@@ -105,7 +105,7 @@ ad_form -name new_check -export {assessment_id return_url} -form {
 
 }
 
-if {![exists_and_not_null inter_item_check_id]} {
+if {(![info exists inter_item_check_id] || $inter_item_check_id eq "")} {
     ad_form -extend -name new_check -form {
 	{action_p:boolean(radio)
 	    {label "[_ assessment.parameter_type]"}

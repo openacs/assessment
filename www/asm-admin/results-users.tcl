@@ -58,27 +58,27 @@ ad_form -name assessment_results -action results-users -form {
     }
 } -edit_request {
 } -on_submit {
-    if {$start_time == "NULL"} {
+    if {$start_time eq "NULL"} {
         set start_time ""
     }
-    if {$end_time == "NULL"} {
+    if {$end_time eq "NULL"} {
         set end_time ""
     }
-    if {[db_type] == "postgresql"} {
+    if {[db_type] eq "postgresql"} {
         regsub -all -- {to_date} $start_time {to_timestamp} start_time
         regsub -all -- {to_date} $end_time {to_timestamp} end_time
     }
 
     
-    if {![empty_string_p $start_time]} {
+    if {$start_time ne ""} {
         set start_date_sql [db_map restrict_start_date]
     }
-    if {![empty_string_p $end_time]} {
+    if {$end_time ne ""} {
         set end_date_sql [db_map restrict_end_date]
     }
 }
 
-set status_p [exists_and_not_null status]
+set status_p ([info exists status] && $status ne "")
 if { $status_p } {
     if { $status eq "complete" } {
         set whereclause "cs.completed_datetime is not null"
@@ -176,7 +176,7 @@ db_multirow -extend { result_url subject_url status delete_url session_score ass
         set session_score [db_string get_session_score {} -default ""]
         set assessment_score [db_string get_max_points {}]
         if { $assessment_score > 0 } {
-            set percent [format "%3.2f" [expr double([expr double($session_score)*100] / [expr double($assessment_score)])]]
+            set percent [format "%3.2f" [expr double([expr {double($session_score)*100}] / [expr {double($assessment_score)}])]]
         } else {
             set percent ""
         }
@@ -188,7 +188,7 @@ db_multirow -extend { result_url subject_url status delete_url session_score ass
 
 template::multirow sort subjects subject_name
 
-if { $assessment_data(anonymous_p) eq "t" } {
+if { $assessment_data(anonymous_p) == "t" } {
     template::list::create \
         -name subjects \
         -multirow subjects \

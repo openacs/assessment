@@ -31,7 +31,7 @@ imination a query each time
     if {[array size values] == 0} {
         set value ""
     } else {
-	if {$item_type == "mc"} {
+	if {$item_type eq "mc"} {
 	    
             set choice_id $values(choice_answer)
             set value [db_string get_choice_value {

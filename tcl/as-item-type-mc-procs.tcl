@@ -159,15 +159,15 @@ ad_proc -public as::item_type_mc::render {
     set allow_other_p [as::item_type_mc::allow_other_p -item_type_id $type_id]
     
     set defaults ""
-    if {![empty_string_p $default_value]} {
+    if {$default_value ne ""} {
         array set values $default_value
 	set defaults $values(choice_answer)
         if {$allow_other_p} {
             set defaults [list $defaults $values(clob_answer)]
         }
     }
-    if {![empty_string_p $session_id]} {
-	if {[empty_string_p $show_feedback] || $show_feedback == "none"} {
+    if {$session_id ne ""} {
+	if {$show_feedback eq "" || $show_feedback eq "none"} {
 	    set choice_list ""
 	    db_foreach get_sorted_choices {} {
 		if {$content_value ne ""} {
@@ -186,12 +186,12 @@ ad_proc -public as::item_type_mc::render {
 		    set title [as::assessment::display_content -content_id $content_rev_id -filename $content_filename -content_type $content_type -title $title]
 		}
 		set pos [lsearch -exact $defaults $choice_id]
-		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+		if {$pos>-1 && $correct_answer_p == "t" && $show_feedback ne "incorrect"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
-		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+		} elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback ne "correct"} {
 		    lappend choice_list [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 		} else {		    
-		    if {[llength $defaults] && $correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		    if {[llength $defaults] && $correct_answer_p == "t" && $show_feedback ne "incorrect" && $show_feedback ne "correct"} {		    
 		        lappend choice_list [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		    } else {
 		        lappend choice_list [list $title $choice_id]
@@ -219,12 +219,12 @@ ad_proc -public as::item_type_mc::render {
 	}
 	if {$show_feedback ne "" && $show_feedback ne "none"} {
 		set pos [lsearch -exact $defaults $choice_id]
-	    if {$pos > -1 && $correct_answer_p == "t" && $show_feedback != "incorrect"} {
+	    if {$pos > -1 && $correct_answer_p == "t" && $show_feedback ne "incorrect"} {
 		lappend display_choices [list "$title <img src=/resources/assessment/correct.gif> <i>$feedback_text</i>" $choice_id]
-	    } elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback != "correct"} {
+	    } elseif {$pos>-1 && $correct_answer_p == "f" && $show_feedback ne "correct"} {
 		lappend display_choices [list "$title <img src=/resources/assessment/wrong.gif> <i>$feedback_text</i>" $choice_id]
 	    } else {		    
-		if {$correct_answer_p == "t" && $show_feedback != "incorrect" && $show_feedback != "correct"} {		    
+		if {$correct_answer_p == "t" && $show_feedback ne "incorrect" && $show_feedback ne "correct"} {		    
 		    lappend display_choices [list "$title <img src=/resources/assessment/correct.gif>" $choice_id]			
 		} else {
 		    lappend display_choices [list $title $choice_id]
@@ -238,12 +238,12 @@ ad_proc -public as::item_type_mc::render {
 	if {$selected_p == "t"} {
 	    lappend defaults $choice_id
 	}
-	if {![empty_string_p $fixed_position]} {
+	if {$fixed_position ne ""} {
 	    set fixed_pos($fixed_position) [list $title $choice_id]
-	    if {![empty_string_p $num_answers]} {
+	    if {$num_answers ne ""} {
 		incr num_answers -1
 	    }
-	    if {$correct_answer_p == "t" && ![empty_string_p $num_correct_answers]} {
+	    if {$correct_answer_p == "t" && $num_correct_answers ne ""} {
 		incr num_correct_answers -1
 	    }
 	} else {
@@ -256,20 +256,20 @@ ad_proc -public as::item_type_mc::render {
     }
 
     if {[array exists fixed_pos]} {
-	if {[empty_string_p $num_answers]} {
-	    set num_answers [expr [llength $correct_choices] + [llength $wrong_choices]]
+	if {$num_answers eq ""} {
+	    set num_answers [expr {[llength $correct_choices] + [llength $wrong_choices]}]
 	}
-	if {[empty_string_p $num_correct_answers]} {
+	if {$num_correct_answers eq ""} {
 	    set num_correct_answers [llength $correct_choices]
 	}
     }
 
-    if {![empty_string_p $num_answers] && $num_answers < $total} {
+    if {$num_answers ne "" && $num_answers < $total} {
 	# display fewer choices, select random
 	set correct_choices [util::randomize_list $correct_choices]
 	set wrong_choices [util::randomize_list $wrong_choices]
 
-	if {![empty_string_p $num_correct_answers] && $num_correct_answers > 0 && $num_correct_answers < [llength $correct_choices]} {
+	if {$num_correct_answers ne "" && $num_correct_answers > 0 && $num_correct_answers < [llength $correct_choices]} {
 	    # display fewer correct answers than there are
 	    set display_choices [lrange $correct_choices 1 $num_correct_answers]
 	} else {
@@ -283,7 +283,7 @@ ad_proc -public as::item_type_mc::render {
     }
     # now add fixed positions in result list
     if {[array exists fixed_pos]} {
-	set max_pos [expr $num_answers + [array size fixed_pos]]
+	set max_pos [expr {$num_answers + [array size fixed_pos]}]
 	set open_positions $display_choices
 	set display_choices [list]
 
@@ -307,7 +307,7 @@ ad_proc -public as::item_type_mc::render {
     }
 
     # save choice order
-    if {![empty_string_p $session_id]} {
+    if {$session_id ne ""} {
 	set count 0
 	foreach one_choice $display_choices {
 	    lassign $one_choice title choice_id
@@ -421,7 +421,7 @@ ad_proc -public as::item_type_mc::results {
 } {
     
     db_foreach get_results {} {
-	if {[empty_string_p $text_value]} {
+	if {$text_value eq ""} {
 	    lappend results($session_id) [as::assessment::quote_export -text $title]
 	} else {
 	    lappend results($session_id) [as::assessment::quote_export -text $text_value]
@@ -518,13 +518,13 @@ ad_proc -private as::item_type_mc::add_to_assessment {
         }
     }
     foreach c [array names correct] {
-        if {$correct($c) eq "t"} {
+        if {$correct($c) == "t"} {
             incr num_correct_answers 
         }
     }
     
     if {![as::item::get_item_type_info -as_item_id $as_item_id] \
-            || $item_type_info(object_type) != "as_item_type_mc"} {
+            || $item_type_info(object_type) ne "as_item_type_mc"} {
 	# always set mc title to empty on new mc question
 	# we ask for a title for the mc answer set seperately if
 	# required
@@ -559,7 +559,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
 
     set count 0
     foreach i [lsort -integer [array names choice]] {
-        if {![empty_string_p $choice($i)]} {
+        if {$choice($i) ne ""} {
             incr count
             set choice_id [as::item_choice::new -mc_id $mc_id \
                                -title $choice($i) \

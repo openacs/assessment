@@ -18,7 +18,7 @@ set context [list "[_ assessment.Show_Sessions]"]
 
 set package_id [ad_conn package_id]
 
-if {[empty_string_p $subject_id]} {
+if {$subject_id eq ""} {
     set subject_id [ad_conn user_id]
 }
 

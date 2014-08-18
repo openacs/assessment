@@ -42,7 +42,7 @@ set state_query ""
 if {![acs_user::site_wide_admin_p -user_id [ad_conn user_id]]} {
     set permission "and c.assessment_id in (select object_id from acs_permissions where grantee_id=:party_id and privilege='admin')"
 }
-if {[exists_and_not_null assessment] && $assessment!="all"} {
+if {([info exists assessment] && $assessment ne "") && $assessment!="all"} {
     permission::require_permission -object_id $assessment -privilege admin
     
     as::assessment::data -assessment_id $assessment
@@ -59,24 +59,24 @@ if {[exists_and_not_null assessment] && $assessment!="all"} {
     and ci.parent_id = cf.folder_id and cf.package_id = :package_id)"
 }
 
-if {[exists_and_not_null state]} {
+if {([info exists state] && $state ne "")} {
     set d_state $state 
     
 } 
 
-if {[exists_and_not_null interval] && $interval!="all"} {
+if {([info exists interval] && $interval ne "") && $interval!="all"} {
     set d_interval $interval
     set interval_query "and to_date(al.date_requested,'YYYY-MM-DD') >= to_date('$interval','YYYY-MM-DD')"
     set date_query ""
 }
 
-if {[exists_and_not_null date]} {
+if {([info exists date] && $date ne "")} {
     set d_date $date
     set date_query "and to_date(al.date_requested,'YYYY-MM-DD') = to_date('$date','YYYY-MM-DD')"
     set interval_query ""
 }
 
-if { $d_state == "ae"} {
+if { $d_state eq "ae"} {
     set state_query "and al.failed_p= 'f' and al.approved_p='t'"
 } elseif {$d_state =="f"} {
     set state_query "and al.approved_p='f'"

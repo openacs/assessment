@@ -103,13 +103,13 @@ ad_proc -public as::item_data::get {
 
     Get as_item_data from the database
 } {
-    if {[empty_string_p $session_id]} {
+    if {$session_id eq ""} {
 	set last_sessions [db_list_of_lists last_sessions {}]
 	set session_id [lindex [lindex $last_sessions 0] 0]
 	set as_item_id [lindex [lindex $last_sessions 0] 1]
     }
 
-    if {![empty_string_p $session_id] && [db_0or1row response {} -column_array response]} {
+    if {$session_id ne "" && [db_0or1row response {} -column_array response]} {
 	# response found in session
 	set item_data_id $response(item_data_id)
 	set response(choice_answer) [db_list mc_response {}]

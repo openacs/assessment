@@ -105,10 +105,10 @@ ad_proc -public as::item_display_ta::render {
     Render an Item Display TextArea Type
 } {
     array set type [util_memoize [list as::item_display_ta::data -type_id $type_id]]
-    if {[empty_string_p $required_p]} {
+    if {$required_p eq ""} {
 	set required_p f
     }
-    if {[empty_string_p $datatype]} {
+    if {$datatype eq ""} {
 	set datatype text
     }
 
@@ -120,7 +120,7 @@ ad_proc -public as::item_display_ta::render {
 	set optional ",optional"
     }
     set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list html \$type(html_display_options)]]
-    if {![empty_string_p $type(abs_size)]} {
+    if {$type(abs_size) ne ""} {
 	lappend param_list [list maxlength $type(abs_size)]
     }
     set element_params [concat [list "$element\:$datatype\(textarea),nospell$optional"] $param_list]
@@ -171,7 +171,7 @@ ad_proc -private as::item_display_ta::set_item_display_type {
 	db_dml update_section_in_assessment {}
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_ta"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_ta"} {
 	    set as_item_display_id [as::item_display_ta::new \
 					-html_display_options $html_options \
 					-abs_size $abs_size \

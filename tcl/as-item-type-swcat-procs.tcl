@@ -94,7 +94,7 @@ ad_proc -public as::item_type_swcat::render {
 
     Render a SW Category Type
 } {
-    if {![empty_string_p $default_value]} {
+    if {$default_value ne ""} {
 	array set values $default_value
 	set default $values(text_answer)
     } else {

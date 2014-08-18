@@ -65,7 +65,7 @@ ad_form -name catalog_section_add -action catalog-section-add -export { section_
 
 
 db_multirow sections sections {} {
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
 	set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]

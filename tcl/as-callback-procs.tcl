@@ -20,7 +20,7 @@ ad_proc -public -callback imsld::import -impl qti {} {
 } {
 	if {$res_type == "imsqti_xmlv1p0" || $res_type == "imsqti_xmlv1p1" || $res_type =="imsqti_item_xmlv2p0"} {
             set extension [string tolower [file extension $tmp_dir/$res_href]]
-            if {$extension == ".xml"} {
+            if {$extension eq ".xml"} {
                 return [as::qti::register_xml_object_id \
                             -xml_file $tmp_dir/$res_href \
                             -community_id $community_id \

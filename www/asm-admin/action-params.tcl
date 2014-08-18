@@ -36,7 +36,7 @@ set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$
 
 set new_assessment_revision $assessment_data(assessment_rev_id)
 
-if {[exists_and_not_null by_item_p]} {
+if {([info exists by_item_p] && $by_item_p ne "")} {
     set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
     
     if {$by_item_p == 1} {
@@ -68,8 +68,8 @@ ad_form -name get_params -export { assessment_id section_id action_perform by_it
 } 
 db_foreach get_params {} {
     set choices [list]
-    if { $type == "n" } {
-	if { $action_perform == "aa" || $action_perform == "m" || $action_perform == "or" || $action_perform == "sa"} {
+    if { $type eq "n" } {
+	if { $action_perform eq "aa" || $action_perform eq "m" || $action_perform eq "or" || $action_perform eq "sa"} {
 	    set choices [db_list_of_lists choices {}]
 	} else {
 	    set choices [db_list_of_lists prev_choices {}]
@@ -84,7 +84,7 @@ db_foreach get_params {} {
 ad_form -extend -name get_params -new_data {
     db_foreach get_params {} {
 	
-	if { $type == "n"} {
+	if { $type eq "n"} {
 	    set item_id [set param_$parameter_id]
 	    db_dml param_values_n {}
 	} else {
@@ -99,7 +99,7 @@ ad_form -extend -name get_params -new_data {
     set action_id $action_id
     db_foreach get_params {} {
 	set param_$parameter_id [as::assessment::check::get_parameter_value -parameter_id $parameter_id -type $type -check_id $inter_item_check_id]
-	if { [set param_$parameter_id] == ""} {
+	if { [set param_$parameter_id] eq ""} {
 	    set param_$parameter_id [lindex [lindex $choices 0] 1]
 	}
 	

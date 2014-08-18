@@ -52,7 +52,7 @@ if {$type > 1} {
     }
 }
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+if {[category_tree::get_mapped_trees $package_id] ne ""} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $_section_id -form_name section_form
 }
 
@@ -95,10 +95,10 @@ ad_form -extend -name section_form -new_request {
 				-max_time_to_complete $max_time_to_complete]
 
 	db_dml move_down_sections {}
-	set sort_order [expr $after + 1]
+	set sort_order [expr {$after + 1}]
 	db_dml add_section_to_assessment {}
 
-	if {[exists_and_not_null category_ids]} {
+	if {([info exists category_ids] && $category_ids ne "")} {
 	    category::map_object -object_id $new_section_id $category_ids
 	}
     }
@@ -119,7 +119,7 @@ ad_form -extend -name section_form -new_request {
 
 	db_dml update_section_of_assessment {}
 
-	if {[exists_and_not_null category_ids]} {
+	if {([info exists category_ids] && $category_ids ne "")} {
 	    category::map_object -object_id $new_section_id $category_ids
 	}
     }

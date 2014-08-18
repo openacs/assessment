@@ -27,18 +27,18 @@ ad_proc -public as::item::new {
 
     New item to the database
 } {
-    if { ![exists_and_not_null package_id] } {
+    if { (![info exists package_id] || $package_id eq "") } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     # Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     db_transaction {
-	if {[empty_string_p $item_item_id]} {
+	if {$item_item_id eq ""} {
 	    set item_item_id [db_nextval acs_object_id_seq]
 	}
 	set name "QUE_$item_item_id"
-	if {[empty_string_p $field_name]} {
+	if {$field_name eq ""} {
 	    set field_name $name
 	}
         set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -creation_user [ad_conn user_id] -creation_ip [ad_conn peeraddr] -storage_type text]
@@ -147,7 +147,7 @@ ad_proc -public as::item::latest {
 
     Returns the latest revision of an item
 } {
-    if {![db_0or1row get_latest_item_id {}] && ![empty_string_p $default]} {
+    if {![db_0or1row get_latest_item_id {}] && $default ne ""} {
 	return $default
     }
     return $as_item_id
@@ -166,7 +166,7 @@ ad_proc -public as::item::copy {
     Copies an item in the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-    if { ![exists_and_not_null package_id] } {
+    if { (![info exists package_id] || $package_id eq "") } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -176,7 +176,7 @@ ad_proc -public as::item::copy {
 
 	set item_item_id [db_nextval acs_object_id_seq]
 	set name "QUE_$item_item_id"
-	if {[empty_string_p $field_name]} {
+	if {$field_name eq ""} {
 	    set field_name $name
 	}
 

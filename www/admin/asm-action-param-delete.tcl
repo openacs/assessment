@@ -22,7 +22,7 @@ ad_form -name parameter_delete -form {
     {submit:text(submit) {label "delete"}}
     {back:text(submit) {label "back"}}
 }  -on_submit {
-    if { $back == "back" } {
+    if { $back eq "back" } {
 	ad_returnredirect "asm-action-new?action_id=$action_id"
     } else {
 

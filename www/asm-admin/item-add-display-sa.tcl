@@ -57,7 +57,7 @@ ad_form -name item_add_display_sa -action item-add-display-sa -export { assessme
                 -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_sa"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_sa"} {
 	    set as_item_display_id [as::item_display_sa::new \
 					-html_display_options $html_options \
 					-abs_size $abs_size \

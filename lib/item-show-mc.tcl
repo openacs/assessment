@@ -39,7 +39,7 @@ foreach one_choice $choices {
 	append ad_form_code "\{infotxt.$choice_id:text(inform) \{label \"[_ assessment.Choice] $count\"\} \{value \"<img src=/resources/assessment/wrong.gif> $title$options\"\}\}\n"
     }
 
-    if {![empty_string_p $content_rev_id]} {
+    if {$content_rev_id ne ""} {
 	append ad_form_code "\{content.$choice_id:text(inform),optional \{label \"[_ assessment.choice_display_Content]\"\} \{value \{<a href=\"../view/$content_filename?revision_id=$content_rev_id\" target=view>$content_name</a>\}\} \{help_text \"[_ assessment.choice_Content_help]\"\}\}\n"
     }
 

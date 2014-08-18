@@ -61,7 +61,7 @@ ad_form -extend -name item_add_sa -form {
     set display_type "tb"
 } -edit_data {
     db_transaction {
-	if {![db_0or1row item_type {}] || $object_type != "as_item_type_sa"} {
+	if {![db_0or1row item_type {}] || $object_type ne "as_item_type_sa"} {
 	    set as_item_type_id [as::item_type_sa::new \
 				     -title $title \
 				     -increasing_p $increasing_p \

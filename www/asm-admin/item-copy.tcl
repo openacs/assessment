@@ -42,7 +42,7 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
 } -edit_request {
     db_1row item_data {}
 } -on_submit {
-    if {[exists_and_not_null submit_ok]} {
+    if {([info exists submit_ok] && $submit_ok ne "")} {
 	db_transaction {
 	    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]

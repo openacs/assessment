@@ -110,7 +110,7 @@ ad_proc -public as::item_display_rb::render {
 
     Render an Item Display RadioButton Type
 } {
-    if {[empty_string_p $required_p]} {
+    if {$required_p eq ""} {
 	set required_p f
     }
 
@@ -195,7 +195,7 @@ ad_proc as::item_display_rb::set_item_display_type {
 	db_dml update_section_in_assessment {}
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_rb"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_rb"} {
 	    set as_item_display_id [as::item_display_rb::new \
 					-html_display_options $html_options \
 					-choice_orientation $choice_orientation \

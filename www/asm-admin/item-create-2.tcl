@@ -46,7 +46,7 @@ element set_properties item-add-2 item_type -value $item_type
 
 #as_items.definition isn't mandatory, then this field can't be filled. If this field is filled we show its value.
 set null ""
-if {[string compare $item_definition $null] != 0} {
+if {$item_definition ne $null } {
     element create item-add-2 as_items__definition -label "Description" -datatype text -widget inform        
     element set_properties item-add-2 as_items__definition -value $item_definition
 }     

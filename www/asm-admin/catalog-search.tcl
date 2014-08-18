@@ -46,7 +46,7 @@ ad_form -name catalog_search -action catalog-search -export { section_id after }
     {assessment_id:key}
 }
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+if {[category_tree::get_mapped_trees $package_id] ne ""} {
     category::ad_form::add_widgets -container_object_id $package_id -form_name catalog_search
 
     ad_form -extend -name catalog_search -form {

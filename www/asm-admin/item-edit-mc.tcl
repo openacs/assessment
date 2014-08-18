@@ -27,7 +27,7 @@ if {![info exists assessment_data(assessment_id)]} {
     ad_script_abort
 }
 
-if {[template::form get_action item_show_mc] == "existing"} {
+if {[template::form get_action item_show_mc] eq "existing"} {
     ad_returnredirect [export_vars -base item-edit-mc-existing {assessment_id section_id as_item_id}]
     ad_script_abort
 }

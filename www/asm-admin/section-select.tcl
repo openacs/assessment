@@ -27,7 +27,7 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set return_url "one-a?assessment_id=$assessment_id"
 
-if { [exists_and_not_null  by_item_p] } {
+if { ([info exists by_item_p] && $by_item_p ne "") } {
     if { $by_item_p == 1} {
 	set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id&item_id=$item_id"
     } else {
