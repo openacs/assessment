@@ -13,7 +13,7 @@
     quizz, complex survey, poll and other data collection packages
     that OpenACS currently supports.</summary>
         <release-date>2007-06-15</release-date>
-        <vendor url="http://www.e-lane.org/">E-LANE</vendor>
+        <vendor url="http://dotlrn.org">DotLRN Consortium</vendor>
         <description format="text/plain">Create assessments and evaluate.</description>
         <maturity>0</maturity>
         <package_instance_name>#assessment.Assessment#</package_instance_name>
