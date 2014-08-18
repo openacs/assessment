@@ -4,7 +4,7 @@ ad_page_contract {
     @date 07-01-2005
     @cvs-id $Id:
 } {
-    action_id:optional
+    action_id:naturalnum,optional
 }
 
 set package_id [ad_conn package_id]

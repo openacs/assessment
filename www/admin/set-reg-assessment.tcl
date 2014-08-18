@@ -5,7 +5,7 @@ ad_page_contract {
     @creation-date 2005-01-20
     @cvs-id $Id: 
 } {
-    assessment_id:optional
+    assessment_id:naturalnum,optional
 }
 
 

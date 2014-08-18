@@ -6,8 +6,8 @@
      @date   2004-12-24
      @cvs-id $Id: 
  } {
-    {session_id:integer 0}
-    {assessment_id:integer 0}
+    {session_id:naturalnum,notnull 0}
+    {assessment_id:naturalnum,notnull 0}
     {next_url ""}
  } -properties {
      context:onevalue

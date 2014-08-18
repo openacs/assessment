@@ -6,7 +6,7 @@ ad_page_contract {
     @author Dave Bauer (dave@solutiongrove.com)
     @creation-date 2007-02-15
 } {
-    assessment_id:integer,notnull
+    assessment_id:naturalnum,notnull
 }
 
 set user_id [ad_conn user_id]

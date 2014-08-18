@@ -6,7 +6,7 @@ ad_page_contract {
     @date   2005-02-16
     @cvs-id $Id: 
 } {
-    session_id:integer
+    session_id:naturalnum,notnull
 } -properties {
     context:onevalue
     page_title:onevalue

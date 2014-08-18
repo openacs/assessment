@@ -1,9 +1,9 @@
 ad_page_contract {
     Delete a users sessions for a particular assessment
 } {
-    assessment_id:integer
-    subject_id:integer
-    orig_session_id:integer,optional
+    assessment_id:naturalnum,notnull
+    subject_id:naturalnum,notnull
+    orig_session_id:naturalnum,optional
     {return_url ""}
 } 
 

@@ -10,8 +10,8 @@ ad_page_contract {
   @cvs-id $Id: item-swap.tcl
 
 } {
-    assessment_id:integer,notnull
-    section_id:integer,notnull
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     sort_order:integer,notnull
     direction:notnull
     return_url:optional

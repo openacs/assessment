@@ -9,12 +9,12 @@ ad_page_contract {
     @arch-tag: 5b26edbe-3bed-464a-b76c-3bf4d0b6ab3c
     @cvs-id $Id$
 } {
-    assessment_id:integer,optional
+    assessment_id:naturalnum,optional
     assessment_id_list:optional
     return_url:notnull
-    as_item_id:integer,notnull,optional
-    section_id:integer,optional
-    catalog_section_id:integer,optional
+    as_item_id:naturalnum,notnull,optional
+    section_id:naturalnum,optional
+    catalog_section_id:naturalnum,optional
     session_id_list:optional
 } -properties {
 } -validate {

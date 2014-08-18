@@ -5,12 +5,12 @@ ad_page_contract {
     
     This page allows to swap action up and down
 } {
-    section_id:integer
-    check_id:integer
+    section_id:naturalnum,notnull
+    check_id:naturalnum,notnull
     action_perform
     order_by:integer
     direction
-    assessment_id:integer
+    assessment_id:naturalnum,notnull
 }
 
 permission::require_permission \

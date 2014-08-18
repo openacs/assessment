@@ -1,7 +1,7 @@
 ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
 } {
-    assessment_id:integer,optional
+    assessment_id:naturalnum,optional
     {type ""}
     {permission_p ""}
     {page_title ""}

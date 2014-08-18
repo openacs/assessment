@@ -9,8 +9,8 @@ ad_page_contract {
     @date   2004-12-08
     @cvs-id $Id: 
 } {
-    assessment_id:integer
-    section_id:integer,optional
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,optional
     after:integer
 }
 

@@ -3,11 +3,11 @@ ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks
     @date 2005-01-17
 } {
-    inter_item_check_id:multiple
-    section_id
-    assessment_id
+    inter_item_check_id:naturalnum,multiple
+    section_id:naturalnum,notnull
+    assessment_id:naturalnum,notnull
     by_item_p
-    item_id:optional
+    item_id:naturalnum,optional
   }
 
 permission::require_permission \

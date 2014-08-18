@@ -9,8 +9,8 @@ ad_page_contract {
     @arch-tag: d97c0cf0-0f43-4958-86ca-2a3d2816f31d
     @cvs-id $Id$
 } {
-    item_id:integer,notnull
-    section_id:integer,notnull
+    item_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     return_url:notnull
 } -properties {
 } -validate {

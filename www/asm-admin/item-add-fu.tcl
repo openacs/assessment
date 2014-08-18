@@ -4,9 +4,9 @@ ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation date  2005-06-23
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
 } -properties {
     context:onevalue

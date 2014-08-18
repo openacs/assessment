@@ -4,7 +4,7 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer,optional
+    assessment_id:naturalnum,optional
     {__new_p 0}
     {permission_p 0}
     {type ""}

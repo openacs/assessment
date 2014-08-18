@@ -4,7 +4,7 @@ ad_page_contract {
     @date 07-01-2005
     @cvs-id $Id:
 } {
-    action_id:integer
+    action_id:naturalnum,notnull
 }
 
 set page_title [_ assessment.delete]

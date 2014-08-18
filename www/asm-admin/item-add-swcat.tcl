@@ -9,9 +9,9 @@ ad_page_contract {
     @arch-tag: 1aaf171d-3d71-4e10-86e8-66731a80a1a5
     @cvs-id $Id$
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
 } -properties {
     context:onevalue

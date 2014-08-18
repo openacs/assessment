@@ -8,7 +8,7 @@ ad_page_contract {
     @date   September 28, 2004
     @cvs-id $Id: 
 } {
-    assessment_id:integer
+    assessment_id:naturalnum,notnull
     {context ""}
     {reg_p ""}
     {asm_instance ""}

@@ -4,7 +4,7 @@ ad_page_contract {
     @author Malte Sussdorff (malte.sussdorff@cognovis.de)
     @author cognovis www.cognovis.de
 } {
-    assessment_id:multiple
+    assessment_id:naturalnum,multiple
     {return_url "index"}
 }
 

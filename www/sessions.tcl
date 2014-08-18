@@ -7,8 +7,8 @@ ad_page_contract {
 	@author Eduardo Pérez Ureta (eperez@it.uc3m.es)
 	@creation-date 2004-09-03
 } {
-    assessment_id:notnull
-    {subject_id:integer,optional ""}
+    assessment_id:naturalnum,notnull
+    {subject_id:naturalnum,optional ""}
 } -properties {
     context_bar:onevalue
     page_title:onevalue

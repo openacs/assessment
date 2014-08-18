@@ -4,9 +4,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    as_item_id:integer
-    mc_id:integer
+    assessment_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
+    mc_id:naturalnum,notnull
     return_url
 } -properties {
     context:onevalue

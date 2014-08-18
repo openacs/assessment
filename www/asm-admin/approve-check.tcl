@@ -3,7 +3,7 @@ ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks
     @date 2005-01-17
 } {
-    action_log_id:multiple
+    action_log_id:naturalnum,multiple
     d_assessment
     d_state
     d_interval

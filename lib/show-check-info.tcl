@@ -5,9 +5,9 @@ ad_page_contract {
     @date 2005-01-17
     
 } {
-    inter_item_check_id:multiple
-    section_id
-    assessment_id
+    inter_item_check_id:naturalnum,multiple
+    section_id:naturalnum,notnull
+    assessment_id:naturalnum,notnull
     type_check
 }
 

@@ -4,8 +4,8 @@ ad_page_contract {
     @date 07-01-2005
     @cvs-id $Id:
 } {
-    action_id
-    parameter_id:optional
+    action_id:naturalnum,notnull
+    parameter_id:naturalnum,optional
 }
 
 if { ![ad_form_new_p -key parameter_id] } {

@@ -5,13 +5,13 @@ ad_page_contract {
     
     This page allows to relate an action to the check.    
 } {
-    assessment_id:integer
-    inter_item_check_id:integer
-    section_id:integer
-    check_id:optional
+    assessment_id:naturalnum,notnull
+    inter_item_check_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    check_id:naturalnum,optional
     edit_check:optional
     by_item_p:optional
-    item_id:optional
+    item_id:naturalnum,optional
     {section_check_p 0}
 } -properties {
     context:onevalue

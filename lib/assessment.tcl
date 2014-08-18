@@ -6,9 +6,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-09-13
 } -query {
-    assessment_id:integer,notnull
+    assessment_id:naturalnum,notnull
     {password:optional ""}
-    {session_id:integer,optional ""}
+    {session_id:naturalnum,optional ""}
     {section_order:integer,optional ""}
     {item_order:integer,optional ""}
     {item_id ""}

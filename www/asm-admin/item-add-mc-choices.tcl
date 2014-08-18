@@ -4,11 +4,11 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
-    mc_id:integer
+    mc_id:naturalnum,notnull
     display_type
     feedback:array,optional
     fixed_pos:array,optional

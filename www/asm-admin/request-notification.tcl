@@ -4,9 +4,9 @@ ad_page_contract {
     @create-date 2005-01-19
 
 } {
-  inter_item_check_id:integer,notnull
-  assessment_id
-  section_id
+  inter_item_check_id:naturalnum,notnull
+  assessment_id:naturalnum,notnull
+  section_id:naturalnum,notnull
 }
 
 set package_id [ad_conn package_id]

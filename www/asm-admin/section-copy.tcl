@@ -4,8 +4,8 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     after:integer
 } -properties {
     context_bar:onevalue

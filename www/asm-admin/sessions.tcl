@@ -10,8 +10,8 @@ ad_page_contract {
     @arch-tag: cdb2d596-15fc-45ba-9ce1-d648a49a20b7
     @cvs-id $Id$
 } {
-    assessment_id:integer,optional,notnull
-    subject_id:integer,optional,notnull
+    assessment_id:naturalnum,optional,notnull
+    subject_id:naturalnum,optional,notnull
     status:optional,notnull
 } -properties {
 } -validate {

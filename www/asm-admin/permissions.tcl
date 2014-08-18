@@ -4,7 +4,7 @@ ad_page_contract {
     @creation-date 2004-11-09
     
 } {
-    object_id:integer
+    object_id:naturalnum,notnull
 } -properties {
     context:onevalue
     page_title:onevalue

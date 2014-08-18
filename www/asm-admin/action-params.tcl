@@ -5,13 +5,13 @@ ad_page_contract {
     
     This page allows to add branches or actions to the question and its choices.    
 } {
-    assessment_id:integer
-    inter_item_check_id:integer
-    section_id:integer
-    action_id:integer
-    check_id:optional
+    assessment_id:naturalnum,notnull
+    inter_item_check_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    action_id:naturalnum,notnull
+    check_id:naturalnum,optional
     edit_check:optional
-    item_id:optional
+    item_id:naturalnum,optional
     by_item_p:optional
 } -properties {
     context:onevalue

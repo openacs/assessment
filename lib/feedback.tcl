@@ -9,9 +9,9 @@ ad_page_contract {
     @arch-tag: 36842c7c-99fa-4d71-904c-814bc3fde60c
     @cvs-id $Id$
 } {
-    assessment_id
-    session_id
-    section_id
+    assessment_id:naturalnum,notnull
+    session_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     {return_p 0}
     section_order:optional
     item_order:optional

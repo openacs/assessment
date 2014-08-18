@@ -9,9 +9,9 @@ ad_page_contract {
     @date   2004-12-08
     @cvs-id $Id: 
 } {
-    assessment_id:integer
+    assessment_id:naturalnum,notnull
     after:integer
-    section_id:integer,multiple,optional
+    section_id:naturalnum,multiple,optional
     section_ids:optional
 } -properties {
     title:onevalue

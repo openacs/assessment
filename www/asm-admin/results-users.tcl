@@ -5,7 +5,7 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-24
 } {
-    assessment_id
+    assessment_id:naturalnum,notnull
     {start_time:optional ""}
     {end_time:optional ""}
     status:optional,notnull
