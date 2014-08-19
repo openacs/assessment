@@ -189,7 +189,7 @@ db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
 set admin_user_id [as::actions::get_admin_user_id]
-set administration_name [db_string admin_name "select first_names || ' ' || last_name from 
+set administration_name [db_string admin_name "select first_names || { } || last_name from 
 persons where person_id = :admin_user_id"]
 set system_name [ad_system_name]
 set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
