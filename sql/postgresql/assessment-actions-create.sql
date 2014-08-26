@@ -168,18 +168,21 @@ END;
 $$ LANGUAGE plpgsql;	
 	
 	
+-- added
+select define_function_args('as_action__default_actions','context_id,creation_user,package_id');
 
-create or replace function as_action__default_actions (integer,integer,integer)
-returns integer as $$
-declare 
-	new__context_id		alias for $1;
-	new__creation_user	alias for $2;
-	new__package_id		alias for $3;
+--
+-- procedure as_action__default_actions/2
+--
+CREATE OR REPLACE FUNCTION as_action__default_actions(
+   new__context_id integer,
+   new__creation_user integer,
+   new__package_id integer
+) RETURNS integer AS $$
+DECLARE 
 	v_action_id		integer;
 	v_parameter_id		integer;
-begin
-	
-	
+BEGIN
 	v_action_id := as_action__new (
 		null,
 		'Register User',
@@ -249,7 +252,7 @@ set community_name [db_string get_community_name { select pretty_name from dotlr
 set subject "Your $community_name membership has been approved"
 set message "Your $community_name membership has been approved. Please return to [ad_url] to log into [ad_system_name]."
 
-set email_from [ad_parameter -package_id [ad_acs_kernel_id] SystemOwner]
+set email_from [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemOwner]
 
 db_1row select_user_info { select email, first_names, last_name from registered_users where user_id = :user_id}
 

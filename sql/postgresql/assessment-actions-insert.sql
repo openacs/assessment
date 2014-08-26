@@ -19,7 +19,7 @@ set admin_user_id [as::actions::get_admin_user_id]
 set administration_name [db_string admin_name "select first_names || \' \' || last_name from persons where person_id
  = :admin_user_id"]
 set system_name [ad_system_name]
-set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
+set system_url [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""].
 set admin_email [db_string unused "select email from parties where party_id = :admin_user_id"]
 
 set message "$first_names $last_name,

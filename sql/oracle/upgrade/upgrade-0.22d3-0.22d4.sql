@@ -213,7 +213,7 @@ set administration_name [db_string admin_name "select first_names || '' '' || la
 person_id = :admin_user_id"]
 
 set system_name [ad_system_name]
-set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
+set system_url [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""].
 set admin_email [db_string unused "select email from parties where party_id = :admin_user_id"]
 set message "$first_names $last_name,
 You have been added as a user to $system_name
@@ -272,7 +272,7 @@ set community_name [db_string get_community_name { select pretty_name from dotlr
 set subject "Your $community_name membership has been approved"
 set message "Your $community_name membership has been approved. Please return to [ad_url] to log into [ad_system_name]."
 
-set email_from [ad_parameter -package_id [ad_acs_kernel_id] SystemOwner]
+set email_from [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemOwner]
 
 db_1row select_user_info { select email, first_names, last_name from registered_users where user_id = :user_id}
 
