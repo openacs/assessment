@@ -91,20 +91,14 @@ $$ LANGUAGE plpgsql;
 
 
 
--- added
-select define_function_args('as_action__default_actions','context_id,creation_user');
-
---
--- procedure as_action__default_actions/2
---
 CREATE OR REPLACE FUNCTION as_action__default_actions(
    new__context_id integer,
    new__creation_user integer
 ) RETURNS integer AS $$
 DECLARE 
 	v_action_id		integer;
+	v_parameter_id		integer;
 BEGIN
-
 	v_action_id := as_action__new (
 		null,
 		'Register User',
@@ -114,8 +108,7 @@ db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
 set admin_user_id [as::actions::get_admin_user_id]
-set administration_name [db_string admin_name "select first_names || \'\' \'\' || last_name from persons where person_id
- = :admin_user_id"]
+set administration_name [db_string admin_name "select first_names || '' '' || last_name from persons where person_id = :admin_user_id"]
 set system_name [ad_system_name]
 set system_url [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""].
 set admin_email [db_string unused "select email from parties where party_id = :admin_user_id"]
@@ -133,10 +126,14 @@ acs_mail_lite::send -to_addr "$email" -from_addr "$admin_email" -subject "You ha
 	new__creation_user
 	);
 
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (select nextval('as_action_params_parameter_id'),v_action_id,'n','first_names','First Names of the User');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (select nextval('as_action_params_parameter_id'),v_action_id,'n','last_name','Last Name of the User');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (select nextval('as_action_params_parameter_id'),v_action_id,'n','email','Email of the User');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (select nextval('as_action_params_parameter_id'),v_action_id,'n','user_name','User name of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','first_names','First Names of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','last_name','Last Name of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','email','Email of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','user_name','User name of the User');
 
 v_action_id:= as_action__new (
 	null,
@@ -148,7 +145,8 @@ events::registration::new -event_id $event_id -user_id $user_id',
 	new__creation_user
 	);
 
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (select nextval('as_action_params_parameter_id'),v_action_id,'q','event_id','Event to add the user', 'select event_id,event_id from acs_events');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','event_id','Event to add the user', 'select event_id,event_id from acs_events');
 
 v_action_id:= as_action__new (
 	null,
@@ -162,7 +160,8 @@ dotlrn_community::add_user_to_community -community_id $community_id -user_id $us
 	new__creation_user
 	);
 
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (select nextval('as_action_params_parameter_id'),v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities');
 
 END;
 $$ LANGUAGE plpgsql;
