@@ -172,7 +172,7 @@ $$ LANGUAGE plpgsql;
 select define_function_args('as_action__default_actions','context_id,creation_user,package_id');
 
 --
--- procedure as_action__default_actions/2
+-- procedure as_action__default_actions/3
 --
 CREATE OR REPLACE FUNCTION as_action__default_actions(
    new__context_id integer,
