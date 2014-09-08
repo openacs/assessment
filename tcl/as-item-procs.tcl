@@ -285,7 +285,7 @@ ad_proc -private as::item::get_item_type_info {
     @return 0 if as_item does not exists, 1 if it does
 
     @author Dave Bauer (dave@solutiongrove.com)
-    @creaton-date 2006-10-26
+    @creation-date 2006-10-26
 } {
     upvar $array_name column_array
     db_0or1row get_item_type_info {} -column_array column_array

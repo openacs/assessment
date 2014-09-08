@@ -17,7 +17,7 @@ ad_proc -public as::item_form::add_item_to_form  {
     {-random_p ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
-    @modified-date 2005-04-08
+    @creation-date 2005-04-08
 
     Add items to a form. The form values are stored in response_to_item.item_id
 } {
