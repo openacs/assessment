@@ -499,7 +499,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     @param correct_choices List in array get format of choice number/t. Elements appear in this list if choice number is one of the correct choices
     @param assessment_id Assessment to attach question to
     @param section_id Section the question is in
-    @oaram as_item_id Item object this multiple choice belongs to
+    @param as_item_id Item object this multiple choice belongs to
     @param title Title of question/choice set for question library
     @param after Add this question after the queston number in the section
 
