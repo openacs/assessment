@@ -68,7 +68,7 @@ ad_proc -public as::assessment::check::get_max_order {
     Return the next value for order_by
 } {
     set order [db_string get_max_order {} -default 1]
-    if { $order == ""} {
+    if { $order eq ""} {
 	set order 1
     } else {
         incr order
@@ -83,7 +83,7 @@ ad_proc -public as::assessment::check::get_parameter_value {
 } {
     Return the parameter_value
 } {
-    if { $type == "n"} {
+    if { $type eq "n"} {
 	return  [db_string get_param_n {} -default " "]
     } else {
 	return [db_string get_param_q {} -default " "]
@@ -102,7 +102,7 @@ ad_proc -public as::assessment::check::set_parameter_value {
 } {
     set exists_p [db_string get_check_id {} -default 0]
     
-    if { $type == "n"} {
+    if { $type eq "n"} {
 	if {$exists_p != 0} {
 	    db_dml param_value_update_n {}
 	} else {
@@ -129,7 +129,7 @@ ad_proc -public as::assessment::check::re_order_actions {
     set order_by [db_string get_order_by {}]
     set count 0
     db_foreach next_order {} {
-	set order [expr $order_by+$count]
+	set order [expr {$order_by+$count}]
 	db_dml update_order {}
 	incr count
     }
@@ -159,13 +159,13 @@ ad_proc -public as::assessment::check::swap_actions {
 } {
     
 } {
-    if { $direction == "d"} {
-	set order_p [expr $order_by + 1]
+    if { $direction eq "d"} {
+	set order_p [expr {$order_by + 1}]
 	set swap_check_id [db_string get_swap_check {}]
 	db_dml update_1 {}
 	db_dml update_2 {}
     } else {
-	set order_p [expr $order_by - 1]
+	set order_p [expr {$order_by - 1}]
 	set swap_check_id [db_string get_swap_check_e {}]
 	db_dml update_1_e {}
 	db_dml update_2_e {}
@@ -226,10 +226,10 @@ ad_proc -public as::assessment::check::action_exec {
 	
 	set $varname ""
 	
-	if {$value == ""} {
+	if {$value eq ""} {
     	    set choice [db_list_of_lists get_item_choice {}]
 	    set answer [db_0or1row get_answer {}] 
-	    if {[exists_and_not_null choice_id]} {
+	    if {([info exists choice_id] && $choice_id ne "")} {
 		set $varname "$choice_id"
 	    } else {
 		if { [info exists boolean_answer] } {
@@ -295,10 +295,10 @@ ad_proc -public as::assessment::check::manual_action_exec {
 	
 	set $varname ""
 	
-	if {$value == ""} {
+	if {$value eq ""} {
     	    set choice [db_list_of_lists get_item_choice {}]
 	    set answer [db_0or1row get_answer {}] 
-	    if {[exists_and_not_null choice_id]} {
+	    if {([info exists choice_id] && $choice_id ne "")} {
 		set $varname "$choice_id"
 	    } else {
 				if { [info exists boolean_answer] } {
@@ -400,7 +400,7 @@ ad_proc -public as::assessment::check::branch_checks {
     if {$order == "f"} {
 	return $order
     } {
-	return [expr $order -1]
+	return [expr {$order -1}]
     }
 }
 
@@ -510,7 +510,7 @@ ad_proc -public as::assessment::check::confirm_display {
     set info [db_0or1row get_check_info {}]
  
     
-    set mod [expr $index%2]
+    set mod [expr {$index%2}]
     
     if {$mod==0} {
 	set class "odd"
@@ -525,7 +525,7 @@ ad_proc -public as::assessment::check::confirm_display {
 	
 	db_foreach parameters {} {
 	    append parameter_list "<li>$varname: "
-	    if {$type == "q"} {
+	    if {$type eq "q"} {
 		append parameter_list "$value"
 	    } else {
 		append parameter_list "$item_id"

@@ -4,7 +4,7 @@ ad_page_contract {
     @author Malte Sussdorff (malte.sussdorff@cognovis.de)
     @author cognovis www.cognovis.de
 } {
-    assessment_id:multiple
+    assessment_id:naturalnum,multiple
     {return_url "index"}
 }
 
@@ -36,17 +36,17 @@ ad_form -name "change-timing" -form {
     }
 } -on_submit {
 
-    if {[db_type] == "postgresql"} {
+    if {[db_type] eq "postgresql"} {
 	regsub -all -- {to_date} $start_time {to_timestamp} start_time
 	regsub -all -- {to_date} $end_time {to_timestamp} end_time
     }
     
     foreach assessment $assessment_id {
 	set assessment_rev_id [content::item::get_latest_revision -item_id $assessment]
-	if {![empty_string_p $start_time]} {
+	if {$start_time ne ""} {
 	    db_dml update_start_time {}
 	}
-	if {![empty_string_p $end_time]} {
+	if {$end_time ne ""} {
 	    db_dml update_end_time {}
 	}
     } 

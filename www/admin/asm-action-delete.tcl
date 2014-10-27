@@ -4,7 +4,7 @@ ad_page_contract {
     @date 07-01-2005
     @cvs-id $Id:
 } {
-    action_id:integer
+    action_id:naturalnum,notnull
 }
 
 set page_title [_ assessment.delete]
@@ -20,7 +20,7 @@ ad_form -name action_delete -form {
     {submit:text(submit) {label "delete"}}
     {back:text(submit) {label "back"}}
 }  -on_submit {
-    if { $back == "back" } {
+    if { $back eq "back" } {
 	ad_returnredirect "asm-action-admin"
     } else {
 	as::actionparam::actiondelete $action_id

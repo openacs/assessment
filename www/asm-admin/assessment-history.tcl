@@ -5,7 +5,7 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-15
 } {
-    assessment_id
+    assessment_id:naturalnum,notnull
 } -properties {
     context:onevalue
     page_title:onevalue

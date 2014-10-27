@@ -4,9 +4,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -58,7 +58,7 @@ ad_form -name item_edit_display_rb -action item-edit-display-rb -export { assess
     {as_item_display_id:text(hidden)}
 } -edit_request {
     db_1row last_used_display_type {}
-    if {![empty_string_p $as_item_display_id]} {
+    if {$as_item_display_id ne ""} {
 	db_1row display_type_data {}
     } else {
 	# default data if display newly mapped

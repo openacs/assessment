@@ -17,7 +17,7 @@ ad_proc -public as::item_type_sa::new {
 
     New Short Answer Answers item to the data database
 } {
-    if { ![exists_and_not_null package_id] } {
+    if { (![info exists package_id] || $package_id eq "") } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -97,7 +97,7 @@ ad_proc -public as::item_type_sa::render {
 
     Render a Short Answer Type
 } {
-    if {![empty_string_p $default_value]} {
+    if {$default_value ne ""} {
 	array set values $default_value
 	set default $values(text_answer)
     } else {
@@ -166,7 +166,7 @@ ad_proc -private as::item_type_sa::add_to_assessment {
 
     @param assessment_id Assessment to attach question to
     @param section_id Section the question is in
-    @oaram as_item_id Item object this multiple choice belongs to
+    @param as_item_id Item object this multiple choice belongs to
     @param title Title of question/choice set for question library
     @param after Add this question after the queston number in the section
 
@@ -174,7 +174,7 @@ ad_proc -private as::item_type_sa::add_to_assessment {
     @creation-date 2006-10-25
 } {
 	if {![as::item::get_item_type_info -as_item_id $as_item_id] \
-                || $item_type_info(object_type) != "as_item_type_sa"} {
+                || $item_type_info(object_type) ne "as_item_type_sa"} {
 	    set as_item_type_id [as::item_type_sa::new \
 				     -title $title \
 				     -increasing_p $increasing_p \

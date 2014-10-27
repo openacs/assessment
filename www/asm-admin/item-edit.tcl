@@ -4,9 +4,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -33,7 +33,7 @@ db_1row general_item_data {}
 set item_type [string range [db_string item_type {}] end-1 end]
 set display_type [string range [db_string display_type {}] end-1 end]
 
-if {[string eq $display_type "_f"]} {
+if {$display_type eq "_f"} {
     set display_type f
 }
 set question_text [list $title text/html]
@@ -74,7 +74,7 @@ if {[db_0or1row get_item_content {}]} {
     }
 }
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+if {[category_tree::get_mapped_trees $package_id] ne ""} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $as_item_id -form_name item_edit
 }
 

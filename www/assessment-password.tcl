@@ -5,7 +5,7 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-02-20
 } -query {
-    assessment_id:integer,notnull
+    assessment_id:naturalnum,notnull
 } -properties {
     context_bar:onevalue
     page_title:onevalue
@@ -26,7 +26,7 @@ if {![info exists assessment_data(assessment_id)]} {
 
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id -password $assessment_data(password)]
-if {![empty_string_p $errors]} {
+if {$errors ne ""} {
     ad_return_complaint 1 $errors
     ad_script_abort
 }

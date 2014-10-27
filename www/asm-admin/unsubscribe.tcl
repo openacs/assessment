@@ -4,11 +4,11 @@ ad_page_contract {
     @creation_date 2005-01-19
     
 } {
-    inter_item_check_id:notnull
-    request_id:multiple
-    type_id     
-    assessment_id
-    section_id
+    inter_item_check_id:naturalnum,notnull
+    request_id:naturalnum,multiple
+    type_id:naturalnum,notnull     
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
 } 
 
 permission::require_permission \

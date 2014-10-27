@@ -1,7 +1,7 @@
 ad_library {
 
     Procedures to do a new impl and aliases in the acs-sc.
-    @creation date 2004-11-24
+    @creation-date 2004-11-24
     @author Anny Flores (annyflores@viaro.net)
 }
 

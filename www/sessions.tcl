@@ -7,8 +7,8 @@ ad_page_contract {
 	@author Eduardo Pérez Ureta (eperez@it.uc3m.es)
 	@creation-date 2004-09-03
 } {
-    assessment_id:notnull
-    {subject_id:integer,optional ""}
+    assessment_id:naturalnum,notnull
+    {subject_id:naturalnum,optional ""}
 } -properties {
     context_bar:onevalue
     page_title:onevalue
@@ -32,13 +32,13 @@ set assessment_rev_id $assessment_data(assessment_rev_id)
 set admin_p [permission::permission_p -object_id $assessment_id -privilege admin]
 
 #if the user is admin he will display all sessions from all subjects
-if {$admin_p && [empty_string_p $subject_id]} {
+if {$admin_p && $subject_id eq ""} {
     set query "sessions_of_assessment_of_subject"
 } else {
     set query "sessions_of_assessment"
 }
 
-if {[empty_string_p $subject_id] || !$admin_p} {
+if {$subject_id eq "" || !$admin_p} {
     set subject_id $user_id
 }
 
@@ -103,7 +103,7 @@ if {$assessment_data(survey_p) == "t"} {
 
 db_multirow -extend { subject_url assessment_url } sessions $query {
 } {
-    if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
+    if {($start_time eq "" || $start_time <= $cur_time) && ($end_time eq "" || $end_time >= $cur_time)} {
 	set assessment_url [export_vars -base "assessment" {assessment_id}]
     } else {
 	set assessment_url ""

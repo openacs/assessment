@@ -4,7 +4,7 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer,optional
+    assessment_id:naturalnum,optional
     {__new_p 0}
     {permission_p 0}
     {type ""}
@@ -78,7 +78,7 @@ ad_form -name assessment_form \
         }
     }
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+if {[category_tree::get_mapped_trees $package_id] ne ""} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id $s_assessment_id -form_name assessment_form
 }
 
@@ -280,10 +280,10 @@ ad_form -extend -name assessment_form -new_request {
 } -edit_request {
     db_1row assessment_data {}
     
-    if {![empty_string_p $start_time]} {
+    if {$start_time ne ""} {
         set start_time [util::date::acquire ansi $start_time]
     }
-    if {![empty_string_p $end_time]} {
+    if {$end_time ne ""} {
         set end_time [util::date::acquire ansi $end_time]
     }
 
@@ -291,13 +291,13 @@ ad_form -extend -name assessment_form -new_request {
     set exit_page [template::util::richtext::create $exit_page text/html]
 
 } -on_submit {
-    if {$start_time == "NULL"} {
+    if {$start_time eq "NULL"} {
         set start_time ""
     }
-    if {$end_time == "NULL"} {
+    if {$end_time eq "NULL"} {
         set end_time ""
     }
-    if {[db_type] == "postgresql"} {
+    if {[db_type] eq "postgresql"} {
         regsub -all -- {to_date} $start_time {to_timestamp} start_time
         regsub -all -- {to_date} $end_time {to_timestamp} end_time
     }
@@ -337,14 +337,14 @@ ad_form -extend -name assessment_form -new_request {
 
         permission::grant -party_id $user_id -object_id $assessment_id -privilege "admin"
 
-        if {[exists_and_not_null category_ids]} {
+        if {([info exists category_ids] && $category_ids ne "")} {
             category::map_object -object_id $assessment_rev_id $category_ids
         }
 
-        if {![empty_string_p $start_time]} {
+        if {$start_time ne ""} {
             db_dml update_start_time {}
         }
-        if {![empty_string_p $end_time]} {
+        if {$end_time ne ""} {
             db_dml update_end_time {}
         }
 
@@ -352,10 +352,10 @@ ad_form -extend -name assessment_form -new_request {
         
         set new_section_id [as::section::new -title [_ assessment.Questions] ]
         db_dml move_down_sections {}
-        set sort_order [expr $after + 1]
+        set sort_order [expr {$after + 1}]
         db_dml add_section_to_assessment {}
         
-        if {[exists_and_not_null category_ids]} {
+        if {([info exists category_ids] && $category_ids ne "")} {
             category::map_object -object_id $new_section_id $category_ids
         }
     }
@@ -387,14 +387,14 @@ ad_form -extend -name assessment_form -new_request {
                                    -section_navigation $section_navigation \
                                    -type $type]
 
-        if {[exists_and_not_null category_ids]} {
+        if {([info exists category_ids] && $category_ids ne "")} {
             category::map_object -object_id $assessment_rev_id $category_ids
         }
 
-        if {![empty_string_p $start_time]} {
+        if {$start_time ne ""} {
             db_dml update_start_time {}
         }
-        if {![empty_string_p $end_time]} {
+        if {$end_time ne ""} {
             db_dml update_end_time {}
         }
     }

@@ -2,33 +2,56 @@
 alter table as_item_data add as_item_cr_item_id integer;
 alter table as_item_data add choice_value text;
 
-create or replace function as_item_data_ins_trg() returns trigger as '
-declare v_item_id integer;
-begin
+
+
+--
+-- procedure as_item_data_ins_trg/0
+--
+CREATE OR REPLACE FUNCTION as_item_data_ins_trg(
+
+) RETURNS trigger AS $$
+DECLARE v_item_id integer;
+BEGIN
 select item_id into v_item_id
 from cr_revisions where revision_id = NEW.as_item_id;
 NEW.as_item_cr_item_id = v_item_id;
 return NEW;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
-create or replace function as_item_data_choices_ins_trg () returns trigger as '
-declare v_choice_value text default '''';
-begin
+
+
+--
+-- procedure as_item_data_choices_ins_trg/0
+--
+CREATE OR REPLACE FUNCTION as_item_data_choices_ins_trg(
+
+) RETURNS trigger AS $$
+DECLARE v_choice_value text default '';
+BEGIN
 
 select title into v_choice_value
 from as_item_choicesx
 where choice_id = NEW.choice_id;
 
-update as_item_data set choice_value = coalesce(choice_value,'''') || '' '' || coalesce(v_choice_value,'''') where item_data_id = new.item_data_id;
+update as_item_data set choice_value = coalesce(choice_value,'') || ' ' || coalesce(v_choice_value,'') where item_data_id = new.item_data_id;
 
 return NEW;
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
-create or replace function as_item_data_choices_upd_trg() returns trigger as '
-declare v_choice_value text default '''';
+
+
+--
+-- procedure as_item_data_choices_upd_trg/0
+--
+CREATE OR REPLACE FUNCTION as_item_data_choices_upd_trg(
+
+) RETURNS trigger AS $$
+DECLARE v_choice_value text default '';
 declare v_row record;
-begin
+BEGIN
 
 for v_row in select title as text_value from
     as_item_choicesx c,
@@ -36,12 +59,13 @@ for v_row in select title as text_value from
     where dc.item_data_id = new.item_data_id and
     c.choice_id = dc.choice_id
 loop
-    v_choice_value := v_choice_value || '' '' || coalesce(v_row.text_value,'''');
+    v_choice_value := v_choice_value || ' ' || coalesce(v_row.text_value,'');
 end loop;
 
-update as_item_data set choice_value = coalesce(choice_value,'''') || '' '' || coalesce(v_choice_value,'''') where item_data_id = new.item_data_id;
+update as_item_data set choice_value = coalesce(choice_value,'') || ' ' || coalesce(v_choice_value,'') where item_data_id = new.item_data_id;
 return NEW;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 create trigger as_item_data_ins_trg before insert on as_item_data for each row execute procedure as_item_data_ins_trg();
 create trigger as_item_data_upd_trg before update on as_item_data for each row execute procedure as_item_data_ins_trg();

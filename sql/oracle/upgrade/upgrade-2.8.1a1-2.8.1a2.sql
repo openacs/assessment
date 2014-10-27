@@ -1,72 +1,3 @@
--- Assessment Package
--- @author annyflores@viaro.net
--- @creation-date 2005-01-06
-
-begin 
-	-- create the action object
-        acs_object_type.create_type (
-		supertype	=>	'acs_object',
-		object_type 	=>	'as_action',
-		pretty_name	=>	'As_action',
-		pretty_plural	=>	'As_actions',
-		table_name	=>	'as_actions',
-		id_column	=>	'action_id'
-);
-end;
-/
-show errors;
-
-declare 
-
-	attr_id acs_attributes.attribute_id%TYPE;
-
-begin
-	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'as_action',
-		attribute_name 	=>	'name',
-		pretty_name	=>	'Name',
-		pretty_plural	=>	'Names',
-		datatype	=>	'string'
-	);
-	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'as_action',
-		attribute_name 	=>	'description',
-		pretty_name	=>	'Description',
-		pretty_plural	=>	'Descriptions',
-		datatype	=>	'string'
-	);
-	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'as_action',
-		attribute_name 	=>	'tcl_code',
-		pretty_name	=>	'Tcl_code',
-		pretty_plural	=>	'Tcl_code',
-		datatype	=>	'string'
-	);
-end;
-/
-show errors;
-
-create or replace package as_action
-as
-	function new (
-	action_id     	in acs_objects.object_id%TYPE default null,
-        name  		in as_actions.name%TYPE,
-        description     in as_actions.description%TYPE,
-        tcl_code        in as_actions.tcl_code%TYPE,
-	context_id	in acs_objects.context_id%TYPE,
-	creation_user	in acs_objects.creation_user%TYPE
-		     ) return as_actions.action_id%TYPE;
-	procedure del (
-	 	action_id 	in as_actions.action_id%TYPE
-	);
-	procedure default_actions (
-		context_id	in acs_objects.context_id%TYPE,
-		creation_user	in acs_objects.creation_user%TYPE
-	);
-end as_action;
-/
-show errors;
-
 create or replace package body  as_action
 as
 	function new (
@@ -216,4 +147,4 @@ values (parameter_id_seq.nextval,v_action_id,'q','community_id','Community to ad
 end as_action;
 /
 show errors;
-	
+

@@ -10,8 +10,8 @@ ad_page_contract {
     @arch-tag: cdb2d596-15fc-45ba-9ce1-d648a49a20b7
     @cvs-id $Id$
 } {
-    assessment_id:integer,optional,notnull
-    subject_id:integer,optional,notnull
+    assessment_id:naturalnum,optional,notnull
+    subject_id:naturalnum,optional,notnull
     status:optional,notnull
 } -properties {
 } -validate {
@@ -54,10 +54,10 @@ if { [info exists assessment_id] } {
     lappend actions "[_ assessment.Summary]" [export_vars -base item-stats { assessment_id {return_url [ad_return_url]} }] "[_ assessment.Summary]"
 }
 
-if { [exists_and_not_null status] } {
-        if { $status == "complete" } {
+if { ([info exists status] && $status ne "") } {
+        if { $status eq "complete" } {
                 set whereclause "cs.completed_datetime is not null"
-        } elseif { $status == "incomplete" } {
+        } elseif { $status eq "incomplete" } {
                 set whereclause "cs.completed_datetime is null and ns.session_id is not null"
         } else {
                 set whereclause "cs.completed_datetime is null and ns.session_id is null"
@@ -116,7 +116,7 @@ template::list::create \
 		<img src="/resources/right.gif" style="border:0"></a>
 		</if>
 	    }
-	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) != "test"}]}
+	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) ne "test"}]}
 	}
     } \
     -filters {

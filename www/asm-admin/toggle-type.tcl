@@ -1,7 +1,7 @@
 ad_page_contract {
     Toggle type between 'survey' and 'test'
 } {
-    assessment_id:integer,notnull
+    assessment_id:naturalnum,notnull
 }
 
 permission::require_permission \

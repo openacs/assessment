@@ -8,7 +8,7 @@ ad_page_contract {
     @date   January 15, 2007
 
 } {
-    assessment_id:integer
+    assessment_id:naturalnum,notnull
 }
 
 set package_id [ad_conn package_id]

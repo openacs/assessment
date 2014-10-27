@@ -75,11 +75,11 @@ aa_register_case -cats api as_instantiate {
         # get data
         array set assessment_data {}
         as::assessment::data -assessment_id $assessment_id
-        aa_true "assessment exists" [expr $assessment_data(assessment_id) > 0]
+        aa_true "assessment exists" [expr {$assessment_data(assessment_id) > 0}]
 
         # start a session
         set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id -package_id $package_id]
-        aa_true "session exists" [expr $session_id > 0]
+        aa_true "session exists" [expr {$session_id > 0}]
 
         set section_list [as::assessment::sections -assessment_id $assessment_rev_id \
                               -session_id $session_id \

@@ -4,9 +4,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
     choice:optional,array
     correct:optional,array
@@ -86,13 +86,13 @@ for {set i 1} {$i <= $num_choices} {incr i} {
     } else {
 	append ad_form_code "\{correct.$i:text(checkbox),optional \{label \"[_ assessment.Correct_Answer_Choice] $i\"\} \{options \$correct_options\} \{help_text \"[_ assessment.Correct_Answer_help]\"\}\}\n"
     }
-    if {[exists_and_not_null num_correct_answers] && $num_correct_answers > 0} {
+    if {([info exists num_correct_answers] && $num_correct_answers ne "") && $num_correct_answers > 0} {
 	lappend validate_list "correct.$i {\$count_correct > 0} \"\[_ assessment.one_correct_choice_req\]\""
     }
     }
 }
 append ad_form_code "\}"
-if {[exists_and_not_null mc_id]} {
+if {([info exists mc_id] && $mc_id ne "")} {
     set count_correct 1
 }
 eval ad_form -extend -name item_add_mc $ad_form_code

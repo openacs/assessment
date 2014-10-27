@@ -1,7 +1,7 @@
 ad_page_contract {
     Toggle a boolean parameter
 } {
-    assessment_id:integer,notnull
+    assessment_id:naturalnum,notnull
     param:sql_identifier,notnull
 }
 

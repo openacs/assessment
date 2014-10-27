@@ -9,12 +9,12 @@ ad_page_contract {
     @arch-tag: 5b26edbe-3bed-464a-b76c-3bf4d0b6ab3c
     @cvs-id $Id$
 } {
-    assessment_id:integer,optional
+    assessment_id:naturalnum,optional
     assessment_id_list:optional
     return_url:notnull
-    as_item_id:integer,notnull,optional
-    section_id:integer,optional
-    catalog_section_id:integer,optional
+    as_item_id:naturalnum,notnull,optional
+    section_id:naturalnum,optional
+    catalog_section_id:naturalnum,optional
     session_id_list:optional
 } -properties {
 } -validate {
@@ -27,7 +27,7 @@ set package_id [ad_conn package_id]
 # if we get a dotlrn_ecommerce_section_id (catalog_section_id),
 #  let's create a clause to query all the rel_ids with type membership_rels
 set limit_to_section_clause ""
-if { [exists_and_not_null catalog_section_id] } {
+if { ([info exists catalog_section_id] && $catalog_section_id ne "") } {
 	set limit_to_section_clause "(select session_id from dotlrn_ecommerce_application_assessment_map where rel_id in (select rel_id from acs_rels where rel_type='dotlrn_member_rel' and object_id_one = (select community_id from dotlrn_ecommerce_section where section_id=:catalog_section_id)))"	
 }
 
@@ -99,8 +99,8 @@ order by ism.sort_order
 	    set visited_session_ids [list]
 
 	    set item_choices_limit_session ""
-	    if { [exists_and_not_null limit_to_section_clause] } { set item_choices_limit_session "and d.session_id in $limit_to_section_clause" }
-if {[exists_and_not_null session_id_list]} {set item_choices_limit_session " and d.session_id in ([template::util::tcl_to_sql_list $session_id_list]) " }
+	    if { ([info exists limit_to_section_clause] && $limit_to_section_clause ne "") } { set item_choices_limit_session "and d.session_id in $limit_to_section_clause" }
+if {([info exists session_id_list] && $session_id_list ne "")} {set item_choices_limit_session " and d.session_id in ([template::util::tcl_to_sql_list $session_id_list]) " }
 	    set item_choices_query "select r.title as choice_title, c.choice_id, c.correct_answer_p,
 			(select count(*)
 			 from as_item_data_choices
@@ -139,9 +139,9 @@ if {[exists_and_not_null session_id_list]} {set item_choices_limit_session " and
 	    }
     
 	    set total_responses_limit_session ""
-	    if { [exists_and_not_null limit_to_section_clause] } { set total_responses_limit_session "and s.session_id in $limit_to_section_clause" }
+	    if { ([info exists limit_to_section_clause] && $limit_to_section_clause ne "") } { set total_responses_limit_session "and s.session_id in $limit_to_section_clause" }
 
-if {[exists_and_not_null session_id_list]} {
+if {([info exists session_id_list] && $session_id_list ne "")} {
     set total_responses_limit_session " and s.session_id in ([template::util::tcl_to_sql_list $session_id_list]) "
 }
 	    set total_responses [db_string count_responses "select count(*) from (select distinct s.session_id from as_sessions s, as_item_data, cr_revisions cr1, cr_revisions cr2 where cr1.revision_id=:revision_id and cr1.item_id=cr2.item_id and as_item_id = cr2.revision_id and s.session_id = as_item_data.session_id and s.completed_datetime is not null $total_responses_limit_session ) d"]
@@ -158,7 +158,7 @@ if {[exists_and_not_null session_id_list]} {
 		    } else {
 			append stats "<td>&nbsp;</td>"
 		    }
-		    append stats "<td width=250>$r(choice_title):</td><td style='text-align: right; padding-right: 10px'>$r(choice_responses)</td><td style='text-align: right; padding-right: 20px'>[format "%.2f" [expr double($r(choice_responses)) / $total_responses * 100]]%</td>\n"
+		    append stats "<td width=250>$r(choice_title):</td><td style='text-align: right; padding-right: 10px'>$r(choice_responses)</td><td style='text-align: right; padding-right: 20px'>[format "%.2f" [expr {double($r(choice_responses)) / $total_responses * 100}]]%</td>\n"
 
 		    if { $first_p } {
 			append stats "
@@ -169,7 +169,7 @@ if {[exists_and_not_null session_id_list]} {
 <b>[_ assessment.Total_Correct]</b> $total_correct"
 			
 			if { $total_correct > 0 } {
-			    append stats ", [format "%.2f" [expr double($total_correct) / $total_responses * 100]]%"
+			    append stats ", [format "%.2f" [expr {double($total_correct) / $total_responses * 100}]]%"
 			}
 			}
 			append stats "</td></tr>\n"

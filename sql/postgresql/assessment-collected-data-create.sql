@@ -147,14 +147,22 @@ create index as_item_data_pk3 on as_item_data (as_item_id, section_id, session_i
 create index as_item_data_subject_id_idx on as_item_data (subject_id);
 create index as_item_data_as_item_id_idx on as_item_data (as_item_id);
 
-create or replace function as_item_data_ins_trg() returns trigger as '
-declare v_item_id integer;
-begin
+
+
+--
+-- procedure as_item_data_ins_trg/0
+--
+CREATE OR REPLACE FUNCTION as_item_data_ins_trg(
+
+) RETURNS trigger AS $$
+DECLARE v_item_id integer;
+BEGIN
 select item_id into v_item_id
 from cr_revisions where revision_id = NEW.as_item_id;
 NEW.as_item_cr_item_id = v_item_id;
 return NEW;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 create trigger as_item_data_ins_trg before insert on as_item_data for each row execute procedure as_item_data_ins_trg();
 
@@ -191,19 +199,27 @@ create table as_item_data_choices (
 
 create unique index as_item_data_choices_pk2 on as_item_data_choices (choice_id, item_data_id);
 
-create or replace function as_item_data_choices_ins_trg () returns trigger as '
-declare v_choice_value text default '''';
-begin
+
+
+--
+-- procedure as_item_data_choices_ins_trg/0
+--
+CREATE OR REPLACE FUNCTION as_item_data_choices_ins_trg(
+
+) RETURNS trigger AS $$
+DECLARE v_choice_value text default '';
+BEGIN
 
 select title into v_choice_value
 from cr_revisions
 where revision_id = NEW.choice_id;
 
-update as_item_data set choice_value = coalesce(choice_value,'''') || '' '' || coalesce(v_choice_value,'''') where item_data_id = new.item_data_id;
+update as_item_data set choice_value = coalesce(choice_value,'') || ' ' || coalesce(v_choice_value,'') where item_data_id = new.item_data_id;
 
 return NEW;
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 create trigger as_item_data_choices_ins_trg after insert on as_item_data_choices for each row execute procedure as_item_data_choices_ins_trg();
 

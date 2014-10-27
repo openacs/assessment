@@ -51,7 +51,7 @@ foreach one_item $item_list {
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 
-    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+    if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
 	db_1row choice_orientation {}
     } else {
 	set choice_orientation ""

@@ -9,8 +9,8 @@ ad_page_contract {
     @date   2004-12-08
     @cvs-id $Id: 
 } {
-    assessment_id:integer
-    {section_id:integer,optional}
+    assessment_id:naturalnum,notnull
+    {section_id:naturalnum,optional}
     after:integer
     {itype:optional}
     {subtree_p:optional}
@@ -76,7 +76,7 @@ switch -exact $letter {
 }
 
 set itype_where_clause ""
-if {[exists_and_not_null itype]} {
+if {([info exists itype] && $itype ne "")} {
     set obj_type "as_item_type_$itype"
     set itype_where_clause [db_map item_type]
 }
@@ -84,7 +84,7 @@ if {[exists_and_not_null itype]} {
 set category_ids_length [llength $category_ids]
 if {$category_ids_length > 0} {
     set category_id_sql [join $category_ids ,]
-    if {$join == "and"} {
+    if {$join eq "and"} {
 	# combining categories with and
 	if {$subtree_p == "t"} {
 	    # generate sql for exact categorizations plus subcategories
@@ -111,7 +111,7 @@ if {$category_ids_length > 0} {
 }
 
 set keyword_where_clause ""
-if {![empty_string_p $keywords]} {
+if {$keywords ne ""} {
     set keyword_sql [string tolower "%$keywords%"]
     if {[info exists section_id]} {
 	set keyword_where_clause [db_map item_keywords]

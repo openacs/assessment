@@ -30,7 +30,7 @@
 # set page_title "[_ assessment.Show_Items]"
 # set context [list $page_title]
 
-# if { $return_p && [exists_and_not_null return_url] } {
+# if { $return_p && ([info exists return_url] && $return_url ne "") } {
 #     set next_url $return_url
 # } else {
 #     set next_url [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id}]

@@ -1,6 +1,6 @@
 ad_library {
     @author Anny Flores (annyflores@viaro.net)
-    @creation_date 2004-12-03
+    @creation-date 2004-12-03
 
     Inter_Item_Check Library - Reply Handling
 }

@@ -34,7 +34,7 @@ ad_proc -public as::install::assessment_create_install {
 
 set value [parameter::get -parameter "AsmForRegisterId" -package_id [subsite::main_site_id]]
 
-if {[empty_string_p $value]} {
+if {$value eq ""} {
     apm_parameter_register "AsmForRegisterId" "Assessment used on the registration process." "acs-subsite" "0" "number" "user-login"
 }
     

@@ -117,7 +117,7 @@ ad_proc -public as::qti::register_xml_object_id {
 
 ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a mattext } {
     set texttype [$mattextNode getAttribute {texttype} {text/plain}]
-    if { $texttype == "text/html" } {
+    if { $texttype eq "text/html" } {
 	return [$mattextNode text]
     } else {
 	return [ad_html_text_convert -from text/plain -to text/html -- [$mattextNode text]]
@@ -153,27 +153,27 @@ ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI 
 		foreach node $nodesList {
 		    set nodeName [$node nodeName]
 		    #as_assessmentsx.description = <qticomment> or <objectives>
-		    if {$nodeName == "qticomment"} {
+		    if {$nodeName eq "qticomment"} {
 			set definitionNodes [$assessment selectNodes {qticomment}]
 			if {[llength $definitionNodes] != 0} {
 			    set definition [lindex $definitionNodes 0]
 			    set as_assessments__definition [as::qti::mattext_gethtml $definition]
 			}
-		    } elseif {$nodeName == "objectives"} {
+		    } elseif {$nodeName eq "objectives"} {
 			set definitionNodes [$assessment selectNodes {objectives/material/mattext}]
 			if {[llength $definitionNodes] != 0} {
 			    set definition [lindex $definitionNodes 0]
 			    set as_assessments__definition [as::qti::mattext_gethtml $definition]
 			}
 			#as_assessments.instructions = <rubric>
-		    } elseif {$nodeName == "rubric"} {
+		    } elseif {$nodeName eq "rubric"} {
 			set instructionNodes [$assessment selectNodes {rubric/material/mattext}]
 			if {[llength $instructionNodes] != 0} {
 			    set instruction [lindex $instructionNodes 0]
 			    set as_assessments__instructions [as::qti::mattext_gethtml $instruction]
 			}
 			#as_assessments.time_for_response = <duration>	
-		    } elseif {$nodeName == "duration"} {
+		    } elseif {$nodeName eq "duration"} {
 			set durationNodes [$assessment selectNodes {duration/text()}]
 			if {[llength $durationNodes] != 0} {
 			    set duration [lindex $durationNodes 0]
@@ -307,34 +307,34 @@ ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI 
 		    foreach node $nodesList {
 			set nodeName [$node nodeName]
 			#as_sectionsx.description = <qticomment> or <objectives>
-			if {$nodeName == "qticomment"} {
+			if {$nodeName eq "qticomment"} {
 			    set definitionNodes [$section selectNodes {qticomment}]
 			    if {[llength $definitionNodes] != 0} {
 				set definition [lindex $definitionNodes 0]
 				set as_sections__definition [as::qti::mattext_gethtml $definition]
 			    }
-			} elseif {$nodeName == "objectives"} {
+			} elseif {$nodeName eq "objectives"} {
 			    set definitionNodes [$section selectNodes {objectives/material/mattext}]
 			    if {[llength $definitionNodes] != 0} {
 				set definition [lindex $definitionNodes 0]
 				set as_sections__definition [as::qti::mattext_gethtml $definition]
 			    }		
 			    #as_sections.max_time_to_complete = <duration>    				    
-			} elseif {$nodeName == "duration"} {
+			} elseif {$nodeName eq "duration"} {
 			    set section_durationNodes [$section selectNodes {duration/text()}]
 			    if {[llength $section_durationNodes] != 0} {
 				set section_duration [lindex $section_durationNodes 0]
 				set as_sections__duration [as::qti::duration [$section_duration nodeValue]]
 			    }				
 			    #as_sections.instructions = <rubric>    		    
-			} elseif {$nodeName == "rubric"} {
+			} elseif {$nodeName eq "rubric"} {
 			    set section_instructionNodes [$section selectNodes {rubric/material/mattext}]
 			    if {[llength $section_instructionNodes] != 0} {
 				set section_instruction [lindex $section_instructionNodes 0]
 				set as_sections__instructions [as::qti::mattext_gethtml $section_instruction]
 			    }				
 			    #as_sections.feedback_text = <sectionfeedback>    		        
-			} elseif {$nodeName == "sectionfeedback"} {
+			} elseif {$nodeName eq "sectionfeedback"} {
 			    set sectionfeedbackNodes [$section selectNodes {sectionfeedback/material/mattext}]
 			    if {[llength $sectionfeedbackNodes] != 0} {
 				set sectionfeedback [lindex $sectionfeedbackNodes 0]
@@ -433,7 +433,7 @@ DB -----------------------------------------------------------------------------
 			array set as_item $as_item_list
 			set as_item_id $as_item(as_item_id)
 			set as_item__duration $as_item(duration)
-			set as_item__points [expr int($as_item(points))]
+			set as_item__points [expr {int($as_item(points))}]
 			set as_item__required_p $as_item(required_p)
 			db_dml as_item_section_map_insert {}
 			incr as_item_sect_map__sort_order
@@ -485,21 +485,21 @@ ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items
         foreach node $nodesList {
             set nodeName [$node nodeName]
             #as_items.max_time_to_complete = <duration> 
-            if {$nodeName == "duration"} {
+            if {$nodeName eq "duration"} {
                 set durationNodes [$item selectNodes {duration/text()}]
                 if {[llength $durationNodes] != 0} {
                     set duration [lindex $durationNodes 0]
                     set as_items__duration [as::qti::duration [$duration nodeValue]]
                 }
                 #as_items.description = <qticomment>    
-            } elseif {$nodeName == "qticomment"} {
+            } elseif {$nodeName eq "qticomment"} {
                 set qticommentNodes [$item selectNodes {qticomment/text()}]
                 if {[llength $qticommentNodes] != 0} {
                     set qticomment [lindex $qticommentNodes 0]
                     set as_items__description [$qticomment nodeValue]
                 }
                 #as_items.subtext = <rubric>
-            } elseif {$nodeName == "rubric"} {
+            } elseif {$nodeName eq "rubric"} {
                 set instructionNodes [$item selectNodes {rubric/material/mattext}]
                 if {[llength $instructionNodes] != 0} {
                     set instruction [lindex $instructionNodes 0]
@@ -608,9 +608,9 @@ ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items
                 foreach var $decvarNode {
                         set varname [$var getAttribute {varname} {Decvar}]
                         # now we have to see if the variable name exists in the list
-                        if { $prop != ""} {
+                        if { $prop ne ""} {
                                 set aux [lindex [split $prop .] 1]
-                                if { [string compare $aux $varname] != 0 } {
+                                if { $aux ne $varname  } {
                                         set badprop 1
                                         set res $varname
                                 }
@@ -863,13 +863,13 @@ ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items
                         set as_item_choices__content_value [as::file::new -file_pathname $mediabasepath]
                     }
                     # Insert as_item_choice
-                    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr [info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}]
+                    set as_item_choices__correct_answer_p($as_item_choices__ident) [expr {[info exists as_item_choices__correct_answer_p($as_item_choices__ident)]?{t}:{f}}]
                     if {[info exists as_item_choices__score($as_item_choices__ident)]} {
                         if {$as_items__points== 0} {
                             #if <setvar> is missing
                             set as_items__points 1                      
                         }
-                        set as_item_choices__score($as_item_choices__ident) [expr round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)]
+                        set as_item_choices__score($as_item_choices__ident) [expr {round(100 * $as_item_choices__score($as_item_choices__ident) / $as_items__points)}]
                     } else {
                         set as_item_choices__score($as_item_choices__ident) 0
                     }
@@ -947,6 +947,6 @@ ad_proc -public as::qti::duration {
 	# check for format P0Y0M0DT0H1M0S
 	regexp {t|T(\d+)h|H(\d+)m|M(\d+)s|S} $duration match h m s
 	# ignore year, month and days for now
-	return [expr $h*3600+$m*60+$s]
+	return [expr {$h*3600+$m*60+$s}]
     }
 }

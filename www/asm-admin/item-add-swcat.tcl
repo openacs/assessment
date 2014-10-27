@@ -9,9 +9,9 @@ ad_page_contract {
     @arch-tag: 1aaf171d-3d71-4e10-86e8-66731a80a1a5
     @cvs-id $Id$
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
 } -properties {
     context:onevalue
@@ -49,7 +49,7 @@ ad_form -name item-add-swcat -export { assessment_id section_id after } -form {
     set display_type "sb"
 } -edit_data {
     db_transaction {
-	if {![db_0or1row item_type {}] || $object_type != "as_item_type_swcat"} {
+	if {![db_0or1row item_type {}] || $object_type ne "as_item_type_swcat"} {
 	    set as_item_type_id [as::item_type_sa::new \
                                      -tree_id $tree_id]
 	

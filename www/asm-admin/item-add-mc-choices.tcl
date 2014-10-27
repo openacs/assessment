@@ -4,11 +4,11 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
-    mc_id:integer
+    mc_id:naturalnum,notnull
     display_type
     feedback:array,optional
     fixed_pos:array,optional
@@ -66,7 +66,7 @@ if { $type == 1} {
 	    set answer_value $answer_val($choice_id)
 
 	    eval set content "\$content_$choice_id"
-	    if {![empty_string_p $content]} {
+	    if {$content ne ""} {
 		set filename [lindex $content 0]
 		set tmp_filename [lindex $content 1]
 		set file_mimetype [lindex $content 2]
@@ -117,7 +117,7 @@ append ad_form_code "\}"
 # (apparently the author does not want the respondee to give a correct answer.
  
 if {$count_correct > 0} {
-    set percentage [expr 100 / $count_correct]
+    set percentage [expr {100 / $count_correct}]
 } else {
     set percentage 0
 }
@@ -142,7 +142,7 @@ ad_form -extend -name item_add_mc_choices -edit_request {
 	    set answer_value $answer_val($choice_id)
 
 	    eval set content "\$content_$choice_id"
-	    if {![empty_string_p $content]} {
+	    if {$content ne ""} {
 		set filename [lindex $content 0]
 		set tmp_filename [lindex $content 1]
 		set file_mimetype [lindex $content 2]

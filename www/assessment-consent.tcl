@@ -5,8 +5,8 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @date   2005-01-24
 } {
-    session_id:integer,notnull
-    assessment_id:integer,notnull
+    session_id:naturalnum,notnull
+    assessment_id:naturalnum,notnull
     {password:optional ""}
 } -properties {
     context_bar:onevalue

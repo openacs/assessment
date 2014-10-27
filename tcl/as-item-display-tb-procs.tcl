@@ -17,7 +17,7 @@ ad_proc -public as::item_display_tb::new {
 
     New Item Display TextBox Type to the database
 } {
-    if { ![exists_and_not_null package_id] } {
+    if { (![info exists package_id] || $package_id eq "") } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -103,10 +103,10 @@ ad_proc -public as::item_display_tb::render {
     Render an Item Display TextBox Type
 } {
     array set type [util_memoize [list as::item_display_tb::data -type_id $type_id]]
-    if {[empty_string_p $required_p]} {
+    if {$required_p eq ""} {
 	set required_p f
     }
-    if {[empty_string_p $datatype]} {
+    if {$datatype eq ""} {
 	set datatype text
     }
 
@@ -118,7 +118,7 @@ ad_proc -public as::item_display_tb::render {
 	set optional ",optional"
     }
     set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list html \$type(html_display_options)]]
-    if {![empty_string_p $type(abs_size)]} {
+    if {$type(abs_size) ne ""} {
 	lappend param_list [list maxlength $type(abs_size)]
     }
     set element_params [concat [list "$element\:$datatype\(text)$optional"] $param_list]
@@ -169,7 +169,7 @@ ad_proc -private as::item_display_tb::set_item_display_type {
 	db_dml update_section_in_assessment {}
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_tb"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_tb"} {
 	    set as_item_display_id [as::item_display_tb::new \
 					-html_display_options $html_options \
 					-abs_size $abs_size \

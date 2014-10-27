@@ -104,7 +104,7 @@ ad_proc -public as::item_type_oq::render {
 
     Render an Open Question Type
 } {
-    if {![empty_string_p $default_value]} {
+    if {$default_value ne ""} {
 	array set values $default_value
 	set default $values(clob_answer)
     } else {
@@ -203,7 +203,7 @@ ad_proc -private as::item_type_oq::add_to_assessment {
 
     @param assessment_id Assessment to attach question to
     @param section_id Section the question is in
-    @oaram as_item_id Item object this multiple choice belongs to
+    @param as_item_id Item object this multiple choice belongs to
     @param title Title of question/choice set for question library
     @param after Add this question after the queston number in the section
 
@@ -211,7 +211,7 @@ ad_proc -private as::item_type_oq::add_to_assessment {
     @creation-date 2006-10-25
 } {
     if {![as::item::get_item_type_info -as_item_id $as_item_id] \
-            || $item_type_info(object_type) != "as_item_type_oq"} {
+            || $item_type_info(object_type) ne "as_item_type_oq"} {
         set as_item_type_id [as::item_type_oq::new \
                                  -title $title \
                                  -default_value $default_value \

@@ -11,20 +11,27 @@ drop function as_inter_item_check__new (integer,boolean,integer,integer,varchar,
 
 drop function as_inter_item_check__delete (integer);
 
-create function inline_0()
-returns integer as '
-declare
+
+
+--
+-- procedure inline_0/0
+--
+CREATE OR REPLACE FUNCTION inline_0(
+
+) RETURNS integer AS $$
+DECLARE
 	object_rec	record;
-begin 
+BEGIN 
 
 	-- drop objects
- 	for object_rec in select object_id from acs_objects where object_type = ''as_inter_item_check''
+ 	for object_rec in select object_id from acs_objects where object_type = 'as_inter_item_check'
 	loop
 		PERFORM acs_object__delete ( object_rec.object_id );
 	end loop;
 
 	return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_0();
 

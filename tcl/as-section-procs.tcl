@@ -32,9 +32,9 @@ ad_proc -public as::section::new {
     # Insert as_section in the CR (and as_sections table) getting the revision_id (as_section_id)
     db_transaction {
 	set section_item_id [db_nextval acs_object_id_seq]
-	if { ![empty_string_p $name] && [db_0or1row item_exists {}] } {
+	if { $name ne "" && [db_0or1row item_exists {}] } {
 	    set name "$section_item_id: $name"
-	} elseif {[empty_string_p $name]} {
+	} elseif {$name eq ""} {
 	    set name "SEC_$section_item_id"
 	}
 	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name]
@@ -136,7 +136,7 @@ ad_proc -public as::section::latest {
 
     Returns the latest revision of a section
 } {
-    if {![db_0or1row get_latest_section_id {}] && ![empty_string_p $default]} {
+    if {![db_0or1row get_latest_section_id {}] && $default ne ""} {
 	return $default
     }
     return $section_id
@@ -164,7 +164,7 @@ ad_proc -public as::section::copy {
 
 	set section_item_id [db_nextval acs_object_id_seq]
 
-	if {[empty_string_p $name]} {
+	if {$name eq ""} {
 	    set name "SEC_$section_item_id"
 	}
 	set section_item_id [content::item::new -item_id $section_item_id -parent_id $folder_id -content_type {as_sections} -name $name]
@@ -225,7 +225,7 @@ ad_proc as::section::items {
     set max_pos 0
     db_foreach section_items {} {
 	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type $as_item_type_id $validate_block $question_text]
-	if {![empty_string_p $fixed_position] && $fixed_position != "0"} {
+	if {$fixed_position ne "" && $fixed_position != 0} {
 	    set fixed_positions($fixed_position) $as_item_id
 	    if {$max_pos < $fixed_position} {
 		set max_pos $fixed_position
@@ -260,7 +260,7 @@ ad_proc as::section::items {
 	    lappend sorted_items $fixed_position($position)
 	    array unset fixed_position $position
 	} elseif {[llength $open_positions] > 0} {
-	    lappend sorted_items [lindex [lindex $open_positions 0] 0]
+	    lappend sorted_items [lindex $open_positions 0 0]
 	    set open_positions [lreplace $open_positions 0 0]
 	}
     }
@@ -273,7 +273,7 @@ ad_proc as::section::items {
 	}
     }
     
-    if {![empty_string_p $num_items] && [llength $sorted_items] > $num_items} {
+    if {$num_items ne "" && [llength $sorted_items] > $num_items} {
     	set sorted_items [lreplace $sorted_items $num_items end]
     }
 
@@ -310,19 +310,19 @@ ad_proc -public as::section::calculate {
     db_1row sum_of_item_points {}
 
     # Make sure we have valid points for the calculation
-    if ![exists_and_not_null section_max_points] {
+    if {(![info exists section_max_points] || $section_max_points eq "")} {
 	set section_max_points 0
     }
 
-    if ![exists_and_not_null item_points] {
+    if {(![info exists item_points] || $item_points eq "")} {
 	set item_points 0
     }
 
-    if {![exists_and_not_null item_max_points] || $item_max_points==0} {
+    if {(![info exists item_max_points] || $item_max_points eq "") || $item_max_points==0} {
 	set item_max_points 100
     }
 
-    set section_points [expr round($section_max_points * $item_points / $item_max_points)]
+    set section_points [expr {round($section_max_points * $item_points / $item_max_points)}]
     as::session_results::new -target_id $section_data_id -points $section_points
     db_dml update_section_points {}
 }

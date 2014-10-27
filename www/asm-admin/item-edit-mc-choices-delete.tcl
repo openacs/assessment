@@ -9,10 +9,10 @@ ad_page_contract {
   @cvs-id $Id: item-swap.tcl
 
 } {
-    assessment_id:integer,notnull
-    section_id:integer,notnull
-    as_item_id:integer,notnull
-    choice_id:integer,notnull
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
+    choice_id:naturalnum,notnull
 }
 
 set package_id [ad_conn package_id]

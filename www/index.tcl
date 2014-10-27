@@ -36,8 +36,8 @@ template::list::create \
 template::multirow create assessments assessment_id title description assessment_url
 db_foreach open_asssessments {} {
     set title [as::assessment::title -title $title]
-    if {([empty_string_p $start_time] || $start_time <= $cur_time) && ([empty_string_p $end_time] || $end_time >= $cur_time)} {
-	if {[empty_string_p $password]} {
+    if {($start_time eq "" || $start_time <= $cur_time) && ($end_time eq "" || $end_time >= $cur_time)} {
+	if {$password eq ""} {
 	    set assessment_url [export_vars -base "instructions" {assessment_id}]
 	} else {
 	    set assessment_url [export_vars -base "assessment-password" {assessment_id}]

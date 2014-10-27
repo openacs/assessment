@@ -8,7 +8,7 @@ ad_page_contract {
     @date   September 28, 2004
     @cvs-id $Id: 
 } {
-    assessment_id:integer
+    assessment_id:naturalnum,notnull
     {context ""}
     {reg_p ""}
     {asm_instance ""}
@@ -49,7 +49,7 @@ set sessions_url [export_vars -base sessions {assessment_id}]
 set results_url [export_vars -base results-users {assessment_id}]
 set export_url [export_vars -base results-export {assessment_id}]
 
-if { [exists_and_not_null asm_instance]} {
+if { ([info exists asm_instance] && $asm_instance ne "")} {
     set reg_url "[apm_package_url_from_id $asm_instance]admin"
 } else {
     set reg_url "../admin"
@@ -84,7 +84,7 @@ set notification_chunk [notification::display::request_widget \
 			    -url [ad_return_url] ]
 
 db_multirow -extend { section_url } sections assessment_sections {} {
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
 	set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]

@@ -5,13 +5,13 @@ ad_page_contract {
     
     This page allows to relate an action to the check.    
 } {
-    assessment_id:integer
-    inter_item_check_id:integer
-    section_id:integer
-    check_id:optional
+    assessment_id:naturalnum,notnull
+    inter_item_check_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    check_id:naturalnum,optional
     edit_check:optional
     by_item_p:optional
-    item_id:optional
+    item_id:naturalnum,optional
     {section_check_p 0}
 } -properties {
     context:onevalue
@@ -120,7 +120,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     ad_returnredirect "${url}$return_url"
     
 } -after_submit {
-    if {  $action_perform == "m" } {
+    if {  $action_perform eq "m" } {
 	as::assessment::check::add_manual_check -assessment_id $assessment_rev_id -inter_item_check_id  $inter_item_check_id
     }
     

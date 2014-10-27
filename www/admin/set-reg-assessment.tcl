@@ -5,14 +5,14 @@ ad_page_contract {
     @creation-date 2005-01-20
     @cvs-id $Id: 
 } {
-    assessment_id:optional
+    assessment_id:naturalnum,optional
 }
 
 
 set subsite_id [subsite::main_site_id]
 set asm_instance [ad_conn package_id]
 
-if {![exists_and_not_null assessment_id]} {
+if {(![info exists assessment_id] || $assessment_id eq "")} {
     set value [parameter::get -parameter RegistrationId -package_id $subsite_id]
     set assessment_id $value
 }
@@ -39,7 +39,7 @@ ad_form -name get_assessment  -form {
     {edit:text(submit)
 	{label "[_ acs-subsite.edit_asm]"}}
 } -after_submit {
-    if {![empty_string_p $edit]} {
+    if {$edit ne ""} {
 	if { $assessment_id != 0} {
 	    set package_id [db_string package_id {}]
 	    set url [apm_package_url_from_id $package_id]

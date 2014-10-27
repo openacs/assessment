@@ -4,7 +4,7 @@ ad_page_contract {
     @date 07-01-2005
     @cvs-id $Id:
 } {
-    action_id:optional
+    action_id:naturalnum,optional
 }
 
 set package_id [ad_conn package_id]
@@ -39,7 +39,7 @@ ad_form -name action_admin -form {
     }
 
 } -validate {
-    {tcl_code {![empty_string_p $tcl_code]} "[_ assessment.error_enter_tcl_code]"}
+    {tcl_code {$tcl_code ne ""} "[_ assessment.error_enter_tcl_code]"}
 
 } -select_query {
     	select name,description,tcl_code 

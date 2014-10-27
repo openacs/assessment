@@ -5,9 +5,9 @@ ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @date 2005-01-07
 } {
-    assessment_id:integer
-    section_id
-    item_id:optional
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    item_id:naturalnum,optional
       
 }
 
@@ -22,7 +22,7 @@ set by_item_p 0
 set item_p ""
 set item_id_check ""
 
-if {[exists_and_not_null item_id]} {
+if {([info exists item_id] && $item_id ne "")} {
     set show_p 0
     set by_item_p 1
     set item_p "&item_id=$item_id"
@@ -44,7 +44,7 @@ if {[exists_and_not_null item_id]} {
     if {$count == 0} {
 	append check_list "0,"
     }
-    set check_list [string range $check_list 0 [expr [string length $check_list] -2]]
+    set check_list [string range $check_list 0 [string length $check_list]-2]
     append  check_list ")"
 } 
 

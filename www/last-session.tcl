@@ -7,8 +7,8 @@ ad_page_contract {
 	@author Eduardo Pérez Ureta (eperez@it.uc3m.es)
 	@creation-date 2004-09-03
 } {
-    assessment_id:notnull
-    {subject_id:integer,optional ""}
+    assessment_id:naturalnum,notnull
+    {subject_id:naturalnum,optional ""}
 } -properties {
     context:onevalue
     assessment_info:multirow
@@ -18,7 +18,7 @@ set context [list "[_ assessment.Show_Sessions]"]
 
 set package_id [ad_conn package_id]
 
-if {[empty_string_p $subject_id]} {
+if {$subject_id eq ""} {
     set subject_id [ad_conn user_id]
 }
 

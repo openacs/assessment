@@ -21,10 +21,10 @@ ad_proc -public as::export::new_element {
     New element 
 } {
     #create a new element named "label" and child of "father", with attribute_label=attribute_value
-    if {![empty_string_p $value]} {
+    if {$value ne ""} {
         set label [$root createElement $label]
         $father appendChild $label
-	if {![empty_string_p $attribute_label]} {
+	if {$attribute_label ne ""} {
 	    $label setAttribute $attribute_label $attribute_value
 	}
 	if {$material_p == "t"} {
@@ -55,7 +55,7 @@ ad_proc -public as::export::element_qtimetadatafield {
     New element qtimetadatafield
 } {
    #create an element <qtimetadatafield><fieldlabel></fieldlabel><fieldentry></fieldentry></qtimetadatafield>
-   if {![empty_string_p $value]} {
+   if {$value ne ""} {
     #<qtimetadatafield>
     set qtimetadatafield [$root createElement qtimetadatafield]
     $father appendChild $qtimetadatafield

@@ -4,10 +4,10 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
-    mc_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
+    mc_id:naturalnum,notnull
     feedback:array,optional
     fixed_pos:array,optional
     answer_val:array,optional
@@ -60,7 +60,7 @@ foreach one_choice $choices {
     append ad_form_code "\{fixed_pos.$choice_id:text,optional,nospell \{label \"[_ assessment.Fixed_Position]\"\} \{html \{size 5 maxlength 5\}\} \{value \"$fixed_position\"\} \{help_text \"[_ assessment.choice_Fixed_Position_help]\"\}\}\n"
     append ad_form_code "\{answer_val.$choice_id:text,optional,nospell \{label \"[_ assessment.Answer_Value]\"\} \{html \{size 80 maxlength 500\}\} \{value \"$answer_value\"\} \{help_text \"[_ assessment.Answer_Value_help]\"\}\}\n"
 
-    if {![empty_string_p $content_rev_id]} {
+    if {$content_rev_id ne ""} {
 	append ad_form_code "\{delete_content.$choice_id:text(checkbox),optional \{label \"[_ assessment.choice_Delete_Content]\"\} \{options \{\{\{<a href=\"../view/$content_filename?revision_id=$content_rev_id\" target=view>$content_name</a>\} t\}\} \}\}\n"
     }
     append ad_form_code "\{content_$choice_id:file,optional \{label \"[_ assessment.choice_Content]\"\} \{help_text \"[_ assessment.choice_Content_help]\"\}\}\n"
@@ -75,7 +75,7 @@ foreach one_choice $choices {
 }
 append ad_form_code "\}"
 if {$count_correct > 0} {
-    set percentage [expr 100 / $count_correct]
+    set percentage [expr {100 / $count_correct}]
 } else {
     set percentage 0
 }
@@ -110,7 +110,7 @@ ad_form -extend -name item_edit_mc_choices -edit_request {
 	    db_dml update_choice_data {}
 
 	    eval set content "\$content_$choice_id"
-	    if {![empty_string_p $content]} {
+	    if {$content ne ""} {
 		set filename [lindex $content 0]
 		set tmp_filename [lindex $content 1]
 		set file_mimetype [lindex $content 2]

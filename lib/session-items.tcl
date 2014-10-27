@@ -1,8 +1,8 @@
-if {![exists_and_not_null edit_p]} {
+if {(![info exists edit_p] || $edit_p eq "")} {
     set edit_p 0
 }
 
-if {![exists_and_not_null feedback_only_p] } {
+if {(![info exists feedback_only_p] || $feedback_only_p eq "") } {
     set feedback_only_p 0
 }
 if {![info exists assessment_id]} {
@@ -48,14 +48,14 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     
     set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback -random_p $assessment_data(random_p)]
 
-    if {$presentation_type == "fitb"} {
+    if {$presentation_type eq "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
     if {$presentation_type == "f"} {
 	set view "[as::item_display_$presentation_type\::view -item_id $as_item_id -session_id $session_id -section_id $section_id]"
     }
 
-    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+    if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
 	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
 	set choice_orientation $type(choice_orientation)
 	array unset type
@@ -63,11 +63,11 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 	set choice_orientation ""
     }
 
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
 	set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
-    if {![empty_string_p $default_value]} {
+    if {$default_value ne ""} {
 	array set values $default_value
 	set result_points $values(points)
 	set item_data_id $values(item_data_id)
@@ -77,7 +77,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 	if { $points != 0 } {
 	    if {$result_points < $points} {
 		set correct_p 0
-		if {$show_feedback != "correct"} {
+		if {$show_feedback ne "correct"} {
 		    if { $feedback_wrong ne "" } {
 			set feedback "<span style=\"color:red\">$feedback_wrong</span>"
 			set has_feedback_p 1
@@ -98,17 +98,17 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 	    }
 	} else {
 	    set correct_p 1
-	    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+	    if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
 		set user_answers [db_list get_user_choice_answers {}]
 
 		set correct_answers [db_list get_correct_choice_answers {}]
 
-		if { $presentation_type == "rb" } {
+		if { $presentation_type eq "rb" } {
 		    set user_answers [lindex $user_answers 0]
 
 		    if { [lsearch $correct_answers $user_answers] == -1 } {
 			set correct_p 0
-			if {$show_feedback != "correct"} {
+			if {$show_feedback ne "correct"} {
 			    if { $feedback_wrong ne "" } {
 				set feedback "<span style=\"color:red\">$feedback_wrong</span>"
 				set has_feedback_p 1
@@ -117,7 +117,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 			    }
 			}	
 		    } else {
-			if {$show_feedback != "incorrect"} {
+			if {$show_feedback ne "incorrect"} {
 			    if { $feedback_right ne "" } {
 				set feedback "<span style=\"color:green\">$feedback_right</span>"
 				set has_feedback_p 1
@@ -143,7 +143,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 		    }
 
 		    if { !$correct_p } {
-			if {$show_feedback != "correct"} {
+			if {$show_feedback ne "correct"} {
 			    if { $feedback_wrong ne "" } {
 				set feedback "<span style=\"color:red\">$feedback_wrong</span>"
 				set has_feedback_p 1
@@ -152,7 +152,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 			    }
 			}	
 		    } else {
-			if {$show_feedback != "incorrect"} {
+			if {$show_feedback ne "incorrect"} {
 			    if { $feedback_right ne "" } {
 				set feedback "<span style=\"color:green\">$feedback_right</span>"
 				set has_feedback_p 1
@@ -182,7 +182,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     }
 }
 
-if { $feedback_only_p && $feedback_count == 0 && [exists_and_not_null next_url] } {
+if { $feedback_only_p && $feedback_count == 0 && ([info exists next_url] && $next_url ne "") } {
     ad_returnredirect $next_url
     ad_script_abort
 }

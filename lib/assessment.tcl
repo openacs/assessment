@@ -6,9 +6,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-09-13
 } -query {
-    assessment_id:integer,notnull
+    assessment_id:naturalnum,notnull
     {password:optional ""}
-    {session_id:integer,optional ""}
+    {session_id:naturalnum,optional ""}
     {section_order:integer,optional ""}
     {item_order:integer,optional ""}
     {item_id ""}
@@ -56,28 +56,28 @@ if { $assessment_data(publish_status) ne "live" } {
 set assessment_rev_id $assessment_data(assessment_rev_id)
 set number_tries $assessment_data(number_tries)
 db_1row total_tries {}
-if {![empty_string_p $number_tries] && $number_tries > 0 && $number_tries <= $total_tries} {
+if {$number_tries ne "" && $number_tries > 0 && $number_tries <= $total_tries} {
     ad_returnredirect [export_vars -base session {assessment_id}]
 }
 
 set errors [as::assessment::check_session_conditions -assessment_id $assessment_rev_id -subject_id $user_id -password $password]
 
-if {![empty_string_p $errors]} {
+if {$errors ne ""} {
     ad_return_complaint 1 $errors
     ad_script_abort
 }
 set assessment_package_id $assessment_data(package_id)
 
 db_transaction {
-    if {[empty_string_p $session_id]} {
+    if {$session_id eq ""} {
 
 	# Check if there is an unfinished session lying around
 	set session_id [db_string unfinished_session_id {}]
     }
-    	if {[empty_string_p $session_id]} {
+    	if {$session_id eq ""} {
 	    # start new session
 	    set session_id [as::session::new -assessment_id $assessment_rev_id -subject_id $user_id -package_id $assessment_package_id]
-	    if {[empty_string_p $assessment_data(consent_page)]} {
+	    if {$assessment_data(consent_page) eq ""} {
 		# set the time when the subject initiated the Assessment
 		db_dml session_start {}
 	    } else {
@@ -87,12 +87,12 @@ db_transaction {
 	    # pick up old session
 	    if {$section_order eq ""} {
 		db_1row unfinished_section_order {}
-		if {[empty_string_p $section_order]} {
+		if {$section_order eq ""} {
 		    #		set consent_url [export_vars -base assessment-consent {assessment_id session_id password return_url next_asm single_section_id}]
 		} else {
 		    db_1row unfinished_section_id {}
 		    db_1row unfinished_item_order {}
-		if {![empty_string_p $item_order]} {
+		if {$item_order ne ""} {
 		    incr section_order -1
 		    if {$item_order eq ""} {
 			set item_order 0
@@ -108,16 +108,16 @@ db_transaction {
     if {![info exists consent_url]} {
 	db_1row session_time {}
 	set assessment_data(elapsed_time) $elapsed_time
-	if {![empty_string_p $assessment_data(time_for_response)]} {
-	    set assessment_data(time_for_response) [expr 60 * $assessment_data(time_for_response)]
-	    set assessment_data(pretty_remaining_time) [as::assessment::pretty_time -seconds [expr $assessment_data(time_for_response) - $assessment_data(elapsed_time)]]
+	if {$assessment_data(time_for_response) ne ""} {
+	    set assessment_data(time_for_response) [expr {60 * $assessment_data(time_for_response)}]
+	    set assessment_data(pretty_remaining_time) [as::assessment::pretty_time -seconds [expr {$assessment_data(time_for_response) - $assessment_data(elapsed_time)}]]
 	}
 
 
 	# get all sections of assessment in correct order
 	set section_list [as::assessment::sections -assessment_id $assessment_rev_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
 	if {$single_section_id eq ""} {
-	    if {[empty_string_p $section_order]} {
+	    if {$section_order eq ""} {
 		# start at the first section
 		set section_order 0
 		set section_id [lindex $section_list 0]
@@ -154,7 +154,7 @@ db_transaction {
 	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $user_id -package_id $assessment_package_id
 	db_1row section_data {} -column_array section
 	set display_type_id $section(display_type_id)
-	if {![empty_string_p $display_type_id]} {
+	if {$display_type_id ne ""} {
 	    db_1row display_data {} -column_array display
 	} else {
 	    array set display [list num_items "" adp_chunk "" branched_p f back_button_p t submit_answer_p f sort_order_type order_of_entry]
@@ -175,13 +175,13 @@ db_transaction {
 
 	set section(num_sections) [llength $section_list]
 	set section(num_items) [llength $item_list]
-	if {![empty_string_p $section(max_time_to_complete)]} {
-	    set section(pretty_remaining_time) [as::assessment::pretty_time -seconds [expr $section(max_time_to_complete) - $section(elapsed_time)]]
+	if {$section(max_time_to_complete) ne ""} {
+	    set section(pretty_remaining_time) [as::assessment::pretty_time -seconds [expr {$section(max_time_to_complete) - $section(elapsed_time)}]]
 	}
 
-	if {![empty_string_p $item_order]} {
+	if {$item_order ne ""} {
 	    # show next items on section page
-	    if {![empty_string_p $display(num_items)]} {
+	    if {$display(num_items) ne ""} {
 		# make sure to display correct section page
 		set item_order [expr {$item_order - ($item_order % $display(num_items))}]
 	    } elseif {$display(submit_answer_p) == "t"} {
@@ -191,34 +191,34 @@ db_transaction {
 	}
 
 	# determine on which page we are right now based on item_order
-	if { ![exists_and_not_null item_order] } { set item_order 0 }
+	if { (![info exists item_order] || $item_order eq "") } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
 	set current_page [expr {$item_order == 0 ? 0 : $item_order / $page_display_per_page + 1}]
 
 	# strip away items on previous section pages
-	set item_list [lreplace $item_list 0 [expr $item_order-1]]
+	set item_list [lreplace $item_list 0 [expr {$item_order-1}]]
 
 
-	if {![empty_string_p $display(num_items)]} {
+	if {$display(num_items) ne ""} {
 	    if {[llength $item_list] > $display(num_items)} {
 		# show only a few items per page
 		set item_list [lreplace $item_list $display(num_items) end]
 		# next page: more items of this section
 		set new_item_order $item_order
 		set new_section_order $section_order
-		if {[empty_string_p $item_order]} {
+		if {$item_order eq ""} {
 		    set new_item_order 0
 		}
-		set new_item_order [expr $new_item_order + $display(num_items)]
+		set new_item_order [expr {$new_item_order + $display(num_items)}]
 	    } else {
 		# next page: next section
 		set new_item_order ""
-		set new_section_order [expr $section_order + 1]
+		set new_section_order [expr {$section_order + 1}]
 	    }
 	} else {
 	    # next page: next section
-	    set new_section_order [expr $section_order + 1]
+	    set new_section_order [expr {$section_order + 1}]
 	    set new_item_order ""
 	}
 
@@ -233,7 +233,7 @@ db_transaction {
 
 	# let's generate the list of page numbers 
 	# for sections with a limited number of items per page
-	if {![empty_string_p $display(num_items)] && $page_total > 1} {
+	if {$display(num_items) ne "" && $page_total > 1} {
 	    set progress_bar_list [template::util::number_list $page_total 1]
 	    set total_pages [llength $progress_bar_list]
 	}
@@ -254,15 +254,15 @@ if {[info exists consent_url]} {
     ad_script_abort
 }
 
-set section(cur_section) [expr $section_order + 1]
-set section(cur_first_item) [expr $item_order + 1]
-set section(cur_last_item) [expr $item_order + [llength $item_list]]
+set section(cur_section) [expr {$section_order + 1}]
+set section(cur_first_item) [expr {$item_order + 1}]
+set section(cur_last_item) [expr {$item_order + [llength $item_list]}]
 
 # check if section or session time ran out
-if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(time_for_response) < $assessment_data(elapsed_time)) || (![empty_string_p $section(max_time_to_complete)] && $section(max_time_to_complete) < $section(elapsed_time))} {
-    if {[empty_string_p $assessment_data(time_for_response)] || $assessment_data(time_for_response) >= $assessment_data(elapsed_time)} {
+if {($assessment_data(time_for_response) ne "" && $assessment_data(time_for_response) < $assessment_data(elapsed_time)) || ($section(max_time_to_complete) ne "" && $section(max_time_to_complete) < $section(elapsed_time))} {
+    if {$assessment_data(time_for_response) eq "" || $assessment_data(time_for_response) >= $assessment_data(elapsed_time)} {
 	# skip to next section
-	set new_section_order [expr $section_order + 1]
+	set new_section_order [expr {$section_order + 1}]
 	set new_item_order ""
 	if {$new_section_order == [llength $section_list]} {
 	    # last section
@@ -296,7 +296,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	    }
 
 
-	    set section_list [lreplace $section_list 0 [expr $section_order]]
+	    set section_list [lreplace $section_list 0 [expr {$section_order}]]
 	    foreach section_id $section_list {
 		# skip remaining sections
 		as::section::skip -section_id $section_id -session_id $session_id -subject_id $user_id
@@ -304,7 +304,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	}
     }
 
-    if {![empty_string_p $new_section_order]} {
+    if {$new_section_order ne ""} {
 	# go to next section
 	set section_order $new_section_order
 	set item_order $new_item_order
@@ -319,7 +319,7 @@ if {(![empty_string_p $assessment_data(time_for_response)] && $assessment_data(t
 	# section based aa checks
 	as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
         as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
-	if {[empty_string_p $assessment_data(return_url)]} {
+	if {$assessment_data(return_url) eq ""} {
 	    set return_url [export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}]
 	} else {
 	    set return_url $assessment_data(return_url)
@@ -371,7 +371,7 @@ foreach one_item $item_list {
     } else {
 	# submit each item seperately
 	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id -section_id $section_id]
-	if {![empty_string_p $default_value]} {
+	if {$default_value ne ""} {
 	    # value already submitted
 	    set submitted_p t
 	    set mode display
@@ -451,7 +451,7 @@ foreach one_item $item_list {
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 
-    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+    if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
 	array set item [as::item::item_data -as_item_id $as_item_id]
 	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
 	set choice_orientation $type(choice_orientation)
@@ -605,7 +605,7 @@ if {$display(submit_answer_p) != "t"} {
 	    ad_returnredirect $next_url
 	    ad_script_abort
 	}
-	if {![empty_string_p $new_section_order]} {
+	if {$new_section_order ne ""} {
 	    # go to next section
 	    set section_order $new_section_order
 	    set item_order $new_item_order
@@ -620,7 +620,7 @@ if {$display(submit_answer_p) != "t"} {
 	    # section based aa checks
 	    as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
-	    if {[empty_string_p $assessment_data(return_url)]} {
+	    if {$assessment_data(return_url) eq ""} {
 		set return_url [export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}]
 	    } else {
 		set return_url $assessment_data(return_url)

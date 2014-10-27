@@ -4,8 +4,8 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     after:integer
     choice:optional,array
     correct:optional,array
@@ -51,7 +51,7 @@ if { $type ne "survey"} {
 #    }
 }
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+if {[category_tree::get_mapped_trees $package_id] ne ""} {
     category::ad_form::add_widgets -container_object_id $package_id -categorized_object_id 0 -form_name item-add
 }
 
@@ -167,7 +167,7 @@ ad_form -extend -name item-add -form {
 }
 
 ad_form -extend -name item-add -validate {
-    {item_type {$item_type ne "mc" || [exists_and_not_null add_existing_mc_id] || [array size choice] > [llength [lsearch -all -exact [array get choice] ""]]} "Please enter at least one choice for multiple choice question."}
+    {item_type {$item_type ne "mc" || ([info exists add_existing_mc_id] && $add_existing_mc_id ne "") || [array size choice] > [llength [lsearch -all -exact [array get choice] ""]]} "Please enter at least one choice for multiple choice question."}
 }
 ad_form -extend -name item-add -new_request {
     set name ""
@@ -184,11 +184,11 @@ ad_form -extend -name item-add -new_request {
     set ms_label "Choose all that apply"
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
 	set points 0
     }
 
-    if {![exists_and_not_null formbutton_add_another_choice]} {
+    if {(![info exists formbutton_add_another_choice] || $formbutton_add_another_choice eq "")} {
     # map display types to data types
     switch -exact $item_type {
         sa {
@@ -251,11 +251,11 @@ ad_form -extend -name item-add -new_request {
 	    db_dml delete_files {}
 	}
 
-	if {[exists_and_not_null category_ids]} {
+	if {([info exists category_ids] && $category_ids ne "")} {
 	    category::map_object -object_id $as_item_id $category_ids
 	}
 
-	if {![empty_string_p $content]} {
+	if {$content ne ""} {
 	    set filename [lindex $content 0]
 	    set tmp_filename [lindex $content 1]
 	    set file_mimetype [lindex $content 2]
@@ -295,7 +295,7 @@ ad_form -extend -name item-add -new_request {
 
 		if {[info exists add_existing_mc_id] && $add_existing_mc_id ne ""} {
 		    set add_existing_mc_id [as::item_type_mc::copy -type_id $add_existing_mc_id -copy_correct_answer_p "f" -new_title ""]
-		    if {![db_0or1row item_type {}] || $object_type != "as_item_type_mc"} {
+		    if {![db_0or1row item_type {}] || $object_type ne "as_item_type_mc"} {
 			if {![info exists object_type]} {
 			    # first item type mapped
 			    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $add_existing_mc_id -type as_item_type_rel
@@ -337,10 +337,10 @@ ad_form -extend -name item-add -new_request {
     }
 }
 } -after_submit {
-    if {![exists_and_not_null formbutton_add_another_question] \
-	    && ![exists_and_not_null formbutton_add_another_choice]} {
+    if {(![info exists formbutton_add_another_question] || $formbutton_add_another_question eq "") \
+	    && (![info exists formbutton_add_another_choice] || $formbutton_add_another_choice eq "")} {
 	set return_url "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
-    } elseif {[exists_and_not_null formbutton_add_another_question]} {
+    } elseif {([info exists formbutton_add_another_question] && $formbutton_add_another_question ne "")} {
 	set after [expr {$after + 1}]
 	set return_url  "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
     }

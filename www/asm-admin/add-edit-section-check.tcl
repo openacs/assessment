@@ -9,9 +9,9 @@ ad_page_contract {
     @arch-tag: 29e2145c-7bcc-4a3d-b2e7-b43a2e305f7c
     @cvs-id $Id$
 } {
-    assessment_id:integer
-    section_id:integer,optional
-    inter_item_check_id:optional
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,optional
+    inter_item_check_id:naturalnum,optional
     edit_check:optional
     by_item_p:optional
 } -properties {
@@ -39,10 +39,10 @@ set section_id_from $section_id
 
 set as_item_id $item_id
 
-if {[exists_and_not_null edit_check]} {
+if {([info exists edit_check] && $edit_check ne "")} {
     set return_url "&check_id=$inter_item_check_id&edit_check=t"
 }
-if {[exists_and_not_null by_item_p]} {
+if {([info exists by_item_p] && $by_item_p ne "")} {
     if {$by_item_p==1} {
 	    append return_url "&item_id=$item_id&by_item_p=$by_item_p"
 	} else  {

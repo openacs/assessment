@@ -19,41 +19,58 @@ select acs_object_type__create_type (
 
 
 
-create or replace function as_action__new (integer,varchar,varchar,text,integer,integer,integer)
-returns integer as '
-declare 
-	new__action_id     	alias for $1;
-        new__name        	alias for $2;
-        new__description        alias for $3;
-        new__tcl_code           alias for $4;
-	new__context_id		alias for $5;
-	new__creation_user	alias for $6;
-	new__package_id         alias for $7;
+
+
+-- added
+select define_function_args('as_action__new','action_id,name,description,tcl_code,context_id,creation_user,package_id');
+
+--
+-- procedure as_action__new/7
+--
+CREATE OR REPLACE FUNCTION as_action__new(
+   new__action_id integer,
+   new__name varchar,
+   new__description varchar,
+   new__tcl_code text,
+   new__context_id integer,
+   new__creation_user integer,
+   new__package_id integer
+) RETURNS integer AS $$
+DECLARE 
 	v_action_id	     integer;
-begin
+BEGIN
 	v_action_id := acs_object__new (
 		new__action_id,
-		''as_action'',
+		'as_action',
 		now(),
 		new__creation_user,
 		null,
 		new__package_id,
-		''t''
+		't'
 	);
 	insert into as_actions 
 	(action_id,name,description,tcl_code)
         values (v_action_id,new__name,new__description,new__tcl_code);
 
         return v_action_id;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 
 
-create or replace function as_action__delete (integer)
-returns integer as '
-declare 
-	del__action_id     alias for $1;
-begin
+
+
+-- added
+select define_function_args('as_action__delete','action_id');
+
+--
+-- procedure as_action__delete/1
+--
+CREATE OR REPLACE FUNCTION as_action__delete(
+   del__action_id integer
+) RETURNS integer AS $$
+DECLARE 
+BEGIN
 	
 		
 	delete from as_action_params where action_id=del__action_id;
@@ -62,26 +79,35 @@ begin
         PERFORM acs_object__delete (del__action_id);	
 	return del__action_id;	
 
-end;' language 'plpgsql';	
+END;
+$$ LANGUAGE plpgsql;	
 	
 	
 
-create or replace function as_action__default_actions (integer,integer,integer)
-returns integer as '
-declare 
-	new__context_id		alias for $1;
-	new__creation_user	alias for $2;
-	new__package_id		alias for $3;
+
+
+-- added
+select define_function_args('as_action__default_actions','context_id,creation_user,package_id');
+
+--
+-- procedure as_action__default_actions/3
+--
+CREATE OR REPLACE FUNCTION as_action__default_actions(
+   new__context_id integer,
+   new__creation_user integer,
+   new__package_id integer
+) RETURNS integer AS $$
+DECLARE 
 	v_action_id		integer;
 	v_parameter_id		integer;
-begin
+BEGIN
 	
 	
 	v_action_id := as_action__new (
 		null,
-		''Register User'',
-		''Register new users'',
-		''set password [ad_generate_random_string] 
+		'Register User',
+		'Register new users',
+		'set password [ad_generate_random_string] 
 db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
@@ -89,7 +115,7 @@ set admin_user_id [auth::test::get_admin_user_id]
 set administration_name [db_string admin_name "select first_names || \'\' \'\' || last_name from 
 persons where person_id = :admin_user_id"]
 set system_name [ad_system_name]
-set system_url [ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""].
+set system_url [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""].
 set admin_email [db_string unused "select email from parties where party_id = :admin_user_id"]
 set message "$first_names $last_name,
 You have been added as a user to $system_name
@@ -100,53 +126,54 @@ Password: $password
 (you may change your password after you log in)
 Thank you,
 $administration_name"
-ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"'',
+ns_sendmail "$email" "$admin_email" "You have been added as a user to [ad_system_name] at [ad_url]" "$message"',
 	new__package_id,
 	new__creation_user,
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''first_names'',''First Names of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''last_name'',''Last Name of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''email'',''Email of the User'');
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,''n'',''user_name'',''User name of the User'');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','first_names','First Names of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','last_name','Last Name of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','email','Email of the User');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description) values (v_parameter_id,v_action_id,'n','user_name','User name of the User');
 
 v_action_id:= as_action__new (
 	null,
-	''Event Registration'',
-	''Register user to event'',
-	''set user_id [ad_conn user_id]
-events::registration::new -event_id $event_id -user_id $user_id'',
+	'Event Registration',
+	'Register user to event',
+	'set user_id [ad_conn user_id]
+events::registration::new -event_id $event_id -user_id $user_id',
 	new__package_id,
 	new__creation_user,
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''event_id'',''Event to add the user'', ''select event_id,event_id from acs_events'');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','event_id','Event to add the user', 'select event_id,event_id from acs_events');
 
 v_action_id:= as_action__new (
 	null,
-	''Add to Community'',
-	''Add user to a community'',
-	''set user_id [ad_conn user_id]
+	'Add to Community',
+	'Add user to a community',
+	'set user_id [ad_conn user_id]
 dotlrn_privacy::set_user_guest_p -user_id $user_id -value "t"
 dotlrn::user_add -can_browse  -user_id $user_id
-dotlrn_community::add_user_to_community -community_id $community_id -user_id $user_id'',
+dotlrn_community::add_user_to_community -community_id $community_id -user_id $user_id',
 	new__package_id,
 	new__creation_user,
 	new__package_id
 	);
 
-v_parameter_id:= nextval(''as_action_params_parameter_id'');
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,''q'',''community_id'',''Community to add the user'', ''select pretty_name,community_id from dotlrn_communities'');
+v_parameter_id:= nextval('as_action_params_parameter_id');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities');
 
 	return v_action_id;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 
 create table del_actions (
@@ -168,9 +195,15 @@ create table del_params (
 
 
 
-create or replace function as_action__create_action_object ()
-returns integer as '
-declare 
+
+
+--
+-- procedure as_action__create_action_object/0
+--
+CREATE OR REPLACE FUNCTION as_action__create_action_object(
+
+) RETURNS integer AS $$
+DECLARE 
 	v_action_id	integer;
 	v_parameter_id	integer;
 	package		RECORD;
@@ -178,7 +211,7 @@ declare
 	param		RECORD;
 	check		RECORD;
 	del_actions 	RECORD;
-begin
+BEGIN
 	
 	FOR action IN SELECT * from as_actions LOOP
 		insert into del_actions (action_id,tcl_code,name,description) values (action.action_id,action.tcl_code,action.name,action.description);
@@ -194,7 +227,7 @@ begin
 
 	alter table as_actions add constraint as_actions_action_id_fk foreign key (action_id) references acs_objects(object_id);  
 
-	FOR package IN SELECT apm.package_id,o.context_id,o.creation_user from apm_packages apm, acs_objects o where o.object_id=apm.package_id and apm.package_key = ''assessment'' LOOP
+	FOR package IN SELECT apm.package_id,o.context_id,o.creation_user from apm_packages apm, acs_objects o where o.object_id=apm.package_id and apm.package_key = 'assessment' LOOP
 
 		FOR action IN SELECT * from del_actions LOOP
 	
@@ -202,7 +235,7 @@ begin
 
 			FOR param IN SELECT * from del_params where action_id=action.action_id LOOP
 			
-				v_parameter_id:=nextval(''as_action_params_parameter_id'');		
+				v_parameter_id:=nextval('as_action_params_parameter_id');		
 				insert into as_action_params (parameter_id,type,query,description,varname,action_id) values (v_parameter_id,param.type,param.query,param.description,param.varname,v_action_id);
 
 
@@ -226,5 +259,6 @@ begin
 	return v_action_id;
 
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 

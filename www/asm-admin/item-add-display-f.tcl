@@ -4,9 +4,9 @@ ad_page_contract {
     @author  Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
 
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     after:integer
 } -properties {
     context:onevalue
@@ -57,7 +57,7 @@ ad_form -name item_add_display_f -action item-add-display-f -export { assessment
                 -new_assessment_rev_id $new_assessment_rev_id
 	set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type != "as_item_display_f"} {
+	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_f"} {
 	    set as_item_display_id [as::item_display_f::new \
 					-html_display_options $html_options \
 					-abs_size $abs_size \

@@ -4,9 +4,9 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
-    as_item_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
+    as_item_id:naturalnum,notnull
     choice:optional,array
     correct:optional,array
     move_up:optional,array
@@ -45,7 +45,7 @@ ad_form -name item_edit_general -action item-edit-general -export { assessment_i
 set item_type [string range [db_string get_item_type {}] end-1 end]
 set display_type [string range [db_string get_display_type {}] end-1 end]
 
-if { $item_type == "mc"  } {
+if { $item_type eq "mc"  } {
 	 ad_form -extend -name item_edit_general -form {
 	    {display_type:text(radio),optional
 	    	{label "[_ assessment.singleanswermultipleanswer]"} 
@@ -191,7 +191,7 @@ ns_log notice "Add Another = '[template::element::get_value item_edit_general ad
     foreach c $existing_choices {
         set id [lindex $c 1]
         template::multirow append choice_elements $id f
-        if {[lindex $c 2] eq "t" && ![template::form::is_submission item_edit_general]} {
+        if {[lindex $c 2] == "t" && ![template::form::is_submission item_edit_general]} {
             set correct($id) t
         }
     }
@@ -226,7 +226,7 @@ ns_log notice "Add Another = '[template::element::get_value item_edit_general ad
     
 ad_form -extend -name item_edit_general -edit_request {
     db_1row general_item_data {}
-    if {[empty_string_p $data_type]} {
+    if {$data_type eq ""} {
 	set data_type varchar
     }
     set data_type_disp "[_ assessment.data_type_$data_type]" 
@@ -239,11 +239,11 @@ ad_form -extend -name item_edit_general -edit_request {
 	set display_type [string range [db_string get_display_type {}] end-1 end]
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
 	set points 0
     }
 } -edit_data {
-    if {[exists_and_not_null formbutton_ok] || [exists_and_not_null formbutton_add_another_question]} {
+    if {([info exists formbutton_ok] && $formbutton_ok ne "") || ([info exists formbutton_add_another_question] && $formbutton_add_another_question ne "")} {
         set question_text [template::util::richtext::get_property contents $question_text]
         set feedback_right [template::util::richtext::get_property content $feedback_right]
         set feedback_wrong [template::util::richtext::get_property content $feedback_wrong]
@@ -280,10 +280,10 @@ ad_form -extend -name item_edit_general -edit_request {
                                  -points $points \
                                  -validate_block $validate_block]
 
-            if {[exists_and_not_null category_ids]} {
+            if {([info exists category_ids] && $category_ids ne "")} {
                 category::map_object -object_id $new_item_id $category_ids
             }
-            if {![empty_string_p $content]} {
+            if {$content ne ""} {
                 set filename [lindex $content 0]
                 set tmp_filename [lindex $content 1]
                 set file_mimetype [lindex $content 2]
@@ -336,7 +336,7 @@ ad_form -extend -name item_edit_general -edit_request {
 
 		    if {[info exists add_existing_mc_id] && $add_existing_mc_id ne ""} {
 			set new_item_type_id [as::item_type_mc::copy -type_id $add_existing_mc_id -copy_correct_answer_p "f" -new_title ""]
-			if {![db_0or1row get_item_type {}] || $object_type != "as_item_type_mc"} {
+			if {![db_0or1row get_item_type {}] || $object_type ne "as_item_type_mc"} {
 			    if {![info exists object_type]} {
 				# first item type mapped
 				as::item_rels::new -item_rev_id $as_item_id -target_rev_id $add_existing_mc_id -type as_item_type_rel
@@ -358,7 +358,7 @@ ad_form -extend -name item_edit_general -edit_request {
 			    }
 			}
 			foreach c [array names correct] {
-			    if {$correct($c) eq "t"} {
+			    if {$correct($c) == "t"} {
 				incr num_correct_answers 
 			    }
 			}
@@ -380,7 +380,7 @@ ad_form -extend -name item_edit_general -edit_request {
 			# edit existing choices
 			set count 0
 			foreach i [lsort [array names choice]] {
-			    if {[string range  $i 0 0] != "_" && ![empty_string_p $choice($i)]} {
+			    if {[string range  $i 0 0] ne "_" && $choice($i) ne ""} {
 				incr count
 				set new_choice_id [as::item_choice::new_revision -choice_id $i -mc_id $new_item_type_id]
 				set title $choice($i)
@@ -394,7 +394,7 @@ ad_form -extend -name item_edit_general -edit_request {
 			# add new choices
 			foreach i [lsort [array names choice]] {
 			    
-			    if {[string range  $i 0 0] == "_" && ![empty_string_p $choice($i)]} {
+			    if {[string range  $i 0 0] eq "_" && $choice($i) ne ""} {
 				incr count
 				set new_choice_id [as::item_choice::new -mc_id $new_item_type_id \
 						       -title $choice($i) \
@@ -447,7 +447,7 @@ ad_form -extend -name item_edit_general -edit_request {
             -text $question_text
     }
 } -after_submit {
-    if {[exists_and_not_null formbutton_ok]} {
+    if {([info exists formbutton_ok] && $formbutton_ok ne "")} {
 	set return_url [export_vars -base "questions" {assessment_id section_id }]&\#${as_item_id}
 	if {[info exists save_answer_set] && $save_answer_set eq "on" && (![info exists add_existing_mc_id] || $add_existing_mc_id eq "")} {
 	    set return_url [export_vars -base save-answer-set {assessment_id as_item_id return_url {mc_id $new_item_type_id}}]

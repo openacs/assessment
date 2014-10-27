@@ -9,8 +9,8 @@ ad_page_contract {
     @date   October 28, 2006
 
 } {
-    assessment_id:integer
-    section_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
 }
 
 set package_id [ad_conn package_id]

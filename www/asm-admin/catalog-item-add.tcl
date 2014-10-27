@@ -10,10 +10,10 @@ ad_page_contract {
     @date   2004-12-08
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     after:integer
-    as_item_id:integer,multiple,optional
+    as_item_id:naturalnum,multiple,optional
     item_ids:optional
 } -properties {
     page_title:onevalue
@@ -80,10 +80,10 @@ ad_form -name show_items -form {
 
 db_multirow -extend { presentation_type html choice_orientation } items items {} {
     set presentation_type [as::item_form::add_item_to_form -name show_items -section_id $section_id -item_id $as_item_id]
-    if {$presentation_type == "fitb"} {
+    if {$presentation_type eq "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
-    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+    if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
 	array set item [as::item::item_data -as_item_id $as_item_id]
 	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
 	set choice_orientation $type(choice_orientation)
@@ -93,7 +93,7 @@ db_multirow -extend { presentation_type html choice_orientation } items items {}
 	set choice_orientation ""
     }
 
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
 	set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]

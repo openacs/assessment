@@ -4,8 +4,8 @@ ad_page_contract {
     @author Timo Hentschel (timo@timohentschel.de)
     @cvs-id $Id:
 } {
-    assessment_id:integer
-    section_id:integer
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,notnull
     after:integer
 } -properties {
     context_bar:onevalue
@@ -46,7 +46,7 @@ ad_form -name section_copy_confirm -action section-copy -export { assessment_id 
 	    set new_section_id [as::section::copy -section_id $section_id -name $name -assessment_id $assessment_id]
 
 	    db_dml move_down_sections {}
-	    set sort_order [expr $after + 1]
+	    set sort_order [expr {$after + 1}]
 	    db_dml add_section_to_assessment {}
 	}
     }

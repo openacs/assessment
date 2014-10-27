@@ -9,8 +9,8 @@ ad_page_contract {
     @date   2004-12-08
     @cvs-id $Id: 
 } {
-    assessment_id:integer
-    section_id:integer,optional
+    assessment_id:naturalnum,notnull
+    section_id:naturalnum,optional
     after:integer
 }
 
@@ -46,7 +46,7 @@ ad_form -name catalog_search -action catalog-search -export { section_id after }
     {assessment_id:key}
 }
 
-if {![empty_string_p [category_tree::get_mapped_trees $package_id]]} {
+if {[category_tree::get_mapped_trees $package_id] ne ""} {
     category::ad_form::add_widgets -container_object_id $package_id -form_name catalog_search
 
     ad_form -extend -name catalog_search -form {

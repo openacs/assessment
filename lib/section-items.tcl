@@ -27,7 +27,7 @@ db_multirow -extend {
     checks_admin_url
 } items section_items {} {
     set presentation_type [as::item_form::add_item_to_form -name admin_section_${section_id} -section_id $section_id -item_id $as_item_id -random_p f]
-    if {$presentation_type == "fitb"} {
+    if {$presentation_type eq "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
     array set item [as::item::item_data -as_item_id $as_item_id]
@@ -42,7 +42,7 @@ db_multirow -extend {
     set add_edit_check_url [export_vars -base "../asm-admin/add-edit-check" {as_item_id section_id assessment_id {after $sort_order}}]
     set checks_admin_url [export_vars -base "../asm-admin/checks-admin" {section_id assessment_id {item_id $as_item_id}}]
 
-    if {$presentation_type == "rb" || $presentation_type == "cb"} {
+    if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
         array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
         set choice_orientation $type(choice_orientation)
         #        set allow_other_p $item(allow_other_p)
@@ -55,7 +55,7 @@ db_multirow -extend {
     set item_type $item(item_type)
     array unset item
 
-    if {[empty_string_p $points]} {
+    if {$points eq ""} {
         set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]

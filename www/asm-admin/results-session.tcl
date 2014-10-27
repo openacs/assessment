@@ -6,7 +6,7 @@ ad_page_contract {
     @date   2005-02-16
     @cvs-id $Id: 
 } {
-    session_id:integer
+    session_id:naturalnum,notnull
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -53,7 +53,7 @@ if {$assessment_data(anonymous_p) == "t" && $subject_id != $user_id} {
     set show_username_p 0
 }
 
-if {[empty_string_p $assessment_data(show_feedback)]} {
+if {$assessment_data(show_feedback) eq ""} {
     set assessment_data(show_feedback) "all"
 }
 
