@@ -2,7 +2,7 @@ ad_page_contract {
 
     Export an assessment in IMS QTI format
 
-    @author Natalia Pérez (nperper@it.uc3m.es)
+    @author Natalia PÃ©rez (nperper@it.uc3m.es)
     @creation-date 2004-11-25
 } -query {
     {assessment_id:integer,optional}
@@ -28,7 +28,7 @@ if {[exists_and_not_null assessment_id]} {
 # convenient way to get the values out of a list
 foreach {assessment_id download_name} [split [ad_conn path_info] /] {break}
 
-ad_require_permission $assessment_id admin
+permission::require_permission -object_id $assessment_id -privilege admin
 
 # Get the assessment data
 as::assessment::data -assessment_id $assessment_id
@@ -36,12 +36,12 @@ as::assessment::data -assessment_id $assessment_id
 set assessment_id1 $assessment_data(assessment_rev_id)
 
 # publish the object to the file system
-set in_path [ns_tmpnam]
+set in_path [ad_tmpnam]
 file mkdir $in_path
 
 
 # create a temp dir to put the archive in
-set out_path [ns_tmpnam]
+set out_path [ad_tmpnam]
 file mkdir $out_path
 
 # First create our top-level document
