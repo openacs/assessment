@@ -58,3 +58,7 @@ create table as_item_rels (
 	constraint as_item_rels_pk
 	primary key (item_rev_id, rel_type, target_rev_id)
 );
+
+create index as_item_rels_item_rev_id_idx on as_item_rels(item_rev_id);
+create index as_item_rels_target_rev_id_idx on as_item_rels(target_rev_id);
+
