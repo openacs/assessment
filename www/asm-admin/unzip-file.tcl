@@ -17,7 +17,7 @@ permission::require_permission \
 set context [list "[_ assessment.Import_Results]"]
 
 # Generate a random directory name
-set tmpdirectory [ns_tmpnam]
+set tmpdirectory [ad_tmpnam]
 # Create a temporary directory
 file mkdir $tmpdirectory
 

@@ -148,6 +148,12 @@ create index as_item_data_pk2 on as_item_data (session_id, section_id, as_item_i
 create index as_item_data_pk3 on as_item_data (as_item_id, section_id, session_id);
 create index as_item_data_subj_idx on as_item_data (subject_id);
 create index as_item_data_as_item_id_idx on as_item_data (as_item_id);
+create index as_item_data_content_answer_idx on as_item_data(content_answer);
+create index as_item_data_file_id_idx on as_item_data(file_id);
+create index as_item_data_section_id_idx on as_item_data(section_id);
+create index as_item_data_staff_id_idx on as_item_data(staff_id);
+
+
 
 create or replace trigger as_item_data_ins_trg
 before insert on as_item_data

@@ -81,6 +81,8 @@ create table as_item_choices (
 );
 
 create index as_i_choices_order_idx on as_item_choices (mc_id, sort_order);
+create index as_i_choices_cv_idx on as_item_choices(content_value);
+create index as_i_choices_mc_id_idx on as_item_choices(mc_id);
 
 -- Short Answer Answers
 create table as_item_sa_answers (

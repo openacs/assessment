@@ -17,7 +17,7 @@ ad_proc -public as::qti::register {
     
     if {[regexp -nocase -- {\.zip$} $tmp_dir]} {
 	# Generate a random directory name
-	set tmpdirectory [ns_tmpnam]
+	set tmpdirectory [ad_tmpnam]
 	# Create a temporary directory
 	file mkdir $tmpdirectory
 	# UNZIP the zip file in the temporary directory
@@ -49,7 +49,7 @@ ad_proc -public as::qti::register_object_id {
 
     if {[regexp -nocase -- {\.zip$} $tmp_dir]} {
         # Generate a random directory name
-        set tmpdirectory [ns_tmpnam]
+        set tmpdirectory [ad_tmpnam]
         # Create a temporary directory
         file mkdir $tmpdirectory
         # UNZIP the zip file in the temporary directory
