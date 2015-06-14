@@ -12,7 +12,7 @@ ad_page_contract {
     check_id:naturalnum,optional
     edit_check:optional
     item_id:naturalnum,optional
-    by_item_p:optional
+    by_item_p:boolean,optional
 } -properties {
     context:onevalue
     title:onevalue

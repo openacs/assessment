@@ -13,7 +13,7 @@ ad_page_contract {
     {section_id:naturalnum,optional}
     after:integer
     {itype:optional}
-    {subtree_p:optional}
+    {subtree_p:boolean,optional}
     letter:optional
     {category_ids:integer,multiple,optional ""}
     {join:optional}

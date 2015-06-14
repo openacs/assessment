@@ -5,8 +5,8 @@ ad_page_contract {
     @cvs-id $Id:
 } {
     assessment_id:naturalnum,optional
-    {__new_p 0}
-    {permission_p 0}
+    {__new_p:boolean 0}
+    {permission_p:boolean 0}
     {type ""}
     {after "0"}
 } -properties {

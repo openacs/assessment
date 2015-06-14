@@ -13,7 +13,7 @@ ad_page_contract {
     section_id:naturalnum,optional
     inter_item_check_id:naturalnum,optional
     edit_check:optional
-    by_item_p:optional
+    by_item_p:boolean,optional
 } -properties {
 } -validate {
 } -errors {

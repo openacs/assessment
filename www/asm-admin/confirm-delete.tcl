@@ -6,7 +6,7 @@ ad_page_contract {
     inter_item_check_id:naturalnum,multiple
     section_id:naturalnum,notnull
     assessment_id:naturalnum,notnull
-    by_item_p:integer
+    by_item_p:boolean,integer
     item_id_check:optional
 }
 

@@ -3,7 +3,7 @@ ad_page_contract {
 } {
     assessment_id:naturalnum,optional
     {type ""}
-    {permission_p ""}
+    {permission_p:boolean ""}
     {page_title ""}
 } -properties {
     context:onevalue

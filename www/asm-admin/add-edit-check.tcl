@@ -11,7 +11,7 @@ ad_page_contract {
     inter_item_check_id:naturalnum,optional
     edit_check:optional
     type:optional
-    by_item_p:optional
+    by_item_p:boolean,optional
     item_id:naturalnum,optional
 } -properties {
     context:onevalue

@@ -10,7 +10,7 @@ ad_page_contract {
 } {
     assessment_id:naturalnum,notnull
     {context ""}
-    {reg_p ""}
+    {reg_p:boolean ""}
     {asm_instance ""}
     {reg_url ""}
 }

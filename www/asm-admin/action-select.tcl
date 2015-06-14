@@ -10,9 +10,9 @@ ad_page_contract {
     section_id:naturalnum,notnull
     check_id:naturalnum,optional
     edit_check:optional
-    by_item_p:optional
+    by_item_p:boolean,optional
     item_id:naturalnum,optional
-    {section_check_p 0}
+    {section_check_p:boolean 0}
 } -properties {
     context:onevalue
     title:onevalue

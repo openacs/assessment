@@ -8,7 +8,7 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     inter_item_check_id:naturalnum,notnull
     section_id:naturalnum,notnull
-    by_item_p:optional
+    by_item_p:boolean,optional
     item_id:naturalnum,optional
 } -properties {
     context:onevalue
