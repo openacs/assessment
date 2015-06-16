@@ -28,7 +28,7 @@
       <if @items.content@ not nil><tr><td bgcolor="#e4eaef" colspan="4"><br>@items.content;noquote@</if>
       <if @items.title@ ne @items.next_title@>
         </td></tr>
-        <tr class="form-widget"><if @assessment_data.show_item_name_p@ eq t><td colspan=4></if><else><td colspan=3></else>
+        <tr class="form-widget"><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>
           <table>
       </if>
       <else>
@@ -40,12 +40,12 @@
             <if @items.title@ eq @items.next_title@ and @items.groupnum@ eq 1>
               <td></td>
               <formgroup id="response_to_item.@items.as_item_id@">
-                <td align=center>@formgroup.label;noquote@</td>
+                <td align="center">@formgroup.label;noquote@</td>
               </formgroup>
               </tr><tr class="form-widget">
             </if>
           </if>
-          <td valign=top>@items.description;noquote@</td>
+          <td valign="top">@items.description;noquote@</td>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
             <if @items.choice_orientation@ ne horizontal>
               <td><formgroup id="response_to_item.@items.as_item_id@">
@@ -60,16 +60,16 @@
             </elseif>
             <else>
               <formgroup id="response_to_item.@items.as_item_id@">
-                <td align=center>@formgroup.widget;noquote@</td>
+                <td align="center">@formgroup.widget;noquote@</td>
               </formgroup>
-              </tr><tr><td></td><td colspan=10>
+              </tr><tr><td></td><td colspan="10">
             </else>
           </if>
           <elseif @items.presentation_type@ eq fitb>
             <td>@items.html;noquote@
           </elseif>
           <else>
-            <td colspan=10><formwidget id="response_to_item.@items.as_item_id@">
+            <td colspan="10"><formwidget id="response_to_item.@items.as_item_id@">
           </else>
 
           <if @items.subtext@ not nil>
@@ -84,7 +84,7 @@
 </group></table>
 
         </td></tr>
-        <tr><td colspan=4><hr></td></tr>
+        <tr><td colspan="4"><hr></td></tr>
       </multiple>
 
   </table>

@@ -1,6 +1,6 @@
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr>
-<th colspan="3" align=left>#assessment.Assessment#: <a href="assessment?assessment_id=@assessment_id@">@assessment_data.title@</a></th></tr>
+<th colspan="3" align="left">#assessment.Assessment#: <a href="assessment?assessment_id=@assessment_id@">@assessment_data.title@</a></th></tr>
 <tr><td><b>#assessment.User_ID#:</b> <span><if @show_username_p@><a href="@session_user_url@">@first_names@ @last_name@</a><if @assessment_data.anonymous_p@ eq "t"><br>#assessment.lt_bNoteb_This_assessmen#</if></if><else>#assessment.anonymous_name#</else></span></td>
 <td><b>#assessment.Attempt#:</b> <multiple name="session_attempts"><if @session_attempts.session_id@ eq @session_id@><b>@session_attempts.rownum@</b></if><else><a href="session?session_id=@session_attempts.session_id@">@session_attempts.rownum@</a></else>&nbsp;&nbsp; </multiple> <if @admin_p@> (<a href="@delete_url@">#assessment.Delete_Attempts#</a>)</if></td>
 <td><if @assessment_data.survey_p@ ne t> <if @showpoints@ eq 1> <b>#assessment.Percent_Score#:</b>  <span>@percent_score@</span></if></if> </td></tr>

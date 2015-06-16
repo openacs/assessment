@@ -7,4 +7,4 @@
 
 <include src=asm-action-param-list action_id=@action_id@> &nbsp;
 
-<p><a href=/assessment/admin>#assessment.return#</a></p>
+<p><a href="/assessment/admin">#assessment.return#</a></p>

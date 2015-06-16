@@ -5,7 +5,7 @@
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3"><!-- @assessment_data.html_title;noquote@ --></th></tr>
 <tr><td><em>@assessment_data.instructions;noquote@</em></td></tr>
-<tr><td align=right>
+<tr><td align="right">
 <!--#assessment.section_counter#
 <br>#assessment.item_counter#-->
 <if @assessment_data.time_for_response@ not nil><br>#assessment.session_time_remaining#</if>
@@ -39,7 +39,7 @@
       <tr><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>
         <table>
           <tr class="form-widget">
-          <if @items.description@ not nil><td valign=top>@items.description;noquote@</td></if><td>
+          <if @items.description@ not nil><td valign="top">@items.description;noquote@</td></if><td>
           <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
             <formgroup id="response_to_item.@items.as_item_id@">
               <if @items.choice_orientation@ ne horizontal>

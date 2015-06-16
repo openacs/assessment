@@ -1,7 +1,7 @@
 <h3>#assessment.Items#</h3>
 
 <formtemplate id="show_section">
-<table cellspacing=0>
+<table cellspacing="0">
 <if @items:rowcount@ eq 0>
 </if>
 

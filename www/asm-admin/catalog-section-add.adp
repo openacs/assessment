@@ -7,7 +7,7 @@
 
 <h3>#assessment.Selected_Sections#</h3>
 
-<table cellspacing=0>
+<table cellspacing="0">
 <tr class="odd">
 <td valign="top">@sections.rownum@. @sections.name@
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
