@@ -66,7 +66,7 @@
           </if>
           <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
           </td></tr><tr class="form-widget"><td>
-            <if @items.submitted_p@ eq f><br><input type=submit value="#assessment.Submit#"></if>
+            <if @items.submitted_p@ eq f><br><input type="submit" value="#assessment.Submit#"></if>
           </td></tr></table>
         <hr>
       </td></tr>
@@ -74,7 +74,7 @@
   </multiple>
   <if @required_count@ eq 0>
     <formtemplate id="show_item_form">
-      <tr><td><input type=submit value="#assessment.Next#"></td></tr>
+      <tr><td><input type="submit" value="#assessment.Next#"></td></tr>
     </formtemplate>
   </if>
   </table>

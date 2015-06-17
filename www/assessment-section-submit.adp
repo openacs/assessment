@@ -90,7 +90,7 @@
 
     </multiple>
 	<p>#assessment.This_is_a_required#</p>
-    <div><input type=submit value="#assessment.Submit#"></div>
+    <div><input type="submit" value="#assessment.Submit#"></div>
   </formtemplate>
 
 <!--<div style="clear: both;" />-->
