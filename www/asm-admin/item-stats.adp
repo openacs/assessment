@@ -1,7 +1,7 @@
 <master>
   <property name="title">#assessment.Question_Statistics#</property>
 
-  <p><a href="@return_url;noquote@" class="button">#assessment.Back_to_Sessions#</a></p>
+  <p><a href="@return_url@" class="button">#assessment.Back_to_Sessions#</a></p>
     <multiple name="items">
 	<h2>@items.section_title@</h2>
 	<group column="section_id">
