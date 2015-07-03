@@ -1,5 +1,5 @@
-<property name="title">@assessment_data.html_title;noquote@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@assessment_data.html_title;literal@</property>
+<property name="context">@context;literal@</property>
 
 <if @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@: Feedback</h2></if>
 

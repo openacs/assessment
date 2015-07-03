@@ -1,6 +1,6 @@
 <master>
-<property name="title">@page_title;noquote@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@page_title;literal@</property>
+<property name="context">@context;literal@</property>
 
 <if @total_pages@ defined>
   <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages@" current="@current_page@" finish="1" />

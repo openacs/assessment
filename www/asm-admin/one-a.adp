@@ -1,6 +1,6 @@
 <master>
-<property name="title">@p_title;noquote@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@p_title;literal@</property>
+<property name="context">@context;literal@</property>
 
 <include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="front">
 

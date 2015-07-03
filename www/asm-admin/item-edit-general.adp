@@ -1,6 +1,6 @@
 <master>
-<property name="title">@page_title;noquote@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@page_title;literal@</property>
+<property name="context">@context;literal@</property>
 
 <formtemplate id="item_edit_general">
   <div><formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id">

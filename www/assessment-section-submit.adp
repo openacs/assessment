@@ -1,6 +1,6 @@
 
-<property name="title">@assessment_data.html_title;noquote@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@assessment_data.html_title;literal@</property>
+<property name="context">@context;literal@</property>
 
 
 <!-- Pretty output starts here -->

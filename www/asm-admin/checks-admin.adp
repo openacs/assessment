@@ -1,6 +1,6 @@
 <master>
 <property name="title">@title@ #assessment.Administration#</property>
-<property name="context">@context;noquote@</property>
+<property name="context">@context;literal@</property>
 <br>
 <b>On Request (section check)</b>
 <br>

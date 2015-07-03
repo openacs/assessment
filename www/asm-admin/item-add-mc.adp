@@ -1,6 +1,6 @@
 <master>
-<property name="title">@page_title;noquote@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@page_title;literal@</property>
+<property name="context">@context;literal@</property>
 
     <p>
       <a href="@add_existing_link@">#assessment.add_item_type_mc_existing#</a>

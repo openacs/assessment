@@ -1,5 +1,5 @@
 <master>
-<property name="title">@title@</property>
-<property name="context">@context;noquote@</property>
+<property name="title">@title;literal@</property>
+<property name="context">@context;literal@</property>
 <formtemplate id=notify></formtemplate>
 <listtemplate name="notify_users"></listtemplate>
