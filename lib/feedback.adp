@@ -1,4 +1,4 @@
-<property name="title">@assessment_data.html_title;literal@</property>
+<property name="doc(title)">@assessment_data.html_title;literal@</property>
 <property name="context">@context;literal@</property>
 
 <if @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@: Feedback</h2></if>

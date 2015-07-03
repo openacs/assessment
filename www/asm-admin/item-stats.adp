@@ -1,5 +1,5 @@
 <master>
-  <property name="title">#assessment.Question_Statistics#</property>
+  <property name="doc(title)">#assessment.Question_Statistics#</property>
 
   <p><a href="@return_url@" class="button">#assessment.Back_to_Sessions#</a></p>
     <multiple name="items">

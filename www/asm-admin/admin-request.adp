@@ -1,5 +1,5 @@
 <master src="admin-master">
-<property name="title">#assessment.Request# #assessment.Administration#</property>
+<property name="doc(title)">#assessment.Request# #assessment.Administration#</property>
 <property name="context_bar">@context;literal@</property>
 
 <script type="text/javascript">

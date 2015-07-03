@@ -1,5 +1,5 @@
 
-<property name="title">@assessment_data.html_title;literal@</property>
+<property name="doc(title)">@assessment_data.html_title;literal@</property>
 <property name="context">@context;literal@</property>
 
 

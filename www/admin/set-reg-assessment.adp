@@ -1,5 +1,5 @@
 <master>
-<property name="title">@page_title;literal@</property>
+<property name="doc(title)">@page_title;literal@</property>
 <property name="context">@context;literal@</property>
 <if @asm_p@ eq 0>
 	#acs-subsite.no_assessment#

@@ -1,5 +1,5 @@
 <master>
-<property name="title">@title@ #assessment.Administration#</property>
+<property name="doc(title)">@title@ #assessment.Administration#</property>
 <property name="context">@context;literal@</property>
 <br>
 <b>On Request (section check)</b>
