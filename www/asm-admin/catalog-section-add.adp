@@ -25,7 +25,7 @@
 </td></tr>
 </table>      
 
-  <include src="/packages/assessment/lib/section-show" assessment_id="@assessment_id@" section_id="@sections.section_id@">
+  <include src="/packages/assessment/lib/section-show" assessment_id="@assessment_id;literal@" section_id="@sections.section_id;literal@">
 
 </multiple>
 

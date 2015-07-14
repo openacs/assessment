@@ -33,7 +33,7 @@
 			<else><p style="font-weight:bold;">#assessment.not_answered#</p></else>
 		      </else>
 		      <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="@items.results_edit_url@">#assessment.Edit#</a></if>
-		      <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@">
+		      <include src="/packages/assessment/lib/results-messages" session_id="@session_id;literal@" section_id="@section_id;literal@" as_item_id="@items.as_item_id;literal@">
 		    </if>
 		    <else>
 		      <if @items.answered_p@ eq t><p style="font-weight:bold">#assessment.not_yet_reviewed#</p> </if>
@@ -42,7 +42,7 @@
 		    <if @edit_p@ eq 1 and @items.answered_p@ eq t>
               <a href="@items.results_edit_url@">#assessment.Edit#</a>
             </if>
-		    <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@"> 
+		    <include src="/packages/assessment/lib/results-messages" session_id="@session_id;literal@" section_id="@section_id;literal@" as_item_id="@items.as_item_id;literal@"> 
 		  </if>
 		</if>
 	      <if @items.presentation_type@ eq rb or @items.presentation_type@ eq cb>
@@ -80,7 +80,7 @@
 	  </if>
     </group>
 
-  <include src="/packages/assessment/lib/results-messages" session_id="@session_id@" section_id="@section_id@" as_item_id="@items.as_item_id@" &=assessment>    
+  <include src="/packages/assessment/lib/results-messages" session_id="@session_id;literal@" section_id="@section_id;literal@" as_item_id="@items.as_item_id;literal@" &=assessment>    
   <if @edit_p@ eq 1 and @items.answered_p@ eq t>
     <p><a href="@items.results_edit_url@" class="button">#assessment.Add_Comment#</a></p>
   </if>

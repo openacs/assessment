@@ -2,7 +2,7 @@
 <property name="doc(title)">@page_title;literal@</property>
 <property name="context">@context;literal@</property>
 
-<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="results">
+<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id;literal@" tab="results">
 
 <if @status_p@ eq 0>
 <p>@count_all_users@ #assessment.users_in_community#, @count_complete@ #assessment.complete_responses#, @count_incomplete@ #assessment.incomplete_responses#</p>

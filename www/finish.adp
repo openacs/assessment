@@ -3,7 +3,7 @@
 <property name="context">@context;literal@</property>
 
 <if @total_pages@ defined>
-  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages@" current="@current_page@" finish="1" />
+  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages;literal@" current="@current_page;literal@" finish="1" />
 </if>
 
 @assessment_data.exit_page;noquote@

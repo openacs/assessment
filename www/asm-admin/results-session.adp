@@ -18,12 +18,12 @@
 <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
 <if @sections.description@ not nil><p>@sections.description@</p></if>
 <if @sections.feedback_text@ not nil><p>@sections.feedback_text@</p></if>
-<include src="/packages/assessment/lib/session-items" edit_p=1 section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" &assessment_data="assessment_data" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@" survey_p="@assessment_data.survey_p@">
+<include src="/packages/assessment/lib/session-items" edit_p=1 section_id="@sections.section_id;literal@" subject_id="@subject_id;literal@" session_id="@session_id;literal@" &assessment_data="assessment_data" show_item_name_p="@assessment_data.show_item_name_p;literal@" show_feedback="@assessment_data.show_feedback;literal@" survey_p="@assessment_data.survey_p;literal@">
 </div> <!-- section -->
 </multiple>
 <hr>
 <if @assessment_data.type@ ne survey><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 <if @comments_installed_p@>
-<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id@" />
+<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" />
 </if>
 </div> <!-- result -->

@@ -2,7 +2,7 @@
 <property name="doc(title)">@title;literal@</property>
 <property name="context">@context;literal@</property>
 
-<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="@section_id@">
+<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id;literal@" tab="@section_id;literal@">
 
 <h3>#assessment.Sections#</h3>
 
@@ -49,6 +49,6 @@
 </td></tr>
 </table>      
 
-  <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@section_id@">
+  <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id;literal@" section_id="@section_id;literal@">
 
 </multiple>

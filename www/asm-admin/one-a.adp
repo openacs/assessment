@@ -2,7 +2,7 @@
 <property name="doc(title)">@p_title;literal@</property>
 <property name="context">@context;literal@</property>
 
-<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="front">
+<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id;literal@" tab="front">
 
 <table width="100%">
 <tr>

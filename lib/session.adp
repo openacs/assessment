@@ -27,7 +27,7 @@
     <if @assessment_data.show_feedback@ ne none><p>@sections.feedback_text@</p></if>
 
 
-  <include src="/packages/assessment/lib/session-items" section_id="@sections.section_id@" subject_id="@subject_id@" session_id="@session_id@" show_item_name_p="@assessment_data.show_item_name_p@" show_feedback="@assessment_data.show_feedback@" survey_p="@assessment_data.survey_p@" &=assessment_data>
+  <include src="/packages/assessment/lib/session-items" section_id="@sections.section_id;literal@" subject_id="@subject_id;literal@" session_id="@session_id;literal@" show_item_name_p="@assessment_data.show_item_name_p;literal@" show_feedback="@assessment_data.show_feedback;literal@" survey_p="@assessment_data.survey_p;literal@" &=assessment_data>
 
 
       </fieldset><!-- End Section FieldSet -->
@@ -40,5 +40,5 @@
 <if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none and @assessment_score@ not nil and @assessment_score@ gt 0><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
 
 <if @comments_installed_p@>
-<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id@" />
+<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" />
 </if>

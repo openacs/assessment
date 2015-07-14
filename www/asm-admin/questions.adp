@@ -2,7 +2,7 @@
 <property name="doc(title)">@title;literal@</property>
 <property name="context">@context;literal@</property>
 
-<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id@" tab="@tab@">
+<include src="/packages/assessment/lib/section-links" assessment_id="@assessment_id;literal@" tab="@tab;literal@">
 
 <if @sections:rowcount@ eq 0><br><a class="button" href="section-form?assessment_id=@assessment_id@">#assessment.add_new_section#</a></if>
 
@@ -34,7 +34,7 @@
   <img src="/resources/assessment/spacer.gif" style="border: 0;" alt="" width="10">
  <fieldset> 
    <legend>#assessment.Items#</legend>
-   <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id@" section_id="@sections.section_id@" admin_trigger_p="@admin_trigger_p@">
+   <include src="/packages/assessment/lib/section-items" assessment_id="@assessment_id;literal@" section_id="@sections.section_id;literal@" admin_trigger_p="@admin_trigger_p;literal@">
  </fieldset>
 </multiple>
 

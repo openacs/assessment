@@ -5,6 +5,6 @@
   <formtemplate id="action_admin"></formtemplate>
 
 <if @parameter_exist@ eq "y">
-	<include src=asm-action-param-list action_id=@action_id@>
+	<include src=asm-action-param-list action_id="@action_id;literal@">
 </if>
 
