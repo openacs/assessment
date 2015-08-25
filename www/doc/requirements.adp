@@ -2,12 +2,13 @@
 <property name="context">{/doc/assessment {Assessment}} {Assessment functional requirements}</property>
 <property name="doc(title)">Assessment functional requirements</property>
 <master>
-
-<body>
 <h2>Introduction</h2>
+
 The assessment module provides OpenACS with capabilities to conduct
 surveys, tests and dynamic information gathering in general, as can
-be seen in the use cases.<br><h2>Vision Statement</h2>
+be seen in the use cases.<br>
+<h2>Vision Statement</h2>
+
 The motivation behind the Assessment package is to extend the
 functionality of the existing Survey package in both depth and
 breadth:
@@ -18,21 +19,27 @@ with non-OpenACS systems, etc.</li><li>mechanisms to embed Assessment capabiliti
 OpenACS packages and to assemble larger systems of packages within
 which Assessment is one component (eg dotLRN, clinical trials
 management systems, etc)</li>
-</ul><p>The current Survey package is a very capable piece of
+</ul>
+<p>The current Survey package is a very capable piece of
 engineering that provides stand-alone data collection functions. It
 is subsite-aware and has been integrated to some extent with
 portlets. It also is just being integrated into user registration
 processes. These efforts point the path down which the Assessment
-package intends to proceed to its logical conclusion.</p><p>Development efforts for Assessment thus involve two tracks:</p><ul>
+package intends to proceed to its logical conclusion.</p>
+<p>Development efforts for Assessment thus involve two tracks:</p>
+<ul>
 <li>refinement and extension of the data model and UIs from Survey
 (and its sibling forks) to support a variety of expanded user
 requirements</li><li>incorporation of hooks (of various sorts, such as Service
 Contracts) to integrate Assessment with OpenACS subsystems: Content
 Repository, Workflow, Notifications, Internationalization, etc</li>
-</ul><p>The measure of success of the Assessment package is the ease
+</ul>
+<p>The measure of success of the Assessment package is the ease
 with which it can rapidly be deployed into some high-profile
 implementations, notably dotLRN and a clinical trials management
-system under development.</p><h2>Use Cases</h2>
+system under development.</p>
+<h2>Use Cases</h2>
+
 The assessment module in it's simplest form is a dynamic
 information gathering tool. This can be clearly seen in the first
 group of use cases, which deal with surveys (one form of
@@ -50,9 +57,13 @@ determined parameters should be made for the user (e.g. no need to
 let the user fill out correct answers to questions, if the question
 is not used in a test). Some use cases like elections require
 special parameters not necessary anywhere else (like counting
-system).</p><h3>Survey scenario</h3>
+system).</p>
+<h3>Survey scenario</h3>
+
 The survey scenarios are the basic use cases for the use of the
-assessment system.<br><h4>Simple survey</h4>
+assessment system.<br>
+<h4>Simple survey</h4>
+
 An editor wants to conduct surveys on his site. For this purpose he
 creates questions which are stored in a question catalogue. From
 this question catalogue, the editor choose the questions he wants
@@ -60,13 +71,17 @@ to use in his current survey along with the style the survey should
 be presented to the user. Once satisfied he can make the survey
 public or test it first. Once the survey is public subjects (users)
 of the site can take the survey by filling out the generated form
-with all the questions the author added to the survey.<br><h4>Quality Assurance</h4>
+with all the questions the author added to the survey.<br>
+<h4>Quality Assurance</h4>
+
 A company wants to get feedback from users about it's product. It
 creates a survey which offers branching (to prevent users from
 filling out unnecessary data, e.g. if you answered you have never
 been to Europe the question "Have you seen Rome" should not show
 up) and multi-dimensional likert scales (To ask for the quality and
-importance of a part of the product in conjunction).<br><h4>Professional data entry</h4>
+importance of a part of the product in conjunction).<br>
+<h4>Professional data entry</h4>
+
 A clinic wants to conduct a trial. For this research assistants are
 asked to interview the patients and store the answers in the
 assessment on behalf of the client. For meeting FDA requirements it
@@ -78,6 +93,7 @@ the entered data and the validity of it (area code should be five
 digits, if the age of the patient is below 10, no need to ask for
 credit card information, ...).
 <h4>University survey</h4>
+
 A Professor wants to create a test by searching through the
 question database and selecting old questions. He searches the
 database for a specific keyword or browses by category. The System
@@ -85,6 +101,7 @@ presents him all questions which have the keyword and/or category
 in it. The Professor is able to preview every question and may then
 decide which question he will transfer into the survey.
 <h4>Internal Evaluation</h4>
+
 An institution wants to survey students to compare the quality of
 specific courses, teachers, or other factors effecting the quality
 of their education and level of happiness. It should be possible
@@ -93,7 +110,9 @@ anonymously and only be able to take the survey once.
 <p>It should also be able to show the results of a survey to a
 group of users (e.g. a specific department evaluated). The results
 should be able to be displayed in a way that give a department a
-ranking compared with other departments.</p><h4>Reuse of questions</h4>
+ranking compared with other departments.</p>
+<h4>Reuse of questions</h4>
+
 The author of multiple choice question decides that the provided
 answers are not good for differentiating the knowledge of the
 subjects and changes some of them. All editors using this question
@@ -105,6 +124,7 @@ editor should be able to inform all subjects that have taken the
 question already, that it has changed (and that they might (have
 to) re-answer).
 <h4>Multiple languages</h4>
+
 The quality assurance team of the company mentioned above realizes
 that the majority of it's user base is not native English speakers.
 This is why they want to add additional translations to the
@@ -114,11 +134,13 @@ have been translated. Furthermore it is necessary to store the
 language used along with the response (as a translation might not
 be as good as the original).
 <h4>The poll</h4>
+
 An editor wants to conduct a poll on the site with immediate
 publication of the result to get a feeling how users like the new
 design of the website. The result can be displayed in an includelet
 (see the below for details) on any page the editor wants.
 <h4>The election</h4>
+
 The OpenACS community wants to conduct a new election on the OCT.
 On creation the names of the contestants have to be available along
 with a list of all users allowed to vote. Depending on the election
@@ -126,18 +148,21 @@ system, the users have one or multiple votes (ranked or not), which
 are calculated in a certain way. Once the election is over the
 result is published.
 <h4>Collective Meeting planing</h4>
+
 The sailing club needs to find meeting time for all skippers to
 attend. Given a number of predefined choices, each skipper can give
 his/her preference for the time slots. The slot with the highest
 approval wins and is automatically entered into the calendar of all
 skippers and a notification send out.
 <h3>Testing scenario</h3>
+
 Especially in the university environment it is important to be able
 to conduct tests. These help the students to prepare for exams but
 also allow Professors to conduct exams. In addition to the data
 collection done in a survey scenario testing adds checks and
 instant evaluation to assessment.
 <h4>Proctored Exam</h4>
+
 A Professor wants to have a proctored test in a computer room. He
 wants to create the test using question that he has added and are
 already in the database. The only people allowed to take the test
@@ -155,7 +180,9 @@ printed out on a sheet of paper for each user along with a return
 sheet which needs the answers to be ticked off. A scanner system
 scans this return sheet and stores the data for the student in the
 system.</li>
-</ul><h4>The Mistake</h4>
+</ul>
+<h4>The Mistake</h4>
+
 A Professor has created a test from the question pool and have
 administered the exam to a group of students. The test has been
 taken by some of his students already. He discovers that the answer
@@ -165,6 +192,7 @@ already been completed and the option to notify students who have
 taken the test and received a grade that their results have
 changed.
 <h4>Discriminatory power</h4>
+
 A Professor has created a test which is taken by all of his
 students. The test results should be matched with the individual
 results to create the discriminatory power and the reliability of
@@ -181,7 +209,9 @@ the test. Example: A hard question with a high mean value should be
 answered by good students more often right than by bad students. If
 the questions is answered same often by good and bad students the
 discriminatory power tells the professor that the question is more
-to guess than to know]</p><h4>The vocabulary test</h4>
+to guess than to know]</p>
+<h4>The vocabulary test</h4>
+
 A student wants to learn a new language. While attending the class,
 he enters the vocabulary for each section into the assessment
 system. If he wants to check his learned knowledge he takes the
@@ -195,18 +225,22 @@ types of questions:
 <ul>
 <li>Free text translation of a word</li><li>Free text translation of a sentence</li><li>Multiple choice test</li><li>Fill in the blanks</li>
 </ul>
+
 To determine the correct answer it is possible to do a char-by-char
 compare and highlight the wrong parts vs. just displaying the wrong
 and correct answer (at the end of the test or once the answer is
 given).
 <h4>The quizz</h4>
+
 To pep up your website you offer a quiz, which allows users to
 answer some (multiple choice) questions and get the result
 immediately as a percentage score in a table comparing that score
 to other users. Users should be able to answer only a part of the
 possible questions each time. If the user is in the top 2%, offer
 him the contact address of "Mensa", other percentages should give
-encouraging text.<br><h4>Scoring</h4>
+encouraging text.<br>
+<h4>Scoring</h4>
+
 The computer science department has a final exam for the students.
 The exam consists of 3 sections. The exam is passed, if the student
 achieves at least 50% total score. In addition the student has to
@@ -220,10 +254,14 @@ warning. Some of the questions are multiple choice questions, that
 get different percentages for each answer. As the computer science
 department wants to discourage students from giving wrong answers,
 some wrong answers have a negative percentage (thereby reducing the
-total score in the section).<br><br><h3>Reuse in other packages</h3>
+total score in the section).<br>
+<br>
+<h3>Reuse in other packages</h3>
+
 The information gathering capabilities of the assessment system
 should be able to be reused by other packages.
 <h4>User profiling</h4>
+
 In order to join a class at the university the student has to fill
 out some questions. The answers can be viewed by the administrator
 but also by other students (pending the choice of the user). This
@@ -231,10 +269,12 @@ latter functionality should not be part of assessment itself, but
 of a different module, making use of assessment. The GPI
 user-register is a good example for this.
 <h4>Includes</h4>
+
 Using a CMS the editor wants to include the poll on the first page
 on the top right corner. The result should be shown on a separate
 page or be included in the CMS as well.
 <h4>Information gathering for developers</h4>
+
 A developer needs functionality for gathering dynamic information
 easily. For this he should be able to easily include an assessment
 instead of using ad_form directly in his code. This gives the
@@ -242,47 +282,65 @@ administrator of the site the option to change the questions at a
 later stage (take the questions in the user sign-up process as an
 example).
 <h4>Database questions</h4>
+
 Some answers to questions should be stored directly in database
 tables of OpenACS in addition to the assessment system. This is
 e.g. useful if your questions ask for first_names and last_name.
 When answering the question, the user should see the value
 currently stored in the database as a default.
 <h4>Action driven questions</h4>
+
 The company conducting the QA wants to get more participants to
 it's survey by recommendation. For this each respondee is asked at
 the end of the survey if he would recommend this survey to other
 users (with the option to give the email address of these users).
 The answer will be processed and an email send out to all given
 emails inviting them to take the survey.
-<h2>User Types</h2><p>There are several types of administrative users and end-users
+<h2>User Types</h2>
+<p>There are several types of administrative users and end-users
 for the Assessment package which drive the functional requirements.
 Here is a brief synopsis of their responsibilities in this
-package.</p><h3>Package-level Administrator</h3>
+package.</p>
+<h3>Package-level Administrator</h3>
+
 Assigns permissions to other users for administrative roles.
-<h3>Editor</h3><p>Has permissions to create, edit, delete and organize in
+<h3>Editor</h3>
+<p>Has permissions to create, edit, delete and organize in
 repositories Assessments, Sections and Items. This includes
 defining Item formats, configuring data validation and data
 integrity checks, configuring scoring mechanisms, defining
-sequencing/navigation parameters, etc.</p><p>Editors could thus be teachers in schools, principal
+sequencing/navigation parameters, etc.</p>
+<p>Editors could thus be teachers in schools, principal
 investigators or biostatisticians in clinical trials, creative
 designers in advertising firms -- or OpenACS developers
 incorporating a bit of data collection machinery into another
-package.</p><h3>Scheduler</h3><p>Has permissions to assign, schedule or otherwise map a given
+package.</p>
+<h3>Scheduler</h3>
+<p>Has permissions to assign, schedule or otherwise map a given
 Assessment or set of Assessments to a specific set of subjects,
 students or other data entry personnel. These actions potentially
 will involve interfacing with other Workflow management tools (e.g.
 an "Enrollment" package that would handle creation of new Parties
-(aka clinical trial subjects) in the database.</p><p>Schedulers could also be teachers, curriculum designers, site
-coordinators in clinical trials, etc.</p><h3>Analyst</h3><p>Has permissions to search, sort, review and download data
-collected via Assessments.</p><p>Analysts could be teachers, principals, principal investigators,
-biostatisticians, auditors, etc.</p><h3>Subject</h3><p>Has permissions to complete an Assessment providing her own
+(aka clinical trial subjects) in the database.</p>
+<p>Schedulers could also be teachers, curriculum designers, site
+coordinators in clinical trials, etc.</p>
+<h3>Analyst</h3>
+<p>Has permissions to search, sort, review and download data
+collected via Assessments.</p>
+<p>Analysts could be teachers, principals, principal investigators,
+biostatisticians, auditors, etc.</p>
+<h3>Subject</h3>
+<p>Has permissions to complete an Assessment providing her own
 responses or information. This would be a Student, for instance,
 completing a test in an educational setting, or a Patient
 completing a health-related quality-of-life instrument to track her
 health status. Subjects need appropriate UIs depending on Item
 formats and technological prowess of the Subject -- kiosk
 "one-question-at-a-time" formats, for example. May or may not get
-immediate feedback about data submitted.</p><p>Subjects could be students, consumers, or patients.</p><h3>Data Entry Staff</h3><p>Has permissions to create, edit and delete data for or about the
+immediate feedback about data submitted.</p>
+<p>Subjects could be students, consumers, or patients.</p>
+<h3>Data Entry Staff</h3>
+<p>Has permissions to create, edit and delete data for or about the
 "real" Subject. Needs UIs to speed the actions of this trained
 individual and support "save and resume" operations. Data entry
 procedures used by Staff must capture the identity if both the
@@ -294,9 +352,13 @@ signatures at final submission. (Many of the tight-sphinctered
 requirements for FDA submissions center around mechanisms
 encountered here: to prove exactly who created any datum, when,
 whether it is a correct value, whether anyone has looked at it or
-edited it and when, etc etc...)</p><p>Staff could be site coordinators in clinical trials, insurance
-adjustors, accountants, tax preparation staff, etc.</p><h2>System / Application Overview<br>
-</h2><h3>Editing of Assessments</h3><ul>
+edited it and when, etc etc...)</p>
+<p>Staff could be site coordinators in clinical trials, insurance
+adjustors, accountants, tax preparation staff, etc.</p>
+<h2>System / Application Overview<br>
+</h2>
+<h3>Editing of Assessments</h3>
+<ul>
 <li>Manage the structure of Assessments -- the organization of
 series of questions (called "Items") into Sections (defined
 logically in terms of branch points and literally in terms of
@@ -450,7 +512,9 @@ select which version of any entity an Assessment editor wants to
 use.</li>
 </ul>
 </li>
-</ul><h3>Scheduling of Assessments</h3><ul>
+</ul>
+<h3>Scheduling of Assessments</h3>
+<ul>
 <li>Create, edit, clone and delete Assessment Schedules. Schedulers
 will define:
 <ul>
@@ -475,7 +539,9 @@ the Assessments they're scheduled to perform -- eg a table that
 shows expected dates, actual completion dates, etc.</li>
 </ul>
 </li>
-</ul><h3>Analysis of Assessments</h3><ul><li>Provide UIs to:
+</ul>
+<h3>Analysis of Assessments</h3>
+<ul><li>Provide UIs to:
 <ul>
 <li>Define time-based, sortable searches of Assessment data (both
 primary/raw data and calculated Scored data) for tabular and (if
@@ -484,7 +550,9 @@ conversion into configurable file formats for download</li><li>Define specific s
 (incomplete assessments, audit trails of changed data values,
 etc)</li>
 </ul>
-</li></ul><h3>Performance of Assessments</h3><ul><li>Provide mechanisms to:
+</li></ul>
+<h3>Performance of Assessments</h3>
+<ul><li>Provide mechanisms to:
 <ul>
 <li>Handle user Login (for non-anonymous studies)</li><li>Determine and display correct UI for type of user (eg kiosk
 format for patients; keyboard-centric UI for data entry Staff)</li><li>Deliver Section forms to user</li><li>Perform data validation and data integrity checks on form
@@ -503,4 +571,3 @@ indicated for Assessment</li><li>Handle indicated email notifications at end of 
 Subject, Staff, Scheduler, or Editor)</li>
 </ul>
 </li></ul>
-</body>

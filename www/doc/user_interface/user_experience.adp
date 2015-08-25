@@ -2,12 +2,11 @@
 <property name="context">{/doc/assessment {Assessment}} {User Experience}</property>
 <property name="doc(title)">User Experience</property>
 <master>
-
-<body>
 <!-- START HEADER --><span class="context"><span class="reg">User
 experience describes the various steps the USER sees and what he
 can do when taking an assessment. When answering a section a couple
-of things happen:</span></span><ul>
+of things happen:</span></span>
+<ul>
 <li>
 <span class="context">A permission check will be made to
 determine whether the user is allowed to take the
@@ -20,8 +19,10 @@ left</span></li>
 </li><li><span class="context">Starttime of the response will be
 logged</span></li><li><span class="context">First section will be delivered to the
 user for anwering.</span></li>
-</ul><span class="context">Depending on the settings, the display of the
-assessment will vary:</span><ul>
+</ul>
+<span class="context">Depending on the settings, the display of the
+assessment will vary:</span>
+<ul>
 <li><span class="context">If all answers have to be submited
 seperatly, a submit button will be shown next to each answer. If
 the user hits the submit button next to the question the answer
@@ -46,8 +47,10 @@ be marked as taken.</span></li><li><span class="context">If immediate answer val
 ad_form check) for a question is true, check the answer if it is
 valid, otherwise notify the user that it is not and do not store
 the result.</span></li>
-</ul><span class="context">The processing has to take some additional
-notes into consideration:</span><ul>
+</ul>
+<span class="context">The processing has to take some additional
+notes into consideration:</span>
+<ul>
 <li><span class="context">Branching does not always depend on an
 answer but may also depend on the result within a section (branch
 by disctractor, median)</span></li><li><span class="context">questions within a section can be
@@ -57,7 +60,9 @@ mandatory and even mandatory in position.</span></li><li><span class="context">W
 randomizing element has to be the same for each response_id (the
 user shall not have the option to see different questions just by
 hitting reload).</span></li>
-</ul><span class="context">Once the assessment has been finished</span><ul>
+</ul>
+<span class="context">Once the assessment has been finished</span>
+<ul>
 <li><span class="context">Display optional electronic signature
 file upload with an "I certify this test and state it is mine"
 checkbox. This will be stored in addition to the test.</span></li><li><span class="context">Notifications shall be send to the admin,
@@ -69,14 +74,17 @@ result to the user (e.g. if 90% means "you are a dream husband",
 display this along with the 90%).</span></li><li><span class="context">Display a link with the possibility to
 show all the questions and answers for printout.</span></li><li><span class="context">Store the endtime with the
 response.</span></li>
-</ul><span class="context">An administrator can take the survey in
+</ul>
+<span class="context">An administrator can take the survey in
 various modes which he can select before the first section will be
-displayed.</span><ul>
+displayed.</span>
+<ul>
 <li><span class="context">Normal mode: The adminsitrator is treated
 as a normal respondee, the response will be stored in the
 system.</span></li><li><span class="context">Test mode: The administrator sees the
 survey as a normal respondee, the response will not be stored in
 the system.</span></li><li><span class="context">Optional: Display correct answers when
 taking the assessment.</span></li>
-</ul><span class="etp-link"><a class="top" href="etp?name=user_experience"></a></span><!-- END ETP LINK -->
-</body>
+</ul>
+<span class="etp-link"><a class="top" href="etp?name=user_experience"></a></span>
+<!-- END ETP LINK -->

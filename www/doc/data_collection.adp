@@ -2,23 +2,25 @@
 <property name="context">{/doc/assessment {Assessment}} {Data Collection}</property>
 <property name="doc(title)">Data Collection</property>
 <master>
-
-<body>
-<h2>Overview</h2><p>The schema for the entities that actually collect, store and
+<h2>Overview</h2>
+<p>The schema for the entities that actually collect, store and
 retrieve Assesment data parallels the hierarchical structure of the
 <a href="data-modell">Metadata Data Model</a>. In the
 antecedent "complex survey" and "questionnaire" systems, this
-schema was simple two-level structure:</p><ul>
+schema was simple two-level structure:</p>
+<ul>
 <li>
 <b>survey_responses</b> which capture information about which
 survey was completed, by whom, when, etc</li><li>
 <b>survey_question_responses</b> which capture the actual user
 data in a "long skinny table" mechanism</li>
-</ul><p>This suffices for one-shot surveys but doesn't support the fine
+</ul>
+<p>This suffices for one-shot surveys but doesn't support the fine
 granularity of user-action tracking, "save&amp;resume"
 capabilities, and other requirements identified for the enhanced
 Assessment package. Consequently, we use a more extended
-hierarchy:</p><ul>
+hierarchy:</p>
+<ul>
 <li>
 <b>Assessment Session</b> which captures information about
 which Assessment, which Subject, when, etc</li><li>
@@ -26,7 +28,8 @@ which Assessment, which Subject, when, etc</li><li>
 each Section</li><li>
 <b>Item Data</b> which holds the actual data extracted from the
 Assessment's html forms; this is the "long skinny table"</li>
-</ul><p>To support user modification of submitted data (of which
+</ul>
+<p>To support user modification of submitted data (of which
 "store&amp;resume" is a special case), we base all these entities
 in the CR. In fact, we use both cr_items and cr_revisions in our
 schema, since for any given user's Assessment submission, there
@@ -35,7 +38,8 @@ any Assessment itself, different authors may be using different
 versions of the Assessment. While this situation may be unusual,
 the fact that it must be supported means that the semantics of
 cr_items don't fit the Assessment itself. They <i>do</i> fit the
-semantics of a given user's Assessment "session" however.</p><p>We distinguish here between "subjects" which are users whose
+semantics of a given user's Assessment "session" however.</p>
+<p>We distinguish here between "subjects" which are users whose
 information is the primary source of the Assessment's responses,
 and "users" which are real OpenACS users who can log into the
 system. Subjects may be completing the Assessment themselves or may
@@ -49,8 +53,10 @@ completing the assessment for herself, the staff_id will be
 identical to the subject_id. But if the user completing the
 assessment is doing it by proxy for the "real" subject, then the
 staff_id will be hers while the subject_id will belong to the
-"real" subject.</p><p>We've simplified this subsection of Assessment considerably from
-earlier versions, and here is how and why:</p><ul>
+"real" subject.</p>
+<p>We've simplified this subsection of Assessment considerably from
+earlier versions, and here is how and why:</p>
+<ul>
 <li>
 <b>Annotations</b>: We previously had a separate table to
 capture any type of ad hoc explanations/descriptions/etc that a
@@ -137,12 +143,18 @@ move this out of the data model for Assessment per se and into
 Workflow. Assessment authors will have a UI through which they can
 configure an applicable workflow (defining states, roles, actions)
 for the assessment.</li>
-</ul><h2>Synopsis of Data-Collection Datamodel</h2><p>Here's the schema for this subsystem:<br>
-</p><center><p><img alt="Data Model" src="images/assessment-datafocus.jpg" style="width: 923px; height: 651px;"></p></center><h2>Specific Entities</h2><p>This section addresses the attributes the most important
+</ul>
+<h2>Synopsis of Data-Collection Datamodel</h2>
+<p>Here's the schema for this subsystem:<br>
+</p>
+<center><p><img alt="Data Model" src="images/assessment-datafocus.jpg" style="width: 923px; height: 651px;"></p></center>
+<h2>Specific Entities</h2>
+<p>This section addresses the attributes the most important
 entities have in the data-collection data model -- principally the
 various design issues and choices we've made. We omit here literal
 SQL snippets since that's what the web interface to CVS is for.
-;-)</p><ul>
+;-)</p>
+<ul>
 <li>
 <b>Assessment Sessions (as_sessions)</b> are the top of the
 data-collection entity hierarchy. They provide the central
@@ -224,7 +236,8 @@ need to provide a reason for making that change. Teachers may want
 to attach a reply to a student's answer to a specific Item or make
 a global comment about the entire Assessment. This will be achieved
 by using the General Comments System of OpenACS</li>
-</ul><ul><li>
+</ul>
+<ul><li>
 <span style="font-weight: bold;">Signing of content</span>
 allows to verify that the data submitted is actually from the
 person it is pretended to be from. This assumes an public key
@@ -235,5 +248,5 @@ with the secret key of the user). To verify if the data in
 as_item_data is actually verified the system only has to check the
 signed_data with the public key and see if it matches the
 data.<br>
-</li></ul><br>
-</body>
+</li></ul>
+<br>

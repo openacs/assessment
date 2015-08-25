@@ -2,15 +2,14 @@
 <property name="context">{/doc/assessment {Assessment}} {Assessment Creation}</property>
 <property name="doc(title)">Assessment Creation</property>
 <master>
-
-<body>
 <!-- START HEADER --><span class="context"><span class="reg">When
 creating an assessment the administrator has a couple of fields to
 determine the look and feel of the assessment along with the option
 to view the responses. This is a list of attributes the
 administrator can edit when creating an assessment. The grouping is
 based on the UI and not on the datamodell. So you should follow
-this with regards to the UI:</span></span><ul>
+this with regards to the UI:</span></span>
+<ul>
 <li><span class="context">Title: Title of the
 accessment</span></li><li><span class="context">Anonymous Accessment: boolean (yes/no).
 This shows whether the creator of the accessment will have the
@@ -174,5 +173,6 @@ store the user's response whether it is positive or negative, along
 with a timestamp. This isn't relevant in educational testing, but
 it is an important feature to include for other settings, notably
 medical and financial ones.</span></li>
-</ul><span class="etp-link"><a class="top" href="etp?name=assessment_creation"></a></span><!-- END ETP LINK -->
-</body>
+</ul>
+<span class="etp-link"><a class="top" href="etp?name=assessment_creation"></a></span>
+<!-- END ETP LINK -->

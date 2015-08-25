@@ -2,18 +2,20 @@
 <property name="context">{/doc/assessment {Assessment}} {AS_item Types}</property>
 <property name="doc(title)">AS_item Types</property>
 <master>
-
-<body>
 <h2>Overview</h2>
-This is a list of item types and <span style="font-weight: bold;">some of</span> their attributes we want to
+
+This is a list of item types and <span style="font-weight: bold;">some of</span>
+ their attributes we want to
 support (a full list is stored with the design specifications). At
 a later stage we are going to add the checks for each item_type to
 this page as well. This does not mean we are going to create all of
 them in the first shot. The attributes are *ONLY* those which are
 not already part of as_items and therefore should be dealt with in
-as_item_type_attributes (see <a href="as_items.html">Item Data
-Model</a> for reference).
-<h2>Specific Item Types</h2><ul>
+as_item_type_attributes (see <a href="as_items">Item Data
+Model</a>
+ for reference).
+<h2>Specific Item Types</h2>
+<ul>
 <li>Open Question
 <p>Open questions are text input questions for free text. For
 obvious reasons they cannot be auto corrected. The difference
@@ -206,6 +208,7 @@ will add more info on this.</p><ul>
 </ul>
 </li>
 </ul>
+
 Only site wide admins will get to see the following question types:
 <ul><li>Database question:
 <p>The answer to this question will be stored in the database. The
@@ -223,4 +226,3 @@ used for storing the responses.</li><li>Key Column: short_string. This is the co
 matches the user_id of the respondee.</li>
 </ul>
 </li></ul>
-</body>

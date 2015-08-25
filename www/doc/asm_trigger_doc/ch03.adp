@@ -2,16 +2,11 @@
 <property name="context">{/doc/assessment {Assessment}} {Chapter 3. Registration Assessment}</property>
 <property name="doc(title)">Chapter 3. Registration Assessment</property>
 <master>
-
-<body>
-<div class="navheader"><table width="100%" summary="Navigation header">
-<tr><th colspan="3" align="center">Chapter 3. Registration
-Assessment</th></tr><tr>
-<td width="20%" align="left">
-<a accesskey="p" href="ch02s07">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch04">Next</a>
-</td>
-</tr>
-</table></div><div class="chapter" lang="en">
+<include src="/packages/acs-core-docs/lib/navheader"
+		    leftLink="ch02s07" leftLabel="Prev"
+		    title=" "
+		    rightLink="ch04" rightLabel="Next">
+		<div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e316" id="d0e316"></a>Chapter 3. Registration Assessment</h2></div></div></div><p>To be able to select an assessment that will be related to the
 registration process is necessary that the user has site wide admin
@@ -25,17 +20,12 @@ the option "None" is selected, it means that the registration
 process will be the same as always has been, if any other option is
 selected, the assessment will be diplayed when a user creates a new
 account.</p><div class="screenshot"><div class="mediaobject"><img src="resources/none_asm.JPG"></div></div><div class="screenshot"><div class="mediaobject"><img src="resources/select_asm.JPG"></div></div>
-</div><div class="navfooter">
-<hr><table width="100%" summary="Navigation footer">
-<tr>
-<td width="40%" align="left">
-<a accesskey="p" href="ch02s07">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch04">Next</a>
-</td>
-</tr><tr>
-<td width="40%" align="left" valign="top">7. Request
-Administration </td><td width="20%" align="center"><a accesskey="h" href="index">Home</a></td><td width="40%" align="right" valign="top">
- Chapter 4. Authors</td>
-</tr>
-</table>
 </div>
-</body>
+<include src="/packages/acs-core-docs/lib/navfooter"
+		    leftLink="ch02s07" leftLabel="Prev" leftTitle="7. Request
+Administration "
+		    rightLink="ch04" rightLabel="Next" rightTitle="
+ Chapter 4. Authors"
+		    homeLink="index" homeLabel="Home" 
+		    upLink="ch02" upLabel="Up"> 
+		

@@ -2,10 +2,9 @@
 <property name="context">{/doc/assessment {Assessment}} {Policies and Events}</property>
 <property name="doc(title)">Policies and Events</property>
 <master>
-
-<body>
 <h2>Policies and Events<br>
-</h2><ul>
+</h2>
+<ul>
 <li>Assessment-Policies (as_assessment_policies) abstract out from
 Assessments a variety of attributes that describe deployment
 particulars. This allows multiple users of an Assessment to define
@@ -46,4 +45,3 @@ Assessment must be performed</li><li>required_days_post</li><li style="font-fami
 </ul>
 </li>
 </ul>
-</body>

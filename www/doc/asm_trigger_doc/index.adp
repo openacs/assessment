@@ -2,15 +2,11 @@
 <property name="context">{/doc/assessment {Assessment}} {Triggers and Action Execution in Assessment}</property>
 <property name="doc(title)">Triggers and Action Execution in Assessment</property>
 <master>
-
-<body>
-<div class="navheader"><table width="100%" summary="Navigation header">
-<tr><th colspan="3" align="center">Triggers and Action Execution in
-Assessment</th></tr><tr>
-<td width="20%" align="left"> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01">Next</a>
-</td>
-</tr>
-</table></div><div class="book" lang="en">
+<include src="/packages/acs-core-docs/lib/navheader"
+		    leftLink="ch03" leftLabel="Prev"
+		    title=" "
+		    rightLink="ch01" rightLabel="Next">
+		<div class="book" lang="en">
 <div class="titlepage">
 <div><div><h1 class="title">
 <a name="d0e1" id="d0e1"></a>Triggers and Action
@@ -34,15 +30,11 @@ Assessment</a></span></dt><dt><span class="chapter"><a href="ch04">4.
 Authors</a></span></dt>
 </dl>
 </div><div class="list-of-figures"><a href="ch01s01"></a></div>
-</div><div class="navfooter">
-<hr><table width="100%" summary="Navigation footer">
-<tr>
-<td width="40%" align="left"> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch01">Next</a>
-</td>
-</tr><tr>
-<td width="40%" align="left" valign="top"> </td><td width="20%" align="center"> </td><td width="40%" align="right" valign="top">
- Chapter 1. Design</td>
-</tr>
-</table>
 </div>
-</body>
+<include src="/packages/acs-core-docs/lib/navfooter"
+		    leftLink="ch03" leftLabel="Prev" leftTitle=" "
+		    rightLink="ch01" rightLabel="Next" rightTitle="
+ Chapter 1. Design"
+		    homeLink="index" homeLabel="Home" 
+		    upLink="ch02" upLabel="Up"> 
+		

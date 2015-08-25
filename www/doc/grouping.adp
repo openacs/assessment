@@ -2,12 +2,13 @@
 <property name="context">{/doc/assessment {Assessment}} {Assessment}</property>
 <property name="doc(title)">Assessment</property>
 <master>
-
-<body>
 <p>Here is a graphical overview of the subsystem in the Assessment
 package that organizes Items into Sections and whole
 Assessments:<br>
-</p><center><p><img alt="Data modell graphic" src="images/assessment-groupingfocus.jpg" style="width: 797px; height: 565px;"></p></center><h2>Review of Specific Entities</h2><ul>
+</p>
+<center><p><img alt="Data modell graphic" src="images/assessment-groupingfocus.jpg" style="width: 797px; height: 565px;"></p></center>
+<h2>Review of Specific Entities</h2>
+<ul>
 <li>Assessments (as_assessments) are the highest-level container in
 the hierarchical structure. They define the key by which all other
 entities are assembled into meaningful order during display,
@@ -77,7 +78,8 @@ default.</span></span></span></li>
 special style associated with it. As styles can be reused (e.g.
 within a department) they are covered in the
 as_assessment_styles:</li>
-</ul><ul>
+</ul>
+<ul>
 <li style="list-style: none">
 <ul>
 <li>custom_header - Custom header (and footer) that will be
@@ -211,4 +213,3 @@ here if desired:
 </ul>
 </li>
 </ul>
-</body>

@@ -2,16 +2,12 @@
 <property name="context">{/doc/assessment {Assessment}} {6. Trigger Administration}</property>
 <property name="doc(title)">6. Trigger Administration</property>
 <master>
-
-<body>
-<div class="navheader"><table width="100%" summary="Navigation header">
-<tr><th colspan="3" align="center">6. Trigger Administration</th></tr><tr>
-<td width="20%" align="left">
-<a accesskey="p" href="ch02s05">Prev</a> </td><th width="60%" align="center">Chapter 2. User
-Manual</th><td width="20%" align="right"> <a accesskey="n" href="ch02s07">Next</a>
-</td>
-</tr>
-</table></div><div class="section" lang="en">
+<include src="/packages/acs-core-docs/lib/navheader"
+		    leftLink="ch02s05" leftLabel="Prev"
+		    title="Chapter 2. User
+Manual"
+		    rightLink="ch02s07" rightLabel="Next">
+		<div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e259" id="d0e259"></a>6. Trigger Administration</h2></div></div></div><p>The trigger administration page can be reached from two
 different links, the link "Administer Triggers" in the action bar
@@ -28,17 +24,12 @@ deleted or can be managed its notifications.</p><p>When a trigger is deleted, a 
 showing all the information related to it.</p><div class="screenshot"><div class="mediaobject"><img src="resources/delete_triggers.JPG"></div></div><p>The link "Notify User" leads to a page a user can request
 notifications when this trigger is executed. It also allowst to
 search and register another users to the notifications.</p><div class="screenshot"><div class="mediaobject"><img src="resources/notifications.JPG"></div></div>
-</div><div class="navfooter">
-<hr><table width="100%" summary="Navigation footer">
-<tr>
-<td width="40%" align="left">
-<a accesskey="p" href="ch02s05">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s07">Next</a>
-</td>
-</tr><tr>
-<td width="40%" align="left" valign="top">5. Action
-Triggers </td><td width="20%" align="center"><a accesskey="h" href="index">Home</a></td><td width="40%" align="right" valign="top"> 7. Request
-Administration</td>
-</tr>
-</table>
 </div>
-</body>
+<include src="/packages/acs-core-docs/lib/navfooter"
+		    leftLink="ch02s05" leftLabel="Prev" leftTitle="5. Action
+Triggers "
+		    rightLink="ch02s07" rightLabel="Next" rightTitle=" 7. Request
+Administration"
+		    homeLink="index" homeLabel="Home" 
+		    upLink="ch02" upLabel="Up"> 
+		

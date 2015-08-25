@@ -2,19 +2,21 @@
 <property name="context">{/doc/assessment {Assessment}} {As_Item Display Types}</property>
 <property name="doc(title)">As_Item Display Types</property>
 <master>
-
-<body>
-<h2><span class="context">Overview</span></h2><span class="context">Displaying items to users has a couple of
+<h2><span class="context">Overview</span></h2>
+<span class="context">Displaying items to users has a couple of
 challanges. First of all the display of a single item can be
 different for each item_type (and even within a type). Second of
 all, the display of items within a section can be different from
 assessment to assessment. Last but not least, the whole assessment
 might be displayed differently depending on attributes and the type
-of assessment we are talking about.</span><p><span class="context"><b><i>Note: please refer to the discussion
-of Items <a href="as_items.html">here</a>. That discussion
+of assessment we are talking about.</span>
+<p><span class="context"><b><i>Note: please refer to the discussion
+of Items <a href="as_items">here</a>. That discussion
 complements the discussion here, and the data model graphic
 pertaining to the Item Display Types system is available there
-also.</i></b></span></p><h2><span class="context">Item Display Types</span></h2><span class="context">Each item has an item_display_type object
+also.</i></b></span></p>
+<h2><span class="context">Item Display Types</span></h2>
+<span class="context">Each item has an item_display_type object
 associated with it, that defines how to display the item. Each
 item_display_type has a couple of attributes, that can be passed to
 the formbuilder for the creation of the widget. Each widget has at
@@ -22,8 +24,10 @@ least one item_display_type associated with it. In the long run I
 think this system has the potential to become a part of OpenACS
 itself (storing additional display information for each
 acs_object), but we are not there yet :). Obviouslly we are talking
-cr_item_types here as well.</span><p><span class="context">Each item_display_type has a couple of
-attributes in common.</span></p><ul>
+cr_item_types here as well.</span>
+<p><span class="context">Each item_display_type has a couple of
+attributes in common.</span></p>
+<ul>
 <li><span class="context">item_display_type_id</span></li><li><span class="context">item_type_name - name like "Select box,
 aligned right", stored in the name field of CR.<br>
 </span></li><li><span class="context">presentation_type - the type of "widget"
@@ -50,14 +54,16 @@ will display when first output (eg text in a textbox; eg the
 defaults that ad_dateentrywidget expects: "" for "no date", "0" for
 "today", or else some specific date set by the author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
 this example</a>)</span></span></span></li>
-</ul><p>Depending on the presentation_types <font color="red">additonal
+</ul>
+<p>Depending on the presentation_types <font color="red">additonal
 attributes (presentation_type attributes)</font> come into play
 (are added as attributes to the CR item type) (mark: this is not
 feature complete. It really is up to the coder to decide what
 attributes each widget should have, down here are only
 *suggestions*). Additionally we're not mentioning all HTML
 possibilities associated with each type (e.g. a textarea has width
-and heigth..).</p><ul>
+and heigth..).</p>
+<ul>
 <li>textbox - single-line typed entry
 <ul><li>abs_size - An abstraction of the real size value in
 "small","medium","large". Up to the developer how this
@@ -109,23 +115,29 @@ are textboxes for all-keyboard entry; needs no resetting scripts
 but does need date validity check</li><li>image_map - requires a linked image; the image map coordinates
 are handled as Item Choices</li><li>file_upload - present a File box (browse button, file_name
 textbox, and submit button together) so user can upload a file</li><li><font color="red">many more</font></li>
-</ul><p>In addition, there are some potential presentation_types that
+</ul>
+<p>In addition, there are some potential presentation_types that
 actually seem to be better modeled as a Section of separate
-Items:</p><ul>
+Items:</p>
+<ul>
 <li>ranking - a set of alternatives each need to be assigned an
 exclusive rank ("Indicate the order of US Presidents from bad to
 worse"). Is this one Item with multiple Item Choices? Actually,
 not, since each alternative has a value that must be separately
 stored (the tester would want to know that the testee ranked GWB
 last, for instance).</li><li><font color="red">...</font></li>
-</ul><h2><a name="section_display" id="section_display">Section
+</ul>
+<h2><a name="section_display" id="section_display">Section
 display</a></h2>
+
 A section can be seen as a form with all the items within this
 section making up the form. Depending on the type of assessment we
 are talking about, the section can be displayed in various
 ways.<br>
+
 The section display page will be made up of the following
-attributes:<br><ul>
+attributes:<br>
+<ul>
 <li>Name: text. Name of the section like "test view sorted"</li><li>Number of questions per page: integer. THIS HAS TO BE CHANGED
 IN THE DATAMODELL FROM PAGINATION_STYLE. How many questions shall
 be displayed per page in this section. Usually the answer would be
@@ -154,8 +166,8 @@ section is finished all answers that have not been seperatly
 submitted will be treated as not being submitted at all.<br>
 </li>
 </ul>
+
 Additionally each section has certain parameters that determine the
 look and feel of the section itself. Luckily it is not necessary to
 have differing attributes for the sections, therefore all these
 display attributes can be found with the <a href="grouping">section and assessment specification</a>
-</body>

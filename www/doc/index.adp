@@ -2,17 +2,18 @@
 <property name="context">{/doc/assessment {Assessment}} {Assessment Overview}</property>
 <property name="doc(title)">Assessment Overview</property>
 <master>
-
-<body>
-<h2>Introduction</h2><p>The Assessment Package unites the work and needs of various
+<h2>Introduction</h2>
+<p>The Assessment Package unites the work and needs of various
 members of the OpenACS community for data collection functionality
 within the OpenACS framework. We're using the term "Assessment"
 instead of "Survey" or "Questionnaire" (or "Case Report Form" aka
 CRF, the term used in clinical trials) because it is a term used by
 IMS and because it connotes the more generic nature of the data
-collection system we're focusing on.</p><p>There has been considerable recent interest in expanding the
+collection system we're focusing on.</p>
+<p>There has been considerable recent interest in expanding the
 capabilities of generic data collection packages within OpenACS.
-Identified applications include:</p><ul>
+Identified applications include:</p>
+<ul>
 <li>Educational settings. The dotLRN project has updated the
 Simple-Survey package to the Survey package now in the current
 distribution. A number of groups in the OpenACS community are
@@ -49,8 +50,11 @@ incorporating Workflow and a new data collection package would be
 key to creation of new vertical-application tools like dotWRK. Such
 integration would also be immensely useful for a clinical trials
 management toolkit.</p></li>
-</ul><h2>Historical Considerations (Work Done So Far)</h2><p>Several OpenACS efforts form the context for any future work.
-These include:</p><ul>
+</ul>
+<h2>Historical Considerations (Work Done So Far)</h2>
+<p>Several OpenACS efforts form the context for any future work.
+These include:</p>
+<ul>
 <li>Survey. This package (largely written/revised by <a href="http://openacs.org/shared/community-member?user_id=2956" target="_blank">Dave Bauer</a>) doesn't currently have any documentation
 in the <a href="http://openacs.org/doc/openacs-4/" target="_blank">documentation section of the OpenACS.org site</a>, but it
 is in any current OpenACS installation at /doc/survey/. Dave has
@@ -94,46 +98,62 @@ capabilities.) This module runs within OpenACS 3.2.5, though, and
 will need a substantial rewrite to work within the new 5.x
 infrastructure.</li><li>Simple-survey. This package remains in the OpenACS distribution
 but it is now obsolete, supplanted by Survey</li>
-</ul><h2>Competitive Analysis</h2>
+</ul>
+<h2>Competitive Analysis</h2>
+
 The number of competing products in this area is *huge*. Starting
 with the usual suspects Blackboard and WebCT you can go on to
 clinical trial software like Oracle Clinical or specialised survey
 systems. When writing the specifications we tried to incorporate as
 many ideas as possible from the various systems we had a look at
 and use that experience. A detailed analysis would be too much for
-the moment.<br><h2>Functional Requirements</h2>
-An overview of the functional requirements can be found <a href="requirements">here</a>. It is highly encouraged to be read
+the moment.<br>
+<h2>Functional Requirements</h2>
+
+An overview of the functional requirements can be found <a href="requirements">here</a>
+. It is highly encouraged to be read
 first, as it contains the use cases along with a global overview of
 the functionality contained within assessment. Additional
 requirements can be found in the specific pages for the user
-interface.<br><h2>Design Tradeoffs</h2>
+interface.<br>
+<h2>Design Tradeoffs</h2>
+
 The assessment system has been designed with a large flexibility
 and reuse of existing functionality in mind. This might result in
 larger complexity for simple uses (e.g. a plain poll system on it's
 own will be more performant than running a poll through
 assessment), but provides the chance to maintain one code base for
-all these seperate modules.<br><h2>API</h2>
-The API will be defined during the development phase.<br><h2>Data model</h2>
-The data model is described in detail in the <a href="data-modell">design descriptions</a>.<br><h2><a href="user_interface/index.html">User Interface</a></h2>
+all these seperate modules.<br>
+<h2>API</h2>
+
+The API will be defined during the development phase.<br>
+<h2>Data model</h2>
+
+The data model is described in detail in the <a href="data-modell">design descriptions</a>
+.<br>
+<h2><a href="user_interface/index">User Interface</a></h2>
+
 The UI for Assessment divides into a number of primary functional
-areas, with the entry page located <a href="user_interface/index.html">here</a>. It is split up into multiple
-sections:<br><ul>
+areas, with the entry page located <a href="user_interface/index">here</a>
+. It is split up into multiple
+sections:<br>
+<ul>
 <li>
-<a href="user_interface/assessment_creation.html">Assessment
+<a href="user_interface/assessment_creation">Assessment
 Authoring</a>: all the pages involved in creating, editing, and
 deleting the Assessments themselves</li><li>
-<a href="user_interface/section_creation.html">Section
+<a href="user_interface/section_creation">Section
 Authoring</a>: all the pages involved in creating, editing, and
 deleting the Sections themselves. Includes the page to browse for
 items to include in sections</li><li>
-<a href="user_interface/item_creation.html">Item Authoring and
+<a href="user_interface/item_creation">Item Authoring and
 Catalogue</a>: all the pages involing the item creation and the
 item catalogue.</li><li>
-<a href="user_interface/user_experience.html">Assessment
+<a href="user_interface/user_experience">Assessment
 Delivery</a>: all the pages involved in deploying a given
 Assessment to users for completion, processing those results, etc;
 these are user pages</li><li>
-<a href="user_interface/tests.html">Section on Tests</a>:
+<a href="user_interface/tests">Section on Tests</a>:
 Currently still split away, some notes on additional user interface
 for test. Shall be integrated with the rest of the pages.</li><li>Assessment Review: all the pages involved in select data
 extracts and displaying them in whatever formats indicated; this
@@ -148,13 +168,21 @@ next one in some fashion, though exactly how this occurs needs to
 be further thought through, depending on where the Site Management
 mechanisms reside.</li><li><a href="asm_trigger_doc/">Triggers and Action
 Execution</a></li>
-</ul><br>
-The  <a href="page_flow.html">Page Flow</a> page is diagrammed
+</ul>
+<br>
+
+The  <a href="page_flow">Page Flow</a>
+ page is diagrammed
 below and should give a very rough and outdated overview, but still
-good for getting an impression.<br><br><h2>Authors</h2>
+good for getting an impression.<br>
+<br>
+<h2>Authors</h2>
+
 The specifications for the assessment system have been written by
 <a href="http://openacs.org/shared/community-member?user_id=6569">Stan
-Kaufman</a> and <a href="http://openacs.org/shared/community-member?user_id=7797">Malte
-Sussdorff</a> with help from numerous people within and outside the
-OpenACS community.<br><br>
-</body>
+Kaufman</a>
+ and <a href="http://openacs.org/shared/community-member?user_id=7797">Malte
+Sussdorff</a>
+ with help from numerous people within and outside the
+OpenACS community.<br>
+<br>

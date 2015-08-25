@@ -2,12 +2,11 @@
 <property name="context">{/doc/assessment {Assessment}} {Tests}</property>
 <property name="doc(title)">Tests</property>
 <master>
-
-<body>
 <!-- START HEADER --><span class="context"><span class="reg">A test
 is a special kind of accessment that allows the respondee's answers
 to be rated immediatly. Unless otherwise stated, all pages
-described are admin viewable only.</span></span><ul>
+described are admin viewable only.</span></span>
+<ul>
 <li>
 <span class="context">Settings</span><ul>
 <li><span class="context">Assessment: a selectbox containing all
@@ -64,8 +63,10 @@ median of all tries, mark all of them green.</span></li>
 test, reports and summary are given.</span></li>
 </ul>
 </li>
-</ul><span class="context"><span class="reg">Test processing happens in
-a multiple stage process.</span></span><ol>
+</ul>
+<span class="context"><span class="reg">Test processing happens in
+a multiple stage process.</span></span>
+<ol>
 <li><span class="context">The system evaluates the test as good as
 it can.</span></li><li><span class="context">The results of this auto-grading are
 displayed in the evaluation table for the admin (see test
@@ -74,10 +75,12 @@ system.</span></li><li><span class="context">Staff can manually Human Grade the 
 This is mandatory for open questions for the test to be completly
 graded.</span></li><li><span class="context">The result of the human grading
 overwrites the auto grading in the scoring system.</span></li>
-</ol><span class="context">Autograding is different for the types of
+</ol>
+<span class="context">Autograding is different for the types of
 questions the test has. For future versions it should be possible
 to easily add other types of information that will be autograded.
-All autograding follow this scheme:</span><ol>
+All autograding follow this scheme:</span>
+<ol>
 <li><span class="context">The answer is taken from the respondee
 response</span></li><li><span class="context">It is compared with the correct
 answer</span></li><li><span class="context">A percentage value is
@@ -88,8 +91,10 @@ link to the response for the particular question in the scoring
 system.</span></li><li><span class="context">Once finished with all the questions, the
 result for the test is computed and stored with a link to the
 response in the scoring system.</span></li>
-</ol><span class="context">Autograding is different for each type of
-question.</span><ul>
+</ol>
+<span class="context">Autograding is different for each type of
+question.</span>
+<ul>
 <li>
 <span class="context">Multiple Choice</span><ul>
 <li><span class="context">All or nothing. In this scenario it will
@@ -135,10 +140,12 @@ be granted to the response. If allow negative is true, even a
 negative percentage can be the result.</span></li>
 </ol>
 </li>
-</ul><span class="context">Human grading will display all the questions
+</ul>
+<span class="context">Human grading will display all the questions
 and answers of response along with the possibility to reevalutate
 the points and give comments. The header will display the following
-information:</span><ul>
+information:</span>
+<ul>
 <li><span class="context">Title of the test</span></li><li><span class="context">Name of the respondee</span></li><li><span class="context">Number of the try / total number of
 tries</span></li><li><span class="context">Status of the try (finished, unfinished,
 autograded, human graded (by whom))</span></li><li><span class="context">Start and Endtime for this
@@ -147,8 +154,10 @@ test:Integer. Prefilled with the current value for the
 response.</span></li><li><span class="context">Comment: richtext. Comment for the number
 of points given. Prefilled with the current version of the
 comment.</span></li>
-</ul><span class="context">For each question the following will be
-displayed</span><ul>
+</ul>
+<span class="context">For each question the following will be
+displayed</span>
+<ul>
 <li><span class="context">Question Title.</span></li><li><span class="context">Maximum number of points for this
 question.</span></li><li><span class="context">Question.</span></li><li><span class="context">New Points: Integer. Prefilled with the
 current value for the response. This is the possibility for staff
@@ -177,7 +186,7 @@ the correct answers for this answerbox (with percentage). Might be
 interesting to display regexps here :-).</span></li>
 </ul>
 </li>
-</ul><span class="context">
+</ul>
+<span class="context">
 <span class="etp-link"><a class="top" href="etp?name=tests"></a></span><!-- END ETP LINK -->
 </span>
-</body>

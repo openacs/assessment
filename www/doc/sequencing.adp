@@ -2,9 +2,8 @@
 <property name="context">{/doc/assessment {Assessment}} {Assessment Item Checks}</property>
 <property name="doc(title)">Assessment Item Checks</property>
 <master>
-
-<body>
-<h2>Sequencing</h2><p>Along with Data Validation and Versioning, probably the most
+<h2>Sequencing</h2>
+<p>Along with Data Validation and Versioning, probably the most
 vexing problem confronting the Assessment package is how to handle
 conditional navigation through an Assessment guided by user input.
 Simple branching has already been accomplished in the "complex
@@ -15,7 +14,8 @@ relate to management of data validation steps? If
 branching/skipping depends not merely on what combination of
 "correct" or "in range" data the user submits, but also on
 combinations of "incorrect" or "out of range" data, how the heck do
-we do this?</p><p>One basic conceptual question is whether Data Validation is a
+we do this?</p>
+<p>One basic conceptual question is whether Data Validation is a
 distinct process from Navigation Control or not. Initially we
 thought it was and that there should be a datamodel and set of
 procedures for checking user input, the output of which would pipe
@@ -28,6 +28,7 @@ processes into a common "post-submission user input processing"
 step we'll refer to here as Sequencing. (Note: we reviewed several
 alternatives in the archived prior discussions <a href="http://openacs.org/projects/openacs/packages/assessment/specs/sequencing">
 here</a>.</p>
+
 So here is our current approach. We note that there are two scopes
 over which Sequencing needs to be handled:
 <ul>
@@ -35,9 +36,13 @@ over which Sequencing needs to be handled:
 item</li><li>inter-item : checks pertaining to user responses to more than
 one item; checks among multiple items will be built up
 pairwise</li>
-</ul><p>So how might we implement this in our datamodel? Consider the
+</ul>
+<p>So how might we implement this in our datamodel? Consider the
 "sequencing" subsystem of the Assessment package:<br>
-</p><center><p><img alt="Data Modell Graphic" src="images/assessment-sequencefocus.jpg" style="width: 711px; height: 707px;"></p></center><h2>Specific Entities</h2><ul>
+</p>
+<center><p><img alt="Data Modell Graphic" src="images/assessment-sequencefocus.jpg" style="width: 711px; height: 707px;"></p></center>
+<h2>Specific Entities</h2>
+<ul>
 <li>Item-checks (as_item_checks) define 1..n ordered evaluations of
 a user's response to a single Item. These can occur either via
 client-side Javascript when the user moves focus from the Item, or
@@ -106,4 +111,3 @@ in the check_sql to speed up the check.<br>
 </ul><br>
 </li>
 </ul>
-</body>

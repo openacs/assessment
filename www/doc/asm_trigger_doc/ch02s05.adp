@@ -2,16 +2,12 @@
 <property name="context">{/doc/assessment {Assessment}} {5. Action Triggers}</property>
 <property name="doc(title)">5. Action Triggers</property>
 <master>
-
-<body>
-<div class="navheader"><table width="100%" summary="Navigation header">
-<tr><th colspan="3" align="center">5. Action Triggers</th></tr><tr>
-<td width="20%" align="left">
-<a accesskey="p" href="ch02s04">Prev</a> </td><th width="60%" align="center">Chapter 2. User
-Manual</th><td width="20%" align="right"> <a accesskey="n" href="ch02s06">Next</a>
-</td>
-</tr>
-</table></div><div class="section" lang="en">
+<include src="/packages/acs-core-docs/lib/navheader"
+		    leftLink="ch02s04" leftLabel="Prev"
+		    title="Chapter 2. User
+Manual"
+		    rightLink="ch02s06" rightLabel="Next">
+		<div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e204" id="d0e204"></a>5. Action Triggers</h2></div></div></div><p>To define an Action Trigger, the field "Type" in the form must
 be checked as "Action".</p><p>The condition field shows the question and its possible anwers,
@@ -33,17 +29,12 @@ execution:</p><div class="itemizedlist"><ul type="circle"><li><p>Immediately: di
 sections.</p></li></ul></div><div class="itemizedlist"><ul type="circle"><li><p>At the end of the assessment and Manually: display all the
 questions defined in the assessment.</p></li></ul></div>
 </li></ul></div><div class="screenshot"><div class="mediaobject"><img src="resources/set_params.JPG"></div></div>
-</div><div class="navfooter">
-<hr><table width="100%" summary="Navigation footer">
-<tr>
-<td width="40%" align="left">
-<a accesskey="p" href="ch02s04">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s06">Next</a>
-</td>
-</tr><tr>
-<td width="40%" align="left" valign="top">4. Branch
-Triggers </td><td width="20%" align="center"><a accesskey="h" href="index">Home</a></td><td width="40%" align="right" valign="top"> 6. Trigger
-Administration</td>
-</tr>
-</table>
 </div>
-</body>
+<include src="/packages/acs-core-docs/lib/navfooter"
+		    leftLink="ch02s04" leftLabel="Prev" leftTitle="4. Branch
+Triggers "
+		    rightLink="ch02s06" rightLabel="Next" rightTitle=" 6. Trigger
+Administration"
+		    homeLink="index" homeLabel="Home" 
+		    upLink="ch02" upLabel="Up"> 
+		

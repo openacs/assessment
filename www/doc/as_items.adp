@@ -2,9 +2,8 @@
 <property name="context">{/doc/assessment {Assessment}} {As_Items}</property>
 <property name="doc(title)">As_Items</property>
 <master>
-
-<body>
-<h2><span class="context">Overview</span></h2><p><span class="context">The  As_Item and Section catalogues
+<h2><span class="context">Overview</span></h2>
+<p><span class="context">The  As_Item and Section catalogues
 are central parts of the assessment system. These repositories
 support reuse of Assessment components by storing of the various
 as_items (or questions if you like) and groups of as_items (e.g.
@@ -12,18 +11,21 @@ Sections) that can be used in an assessment. You are able to
 add/edit/delete an as_item of a certain type to a certain scope.
 Furthermore it allows you to search and browse for questions for
 inclusion in your assesment as well as import and export multiple
-questions using various formats.</span></p><p><span class="context">In this description here we will only
+questions using various formats.</span></p>
+<p><span class="context">In this description here we will only
 discuss the design implications for as_items. Green colored tables
-have to be internationlized.</span></p><p><span class="context">Each as_item consists of a specific
+have to be internationlized.</span></p>
+<p><span class="context">Each as_item consists of a specific
 as_item Type like "Multiple Choice Question" or "Free Text". Each
-<a href="item_types.html">as_item Type</a> adds additional
+<a href="item_types">as_item Type</a> adds additional
 Attributes to the as_item, thereby making it pretty flexible.
-Additionally each as_item has a related <a href="display_types.html">display type</a> storing information on how to
+Additionally each as_item has a related <a href="display_types">display type</a> storing information on how to
 display this as_item. This way we can create an adp-snippet which
 we can include to display a certain as_item (the snippet is stored
 de-normalized in the as_items table and update on every change to
 the as_item or the as_item_type).<br>
-</span></p><p><span class="context">How is this achieved concretely? Each
+</span></p>
+<p><span class="context">How is this achieved concretely? Each
 as_item Type has it's own table with attributes useful for this
 as_item type. All tables (as_items, as_item_type_*,
 as_item_display_*) are controlled by the content repository. Each
@@ -31,26 +33,33 @@ as_item is linked using acs-relationships to the specific items of
 the as_item_type_*  and as_item_display_* tables. Each as_item
 can only be linked to one as_item_type instance and one
 as_item_display instance.<br>
-</span></p><p><span class="context">Categorization and internationalization
+</span></p>
+<p><span class="context">Categorization and internationalization
 will make it into OpenACS 5.2, therefore we are not dealing with it
 in Assessment seperately but use the (to be) built in functionality
-of OpenACS 5.2</span></p><p><span class="context">Additionally we have support functionality
+of OpenACS 5.2</span></p>
+<p><span class="context">Additionally we have support functionality
 for an as_item. This includes the help functionality. To give
 Assessment authors flexibility in adapting as_item defaults, help
 messages, etc for use in different Assessments, we abstract out a
 number of attributes from as_items into mapping tables where
 "override" values for these attributes can optionally be set by
 authors. If they choose not to set overrides, then the values
-originally created in the as_item supercede.</span></p><p><span class="context">Seperately we will deal with Checks on
+originally created in the as_item supercede.</span></p>
+<p><span class="context">Seperately we will deal with Checks on
 as_items. These will allow us to make checks on the input (is the
 value given by the user actually a valid value??), branches (if we
 display this as_item, which responses have to have been given) and
 post-input checks (how many points does this answer
-give).</span></p><p><span class="context">Here is the graphical schema for the
+give).</span></p>
+<p><span class="context">Here is the graphical schema for the
 as_item-related subsystems, including the as_item Display subsystem
-described <a style="font-family: monospace;" href="display_types.html">here</a>.<br>
-</span></p><center><p><span class="context"><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg" style="width: 752px; height: 1121px;"></span></p></center><h2><span class="context">Core Function: as_items<br>
-</span></h2><ul><li>
+described <a style="font-family: monospace;" href="display_types">here</a>.<br>
+</span></p>
+<center><p><span class="context"><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg" style="width: 752px; height: 1121px;"></span></p></center>
+<h2><span class="context">Core Function: as_items<br>
+</span></h2>
+<ul><li>
 <span class="context">
 <b>as_items</b> are the "questions" that
 constitute the atomic focus of the Assessment package. Each as_item
@@ -93,8 +102,10 @@ allows specific access to an item.</span></li><li><span class="context">Write: A
 as_item.</span></li><li><span class="context">Admin: Author can reuse, change and give
 permission on this as_item</span></li>
 </ul><span class="context"><br></span>
-</li></ul><h2><span class="context"><span class="reg">As_item
-Types</span></span></h2><span class="context"><span class="reg">
+</li></ul>
+<h2><span class="context"><span class="reg">As_item
+Types</span></span></h2>
+<span class="context"><span class="reg">
 <b><font color="green">as_item Types (as_item_type_*)</font></b> define types of
 as_items like "Open Question", "Calculation" and others. The
 as_item type will also define in what format the answer should be
@@ -108,9 +119,11 @@ us to create and reuse standard as_items (e.g. for the likert
 scale), by linking different questions with the answer
 possibilities (and the same attributes) to one as_item_type object.
 If we have objects that are linked this way, we can generate the
-matrix for them easily.</span></span> A functional list of all
+matrix for them easily.</span></span>
+ A functional list of all
 as_item types and their attributes can be found in the <a href="http://openacs.org/projects/openacs/packages/assessment/requirements/item_types">
-requirements section.</a><ul>
+requirements section.</a>
+<ul>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Open Question
 (as_item_type_oq):</font></b></span></span></span></span></li><li style="list-style: none"><ul>
 <li>as_item_type_id<br>
@@ -128,7 +141,8 @@ will either give 100%, if all correct answers are given, or 0%
 else.</li><li>allow_negative_p: This will allow a negative percentage as well
 (as the total result).</li>
 </ul></li>
-</ul><ul>
+</ul>
+<ul>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Short Answer
 Answers
 (as_item_sa_answers):</font></b></span></span></span></span></li><li style="list-style: none"><ul>
@@ -144,7 +158,8 @@ answers</li><li>NOTE: These answers are reusable, that's why we have a
 relationship.<br>
 </li>
 </ul></li>
-</ul><ul>
+</ul>
+<ul>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Multiple Choice
 Item
 (as_item_type_mc)<br>
@@ -159,7 +174,8 @@ displayed. Check if enough correct choices have been defined.</li><li>num_answer
 (correct and incorrect). Check if enough choices are
 available.</li>
 </ul></li>
-</ul><ul>
+</ul>
+<ul>
 <li>
 <span class="context">
 <b><font color="green">Multiple Choices
@@ -212,7 +228,8 @@ cr_revision_id of the image, references
 cr_revisions<br>
 </span></span></li>
 </ul></li>
-</ul><ul>
+</ul>
+<ul>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Image Map
 Choices
 (as_item_image_choices):<br>
@@ -230,7 +247,9 @@ area that uses the coordinates_string</span></span></li><li><span class="context
 String that defines the html area coordinates if this choice is
 used in an image_map question.</span></span></li>
 </ul></li>
-</ul><h2><span class="context">Item Display Types</span></h2><span class="context">Each item has an item_display_type object
+</ul>
+<h2><span class="context">Item Display Types</span></h2>
+<span class="context">Each item has an item_display_type object
 associated with it, that defines how to display the item. Each
 item_display_type has a couple of attributes, that can be passed to
 the formbuilder for the creation of the widget. Each widget has at
@@ -238,14 +257,17 @@ least one item_display_type associated with it. In the long run I
 think this system has the potential to become a part of OpenACS
 itself (storing additional display information for each
 acs_object), but we are not there yet :). Obviously we are talking
-cr_item_types here as well.</span><p><span class="context">Each item_display_type has a couple of
-attributes in common.</span></p><ul>
+cr_item_types here as well.</span>
+<p><span class="context">Each item_display_type has a couple of
+attributes in common.</span></p>
+<ul>
 <li><span class="context">item_display_id</span></li><li><span class="context">cr::name - name like "Select box, aligned
 right", stored in the name field of CR.<br>
 </span></li><li><span class="context">html_display_options - field to specify
 other stuff like textarea dimensions ("rows=10 cols=50"
 eg)</span></li>
-</ul><p><span class="context">Depending on the presentation_types
+</ul>
+<p><span class="context">Depending on the presentation_types
 <font color="red">additonal attributes (presentation_type
 attributes)</font> come into play (are added as attributes to the
 CR item type) (mark: this is not feature complete. It really is up
@@ -254,7 +276,8 @@ down here are only *suggestions*). Additionally we're not
 mentioning all HTML possibilities associated with each type (e.g. a
 textarea has width and heigth..) as these can be parsed in via the
 html_display_options.<br>
-</span></p><ul>
+</span></p>
+<ul>
 <li>
 <span class="context">textbox (as_item_display_tb) -
 single-line typed entry</span><ul>
@@ -428,7 +451,9 @@ during leap years -- via Javascript) and tests for valid dates</li><li style="li
 are textboxes for all-keyboard entry; needs no resetting scripts
 but does need date validity check</li><li style="list-style: none"><ul><li><br></li></ul></li><li>file_upload - present a File box (browse button, file_name
 textbox, and submit button together) so user can upload a file</li>
-</ul><h2><span class="context">Help System</span></h2><span class="context">The help system should allow a small "?"
+</ul>
+<h2><span class="context">Help System</span></h2>
+<span class="context">The help system should allow a small "?"
 appear next to an object's title that has a help text identified
 with it. Help texts are to be displayed in the nice bar that Lars
 created for OpenACS in the header. Each object can have multiple
@@ -436,14 +461,17 @@ help texts associated with it (which will be displayed in sort
 order with each hit to the "?".) and we can reuse the help text,
 making this an n:m relationship (using cr_rels). E.g. you might
 want to have a default help text for certain cr_as_item_types,
-that's why I was thinking about reuse...</span><p><span class="context">Relationship attributes:</span></p><ul>
+that's why I was thinking about reuse...</span>
+<p><span class="context">Relationship attributes:</span></p>
+<ul>
 <li><span class="context">as_item_id</span></li><li><span class="context">message_id - references
 as_messages</span></li><li><span class="context">sort_order (in which order do the
 messages appear)</span></li>
-</ul><p><span class="context">
+</ul>
+<p><span class="context">
 <b>Messages (as_messages)</b> abstracts
 out help messages (and other types of messages) for use in this
-package. Attributes include:</span></p><ul>
+package. Attributes include:</span></p>
+<ul>
 <li><span class="context">message_id</span></li><li><span class="context">message</span></li>
 </ul>
-</body>

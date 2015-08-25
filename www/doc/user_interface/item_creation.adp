@@ -2,10 +2,9 @@
 <property name="context">{/doc/assessment {Assessment}} {Question Catalogue}</property>
 <property name="doc(title)">Question Catalogue</property>
 <master>
-
-<body>
 <!-- START HEADER --><span class="context"><span class="reg">
-<b>Question Catalogue: Summary</b>:</span></span><p><span class="context">The question catalogue is a central part
+<b>Question Catalogue: Summary</b>:</span></span>
+<p><span class="context">The question catalogue is a central part
 of the assessment system. It deals with the storing of the various
 questions that can be used in a survey. You are able to
 add/edit/delete a question of a certain type to a certain scope.
@@ -13,9 +12,11 @@ Furthermore it allows you to search and browse for questions for
 inclusion in your assesment as well as import and export multiple
 questions using various formats. This concept is new to survey 0.1d
 and changes the design of the survey module considerably. No
-mockups available.</span></p><p><span class="context">
+mockups available.</span></p>
+<p><span class="context">
 <b>Spec</b>:<br>
-All questions have some common ground.</span></p><ul>
+All questions have some common ground.</span></p>
+<ul>
 <li>
 <span class="context">Questions must be scopeable, scope should
 be:</span><ul>
@@ -33,10 +34,12 @@ wide.</span></li><li><span class="context">Questions will have a title, so they 
 easily be found again.</span></li><li><span class="context">Questions have to be versionable. This
 allows a survey to use the older version of a question, if the
 question is changed.</span></li>
-</ul><span class="context">For each of the various question types, there
+</ul>
+<span class="context">For each of the various question types, there
 will be a seperate input form instead of the currently used method.
 A user selects a question type to add and is then redirected to the
-question type add form.</span><ul>
+question type add form.</span>
+<ul>
 <li>
 <span class="context">True for all Question types<br>
 The following fields are true for every question type:</span><ul>
@@ -211,8 +214,10 @@ displayed in one block. At the moment this is done in the section
 setup (if all questions in a section have the same answers they
 would be shown in a matrix). One could think about making this a
 special question type on it's own.</span></li>
-</ul><span class="context">Only site wide admins will get to see the
-following question types:</span><ul><li>
+</ul>
+<span class="context">Only site wide admins will get to see the
+following question types:</span>
+<ul><li>
 <span class="context">Database question:<br>
 The answer to this question will be stored in the database. The
 question has the following additional fields:</span><ul>
@@ -223,8 +228,10 @@ of the table that is used for storing the responses.</span></li><li><span class=
 column of the table that matches the user_id of the
 respondee.</span></li>
 </ul>
-</li></ul><span class="context">Concerning permissions here is the current
-thinking:</span><ul>
+</li></ul>
+<span class="context">Concerning permissions here is the current
+thinking:</span>
+<ul>
 <li><span class="context">A question can be changed only by the
 creator or any person that the creator authorizes. To keep it
 simple for the moment, a person that is authorized by the creator
@@ -234,8 +241,10 @@ change and given the opportunity to upgrade to the new version, or
 stick with their revision of the question.</span></li><li><span class="context">If an upgrade happens we have to make
 sure that the survey gets reevaluated. Unsure about the exact
 procedure here.</span></li>
-</ul><span class="context">There needs to be an option to search the
-question catalogue:</span><ul>
+</ul>
+<span class="context">There needs to be an option to search the
+question catalogue:</span>
+<ul>
 <li><span class="context">Search term: short_text. What shall be
 searched for</span></li><li><span class="context">Search type: select {exact, all, either}.
 Search for the exact term, for all terms or for one of the terms
@@ -255,7 +264,9 @@ questions</span></li><li><span class="context">Export questions in CSV, Blackboa
 WebCT or IMS format.</span></li>
 </ul>
 </li>
-</ul><span class="context">Operations on questions:</span><ul>
+</ul>
+<span class="context">Operations on questions:</span>
+<ul>
 <li><span class="context">View. View the question in more detail
 (all settings along with a preview of the question)</span></li><li>
 <span class="context">Edit. Edit the current question. On
@@ -275,18 +286,23 @@ confirmation page show all the Possibility to include images in
 answers. Currently this can be done using HTML linking. A more
 sophisticated system which links to a media database is thinkable,
 once the media database is ready.</span></li>
-</ul><span class="context">For the future we'd like to see a more
+</ul>
+<span class="context">For the future we'd like to see a more
 sophisticated way to include images in questions. Currently this
 can be done using HTML linking, but a media database would be
 considerably more helpful and could be reused for the CMS as
-well.</span><br clear="left"><h4>Calculation and Database Questions</h4>
+well.</span>
+<br clear="left">
+<h4>Calculation and Database Questions</h4>
+
 I'm not clear from your description what these are. If by
 Calculation questions you mean questions that produce some
 calculated result from the user's raw response, then IMHO this is
 an important type of question to support now and not defer. This is
 the main type of question we use in quality-of-life measures (see
 demo <a href="http://www.epimetrics.com/questionnaires/one-questionnaire?questionnaire_id=1">
-here</a>). These are questions scored by the Likert scale
+here</a>
+). These are questions scored by the Likert scale
 algorithm. If there are five potential responses (1,2,3,4, and 5)
 for a question, and the user choose "1" then the "score" is
 calculated as 0; if "5" then 100; if "3" then 50, and so on -- a
@@ -297,7 +313,9 @@ textboxes or textareas) questions for which there is a "correct"
 answer that needs to be stored during question creation? Then when
 the teacher is reviewing the student's response, she can inspect
 the student's response against the stored answer and determine what
-degree of correctness to assign the response?</p><p>-- <a href="/shared/community-member?user_id=6569">Stan
+degree of correctness to assign the response?</p>
+<p>-- <a href="/shared/community-member?user_id=6569">Stan
 Kaufman</a> on November 09, 2003 06:29 PM (<a href="/comments/view-comment?comment%5fid=141902&amp;return%5furl=">view
-details</a>)</p><span class="etp-link"><a class="top" href="etp?name=question_catalogue"></a></span><!-- END ETP LINK -->
-</body>
+details</a>)</p>
+<span class="etp-link"><a class="top" href="etp?name=question_catalogue"></a></span>
+<!-- END ETP LINK -->

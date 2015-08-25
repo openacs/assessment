@@ -2,8 +2,6 @@
 <property name="context">{/doc/assessment {Assessment}} {Sections}</property>
 <property name="doc(title)">Sections</property>
 <master>
-
-<body>
 <!-- START HEADER --><span class="context"><span class="reg">Section page. This page is for editing information about a
 section and adding questions to it. It contains a couple of
 subpages. Datamodell can be found <a href="http://sussdorff.de/assessment/doc/grouping.html">here.</a><br><br>
@@ -12,7 +10,8 @@ the display type for information purposes. Below this put links to
 the following pages.<br><br>
 The section edit page contains the following
 Items:<br>
-</span></span><ul>
+</span></span>
+<ul>
 <li><span class="context">Title: Title of the section</span></li><li><span class="context">Description: text used for identification
 and selection in admin pages, not for end-user pages</span></li><li><span class="context">Instructions: text displayed on user
 pages describing the user how to fill out the section.</span></li><li><span class="context">
@@ -31,10 +30,12 @@ randomly pick from the questions, but definitely add the mandatory
 questions.<br>
 </span></li><li style="list-style: none"><br></li>
 </ul>
+
 The branch conditions page allows the conditions to be added under
 which this section will be called (branch conditions). This is
 still work in progress and will not be developed in the first
-phase.<br><ul>
+phase.<br>
+<ul>
 <li><span class="context">
 <a href="../sequencing.html"><span style="color: rgb(204, 102, 0);">Sequencing
 Information</span></a><br>
@@ -47,7 +48,8 @@ Check.<br>
 boolean. Is it mandatory that all conditions have been met or is
 one condition enough (for not displaying this section)</li>
 </ul></li>
-</ul><ul>
+</ul>
+<ul>
 <li style="color: rgb(204, 102, 0);">
 <span class="context">Branch
 by question. This kind of branch depends on previous answers. A
@@ -89,9 +91,12 @@ the user.</span></li>
 is imagineable that a combination of both methods makes sense, so
 we should take this into account when creating the
 UI.</span></span></li>
-</ul><br>
+</ul>
+<br>
+
 Below this information we have a paragraph where all questions are
-displayed with the options to<br><ul>
+displayed with the options to<br>
+<ul>
 <li>Edit question<br>
 </li><li>Search and add question(s) from question database: Link to the
 search page which allows to search for questions that can be added
@@ -105,7 +110,7 @@ this section.<br>
 section. It will be displayed in any case, regardless of
 randomizing.</li><li>Fixed Position: select (1,2..., buttom). Position the question
 has to be displayed, regardless of randomizing.</li>
-</ul><span class="context">
+</ul>
+<span class="context">
 <span class="etp-link"><a class="top" href="etp?name=sections"></a></span><!-- END ETP LINK -->
 </span>
-</body>
