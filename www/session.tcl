@@ -42,3 +42,9 @@ set context [list [list [export_vars -base sessions {assessment_id}] "[_ assessm
 template::head::add_css -href "/resources/assessment/assessment.css"
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

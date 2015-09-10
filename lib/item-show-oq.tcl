@@ -11,3 +11,9 @@ ad_form -name item_show_oq -mode display -action item-edit-oq -export { assessme
     {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 80}} {value $reference_answer} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
     {keywords:text(textarea),optional {label "[_ assessment.oq_Keywords]"} {html {rows 5 cols 80}} {value $keywords} {help_text "[_ assessment.oq_Keywords_help]"}}
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

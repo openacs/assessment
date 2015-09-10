@@ -115,3 +115,9 @@ ad_form -name item_edit_display_rb -action item-edit-display-rb -export { assess
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

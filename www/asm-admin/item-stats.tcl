@@ -253,3 +253,8 @@ if {([info exists session_id_list] && $session_id_list ne "")} {
 	template::multirow append items $item_id $revision_id $title $data_type $display_type $stats $section_id $section_title
     }
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

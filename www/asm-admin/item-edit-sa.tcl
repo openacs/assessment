@@ -79,3 +79,9 @@ ad_form -extend -name item_edit_sa  -edit_request {
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

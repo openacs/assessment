@@ -209,3 +209,9 @@ set count_all_users [template::multirow size results]
 set count_incomplete [expr {$count_all_users - $count_complete}]
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

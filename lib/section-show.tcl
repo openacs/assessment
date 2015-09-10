@@ -13,3 +13,9 @@ db_multirow -extend { presentation_type html } items section_items {} {
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

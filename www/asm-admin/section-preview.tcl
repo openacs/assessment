@@ -71,3 +71,9 @@ for {set i 1; set j 2} {$i <= ${items:rowcount}} {incr i; incr j} {
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

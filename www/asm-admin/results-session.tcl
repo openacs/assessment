@@ -86,3 +86,9 @@ set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
 set comments_installed_p [apm_package_enabled_p "general-comments"]
 set delete_url [export_vars -base session-delete {assessment_id subject_id {orig_session_id $session_id} {return_url [ad_return_url]}}]
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

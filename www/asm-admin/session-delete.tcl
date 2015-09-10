@@ -95,3 +95,8 @@ template::head::add_javascript -script {
 set page_title [_ assessment.Delete_Attempts]
 set context [list $page_title]
 ad_return_template
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

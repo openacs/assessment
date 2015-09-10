@@ -386,3 +386,8 @@ ad_proc as::list::orderby_spec {
     set item_ref as_item_id_$cr_item_id
     return [list orderby ${item_ref}.choice_value]    
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

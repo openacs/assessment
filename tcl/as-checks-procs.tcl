@@ -661,3 +661,9 @@ ad_proc -public as::assessment::check::add_manual_check {
 }
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

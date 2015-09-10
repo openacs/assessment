@@ -79,3 +79,9 @@ ad_form -name parameter_admin -form {
     
     ad_returnredirect "asm-action-param-admin?action_id=$action_id"
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

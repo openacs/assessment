@@ -54,3 +54,9 @@ ad_proc -public as::actions::update_checks_after_upgrade {
     }
 }
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

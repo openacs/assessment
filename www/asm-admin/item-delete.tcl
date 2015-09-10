@@ -64,3 +64,9 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

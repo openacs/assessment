@@ -92,3 +92,9 @@ ad_form \
         set url [as::assessment::check::add_check_return_url $action_p]
         ad_returnredirect "${url}?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&section_id=$section_id_from&section_check_p=1$return_url"
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

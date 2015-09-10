@@ -193,3 +193,9 @@ set after_submit "{
 eval ad_form -extend -name item_edit_mc -validate "{$validate_list}" -edit_request $edit_request -on_submit $on_submit -edit_data $edit_data -after_submit $after_submit
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

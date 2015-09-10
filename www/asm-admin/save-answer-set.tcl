@@ -46,3 +46,9 @@ ad_form -name save-answer-set -export { assessment_id as_item_id mc_id return_ur
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

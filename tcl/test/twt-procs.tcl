@@ -90,3 +90,8 @@ select user_id from cc_users where email like '%test.test'
     aa_log $errmsg
 }
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

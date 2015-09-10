@@ -69,3 +69,9 @@ ad_form -extend -new_request {
 }
     ns_log notice "DONE results edit return template"
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

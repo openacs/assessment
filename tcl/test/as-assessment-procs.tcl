@@ -269,3 +269,9 @@ aa_register_case -cats { api }   as_assessment {
     aa_true "\"$seconds\" returns \"$seconds\"" [expr {$pretty_time eq $seconds}]
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -191,3 +191,9 @@ if {[info exists section_id]} {
 
 ad_return_template
 return
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

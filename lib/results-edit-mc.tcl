@@ -21,3 +21,9 @@ array set reference_answer $user_answer
 set reference_answer(choice_answer) [db_list reference_answer {}]
 
 set presentation_type [as::item_form::add_item_to_form -name results_edit_mc_reference -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value [array get reference_answer] -show_feedback correct]
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

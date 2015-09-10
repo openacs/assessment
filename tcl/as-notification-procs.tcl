@@ -18,3 +18,9 @@ ad_proc -public as::notification::process_reply {
     reply_id
 } {
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

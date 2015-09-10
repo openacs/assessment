@@ -754,3 +754,9 @@ ad_proc -private as::item_type_mc::form_widget {
 
     return [string map {rb radio cb checkbox sb selet} $display_type]
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

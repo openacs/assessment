@@ -634,3 +634,8 @@ ad_proc -private as::assessment::delete {
 
     content::item::delete -item_id $assessment_id
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

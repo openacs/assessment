@@ -71,3 +71,9 @@ if {[info exists current_page]} {
 }
 
 template::head::add_css -href "/resources/assessment/assessment.css"
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

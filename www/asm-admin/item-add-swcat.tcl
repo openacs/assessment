@@ -80,3 +80,9 @@ ad_form -name item-add-swcat -export { assessment_id section_id after } -form {
 ad_return_template
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

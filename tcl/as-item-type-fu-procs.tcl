@@ -191,3 +191,9 @@ ad_proc -private as::item_type_fu::add_to_assessment {
             -as_item_id $as_item_id \
             -after $after
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

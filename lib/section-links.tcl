@@ -22,3 +22,9 @@ if { [string is integer $tab] } {
 db_multirow -extend { section_url } sections sections_query {} {
     set section_url [export_vars -base one-section {assessment_id section_id}]
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

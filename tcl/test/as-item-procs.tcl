@@ -77,3 +77,8 @@ aa_register_case as_item_new {
 	}
 }
  
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

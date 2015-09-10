@@ -73,3 +73,8 @@ template::list::create \
         link_url_col file_url
 	}
     }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -56,3 +56,9 @@ ad_form -name action_admin -form {
 
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

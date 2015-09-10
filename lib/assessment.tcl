@@ -637,3 +637,9 @@ set form_is_valid [template::form::is_valid show_item_form]
 
 ad_return_template $template
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

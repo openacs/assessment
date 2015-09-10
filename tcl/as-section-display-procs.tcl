@@ -77,3 +77,9 @@ ad_proc -public as::section_display::edit {
     db_dml update_clobs "" -clobs [list $adp_chunk]
     return $display_id
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

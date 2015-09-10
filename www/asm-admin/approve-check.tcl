@@ -27,3 +27,8 @@ for { set i 0} { $i< $count } {incr i} {
     as::assessment::check::manual_action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id -action_log_id $log_id
 }
 ad_returnredirect "admin-request?assessment=$d_assessment&state=$d_state&interval=$d_interval&date=$d_date"
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

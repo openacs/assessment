@@ -950,3 +950,9 @@ ad_proc -public as::qti::duration {
 	return [expr {$h*3600+$m*60+$s}]
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

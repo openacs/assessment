@@ -51,3 +51,9 @@ foreach one_choice $choices {
 }
 append ad_form_code "\}"
 eval ad_form -extend -name item_show_mc $ad_form_code
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

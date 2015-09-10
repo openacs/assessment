@@ -65,3 +65,9 @@ ad_form -name item_copy_confirm -action item-copy -export { assessment_id sectio
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

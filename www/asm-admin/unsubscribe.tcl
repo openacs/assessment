@@ -25,3 +25,9 @@ for { set i 0} { $i < $request_count } { incr i } {
 }
 
 ad_returnredirect "request-notification?inter_item_check_id=$inter_item_check_id&type_id=$type_id&assessment_id=$assessment_id&section_id=$section_id"
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -101,3 +101,9 @@ list::create \
     -bulk_actions $bulk_actions
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -207,3 +207,8 @@ ad_proc -private as::item_display_ta::set_item_display_type {
 	    db_dml update_item {}
 	}
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

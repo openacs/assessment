@@ -44,3 +44,9 @@ ad_proc -public as::item_answer::new {
 
     return $as_item_answer_id
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

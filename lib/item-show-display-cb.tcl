@@ -8,3 +8,9 @@ ad_form -name item_show_display_cb -mode display -action item-edit-display-cb -e
     {choice_orientation:text {label "[_ assessment.Choice_Orientation]"} {value "[_ assessment.$choice_orientation]"} {help_text "[_ assessment.Choice_Orientation_help]"}}
     {order_type:text {label "[_ assessment.Order_Type]"} {value "[_ assessment.$sort_order_type]"} {help_text "[_ assessment.Order_Type_help]"}}
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

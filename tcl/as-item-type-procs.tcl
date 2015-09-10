@@ -55,3 +55,9 @@ ad_proc -public as_item_type::get_display_types {
     return $display_types
 }
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

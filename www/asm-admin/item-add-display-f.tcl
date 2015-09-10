@@ -98,3 +98,9 @@ ad_form -name item_add_display_f -action item-add-display-f -export { assessment
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

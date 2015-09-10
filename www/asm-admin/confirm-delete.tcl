@@ -43,3 +43,9 @@ ad_form -name delete_checks -export {by_item_p item_id_check} -form {
     
     
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

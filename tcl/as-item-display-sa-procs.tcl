@@ -142,3 +142,9 @@ ad_proc -private as::item_display_sa::data_not_cached {
     db_1row display_item_data {} -column_array type
     return [array get type]
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

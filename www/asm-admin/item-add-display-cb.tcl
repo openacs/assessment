@@ -186,3 +186,9 @@ ad_form -name item_add_display_cb -action item-add-display-cb -export { assessme
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

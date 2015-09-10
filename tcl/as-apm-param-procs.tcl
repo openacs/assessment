@@ -54,3 +54,9 @@ ad_proc -public as::parameter::reset_parameter {
 
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

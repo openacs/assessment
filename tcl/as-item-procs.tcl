@@ -334,3 +334,9 @@ ad_proc -private as::item::get_item_type_id {
 } {
     return [db_string item_type_id {}]    
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

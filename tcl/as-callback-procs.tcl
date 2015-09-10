@@ -92,3 +92,9 @@ ad_proc -public -callback imsld::finish_object {
     @param user_id    User identifier
     @param session_id Session identifier
 } -
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
