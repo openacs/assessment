@@ -61,7 +61,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    other_sessions {
 		label {[_ assessment.Other_Sessions]}
-		link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]sessions?[export_vars {assessment_id subject_id}]}
+		link_url_eval {[site_node::get_url_from_object_id -object_id $package_id][export_vars -base sessions {assessment_id subject_id}]}
 	    }
 	} -main_class {
 	    narrow
@@ -95,7 +95,7 @@ if {$assessment_data(survey_p) == "t"} {
 	    }
 	    other_sessions {
 		label {[_ assessment.Other_Sessions]}
-		link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]sessions?[export_vars {assessment_id subject_id}]}
+		link_url_eval {[site_node::get_url_from_object_id -object_id $package_id][export_vars -base sessions {assessment_id subject_id}]}
 	    }
 	} \
 	-main_class {

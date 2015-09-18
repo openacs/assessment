@@ -25,13 +25,13 @@ template::list::create \
     -elements {         
 	title {
 	    label {[_ assessment.Assessment] ($community_name)}	    
-	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]assessment?[export_vars {assessment_id}]}
+	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id][export_vars -base assessment {assessment_id}]}
 	    link_html { title {description} }
 	    
 	}
 	session {	    
 	    label {[_ assessment.Sessions]}	    
-	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id]last-session?[export_vars {assessment_id}]}
+	    link_url_eval {[site_node::get_url_from_object_id -object_id $package_id][export_vars -base last-session {assessment_id}]}
 	}
     } \
     -main_class {
