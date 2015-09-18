@@ -21,8 +21,8 @@ set choices [db_list_of_lists get_choices {}]
 set total [llength $choices]
 foreach one_choice $choices {
     lassign $one_choice choice_id title correct_answer_p feedback_text selected_p percent_score sort_order fixed_position answer_value content_rev_id content_filename content_name
-    set title  [ad_quotehtml $title]
-    set feedback_text [ad_quotehtml $feedback_text]
+    set title  [ns_quotehtml $title]
+    set feedback_text [ns_quotehtml $feedback_text]
     incr count
     set options ""
     if {$count < $total} {

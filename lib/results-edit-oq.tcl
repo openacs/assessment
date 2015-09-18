@@ -2,7 +2,7 @@
 # author Timo Hentschel (timo@timohentschel.de)
 
 db_1row item_type_data {}
-set keywords [string tolower [ad_quotehtml [join $keywords "\n"]]]
+set keywords [string tolower [ns_quotehtml [join $keywords "\n"]]]
 set answer_text [ad_text_to_html -no_links -- $answer_text]
 
 foreach keyword $keywords {
