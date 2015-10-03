@@ -43,10 +43,18 @@ ad_proc -public as::assessment::check::intervals {
 } {
     Return the time intervals
 } {
-    db_1row intervals {}
+    set today [clock format [clock seconds] -format %Y-%m-%d]
+    set yesterday [clock format [clock scan yesterday] -format %Y-%m-%d]
+    set two_days [clock format [clock scan "2 days ago"] -format %Y-%m-%d]
+    set last_week [clock format [clock scan "1 week ago"] -format %Y-%m-%d]
+    set last_month [clock format [clock scan "1 month ago"] -format %Y-%m-%d]
     
-    set intervals [list [list "[_ assessment.all]" "all"] [list "[_ assessment.today]" $today]  [list "[_ assessment.yesterday]" $yesterday] [list "[_ assessment.two_days]" $two_days] [list "[_ assessment.last_week]" $last_week] [list "[_ assessment.last_month]" $last_month]]
-    
+    return [list [list [_ assessment.all] "all"] \
+                [list [_ assessment.today]      $today] \
+                [list [_ assessment.yesterday]  $yesterday] \
+                [list [_ assessment.two_days]   $two_days] \
+                [list [_ assessment.last_week]  $last_week] \
+                [list [_ assessment.last_month] $last_month]]
 }
 
 ad_proc -public as::assessment::check::add_check_return_url {

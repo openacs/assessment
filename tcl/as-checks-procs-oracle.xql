@@ -27,13 +27,6 @@
       </querytext>
 </fullquery>
 
-<fullquery name="as::assessment::check::intervals.intervals">
-      <querytext>
-	
-      select to_date(sysdate,'YYYY-MM-DD') as today, to_date(sysdate-1,'YYYY-MM-DD') as yesterday,  to_date (sysdate-2,'YYYY-MM-DD') as two_days,to_date (sysdate-7,'YYYY-MM-DD') as last_week, to_date (sysdate-30,'YYYY-MM-DD') as last_month from dual 
-      </querytext>
-</fullquery>
-
 <fullquery name="as::assessment::check::manual_action_exec.update_actions_log">
       <querytext>
       update as_actions_log set failed_p=:failed_p,date_processed=(select sysdate from dual),finally_executed_by=:user_id,approved_p='t' where action_log_id=:action_log_id

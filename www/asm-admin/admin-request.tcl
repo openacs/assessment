@@ -66,13 +66,13 @@ if {([info exists state] && $state ne "")} {
 
 if {([info exists interval] && $interval ne "") && $interval!="all"} {
     set d_interval $interval
-    set interval_query "and to_date(al.date_requested,'YYYY-MM-DD') >= to_date('$interval','YYYY-MM-DD')"
+    set interval_query "and date_trunc('day', al.date_requested) >= to_date('$interval','YYYY-MM-DD')"
     set date_query ""
 }
 
 if {([info exists date] && $date ne "")} {
     set d_date $date
-    set date_query "and to_date(al.date_requested,'YYYY-MM-DD') = to_date('$date','YYYY-MM-DD')"
+    set date_query "and date_trunc('day', al.date_requested) = to_date('$date','YYYY-MM-DD')"
     set interval_query ""
 }
 
