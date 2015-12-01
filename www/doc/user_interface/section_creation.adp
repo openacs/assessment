@@ -15,7 +15,7 @@ Items:<br>
 <li><span class="context">Title: Title of the section</span></li><li><span class="context">Description: text used for identification
 and selection in admin pages, not for end-user pages</span></li><li><span class="context">Instructions: text displayed on user
 pages describing the user how to fill out the section.</span></li><li><span class="context">
-<a href="../display_types.html#section_display">Display Type</a>: section
+<a href="../display_types">Display Type</a>: section
 display type to use. Select box of display types in use by this
 user, as well as "new display type" and "display type from
 catalogue".<br>
@@ -37,7 +37,7 @@ still work in progress and will not be developed in the first
 phase.<br>
 <ul>
 <li><span class="context">
-<a href="../sequencing.html"><span style="color: rgb(204, 102, 0);">Sequencing
+<a href="../sequencing"><span style="color: rgb(204, 102, 0);">Sequencing
 Information</span></a><br>
 </span></li><li style="list-style: none"><ul>
 <li style="color: rgb(204, 102, 0);">Display of the Pre Display

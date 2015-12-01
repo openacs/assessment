@@ -5,7 +5,7 @@
 <include src="/packages/acs-core-docs/lib/navheader"
 		    leftLink="ch03" leftLabel="Prev"
 		    title=" "
-		    rightLink="ch04" rightLabel="Next">
+		    rightLink="" rightLabel="">
 		<div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e336" id="d0e336"></a>Chapter 4. Authors</h2></div></div></div><p>Viaro Networks (www.viaro.net)</p><div class="orderedlist"><ol type="1">
@@ -21,7 +21,7 @@
 <include src="/packages/acs-core-docs/lib/navfooter"
 		    leftLink="ch03" leftLabel="Prev" leftTitle="
 Chapter 3. Registration Assessment "
-		    rightLink="ch04" rightLabel="Next" rightTitle=" "
+		    rightLink="" rightLabel="" rightTitle=" "
 		    homeLink="index" homeLabel="Home" 
-		    upLink="ch02" upLabel="Up"> 
+		    upLink="" upLabel=""> 
 		

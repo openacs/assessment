@@ -320,7 +320,7 @@ line.<br>
 "small","medium","large". Up to the developer how this
 translates.</li><li>acs_widget - the type of "widget" displayed when the Item is
 output in html. There are many types we should support beyond the
-stock html types. We are talking <a href="../../../acs-templating/www/doc/widgets/index.html">ACS Templating
+stock html types. We are talking <a href="../../../acs-templating/www/doc/widgets/index">ACS Templating
 widgets</a> here.<br>
 </li><li>item_answer_alignment - the orientation between the "question
 part" of the Item (the title/subtext) and the "answer part" -- the

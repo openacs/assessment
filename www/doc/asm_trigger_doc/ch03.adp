@@ -27,5 +27,5 @@ Administration "
 		    rightLink="ch04" rightLabel="Next" rightTitle="
  Chapter 4. Authors"
 		    homeLink="index" homeLabel="Home" 
-		    upLink="ch02" upLabel="Up"> 
+		    upLink="" upLabel=""> 
 		

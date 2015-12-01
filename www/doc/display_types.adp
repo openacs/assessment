@@ -32,7 +32,7 @@ attributes in common.</span></p>
 aligned right", stored in the name field of CR.<br>
 </span></li><li><span class="context">presentation_type - the type of "widget"
 displayed when the Item is output in html. There are many types we
-should support beyond the stock html types. We are talking <a href="../../../acs-templating/www/doc/widgets/index.html">ACS Templating
+should support beyond the stock html types. We are talking <a href="../../../acs-templating/www/doc/widgets/index">ACS Templating
 widgets</a> here.<br>
 </span></li><li>
 <span class="context">item_answer_alignment - the orientation

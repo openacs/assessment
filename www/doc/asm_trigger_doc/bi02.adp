@@ -16,5 +16,5 @@
 		    rightLink="ch01" rightLabel="Next" rightTitle="
  Chapter 1. Design"
 		    homeLink="index" homeLabel="Home" 
-		    upLink="complete-install" upLabel="Up"> 
+		    upLink="" upLabel=""> 
 		

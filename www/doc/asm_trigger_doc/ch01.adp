@@ -19,5 +19,5 @@ Execution in Assessment "
 		    rightLink="ch01s01" rightLabel="Next" rightTitle=" 1. Data
 Model"
 		    homeLink="index" homeLabel="Home" 
-		    upLink="complete-install" upLabel="Up"> 
+		    upLink="" upLabel=""> 
 		

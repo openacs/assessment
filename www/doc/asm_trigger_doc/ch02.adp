@@ -28,5 +28,5 @@ Model "
 		    rightLink="ch02s01" rightLabel="Next" rightTitle=" 1. Manage
 Permissions"
 		    homeLink="index" homeLabel="Home" 
-		    upLink="ch01" upLabel="Up"> 
+		    upLink="" upLabel=""> 
 		

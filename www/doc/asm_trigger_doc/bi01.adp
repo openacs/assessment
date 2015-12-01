@@ -17,5 +17,5 @@ Vivian Hernandez (vivian\@viaro.net)</p></div>
 Assessment "
 		    rightLink="bi02" rightLabel="Next" rightTitle=" Bibliography"
 		    homeLink="index" homeLabel="Home" 
-		    upLink="complete-install" upLabel="Up"> 
+		    upLink="" upLabel=""> 
 		
