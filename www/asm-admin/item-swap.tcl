@@ -14,7 +14,7 @@ ad_page_contract {
     section_id:naturalnum,notnull
     sort_order:integer,notnull
     direction:notnull
-    return_url:optional
+    return_url:localurl,optional
 }
 
 set package_id [ad_conn package_id]

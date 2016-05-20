@@ -4,7 +4,7 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     subject_id:naturalnum,notnull
     orig_session_id:naturalnum,optional
-    {return_url ""}
+    {return_url:localurl ""}
 } 
 
 permission::require_permission \

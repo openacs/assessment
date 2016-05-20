@@ -2,7 +2,7 @@ ad_page_contract {
     Publish or unpublish an assessment
 } {
     assessment_id:naturalnum,notnull
-    {return_url ""}
+    {return_url:localurl ""}
 }
 
 permission::require_permission \

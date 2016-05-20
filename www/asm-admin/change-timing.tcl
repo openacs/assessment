@@ -5,7 +5,7 @@ ad_page_contract {
     @author cognovis www.cognovis.de
 } {
     assessment_id:naturalnum,multiple
-    {return_url "index"}
+    {return_url:localurl "index"}
 }
 
 foreach id $assessment_id {

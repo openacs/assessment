@@ -11,7 +11,7 @@ ad_page_contract {
 } {
     assessment_id:naturalnum,optional
     assessment_id_list:optional
-    return_url:notnull
+    return_url:localurl,notnull
     as_item_id:naturalnum,notnull,optional
     section_id:naturalnum,optional
     catalog_section_id:naturalnum,optional

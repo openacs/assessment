@@ -7,7 +7,7 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     as_item_id:naturalnum,notnull
     mc_id:naturalnum,notnull
-    return_url
+    return_url:localurl
 } -properties {
     context:onevalue
     page_title:onevalue

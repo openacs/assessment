@@ -7,7 +7,7 @@ ad_page_contract {
 } {
     session_id:naturalnum,notnull
     assessment_id:naturalnum,notnull
-    return_url:optional
+    return_url:localurl,optional
     next_asm:optional
 } -properties {
     context:onevalue

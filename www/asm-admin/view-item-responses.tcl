@@ -11,7 +11,7 @@ ad_page_contract {
 } {
     item_id:naturalnum,notnull
     section_id:naturalnum,notnull
-    return_url:notnull
+    return_url:localurl,notnull
 } -properties {
 } -validate {
 } -errors {
