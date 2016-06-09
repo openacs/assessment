@@ -9,7 +9,7 @@
 		<div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e49" id="d0e49"></a>Chapter 2. User Manual</h2></div></div></div><div class="toc">
-<p><b>Table of Contents</b></p><dl>
+<p><strong>Table of Contents</strong></p><dl>
 <dt><span class="section"><a href="ch02s01">1. Manage
 Permissions</a></span></dt><dt><span class="section"><a href="ch02s02">2. Actions
 Administration</a></span></dt><dt><span class="section"><a href="ch02s03">3. Trigger

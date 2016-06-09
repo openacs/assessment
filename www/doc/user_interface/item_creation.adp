@@ -3,7 +3,7 @@
 <property name="doc(title)">Question Catalogue</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">
-<b>Question Catalogue: Summary</b>:</span></span>
+<strong>Question Catalogue: Summary</strong>:</span></span>
 <p><span class="context">The question catalogue is a central part
 of the assessment system. It deals with the storing of the various
 questions that can be used in a survey. You are able to
@@ -14,7 +14,7 @@ questions using various formats. This concept is new to survey 0.1d
 and changes the design of the survey module considerably. No
 mockups available.</span></p>
 <p><span class="context">
-<b>Spec</b>:<br>
+<strong>Spec</strong>:<br>
 All questions have some common ground.</span></p>
 <ul>
 <li>
@@ -51,18 +51,18 @@ as a default value</span></li><li>
 <span class="context">Data validation steps are fairly complex
 because we need two layers of data validation checks:</span><ul>
 <li><span class="context">
-<i>Intra-item checks</i>: the user input
+<em>Intra-item checks</em>: the user input
 { exactly matches | falls within narrow "target" bounds | falls
 within broader "acceptable" bounds with explanation}</span></li><li><span class="context">
-<i>Inter-item checks</i>: if { a user
+<em>Inter-item checks</em>: if { a user
 input for item a is A, item b is B, ... item n is N } then { user
 input for item z is Z }</span></li>
 </ul><p><span class="context">Both levels involve stringing together
 multiple binary comparisons (eg 0 &lt; input &lt; 3 means checks
-that 0 &lt; input <i>and</i> input &lt; 3), so we need to express a
+that 0 &lt; input <em>and</em> input &lt; 3), so we need to express a
 grammar consisting of</span></p><ul>
-<li><span class="context">comparison1 <i>conjunction</i>
-comparison2 <i>conjunction</i> ... comparison n</span></li><li><span class="context">appropriate grouping to define precedence
+<li><span class="context">comparison1 <em>conjunction</em>
+comparison2 <em>conjunction</em> ... comparison n</span></li><li><span class="context">appropriate grouping to define precedence
 order (or simply agree to evaluate left to right)</span></li>
 </ul>
 </li>

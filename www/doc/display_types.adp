@@ -10,11 +10,11 @@ all, the display of items within a section can be different from
 assessment to assessment. Last but not least, the whole assessment
 might be displayed differently depending on attributes and the type
 of assessment we are talking about.</span>
-<p><span class="context"><b><i>Note: please refer to the discussion
+<p><span class="context"><strong><em>Note: please refer to the discussion
 of Items <a href="as_items">here</a>. That discussion
 complements the discussion here, and the data model graphic
 pertaining to the Item Display Types system is available there
-also.</i></b></span></p>
+also.</em></strong></span></p>
 <h2><span class="context">Item Display Types</span></h2>
 <span class="context">Each item has an item_display_type object
 associated with it, that defines how to display the item. Each

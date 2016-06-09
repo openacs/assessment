@@ -31,9 +31,9 @@ question.</span></li><li><span class="context">Sectioned</span></li>
 </li><li><span class="context">Reuse responses: boolean (yes/no). If
 yes, the system will look for previous responses to the the
 questions and prefill the last answer the respondee has given in
-the assessment form of the respondee. <i>It is debatable whether
+the assessment form of the respondee. <em>It is debatable whether
 this function should be per assessment and/or per
-question</i>
+question</em>
 </span></li><li><span class="context">Navigation of sections: select (default
 path, randomized, rule-based branching, maybe looping in the
 future).</span></li><li><span class="context">Show question titles: boolean (yes/no).

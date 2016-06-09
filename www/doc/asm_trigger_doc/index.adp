@@ -12,7 +12,7 @@
 <a name="d0e1" id="d0e1"></a>Triggers and Action
 Execution in Assessment</h1></div></div><hr>
 </div><div class="toc">
-<p><b>Table of Contents</b></p><dl>
+<p><strong>Table of Contents</strong></p><dl>
 <dt><span class="chapter"><a href="ch01">1.
 Design</a></span></dt><dd><dl><dt><span class="section"><a href="ch01s01">1. Data
 Model</a></span></dt></dl></dd><dt><span class="chapter"><a href="ch02">2. User

@@ -10,9 +10,9 @@ antecedent "complex survey" and "questionnaire" systems, this
 schema was simple two-level structure:</p>
 <ul>
 <li>
-<b>survey_responses</b> which capture information about which
+<strong>survey_responses</strong> which capture information about which
 survey was completed, by whom, when, etc</li><li>
-<b>survey_question_responses</b> which capture the actual user
+<strong>survey_question_responses</strong> which capture the actual user
 data in a "long skinny table" mechanism</li>
 </ul>
 <p>This suffices for one-shot surveys but doesn't support the fine
@@ -22,11 +22,11 @@ Assessment package. Consequently, we use a more extended
 hierarchy:</p>
 <ul>
 <li>
-<b>Assessment Session</b> which captures information about
+<strong>Assessment Session</strong> which captures information about
 which Assessment, which Subject, when, etc</li><li>
-<b>Section Data</b> which holds information about the status of
+<strong>Section Data</strong> which holds information about the status of
 each Section</li><li>
-<b>Item Data</b> which holds the actual data extracted from the
+<strong>Item Data</strong> which holds the actual data extracted from the
 Assessment's html forms; this is the "long skinny table"</li>
 </ul>
 <p>To support user modification of submitted data (of which
@@ -37,7 +37,7 @@ indeed is a "final" or "live" version. In contrast, recall that for
 any Assessment itself, different authors may be using different
 versions of the Assessment. While this situation may be unusual,
 the fact that it must be supported means that the semantics of
-cr_items don't fit the Assessment itself. They <i>do</i> fit the
+cr_items don't fit the Assessment itself. They <em>do</em> fit the
 semantics of a given user's Assessment "session" however.</p>
 <p>We distinguish here between "subjects" which are users whose
 information is the primary source of the Assessment's responses,
@@ -47,8 +47,8 @@ have completed some paper form that is being transcribed by staff
 people who are users. We thus account for both the "real" and one
 or more "proxy" respondents via this mechanism. Note that subjects
 may or may not be OpenACS users who can log into the system running
-Assessment. Thus <b>subject_id</b> will be a foreign key to
-<b>persons</b> not <b>users</b>. If the responding user is
+Assessment. Thus <strong>subject_id</strong> will be a foreign key to
+<strong>persons</strong> not <strong>users</strong>. If the responding user is
 completing the assessment for herself, the staff_id will be
 identical to the subject_id. But if the user completing the
 assessment is doing it by proxy for the "real" subject, then the
@@ -58,7 +58,7 @@ staff_id will be hers while the subject_id will belong to the
 earlier versions, and here is how and why:</p>
 <ul>
 <li>
-<b>Annotations</b>: We previously had a separate table to
+<strong>Annotations</strong>: We previously had a separate table to
 capture any type of ad hoc explanations/descriptions/etc that a
 user would need to attach to a given data element (either an item
 or section). Instead, we will use the OpenACS General Comments
@@ -68,7 +68,7 @@ integration between Assessment and GC thus will need to be at the
 UI level, not the data model level. Using GC will support post-test
 "discussions" between student and teacher, for example, about
 inidividual items, sections or sessions.</li><li>
-<b>Scoring-grading</b>: This has been a rather controversial
+<strong>Scoring-grading</strong>: This has been a rather controversial
 area because of the wide range of needs for derived
 calculations/evaluations that different applications need to
 perform on the raw submitted data. In many cases, no calculations
@@ -82,19 +82,19 @@ scales consisting of arbitrary combinations of items among
 different sections or even consisting of arithmetic means of
 already calculated scale scores.
 <p>Because of this variability as well as the recognition that
-Assessment should be primarily a data <i>collection</i> package,
+Assessment should be primarily a data <em>collection</em> package,
 we've decided to abstract all scoring-grading functions to one or
 more additional packages. A grading package (<a href="http://openacs.org/viewcvs/openacs-4/packages/evaluation/">evaluation</a>)
 is under development now by part of our group, but no documentation
-is yet available about it. <i>How such client packages will
+is yet available about it. <em>How such client packages will
 interface with Assessment has not yet been worked out, but this is
 a crucial issue to work through. Presumably something to do with
-service contracts.</i> Such a package will need to interact both
+service contracts.</em> Such a package will need to interact both
 with Assessment metadata (to define what items are to be "scored"
 and how they are to be scored -- and with Assessment collected data
 (to do the actual calculations and mappings-to-grades.</p>
 </li><li>
-<b>Signatures</b>: The purpose of this is to provide
+<strong>Signatures</strong>: The purpose of this is to provide
 identification and nonreputability during data submission. An
 assessment should optionally be configurable to require a
 pass-phrase from the user at the individual item level, the section
@@ -110,7 +110,7 @@ assessments won't use this (at least, that is the opinion of most
 of the educational folks here). However, since we're generating
 separate revisions of each of these collected data types, we
 decided it would be far simpler and more appropriate to include the
-<b>signed_data</b> field directly in the as_item_data table. Note
+<strong>signed_data</strong> field directly in the as_item_data table. Note
 that for complex applications, the need to "sign the entire form"
 or "sign the section" could be performed by concatenating all the
 items contained by the section or assessment and storing that in a
@@ -121,7 +121,7 @@ only "sign" the data at the atomic, as_item level, and procedurally
 sign all as_item_data at once if the assessment author requires
 only a section-level or assessment-level signature.</p>
 </li><li>
-<b>"Events" related to assessments</b> In some applications
+<strong>"Events" related to assessments</strong> In some applications
 (like clinical trials), it is important to define a series of
 "named" assessment events (like "baseline" "one month" "six months"
 etc) at which time assessments are to be performed. Earlier we
@@ -132,7 +132,7 @@ considerations, but it doesn't prove to be generally applicable
 enough to most contexts, so we've removed it. Instead, any client
 package using Assessment in this fashion should implement its own
 relationships (presumably with acs_rels).</li><li>
-<b>"Status" of data collection entities</b> An assessment
+<strong>"Status" of data collection entities</strong> An assessment
 author may specify different allowable steps for her assessment --
 such as whether a user can "save&amp;resume" between sessions,
 whether a second user needs to "review&amp;confirm" entered data
@@ -156,7 +156,7 @@ SQL snippets since that's what the web interface to CVS is for.
 ;-)</p>
 <ul>
 <li>
-<b>Assessment Sessions (as_sessions)</b> are the top of the
+<strong>Assessment Sessions (as_sessions)</strong> are the top of the
 data-collection entity hierarchy. They provide the central
 definition of a given subject's performance of an Assessment.
 Attributes include:
@@ -165,13 +165,13 @@ Attributes include:
 "$session_id-$last_mod_datetime"<br>
 </li><li>assessment_id (note that this is actually a revision_id)</li><li>subject_id - references a Subjects entity that we don't define
 in this package. Should reference the parties table as there is no
-concept of storing persons in OpenACS in general. <b>Note: this
+concept of storing persons in OpenACS in general. <strong>Note: this
 cannot reference users, since in many cases, subjects will not be
 able (or should not be able) to log into the system. The users
 table requires email addresses. Subjects in Assessment cannot be
 required to have email addresses. If they can't be "persons" then
 Assessment will have to define an as_subjects table for its own
-use.</b>
+use.</strong>
 </li><li>staff_id - references Users if someone is doing the Assessment
 as a proxy for the real subject</li><li>target_datetime - when the subject should do the
 Assessment</li><li>creation_datetime - when the subject initiated the
@@ -191,7 +191,7 @@ for instance). In fact, I've removed this from the graffle
 (SK).</li>
 </ul>
 </li><li>
-<b>Assessment Section Data (as_section_data)</b> tracks the
+<strong>Assessment Section Data (as_section_data)</strong> tracks the
 state of each Section in the Assessment. Attributes include:
 <ul>
 <li>section_data_id</li><li>cr::name - Identifier, format
@@ -199,7 +199,7 @@ state of each Section in the Assessment. Attributes include:
 </li><li>session_id</li><li>section_id</li><li>subject_id</li><li>staff_id</li>
 </ul>
 </li><li>
-<b>Assessment Item Data (as_item_data)</b> is the heart of the
+<strong>Assessment Item Data (as_item_data)</strong> is the heart of the
 data collection piece. This is the "long skinny table" where all
 the primary data go -- everything other than "scale" data ie
 calculated scoring results derived from these primary responses
@@ -221,7 +221,7 @@ answers should be supported; the Attachment package is still in
 need of considerable help. Can we rely on it here?</li>
 </ul>
 </li><li>
-<b>Assessment Scales</b> : As discussed above, this will for
+<strong>Assessment Scales</strong> : As discussed above, this will for
 the time being be handled by external grading-scoring-evaluation
 packages. Assessment will only work with percentages internally. It
 might be necessary to add scales into assessment as well, but we
@@ -229,7 +229,7 @@ will think about this once the time arrives, but we think that a
 more elegant (and appropriate, given the OpenACS toolkit design)
 approach will be to define service contracts to interface these
 packages.</li><li>
-<b>Assessment Annotations</b> provides a flexible way to handle
+<strong>Assessment Annotations</strong> provides a flexible way to handle
 a variety of ways that we need to be able to "mark up" an
 Assessment. Subjects may modify a response they've already made and
 need to provide a reason for making that change. Teachers may want

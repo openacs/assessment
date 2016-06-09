@@ -61,7 +61,7 @@ described <a style="font-family: monospace;" href="display_types">here</a>.<br>
 </span></h2>
 <ul><li>
 <span class="context">
-<b>as_items</b> are the "questions" that
+<strong>as_items</strong> are the "questions" that
 constitute the atomic focus of the Assessment package. Each as_item
 is of a certain type, that can give the as_item additional
 attributes, making it really flexible. The following attributes are
@@ -90,7 +90,7 @@ the generated "widget" for the as_item (NB: when any change is made
 to an as_item_choice related to an as_item, this will have to be
 updated!)</span></li>
 </ul><p><span class="context">
-<i>Permissions / Scope</i>: as_items need
+<em>Permissions / Scope</em>: as_items need
 a clearly defined scope, in which they can be reused. Instead of
 defining a special scope variable we will use the acs permission
 system to grant access rights to an as_item.</span></p><ul>
@@ -106,7 +106,7 @@ permission on this as_item</span></li>
 <h2><span class="context"><span class="reg">As_item
 Types</span></span></h2>
 <span class="context"><span class="reg">
-<b><font color="green">as_item Types (as_item_type_*)</font></b> define types of
+<strong><font color="green">as_item Types (as_item_type_*)</font></strong> define types of
 as_items like "Open Question", "Calculation" and others. The
 as_item type will also define in what format the answer should be
 stored. For <span style="font-weight: bold;">each</span> as_item
@@ -124,16 +124,16 @@ matrix for them easily.</span></span>
 as_item types and their attributes can be found in the <a href="http://openacs.org/projects/openacs/packages/assessment/requirements/item_types">
 requirements section.</a>
 <ul>
-<li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Open Question
-(as_item_type_oq):</font></b></span></span></span></span></li><li style="list-style: none"><ul>
+<li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Open Question
+(as_item_type_oq):</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>as_item_type_id<br>
 </li><li>cr::name - Identifier<br>
 </li><li>default_value: The content of this field will be prefilled in
 the response of the user taking the survey</li><li>feedback_text: The person correcting the answers will see the
 contents of this box as correct answer for comparison with the user
 response.</li>
-</ul></li><li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Short Answer
-(as_item_type_sa):</font></b></span></span></span></span></li><li style="list-style: none"><ul>
+</ul></li><li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Short Answer
+(as_item_type_sa):</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>as_item_type_id<br>
 </li><li>cr::name - Identifier</li><li>increasing_p:  Increasing will give (number of correct
 matches / number of total matches) *100% points. All or nothing
@@ -143,9 +143,9 @@ else.</li><li>allow_negative_p: This will allow a negative percentage as well
 </ul></li>
 </ul>
 <ul>
-<li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Short Answer
+<li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Short Answer
 Answers
-(as_item_sa_answers):</font></b></span></span></span></span></li><li style="list-style: none"><ul>
+(as_item_sa_answers):</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>answer_id<br>
 </li><li>cr::name - Identifier</li><li>cr::title - Answer string that will be matched against the
 response</li><li>data_type - Integer vs. real number vs. text</li><li>case_sensitive_p - Shall the match be case sensitive</li><li>percent_score - Percentage a correct match gives<br>
@@ -160,10 +160,10 @@ relationship.<br>
 </ul></li>
 </ul>
 <ul>
-<li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Multiple Choice
+<li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Multiple Choice
 Item
 (as_item_type_mc)<br>
-</font></b></span></span></span></span></li><li style="list-style: none"><ul>
+</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>cr::name - Identifier<br>
 </li><li>increasing_p:  Increasing will give (number of correct
 matches / number of total matches) *100% points. All or nothing
@@ -178,8 +178,8 @@ available.</li>
 <ul>
 <li>
 <span class="context">
-<b><font color="green">Multiple Choices
-(as_item_choices)</font></b> contain additional information for all
+<strong><font color="green">Multiple Choices
+(as_item_choices)</font></strong> contain additional information for all
 multiple choice as_item_types. Obvious examples are radiobutton and
 checkbox as_items, but pop-up_date, typed_date and image_map
 as_items also are constructed via as_item Choices. Each choice is a
@@ -214,10 +214,10 @@ selected (in percent).<br>
 definition carried with it any range-checking or text-filtering
 criteria; these are now abstracted to the as_item-Checks and
 Inter-as_item Checks.</p>
-</li><li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Image Map
+</li><li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Image Map
 Multiple Choice Item
 (as_item_type_im):<br>
-</font></b></span></span></span></span></li><li style="list-style: none"><ul>
+</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>cr::name - Identifier</li><li>cr::title - Title of the image map.<br>
 </li><li>increasing_p:  Increasing will give (number of correct
 matches / number of total matches) *100% points. All or nothing
@@ -230,10 +230,10 @@ cr_revisions<br>
 </ul></li>
 </ul>
 <ul>
-<li><span class="context"><span class="reg"><span class="context"><span class="reg"><b><font color="green">Image Map
+<li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Image Map
 Choices
 (as_item_image_choices):<br>
-</font></b></span></span></span></span></li><li style="list-style: none"><ul>
+</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>choice_id</li><li>cr::parent_id (belonging to an as_item_type_im object).</li><li>cr::name - Identifier<br>
 </li><li>cr::title - what is displayed in the choice's "label"</li><li>data_type - which of the value columns has the information this
 Choice conveys</li><li>numeric_value - we can stuff both integers and real numbers
@@ -469,7 +469,7 @@ as_messages</span></li><li><span class="context">sort_order (in which order do t
 messages appear)</span></li>
 </ul>
 <p><span class="context">
-<b>Messages (as_messages)</b> abstracts
+<strong>Messages (as_messages)</strong> abstracts
 out help messages (and other types of messages) for use in this
 package. Attributes include:</span></p>
 <ul>

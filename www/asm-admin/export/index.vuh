@@ -8,7 +8,7 @@ ad_page_contract {
     {assessment_id:integer,optional}
 } 
 
-if {[exists_and_not_null assessment_id]} {
+if {([info exists assessment_id] && $assessment_id ne "")} {
     # Get the assessment data
     as::assessment::data -assessment_id $assessment_id
     set download_name $assessment_data(title)
@@ -60,7 +60,7 @@ as::export::new_element -value $assessment_data(description) -father $assessment
 #<duration>, time_for_response
 as::export::new_element -value $assessment_data(time_for_response) -father $assessment -label duration -root $doc 
 #<qtimetadata>
-if {![empty_string_p $assessment_data(run_mode)] || ![empty_string_p $assessment_data(anonymous_p)] || ![empty_string_p $assessment_data(secure_access_p)] || ![empty_string_p $assessment_data(reuse_responses_p)] || ![empty_string_p $assessment_data(show_item_name_p)] || ![empty_string_p $assessment_data(consent_page)] || ![empty_string_p $assessment_data(return_url)] || ![empty_string_p $assessment_data(start_time)] || ![empty_string_p $assessment_data(end_time)] || ![empty_string_p $assessment_data(number_tries)] || ![empty_string_p $assessment_data(wait_between_tries)] || ![empty_string_p $assessment_data(time_for_response)] || ![empty_string_p $assessment_data(ip_mask)] || ![empty_string_p $assessment_data(show_feedback)] || ![empty_string_p $assessment_data(section_navigation)]} {
+if {$assessment_data(run_mode) ne "" || $assessment_data(anonymous_p) ne "" || $assessment_data(secure_access_p) ne "" || $assessment_data(reuse_responses_p) ne "" || $assessment_data(show_item_name_p) ne "" || $assessment_data(consent_page) ne "" || $assessment_data(return_url) ne "" || $assessment_data(start_time) ne "" || $assessment_data(end_time) ne "" || $assessment_data(number_tries) ne "" || $assessment_data(wait_between_tries) ne "" || $assessment_data(time_for_response) ne "" || $assessment_data(ip_mask) ne "" || $assessment_data(show_feedback) ne "" || $assessment_data(section_navigation) ne ""} {
 
     set qtimetadata [$doc createElement qtimetadata]
     $assessment appendChild $qtimetadata
@@ -99,7 +99,7 @@ as::export::new_element -value $assessment_data(description) -father $assessment
 
 #<assessmentcontrol>
 set assessmentcontrol [$doc createElement assessmentcontrol]
-if { $assessment_data(show_feedback) == "none" } {
+if { $assessment_data(show_feedback) eq "none" } {
     $assessmentcontrol setAttribute feedbackswitch "No"
 } else {
     $assessmentcontrol setAttribute feedbackswitch "Yes"
@@ -132,7 +132,7 @@ db_multirow sections query_all_sections {} {
     #<duration>
     as::export::new_element -value $section_max_time_to_complete -father $section -label duration -root $doc
     
-    if {![empty_string_p $section_num_items] || ![empty_string_p $section_points] || ![empty_string_p $section_display_type] || ![empty_string_p $s_num_items] || ![empty_string_p $s_adp_chunk] || ![empty_string_p $s_branched_p] || ![empty_string_p $s_back_button_p] || ![empty_string_p $s_submit_answer_p] || ![empty_string_p $s_sort_order_type]} {
+    if {$section_num_items ne "" || $section_points ne "" || $section_display_type ne "" || $s_num_items ne "" || $s_adp_chunk ne "" || $s_branched_p ne "" || $s_back_button_p ne "" || $s_submit_answer_p ne "" || $s_sort_order_type ne ""} {
         set qtimetadata [$doc createElement qtimetadata]
         $section appendChild $qtimetadata
         #num_items
@@ -213,7 +213,7 @@ db_multirow sections query_all_sections {} {
 	#<duration>
 	as::export::new_element -value $item_max_time_to_complete -father $item -label duration -root $doc
 	
-	if {![empty_string_p $item_field_code] || ![empty_string_p $item_required_p] || ![empty_string_p $item_points] || ![empty_string_p $item_data_type]} {
+	if {$item_field_code ne "" || $item_required_p ne "" || $item_points ne "" || $item_data_type ne ""} {
 	    set itemmetadata [$doc createElement itemmetadata]
 	    $item appendChild $itemmetadata
 	    set qtimetadata [$doc createElement qtimetadata]
@@ -306,12 +306,12 @@ db_multirow sections query_all_sections {} {
 	    set content_type ""
 	    
 	    db_0or1row get_content_type_items {}
-	    if {$content_type == "image"} {	        
+	    if {$content_type eq "image"} {	        
 		#<matimage>
 		set matimage [$doc createElement matimage]
 		$material appendChild $matimage
 		$matimage setAttribute uri $content_filename	        
-		if {![empty_string_p $mime_type]} {
+		if {$mime_type ne ""} {
 		    $matimage setAttribute imagtype $mime_type
 		}		        
 		
@@ -353,12 +353,12 @@ db_multirow sections query_all_sections {} {
 	        $response_label appendChild $material
 		
 		#content_type: imagen	        
-	        if {$content_type == "image"} {	        
+	        if {$content_type eq "image"} {	        
 		    #<matimage>		
 		    set matimage [$doc createElement matimage]
 		    $material appendChild $matimage
 		    $matimage setAttribute uri $content_filename	     
-		    if {![empty_string_p $mime_type]} {
+		    if {$mime_type ne ""} {
 		        $matimage setAttribute imagtype $mime_type
 		    }   		    		    
 		    set cr_path [cr_fs_path $storage_area_key]
@@ -666,15 +666,15 @@ db_multirow sections query_all_sections {} {
 			    $setvar setAttribute action "Add"
 			    $respcondition appendChild $setvar
 			    # in fib items choice_percent_score column is null
-			    if {[empty_string_p $choice_percent_score]} {
+			    if {$choice_percent_score eq ""} {
 				set choice_percent_score 1
 			    } else {
-				set choice_percent_score [expr round (($num_answers_correct * $choice_percent_score * 1.0) / 100)]
+				set choice_percent_score [expr {round (($num_answers_correct * $choice_percent_score * 1.0) / 100)}]
 			    }		    
 			    set text [$doc createCDATASection $choice_percent_score]
 			    $setvar appendChild $text
 			    #feedback choice
-			    if {![empty_string_p $choice_feedback_text]} {
+			    if {$choice_feedback_text ne ""} {
 				set displayfeedback [$doc createElement displayfeedback]
 				set linkrefid { }
 				append linkrefid $choice_name feedbackChoice
@@ -686,7 +686,7 @@ db_multirow sections query_all_sections {} {
 		    incr i 2   	
 		    
 		    #for feedback choice
-		    if { $choice_correct_answer_p == "f" && ![empty_string_p $choice_feedback_text] } {
+		    if { $choice_correct_answer_p == "f" && $choice_feedback_text ne "" } {
 			#<respcondition>
 			set respcondition [$doc createElement respcondition]
 			$resprocessing appendChild $respcondition
@@ -710,7 +710,7 @@ db_multirow sections query_all_sections {} {
 	    }
 	    
 	    #feedback_wrong
-	    if {![empty_string_p $item_feedback_wrong] } {
+	    if {$item_feedback_wrong ne "" } {
 		#<itemfeedback>
 		set itemfeedback [$doc createElement itemfeedback]
 		set ident { }
@@ -722,7 +722,7 @@ db_multirow sections query_all_sections {} {
 	    }
 	    
 	    #feedback_right
-	    if {![empty_string_p $item_feedback_right]} {
+	    if {$item_feedback_right ne ""} {
 		#<itemfeedback>
 		set itemfeedback [$doc createElement itemfeedback]
 		set ident { }
@@ -735,7 +735,7 @@ db_multirow sections query_all_sections {} {
 	    
 	    #feedback_choice
 	    db_foreach query_all_choices {} {
-		if {![empty_string_p $choice_feedback_text]} {
+		if {$choice_feedback_text ne ""} {
 		    #<itemfeedback>
 		    set itemfeedback [$doc createElement itemfeedback]
 		    set ident { }

@@ -9,7 +9,7 @@
 		<div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e4" id="d0e4"></a>Chapter 1. Design</h2></div></div></div><div class="toc">
-<p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ch01s01">1. Data
+<p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="ch01s01">1. Data
 Model</a></span></dt></dl>
 </div>
 </div>
