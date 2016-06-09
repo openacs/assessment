@@ -10,3 +10,8 @@ if {![lsearch $valid_pages $path_info] \
 
 
 rp_internal_redirect /packages/assessment/lib/include 
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
