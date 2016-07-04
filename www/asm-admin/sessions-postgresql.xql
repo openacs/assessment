@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
-<!DOCTYPE queryset PUBLIC "-//OpenACS//DTD XQL 1.0//EN" "http://www.thecodemill.biz/repository/xql.dtd">
-<!-- packages/assessment/www/asm-admin/sessions.xql -->
-<!-- @author Dave Bauer (dave@thedesignexperience.org) -->
-<!-- @creation-date 2007-09-14 -->
-<!-- @cvs-id $Id$ -->
+
 <queryset>
+   <rdbms><type>postgresql</type><version>7.1</version></rdbms>
+
   <fullquery name="get_sessions">
     <querytext>
     select a.*,
@@ -21,12 +19,9 @@
 	  where a.assessment_id = cr.revision_id
 	  and cr.revision_id = ci.latest_revision
 	  and ci.parent_id = :folder_id
-          and u.user_id <> 0 
-	  and exists (
-                      select 1 from acs_object_party_privilege_map
-                      where object_id = :context_object_id
-                      and party_id = u.user_id
-                      and privilege = 'read')) a
+          and u.user_id <> 0
+	  and acs_permission__permission_p(:context_object_id, u.user_id, 'read')
+	  ) a
     left join (select as_sessions.*, cr.item_id
 	       from as_sessions, cr_revisions cr
 	       where session_id in (select max(session_id)
@@ -54,4 +49,5 @@
     order by lower(a.title), lower(a.last_name), lower(a.first_names)
     </querytext>
   </fullquery>
+   
 </queryset>

@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
-<queryset>
-<rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
-<fullquery name="assessment_results">
-	<querytext>
-    select  a.title, 
-	a.user_id, a.first_names, a.last_name,
-    to_char(cs.completed_datetime, :format) as completed_datetime,
-    to_char(coalesce(cs.last_mod_datetime, ns.last_mod_datetime), :format) as last_mod_datetime,
+<queryset>
+   <rdbms><type>oracle</type><version>8.1.6</version></rdbms>
+
+  <fullquery name="get_sessions">
+    <querytext>
+    select a.*,
+    to_char(cs.completed_datetime, 'YYYY-MM-DD HH24:MI:SS') as completed_datetime,
+    to_char(coalesce(cs.last_mod_datetime, ns.last_mod_datetime), 'YYYY-MM-DD HH24:MI:SS') as last_mod_datetime,
     coalesce(cs.subject_id, ns.subject_id) as subject_id,
     coalesce(cs.session_id, ns.session_id) as session_id,
-    cs.percent_score,
-    a.last_name || ', ' || a.first_names as subject_name
+    cs.percent_score
  
     from (select a.assessment_id, cr.title, cr.item_id, cr.revision_id,
 	  u.user_id, u.first_names, u.last_name
@@ -20,10 +19,12 @@
 	  where a.assessment_id = cr.revision_id
 	  and cr.revision_id = ci.latest_revision
 	  and ci.parent_id = :folder_id
-          and u.user_id <> 0
-	  and acs_permission__permission_p(:assessment_id, u.user_id, 'read')
-	  and acs_group__member_p(u.user_id, :group_id, 't')
-	  ) a
+          and u.user_id <> 0 
+	  and exists (
+                      select 1 from acs_object_party_privilege_map
+                      where object_id = :context_object_id
+                      and party_id = u.user_id
+                      and privilege = 'read')) a
     left join (select as_sessions.*, cr.item_id
 	       from as_sessions, cr_revisions cr
 	       where session_id in (select max(session_id)
@@ -45,12 +46,11 @@
                                     group by subject_id, assessment_id)) ns
     on (a.user_id = ns.subject_id and a.assessment_id = ns.assessment_id)
 
-	where true
+    where 1=1
+    [list::filter_where_clauses -and -name "sessions"]
 
-    [list::filter_where_clauses -and -name "results"]
-
-    order by lower(a.title), lower(a.last_name), lower(a.first_names)          
-	</querytext>
+    order by lower(a.title), lower(a.last_name), lower(a.first_names)
+    </querytext>
   </fullquery>
 
 </queryset>
