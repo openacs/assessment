@@ -404,14 +404,14 @@ ad_proc -public as::install::after_upgrade {
                 # update as_param_map table to set the item_id  as a cr_item and not a cr_revision id
                 
                 db_foreach as_parameter { select cr.item_id, pm.parameter_id from as_param_map pm, cr_revisions cr where cr.revision_id = pm.item_id} {
-                    db_dml  update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
+                    db_dml update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
                 }
                 
             }
             0.14 0.15 {
                 # update as_inter_item_check_id table to set the check_sql condition using the item_id of a choice instead of using the revision_id
                 
-                db_foreach check  { select inter_item_check_id, check_sql from as_inter_item_checks } {
+                db_foreach check { select inter_item_check_id, check_sql from as_inter_item_checks } {
                     set cond_list  [split $check_sql "="]
                     set item_id [lindex [split [lindex $cond_list 2] " "] 0]
                     set choice_id [lindex [split [lindex $cond_list 1] " "] 0]

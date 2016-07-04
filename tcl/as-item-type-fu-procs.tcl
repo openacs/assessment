@@ -112,7 +112,7 @@ ad_proc -public as::item_type_fu::process {
         content::item::set_live_revision -revision_id $file_revision_id
 	set as_item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
     }	
-    db_dml update_item_data { }
+    db_dml update_item_data {}
     
 }
 
