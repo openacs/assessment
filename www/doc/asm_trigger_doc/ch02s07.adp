@@ -18,8 +18,8 @@ executed triggers).</p><p>This interface will display those requests related to 
 assessments that the user owns, if the user is site wide
 administrator, all the requests related to all the assessments will
 be display.</p><div class="screenshot"><div class="mediaobject"><img src="resources/show_requests.JPG"></div></div><p>An administrator can select requests that want to approve and
-click in the button "Approve", and also can send mail to several
-users that requested the action. Through this interface the
+click in the button "Approve", and also can send mail to
+several users that requested the action. Through this interface the
 notifications can also be managed.</p><div class="screenshot"><div class="mediaobject"><img src="resources/request_actions.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"

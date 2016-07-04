@@ -17,8 +17,8 @@ and selection in admin pages, not for end-user pages</span></li><li><span class=
 pages describing the user how to fill out the section.</span></li><li><span class="context">
 <a href="../display_types">Display Type</a>: section
 display type to use. Select box of display types in use by this
-user, as well as "new display type" and "display type from
-catalogue".<br>
+user, as well as "new display type" and "display
+type from catalogue".<br>
 </span></li><li><span class="context">Seconds allowed for completion: integer.
 Seconds allowed for completing the section.</span></li><li><span class="context">Feedback Text: textarea. Feedback given
 to the user after finishing the section.</span></li><li><span class="context">
@@ -77,7 +77,7 @@ shown.</span>
 <span class="context">Branch
 by result. Instead of relying on one or multiple answers we check
 for a result in a previous section. This can only work in a test
-environment (so don't display this option if we are not dealing
+environment (so don&#39;t display this option if we are not dealing
 with a test).</span><ul>
 <li><span class="context">Section: select. This will display a list
 of all previous sections. The selected section will be used for the

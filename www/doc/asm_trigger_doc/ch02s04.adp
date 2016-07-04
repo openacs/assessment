@@ -9,9 +9,9 @@ Manual"
 		    rightLink="ch02s05" rightLabel="Next">
 		<div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="d0e185" id="d0e185"></a>4. Branch Triggers</h2></div></div></div><p>To define a Branch Trigger, the field "Type" in the form must be
-checked as branch. Is necessary that at least one section is
-created after the one that is being evaluated.</p><p>The condition field shows the question and its possible answers,
+<a name="d0e185" id="d0e185"></a>4. Branch Triggers</h2></div></div></div><p>To define a Branch Trigger, the field "Type" in the
+form must be checked as branch. Is necessary that at least one
+section is created after the one that is being evaluated.</p><p>The condition field shows the question and its possible answers,
 this means that if a user that respond the assessment choose that
 response the trigger will be activated, and the section secuence
 will change.</p><div class="screenshot"><div class="mediaobject"><img src="resources/branch_trigger.JPG"></div></div><p>After the trigger is defined as branch, the section that will be

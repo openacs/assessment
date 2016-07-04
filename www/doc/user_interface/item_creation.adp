@@ -51,16 +51,17 @@ as a default value</span></li><li>
 <span class="context">Data validation steps are fairly complex
 because we need two layers of data validation checks:</span><ul>
 <li><span class="context">
-<em>Intra-item checks</em>: the user input
-{ exactly matches | falls within narrow "target" bounds | falls
-within broader "acceptable" bounds with explanation}</span></li><li><span class="context">
+<em>Intra-item checks</em>: the user
+input { exactly matches | falls within narrow "target"
+bounds | falls within broader "acceptable" bounds with
+explanation}</span></li><li><span class="context">
 <em>Inter-item checks</em>: if { a user
 input for item a is A, item b is B, ... item n is N } then { user
 input for item z is Z }</span></li>
 </ul><p><span class="context">Both levels involve stringing together
 multiple binary comparisons (eg 0 &lt; input &lt; 3 means checks
-that 0 &lt; input <em>and</em> input &lt; 3), so we need to express a
-grammar consisting of</span></p><ul>
+that 0 &lt; input <em>and</em> input &lt; 3), so we need to express
+a grammar consisting of</span></p><ul>
 <li><span class="context">comparison1 <em>conjunction</em>
 comparison2 <em>conjunction</em> ... comparison n</span></li><li><span class="context">appropriate grouping to define precedence
 order (or simply agree to evaluate left to right)</span></li>
@@ -108,10 +109,10 @@ percentage points a match will awarded.</span></li><li><span class="context">Siz
 box (small, medium, large)</span></li><li><span class="context">Compare by: Select (equal, contains,
 regexp). This defines how the comparison between the answer string
 and the response shall happen.</span></li><li><span class="context">Allow in answerbox: (multiple select box
-with "All" and the numbers from 1 to x where x is the number of
-answerboxes from above. For sure this only works with JS enabled
-:)). Defines the answerboxes the user can fill out that shall be
-matched with this answer. w</span></li>
+with "All" and the numbers from 1 to x where x is the
+number of answerboxes from above. For sure this only works with JS
+enabled :)). Defines the answerboxes the user can fill out that
+shall be matched with this answer. w</span></li>
 </ul>
 </li>
 </ul>
@@ -174,9 +175,9 @@ information on the question he choose.</span></li>
 </ul>
 </li><li><span class="context">In addition to submit, there is another
 button to allow further answers to be filled in. Typed in values
-shall be remembered and 4 more answerboxes be shown.</span></li><li><span class="context">Additionally there is a button "copy",
-which copies the contents of this question to a new question, after
-you gave it a new title.</span></li><li>
+shall be remembered and 4 more answerboxes be shown.</span></li><li><span class="context">Additionally there is a button
+"copy", which copies the contents of this question to a
+new question, after you gave it a new title.</span></li><li>
 <span class="context">[FE]: Possibility to randomly choose from
 the options. This would add a couple of fields:</span><ul>
 <li><span class="context">To each answer: Fixed position: Select
@@ -213,7 +214,7 @@ A matric table allows multiple questions with the same answer to be
 displayed in one block. At the moment this is done in the section
 setup (if all questions in a section have the same answers they
 would be shown in a matrix). One could think about making this a
-special question type on it's own.</span></li>
+special question type on it&#39;s own.</span></li>
 </ul>
 <span class="context">Only site wide admins will get to see the
 following question types:</span>
@@ -275,7 +276,7 @@ submit:</span><ul>
 question.</span></li><li><span class="context">Mail all current survey administrators
 using this question about the update.</span></li><li><span class="context">Include a link which allows the
 administrators to update their survey to the latest revision of the
-question.</span></li><li><span class="context">Don't relink the survey to the latest
+question.</span></li><li><span class="context">Don&#39;t relink the survey to the latest
 revision if not explicitly asked for by the survey
 administrator.</span></li>
 </ul>
@@ -287,7 +288,7 @@ answers. Currently this can be done using HTML linking. A more
 sophisticated system which links to a media database is thinkable,
 once the media database is ready.</span></li>
 </ul>
-<span class="context">For the future we'd like to see a more
+<span class="context">For the future we&#39;d like to see a more
 sophisticated way to include images in questions. Currently this
 can be done using HTML linking, but a media database would be
 considerably more helpful and could be reused for the CMS as
@@ -297,23 +298,25 @@ well.</span>
 
 I'm not clear from your description what these are. If by
 Calculation questions you mean questions that produce some
-calculated result from the user's raw response, then IMHO this is
-an important type of question to support now and not defer. This is
-the main type of question we use in quality-of-life measures (see
-demo <a href="http://www.epimetrics.com/questionnaires/one-questionnaire?questionnaire_id=1">
+calculated result from the user&#39;s raw response, then IMHO this
+is an important type of question to support now and not defer. This
+is the main type of question we use in quality-of-life measures
+(see demo <a href="http://www.epimetrics.com/questionnaires/one-questionnaire?questionnaire_id=1">
 here</a>
 ). These are questions scored by the Likert scale
 algorithm. If there are five potential responses (1,2,3,4, and 5)
-for a question, and the user choose "1" then the "score" is
-calculated as 0; if "5" then 100; if "3" then 50, and so on -- a
-mapping from raw responses to a 0-100 scale. Is this what you mean
-by a "calculation" question?
+for a question, and the user choose "1" then the
+"score" is calculated as 0; if "5" then 100; if
+"3" then 50, and so on -- a mapping from raw responses to
+a 0-100 scale. Is this what you mean by a "calculation"
+question?
 <p>By Database questions, do you mean free text input (via
-textboxes or textareas) questions for which there is a "correct"
-answer that needs to be stored during question creation? Then when
-the teacher is reviewing the student's response, she can inspect
-the student's response against the stored answer and determine what
-degree of correctness to assign the response?</p>
+textboxes or textareas) questions for which there is a
+"correct" answer that needs to be stored during question
+creation? Then when the teacher is reviewing the student&#39;s
+response, she can inspect the student&#39;s response against the
+stored answer and determine what degree of correctness to assign
+the response?</p>
 <p>-- <a href="/shared/community-member?user_id=6569">Stan
 Kaufman</a> on November 09, 2003 06:29 PM (<a href="/comments/view-comment?comment%5fid=141902&amp;return%5furl=">view
 details</a>)</p>

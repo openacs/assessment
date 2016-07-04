@@ -9,8 +9,8 @@ Manual"
 		    rightLink="ch02s06" rightLabel="Next">
 		<div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="d0e204" id="d0e204"></a>5. Action Triggers</h2></div></div></div><p>To define an Action Trigger, the field "Type" in the form must
-be checked as "Action".</p><p>The condition field shows the question and its possible anwers,
+<a name="d0e204" id="d0e204"></a>5. Action Triggers</h2></div></div></div><p>To define an Action Trigger, the field "Type" in the
+form must be checked as "Action".</p><p>The condition field shows the question and its possible anwers,
 it means that when the user is responding the assessment, if this
 answer is given for this question, the action will be executed.</p><div class="screenshot"><div class="mediaobject"><img src="resources/action_trigger.JPG"></div></div><p>After the trigger is created, the action related must be chosen,
 also the time when the action will be executed, and the message

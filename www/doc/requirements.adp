@@ -40,14 +40,14 @@ implementations, notably dotLRN and a clinical trials management
 system under development.</p>
 <h2>Use Cases</h2>
 
-The assessment module in it's simplest form is a dynamic
+The assessment module in it&#39;s simplest form is a dynamic
 information gathering tool. This can be clearly seen in the first
 group of use cases, which deal with surveys (one form of
 assessment, e.g. for quality assurance or clinical trials). An
 extension of this information gathering the possibility to conduct
 an evaluation on the information given, as we show in the second
 group of use cases (testing scenarios). Last but not least, the
-assessment tool should be able to provide it's information
+assessment tool should be able to provide it&#39;s information
 gathering features to other packages within the OpenACS framework
 as well.
 <p>It is very important to note, that not all parameters and
@@ -74,12 +74,13 @@ of the site can take the survey by filling out the generated form
 with all the questions the author added to the survey.<br>
 <h4>Quality Assurance</h4>
 
-A company wants to get feedback from users about it's product. It
-creates a survey which offers branching (to prevent users from
+A company wants to get feedback from users about it&#39;s product.
+It creates a survey which offers branching (to prevent users from
 filling out unnecessary data, e.g. if you answered you have never
-been to Europe the question "Have you seen Rome" should not show
-up) and multi-dimensional likert scales (To ask for the quality and
-importance of a part of the product in conjunction).<br>
+been to Europe the question "Have you seen Rome" should
+not show up) and multi-dimensional likert scales (To ask for the
+quality and importance of a part of the product in
+conjunction).<br>
 <h4>Professional data entry</h4>
 
 A clinic wants to conduct a trial. For this research assistants are
@@ -126,9 +127,9 @@ to) re-answer).
 <h4>Multiple languages</h4>
 
 The quality assurance team of the company mentioned above realizes
-that the majority of it's user base is not native English speakers.
-This is why they want to add additional translations to the
-questions to broaden the response base. For consistency, the
+that the majority of it&#39;s user base is not native English
+speakers. This is why they want to add additional translations to
+the questions to broaden the response base. For consistency, the
 assessment may only be shown to the subject if all questions used
 have been translated. Furthermore it is necessary to store the
 language used along with the response (as a translation might not
@@ -237,8 +238,8 @@ answer some (multiple choice) questions and get the result
 immediately as a percentage score in a table comparing that score
 to other users. Users should be able to answer only a part of the
 possible questions each time. If the user is in the top 2%, offer
-him the contact address of "Mensa", other percentages should give
-encouraging text.<br>
+him the contact address of "Mensa", other percentages
+should give encouraging text.<br>
 <h4>Scoring</h4>
 
 The computer science department has a final exam for the students.
@@ -249,7 +250,7 @@ deemed more important, therefore it gets a weigth of 40%, the other
 two sections only 30% towards the total score. Each section
 consists of multiple questions that have a different weigth (in
 percent) for the total score of the section. The sum of the weigths
-has to be 100%, otherwise the author of the section get's a
+has to be 100%, otherwise the author of the section get&#39;s a
 warning. Some of the questions are multiple choice questions, that
 get different percentages for each answer. As the computer science
 department wants to discourage students from giving wrong answers,
@@ -291,8 +292,8 @@ currently stored in the database as a default.
 <h4>Action driven questions</h4>
 
 The company conducting the QA wants to get more participants to
-it's survey by recommendation. For this each respondee is asked at
-the end of the survey if he would recommend this survey to other
+it&#39;s survey by recommendation. For this each respondee is asked
+at the end of the survey if he would recommend this survey to other
 users (with the option to give the email address of these users).
 The answer will be processed and an email send out to all given
 emails inviting them to take the survey.
@@ -320,8 +321,8 @@ package.</p>
 Assessment or set of Assessments to a specific set of subjects,
 students or other data entry personnel. These actions potentially
 will involve interfacing with other Workflow management tools (e.g.
-an "Enrollment" package that would handle creation of new Parties
-(aka clinical trial subjects) in the database.</p>
+an "Enrollment" package that would handle creation of new
+Parties (aka clinical trial subjects) in the database.</p>
 <p>Schedulers could also be teachers, curriculum designers, site
 coordinators in clinical trials, etc.</p>
 <h3>Analyst</h3>
@@ -336,23 +337,23 @@ completing a test in an educational setting, or a Patient
 completing a health-related quality-of-life instrument to track her
 health status. Subjects need appropriate UIs depending on Item
 formats and technological prowess of the Subject -- kiosk
-"one-question-at-a-time" formats, for example. May or may not get
-immediate feedback about data submitted.</p>
+"one-question-at-a-time" formats, for example. May or may
+not get immediate feedback about data submitted.</p>
 <p>Subjects could be students, consumers, or patients.</p>
 <h3>Data Entry Staff</h3>
 <p>Has permissions to create, edit and delete data for or about the
-"real" Subject. Needs UIs to speed the actions of this trained
-individual and support "save and resume" operations. Data entry
-procedures used by Staff must capture the identity if both the
-"real" subject and the Staff person entering the data -- for audit
-trails and other data security and authentication functions. Data
-entry staff need robust data validation and integrity checks with
-optional, immediate data verification steps and electronic
-signatures at final submission. (Many of the tight-sphinctered
-requirements for FDA submissions center around mechanisms
-encountered here: to prove exactly who created any datum, when,
-whether it is a correct value, whether anyone has looked at it or
-edited it and when, etc etc...)</p>
+"real" Subject. Needs UIs to speed the actions of this
+trained individual and support "save and resume"
+operations. Data entry procedures used by Staff must capture the
+identity if both the "real" subject and the Staff person
+entering the data -- for audit trails and other data security and
+authentication functions. Data entry staff need robust data
+validation and integrity checks with optional, immediate data
+verification steps and electronic signatures at final submission.
+(Many of the tight-sphinctered requirements for FDA submissions
+center around mechanisms encountered here: to prove exactly who
+created any datum, when, whether it is a correct value, whether
+anyone has looked at it or edited it and when, etc etc...)</p>
 <p>Staff could be site coordinators in clinical trials, insurance
 adjustors, accountants, tax preparation staff, etc.</p>
 <h2>System / Application Overview<br>
@@ -360,11 +361,11 @@ adjustors, accountants, tax preparation staff, etc.</p>
 <h3>Editing of Assessments</h3>
 <ul>
 <li>Manage the structure of Assessments -- the organization of
-series of questions (called "Items") into Sections (defined
-logically in terms of branch points and literally in terms of
-"Items presented together on a page"), along with all other
-parameters that define the nature and fuction of all Assessment
-components.</li><li>Create, edit and delete Assessments, the highest level in the
+series of questions (called "Items") into Sections
+(defined logically in terms of branch points and literally in terms
+of "Items presented together on a page"), along with all
+other parameters that define the nature and fuction of all
+Assessment components.</li><li>Create, edit and delete Assessments, the highest level in the
 structure hierarchy. Configure Assessment attributes:
 <ul>
 <li>Assessment name, description, version notes, instructions,
@@ -395,10 +396,11 @@ interrupt and resume a given Assessment</li><li>Control of access permissions fo
 Assessment, including editing of the Assessment itself, access to
 collected Assessment data, and control of scheduling
 procedures.</li><li>A "clear" button to wipe all user input from an
-Assessment.</li><li>A "printer-friendly" version of the Assessment so that it can
-be printed out for contexts in which users need to complete it on
-paper and then staff people transcribe the answers into the web
-system (yes, this actually is an important feature).</li>
+Assessment.</li><li>A "printer-friendly" version of the Assessment so
+that it can be printed out for contexts in which users need to
+complete it on paper and then staff people transcribe the answers
+into the web system (yes, this actually is an important
+feature).</li>
 </ul>
 </li><li>Create, edit, clone and delete Sections -- the atomic grouping
 unit for Items. Configure Section attributes:
@@ -410,11 +412,13 @@ derived from submitted data rolled up from the constituent
 Items.</li><li>Item data integrity checks: rules for checking for expected
 relationships among data submitted from two or more Items. These
 define what are consistent and acceptable responses (ie if Item A
-is "zero" then Item B must be "zero" as well for example).</li><li>Navigation criteria among Items within a Section -- including
+is "zero" then Item B must be "zero" as well
+for example).</li><li>Navigation criteria among Items within a Section -- including
 default paths, randomized paths, rule-based branching paths
 responding to user-submitted data, including possibly looping
 paths.</li><li>Any time-based attributes (max time allowed for Section,
-minimum time allowed)</li><li>A "clear" button to clear all user values in a Section.</li>
+minimum time allowed)</li><li>A "clear" button to clear all user values in a
+Section.</li>
 </ul>
 </li><li>Create, edit, clone and delete Items -- the individual
 "questions" themselves. Configure Item attributes:
@@ -422,34 +426,36 @@ minimum time allowed)</li><li>A "clear" button to clear all user values in a Sec
 <li>Item data types: integer, numeric, text, boolean, date, or
 uploaded file</li><li>Item formats: radio buttons, checkboxes, textfields, textareas,
 selects, file boxes.</li><li>Item values: the label, instructions, feedback text (for use
-during "grading") etc displayed with the Item either during the
-subject's performance of the Assessment or the.</li><li>Item designation (a "field code") to include in data
+during "grading") etc displayed with the Item either
+during the subject&#39;s performance of the Assessment or the.</li><li>Item designation (a "field code") to include in data
 reporting</li><li>Item defaults: configure a radio button choice that will be
 checked when the Assessment first displays, a text that will
 appear, a date that will be set, etc.</li><li>Item data validation checks: correct data type; range checks
 for integer and numeric types; regexp matching for text types (eg
 accept only valid phone numbers) along with optional
 case-sensitivity during text validation; valid file formats for
-uploaded files. Note: the designation of "the correct answer" in
-the educational context of testing is a special case of data
-validation checks.
+uploaded files. Note: the designation of "the correct
+answer" in the educational context of testing is a special
+case of data validation checks.
 <p>Note also: need to support three-value logic regarding the
 existence of any single Item datum: null value means the Item
-hasn't been dealt with by responder; "unknown" value means that the
-Item has been answered but the responder doesn't know value; actual
-value (of proper type) means that the responder has found and
-submitted a value.</p>
-</li><li>Database-derived stock Items (eg, "country widgets", "state
-widgets", etc).</li><li>Item-specific feedback: configurable text/sound/image that can
+hasn&#39;t been dealt with by responder; "unknown" value
+means that the Item has been answered but the responder doesn&#39;t
+know value; actual value (of proper type) means that the responder
+has found and submitted a value.</p>
+</li><li>Database-derived stock Items (eg, "country widgets",
+"state widgets", etc).</li><li>Item-specific feedback: configurable text/sound/image that can
 be returned to user based on user response to Item.</li><li>Any time-based attributes (max time allowed for Item, minimum
-time allowed).</li><li>Support of combo-box "other" choice in multiple-choice Items
-(ie, if user selects a radiobutton or checkbox option of "other"
-then the textbox for typed entry gets read; if user doesn't select
-that choice, then the textbox is ignored).</li><li>A "clear Item" button for each Item type that can't be directly
-edited by user.</li>
+time allowed).</li><li>Support of combo-box "other" choice in
+multiple-choice Items (ie, if user selects a radiobutton or
+checkbox option of "other" then the textbox for typed
+entry gets read; if user doesn&#39;t select that choice, then the
+textbox is ignored).</li><li>A "clear Item" button for each Item type that
+can&#39;t be directly edited by user.</li>
 </ul>
-</li><li>Create, edit, clone and delete Item Choices -- the "multiple
-choices" for radiobutton and checkbox type Items:
+</li><li>Create, edit, clone and delete Item Choices -- the
+"multiple choices" for radiobutton and checkbox type
+Items:
 <ul>
 <li>Choice data types: integer, numeric, text, boolean</li><li>Choice formats: horizontal, vertical, grid</li><li>Choice values: labels, instructions, numeric/text encoded
 values</li><li>Choice-specific feedback: configurable text/sound/image that
@@ -462,54 +468,57 @@ Processing Procedures. Configure:
 <ul>
 <li>Scoring Algorithms: names and arithmetic calculation formulae
 to operate on submitted data when the form returns to the server.
-These include standard "percent correct -&gt; letter grade" grading
-schemes as well as formal algorithms like Likert scoring
-(conversion of ordinal responses to 0-100 scale scores).</li><li>Names and descriptions of Scales -- the output of Algorithm
+These include standard "percent correct -&gt; letter
+grade" grading schemes as well as formal algorithms like
+Likert scoring (conversion of ordinal responses to 0-100 scale
+scores).</li><li>Names and descriptions of Scales -- the output of Algorithm
 calculations.</li><li>Mapping of Items (and/or other Scales) to calculate a given
 Scale Scores.</li><li>Define data retrieval and display alternatives: tabular display
 in web page tables; tab-delimited (or CSV etc) formats; graphical
-displays (when appropriate).</li><li>Note: manual "grading by the teacher" is a special case of
-post-submission Assessment Processing in that no automated
+displays (when appropriate).</li><li>Note: manual "grading by the teacher" is a special
+case of post-submission Assessment Processing in that no automated
 processing occurs at all; rather, an admin user (the teacher)
-retrieves the subject's responses and interacts with the subject's
-data by in effect annotating it ("This answer is wrong" "You are
-half right here" etc). Such annotations could be via free text or
-via choices configured during editing of Items and Choices (as
-described above).</li>
+retrieves the subject&#39;s responses and interacts with the
+subject&#39;s data by in effect annotating it ("This answer is
+wrong" "You are half right here" etc). Such
+annotations could be via free text or via choices configured during
+editing of Items and Choices (as described above).</li>
 </ul><p>Note that there are at least three semantically distinct
 concepts of scoring, each of which the Assessment package should
 support and have varying levels of importance in different
 contexts. Consider:</p><ul>
-<li>Questions may have a "correct" answer against which a subject's
-reponse should be compared, yielding some measure of a "score" for
-that question varying from completely "wrong" to completely
-"correct". The package should allow Editors to specify the nature
-of the scoring continuum for the question, whether it's a
-percentage scale ("Your response is 62% correct") or a nominal
-scale ("Your response is Spot-on" "Close but No Cigar" "How did you
-get into this class??")</li><li>Raw responses to questions may be arithmetically compiled into
+<li>Questions may have a "correct" answer against which a
+subject&#39;s reponse should be compared, yielding some measure of
+a "score" for that question varying from completely
+"wrong" to completely "correct". The package
+should allow Editors to specify the nature of the scoring continuum
+for the question, whether it&#39;s a percentage scale ("Your
+response is 62% correct") or a nominal scale ("Your
+response is Spot-on" "Close but No Cigar" "How
+did you get into this class??")</li><li>Raw responses to questions may be arithmetically compiled into
 some form of Scale, which is the real output of the Assessment.
 This is the case in the health-related quality-of-life measures
-demo'd <a href="http://www.cvoutcomes.org/demos">here</a>. There is
-no "correct" answer as such for any subject's responses, but all
-responses are combined and normalized into a 0-100 scale.</li><li>Scoring may involve summary statistics over multiple responses
-(one subjects' over time; many subjects' at a single time; etc).
-Such "scoring" output from the Assessment package pertains to
-either of the two above notions. This is particularly important in
-educational settings.</li>
+demo&#39;d <a href="http://www.cvoutcomes.org/demos">here</a>.
+There is no "correct" answer as such for any
+subject&#39;s responses, but all responses are combined and
+normalized into a 0-100 scale.</li><li>Scoring may involve summary statistics over multiple responses
+(one subjects' over time; many subjects' at a single time;
+etc). Such "scoring" output from the Assessment package
+pertains to either of the two above notions. This is particularly
+important in educational settings.</li>
 </ul>
 </li><li>Create, edit, clone and delete Repositories of Assessments,
 Sections and Items. Configure:
 <ul>
-<li>Whether a Repository is shareable, and how/with whom.</li><li>Whether a Repository is cloneable, and how/with whom.</li><li>Note: this is the concept of a "Question Catalog" taken to its
-logical end -- catalogs of all the organizational components in an
-Assessment. In essence, the Assessment package is an Assessment
-Catalog. (The CR is our friend here ;-)</li><li>Versioning is a central feature of this repository; multiple
-"live" versions of any entity should be supported, with attributes
-(name, version notes, version creation dates, version author, scope
--- eg subsite/group/etc) to make it possible to identify, track and
-select which version of any entity an Assessment editor wants to
-use.</li>
+<li>Whether a Repository is shareable, and how/with whom.</li><li>Whether a Repository is cloneable, and how/with whom.</li><li>Note: this is the concept of a "Question Catalog"
+taken to its logical end -- catalogs of all the organizational
+components in an Assessment. In essence, the Assessment package is
+an Assessment Catalog. (The CR is our friend here ;-)</li><li>Versioning is a central feature of this repository; multiple
+"live" versions of any entity should be supported, with
+attributes (name, version notes, version creation dates, version
+author, scope -- eg subsite/group/etc) to make it possible to
+identify, track and select which version of any entity an
+Assessment editor wants to use.</li>
 </ul>
 </li>
 </ul>
@@ -525,17 +534,17 @@ performing Assessment on a Subject</li>
 </ul>
 </li><li>Provide these additional functions:
 <ul>
-<li>Support optional "electronic signatures" consisting simply of
-an additional password field on the form along with an "I attest
-this is my response" checkbox that the user completes on submission
-(rejected without the correct password) -- ie authentication
-only.</li><li>Support optional "digital signatures" consisting of a hash of
-the user's submitted data, encrypted along with the user's password
--- ie authentication + nonrepudiation.</li><li>Perform daily scheduled procedures to look for Subjects and
+<li>Support optional "electronic signatures" consisting
+simply of an additional password field on the form along with an
+"I attest this is my response" checkbox that the user
+completes on submission (rejected without the correct password) --
+ie authentication only.</li><li>Support optional "digital signatures" consisting of a
+hash of the user&#39;s submitted data, encrypted along with the
+user&#39;s password -- ie authentication + nonrepudiation.</li><li>Perform daily scheduled procedures to look for Subjects and
 Staff who need to be Invited/Instructed or Reminded to
 participate.</li><li>Incorporate procedures to send Thanks notifications upon
 completion of Assessment</li><li>Provide UIs for Subjects and for Staff to show the status of
-the Assessments they're scheduled to perform -- eg a table that
+the Assessments they&#39;re scheduled to perform -- eg a table that
 shows expected dates, actual completion dates, etc.</li>
 </ul>
 </li>
@@ -557,16 +566,17 @@ etc)</li>
 <li>Handle user Login (for non-anonymous studies)</li><li>Determine and display correct UI for type of user (eg kiosk
 format for patients; keyboard-centric UI for data entry Staff)</li><li>Deliver Section forms to user</li><li>Perform data validation and data integrity checks on form
 submission, and return any errors flagged within form</li><li>Display confirmation page showing submitted data (if
-appropriate) along with "Edit this again" or "Yes, Save Data"
-buttons</li><li>Display additional "electronic signature" field for password
-and "I certify these data" checkbox if indicated for
-Assessment</li><li>Process sequence navigation rules based on submitted data and
+appropriate) along with "Edit this again" or "Yes,
+Save Data" buttons</li><li>Display additional "electronic signature" field for
+password and "I certify these data" checkbox if indicated
+for Assessment</li><li>Process sequence navigation rules based on submitted data and
 deliver next Section or terminate event as indicated</li><li>Track elapsed time user spends on Assessment tasks -- answering
 a given question, a section of questions, or the entire Assessment
--- and do something with this (we're not entirely sure yet what
+-- and do something with this (we&#39;re not entirely sure yet what
 this should be -- merely record the elapsed time for subsequent
 analysis, reject over-time submissions, or even forcibly refresh a
-laggard user's page to "grab the Assessment back")</li><li>Insert appropriate audit records for each data submission, if
+laggard user&#39;s page to "grab the Assessment
+back")</li><li>Insert appropriate audit records for each data submission, if
 indicated for Assessment</li><li>Handle indicated email notifications at end of Assessment (to
 Subject, Staff, Scheduler, or Editor)</li>
 </ul>

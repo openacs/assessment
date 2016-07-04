@@ -33,7 +33,7 @@ question, the submitted question will be displayed with an edit
 instead of the submit button. Otherwise only the answer will be
 displayed. In either case the answer is displayed as text on the
 page, not within a form element.</span></li><li><span class="context">If the respondee cannot see his old
-answers, don't display them once submitted. Make sure the
+answers, don&#39;t display them once submitted. Make sure the
 backbutton does not work (e.g. using Postdata ?). Not sure how much
 sense it makes to display an edit button :).</span></li><li><span class="context">If we have a time in which the respondee
 has to answer the assessment, display a bar with time
@@ -64,14 +64,15 @@ hitting reload).</span></li>
 <span class="context">Once the assessment has been finished</span>
 <ul>
 <li><span class="context">Display optional electronic signature
-file upload with an "I certify this test and state it is mine"
-checkbox. This will be stored in addition to the test.</span></li><li><span class="context">Notifications shall be send to the admin,
+file upload with an "I certify this test and state it is
+mine" checkbox. This will be stored in addition to the
+test.</span></li><li><span class="context">Notifications shall be send to the admin,
 staff and respondee.</span></li><li><span class="context">If we shall display the results to the
 respondee immediatly after finishing the assessment, show it to him
 / her. Display the comments along depending on the
 settings.</span></li><li><span class="context">If we have a special score, show this
-result to the user (e.g. if 90% means "you are a dream husband",
-display this along with the 90%).</span></li><li><span class="context">Display a link with the possibility to
+result to the user (e.g. if 90% means "you are a dream
+husband", display this along with the 90%).</span></li><li><span class="context">Display a link with the possibility to
 show all the questions and answers for printout.</span></li><li><span class="context">Store the endtime with the
 response.</span></li>
 </ul>

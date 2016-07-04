@@ -19,14 +19,15 @@ Model</a>
 <li>Open Question
 <p>Open questions are text input questions for free text. For
 obvious reasons they cannot be auto corrected. The difference
-between an "Open Question" and a "Short Answer" Item is that Open
-Questions accept alphanumeric data from a user and only undergo
-manual "grading" by an admin user through comparison with "correct"
-values configured during Assessment authoring. Open Questions can
-either be short (textbox) or long (text area) elements in the html
-form. Here are several configuration options the authoring
-environment will support (in addition to many others, such as
-alignment/orientation, required/not required, etc etc):</p><ul>
+between an "Open Question" and a "Short Answer"
+Item is that Open Questions accept alphanumeric data from a user
+and only undergo manual "grading" by an admin user
+through comparison with "correct" values configured
+during Assessment authoring. Open Questions can either be short
+(textbox) or long (text area) elements in the html form. Here are
+several configuration options the authoring environment will
+support (in addition to many others, such as alignment/orientation,
+required/not required, etc etc):</p><ul>
 <li>Size of the reply box: Radio buttons to set size of textbox:
 small/medium/large; or text area</li><li>Prefilled Answer Box: richtext widget. The content of this
 field will be prefilled in the response of the user taking the
@@ -37,8 +38,8 @@ feedback_text</li><li>[NTH nice to have?]: Button to add predefined comments nex
 the correct answer box. This would be shown to the manual corrector
 to quickly choose from when manually scoring the answer. What kind
 of comments would these be? Should they be categorized entries in
-the "message" system that admin users would populate over time,
-that would be stuck into the authoring UI dynamically during
+the "message" system that admin users would populate over
+time, that would be stuck into the authoring UI dynamically during
 Assessment creation?</li>
 </ul>
 </li><li>Short Answer Item:
@@ -48,8 +49,8 @@ can define what values are valid in each answer box and use various
 compare functions to compare the output. The creation of a short
 answer question will trigger entries into the as_item check tables.
 In addition to supporting automated validation/grading, this item
-type differs from "Open Questions" in that only textboxes are
-supported -- meaning short answers, no text area essays.</p><ul>
+type differs from "Open Questions" in that only textboxes
+are supported -- meaning short answers, no text area essays.</p><ul>
 <li>Intro_label: textarea. This contains the leading text that will
 be presented before the first answerbox.</li><li>Extro_label: textarea. This contains the trailing text.</li><li>Number of Answerboxes: integer. Number of answerboxes presented
 to the user.<br>
@@ -66,15 +67,16 @@ answers or not.</li><li>Value in %: short integer: How many percentage points a 
 will awarded.</li><li>Size: Integer Select: size of the input box (small, medium,
 large)</li><li>Compare by: Select (equal, contains, regexp). This defines how
 the comparison between the answer string and the response shall
-happen.</li><li>Regexp: Textarea. If the compare by is a "regexp", this field
-contains the actual regexp.</li><li>sort_order<br>
+happen.</li><li>Regexp: Textarea. If the compare by is a "regexp",
+this field contains the actual regexp.</li><li>sort_order<br>
 </li><li>Allow in answerbox: This defines to which answerbox the answer
 check of the short_answer is compared to. If we have four
-answerboxes and the question was "Name four  European Capitals
-of EU members", then you would 25 correct answers which could be
-given in all answerboxes. If the question was "Name four European
-Capitals of EU members ordered by Name", then you'd only have four
-answers "Athen, Berlin, Copenhagen,<br>
+answerboxes and the question was "Name four  European
+Capitals of EU members", then you would 25 correct answers
+which could be given in all answerboxes. If the question was
+"Name four European Capitals of EU members ordered by
+Name", then you&#39;d only have four answers "Athen,
+Berlin, Copenhagen,<br>
 </li>
 </ul>
 </li>
@@ -84,9 +86,9 @@ answers "Athen, Berlin, Copenhagen,<br>
 left with pull down menues on the right hand side of a survey. The
 number of the items is identical to the number of items on the
 right hand side. This also appears to be a Section of Items; each
-Item consists of a single "phrase" against which it is to be
-associated with one of a set of potential choices (displayed via a
-select widget; could be radiobutton though too). If there are
+Item consists of a single "phrase" against which it is to
+be associated with one of a set of potential choices (displayed via
+a select widget; could be radiobutton though too). If there are
 several such matchings (three phrases &lt;-&gt; three items in the
 popup select) then this is a Section with three Items. The UI for
 this needs to be in section-edit, not item-edit.</p><ul>
@@ -150,27 +152,28 @@ more answerboxes be shown.</li><li>[Additional Feature]: Possibility to randomly
 options. This would add a couple of fields:
 <ul>
 <li>To each answer: Fixed position: Select Box, Choose the
-mandatory position when displaying the option (e.g. "none of the
-above").</li><li>Number of correct answers: integer, defining how many correct
+mandatory position when displaying the option (e.g. "none of
+the above").</li><li>Number of correct answers: integer, defining how many correct
 options have to be displayed. Check if enough correct answers have
 been defined.</li><li>Number of answers: integer, defining how many options shall be
 displayed in total (correct and incorrect). Check if enough answers
 are available.</li><li>Display of options: Numerical, alphabetic, randomized or by
-order of entry.</li><li>All radio button Items must have a "clear" button that unsets
-all the radiobuttons for the item. (For that matter, every Section
-and every Assessment also must have "clear" buttons. Fairly trivial
-with Javascript.)</li>
+order of entry.</li><li>All radio button Items must have a "clear" button
+that unsets all the radiobuttons for the item. (For that matter,
+every Section and every Assessment also must have "clear"
+buttons. Fairly trivial with Javascript.)</li>
 </ul>
 </li>
 </ul>
-Note that one special type of "multiple choice" question consists
-of choices that are created by a database select. For instance: a
-question like "Indicate your state" will have a select widget that
-displays all state names obtained from the states table in
-OpenACS.</li><li>Rank question:
+Note that one special type of "multiple choice" question
+consists of choices that are created by a database select. For
+instance: a question like "Indicate your state" will have
+a select widget that displays all state names obtained from the
+states table in OpenACS.</li><li>Rank question:
 <p>Rank questions ask for the answers to be ranked. This appears to
-me to be a special case of the "matching question" in which the
-select options are ordinal values, not arbitrary strings.</p><ul>
+me to be a special case of the "matching question" in
+which the select options are ordinal values, not arbitrary
+strings.</p><ul>
 <li>Rank Type: Boolean (alphabetic, numeric). Shall the rank be
 from a to z or from 1 to n.</li><li>Only unique rank: Boolean (yes/no). Shall the ranking only
 allow unique ranks (like 1,2,3,5,6 instead of 1,2,2,4,5)</li><li>Straigth order: Boolean (alphabetic, numeric). Shall the rank
@@ -187,10 +190,10 @@ more answerboxes be shown.</li>
 <p>The idea here is a "question" consisting of a group of
 questions. We include it here because to many users, this does
 appear to be a "single" question.</p><p>However, it is actually more appropriately recognized to be a
-"section" because it is a group of questions, a response to each of
-which will need to be separately stored by the system. Further,
-this is in fact a display option for the section that could
-reasonably be used for any Item Type. For instance, there are
+"section" because it is a group of questions, a response
+to each of which will need to be separately stored by the system.
+Further, this is in fact a display option for the section that
+could reasonably be used for any Item Type. For instance, there are
 situations where an Assessment author may want to group a set of
 selects, or radiobuttons, or small textboxes, etc.</p>
 </li><li>Composite matrix-based multiple response item:

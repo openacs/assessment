@@ -41,10 +41,10 @@ If yes, the respondee will see the title of the question in
 addition to the question itself when taking the survey.</span></li><li>Consent Pages: richtext. <span class="context"><span class="reg"><span class="context">An assessment author should be able
 optionally to specify some consent statement that a user must agree
 to in order to proceed with the assessment. The datamodel needs to
-store the user's response positive response with a timestamp (in
-as_sessions). This isn't relevant in educational testing, but it is
-an important feature to include for other settings, notably medical
-and financial ones.<br>
+store the user&#39;s response positive response with a timestamp
+(in as_sessions). This isn&#39;t relevant in educational testing,
+but it is an important feature to include for other settings,
+notably medical and financial ones.<br>
 </span></span></span>
 </li><li>Progress bar: select. (no progress bar, different styles). What
 kind of progress bar shall be displayed to the respondee while
@@ -59,7 +59,8 @@ displayed before the first response.</li><li>Customizable buttons for Submit, Sa
 using the style?)</li><li>Customizable thank you page: richtext.</li><li>Return_URL: text. URL the respondee will be redirected to after
 finishing the assessment. Should be redirected directly if no Thank
 you page is there. Otherwise the return_url should be set in the
-thank you page context, so we can have a "continue" URL.</li>
+thank you page context, so we can have a "continue"
+URL.</li>
 </ul>
 </li><li>Times
 <ul>
@@ -89,10 +90,10 @@ have achieved in that exam.</li><li>Bulk upload: file. Upload a CSV file with em
 allow access to the accessment. Add users to the system if not
 already part of it. Notify users via email that they should take
 the accessment.</li><li>Password: short_text. Password that has to be typed in before
-the respondee get's access to the accessment. This should be done
-by creating a registered filter that returns a 401 to popup an HTTP
-auth box. look in oacs_dav::authenticate for an example of how to
-check the username/password<br>
+the respondee get&#39;s access to the accessment. This should be
+done by creating a registered filter that returns a 401 to popup an
+HTTP auth box. look in oacs_dav::authenticate for an example of how
+to check the username/password<br>
 </li><li>IP Netmask. short_text. Netmask that will be matched against
 the IP-Adress of the respondee. If it does not match, the user will
 not be given access. Again this should be handled by the creation
@@ -169,10 +170,10 @@ going to happen)</li><li><span class="context">One additional option that should
 included is a consent form; an assessment author should be able
 optionally to specify some consent statement that a user must agree
 to in order to proceed with the assessment. The datamodel needs to
-store the user's response whether it is positive or negative, along
-with a timestamp. This isn't relevant in educational testing, but
-it is an important feature to include for other settings, notably
-medical and financial ones.</span></li>
+store the user&#39;s response whether it is positive or negative,
+along with a timestamp. This isn&#39;t relevant in educational
+testing, but it is an important feature to include for other
+settings, notably medical and financial ones.</span></li>
 </ul>
 <span class="etp-link"><a class="top" href="etp?name=assessment_creation"></a></span>
 <!-- END ETP LINK -->

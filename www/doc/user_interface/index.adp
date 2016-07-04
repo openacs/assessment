@@ -4,10 +4,10 @@
 <master>
 <!-- START HEADER --><h1><span class="context">Introduction</span></h1>
 <span class="context">In recent times the survey system has
-expanded beyond it's initial scope of providing a quick and easy
-solution to conduct surveys. Due to it's flexibility it has already
-expanded in the area of storing user information and provide a tool
-for feedback for quality assurance.</span>
+expanded beyond it&#39;s initial scope of providing a quick and
+easy solution to conduct surveys. Due to it&#39;s flexibility it
+has already expanded in the area of storing user information and
+provide a tool for feedback for quality assurance.</span>
 <p><span class="context">On the other hand the need for dotLRN has
 risen to provide an assessment solutions that allows (automated)
 tests as well with the possibility to score the test results and
@@ -83,10 +83,10 @@ challange.</span></p>
 <p><span class="context">Furthermore the grading package offers to
 transfer scores (which are stored as integer values) into a grade
 (e.g. the american A-F scheme, or the German 1-6). This is where it
-gets the name from I'd say ;). Grading schemes are flexible and can
-be created on the fly. This allows us to support any grading scheme
-across the world's universities. In addition in the area of
-Knowledge Management, grades could be transfered into incentive
+gets the name from I'd say ;). Grading schemes are flexible and
+can be created on the fly. This allows us to support any grading
+scheme across the world&#39;s universities. In addition in the area
+of Knowledge Management, grades could be transfered into incentive
 points, that can be reused to reward employees for good work done
 (where they got good ratings for).</span></p>
 <p><span class="context">Last but not least, maybe embeded with the
@@ -118,7 +118,8 @@ questions in other tables and the rest in the accessment package.
 This way a quick view can be given about the user (aggregating user
 information in a flexible way). Best explanation would be to treat
 the /pvt/home page as a collection of assessment data and the
-"change basic information" as one assessment among many.</span></p>
+"change basic information" as one assessment among
+many.</span></p>
 <p><span class="context">With a little bit of tweaking and the
 possiblity to add instant gratification, aka aggregated result
 display, it could include the poll package and make it
@@ -129,14 +130,15 @@ assessment system is usefull for quality assurance (how important
 is this feature / how good do you think we implemented it). And as
 you might have guessed, for anything the current survey module has
 been used for as well (e.g. plain and simple surveys).</span></p>
-<p><span class="context">The grading system on it's own would be
-usefull for the OpenACS community as it would allow the handing out
-of "zorkmints" along with any benefits the collection of mints
-gives to the users. As mentioned earlier, this is also very
-important in a Knowledge Management environment, where you want to
-give rated feedback to users.</span></p>
+<p><span class="context">The grading system on it&#39;s own would
+be usefull for the OpenACS community as it would allow the handing
+out of "zorkmints" along with any benefits the collection
+of mints gives to the users. As mentioned earlier, this is also
+very important in a Knowledge Management environment, where you
+want to give rated feedback to users.</span></p>
 <blockquote><p><span class="context">
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<strong><a href="question_catalogue">Question Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
+Creation</a></strong><br><br><strong><a href="sections">Sections</a></strong><br><br><strong><a href="tests">Tests</a></strong><br><br><strong><a href="test_processing">Test Processing</a></strong><br><br><strong><a href="user_experience">User Experience</a></strong><br><br><strong><a href="current/"><br></a></strong>
 </span></p></blockquote>
 <span class="context">
 <span class="etp-link"><a class="top" href="etp?name=index"></a></span><!-- END ETP LINK -->

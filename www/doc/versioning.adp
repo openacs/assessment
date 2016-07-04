@@ -5,9 +5,10 @@
 <h2>Overview</h2>
 <p>This topic requires special mention because it is centrally
 important to Assessment and one of the most radical departures from
-the current packages (in which "surveys" or "questionnaires" are
-all one-shot affairs that at best can be cloned but not readily
-modified in a controlled fashion).</p>
+the current packages (in which "surveys" or
+"questionnaires" are all one-shot affairs that at best
+can be cloned but not readily modified in a controlled
+fashion).</p>
 <p>During its lifetime, an Assessment may undergo revisions in the
 midst of data collection. These revisions may be minor (change of a
 label on an Item or adddition of a new Choice to an Item) or major
@@ -18,22 +19,23 @@ the Assessment package must accommodate them. Clinical trial
 protocols change; teachers alter their exams from term to term. And
 still, there is a crucial need to be able to assemble and interpret
 data collected across all these changes.</p>
-<p>Another type of "revision" occurs when a component (an Item
-Choice, Item, Section, or the entire Assessment) needs to be
+<p>Another type of "revision" occurs when a component (an
+Item Choice, Item, Section, or the entire Assessment) needs to be
 translated into another language. Even if the semantics of the
 component are identical (and they should be or you need a better
 translator ;-), the Assessment package needs to handle this
-situation correctly: an admin user needs to be able to "assign" the
-right language version to a set of subjects, and the returned user
-data need to be assembled into trans-language data sets.</p>
+situation correctly: an admin user needs to be able to
+"assign" the right language version to a set of subjects,
+and the returned user data need to be assembled into trans-language
+data sets.</p>
 <p>Note that two orthogonal constructs are in play here:</p>
 <ul>
 <li>Many-many relationships: a given Section may be reused in many
 different Assessments (eg if it contains commonly-needed Items such
 as questions about demographic details)</li><li>Multiple versions: that same Section may exist in different
 versions in those different Assessments (eg if different Assessment
-authors add or subtract an Item, change wording of an Item's label,
-etc). This includes different translations of semantically
+authors add or subtract an Item, change wording of an Item&#39;s
+label, etc). This includes different translations of semantically
 identical text.</li>
 </ul>
 <h2>Approach</h2>
@@ -48,8 +50,8 @@ as_policies), we extend the basic CR entities cr_items and
 cr_revisions. Thus we actually have, for instance, two tables for
 Items:</p>
 <ul>
-<li>as_items (a cr_item) for whatever "immutable" attributes there
-are</li><li>as_items_revs (a cr_revision) for all mutable attributes
+<li>as_items (a cr_item) for whatever "immutable"
+attributes there are</li><li>as_items_revs (a cr_revision) for all mutable attributes
 including translations</li>
 </ul>
 <p>This pattern of dual tables is used for all components that need
@@ -62,23 +64,23 @@ component is changed, there is a simultaneous implicit change to
 the entire hierarchy. Data collected after this change will be
 collected with a semantically different instrument. Whether the
 difference is large or small is immaterial; it is different, and
-Assessment must handle this. And the CR doesn't do this for us
+Assessment must handle this. And the CR doesn&#39;t do this for us
 automagically.</p>
 <p>So what the package must do is version both the individual
 entities and also all the relationships over which we join when
-we're assembling the entire Assessment (whether to send out to a
-requesting user, to stuff the database when the form comes back, or
-to pull collected data into a report).</p>
-<p>This doesn't involve merely creating triggers to insert new
+we&#39;re assembling the entire Assessment (whether to send out to
+a requesting user, to stuff the database when the form comes back,
+or to pull collected data into a report).</p>
+<p>This doesn&#39;t involve merely creating triggers to insert new
 mapping table rows that point to the new components. We also need
 to insert new revisions for all components higher up the hierarchy
-than the component we've just revised. Thus:</p>
+than the component we&#39;ve just revised. Thus:</p>
 <ul>
 <li>If we change the text displayed with a Section, then we need to
 insert a new as_section_revs and a new as_section_assessment_map
 row. But we also need to insert a new as_assessment_revs as well,
 since if the Section is different, so is the Assessment. However,
-we don't need to insert any new as_item_revs for Items in the
+we don&#39;t need to insert any new as_item_revs for Items in the
 Section, though we do need to insert new as_section_item_map
 rows.</li><li>If we change the text of an Item Choice, then we need to insert
 new stuff all the way up the hierarchy.</li>
@@ -86,11 +88,11 @@ new stuff all the way up the hierarchy.</li>
 <p>Another key issue, discussed in <a href="http://openacs.org/forums/message-view?message_id=167168">this
 thread</a>, involves the semantics of versioning. How big of a
 modification in some Assessment package entity needs to happen
-before that entity is now a "new item" instead of a "new version of
-an existing item"? If a typo in a single Item Choice is corrected,
-one can reasonably assume that is merely a new version. But if an
-Item of multiple choice options is given a new choice, is this Item
-now a new one?</p>
+before that entity is now a "new item" instead of a
+"new version of an existing item"? If a typo in a single
+Item Choice is corrected, one can reasonably assume that is merely
+a new version. But if an Item of multiple choice options is given a
+new choice, is this Item now a new one?</p>
 <p>One possible way this could be defined would derive from the
 hierarchy model in the CR: cr_items -- but not cr_revisions -- can
 contain other entities; the parent_id column is only in cr_items.
@@ -109,16 +111,16 @@ construct code based on cr_item_types and relationships.<br>
 <h2>Specific Versionable Entities</h2>
 <p>Within each subsystem of the Assessment package, the following
 entities will inherit from the CR. We list them here now, and once
-we've confirmed this selection, we'll move the information out to
-each of the subsystems' pages.</p>
+we&#39;ve confirmed this selection, we&#39;ll move the information
+out to each of the subsystems' pages.</p>
 <ul>
 <li>Core - Items:
 <ul>
 <li>Items: as_items; as_items_revs</li><li>Item Choices: as_item_choices; as_item_choices_revs</li><li>Localized Items: as_item_localized; as_item_localized_revs<br>
-Note: we're not yet entirely sure what we gain by this when Items
-themselves are versioned; we haven't yet settled on whether
-different translations of the same Items should be different
-versions or not.</li><li>Messages: as_messages; as_messages_revs</li>
+Note: we&#39;re not yet entirely sure what we gain by this when
+Items themselves are versioned; we haven&#39;t yet settled on
+whether different translations of the same Items should be
+different versions or not.</li><li>Messages: as_messages; as_messages_revs</li>
 </ul>
 </li><li>Core - Grouping:
 <ul>
