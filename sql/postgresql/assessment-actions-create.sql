@@ -266,8 +266,18 @@ if [catch {acs_mail_lite::send -to_addr $email -from_addr $email_from -subject $
 	new__package_id
 	);
 
+--
+-- The query below can be probably tuned if necessary. Note that also
+-- the old query - accessing was acs_permissions_all - weird (get
+-- permissions while ignoring privileges?). The old query was:
+--
+--      select pretty_name,community_id from dotlrn_communities
+--      where community_id in (select object_id from acs_permissions_all where grantee_id=:user_id)
+--
+--
 v_parameter_id:= nextval('as_action_params_parameter_id');
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities where community_id in (select object_id from acs_permissions_all where grantee_id=:user_id)');
+insert into as_action_params (parameter_id, action_id,type, varname, description,query) values (v_parameter_id,v_action_id,'q','community_id','Community to add the user', 'select pretty_name,community_id from dotlrn_communities from dotlrn_communities where acs_permission.permission_p(community_id, :user_id, ''read'')');
 
 	return v_action_id;
 END; $$ language 'plpgsql';
+
