@@ -6,8 +6,8 @@
   <link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body bgcolor="white" text="black">
-<!-- START HEADER --><span class="context"><span class="reg"><b>Question
-Catalogue: Summary</b>:
+<!-- START HEADER --><span class="context"><span class="reg"><strong>Question
+Catalogue: Summary</strong>:
 <p>The question catalogue is a central part of the assessment system.
 It deals with the storing of the various questions that can be used in
 a survey. You are able to add/edit/delete a question of a certain type
@@ -16,7 +16,7 @@ questions for inclusion in your assesment as well as import and export
 multiple questions using various formats. This concept is new to survey
 0.1d and changes the design of the survey module considerably. No
 mockups available.</p>
-<p> <b>Spec</b>:<br>
+<p> <strong>Spec</strong>:<br>
 All questions have some common ground.
 </p>
 <ul>
@@ -69,22 +69,22 @@ response of the user to this question will be given as a default value
 layers of data validation checks:
         <p></p>
         <ul>
-          <li> <i>Intra-item checks</i>: the user input { exactly
+          <li> <em>Intra-item checks</em>: the user input { exactly
 matches | falls within narrow "target" bounds | falls within broader
 "acceptable" bounds with explanation}
           </li>
-          <li> <i>Inter-item checks</i>: if { a user input for item a
+          <li> <em>Inter-item checks</em>: if { a user input for item a
 is A, item b is B, ... item n is N } then { user input for item z is Z
 }
           </li>
         </ul>
         <p>
 Both levels involve stringing together multiple binary comparisons (eg
-0 &lt; input &lt; 3 means checks that 0 &lt; input <i>and</i> input
+0 &lt; input &lt; 3 means checks that 0 &lt; input <em>and</em> input
 &lt; 3), so we need to express a grammar consisting of </p>
         <p></p>
         <ul>
-          <li> comparison1 <i>conjunction</i> comparison2 <i>conjunction</i>
+          <li> comparison1 <em>conjunction</em> comparison2 <em>conjunction</em>
 ... comparison n
           </li>
           <li> appropriate grouping to define precedence order (or
