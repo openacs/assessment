@@ -26,11 +26,11 @@
      <formtemplate id="show_item_form">
      <multiple name="items">
        <!-- Item begin -->
-       <if @assessment_data.show_item_name_p@ eq t><p><b>@items.name@:</b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></p></if>
+       <if @assessment_data.show_item_name_p@ eq t><p><strong>@items.name@:</strong><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></p></if>
        <div class="question-container" style="margin-bottom:25px">
          <if @items.description@ not nil><p>@items.description;noquote@</p></if>
          <if @items.content@ not nil><p>@items.content;noquote@</p></if>
-         <if @items.presentation_type@ ne fitb><b>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
+         <if @items.presentation_type@ ne fitb><strong>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></strong></if>
      
 <group column=as_item_id>
          <div class="form-widget">
