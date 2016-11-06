@@ -5,7 +5,7 @@
 <!-- Form elements -->
 <fieldset>
 <legend>#assessment.Question#</legend>
-  <formwidget id=__confirmed_p><formwidget id=__refreshing_p><formwidget id=assessment_id><formwidget id=section_id><formwidget id=after><formwidget id=type><formwidget id=__key_signature><formwidget id=__new_p><formwidget id=as_item_id><formwidget id="num_choices">
+  <formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="after"><formwidget id="type"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id"><formwidget id="num_choices">
       <br>
         
               <if @formerror.question_text@ not nil>
@@ -163,7 +163,7 @@
            <else>
             <span class="form-widget">
            </else>
-             <formwidget id=points>
+             <formwidget id="points">
              </span>
              <formerror id="points">
              <br>
@@ -224,12 +224,12 @@
 <fieldset>
 <legend>#assessment.Short_Answer#</legend>
 <p class="form-help-text">       #assessment.item_type_short_answer_help#</p>
-        <formgroup-widget id="item_type" row=4></formgroup-widget>
+        <formgroup-widget id="item_type" row="4"></formgroup-widget>
 </fieldset>
 <fieldset>
 <legend>#assessment.Long_Answer#</legend>
 <p class="form-help-text">       #assessment.item_type_long_answer_help#</p>
-        <formgroup-widget id="item_type" row=3></formgroup-widget>
+        <formgroup-widget id="item_type" row="3"></formgroup-widget>
 <br>
             <label for="reference_answer">
               #assessment.Reference_Answer#
@@ -239,7 +239,7 @@
 <fieldset>
 <legend>#assessment.File_Upload#</legend>
 <p class="form-help-text">        #assessment.item_type_file_upload_help#</p>
-<formgroup-widget id="item_type" row=1></formgroup-widget>
+<formgroup-widget id="item_type" row="1"></formgroup-widget>
 </fieldset>
 </div>
 </div>

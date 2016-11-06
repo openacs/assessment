@@ -125,7 +125,7 @@ ad_form -name  specific_date_form  -form {
     {specific_date:text(text)
 	{label "" }
 	{html {id sel2}}
-	{after_html {<input type='reset' value=' ... ' onclick="return showCalendar('sel2', 'y-m-d');"><b>YYYY-MM-DD</b>}}
+	{after_html {<input type='reset' value=' ... ' id='sel2-control'><b>YYYY-MM-DD</b>}}
 	{value $d_date}
     }
     
@@ -134,6 +134,8 @@ ad_form -name  specific_date_form  -form {
     }
 } -on_submit {
     ad_returnredirect "admin-request?state=$state&assessment=$assessment&date=$specific_date"
+} -on_request {
+    template::add_event_listener -id sel2-control -script {showCalendar('sel2', 'y-m-d');}
 }
 
 
