@@ -67,7 +67,7 @@
 	    @items.html;noquote@ 
 	  </elseif>
 	  <elseif @items.presentation_type@ eq f>
-	    <a href="@items.view@" onclick= "var w=window.open(this.href, 'newWindow', 'width=650,height=400'); return !w;"><formwidget id="response_to_item.@items.as_item_id@"></a>
+  	    <a href="@items.view@" id="p-type-f-@items.as_item_id"><formwidget id="response_to_item.@items.as_item_id@"></a>
 	  </elseif>
 	  <else>
 	    <div><formwidget id="response_to_item.@items.as_item_id@"></div>

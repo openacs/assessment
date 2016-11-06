@@ -1,8 +1,8 @@
-if {(![info exists edit_p] || $edit_p eq "")} {
+if {![info exists edit_p] || $edit_p eq ""} {
     set edit_p 0
 }
 
-if {(![info exists feedback_only_p] || $feedback_only_p eq "") } {
+if {![info exists feedback_only_p] || $feedback_only_p eq ""} {
     set feedback_only_p 0
 }
 if {![info exists assessment_id]} {
@@ -17,9 +17,15 @@ set admin_p [permission::permission_p \
 
 # if we can tell this is the last section, next button should go to feedback for the entire assessment.
 
-set section_list [as::assessment::sections -assessment_id $assessment_id -session_id $session_id -sort_order_type $assessment_data(section_navigation) -random_p $assessment_data(random_p)]
+set section_list [as::assessment::sections \
+                      -assessment_id $assessment_id \
+                      -session_id $session_id \
+                      -sort_order_type $assessment_data(section_navigation) \
+                      -random_p $assessment_data(random_p)]
 
-if {(![info exists next_url] || $next_url eq "") && [lsearch $section_list $section_id] eq [expr {[llength $section_list]-1}]} {
+if {(![info exists next_url] || $next_url eq "")
+    && [lsearch $section_list $section_id] eq [llength $section_list]-1
+} {
     set next_url [export_vars -base session {session_id next_url}]
 }
 
@@ -36,6 +42,7 @@ ad_form -name session_results_$section_id -mode display -form {
 ad_form -name Xsession_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
+
 set feedback_count 0
 set admin_package_url [ad_conn package_url]asm-admin/
 db_multirow -extend { presentation_type html result_points feedback answered_p choice_orientation next_as_item_id next_pr_type num content has_feedback_p correct_p view item_edit_general_url results_edit_url} items session_items {} {
@@ -50,9 +57,12 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 
     if {$presentation_type eq "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
-    }
-    if {$presentation_type == "f"} {
-	set view "[as::item_display_$presentation_type\::view -item_id $as_item_id -session_id $session_id -section_id $section_id]"
+    } else if {$presentation_type == "f"} {
+	set view [as::item_display_$presentation_type\::view -item_id $as_item_id -session_id $session_id -section_id $section_id]
+
+        template::add_event_listener -id "p-type-f-$as_item_id" -script {
+            var w=window.open(this.href, 'newWindow', 'width=650,height=400');
+        }
     }
 
     if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
