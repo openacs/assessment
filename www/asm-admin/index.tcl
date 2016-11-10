@@ -14,8 +14,8 @@ ad_page_contract {
 }
 set package_id [ad_conn package_id]
 permission::require_permission -object_id $package_id -privilege create
-set title "[_ assessment.Administration]"
-set context [list "[_ assessment.admin]"]
+set title [_ assessment.Administration]
+set context [list [_ assessment.admin]]
 set package_id [ad_conn package_id]
 set folder_id [as::assessment::folder_id -package_id $package_id]
 set categories_url [db_string get_category_url {}]
@@ -31,13 +31,13 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
 set actions [list]
 set advanced_options_p [parameter::get -parameter ShowAdvancedOptions -default 1]
 if { $advanced_options_p } {
-    lappend actions "[_ assessment.New_Survey]" {assessment-form?type=survey} "[_ assessment.New_Survey]" \
-	"[_ assessment.New_Review_Assessment]" {assessment-form?type=3} "[_ assessment.New_Review_Assessment]" \
-	"[_ assessment.New_Partial_Assessment]" {assessment-form?type=4} "[_ assessment.New_Partial_Assessment]" \
-	"[_ assessment.New_Quick_Assessment]" {assessment-form?type=5} "[_ assessment.New_Quick_Assessment]"
+    lappend actions [_ assessment.New_Survey] {assessment-form?type=survey} [_ assessment.New_Survey] \
+	[_ assessment.New_Review_Assessment]  {assessment-form?type=3}      [_ assessment.New_Review_Assessment] \
+	[_ assessment.New_Partial_Assessment] {assessment-form?type=4}      [_ assessment.New_Partial_Assessment] \
+	[_ assessment.New_Quick_Assessment]   {assessment-form?type=5}      [_ assessment.New_Quick_Assessment]
 }
 
-lappend actions "[_ assessment.New_Assessment]" {assessment-form?type=test} "[_ assessment.New_Assessment2]"
+lappend actions [_ assessment.New_Assessment] {assessment-form?type=test} [_ assessment.New_Assessment2]
 
 if { $sw_admin_p && $advanced_options_p } {
     lappend actions [_ assessment.set_reg_asm] "../admin/set-reg-assessment" [_ assessment.set_reg_asm]
