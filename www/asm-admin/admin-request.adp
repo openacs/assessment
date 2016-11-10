@@ -2,7 +2,7 @@
 <property name="doc(title)">#assessment.Request# #assessment.Administration#</property>
 <property name="context_bar">@context;literal@</property>
 
-<script type="text/javascript">
+<script type="text/javascript" <if @::__csp_nonce@ not nil> nonce="@::__csp_nonce;literal@"</if>>
 
 function get_interval() {
         interval=document.interval.date.value; 
