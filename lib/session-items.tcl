@@ -38,7 +38,7 @@ if {[info exists item_id_list]} {
 
 ad_form -name session_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
-}
+} -has_edit 1
 ad_form -name Xsession_results_$section_id -mode display -form {
     {section_id:text(hidden) {value $section_id}}
 }
@@ -57,7 +57,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
 
     if {$presentation_type eq "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
-    } else if {$presentation_type == "f"} {
+    } elseif {$presentation_type == "f"} {
 	set view [as::item_display_$presentation_type\::view -item_id $as_item_id -session_id $session_id -section_id $section_id]
 
         template::add_event_listener -id "p-type-f-$as_item_id" -script {
