@@ -8,7 +8,7 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     {start_time:optional ""}
     {end_time:optional ""}
-    status:optional,notnull
+    {status:optional,notnull ""}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -78,7 +78,7 @@ ad_form -name assessment_results -action results-users -form {
     }
 }
 
-set status_p ([info exists status] && $status ne "")
+set status_p [expr {$status ne ""}]
 if { $status_p } {
     if { $status eq "complete" } {
         set whereclause "cs.completed_datetime is not null"
