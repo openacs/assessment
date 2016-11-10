@@ -26,10 +26,11 @@ ad_proc -public as_item_type::get_item_types {
     @error 
 } {
     foreach item_type [db_list item_types {}] {
-        lappend item_types [list "[_ assessment.item_type_$item_type]" $item_type]
+        lappend item_types [list [_ assessment.item_type_$item_type] $item_type]
     }
-    lappend item_types [list "[_ assessment.item_type_ms]" ms]
-    lappend item_types [list "[_ assessment.Single_Response_Allowed_Dropdown_Box]" sb]
+    lappend item_types \
+        [list [_ assessment.item_type_ms] ms] \
+        [list [_ assessment.item_type_sb] sb]
     return $item_types
 }
 
