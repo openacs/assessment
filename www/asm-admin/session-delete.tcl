@@ -11,6 +11,7 @@ permission::require_permission \
     -party_id [ad_conn user_id] \
     -object_id $assessment_id \
     -privilege admin
+
 as::assessment::data -assessment_id $assessment_id
 set assessment_name $assessment_data(name)
 if {$assessment_data(anonymous_p)} {
@@ -39,7 +40,7 @@ ad_form -name session-delete -export {assessment_id subject_id return_url orig_s
     -form {
         {cancel0:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
         {ok0:text(submit) {label "[_ acs-kernel.common_Delete]"}}
-	{check_all:text(checkbox),optional {label ""} {options $check_all_options} {html {onClick acs_CheckAll('session-delete:elements:session_id',this.checked)}}}
+	{check_all:text(checkbox),optional {label ""} {options $check_all_options}}
         {session_ids_to_delete:text(checkbox),multiple,optional {label "[_ assessment.Attempts_to_delete]"} {options $session_id_options}}
         {cancel:text(submit) {label "[_ acs-kernel.common_Cancel]"}}
         {ok:text(submit) {label "[_ acs-kernel.common_Delete]"}}
@@ -48,10 +49,13 @@ ad_form -name session-delete -export {assessment_id subject_id return_url orig_s
 	if {[info exists orig_session_id]} {
 	    template::element::set_values session-delete session_ids_to_delete $orig_session_id
 	}
+        template::add_event_listener -id "session-delete:elements:check_all:" -script {
+            acs_CheckAll('session-delete:elements:session_id',this.checked);
+        }
     } -on_submit {
-        if {([info exists ok] && $ok ne "" \
-		 || [info exists ok0] && $ok0 ne "" ) \
-		&& [info exists session_ids_to_delete]} {
+        if {([info exists ok] && $ok ne "" || [info exists ok0] && $ok0 ne "" )
+            && [info exists session_ids_to_delete]
+        } {
             #delete sessions
             set message "[_ assessment.Requested_attempts_deleted]"
             foreach id $session_ids_to_delete {
