@@ -333,7 +333,7 @@ lappend exports next_asm assessment_id section_id section_order item_order passw
 # form for display an assessment with sections and items
 ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export $exports -form {
     {session_id:text(hidden) {value $session_id}}
-}
+} -has_submit 1
 
 multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_as_item_id validate_block next_pr_type question_text
 
@@ -493,7 +493,7 @@ if {$display(submit_answer_p) != "t"} {
 	    db_dml session_updated {}
 	    # save answers
 	    foreach one_response \$item_list {
-		util_unlist \$one_response response_item_id
+		lassign \$one_response response_item_id
 		db_1row process_item_type {}
 		set item_type \[string range \$item_type end-1 end\]
 		if {!\[info exists response_to_item(\$response_item_id)\]} {
