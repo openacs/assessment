@@ -73,22 +73,22 @@
 </tr>
 
 <tr class="odd">
-  <td><if @assessment_data.anonymous_p@>#assessment.anonymous_users_allow#</if>
+  <td><if @assessment_data.anonymous_p;literal@ true>#assessment.anonymous_users_allow#</if>
       <else>#assessment.reg_users_required#</else> -
 	[ <a href="@toggle_anon_url@">
-	<if @assessment_data.anonymous_p@>#assessment.make_non_anonymous#</if><else>#assessment.make_anonymous#</else></a> ]</td>
+	<if @assessment_data.anonymous_p;literal@ true>#assessment.make_non_anonymous#</if><else>#assessment.make_anonymous#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
-	<td><if @assessment_data.secure_access_p@> #assessment.secure_access_require#</if><else>#assessment.unsecure_access_allow#</else> -
+	<td><if @assessment_data.secure_access_p;literal@ true> #assessment.secure_access_require#</if><else>#assessment.unsecure_access_allow#</else> -
 	[ <a href="@toggle_secure_url@">
-	<if @assessment_data.secure_access_p@>#assessment.make_unsecure#</if><else>#assessment.make_secure#</else></a> ]</td>
+	<if @assessment_data.secure_access_p;literal@ true>#assessment.make_unsecure#</if><else>#assessment.make_secure#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
-	<td><if @assessment_data.reuse_responses_p@> #assessment.reuse_responses#</if><else>#assessment.dont_reuse_responses#</else> -
+	<td><if @assessment_data.reuse_responses_p;literal@ true> #assessment.reuse_responses#</if><else>#assessment.dont_reuse_responses#</else> -
 	[ <a href="@toggle_reuse_url@">
-	<if @assessment_data.reuse_responses_p@>#assessment.make_not_reuse_respo#</if><else>#assessment.make_reuse_responses#</else></a> ]</td>
+	<if @assessment_data.reuse_responses_p;literal@ true>#assessment.make_not_reuse_respo#</if><else>#assessment.make_reuse_responses#</else></a> ]</td>
 </tr>
 
 <tr class="odd">
@@ -112,9 +112,9 @@
 	<td>#assessment.Extreme_Actions# </td>
 	<td><a href="assessment-delete?assessment_id=@assessment_id@">#assessment.Delete_this_assess#</a> #assessment.Removes_all_questio#<br>
 	<a href="assessment-copy?assessment_id=@assessment_id@">#assessment.Copy_this_assess#</a> #assessment.Lets_you_use_this_a#
-	<if @admin_p@ eq 1>	
-	 <if @anonymous_p@ eq t>
-	   <if @read_p@ eq 1>
+	<if @admin_p;literal@ true>	
+	 <if @anonymous_p;literal@ true>
+	   <if @read_p;literal@ true>
 	      <br><a href="@reg_url@/set-reg-assessment?assessment_id=@assessment_id@">#acs-subsite.set_reg_asm#</a>
 	   </if>
          </if>

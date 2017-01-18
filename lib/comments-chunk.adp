@@ -1,4 +1,4 @@
-<if @has_permission_p@>
+<if @has_permission_p;literal@ true>
 <h2>#assessment.Reviewer_Comments#</h2>
 <if @comments:rowcount@ gt 0>
   <multiple name="comments">

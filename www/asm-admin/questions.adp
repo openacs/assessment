@@ -26,7 +26,7 @@
   <if @sections.max_time_to_complete@ not nil> (#assessment.max_time# @sections.max_time_to_complete@) </if>
   (@sections.points@ #assessment.points#)
 
-<if @admin_trigger_p@>
+<if @admin_trigger_p;literal@ true>
   <a class="button" href="@sections.checks_admin_url@">#assessment.admin_triggers#</a>
   <a class="button" href="@sections.add_edit_section_check_url@">#assessment.add_section_trigger#</a>
 </if>

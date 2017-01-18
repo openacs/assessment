@@ -1,7 +1,7 @@
 <master>
 <property name="doc(title)">@page_title;literal@</property>
 <property name="context">@context;literal@</property>
-<if @asm_p@ eq 0>
+<if @asm_p;literal@ false>
 	#acs-subsite.no_assessment#
 </if>
 <else>

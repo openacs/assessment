@@ -4,16 +4,16 @@
     </if>
 
     <multiple name="items">
-<if @admin_p@><p><a href="@items.item_edit_general_url@">Edit this question</a></p></if>
+<if @admin_p;literal@ true><p><a href="@items.item_edit_general_url@">Edit this question</a></p></if>
 <if @feedback_only_p@ eq 0 or @items.has_feedback_p@ eq 1>
-     <if @show_item_name_p@ eq t><p style="font-weight:bold;">@items.name@:</p></if>
+     <if @show_item_name_p;literal@ true><p style="font-weight:bold;">@items.name@:</p></if>
       <if @survey_p@ ne t and @items.as_item_id@ ne @items.next_as_item_id@>
 	<if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
       </if>
      </if>
-<div class="feedback-message"><if @items.correct_p@ eq 1>
+<div class="feedback-message"><if @items.correct_p;literal@ true>
 <if @show_feedback@ eq correct or @show_feedback@ eq all><if @items.feedback_right@ ne ""><div class="right">@items.feedback_right;noquote@</div></if></if></if>
-	    <if @items.correct_p@ eq 0><if @show_feedback@ eq all or @show_feedback@ eq incorrect><if @items.feedback_wrong@ ne ""><div class="wrong">@items.feedback_wrong;noquote@</div></if></if></if>
+	    <if @items.correct_p;literal@ false><if @show_feedback@ eq all or @show_feedback@ eq incorrect><if @items.feedback_wrong@ ne ""><div class="wrong">@items.feedback_wrong;noquote@</div></if></if></if>
 </div>
 	  <if @items.presentation_type@ ne fitb>
 	     @items.content;noquote@
@@ -29,14 +29,14 @@
 			    </if>
 		      <!--- fixme --->
 		      <else>
-			<if @items.answered_p@ eq t><p style="font-weight:bold;">#assessment.not_yet_reviewed#</p> </if>
+			<if @items.answered_p;literal@ true><p style="font-weight:bold;">#assessment.not_yet_reviewed#</p> </if>
 			<else><p style="font-weight:bold;">#assessment.not_answered#</p></else>
 		      </else>
 		      <if @edit_p@ eq 1 and @items.answered_p@ eq t><a href="@items.results_edit_url@">#assessment.Edit#</a></if>
 		      <include src="/packages/assessment/lib/results-messages" session_id="@session_id;literal@" section_id="@section_id;literal@" as_item_id="@items.as_item_id;literal@">
 		    </if>
 		    <else>
-		      <if @items.answered_p@ eq t><p style="font-weight:bold">#assessment.not_yet_reviewed#</p> </if>
+		      <if @items.answered_p;literal@ true><p style="font-weight:bold">#assessment.not_yet_reviewed#</p> </if>
 		      <else><p style="font-weight:bold">#assessment.not_answered#</p> </else>
 		    </else>
 		    <if @edit_p@ eq 1 and @items.answered_p@ eq t>

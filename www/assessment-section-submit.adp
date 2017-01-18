@@ -18,7 +18,7 @@
   <div class="form-error">#assessment.There_was_a_problem_with_your_answers#</div>
   </if>
 
-<if @show_title_p@ true><h2>@section.title@</h2></if>
+<if @show_title_p;literal@ true><h2>@section.title@</h2></if>
     <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
 
@@ -26,7 +26,7 @@
      <formtemplate id="show_item_form">
      <multiple name="items">
        <!-- Item begin -->
-       <if @assessment_data.show_item_name_p@ eq t><p><strong>@items.name@:</strong><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></p></if>
+       <if @assessment_data.show_item_name_p;literal@ true><p><strong>@items.name@:</strong><if @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></p></if>
        <div class="question-container" style="margin-bottom:25px">
          <if @items.description@ not nil><p>@items.description;noquote@</p></if>
          <if @items.content@ not nil><p>@items.content;noquote@</p></if>
