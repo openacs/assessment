@@ -11,14 +11,14 @@ ad_page_contract {
     {session_id:naturalnum,optional ""}
     {section_order:integer,optional ""}
     {item_order:integer,optional ""}
-    {item_id ""}
-    {return_url:optional}
+    {item_id:integer ""}
+    {return_url:localurl,optional}
     response_to_item:array,optional,multiple,allhtml
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
-    {single_section_id ""}
-    {show_title_p 1}
+    {single_section_id:integer ""}
+    {show_title_p:boolean 1}
 } -properties {
     context:onevalue
     page_title:onevalue

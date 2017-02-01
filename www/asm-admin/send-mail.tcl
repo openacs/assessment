@@ -9,9 +9,9 @@ ad_page_contract {
     @cvs-id $Id$
 
 } -query {
-    {assessment_id ""}
-    {session_id:multiple ""}
-    {return_url ""}
+    {assessment_id:integer ""}
+    {session_id:integer,multiple ""}
+    {return_url:localurl ""}
 } -properties {
     context:onevalue
     page_title:onevalue
