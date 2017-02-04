@@ -40,5 +40,5 @@
 <if @assessment_data.survey_p@ ne t and @assessment_data.show_feedback@ ne none and @assessment_score@ not nil and @assessment_score@ gt 0><strong>#assessment.Total_score#:</strong> @session_score@ / @assessment_score@ = @percent_score@%</if>
 
 <if @comments_installed_p;literal@ true>
-<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" />
+<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" >
 </if>

@@ -24,6 +24,6 @@
 <hr>
 <if @assessment_data.type@ ne survey><strong>#assessment.Total_score#:</strong> @session_score@ / @assessment_score@ = @percent_score@%</if>
 <if @comments_installed_p;literal@ true>
-<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" />
+<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" >
 </if>
 </div> <!-- result -->
