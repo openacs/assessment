@@ -30,7 +30,7 @@ ad_proc -public as::qti::register {
 	}
 
 	# Delete the temporary directory
-	file delete -force $tmpdirectory
+	file delete -force -- $tmpdirectory
     } else {
         set url_assessment [as::qti::register_xml -xml_file $tmp_dir -community_id $community_id]
     }
@@ -63,7 +63,7 @@ ad_proc -public as::qti::register_object_id {
         }
 
         # Delete the temporary directory
-        file delete -force $tmpdirectory
+        file delete -force -- $tmpdirectory
     } else {
         set assessment_id [as::qti::register_xml_object_id -xml_file $tmp_dir -community_id $community_id -prop $prop]
     }

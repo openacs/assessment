@@ -30,7 +30,7 @@ foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
 }
 
 # Delete the temporary directory
-file delete -force $tmpdirectory
+file delete -force -- $tmpdirectory
 
 ad_return_template
 
