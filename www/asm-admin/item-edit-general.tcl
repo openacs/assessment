@@ -380,7 +380,7 @@ ad_form -extend -name item_edit_general -edit_request {
 			# edit existing choices
 			set count 0
 			foreach i [lsort [array names choice]] {
-			    if {[string range  $i 0 0] ne "_" && $choice($i) ne ""} {
+			    if {[string index $i 0] ne "_" && $choice($i) ne ""} {
 				incr count
 				set new_choice_id [as::item_choice::new_revision -choice_id $i -mc_id $new_item_type_id]
 				set title $choice($i)
@@ -394,7 +394,7 @@ ad_form -extend -name item_edit_general -edit_request {
 			# add new choices
 			foreach i [lsort [array names choice]] {
 			    
-			    if {[string range  $i 0 0] eq "_" && $choice($i) ne ""} {
+			    if {[string index $i 0] eq "_" && $choice($i) ne ""} {
 				incr count
 				set new_choice_id [as::item_choice::new -mc_id $new_item_type_id \
 						       -title $choice($i) \

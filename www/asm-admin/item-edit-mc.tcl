@@ -151,7 +151,7 @@ set edit_data "{
 	# edit existing choices
 	set count 0
 	foreach i \[lsort \[array names choice\]\] {
-            if {\[string range  \$i 0 0\] != \"_\" && !\[empty_string_p \$choice(\$i)\]} {
+            if {\[string index  \$i 0\] != \"_\" && !\[empty_string_p \$choice(\$i)\]} {
           	incr count
 		set new_choice_id \[as::item_choice::new_revision -choice_id \$i -mc_id \$new_item_type_id\]
 		set title \$choice(\$i)
@@ -164,7 +164,7 @@ set edit_data "{
 	# add new choices
 	foreach i \[lsort \[array names choice\]\] {
 
-	    if {\[string range  \$i 0 0\] == \"_\" && !\[empty_string_p \$choice(\$i)\]} {
+	    if {\[string index \$i 0\] == \"_\" && !\[empty_string_p \$choice(\$i)\]} {
 		incr count
 		set new_choice_id \[as::item_choice::new -mc_id \$new_item_type_id \\
 				       -title \$choice(\$i) \\
