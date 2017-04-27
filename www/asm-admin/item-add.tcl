@@ -282,7 +282,7 @@ ad_form -extend -name item-add -new_request {
             mc {
 		# title for MC is the name of a saved answer set
 		# always set to empty on a new question and
-		# ask for the title seperately in save-answer-set page
+		# ask for the title separately in save-answer-set page
                 set new_mc_id [as::item_type_mc::add_to_assessment \
 				   -assessment_id $assessment_id \
 				   -section_id $section_id \

@@ -526,7 +526,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     if {![as::item::get_item_type_info -as_item_id $as_item_id] \
             || $item_type_info(object_type) ne "as_item_type_mc"} {
 	# always set mc title to empty on new mc question
-	# we ask for a title for the mc answer set seperately if
+	# we ask for a title for the mc answer set separately if
 	# required
         set mc_id [as::item_type_mc::new \
                        -title $title \

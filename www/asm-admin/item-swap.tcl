@@ -36,7 +36,7 @@ db_transaction {
                 -new_assessment_rev_id $new_assessment_rev_id
     db_dml swap_items {}
 } on_error {
-    ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
+    ad_return_error "Database error" "A database error occurred:<pre>$errmsg</pre>"
     ad_script_abort
 }
 

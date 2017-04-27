@@ -42,7 +42,7 @@ db_transaction {
     db_dml update_item_type_in_item {}
     db_dml swap_choices {}
 } on_error {
-    ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
+    ad_return_error "Database error" "A database error occurred:<pre>$errmsg</pre>"
     ad_script_abort
 }
 

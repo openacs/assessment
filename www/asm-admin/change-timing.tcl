@@ -1,6 +1,6 @@
 # packages/project-manager/www/assign-myself
 ad_page_contract { 
-    Assign all the recieved tasks to the recieved role, default to lead.
+    Assign all the received tasks to the received role, default to lead.
     @author Malte Sussdorff (malte.sussdorff@cognovis.de)
     @author cognovis www.cognovis.de
 } {
