@@ -211,7 +211,7 @@ if {([info exists session_id_list] && $session_id_list ne "")} {
 		    set stats "<table>\n"
 
 		    set number_answers [list]
-		    set total_reponses 0
+		    set total_responses 0
 		    db_foreach get_number_answers {
 			select count(*) as n_responses, numeric_answer
 			from as_item_data
