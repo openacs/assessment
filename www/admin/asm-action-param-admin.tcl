@@ -1,5 +1,5 @@
 ad_page_contract {
-    This page admin the parameters that receive the tcl code defined in the action
+    This page admin the parameters that receive the Tcl code defined in the action
     @author vivian@viaro.net Viaro Networks (www.viaro.net)
     @date 07-01-2005
     @cvs-id $Id:
