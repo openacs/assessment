@@ -296,7 +296,7 @@ well.</span>
 <br clear="left">
 <h4>Calculation and Database Questions</h4>
 
-I'm not clear from your description what these are. If by
+I&#39;m not clear from your description what these are. If by
 Calculation questions you mean questions that produce some
 calculated result from the user&#39;s raw response, then IMHO this
 is an important type of question to support now and not defer. This

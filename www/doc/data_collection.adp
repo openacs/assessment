@@ -194,7 +194,7 @@ capture consent information. Actually, it&#39;s not clear that even
 for education apps that this belongs here, since a consent will
 happen only once for a given assessment while the user may complete
 the assessment during multiple sessions (if save&amp;resume is
-enabled for instance). In fact, I've removed this from the
+enabled for instance). In fact, I&#39;ve removed this from the
 graffle (SK).</li>
 </ul>
 </li><li>

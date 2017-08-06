@@ -83,7 +83,7 @@ challange.</span></p>
 <p><span class="context">Furthermore the grading package offers to
 transfer scores (which are stored as integer values) into a grade
 (e.g. the american A-F scheme, or the German 1-6). This is where it
-gets the name from I'd say ;). Grading schemes are flexible and
+gets the name from I&#39;d say ;). Grading schemes are flexible and
 can be created on the fly. This allows us to support any grading
 scheme across the world&#39;s universities. In addition in the area
 of Knowledge Management, grades could be transfered into incentive

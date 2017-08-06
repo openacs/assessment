@@ -103,7 +103,7 @@ new as_item_rev for the existing as_item.</p>
 <p>A final point concerns the mapping tables. The OpenACS framework
 provides a variety of special-purpose mapping tables that are all
 proper acs_objects (member_rels, composition_rels, acs_rels, and
-the CR's own cr_rels). These provide additional control over
+the CR&#39;s own cr_rels). These provide additional control over
 permissioning but fundamentally are mapping tables. In the long run
 the benefit of using them is the ability of OpenACS 6, to auto
 construct code based on cr_item_types and relationships.<br>
