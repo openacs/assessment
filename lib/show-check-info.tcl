@@ -21,3 +21,9 @@ for { set i 0} { $i< $count } {incr i} {
 }
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -7,8 +7,8 @@
 
 <p><include src="/packages/assessment/lib/results-edit-@item_type@" item_data_id="@item_data_id;literal@">
 
-<p>#assessment.currently# <if @result_points@ not nil><b>@result_points@ / @max_points@ #assessment.points#</b></if>
-<else><b>#assessment.not_yet_reviewed#</b></else>
+<p>#assessment.currently# <if @result_points@ not nil><strong>@result_points@ / @max_points@ #assessment.points#</strong></if>
+<else><strong>#assessment.not_yet_reviewed#</strong></else>
 <p>
 
 <include src="/packages/assessment/lib/results-messages" session_id="@session_id;literal@" section_id="@section_id;literal@" as_item_id="@as_item_id;literal@">

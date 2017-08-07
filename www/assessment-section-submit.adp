@@ -11,14 +11,14 @@
   <if @section.max_time_to_complete@ not nil><br>#assessment.section_time_remaining#</if>
 
   <if @progress_bar_list@ defined>
-  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages;literal@" current="@current_page;literal@" />
+  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages;literal@" current="@current_page;literal@" >
   </if>
 
   <if @form_is_submit@ true and @form_is_valid@ false>
   <div class="form-error">#assessment.There_was_a_problem_with_your_answers#</div>
   </if>
 
-<if @show_title_p@ true><h2>@section.title@</h2></if>
+<if @show_title_p;literal@ true><h2>@section.title@</h2></if>
     <if @section.description@ not nil><p>@section.description;noquote@</p></if>    
     <if @section.instructions@ not nil><p>@section.instructions;noquote@</p></if>
 
@@ -26,11 +26,11 @@
      <formtemplate id="show_item_form">
      <multiple name="items">
        <!-- Item begin -->
-       <if @assessment_data.show_item_name_p@ eq t><p><b>@items.name@:</b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></p></if>
+       <if @assessment_data.show_item_name_p;literal@ true><p><strong>@items.name@:</strong><if @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></p></if>
        <div class="question-container" style="margin-bottom:25px">
          <if @items.description@ not nil><p>@items.description;noquote@</p></if>
          <if @items.content@ not nil><p>@items.content;noquote@</p></if>
-         <if @items.presentation_type@ ne fitb><b>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></if>
+         <if @items.presentation_type@ ne fitb><strong>@items.question_text;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></strong></if>
      
 <group column=as_item_id>
          <div class="form-widget">

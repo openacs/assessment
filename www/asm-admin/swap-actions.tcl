@@ -22,3 +22,8 @@ as::assessment::check::swap_actions -check_id $check_id -action_perform $action_
 
 
 ad_returnredirect "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

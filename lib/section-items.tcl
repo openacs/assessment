@@ -8,7 +8,7 @@ set item_add_top_url [export_vars -base item-add {as_item_id section_id assessme
 
 ad_form -name admin_section_${section_id} -form {
     {section_id:text(hidden) {value $section_id}}
-}
+} -has_submit 1
 
 db_multirow -extend { 
     checks_related 
@@ -72,3 +72,9 @@ db_multirow -extend {
         
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -39,3 +39,9 @@ ad_proc -public as::actionparam::actiondelete {
     }
     return  
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

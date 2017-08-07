@@ -366,6 +366,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="item_type_oq">Open Question</msg>
   <msg key="item_type_sa">Short Answer</msg>
   <msg key="item_type_short_answer_help"></msg>
+  <msg key="item_type_sb">Select Box</msg>
   <msg key="Items">Items</msg>
   <msg key="Keywords">Search Keywords</msg>
   <msg key="Keywords_help">Keywords which will be used to search for a section.</msg>

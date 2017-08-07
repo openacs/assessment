@@ -71,3 +71,9 @@ ad_proc -public as::export::element_qtimetadatafield {
     $fieldentry appendChild $text
   }  
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

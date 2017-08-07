@@ -9,3 +9,9 @@ ad_form -name item_show_display_sb -mode display -action item-edit-display-sb -e
     {multiple_p:text(select) {label "[_ assessment.Multiple]"} {options $boolean_options} {value $multiple_p} {help_text "[_ assessment.Multiple_help]"}}
     {order_type:text {label "[_ assessment.Order_Type]"} {value "[_ assessment.$sort_order_type]"} {help_text "[_ assessment.Order_Type_help]"}}
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

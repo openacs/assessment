@@ -35,3 +35,9 @@ if {[set has_permission_p [permission::permission_p -object_id $object_id -privi
     }
 
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

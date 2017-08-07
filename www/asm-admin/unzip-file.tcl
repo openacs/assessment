@@ -30,6 +30,12 @@ foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {
 }
 
 # Delete the temporary directory
-file delete -force $tmpdirectory
+file delete -force -- $tmpdirectory
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

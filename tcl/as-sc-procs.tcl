@@ -55,3 +55,9 @@ ad_proc -private as::sc::register_fts_impl {} {
 
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

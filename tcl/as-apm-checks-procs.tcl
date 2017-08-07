@@ -17,8 +17,8 @@ namespace eval inter_item_checks::notification_delivery {
 
 
 
-	db_1row  select_inter_item_check_name {*SQL*}
-        db_1row select_user_name {*SQL*}
+	db_1row select_inter_item_check_name {}
+        db_1row select_user_name {}
 	set text ""
 
         set package_id [ad_conn package_id]
@@ -44,3 +44,9 @@ namespace eval inter_item_checks::notification_delivery {
 	
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

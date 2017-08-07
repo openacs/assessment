@@ -43,3 +43,9 @@ db_multirow -extend { section_url section_form_edit_url section_form_add_url cat
 set max_sort_order [db_string max_sort_order {}]
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

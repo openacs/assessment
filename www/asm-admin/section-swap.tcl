@@ -28,8 +28,14 @@ db_transaction {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     db_dml swap_sections {}
 } on_error {
-    ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
+    ad_return_error "Database error" "A database error occurred:<pre>$errmsg</pre>"
     ad_script_abort
 }
 
 ad_returnredirect [export_vars -base questions {assessment_id}]
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

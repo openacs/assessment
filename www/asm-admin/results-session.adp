@@ -4,12 +4,12 @@
 
 <div class="result">
 <h1>@assessment_data.title@</h1>
-<p><span><b>#acs-subsite.Name#:</b> <if @show_username_p@><a href="@session_user_url@">@first_names@ @last_name@</a></if><else>#assessment.anonymous_name#</else></span>
-   <span><b>#assessment.Attempt#:</b> @session_attempt@<if @assessment_data.number_tries@ not nil> / @assessment_data.number_tries@</if></span> (<a href="@delete_url@">#assessment.Delete_Attempts#</a>)
-   <if @assessment_data.type@ ne survey><span><b>#assessment.Percent_Score#:</b> @percent_score@%</span></if>
- <span><b>#assessment.Started#:</b> @session_start@</span>
- <span><b>#assessment.Finished#:</b> @session_finish@</span>
- <span><b>#assessment.Time_spent#:</b> @session_time@</span>
+<p><span><strong>#acs-subsite.Name#:</strong> <if @show_username_p;literal@ true><a href="@session_user_url@">@first_names@ @last_name@</a></if><else>#assessment.anonymous_name#</else></span>
+   <span><strong>#assessment.Attempt#:</strong> @session_attempt@<if @assessment_data.number_tries@ not nil> / @assessment_data.number_tries@</if></span> (<a href="@delete_url@">#assessment.Delete_Attempts#</a>)
+   <if @assessment_data.type@ ne survey><span><strong>#assessment.Percent_Score#:</strong> @percent_score@%</span></if>
+ <span><strong>#assessment.Started#:</strong> @session_start@</span>
+ <span><strong>#assessment.Finished#:</strong> @session_finish@</span>
+ <span><strong>#assessment.Time_spent#:</strong> @session_time@</span>
 </p>
 
 <multiple name="sections">
@@ -22,8 +22,8 @@
 </div> <!-- section -->
 </multiple>
 <hr>
-<if @assessment_data.type@ ne survey><b>#assessment.Total_score#:</b> @session_score@ / @assessment_score@ = @percent_score@%</if>
-<if @comments_installed_p@>
-<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" />
+<if @assessment_data.type@ ne survey><strong>#assessment.Total_score#:</strong> @session_score@ / @assessment_score@ = @percent_score@%</if>
+<if @comments_installed_p;literal@ true>
+<include src="/packages/assessment/lib/comments-chunk" object_id="@session_id;literal@" >
 </if>
 </div> <!-- result -->

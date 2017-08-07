@@ -22,11 +22,6 @@
 	select as_inter_item_check__delete (:check_id)
       </querytext>
 </fullquery>
-<fullquery name="as::assessment::check::intervals.intervals">
-      <querytext>
-      select to_date(now(),'YYYY-MM-DD') as today, to_date(to_date(now(),'YYYY-MM-DD')-1,'YYYY-MM-DD') as yesterday,  to_date (to_date(now(),'YYYY-MM-DD')-2,'YYYY-MM-DD') as two_days,to_date (to_date(now(),'YYYY-MM-DD')-7,'YYYY-MM-DD') as last_week, to_date (to_date(now(),'YYYY-MM-DD')-30,'YYYY-MM-DD') as last_month 
-      </querytext>
-</fullquery>
 
 <fullquery name="as::assessment::check::manual_action_exec.update_actions_log">
       <querytext>

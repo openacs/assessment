@@ -21,3 +21,8 @@ permission::require_permission -object_id $package_id -party_id $user_id -privil
 set node_id [ad_conn node_id]
 set return_url "[site_node::get_url -node_id $node_id]asm-admin/"
 set context [list [list index [_ assessment.admin]] $page_title]
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

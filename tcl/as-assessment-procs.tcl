@@ -170,7 +170,7 @@ ad_proc -public as::assessment::data {
 
     Get all assessment info
 
-    creates a tcl array variable named "assessment_data" in the caller's environment,
+    creates a Tcl array variable named "assessment_data" in the caller's environment,
     which contains key/value pairs for all properties of the requested assessment.
 } {
     upvar assessment_data assessment_data
@@ -634,3 +634,8 @@ ad_proc -private as::assessment::delete {
 
     content::item::delete -item_id $assessment_id
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

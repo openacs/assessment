@@ -288,3 +288,9 @@ ad_proc -callback as::session::update {
     Notify listeners that something interesting happend with this assessment session.
 } -
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

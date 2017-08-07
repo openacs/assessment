@@ -125,3 +125,9 @@ ad_proc -public as::item_choice::copy {
 
     return $new_choice_id
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

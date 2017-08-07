@@ -12,11 +12,11 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     session_id:naturalnum,notnull
     section_id:naturalnum,notnull
-    {return_p 0}
+    {return_p:boolean 0}
     section_order:optional
     item_order:optional
     password:optional
-    return_url:optional
+    return_url:localurl,optional
     next_asm:optional
     {item_id_list:multiple,optional {}}
     {next_url ""}
@@ -71,3 +71,9 @@ if {[info exists current_page]} {
 }
 
 template::head::add_css -href "/resources/assessment/assessment.css"
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

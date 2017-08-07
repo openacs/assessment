@@ -220,7 +220,7 @@
            </formgroup>
 
     <formwidget id="choice.@choice_elements.id@">
-<if @choice_elements.new_p@ false>
+<if @choice_elements.new_p;literal@ false>
        <if @choice_elements.rownum@ gt 1>
         <formwidget id="move_up.@choice_elements.id@">
         </if><else></else>

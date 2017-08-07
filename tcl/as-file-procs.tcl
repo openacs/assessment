@@ -30,3 +30,9 @@ ad_proc -public as::file::new {
 
     return $content_rev_id
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

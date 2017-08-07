@@ -1,0 +1,145 @@
+
+<property name="context">{/doc/assessment {Assessment}} {Versioning}</property>
+<property name="doc(title)">Versioning</property>
+<master>
+<h2>Overview</h2>
+<p>This topic requires special mention because it is centrally
+important to Assessment and one of the most radical departures from
+the current packages (in which "surveys" or
+"questionnaires" are all one-shot affairs that at best
+can be cloned but not readily modified in a controlled
+fashion).</p>
+<p>During its lifetime, an Assessment may undergo revisions in the
+midst of data collection. These revisions may be minor (change of a
+label on an Item or adddition of a new Choice to an Item) or major
+(addition or deletion of an entire Section). Obviously in most
+applications, such changes are undesirable and people want to avoid
+them. But the reality is that such changes are inevitable and so
+the Assessment package must accommodate them. Clinical trial
+protocols change; teachers alter their exams from term to term. And
+still, there is a crucial need to be able to assemble and interpret
+data collected across all these changes.</p>
+<p>Another type of "revision" occurs when a component (an
+Item Choice, Item, Section, or the entire Assessment) needs to be
+translated into another language. Even if the semantics of the
+component are identical (and they should be or you need a better
+translator ;-), the Assessment package needs to handle this
+situation correctly: an admin user needs to be able to
+"assign" the right language version to a set of subjects,
+and the returned user data need to be assembled into trans-language
+data sets.</p>
+<p>Note that two orthogonal constructs are in play here:</p>
+<ul>
+<li>Many-many relationships: a given Section may be reused in many
+different Assessments (eg if it contains commonly-needed Items such
+as questions about demographic details)</li><li>Multiple versions: that same Section may exist in different
+versions in those different Assessments (eg if different Assessment
+authors add or subtract an Item, change wording of an Item&#39;s
+label, etc). This includes different translations of semantically
+identical text.</li>
+</ul>
+<h2>Approach</h2>
+<p>The Content Repository (CR) in OpenACS is designed to handle
+these complex design issues, though it is still undergoing
+refinements and how best to use it is also still being discovered.
+So the ideas here are still somewhat exploratory.</p>
+<p>For each of the package components that need to be versioned
+(certainly the core components as_assessments, as_sections,
+as_items, and as_item_choices; but also other components like
+as_policies), we extend the basic CR entities cr_items and
+cr_revisions. Thus we actually have, for instance, two tables for
+Items:</p>
+<ul>
+<li>as_items (a cr_item) for whatever "immutable"
+attributes there are</li><li>as_items_revs (a cr_revision) for all mutable attributes
+including translations</li>
+</ul>
+<p>This pattern of dual tables is used for all components that need
+to behave this way. When an admin user creates a new Item, a new
+row is inserted into the as_items and the as_items_revs table. Then
+when the same admin user (or another admin user) changes something
+about the Item, a new as_items_revs row is inserted.</p>
+<p>Now here is where things become tricky, though.. Any time a
+component is changed, there is a simultaneous implicit change to
+the entire hierarchy. Data collected after this change will be
+collected with a semantically different instrument. Whether the
+difference is large or small is immaterial; it is different, and
+Assessment must handle this. And the CR doesn&#39;t do this for us
+automagically.</p>
+<p>So what the package must do is version both the individual
+entities and also all the relationships over which we join when
+we&#39;re assembling the entire Assessment (whether to send out to
+a requesting user, to stuff the database when the form comes back,
+or to pull collected data into a report).</p>
+<p>This doesn&#39;t involve merely creating triggers to insert new
+mapping table rows that point to the new components. We also need
+to insert new revisions for all components higher up the hierarchy
+than the component we&#39;ve just revised. Thus:</p>
+<ul>
+<li>If we change the text displayed with a Section, then we need to
+insert a new as_section_revs and a new as_section_assessment_map
+row. But we also need to insert a new as_assessment_revs as well,
+since if the Section is different, so is the Assessment. However,
+we don&#39;t need to insert any new as_item_revs for Items in the
+Section, though we do need to insert new as_section_item_map
+rows.</li><li>If we change the text of an Item Choice, then we need to insert
+new stuff all the way up the hierarchy.</li>
+</ul>
+<p>Another key issue, discussed in <a href="http://openacs.org/forums/message-view?message_id=167168">this
+thread</a>, involves the semantics of versioning. How big of a
+modification in some Assessment package entity needs to happen
+before that entity is now a "new item" instead of a
+"new version of an existing item"? If a typo in a single
+Item Choice is corrected, one can reasonably assume that is merely
+a new version. But if an Item of multiple choice options is given a
+new choice, is this Item now a new one?</p>
+<p>One possible way this could be defined would derive from the
+hierarchy model in the CR: cr_items -- but not cr_revisions -- can
+contain other entities; the parent_id column is only in cr_items.
+Thus if we want to add a fifth as_item_choice to an as_item (while
+preserving the state of the as_item that only had four
+as_item_choices), we need to insert a new as_item and not merely a
+new as_item_rev for the existing as_item.</p>
+<p>A final point concerns the mapping tables. The OpenACS framework
+provides a variety of special-purpose mapping tables that are all
+proper acs_objects (member_rels, composition_rels, acs_rels, and
+the CR&#39;s own cr_rels). These provide additional control over
+permissioning but fundamentally are mapping tables. In the long run
+the benefit of using them is the ability of OpenACS 6, to auto
+construct code based on cr_item_types and relationships.<br>
+</p>
+<h2>Specific Versionable Entities</h2>
+<p>Within each subsystem of the Assessment package, the following
+entities will inherit from the CR. We list them here now, and once
+we&#39;ve confirmed this selection, we&#39;ll move the information
+out to each of the subsystems' pages.</p>
+<ul>
+<li>Core - Items:
+<ul>
+<li>Items: as_items; as_items_revs</li><li>Item Choices: as_item_choices; as_item_choices_revs</li><li>Localized Items: as_item_localized; as_item_localized_revs<br>
+Note: we&#39;re not yet entirely sure what we gain by this when
+Items themselves are versioned; we haven&#39;t yet settled on
+whether different translations of the same Items should be
+different versions or not.</li><li>Messages: as_messages; as_messages_revs</li>
+</ul>
+</li><li>Core - Grouping:
+<ul>
+<li>Assessments: as_assessments; as_assessments_revs</li><li>Sections: as_sections; as_sections_revs</li>
+</ul>
+</li><li>Scheduling:
+<ul>
+<li>Assessment Events: as_assessment_events;
+as_assessment_events_revs</li><li>Assessment Policies: as_assessment_policies;
+as_assessment_policies_revs</li>
+</ul>
+</li><li>Core - Collected Data:
+<ul>
+<li>Item Data: as_item_data; as_item_data_revs</li><li>Scale Data: as_scale_data; as_scale_data_revs</li>
+</ul>
+</li><li>Session Data:
+<ul>
+<li>Sessions: as_sessions; as_sessions_revs</li><li>Assessment Data: as_assessment_data;
+as_assessment_data_revs</li><li>Section Data: as_section_data; as_section_data_revs</li>
+</ul>
+</li>
+</ul>

@@ -4,5 +4,5 @@
   <tr><td>@answer_text;noquote@</td><td>&nbsp;</td>
       <td>@reference_answer@</td></tr>
 </table>
-<if @keywords@ not nil><p><b>#assessment.oq_Keywords#:</b>
+<if @keywords@ not nil><p><strong>#assessment.oq_Keywords#:</strong>
 <pre>@keywords@</pre></if>

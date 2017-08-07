@@ -9,3 +9,9 @@ ad_form -name item_show_sa -mode display -action item-edit-sa -export { assessme
     {increasing_p:text(select) {label "[_ assessment.Increasing]"} {options $boolean_options} {value $increasing_p} {help_text "[_ assessment.Increasing_help]"}}
     {negative_p:text(select) {label "[_ assessment.Allow_Negative]"} {options $boolean_options} {value $allow_negative_p} {help_text "[_ assessment.Allow_Negative_help]"}}
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

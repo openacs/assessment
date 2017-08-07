@@ -92,3 +92,9 @@ db_multirow -extend { section_url } sections assessment_sections {} {
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

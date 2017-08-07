@@ -43,10 +43,18 @@ ad_proc -public as::assessment::check::intervals {
 } {
     Return the time intervals
 } {
-    db_1row intervals {}
+    set today [clock format [clock seconds] -format %Y-%m-%d]
+    set yesterday [clock format [clock scan yesterday] -format %Y-%m-%d]
+    set two_days [clock format [clock scan "2 days ago"] -format %Y-%m-%d]
+    set last_week [clock format [clock scan "1 week ago"] -format %Y-%m-%d]
+    set last_month [clock format [clock scan "1 month ago"] -format %Y-%m-%d]
     
-    set intervals [list [list "[_ assessment.all]" "all"] [list "[_ assessment.today]" $today]  [list "[_ assessment.yesterday]" $yesterday] [list "[_ assessment.two_days]" $two_days] [list "[_ assessment.last_week]" $last_week] [list "[_ assessment.last_month]" $last_month]]
-    
+    return [list [list [_ assessment.all] "all"] \
+                [list [_ assessment.today]      $today] \
+                [list [_ assessment.yesterday]  $yesterday] \
+                [list [_ assessment.two_days]   $two_days] \
+                [list [_ assessment.last_week]  $last_week] \
+                [list [_ assessment.last_month] $last_month]]
 }
 
 ad_proc -public as::assessment::check::add_check_return_url {
@@ -221,7 +229,7 @@ ad_proc -public as::assessment::check::action_exec {
 } {
     set error_txt ""
 
-    db_foreach get_check_params { } {
+    db_foreach get_check_params {} {
 	set parameter_name [db_1row select_name {}]
 	
 	set $varname ""
@@ -290,7 +298,7 @@ ad_proc -public as::assessment::check::manual_action_exec {
     
 } {
     db_0or1row subject_id {select subject_id from as_sessions where session_id=:session_id}
-    db_foreach get_check_params { } {
+    db_foreach get_check_params {} {
 	set parameter_name [db_1row select_name {}]
 	
 	set $varname ""
@@ -360,7 +368,7 @@ ad_proc -public as::assessment::check::eval_i_checks {
     
 } {
     
-    set section_checks [db_list_of_lists section_checks { }]
+    set section_checks [db_list_of_lists section_checks {}]
 
     foreach check $section_checks  {
 	set check_sql [lindex $check 1]
@@ -392,7 +400,7 @@ ad_proc -public as::assessment::check::branch_checks {
 	set perform [db_string check_sql "[lindex $check 0]" -default 0]
 	
 	if {$perform == 1} {
-	    set order [db_string get_order { }]
+	    set order [db_string get_order {}]
 	}
 	
     }
@@ -460,7 +468,7 @@ ad_proc -public as::assessment::check::eval_or_checks {
     
 } {
     
-    set section_checks [db_list_of_lists section_checks { }]
+    set section_checks [db_list_of_lists section_checks {}]
     
     foreach check $section_checks  {
         set check_sql [lindex $check 1]
@@ -661,3 +669,9 @@ ad_proc -public as::assessment::check::add_manual_check {
 }
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -11,7 +11,7 @@ ad_page_contract {
 } {
     assessment_id:naturalnum,optional
     assessment_id_list:optional
-    return_url:notnull
+    return_url:localurl,notnull
     as_item_id:naturalnum,notnull,optional
     section_id:naturalnum,optional
     catalog_section_id:naturalnum,optional
@@ -211,7 +211,7 @@ if {([info exists session_id_list] && $session_id_list ne "")} {
 		    set stats "<table>\n"
 
 		    set number_answers [list]
-		    set total_reponses 0
+		    set total_responses 0
 		    db_foreach get_number_answers {
 			select count(*) as n_responses, numeric_answer
 			from as_item_data
@@ -253,3 +253,8 @@ if {([info exists session_id_list] && $session_id_list ne "")} {
 	template::multirow append items $item_id $revision_id $title $data_type $display_type $stats $section_id $section_title
     }
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

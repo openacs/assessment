@@ -34,3 +34,9 @@ set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_comp
 set section_url [export_vars -base one-section {assessment_id section_id}]
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

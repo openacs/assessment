@@ -11,7 +11,7 @@ ad_page_contract {
 } {
     item_id:naturalnum,notnull
     section_id:naturalnum,notnull
-    return_url:notnull
+    return_url:localurl,notnull
 } -properties {
 } -validate {
 } -errors {
@@ -73,3 +73,8 @@ template::list::create \
         link_url_col file_url
 	}
     }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

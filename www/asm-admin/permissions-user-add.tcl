@@ -37,3 +37,9 @@ if {[template::form is_valid permissions]} {
     }
     ad_returnredirect "permissions?object_id=$object_id"    
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

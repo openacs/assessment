@@ -234,3 +234,9 @@ ad_proc as::item_display_rb::set_item_display_type {
 	}
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

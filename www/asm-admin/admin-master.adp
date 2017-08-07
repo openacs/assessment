@@ -19,12 +19,12 @@
 %>
 
 <master>
+  <property name="&doc">doc</property>
   <property name="link_all">1</property>
   <if @focus@ not nil><property name="focus">@focus;literal@</property></if>
   <if @context@ not nil><property name="context">@context;literal@</property></if>
     <else><if @context_bar@ not nil><property name="context">@context_bar;literal@</property></if></else>
-  <if @doc_type@ not nil><property
-  name="doc_type">@doc_type;noquote@</property></if>
+  <if @doc_type@ not nil><property name="doc_type">@doc_type;noquote@</property></if>
   <if @title@ not nil><property name="doc(title)">@title;literal@</property></if>
 
 <slave>

@@ -60,3 +60,9 @@ ad_form -name item_edit_mc_existing -action item-edit-mc-existing -export { asse
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -7,7 +7,7 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,notnull
     as_item_id:naturalnum,notnull
-    return_url:optional
+    return_url:localurl,optional
 } -properties {
     context_bar:onevalue
     page_title:onevalue
@@ -64,3 +64,9 @@ ad_form -name item_delete_confirm -action item-delete -export { assessment_id se
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

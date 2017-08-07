@@ -18,13 +18,13 @@
 </table>
 
 <table border="0">
-  <tr bgcolor="#d0d0d0"><td><b>#assessment.section#: @section.title@ </b></td></tr>
-  <tr><td><i> @section.description@ </i><br></td></tr>
+  <tr bgcolor="#d0d0d0"><td><strong>#assessment.section#: @section.title@ </strong></td></tr>
+  <tr><td><em> @section.description@ </em><br></td></tr>
   <tr><td> @section.instructions;noquote@ <br></td></tr>
 </table>
 
 <br>&nbsp;&nbsp;
-<b>#assessment.Items#</b><br><br>
+<strong>#assessment.Items#</strong><br><br>
 <table border="0">
 
 
@@ -32,11 +32,11 @@
     <formtemplate id="show_item_form_@items.as_item_id@">
       <input type="hidden" name="as_item_id" value="@items.as_item_id@">
       <tr>
-      <tr bgcolor="#e4eaef"><if @assessment_data.show_item_name_p@ eq t><td colspan="2" nowrap><b>@items.name@:<if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></b></td></if>
-        <td><b><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></if></b></td></tr>
-      <if @items.content@ not nil><tr><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>@items.content;noquote@</td></tr></if>
+      <tr bgcolor="#e4eaef"><if @assessment_data.show_item_name_p;literal@ true><td colspan="2" nowrap><strong>@items.name@:<if @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></strong></td></if>
+        <td><strong><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></if></strong></td></tr>
+      <if @items.content@ not nil><tr><if @assessment_data.show_item_name_p;literal@ true><td colspan="4"></if><else><td colspan="3"></else>@items.content;noquote@</td></tr></if>
 
-      <tr><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>
+      <tr><if @assessment_data.show_item_name_p;literal@ true><td colspan="4"></if><else><td colspan="3"></else>
         <table>
           <tr class="form-widget">
           <if @items.description@ not nil><td valign="top">@items.description;noquote@</td></if><td>
@@ -66,7 +66,7 @@
           </if>
           <div class="form-error"><formerror id="response_to_item.@items.as_item_id@"></formerror></div>
           </td></tr><tr class="form-widget"><td>
-            <if @items.submitted_p@ eq f><br><input type="submit" value="#assessment.Submit#"></if>
+            <if @items.submitted_p;literal@ false><br><input type="submit" value="#assessment.Submit#"></if>
           </td></tr></table>
         <hr>
       </td></tr>

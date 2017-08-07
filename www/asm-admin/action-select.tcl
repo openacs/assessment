@@ -79,7 +79,7 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     }
     {user_message:text(textarea),optional
 	{label "[_ assessment.message]"}
-	{html {cols 50} {rows 15}}
+	{html {cols 50 rows 15}}
 	{help_text "[_ assessment.message_to_display_to]"}
 	{$user_message}
     }
@@ -125,3 +125,8 @@ ad_form -name get_action -export {edit_p action_perform_value action_value retur
     }
     
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

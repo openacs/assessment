@@ -37,10 +37,8 @@
             parties.party_id <> 0
             and parties.party_id = users.user_id        
             and parties.party_id = acs_objects.object_id
-            and exists (select 1 from acs_object_party_privilege_map m
-                        where m.object_id = $assessment_id
-                        and m.party_id = parties.party_id
-                        and m.privilege = 'read')
+	    and acs_permission__permission_p(:assessment_id, parties.party_id, 'read')
+
 	</querytext>
     </partialquery>
 
@@ -82,7 +80,7 @@
 		from as_sessions s, cr_revisions r
 		where s.assessment_id = r.revision_id
 		and s.completed_datetime is not null
-		and r.item_id = $assessment_id)
+		and r.item_id = :assessment_id)
 	</querytext>
     </partialquery>
 
@@ -127,11 +125,9 @@
 		from as_sessions s, cr_revisions r
 		where s.assessment_id = r.revision_id
 		and s.completed_datetime is not null
-		and r.item_id = $assessment_id)
-                and exists (select 1 from acs_object_party_privilege_map m
-                        where m.object_id = $assessment_id
-                        and m.party_id = parties.party_id
-                        and m.privilege = 'read')
+		and r.item_id = :assessment_id)
+		and acs_permission__permission_p(:assessment_id, parties.party_id, 'read')
+
 	</querytext>
     </partialquery>
 
@@ -148,7 +144,7 @@
 		from as_sessions s, cr_revisions r
 		where s.assessment_id = r.revision_id
 		and s.completed_datetime is not null
-		and r.item_id = $assessment_id)
+		and r.item_id = :assessment_id)
 	</querytext>
     </partialquery>
 

@@ -2,25 +2,25 @@
 <property name="doc(title)">@title@ #assessment.Administration#</property>
 <property name="context">@context;literal@</property>
 <br>
-<b>On Request (section check)</b>
+<strong>On Request (section check)</strong>
 <br>
 <listtemplate name="or_checks"></listtemplate>
 <br>
-<b>#assessment.after_this_asm# (section check)</b>
+<strong>#assessment.after_this_asm# (section check)</strong>
 <br>
 <listtemplate name="sa_checks"></listtemplate>
 <br>
-<b>#assessment.after_this_asm#</b>
+<strong>#assessment.after_this_asm#</strong>
 <br>
 <listtemplate name="aa_checks"></listtemplate>
 <br>
-<b>#assessment.immediately#</b>
+<strong>#assessment.immediately#</strong>
 <listtemplate name="i_checks"></listtemplate>
 <br>
-<b>#assessment.manually#</b>
+<strong>#assessment.manually#</strong>
 <listtemplate name="m_checks"></listtemplate>
 <br>
 
-<b>#assessment.branches#</b>
+<strong>#assessment.branches#</strong>
 <listtemplate name="branches"></listtemplate>
 <br>

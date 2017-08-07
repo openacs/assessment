@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <queryset>
+<rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
 <fullquery name="assessment_results">
 	<querytext>
@@ -19,13 +20,10 @@
 	  where a.assessment_id = cr.revision_id
 	  and cr.revision_id = ci.latest_revision
 	  and ci.parent_id = :folder_id
-          and u.user_id <> 0 
-	  and exists (
-                      select 1 from acs_object_party_privilege_map
-                      where object_id = :assessment_id
-                      and party_id = u.user_id
-                      and privilege = 'read')
-      and acs_group__member_p(u.user_id, :group_id, 't')) a
+          and u.user_id <> 0
+	  and acs_permission__permission_p(:assessment_id, u.user_id, 'read')
+	  and acs_group__member_p(u.user_id, :group_id, 't')
+	  ) a
     left join (select as_sessions.*, cr.item_id
 	       from as_sessions, cr_revisions cr
 	       where session_id in (select max(session_id)

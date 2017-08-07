@@ -9,9 +9,9 @@ ad_page_contract {
     @cvs-id $Id$
 
 } -query {
-    {assessment_id ""}
-    {session_id:multiple ""}
-    {return_url ""}
+    {assessment_id:integer ""}
+    {session_id:integer,multiple ""}
+    {return_url:localurl ""}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -121,3 +121,8 @@ ad_form -extend -name send-mail -on_request {
 
     
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

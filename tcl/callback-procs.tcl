@@ -158,3 +158,9 @@ ad_proc -callback learning_materials_portlet::portlet_multirow_admin_data -impl 
 	template::multirow append $multirow $assessment_id $title [export_vars -base "assessment/asm-admin/one-a" {assessment_id}] [expr {$publish_status ne "" ? $publish_status : "\#assessment.Not_Live\#"}] [export_vars -base "assessment/asm-admin/toggle-publish" {assessment_id return_url}] $completed_number [export_vars -base assessment/asm-admin/results-users {assessment_id}] [export_vars -base "assessment/asm-admin/one-a" {assessment_id}]
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

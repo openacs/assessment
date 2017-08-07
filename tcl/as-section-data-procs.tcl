@@ -46,3 +46,9 @@ ad_proc -public as::section_data::new {
 
     return $as_section_data_id
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

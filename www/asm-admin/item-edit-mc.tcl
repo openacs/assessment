@@ -151,7 +151,7 @@ set edit_data "{
 	# edit existing choices
 	set count 0
 	foreach i \[lsort \[array names choice\]\] {
-            if {\[string range  \$i 0 0\] != \"_\" && !\[empty_string_p \$choice(\$i)\]} {
+            if {\[string index  \$i 0\] != \"_\" && !\[empty_string_p \$choice(\$i)\]} {
           	incr count
 		set new_choice_id \[as::item_choice::new_revision -choice_id \$i -mc_id \$new_item_type_id\]
 		set title \$choice(\$i)
@@ -164,7 +164,7 @@ set edit_data "{
 	# add new choices
 	foreach i \[lsort \[array names choice\]\] {
 
-	    if {\[string range  \$i 0 0\] == \"_\" && !\[empty_string_p \$choice(\$i)\]} {
+	    if {\[string index \$i 0\] == \"_\" && !\[empty_string_p \$choice(\$i)\]} {
 		incr count
 		set new_choice_id \[as::item_choice::new -mc_id \$new_item_type_id \\
 				       -title \$choice(\$i) \\
@@ -193,3 +193,9 @@ set after_submit "{
 eval ad_form -extend -name item_edit_mc -validate "{$validate_list}" -edit_request $edit_request -on_submit $on_submit -edit_data $edit_data -after_submit $after_submit
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

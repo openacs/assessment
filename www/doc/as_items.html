@@ -77,7 +77,7 @@ including the as_item Display subsystem described <a
 <h2>Core Function: as_items<br>
 </h2>
 <ul>
-  <li><b>as_items</b> are the "questions" that
+  <li><strong>as_items</strong> are the "questions" that
 constitute the
 atomic focus of the Assessment package. Each as_item is of a certain
 type,
@@ -123,7 +123,7 @@ for the as_item (NB: when any change is made to an as_item_choice
 related
 to an as_item, this will have to be updated!) </li>
     </ul>
-    <p> <i>Permissions / Scope</i>: as_items need a clearly defined
+    <p> <em>Permissions / Scope</em>: as_items need a clearly defined
 scope, in
 which they can be reused. Instead of defining a special scope variable
 we will use the acs permission system to grant access rights to an
@@ -144,8 +144,8 @@ as_item</li>
 </span></span>
 <h2><span class="context"><span class="reg">As_item Types</span></span></h2>
 <h2><span class="context"><span class="reg"></span></span></h2>
-<span class="context"><span class="reg"><b><font color="green">as_item
-Types (as_item_type_*)</font></b>
+<span class="context"><span class="reg"><strong><font color="green">as_item
+Types (as_item_type_*)</font></strong>
 define types of as_items like "Open Question", "Calculation" and
 others.
 The as_item type will also define in what format the answer should be
@@ -172,7 +172,7 @@ section.</a><span class="context"><span class="reg">
 </span></span>
 <ul>
   <li><span class="context"><span class="reg"><span class="context"><span
- class="reg"><b><font color="green">Open Question (as_item_type_oq):</font></b></span></span></span></span></li>
+ class="reg"><strong><font color="green">Open Question (as_item_type_oq):</font></strong></span></span></span></span></li>
   <ul>
     <li>as_item_type_id<br>
     </li>
@@ -186,7 +186,7 @@ comparison with the user response.</li>
   </ul>
   <p> </p>
   <li><span class="context"><span class="reg"><span class="context"><span
- class="reg"><b><font color="green">Short Answer (as_item_type_sa):</font></b></span></span></span></span></li>
+ class="reg"><strong><font color="green">Short Answer (as_item_type_sa):</font></strong></span></span></span></span></li>
   <ul>
     <li>as_item_type_id<br>
     </li>
@@ -202,8 +202,8 @@ negative percentage as well (as the total result).</li>
 </ul>
 <ul>
   <li><span class="context"><span class="reg"><span class="context"><span
- class="reg"><b><font color="green">Short Answer Answers
-(as_item_sa_answers):</font></b></span></span></span></span></li>
+ class="reg"><strong><font color="green">Short Answer Answers
+(as_item_sa_answers):</font></strong></span></span></span></span></li>
   <ul>
     <li>answer_id<br>
     </li>
@@ -228,9 +228,9 @@ relationship.<br>
 </ul>
 <ul>
   <li><span class="context"><span class="reg"><span class="context"><span
- class="reg"><b><font color="green">Multiple Choice Item
+ class="reg"><strong><font color="green">Multiple Choice Item
 (as_item_type_mc)<br>
-    </font></b></span></span></span></span></li>
+    </font></strong></span></span></span></span></li>
   <ul>
     <li>cr::name - Identifier<br>
     </li>
@@ -253,7 +253,7 @@ are available. </li>
 </ul>
 <span class="context"><span class="reg">
 <ul>
-  <li><b><font color="green">Multiple Choices (as_item_choices)</font></b>
+  <li><strong><font color="green">Multiple Choices (as_item_choices)</font></strong>
 contain additional information for all multiple choice as_item_types.
 Obvious examples are radiobutton and checkbox as_items, but
 pop-up_date,
@@ -314,9 +314,9 @@ Inter-as_item
 Checks.</p>
   </li>
   <li><span class="context"><span class="reg"><span class="context"><span
- class="reg"><b><font color="green">Image Map Multiple Choice Item
+ class="reg"><strong><font color="green">Image Map Multiple Choice Item
 (as_item_type_im):<br>
-    </font></b></span></span></span></span></li>
+    </font></strong></span></span></span></span></li>
   <ul>
     <li>cr::name - Identifier</li>
     <li>cr::title - Title of the image map.<br>
@@ -336,9 +336,9 @@ cr_revision_id of the image, references cr_revisions<br>
 </span></span>
 <ul>
   <li><span class="context"><span class="reg"><span class="context"><span
- class="reg"><b><font color="green">Image Map Choices
+ class="reg"><strong><font color="green">Image Map Choices
 (as_item_image_choices):<br>
-    </font></b></span></span></span></span></li>
+    </font></strong></span></span></span></span></li>
   <ul>
     <li>choice_id </li>
     <li> cr::parent_id (belonging to an as_item_type_im
@@ -648,7 +648,7 @@ cr_as_item_types, that's why I was thinking about reuse...
   <li> sort_order (in which order do the messages appear) </li>
 </ul>
 <p>
-<b>Messages (as_messages)</b> abstracts out help messages (and other
+<strong>Messages (as_messages)</strong> abstracts out help messages (and other
 types of messages) for use in this package. Attributes include:
 </p>
 <ul>

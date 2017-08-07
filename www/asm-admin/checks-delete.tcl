@@ -30,3 +30,8 @@ if {$by_item_p == 1} {
 } else {
     ad_returnredirect "checks-admin?section_id=$section_id&assessment_id=$assessment_id&by_item_p=$by_item_p"
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

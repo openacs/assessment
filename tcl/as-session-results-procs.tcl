@@ -44,3 +44,9 @@ ad_proc -public as::session_results::new {
 
     return $result_id
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

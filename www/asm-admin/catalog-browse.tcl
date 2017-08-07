@@ -18,7 +18,7 @@ ad_page_contract {
     {category_ids:integer,multiple,optional ""}
     {join:optional}
     keywords:optional
-    {orderby:optional "title,asc"}
+    {orderby:token,optional "title,asc"}
     {page:optional 1}
     {search_again_url:optional ""}
     {page_size:optional 20}
@@ -191,3 +191,9 @@ if {[info exists section_id]} {
 
 ad_return_template
 return
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

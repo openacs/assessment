@@ -52,3 +52,9 @@ ad_proc -public as::item_form::add_item_to_form  {
 
     return $presentation_type
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

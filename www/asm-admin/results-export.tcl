@@ -114,7 +114,7 @@ ad_form -name assessment_export -action results-export -form {
 		db_foreach mc_items {} {
 		    if {$text_value eq ""} {
 			if {[exists_and_not_null csv_${section_id}_${as_item_id}($session_id)]} {
-			    # append list of choices seperated with comma
+			    # append list of choices separated with comma
 			    append csv_${section_id}_${as_item_id}($session_id) ",[as::assessment::quote_export -text $title]"
 			} else {
 			    # just set the choice value
@@ -157,3 +157,9 @@ ad_form -name assessment_export -action results-export -form {
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

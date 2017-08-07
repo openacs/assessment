@@ -247,3 +247,9 @@ ad_proc -private as::item_type_oq::add_to_assessment {
         -after $after
 
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

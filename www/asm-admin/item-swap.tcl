@@ -14,7 +14,7 @@ ad_page_contract {
     section_id:naturalnum,notnull
     sort_order:integer,notnull
     direction:notnull
-    return_url:optional
+    return_url:localurl,optional
 }
 
 set package_id [ad_conn package_id]
@@ -36,7 +36,7 @@ db_transaction {
                 -new_assessment_rev_id $new_assessment_rev_id
     db_dml swap_items {}
 } on_error {
-    ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
+    ad_return_error "Database error" "A database error occurred:<pre>$errmsg</pre>"
     ad_script_abort
 }
 
@@ -47,3 +47,9 @@ if {![info exists return_url] || $return_url eq ""} {
 ad_returnredirect $return_url
 ad_script_abort
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

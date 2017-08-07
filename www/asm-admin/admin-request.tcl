@@ -3,10 +3,10 @@ ad_page_contract {
     @creation_date 2005-01-17
     
 } {
-    {assessment:optional}
-    {interval:optional}
-    {date:optional}
-    {state:optional}
+    {assessment:optional ""}
+    {interval:optional ""}
+    {date:optional ""}
+    {state:optional ""}
     
 } -properties {
     context
@@ -42,7 +42,7 @@ set state_query ""
 if {![acs_user::site_wide_admin_p -user_id [ad_conn user_id]]} {
     set permission "and c.assessment_id in (select object_id from acs_permissions where grantee_id=:party_id and privilege='admin')"
 }
-if {([info exists assessment] && $assessment ne "") && $assessment!="all"} {
+if {$assessment ne "" && $assessment ne "all"} {
     permission::require_permission -object_id $assessment -privilege admin
     
     as::assessment::data -assessment_id $assessment
@@ -59,20 +59,20 @@ if {([info exists assessment] && $assessment ne "") && $assessment!="all"} {
     and ci.parent_id = cf.folder_id and cf.package_id = :package_id)"
 }
 
-if {([info exists state] && $state ne "")} {
+if {$state ne ""} {
     set d_state $state 
     
 } 
 
-if {([info exists interval] && $interval ne "") && $interval!="all"} {
+if {$interval ne "" && $interval ne "all"} {
     set d_interval $interval
-    set interval_query "and to_date(al.date_requested,'YYYY-MM-DD') >= to_date('$interval','YYYY-MM-DD')"
+    set interval_query "and date_trunc('day', al.date_requested) >= to_date('$interval','YYYY-MM-DD')"
     set date_query ""
 }
 
-if {([info exists date] && $date ne "")} {
+if {$date ne ""} {
     set d_date $date
-    set date_query "and to_date(al.date_requested,'YYYY-MM-DD') = to_date('$date','YYYY-MM-DD')"
+    set date_query "and date_trunc('day', al.date_requested) = to_date('$date','YYYY-MM-DD')"
     set interval_query ""
 }
 
@@ -89,28 +89,29 @@ ad_form -name assessments -form {
     {assessment:text(select)
 	{label "[_ assessment.Assessment]"}
 	{options $assessment_list}
-	{html { onChange "get_assessment()"}}
 	{value $d_assessment}
     }
     
     {state:text(select)
 	{label ""}
 	{options "$approved_options"}
-	{html { onChange "get_state()"}}
 	{value $d_state}
     }
     
 } -has_submit 1
 
+template::add_event_listener -id assessment -event change -script {get_assessment();}
+template::add_event_listener -id state -event change -script {get_state();}
 
-ad_form -name interval  -form {
+
+ad_form -name interval -form {
     {date:text(select)
 	{label "[_ assessment.date_request]"}
 	{options $intervals}
 	{value $d_interval}
-	{html { onChange "get_interval()"}}
     }
 } -has_submit 1
+template::add_event_listener -id date -event change -script {get_interval();}
 
 
 ad_form -name  specific_date_form  -form {
@@ -125,7 +126,7 @@ ad_form -name  specific_date_form  -form {
     {specific_date:text(text)
 	{label "" }
 	{html {id sel2}}
-	{after_html {<input type='reset' value=' ... ' onclick="return showCalendar('sel2', 'y-m-d');"><b>YYYY-MM-DD</b>}}
+	{after_html {<input type='reset' value=' ... ' id='sel2-control'><b>YYYY-MM-DD</b>}}
 	{value $d_date}
     }
     
@@ -134,6 +135,8 @@ ad_form -name  specific_date_form  -form {
     }
 } -on_submit {
     ad_returnredirect "admin-request?state=$state&assessment=$assessment&date=$specific_date"
+} -on_request {
+    template::add_event_listener -id sel2-control -script {showCalendar('sel2', 'y-m-d');}
 }
 
 
@@ -147,7 +150,7 @@ template::list::create \
     -key action_log_id\
     -bulk_actions {
 	"\#assessment.approve\#" "approve-check" "\#assessment.approve_actions\#"
-	"\#assessment.bulk_mail_send\#" "bulk-mail" "\#assessment.bulk_mail\#"
+	"\#assessment.bulk_mail_send\#" "bulk-mail" "\#assessment.bulk_mail_send\#"
     }\
     -bulk_action_method post \
     -bulk_action_export_vars {
@@ -190,3 +193,9 @@ template::list::create \
     }
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

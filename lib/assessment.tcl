@@ -11,14 +11,14 @@ ad_page_contract {
     {session_id:naturalnum,optional ""}
     {section_order:integer,optional ""}
     {item_order:integer,optional ""}
-    {item_id ""}
-    {return_url:optional}
+    {item_id:integer ""}
+    {return_url:localurl,optional}
     response_to_item:array,optional,multiple,allhtml
     {next_asm:optional}
     {response:multiple,optional}
     {next_url ""}
-    {single_section_id ""}
-    {show_title_p 1}
+    {single_section_id:integer ""}
+    {show_title_p:boolean 1}
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -185,7 +185,7 @@ db_transaction {
 		# make sure to display correct section page
 		set item_order [expr {$item_order - ($item_order % $display(num_items))}]
 	    } elseif {$display(submit_answer_p) == "t"} {
-		# show whole section when picking up a seperate submit section
+		# show whole section when picking up a separate submit section
 		set item_order 0
 	    }
 	}
@@ -333,7 +333,7 @@ lappend exports next_asm assessment_id section_id section_order item_order passw
 # form for display an assessment with sections and items
 ad_form -name show_item_form -action assessment -html {enctype multipart/form-data} -export $exports -form {
     {session_id:text(hidden) {value $session_id}}
-}
+} -has_submit 1
 
 multirow create items as_item_id name title description subtext required_p max_time_to_complete presentation_type html submitted_p content as_item_type_id choice_orientation next_as_item_id validate_block next_pr_type question_text
 
@@ -353,7 +353,7 @@ foreach one_item $item_list {
     set default_value ""
     set submitted_p f
     if {$display(submit_answer_p) != "t"} {
-	# no seperate submit of each item
+	# no separate submit of each item
 	if {$assessment_data(reuse_responses_p) == "t"} {
 	    set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -section_id $section_id]
 	}
@@ -369,7 +369,7 @@ foreach one_item $item_list {
         }
 
     } else {
-	# submit each item seperately
+	# submit each item separately
 	set default_value [as::item_data::get -subject_id $user_id -as_item_id $as_item_id -session_id $session_id -section_id $section_id]
 	if {$default_value ne ""} {
 	    # value already submitted
@@ -388,7 +388,7 @@ foreach one_item $item_list {
 	    lappend unsubmitted_list $as_item_id
 	}
 	
-	# create seperate submit form for each item
+	# create separate submit form for each item
 	ad_form -name show_item_form_$as_item_id -mode $mode -action assessment -html {enctype multipart/form-data} -export {assessment_id section_id section_order item_order password return_url next_asm} -form {
 	    {session_id:text(hidden) {value $session_id}}
 	    {item_id:text(hidden) {value $as_item_id}}
@@ -493,7 +493,7 @@ if {$display(submit_answer_p) != "t"} {
 	    db_dml session_updated {}
 	    # save answers
 	    foreach one_response \$item_list {
-		util_unlist \$one_response response_item_id
+		lassign \$one_response response_item_id
 		db_1row process_item_type {}
 		set item_type \[string range \$item_type end-1 end\]
 		if {!\[info exists response_to_item(\$response_item_id)\]} {
@@ -573,7 +573,7 @@ if {$display(submit_answer_p) != "t"} {
 
 } else {
 
-    # process next button in seperate submit mode
+    # process next button in separate submit mode
     set template "assessment-single-submit"
     ad_form -extend -name show_item_form -on_submit {
 	db_transaction {
@@ -637,3 +637,9 @@ set form_is_valid [template::form::is_valid show_item_form]
 
 ad_return_template $template
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

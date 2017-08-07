@@ -93,7 +93,7 @@ ad_form -name new_check -export {assessment_id return_url} -form {
     }
     {description:text(textarea)
 	{label "[_ assessment.action_description]"}
-	{html {cols 40} {rows 20}}
+	{html {cols 40 rows 20}}
 	{help_text "[_ assessment.description_trigger]"}
     }
     {condition:text(radio)
@@ -146,3 +146,8 @@ ad_form -extend -name new_check  -new_data {
     ad_returnredirect "${url}?assessment_id=$assessment_id&inter_item_check_id=$inter_item_check_id&section_id=$section_id_from$return_url"
 
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

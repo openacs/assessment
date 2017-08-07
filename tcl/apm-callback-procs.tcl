@@ -103,3 +103,9 @@ ad_proc -public inter_item_checks::apm_callback::enable_intervals_and_methods {t
 
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

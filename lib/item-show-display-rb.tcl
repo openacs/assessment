@@ -11,3 +11,9 @@ ad_form -name item_show_display_rb -mode display -action item-edit-display-rb -e
 
 ##     {label_orientation:text {label "[_ assessment.Label_Orientation]"} {value "[_ assessment.$choice_label_orientation]"} {help_text "[_ assessment.Label_Orientation_help]"}}
 ##     {answer_alignment:text {label "[_ assessment.Answer_Alignment]"} {value "[_ assessment.$item_answer_alignment]"} {help_text "[_ assessment.Answer_Alignment_help]"}}
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

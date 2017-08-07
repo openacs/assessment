@@ -2,7 +2,7 @@ ad_page_contract {
     Publish or unpublish an assessment
 } {
     assessment_id:naturalnum,notnull
-    {return_url ""}
+    {return_url:localurl ""}
 }
 
 permission::require_permission \
@@ -31,3 +31,9 @@ if {$return_url eq ""} {
     set return_url [export_vars -base one-a {assessment_id}]
 }
 ad_returnredirect -message $message $return_url
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

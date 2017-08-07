@@ -7,7 +7,7 @@ ad_page_contract {
     assessment_id:naturalnum,notnull
     as_item_id:naturalnum,notnull
     mc_id:naturalnum,notnull
-    return_url
+    return_url:localurl
 } -properties {
     context:onevalue
     page_title:onevalue
@@ -46,3 +46,9 @@ ad_form -name save-answer-set -export { assessment_id as_item_id mc_id return_ur
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

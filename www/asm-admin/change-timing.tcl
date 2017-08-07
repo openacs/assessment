@@ -1,11 +1,11 @@
 # packages/project-manager/www/assign-myself
 ad_page_contract { 
-    Assign all the recieved tasks to the recieved role, default to lead.
+    Assign all the received tasks to the received role, default to lead.
     @author Malte Sussdorff (malte.sussdorff@cognovis.de)
     @author cognovis www.cognovis.de
 } {
     assessment_id:naturalnum,multiple
-    {return_url "index"}
+    {return_url:localurl "index"}
 }
 
 foreach id $assessment_id {
@@ -53,3 +53,8 @@ ad_form -name "change-timing" -form {
 } -after_submit {
     ad_returnredirect $return_url
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -5,7 +5,7 @@
     <multiple name="items">
 	<h2>@items.section_title@</h2>
 	<group column="section_id">
-      <p><b>@items.rownum@. @items.title;noquote@</b></p>
+      <p><strong>@items.rownum@. @items.title;noquote@</strong></p>
       <p>
 	@items.stats;noquote@
 	</group>

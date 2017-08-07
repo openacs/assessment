@@ -42,10 +42,16 @@ db_transaction {
     db_dml update_item_type_in_item {}
     db_dml swap_choices {}
 } on_error {
-    ad_return_error "Database error" "A database error occured:<pre>$errmsg</pre>"
+    ad_return_error "Database error" "A database error occurred:<pre>$errmsg</pre>"
     ad_script_abort
 }
 
 set section_id $new_section_id
 set as_item_id $new_item_id
 ad_returnredirect [export_vars -base item-edit {assessment_id section_id as_item_id}]
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

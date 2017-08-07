@@ -70,3 +70,8 @@ ad_form -name get_section -export {by_item_p item_id} -form {
     ad_returnredirect $return_url 
     
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -30,3 +30,9 @@ ad_proc -public as::action_p::action_exec {
     return
     
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

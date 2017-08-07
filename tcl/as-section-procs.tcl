@@ -388,7 +388,7 @@ ad_proc -private as::section::checks_list_not_cached {
     Return a list of checks for the section within the assessment
     
 } {
-    return [db_list_of_lists checks_related { } ] 
+    return [db_list_of_lists checks_related {} ] 
 }
 
 ad_proc -private as::section::update_section_in_assessment {
@@ -412,3 +412,9 @@ ad_proc -public as::section::add_to_assessment {
 } {
     db_dml add {}
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

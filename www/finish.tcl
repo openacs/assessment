@@ -7,7 +7,7 @@ ad_page_contract {
 } {
     session_id:naturalnum,notnull
     assessment_id:naturalnum,notnull
-    return_url:optional
+    return_url:localurl,optional
     next_asm:optional
     total_pages:optional
     current_page:optional
@@ -59,3 +59,9 @@ if  {[info exists return_url]} {
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

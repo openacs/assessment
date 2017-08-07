@@ -526,7 +526,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     if {![as::item::get_item_type_info -as_item_id $as_item_id] \
             || $item_type_info(object_type) ne "as_item_type_mc"} {
 	# always set mc title to empty on new mc question
-	# we ask for a title for the mc answer set seperately if
+	# we ask for a title for the mc answer set separately if
 	# required
         set mc_id [as::item_type_mc::new \
                        -title $title \
@@ -701,7 +701,7 @@ db_transaction {
     set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
     set new_item_id [as::item::new_revision -as_item_id $as_item_id]
     # HAM : querried the mc_id for the given choice id
-    set mc_id [db_string "get_mc_id" "select mc_id from as_item_choices where choice_id=:choice_id"]
+    set mc_id [db_string get_mc_id {select mc_id from as_item_choices where choice_id=:choice_id}]
     #  ***********
     set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id -with_choices_p f]
     as::section::update_section_in_assessment \
@@ -754,3 +754,9 @@ ad_proc -private as::item_type_mc::form_widget {
 
     return [string map {rb radio cb checkbox sb selet} $display_type]
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

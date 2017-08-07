@@ -37,3 +37,9 @@ db_multirow -extend { edit_url } actions action_select {}
 
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

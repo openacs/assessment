@@ -4,15 +4,15 @@
 
 <table width="100%" cellpadding="3" cellspacing="0" border="0">
 <tr><th colspan="3">@assessment_data.title@</th></tr>
-<tr><td><i style="font-size: 1pt;">@assessment_data.instructions;noquote@</i></td></tr>
+<tr><td><em style="font-size: 1pt;">@assessment_data.instructions;noquote@</em></td></tr>
 <tr>
 <td colspan="3"><hr></td>
 </tr>
 </table>
 
 <table border="0">
-  <tr style="background-color: #d0d0d0;"><td><b>@section.title@</b></td></tr>
-  <tr><td><i>@section.description@</i></td></tr>
+  <tr style="background-color: #d0d0d0;"><td><strong>@section.title@</strong></td></tr>
+  <tr><td><em>@section.description@</em></td></tr>
   <tr><td>@section.instructions@</td></tr>
 </table>
 
@@ -23,12 +23,12 @@
 
       <multiple name="items">
       <tr>
-      <tr><if @assessment_data.show_item_name_p@ eq t><td bgcolor="#e4eaef" colspan="2" nowrap><b>@items.name@:</b><if @items.required_p@ eq t> <span style="color: #f00;">*</span></if></td></if>
-        <td bgcolor="#e4eaef"><b><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></if></b>
+      <tr><if @assessment_data.show_item_name_p;literal@ true><td bgcolor="#e4eaef" colspan="2" nowrap><strong>@items.name@:</strong><if @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></td></if>
+        <td bgcolor="#e4eaef"><strong><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></if></strong>
       <if @items.content@ not nil><tr><td bgcolor="#e4eaef" colspan="4"><br>@items.content;noquote@</if>
       <if @items.title@ ne @items.next_title@>
         </td></tr>
-        <tr class="form-widget"><if @assessment_data.show_item_name_p@ eq t><td colspan="4"></if><else><td colspan="3"></else>
+        <tr class="form-widget"><if @assessment_data.show_item_name_p;literal@ true><td colspan="4"></if><else><td colspan="3"></else>
           <table>
       </if>
       <else>

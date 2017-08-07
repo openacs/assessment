@@ -29,7 +29,7 @@ if {([info exists item_id] && $item_id ne "")} {
     set item_id_check $item_id 
     set as_item_id_i [db_string get_item_id { select item_id from cr_revisions where revision_id = :item_id}]
     set check_list "and c.inter_item_check_id in ("
-    set checks [db_list_of_lists get_all_checks { }]
+    set checks [db_list_of_lists get_all_checks {}]
     set count  0
     
     foreach check $checks {
@@ -310,3 +310,9 @@ template::list::create \
 	
     }
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -53,3 +53,9 @@ ad_form -name section_delete_confirm -action section-delete -export { assessment
 }
 
 ad_return_template
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
