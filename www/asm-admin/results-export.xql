@@ -17,7 +17,7 @@
       <querytext>
 
 	select cr.title, cr.description, o.object_type, i.data_type, i.field_name,
-	       cr.item_id as as_item_item_id
+	       cr.item_id as as_item_id
 	from as_item_section_map ism, cr_revisions cr,
 	     as_items i, as_item_rels ir, acs_objects o
 	where ism.section_id = :section_id
