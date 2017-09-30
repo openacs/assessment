@@ -95,7 +95,7 @@ switch -- $item_type {
 	set folder_id [as::assessment::folder_id -package_id $package_id]
 	set choice_sets [list [list "--" ""]]
 db_foreach existing_choice_sets {} {
-    set set_title [string trim [regsub {\[.*?\]} [ad_html_to_text $title] {}]]
+    set set_title [string trim [regsub {\[.*?\]} [ad_html_to_text -- $title] {}]]
     lappend choice_sets [list [expr {$set_title eq "" ? $section_title : $set_title}] $revision_id]
 }
 if {[llength $choice_sets]} {

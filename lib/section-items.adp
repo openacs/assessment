@@ -51,7 +51,7 @@
 	  <p>
 	    <if @items.max_time_to_complete@ not nil> (#assessment.max_time# @items.max_time_to_complete@) </if>
 	    (@items.points@ #assessment.points#) 
-	    <if @items.item_type@ eq "mc" and @admin_trigger_p@>
+	    <if @items.item_type@ eq "mc" and @admin_trigger_p;literal@ true>
             <a class="button" href="@items.add_edit_check_url@">#assessment.add_trigger#</a> 
             (<a href="@items.checks_admin_url@">@items.checks_related@</a>)<img src="/resources/assessment/spacer.gif" style="border:0" alt="" width="10">
 	    </if>
