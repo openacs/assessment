@@ -101,4 +101,35 @@
 	</querytext>
 </fullquery>
 
+<fullquery name="session_start">
+	<querytext>
+
+	update as_sessions
+	set creation_datetime = current_timestamp
+	where session_id = :session_id
+	and creation_datetime is null
+
+	</querytext>
+</fullquery>
+
+<fullquery name="session_updated">
+	<querytext>
+
+	UPDATE as_sessions
+	SET last_mod_datetime = current_timestamp
+	WHERE session_id = :session_id
+
+	</querytext>
+</fullquery>
+
+<fullquery name="session_finished">
+	<querytext>
+
+	UPDATE as_sessions
+	SET completed_datetime = current_timestamp
+	WHERE session_id = :session_id
+
+	</querytext>
+</fullquery>
+
 </queryset>
