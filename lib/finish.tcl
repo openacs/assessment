@@ -23,7 +23,7 @@ if { $user_id ne "0" } {
 }
 
 
-set page_title "[_ assessment.Response_Submitted]"
+set page_title [_ assessment.Response_Submitted]
 set context [list $page_title]
 
 # Raise finish_object event
@@ -33,20 +33,22 @@ callback imsld::finish_object -object_id $assessment_id -user_id $user_id -sessi
 
 
 
-if { ([info exists next_asm] && $next_asm ne "") } {
+if { [info exists next_asm] && $next_asm ne "" } {
     ad_returnredirect "assessment?assessment_id=$next_asm"
+    ad_script_abort
 } 
 
 set value [parameter::get -parameter "RegistrationId" -package_id [subsite::main_site_id]]
 
-if  {[info exists return_url]} {
+if {[info exists return_url]} {
     if { $return_url ne ""} {
 	ad_returnredirect "$return_url"
     } else {
 	if {$value eq $assessment_id} {
 	    ad_returnredirect "/pvt/home"
 	}
-    } 
+    }
+    ad_script_abort
 }
 
 ad_return_template

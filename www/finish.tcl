@@ -42,8 +42,9 @@ ns_log Debug "Assessment (www/finish): callback imsld::finish_object called with
 
 callback imsld::finish_object -object_id $assessment_id -user_id $user_id -session_id $session_id
 
-if { ([info exists next_asm] && $next_asm ne "") } {
+if { [info exists next_asm] && $next_asm ne "" } {
     ad_returnredirect "assessment?assessment_id=$next_asm"
+    ad_script_abort
 } 
 
 set value [parameter::get -parameter "RegistrationId" -package_id [subsite::main_site_id]]
@@ -51,9 +52,11 @@ set value [parameter::get -parameter "RegistrationId" -package_id [subsite::main
 if  {[info exists return_url]} {
     if { $return_url ne ""} {
 	ad_returnredirect "$return_url"
+        ad_script_abort
     } else {
 	if {$value eq $assessment_id} {
 	    ad_returnredirect "/pvt/home"
+            ad_script_abort
 	}
     } 
 }

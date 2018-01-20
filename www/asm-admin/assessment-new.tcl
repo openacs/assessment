@@ -28,7 +28,6 @@ if {[info exists assessment_id]} {
     set page_title [_ assessment.New_Assessment2]    
 }
 set context [list [list index [_ assessment.admin]] $page_title]
-
 set types_list [list [list "[_ assessment.type_s]" survey] [list "[_ assessment.type_test]" test ]]
 
 ad_form -name assessment_type -export {assessment_id permission_p} -form {
@@ -38,16 +37,19 @@ ad_form -name assessment_type -export {assessment_id permission_p} -form {
 	{value $type}
     }
 } -on_submit {
-    if { ([info exists assessment_id] && $assessment_id ne "")} {
-    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
-    db_dml update_asm { update as_assessments set type=:type where assessment_id=:new_assessment_rev_id}
-    ad_returnredirect [export_vars -base one-a {assessment_id}]
+    if { [info exists assessment_id] && $assessment_id ne ""} {
+        set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+        db_dml update_asm {update as_assessments set type=:type where assessment_id=:new_assessment_rev_id}
+        ad_returnredirect [export_vars -base one-a {assessment_id}]
+        ad_script_abort
+
     } else {
 	if { $permission_p ne ""} {
 	    ad_returnredirect [export_vars -base assessment-form {type assessment_id permission_p}]
 	} else {
 	    ad_returnredirect [export_vars -base assessment-form {type assessment_id}]
 	}
+        ad_script_abort
     }
 }
 # Local variables:

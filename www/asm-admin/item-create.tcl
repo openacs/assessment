@@ -39,29 +39,30 @@ form create item-add -elements {
 element set_properties item-add as_items_name -value $item_id
 
 if { [template::form is_valid item-add] } {
-      #valid new item submission so create new item
-      set as_items_name [template::element::get_value item-add as_items_name]
-      set as_items_title [template::element::get_value item-add as_items_title]
-      set as_items_subtext [template::element::get_value item-add as_items_subtext]
-      set as_items_definition [template::element::get_value item-add as_items_definition]
-      set item_type [template::element::get_value item-add item_type]
-      set as_items_max_time_to_complete [template::element::get_value item-add as_items_max_time_to_complete]
-      set as_items_required_p [template::element::get_value item-add as_items_required_p]
-      set as_items_data_type [template::element::get_value item-add as_items_data_type]
+    #valid new item submission so create new item
+    set as_items_name [template::element::get_value item-add as_items_name]
+    set as_items_title [template::element::get_value item-add as_items_title]
+    set as_items_subtext [template::element::get_value item-add as_items_subtext]
+    set as_items_definition [template::element::get_value item-add as_items_definition]
+    set item_type [template::element::get_value item-add item_type]
+    set as_items_max_time_to_complete [template::element::get_value item-add as_items_max_time_to_complete]
+    set as_items_required_p [template::element::get_value item-add as_items_required_p]
+    set as_items_data_type [template::element::get_value item-add as_items_data_type]
       
-      db_transaction {
-       #add the item
+    db_transaction {
+        #add the item
         #Insert as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-	set as_item_id [as::item::new -title $as_items_title -definition $as_items_definition -required_p $as_items_required_p -data_type $as_items_data_type -max_time_to_complete $as_items_max_time_to_complete]
+	set as_item_id [as::item::new -title $as_items_title \
+                            -definition $as_items_definition \
+                            -required_p $as_items_required_p \
+                            -data_type $as_items_data_type \
+                            -max_time_to_complete $as_items_max_time_to_complete]
     }
     
     #redirect back to display-create-type
     ad_returnredirect "display-create-type?item_type=$item_type&as_item_id1=$as_item_id"
+    ad_script_abort
 }
-
-#item_type -label "Item Type" -datatype text -widget select -options {{{Open Question} textarea} {{Short Answer} shortanswer} {Matching matching} {{File Upload} {file_upload}} {{Multiple Choice (radio buttons)}  radiobutton} {{Multiple Choice (checkboxes)} checkbox } {{Multiple Choices (Image Map)} image_map_mc} {{Multiple Choice with Fill-in-Blank} textarea}  {Rank rank} {{Matrix table} {matrix table}} {{Composite matrix-based multiple response} radiobutton}   }
-
-
 
 ad_return_template
   

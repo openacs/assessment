@@ -62,26 +62,24 @@ if {[template::form is_valid notify]} {
             -interval_id $interval_id \
             -delivery_method_id $delivery_method_id
 
-
-
-    ad_returnredirect "request-notification?assessment_id=$assessment_id&section_id=$section_id&inter_item_check_id=$inter_item_check_id"
+    ad_returnredirect [export_vars -base request-notification {assessment_id section_id inter_item_check_id}]
+    ad_script_abort
 }
 
 template::list::create -name notify_users\
--multirow notify_users\
--key request_id\
--bulk_actions\
-    {
+    -multirow notify_users \
+    -key request_id \
+    -bulk_actions {
 	"\#assessment.unsubscribe\#" "unsubscribe" "\#assessment.unsubscribe_user\#"
-    }\
+    } \
     -bulk_action_method post -bulk_action_export_vars {
 	inter_item_check_id
 	type_id
 	assessment_id
 	section_id
-    }\
-    -no_data "\#assessment.there_are_no_users\#"\
-    -row_pretty_plural "notify_users"\
+    } \
+    -no_data "\#assessment.there_are_no_users\#" \
+    -row_pretty_plural "notify_users" \
     -elements {
 	name {
 	    label "[_ assessment.User_ID] [_ assessment.Name]"

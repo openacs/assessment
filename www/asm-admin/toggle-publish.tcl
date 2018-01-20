@@ -19,7 +19,7 @@ if { $old_publish_status ne "live" } {
 # returns list of empty sections
 set empty_sections [db_list count_questions ""]
 
-if { ($empty_sections eq "") || ($old_publish_status eq "live") } {
+if { $empty_sections eq "" || $old_publish_status eq "live" } {
     # if no empty sections, or if we're un-publishing, then proceed
     db_dml toggle_publish ""
     set message "Set to [ad_decode $old_publish_status "live" invisible visible]"
@@ -30,7 +30,9 @@ if { ($empty_sections eq "") || ($old_publish_status eq "live") } {
 if {$return_url eq ""} {
     set return_url [export_vars -base one-a {assessment_id}]
 }
+
 ad_returnredirect -message $message $return_url
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

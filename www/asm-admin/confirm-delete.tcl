@@ -36,11 +36,11 @@ ad_form -name delete_checks -export {by_item_p item_id_check} -form {
 }  -after_submit {
     
     if {$by_item_p == 1} {
-	ad_returnredirect "checks-delete?section_id=$section_id&inter_item_check_id=$inter_item_check_id&assessment_id=$assessment_id&by_item_p=$by_item_p&item_id=$item_id_check"
+	ad_returnredirect [export_vars -base checks-delete {section_id inter_item_check_id assessment_id by_item_p item_id}]
     } else {
-	ad_returnredirect "checks-delete?section_id=$section_id&inter_item_check_id=$inter_item_check_id&assessment_id=$assessment_id&by_item_p=$by_item_p"
+	ad_returnredirect [export_vars -base checks-delete {section_id inter_item_check_id assessment_id by_item_p}]
     }
-    
+    ad_script_abort
     
 }
 

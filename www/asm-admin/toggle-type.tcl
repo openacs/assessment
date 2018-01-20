@@ -15,6 +15,8 @@ set revision_id [content::item::get_latest_revision -item_id $assessment_id]
 db_dml toggle_type ""
 
 ad_returnredirect [export_vars -base one-a {assessment_id}]
+ad_script_abort
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4

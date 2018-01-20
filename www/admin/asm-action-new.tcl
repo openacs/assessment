@@ -51,7 +51,8 @@ ad_form -name action_admin -form {
 } -edit_data {
     db_dml edit_action {}
 } -after_submit {
-  ad_returnredirect "asm-action-new?action_id=$action_id"
+    ad_returnredirect "asm-action-new?action_id=$action_id"
+    ad_script_abort
 }
 
 

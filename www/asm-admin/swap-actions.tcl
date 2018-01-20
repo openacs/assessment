@@ -18,10 +18,17 @@ permission::require_permission \
     -party_id [ad_conn user_id] \
     -privilege "admin"
 
-as::assessment::check::swap_actions -check_id $check_id -action_perform $action_perform -section_id $section_id -direction $direction -order_by $order_by
+as::assessment::check::swap_actions \
+    -check_id $check_id \
+    -action_perform $action_perform \
+    -section_id $section_id \
+    -direction $direction \
+    -order_by $order_by
 
 
-ad_returnredirect "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
+ad_returnredirect [export_vars -base checks-admin {assessment_id section_id}]
+ad_script_abort
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4

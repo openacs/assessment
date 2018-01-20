@@ -36,7 +36,7 @@ set context [list [list index [_ assessment.admin]] [list "one-a?assessment_id=$
 
 set new_assessment_revision $assessment_data(assessment_rev_id)
 
-if {([info exists by_item_p] && $by_item_p ne "")} {
+if {[info exists by_item_p] && $by_item_p ne ""} {
     set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
     
     if {$by_item_p == 1} {
@@ -50,7 +50,8 @@ if {([info exists by_item_p] && $by_item_p ne "")} {
 set has_params_p [db_string has_params {} -default 0]
 
 if {$has_params_p == 0} {
-        ad_returnredirect "one-a?assessment_id=$assessment_id"
+    ad_returnredirect "one-a?assessment_id=$assessment_id"
+    ad_script_abort
 }
 
 set action_perform [db_string get_perform {} -default " "]
@@ -98,7 +99,10 @@ ad_form -extend -name get_params -new_data {
     
     set action_id $action_id
     db_foreach get_params {} {
-	set param_$parameter_id [as::assessment::check::get_parameter_value -parameter_id $parameter_id -type $type -check_id $inter_item_check_id]
+	set param_$parameter_id [as::assessment::check::get_parameter_value \
+                                     -parameter_id $parameter_id \
+                                     -type $type \
+                                     -check_id $inter_item_check_id]
 	if { [set param_$parameter_id] eq ""} {
 	    set param_$parameter_id [lindex $choices 0 1]
 	}
@@ -106,11 +110,16 @@ ad_form -extend -name get_params -new_data {
     }
 } -edit_data {
     db_foreach get_params {} {
-	as::assessment::check::set_parameter_value -parameter_id $parameter_id -type $type -check_id $inter_item_check_id -value [set param_$parameter_id]
+	as::assessment::check::set_parameter_value \
+            -parameter_id $parameter_id \
+            -type $type \
+            -check_id $inter_item_check_id \
+            -value [set param_$parameter_id]
     }
     
 } -on_submit {
-    ad_returnredirect $return_url 
+    ad_returnredirect $return_url
+    ad_script_abort
 }
 
 

@@ -44,11 +44,13 @@ ad_form -name get_assessment  -form {
 	    set package_id [db_string package_id {}]
 	    set url [apm_package_url_from_id $package_id]
 	    ad_returnredirect "${url}asm-admin/one-a?assessment_id=$assessment_id&reg_p=1&asm_instance=$asm_instance"
+            ad_script_abort
 	}
     }  else {
 	parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationId -value $assessment_id
 	parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationImplName -value "asm_url"
 	ad_returnredirect ""
+        ad_script_abort
     }
 }
 

@@ -68,7 +68,7 @@ ad_form -name get_section -export {by_item_p item_id} -form {
     
 } -on_submit {
     ad_returnredirect $return_url 
-    
+    ad_script_abort
 }
 # Local variables:
 #    mode: tcl

@@ -20,14 +20,11 @@ ad_form -name action_delete -form {
     {submit:text(submit) {label "delete"}}
     {back:text(submit) {label "back"}}
 }  -on_submit {
-    if { $back eq "back" } {
-	ad_returnredirect "asm-action-admin"
-    } else {
+    if { $back ne "back" } {
 	as::actionparam::actiondelete $action_id
-	ad_returnredirect "asm-action-admin"	
-
-
     }
+    ad_returnredirect "asm-action-admin"
+    ad_script_abort
 
 }
 # Local variables:

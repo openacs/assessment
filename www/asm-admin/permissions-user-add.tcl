@@ -34,8 +34,10 @@ if {[template::form is_valid permissions]} {
 	    
     } on_error {
 	ad_return_complaint 1 "We had a problem adding the users you selected. Sorry."
+        ad_script_abort
     }
-    ad_returnredirect "permissions?object_id=$object_id"    
+    ad_returnredirect [export_vars -base permissions {object_id}]
+    ad_script_abort
 }
 
 # Local variables:

@@ -78,6 +78,7 @@ ad_form -name parameter_admin -form {
 } -on_submit {
     
     ad_returnredirect "asm-action-param-admin?action_id=$action_id"
+    ad_script_abort
 }
 
 # Local variables:

@@ -33,6 +33,7 @@ db_transaction {
 }
 
 ad_returnredirect [export_vars -base questions {assessment_id}]
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

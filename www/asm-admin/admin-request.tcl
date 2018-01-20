@@ -135,6 +135,8 @@ ad_form -name  specific_date_form  -form {
     }
 } -on_submit {
     ad_returnredirect "admin-request?state=$state&assessment=$assessment&date=$specific_date"
+    ad_script_abort
+
 } -on_request {
     template::add_event_listener -id sel2-control -script {showCalendar('sel2', 'y-m-d');}
 }

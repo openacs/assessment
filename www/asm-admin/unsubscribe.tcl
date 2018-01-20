@@ -25,6 +25,7 @@ for { set i 0} { $i < $request_count } { incr i } {
 }
 
 ad_returnredirect "request-notification?inter_item_check_id=$inter_item_check_id&type_id=$type_id&assessment_id=$assessment_id&section_id=$section_id"
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

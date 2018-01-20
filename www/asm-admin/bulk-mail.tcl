@@ -102,12 +102,8 @@ if {[form is_valid spam_message]} {
 		-message $message \
 		-query $query]
     ad_returnredirect "admin-request?assessment=$d_assessment&state=$d_state&interval=$d_interval&date=$d_date"
+    ad_script_abort
 }
-
-
-
-
-
 
 
 # Local variables:

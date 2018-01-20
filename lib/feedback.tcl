@@ -32,19 +32,24 @@ ad_page_contract {
 #}
 
 if { $next_url eq "" } {
-    if { $return_p && ([info exists return_url] && $return_url ne "") } {
+    if { $return_p && [info exists return_url] && $return_url ne "" } {
 	set next_url $return_url
 	
     } else {
-	set next_url [export_vars -base assessment {assessment_id session_id section_order item_order password return_url next_asm section_id}]
+	set next_url [export_vars -base assessment {
+            assessment_id session_id section_order item_order password return_url next_asm section_id
+        }]
     }
 }
 
-ad_form -name next -export {next_url assessment_id section_id session_id} -form {
-    {next_button:text(submit) {label "[_ assessment.Next]"}}
-} -on_submit {
-    ad_returnredirect $next_url
-}
+ad_form -name next \
+    -export {next_url assessment_id section_id session_id} \
+    -form {
+        {next_button:text(submit) {label "[_ assessment.Next]"}}
+    } -on_submit {
+        ad_returnredirect $next_url
+        ad_script_abort
+    }
 
 set subject_id [ad_conn user_id]
 as::assessment::data -assessment_id $assessment_id
