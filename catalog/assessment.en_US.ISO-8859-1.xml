@@ -224,7 +224,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="data_type_timestamp">Time</msg>
   <msg key="data_type_varchar">Short Text</msg>
   <msg key="date_request">Date request since ...</msg>
-  <msg key="Deafult_Value_help">Enter a Default Value for this Answer.</msg>
+  <msg key="Default_Value_help">Enter a Default Value for this Answer.</msg>
   <msg key="Default_Path">Default Path</msg>
   <msg key="Default_Selected">Default: Selected</msg>
   <msg key="Default_Selected_help">Is this choice selected by default</msg>

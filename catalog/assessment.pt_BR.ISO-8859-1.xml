@@ -194,7 +194,7 @@
   <msg key="data_type_timestamp">Tempo</msg>
   <msg key="data_type_varchar">Texto Curto</msg>
   <msg key="date_request">Pedido de data desde...</msg>
-  <msg key="Deafult_Value_help">Entre com o valor padrão para esta pergunta.</msg>
+  <msg key="Default_Value_help">Entre com o valor padrão para esta pergunta.</msg>
   <msg key="Default_Path">Caminho Padrão</msg>
   <msg key="Default_Selected">Padrão:Selecionado</msg>
   <msg key="Default_Selected_help">Esta escolha é selecionada por padrão</msg>

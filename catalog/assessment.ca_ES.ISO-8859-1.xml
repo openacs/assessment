@@ -190,7 +190,7 @@
   <msg key="data_type_timestamp">Hora</msg>
   <msg key="data_type_varchar">Text curt </msg>
   <msg key="date_request">Data sol·licitada des de...</msg>
-  <msg key="Deafult_Value_help">Introduïu un valor per defecte per a aquesta resposta.</msg>
+  <msg key="Default_Value_help">Introduïu un valor per defecte per a aquesta resposta.</msg>
   <msg key="Default_Path">Path per defecte </msg>
   <msg key="Default_Selected">Per defecte: Seleccionat</msg>
   <msg key="Default_Selected_help">Aquesta resposta està seleccionada per defecte?</msg>

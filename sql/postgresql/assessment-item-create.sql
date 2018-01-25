@@ -19,7 +19,7 @@ create table as_items (
 	field_name	varchar(500),
 	-- a short label for use in qti export
 	field_code	varchar(500),
-	-- whether Item must be answered (default value, can be overriden)
+	-- whether Item must be answered (default value, can be overridden)
 	required_p	char(1) default 'f'
 			constraint as_items_required_p_ck
 			check (required_p in ('t','f')),

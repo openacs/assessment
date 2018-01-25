@@ -21,7 +21,7 @@ create table as_section_display_types (
 	back_button_p		char(1) default 't'
 				constraint as_section_display_types_back_button_p_ck
 				check (back_button_p in ('t','f')),
-	-- whether each answer has to be submitted via a seperate button
+	-- whether each answer has to be submitted via a separate button
 	submit_answer_p		char(1) default 'f'
 				constraint as_section_display_types_submit_answer_p_ck
 				check (submit_answer_p in ('t','f')),

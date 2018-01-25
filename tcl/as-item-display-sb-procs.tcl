@@ -29,7 +29,7 @@ ad_proc -public as::item_display_sb::new {
 				-item_id $item_item_display_sb_id \
 				-content_type {as_item_display_sb} \
 				-attributes [list [list html_display_options $html_display_options] \
-						[list mulitple_p $multiple_p] \
+						[list multiple_p $multiple_p] \
 						[list choice_label_orientation $choice_label_orientation] \
 						[list sort_order_type $sort_order_type] \
 						[list item_answer_alignment $item_answer_alignment] \

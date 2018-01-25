@@ -38,7 +38,7 @@ ad_form -name item_edit_oq -action item-edit-oq -export { assessment_id section_
 
 if { $type > 1} {
     ad_form -extend -name item_edit_oq -form {
-    {default_value:text(textarea),optional,nospell {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Deafult_Value_help]"}}
+    {default_value:text(textarea),optional,nospell {label "[_ assessment.Default_Value]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Default_Value_help]"}}
     {feedback_text:text(textarea),optional {label "[_ assessment.Feedback]"} {html {rows 5 cols 80}} {help_text "[_ assessment.Feedback_help]"}}
     {reference_answer:text(textarea),optional {label "[_ assessment.oq_Reference_Answer]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Reference_Answer_help]"}}
     {keywords:text(textarea),optional {label "[_ assessment.oq_Keywords]"} {html {rows 5 cols 80}} {help_text "[_ assessment.oq_Keywords_help]"}}

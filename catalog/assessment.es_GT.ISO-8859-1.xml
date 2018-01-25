@@ -185,7 +185,7 @@
   <msg key="data_type_timestamp">Hora</msg>
   <msg key="data_type_varchar">Texto corto</msg>
   <msg key="date_request">Fecha solicitada desde ...</msg>
-  <msg key="Deafult_Value_help">Valor por defecto para esta respuesta.</msg>
+  <msg key="Default_Value_help">Valor por defecto para esta respuesta.</msg>
   <msg key="Default_Path">Path por defecto</msg>
   <msg key="Default_Selected">Defecto: Seleccionado</msg>
   <msg key="Default_Selected_help">¿Se selecciona esta respuesta por defecto?</msg>
