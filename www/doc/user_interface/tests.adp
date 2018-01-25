@@ -110,11 +110,11 @@ less then -100%.</span></li>
 </li><li>
 <span class="context">Matching question</span><ul>
 <li><span class="context">All or nothing: User get&#39;s 100% if
-all matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weigthed: Each match is worth
+all matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weighted: Each match is worth
 100/{number of matches} percent. Each correct match will give the
 according percentage and the end result will be the sum of all
 correct matches.</span></li><li><span class="context">Allow negative: If we have equally
-weigthed matches, each correct match adds the match percentage (see
+weighted matches, each correct match adds the match percentage (see
 above) to the total. Each wrong match distracts the match
 percentage from the total.</span></li><li><span class="context">Obviously it is only possible to get up
 to 100% and not less than -100%.</span></li>
@@ -176,7 +176,7 @@ whether the respondee has answered correct or wrong for this option
 (if he picked an option that he should not have picked, this option
 will get a wrong in front).</span></li><li><span class="context">Matching question: The item on the left
 side and the picked item are displayed in a connecting manner. A
-correct / wrong statment will be added depending whether the
+correct / wrong statement will be added depending whether the
 displayed (and responded) match is correct.</span></li><li><span class="context">Open Question: The answer is displayed as
 written by the user. Furthermore the correct answer is displayed as
 well. This should allow the TA to easily come to a conclusion

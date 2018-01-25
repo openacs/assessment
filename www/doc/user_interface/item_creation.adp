@@ -36,7 +36,7 @@ allows a survey to use the older version of a question, if the
 question is changed.</span></li>
 </ul>
 <span class="context">For each of the various question types, there
-will be a seperate input form instead of the currently used method.
+will be a separate input form instead of the currently used method.
 A user selects a question type to add and is then redirected to the
 question type add form.</span>
 <ul>

@@ -89,7 +89,7 @@ Possibility to include system variables (e.g. first name).<br>
 </li><li>custom_footer<br>
 </li><li>form_template - Style (form_template) that will be used for
 this assesment. You can either select an existing one or upload a
-new style as well as edit the currently choosen one (no datamodell
+new style as well as edit the currently chosen one (no datamodell
 but UI thought).<br>
 </li><li>
 <span class="context"><span class="reg">progress_bar: What kind
@@ -101,7 +101,7 @@ These options allow the respondee to select between different
 presentation styles. At least one of the checkboxes mentioned below
 has to be selected.</span></span><ul>
 <li><span class="context">All questions at once</span></li><li><span class="context">One question per page. If you have
-selected respondee may not edit their reponses, it will not be
+selected respondee may not edit their responses, it will not be
 possible for them to go back and choose another answer to that
 question.</span></li><li><span class="context">Sectioned</span></li>
 </ul>
@@ -111,7 +111,7 @@ shareable_p boolean. As with Items and Sections, we instead will
 use the acs permission system:</p><ul>
 <li>Read: An assessment author (who is granted this permission) can
 reuse this assessment (NB: Usually the original author has admin
-priviledges.)</li><li>Write: Author can reuse and change this assessment.</li><li>Admin: Author can reuse, change and give permission on this
+privileges.)</li><li>Write: Author can reuse and change this assessment.</li><li>Admin: Author can reuse, change and give permission on this
 assessment</li><li>Respond: The user can respond to the survey.<br>
 </li>
 </ul>
@@ -142,7 +142,7 @@ shareable_p boolean. As with Items and Assessments, we instead will
 use the acs permission system:</p><ul>
 <li>Read: A section author (who is granted this permission) can
 reuse this section (NB: Usually the original author has admin
-priviledges.)</li><li>Write: Author can reuse and change this section.</li><li>Admin: Author can reuse, change and give permission on this
+privileges.)</li><li>Write: Author can reuse and change this section.</li><li>Admin: Author can reuse, change and give permission on this
 section</li>
 </ul>
 </li><li>Section Display Types (as_section_display_types) define types

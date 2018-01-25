@@ -37,7 +37,7 @@ as_item_display instance.<br>
 </span></p>
 <p><span class="context">Categorization and internationalization
 will make it into OpenACS 5.2, therefore we are not dealing with it
-in Assessment seperately but use the (to be) built in functionality
+in Assessment separately but use the (to be) built in functionality
 of OpenACS 5.2</span></p>
 <p><span class="context">Additionally we have support functionality
 for an as_item. This includes the help functionality. To give
@@ -73,7 +73,7 @@ attached to an as_item&#39;s display</span></li><li><span class="context">cr::de
 text</span></li><li><span class="context">subtext - a secondary label, needed for
 many kinds of questions</span></li><li><span class="context">field_code - a short label for use in
 data output header rows, etc</span></li><li><span class="context">required_p - whether as_item must be
-answered (default value, can be overriden)</span></li><li>
+answered (default value, can be overridden)</span></li><li>
 <span class="context">data_type - This is the expected
 data_type of the answer. Previously "abstract_data_type"
 but omitting the superfluous "abstract" term; selected
@@ -97,7 +97,7 @@ of defining a special scope variable we will use the acs permission
 system to grant access rights to an as_item.</span></p><ul>
 <li><span class="context">Read: An assessment author (who is
 granted this permission) can reuse this as_item in one of his
-sections. (NB: Usually the original author has admin priviledges.).
+sections. (NB: Usually the original author has admin privileges.).
 This is a finer granulation than the previous "enabled_p"
 as it allows specific access to an item.</span></li><li><span class="context">Write: Author can reuse and change this
 as_item.</span></li><li><span class="context">Admin: Author can reuse, change and give
@@ -211,7 +211,7 @@ image, audio file, or video file</li><li>feedback_text - where optionally some p
 specified by the author</li><li>selected_p - Is this choice selected by default (when the item
 is presented to the user)</li><li>correct_answer_p - Is this choice the correct answer<br>
 </li><li>sort_order - In which order shall this choice appear with
-regards to the MC item. Note, this can be overriden by the display
+regards to the MC item. Note, this can be overridden by the display
 type.<br>
 </li><li>percent_score - Score given to the user if this choice is
 selected (in percent).<br>

@@ -58,7 +58,7 @@ of the evaluation (what have the respondees answered, how have they
 done in total (points)). A description for this can be found
 <a href="tests">here</a>.</span>
 <p><span class="context">The backend for the test processing, that
-enables the automatic tests is described in a <a href="test_processing">seperate document</a> as it will be parsed while
+enables the automatic tests is described in a <a href="test_processing">separate document</a> as it will be parsed while
 the respondee answers the test, not manually. In addition this
 document describes how the grades are calculated (automatically or
 manually) for each question. The result is beeing stored in the
@@ -72,7 +72,7 @@ that would be used as a basis for this). In general it should
 provide a very flexible way of adding scores into the system,
 either automatically (as described above) or manually (e.g. this
 student did a good oral exam).</span>
-<p><span class="context">In addition to the possiblity to enter
+<p><span class="context">In addition to the possibility to enter
 scores/rates, the grading package allows for automatic aggregation
 of scores. This holds especially true for tests and classes. A test
 result will depend on the result of all the answers (aggregated). A
@@ -86,10 +86,10 @@ transfer scores (which are stored as integer values) into a grade
 gets the name from I&#39;d say ;). Grading schemes are flexible and
 can be created on the fly. This allows us to support any grading
 scheme across the world&#39;s universities. In addition in the area
-of Knowledge Management, grades could be transfered into incentive
+of Knowledge Management, grades could be transferred into incentive
 points, that can be reused to reward employees for good work done
 (where they got good ratings for).</span></p>
-<p><span class="context">Last but not least, maybe embeded with the
+<p><span class="context">Last but not least, maybe embedded with the
 workflow system, is the possibility to execute actions based on the
 grade. An example would be the adding of the student to the
 advanced class if his grade or score reaches a certain level.
@@ -121,17 +121,17 @@ the /pvt/home page as a collection of assessment data and the
 "change basic information" as one assessment among
 many.</span></p>
 <p><span class="context">With a little bit of tweaking and the
-possiblity to add instant gratification, aka aggregated result
+possibility to add instant gratification, aka aggregated result
 display, it could include the poll package and make it
 redundant.</span></p>
 <p><span class="context">Last but not least with the ability to
 display questions in a multi dimensional way to the user, the
-assessment system is usefull for quality assurance (how important
+assessment system is useful for quality assurance (how important
 is this feature / how good do you think we implemented it). And as
 you might have guessed, for anything the current survey module has
 been used for as well (e.g. plain and simple surveys).</span></p>
 <p><span class="context">The grading system on it&#39;s own would
-be usefull for the OpenACS community as it would allow the handing
+be useful for the OpenACS community as it would allow the handing
 out of "zorkmints" along with any benefits the collection
 of mints gives to the users. As mentioned earlier, this is also
 very important in a Knowledge Management environment, where you

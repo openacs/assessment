@@ -162,8 +162,8 @@ item_alignment and item_labels_as_headers_p<br>
 numerical)&lt;&gt;</li><li>&lt;&gt;Back button allowed: boolean (back_button_p). Is the
 use of the back button allowed? If not, the back button should be
 broken on purpose and result in an error.<br>
-</li><li>Submit Answer seperately: boolean. Shall each answer be
-answered seperately, even if we display multiple answers? If yes,
+</li><li>Submit Answer separately: boolean. Shall each answer be
+answered separately, even if we display multiple answers? If yes,
 display a "save" button next to each answer along with
 green "V" if the answer has been already submitted. To
 finish the section, you still have to click on the OK button at the

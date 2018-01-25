@@ -64,7 +64,7 @@ one).</span></li><li><span class="context">The answers have checkboxes, with the
 correct answers checked by default for multiple choice question.
 All other questions will only be displayed if they give a
 percentage value to the answer. In this case a textfield is given
-with the possibility to give a range (10-100) or seperate
+with the possibility to give a range (10-100) or separate
 percentages (10, 100, 200).</span></li><li><span class="context">The display of this section depends on
 whether the valid answers have been given to all or just one of the
 questions that have been checked (as you might have guessed, we

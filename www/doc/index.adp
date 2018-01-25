@@ -125,7 +125,7 @@ and reuse of existing functionality in mind. This might result in
 larger complexity for simple uses (e.g. a plain poll system on
 it&#39;s own will be more performant than running a poll through
 assessment), but provides the chance to maintain one code base for
-all these seperate modules.<br>
+all these separate modules.<br>
 <h2>API</h2>
 
 The API will be defined during the development phase.<br>

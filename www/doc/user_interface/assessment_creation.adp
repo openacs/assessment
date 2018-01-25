@@ -24,7 +24,7 @@ the respondee to select between different presentation styles. At
 least one of the checkboxes mentioned below has to be
 selected.</span><ul>
 <li><span class="context">All questions at once</span></li><li><span class="context">One question per page. If you have
-selected respondee may not edit their reponses, it will not be
+selected respondee may not edit their responses, it will not be
 possible for them to go back and choose another answer to that
 question.</span></li><li><span class="context">Sectioned</span></li>
 </ul>
@@ -66,7 +66,7 @@ URL.</li>
 <ul>
 <li>Availabilty: 2 date widgets (from, and to). This will set the
 time the time the survey will become visible for the respondees. It
-is overriden by the parameter enabled (if a accessment is not
+is overridden by the parameter enabled (if a accessment is not
 enabled, it will never be visible, regardless of date).</li><li>How often can a accessment be taken: Number of times a survey
 can be taken by a respondee.</li><li>How long has a user to pause: Number of hours a respondee has
 to wait before he can take the accessment again.</li><li>Answer_time: integer: Time in minutes a respondee has to answer
@@ -81,7 +81,7 @@ questions which he answered in correctly.</li>
 </ul>
 </li><li>Permissions
 <ul>
-<li>Grant explicit permissions: Link to a seperate page that will
+<li>Grant explicit permissions: Link to a separate page that will
 allow the creator to grant and revoke permission for this survey.
 Permissions are (take_survey, administer_survey)</li><li>Grant permission on status in curriculum. Needs to be exactly
 defined. Otherwise we will write a small page, that allows the
@@ -122,7 +122,7 @@ messages:<br><ul>
 </ul>
 </li><li>Possible Messages for the staff
 <ul>
-<li>Inform the staff about reponses to be looked at</li><li>Remind the staff about responses</li>
+<li>Inform the staff about responses to be looked at</li><li>Remind the staff about responses</li>
 </ul>
 </li><li>Reminder period for notification messages.</li>
 </ul>
@@ -137,7 +137,7 @@ system):<br>
 <li>Closed - Only the owner of the assessment can see the
 responses<br>
 </li><li>Admin - Only admins of the assessment can see the
-reponses<br>
+responses<br>
 </li><li>Respondees - Only respondees can see the responses<br>
 </li><li>Registered_Users - Only registered users can see the
 responses</li><li>Public - Everyone can see the responses<br>

@@ -15,7 +15,7 @@ Main Site Administration Page. This link only will appear if the
 Assessment Package is installed and mounted.</p><div class="screenshot"><div class="mediaobject"><img src="resources/register_asm.JPG"></div></div><p>If the Assessment Package is installed and mounted, the link can
 be follow and will lead to a page that shows all the assessment
 that can be responded for anonymous users created in all of the
-diferent instances of the assessment package that could exist. If
+different instances of the assessment package that could exist. If
 the option "None" is selected, it means that the
 registration process will be the same as always has been, if any
 other option is selected, the assessment will be diplayed when a
