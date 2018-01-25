@@ -9,7 +9,7 @@ namespace eval inter_item_checks::apm_callback {}
 
 ad_proc -private inter_item_checks::apm_callback::package_install { 
 } {
-    Does the integration whith the notifications package. 
+    Does the integration with the notifications package. 
 } {
     db_transaction {
 
@@ -29,7 +29,7 @@ ad_proc -private inter_item_checks::apm_callback::package_install {
 
 ad_proc -private inter_item_checks::apm_callback::package_uninstall {
 } {
-    Remove the integration whith the notification package
+    Remove the integration with the notification package
 } {
 
     db_transaction {

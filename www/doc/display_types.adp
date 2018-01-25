@@ -4,7 +4,7 @@
 <master>
 <h2><span class="context">Overview</span></h2>
 <span class="context">Displaying items to users has a couple of
-challanges. First of all the display of a single item can be
+challenges. First of all the display of a single item can be
 different for each item_type (and even within a type). Second of
 all, the display of items within a section can be different from
 assessment to assessment. Last but not least, the whole assessment
@@ -58,7 +58,7 @@ date", "0" for "today", or else some
 specific date set by the author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
 this example</a>)</span></span></span></li>
 </ul>
-<p>Depending on the presentation_types <font color="red">additonal
+<p>Depending on the presentation_types <font color="red">additional
 attributes (presentation_type attributes)</font> come into play
 (are added as attributes to the CR item type) (mark: this is not
 feature complete. It really is up to the coder to decide what

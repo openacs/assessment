@@ -127,7 +127,7 @@ content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {data_type}     -datatype {string}  -pretty_name {Data Type}     -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {case_sensitive_p} -datatype {boolean}  -pretty_name {Case Sensitive} -column_spec {char(1)}
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {percent_score} -datatype {number}  -pretty_name {Percent Score} -column_spec {integer}
-content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {compare_by}    -datatype {string}  -pretty_name {Comparasion}    -column_spec {varchar(20)}
+content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {compare_by}    -datatype {string}  -pretty_name {Comparison}    -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {regexp_text}    -datatype {string}  -pretty_name {Regexp}    -column_spec {varchar(20)}
 content::type::attribute::new -content_type {as_item_sa_answers} -attribute_name {allowed_answerbox_list}    -datatype {string}  -pretty_name {Allowed Answerbox List}    -column_spec {varchar(20)}
 

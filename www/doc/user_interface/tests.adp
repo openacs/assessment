@@ -4,7 +4,7 @@
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">A test
 is a special kind of accessment that allows the respondee&#39;s
-answers to be rated immediatly. Unless otherwise stated, all pages
+answers to be rated immediately. Unless otherwise stated, all pages
 described are admin viewable only.</span></span>
 <ul>
 <li>
@@ -142,7 +142,7 @@ negative percentage can be the result.</span></li>
 </li>
 </ul>
 <span class="context">Human grading will display all the questions
-and answers of response along with the possibility to reevalutate
+and answers of response along with the possibility to reevaluate
 the points and give comments. The header will display the following
 information:</span>
 <ul>

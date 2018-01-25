@@ -285,7 +285,7 @@ ad_proc -callback as::session::update {
     -session_points
     -assessment_points
 } {
-    Notify listeners that something interesting happend with this assessment session.
+    Notify listeners that something interesting happened with this assessment session.
 } -
 
 

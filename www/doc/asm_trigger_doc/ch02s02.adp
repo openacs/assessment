@@ -17,7 +17,7 @@ dotlrn class/community.</p></li>
 </ol></div><p>Actions can be also created, following the link "Add new
 action":</p><div class="screenshot"><div class="mediaobject"><img src="resources/add_action.JPG"></div></div><p>The action is formed mainlly by four things:</p><div class="orderedlist"><ol type="1">
 <li><p>Name: the desire name that gives an idea of what the action
-do.</p></li><li><p>Description: short explaination of what the action do, and how
+do.</p></li><li><p>Description: short explanation of what the action do, and how
 its done.</p></li><li><p>Tcl code: the code that its executed to performe the action.</p></li><li><p>Parameter: this are the variables needed in the tcl code, that
 depends of the user.</p></li>
 </ol></div><div class="screenshot"><div class="mediaobject"><img src="resources/create_action.JPG"></div></div><p>After the action is created, a link to add the parameters is

@@ -13,7 +13,7 @@ determine whether the user is allowed to take the
 assessment.</span><ul>
 <li><span class="context">Is the user allowed to take the survey at
 all (acs_permission check)</span></li><li><span class="context">Are all conditions for the taking of the
-assessment fullfilled</span></li><li><span class="context">Is there still a try for the user
+assessment fulfilled</span></li><li><span class="context">Is there still a try for the user
 left</span></li>
 </ul>
 </li><li><span class="context">Starttime of the response will be
@@ -68,7 +68,7 @@ file upload with an "I certify this test and state it is
 mine" checkbox. This will be stored in addition to the
 test.</span></li><li><span class="context">Notifications shall be send to the admin,
 staff and respondee.</span></li><li><span class="context">If we shall display the results to the
-respondee immediatly after finishing the assessment, show it to him
+respondee immediately after finishing the assessment, show it to him
 / her. Display the comments along depending on the
 settings.</span></li><li><span class="context">If we have a special score, show this
 result to the user (e.g. if 90% means "you are a dream
@@ -80,7 +80,7 @@ response.</span></li>
 various modes which he can select before the first section will be
 displayed.</span>
 <ul>
-<li><span class="context">Normal mode: The adminsitrator is treated
+<li><span class="context">Normal mode: The administrator is treated
 as a normal respondee, the response will be stored in the
 system.</span></li><li><span class="context">Test mode: The administrator sees the
 survey as a normal respondee, the response will not be stored in

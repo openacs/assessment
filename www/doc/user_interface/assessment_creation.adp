@@ -64,7 +64,7 @@ URL.</li>
 </ul>
 </li><li>Times
 <ul>
-<li>Availabilty: 2 date widgets (from, and to). This will set the
+<li>Availability: 2 date widgets (from, and to). This will set the
 time the time the survey will become visible for the respondees. It
 is overridden by the parameter enabled (if a accessment is not
 enabled, it will never be visible, regardless of date).</li><li>How often can a accessment be taken: Number of times a survey

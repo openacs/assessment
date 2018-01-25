@@ -276,7 +276,7 @@ other stuff like textarea dimensions ("rows=10 cols=50"
 eg)</span></li>
 </ul>
 <p><span class="context">Depending on the presentation_types
-<font color="red">additonal attributes (presentation_type
+<font color="red">additional attributes (presentation_type
 attributes)</font> come into play (are added as attributes to the
 CR item type) (mark: this is not feature complete. It really is up
 to the coder to decide what attributes each widget should have,
