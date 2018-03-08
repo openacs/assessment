@@ -1,7 +1,7 @@
 ad_page_contract {
 
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
-    @create-date 2005-01-19
+    @creation-date 2005-01-19
 
 } {
   inter_item_check_id:naturalnum,notnull
