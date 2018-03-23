@@ -82,7 +82,7 @@ with a test).</span><ul>
 <li><span class="context">Section: select. This will display a list
 of all previous sections. The selected section will be used for the
 computation.</span></li><li><span class="context">Calculation: select (median, distractor,
-absolut number of points). What shall be computed to determine
+absolute number of points). What shall be computed to determine
 whether the user is allowed to see this section.</span></li><li><span class="context">From / To value: integer. Two fields to
 display the valid range for which this section will be displayed to
 the user.</span></li>

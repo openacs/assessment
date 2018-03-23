@@ -245,7 +245,7 @@ should give encouraging text.<br>
 The computer science department has a final exam for the students.
 The exam consists of 3 sections. The exam is passed, if the student
 achieves at least 50% total score. In addition the student has to
-achive at least 40% in each of the sections. The first section is
+achieve at least 40% in each of the sections. The first section is
 deemed more important, therefore it gets a weight of 40%, the other
 two sections only 30% towards the total score. Each section
 consists of multiple questions that have a different weight (in

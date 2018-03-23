@@ -26,7 +26,7 @@ quality-of-life assessments. This Questionnaire package has not
 been ported to OpenACS 4.x yet, however, and it also lacks a wide
 variety of other features that are necessary for use in formal
 clinical trial data collection applications, certainly for those
-that intend to create data sets acceptible for new drug
+that intend to create data sets acceptable for new drug
 applications to the US Food and Drug Administration and equivalent
 European regulatory agencies.
 <p>Of note, there are large and well-funded vendors of clinical
