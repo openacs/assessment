@@ -165,7 +165,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Change_type">Change type</msg>
   <msg key="Choice">Choice</msg>
   <msg key="choice_Content">Upload File</msg>
-  <msg key="choice_Content_help">Upload a file with the content of the anwser</msg>
+  <msg key="choice_Content_help">Upload a file with the content of the answer</msg>
   <msg key="choice_Delete_Content">Delete File</msg>
   <msg key="choice_display_Content">Choice File</msg>
   <msg key="choice_Feedback_help">Feedback text given with this choice (in addition to the feedback given with the question itself)</msg>

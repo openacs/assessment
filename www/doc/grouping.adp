@@ -88,7 +88,7 @@ displayed the the respondee when answering an assessment.
 Possibility to include system variables (e.g. first name).<br>
 </li><li>custom_footer<br>
 </li><li>form_template - Style (form_template) that will be used for
-this assesment. You can either select an existing one or upload a
+this assessment. You can either select an existing one or upload a
 new style as well as edit the currently chosen one (no datamodell
 but UI thought).<br>
 </li><li>

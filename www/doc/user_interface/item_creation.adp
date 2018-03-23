@@ -9,7 +9,7 @@ of the assessment system. It deals with the storing of the various
 questions that can be used in a survey. You are able to
 add/edit/delete a question of a certain type to a certain scope.
 Furthermore it allows you to search and browse for questions for
-inclusion in your assesment as well as import and export multiple
+inclusion in your assessment as well as import and export multiple
 questions using various formats. This concept is new to survey 0.1d
 and changes the design of the survey module considerably. No
 mockups available.</span></p>

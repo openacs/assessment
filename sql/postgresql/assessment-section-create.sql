@@ -137,7 +137,7 @@ create table as_assessment_styles (
        custom_header	varchar(500), 
        -- custom footer that will be displayed to the respondee when answering an assessment.
        custom_footer	varchar(500), 
-       -- style (form_template) that will be used for this assesment. 
+       -- style (form_template) that will be used for this assessment. 
        form_template	varchar(500),
        -- what kind of progress bar shall be displayed to the respondee while taking the assessment
        progress_bar 	varchar(20) default 'no'       

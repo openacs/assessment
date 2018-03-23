@@ -65,7 +65,7 @@ ad_proc -callback merge::MergePackageUser -impl as {
     will be mapped to the to_user_id.
     
 } {
-    set msg "Merging assesment"
+    set msg "Merging assessment"
     set result [list $msg]
     ns_log Notice $msg
     db_transaction {

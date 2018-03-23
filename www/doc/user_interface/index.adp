@@ -24,7 +24,7 @@ basis for a new assessment package and will consist of various
 areas:</span>
 <h2><span class="context">Question Catalogue</span></h2>
 <span class="context">The question catalogue stores all the
-questions of the assesment package. It is a pool where all the
+questions of the assessment package. It is a pool where all the
 questions from all assessments are stored in. This creates the
 opportunity to make the questions reusable, allowing for statistics
 across surveys and prevents the respondee from having to fill out a

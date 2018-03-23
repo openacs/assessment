@@ -53,7 +53,7 @@ taking the assessment.</li><li>Styles
 <li>Custom header / footer: richtext. Custom header and footer that
 will be displayed the the respondee when answering an assessment.
 Possibility to include system variables (e.g. first name).</li><li>Select presentation style. Style (form_template) that will be
-used for this assesment</li><li>Upload new: file. Possibility to upload a new style</li><li>Edit (brings up a page with the possibility to edit the
+used for this assessment</li><li>Upload new: file. Possibility to upload a new style</li><li>Edit (brings up a page with the possibility to edit the
 selected style)</li><li>Customizable Entry page: richtext. The page that will be
 displayed before the first response.</li><li>Customizable buttons for Submit, Save, continue, cancel (e.g.
 using the style?)</li><li>Customizable thank you page: richtext.</li><li>Return_URL: text. URL the respondee will be redirected to after

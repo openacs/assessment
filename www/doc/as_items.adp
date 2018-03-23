@@ -10,7 +10,7 @@ as_items (or questions if you like) and groups of as_items (e.g.
 Sections) that can be used in an assessment. You are able to
 add/edit/delete an as_item of a certain type to a certain scope.
 Furthermore it allows you to search and browse for questions for
-inclusion in your assesment as well as import and export multiple
+inclusion in your assessment as well as import and export multiple
 questions using various formats.</span></p>
 <p><span class="context">In this description here we will only
 discuss the design implications for as_items. Green colored tables
