@@ -61,7 +61,7 @@ done in total (points)). A description for this can be found
 enables the automatic tests is described in a <a href="test_processing">separate document</a> as it will be parsed while
 the respondee answers the test, not manually. In addition this
 document describes how the grades are calculated (automatically or
-manually) for each question. The result is beeing stored in the
+manually) for each question. The result is being stored in the
 grading package.</span></p>
 <h1><span class="context">Scoring/Grading</span></h1>
 <span class="context">The grading package will be designed first of

@@ -223,7 +223,7 @@ following question types:</span>
 The answer to this question will be stored in the database. The
 question has the following additional fields:</span><ul>
 <li><span class="context">Table Name: short_string. This is the
-name of the table that is beeing used for storing the
+name of the table that is being used for storing the
 responses.</span></li><li><span class="context">Column: short_string. This is the column
 of the table that is used for storing the responses.</span></li><li><span class="context">Key Column: short_string. This is the
 column of the table that matches the user_id of the

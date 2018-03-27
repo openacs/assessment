@@ -21,6 +21,6 @@ create table as_item_display_f (
 	html_display_options	varchar(50),
 	-- an abstraction of the real size value in "small","medium","large" 
 	abs_size		varchar(10),
-	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
+	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, below, above)
 	item_answer_alignment	varchar(20)
 );

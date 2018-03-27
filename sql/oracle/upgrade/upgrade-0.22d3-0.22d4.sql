@@ -113,7 +113,7 @@ alter table as_item_data add constraint as_item_data_subj_id_fk foreign key (sub
 -- 	html_display_options	varchar(50),
 -- 	-- an abstraction of the real size value in "small","medium","large" 
 -- 	abs_size		varchar(10),
--- 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, bellow, above)
+-- 	-- the orientation between the "question part" of the Item (the title/subtext) and the "answer part" (beside-left, beside-right, below, above)
 -- 	item_answer_alignment	varchar(20)
 -- );
 

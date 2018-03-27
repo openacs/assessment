@@ -224,7 +224,7 @@ response data will be stored not only in Assessment entities
 (as_item_data eg) but also back in the other table (eg users). The
 question has the following additional fields:</p><ul>
 <li>Table Name: short_string. This is the name of the table that is
-beeing used for storing the responses.</li><li>Column: short_string. This is the column of the table that is
+being used for storing the responses.</li><li>Column: short_string. This is the column of the table that is
 used for storing the responses.</li><li>Key Column: short_string. This is the column of the table that
 matches the user_id of the respondee.</li>
 </ul>
