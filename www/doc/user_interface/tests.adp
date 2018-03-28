@@ -56,7 +56,7 @@ test</span></li><li>
 have to store the time needed for a try)</span></li><li><span class="context">Status. Status of the try (not finished,
 finished, auto-graded, manually graded)</span></li><li><span class="context">Link to evaluate single response (human
 grading in test-processing.html)</span></li><li><span class="context">The try that is used for scoring the
-respondee is diplayed with a green background. If we take the
+respondee is displayed with a green background. If we take the
 median of all tries, mark all of them green.</span></li>
 </ul>
 </li><li><span class="context">Furthermore links to details about the
@@ -72,7 +72,7 @@ it can.</span></li><li><span class="context">The results of this auto-grading ar
 displayed in the evaluation table for the admin (see test
 specifications)</span></li><li><span class="context">The test result is stored in the scoring
 system.</span></li><li><span class="context">Staff can manually Human Grade the test.
-This is mandatory for open questions for the test to be completly
+This is mandatory for open questions for the test to be completely
 graded.</span></li><li><span class="context">The result of the human grading
 overwrites the auto grading in the scoring system.</span></li>
 </ol>

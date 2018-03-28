@@ -18,7 +18,7 @@ that can be responded for anonymous users created in all of the
 different instances of the assessment package that could exist. If
 the option "None" is selected, it means that the
 registration process will be the same as always has been, if any
-other option is selected, the assessment will be diplayed when a
+other option is selected, the assessment will be displayed when a
 user creates a new account.</p><div class="screenshot"><div class="mediaobject"><img src="resources/none_asm.JPG"></div></div><div class="screenshot"><div class="mediaobject"><img src="resources/select_asm.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
