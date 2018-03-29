@@ -635,7 +635,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Subject_Name">Subject Name</msg>
   <msg key="Submit">Submit</msg>
   <msg key="Submit_Answer">Separate submit for each question</msg>
-  <msg key="submit_answer_help">Does the respondee have to submit the answer for each question seperately.</msg>
+  <msg key="submit_answer_help">Does the respondee have to submit the answer for each question separately.</msg>
   <msg key="Subtext">Subtext&lt;br&gt;(Optional)</msg>
   <msg key="Summary">Summary</msg>
   <msg key="survey_section">Section 1</msg>

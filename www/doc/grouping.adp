@@ -54,7 +54,7 @@ you page is there. Otherwise the return_url should be set in the
 thank you page context, so we can have a "continue"
 URL.</li><li>start_time - At what time shall the assessment become available
 to the users (remark: It will only become available to the users
-who have at least the "respond" priviledge.</li><li>end_time - At what time the assessment becomes unavailable.
+who have at least the "respond" privilege.</li><li>end_time - At what time the assessment becomes unavailable.
 This is a hard date, any response given after this time will be
 discarded.</li><li>number_tries - Number of times a respondee can answer the
 assessment</li><li>wait_between_tries - Number of minutes a respondee has to wait

@@ -47,7 +47,7 @@ number of attributes from as_items into mapping tables where
 "override" values for these attributes can optionally be
 set by authors. If they choose not to set overrides, then the
 values originally created in the as_item supercede.</span></p>
-<p><span class="context">Seperately we will deal with Checks on
+<p><span class="context">Separately we will deal with Checks on
 as_items. These will allow us to make checks on the input (is the
 value given by the user actually a valid value??), branches (if we
 display this as_item, which responses have to have been given) and
