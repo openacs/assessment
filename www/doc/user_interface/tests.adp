@@ -27,7 +27,7 @@ given</span></li><li><span class="context">Points. The number of Points the
 respondee has gotten for the answer</span></li><li><span class="context">Evaluation comment. The evaluation
 comment given by the evaluator</span></li><li><span class="context">Correct Answer. The correct answer of the
 question</span></li><li><span class="context">Feedback. The feedback that is stored
-with the given answer</span></li><li><span class="context">Feeback for question. The feedback that
+with the given answer</span></li><li><span class="context">Feedback for question. The feedback that
 is stored with the question</span></li><li><span class="context">Total result. The total result of the
 test (at the buttoms)</span></li>
 </ul>

@@ -364,7 +364,7 @@ adjustors, accountants, tax preparation staff, etc.</p>
 series of questions (called "Items") into Sections
 (defined logically in terms of branch points and literally in terms
 of "Items presented together on a page"), along with all
-other parameters that define the nature and fuction of all
+other parameters that define the nature and function of all
 Assessment components.</li><li>Create, edit and delete Assessments, the highest level in the
 structure hierarchy. Configure Assessment attributes:
 <ul>

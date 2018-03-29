@@ -162,7 +162,7 @@ content::type::attribute::new -content_type {as_section_display_types} -attribut
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {adp_chunk}      -datatype {text}  -pretty_name {Section Display Template}  -column_spec {text}
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {branched_p}      -datatype {boolean}  -pretty_name {Section Branched}  -column_spec {char(1)}
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {back_button_p}      -datatype {boolean}  -pretty_name {Back button allowed}  -column_spec {char(1)}
-content::type::attribute::new -content_type {as_section_display_types} -attribute_name {submit_answer_p}      -datatype {boolean}  -pretty_name {Seperate submit for each answer}  -column_spec {char(1)}
+content::type::attribute::new -content_type {as_section_display_types} -attribute_name {submit_answer_p}      -datatype {boolean}  -pretty_name {Separate submit for each answer}  -column_spec {char(1)}
 content::type::attribute::new -content_type {as_section_display_types} -attribute_name {sort_order_type}      -datatype {string}  -pretty_name {Item sort order type}  -column_spec {varchar(20)}
 
 # Assessments

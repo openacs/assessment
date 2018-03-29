@@ -126,7 +126,7 @@ messages:<br><ul>
 </ul>
 </li><li>Reminder period for notification messages.</li>
 </ul>
-</li><li>Reponses
+</li><li>Responses
 <ul>
 <li>View responses per User (resulting in a page with all responses
 with checkboxes in front for deletion and a check/uncheck all

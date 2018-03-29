@@ -282,7 +282,7 @@ CR item type) (mark: this is not feature complete. It really is up
 to the coder to decide what attributes each widget should have,
 down here are only *suggestions*). Additionally we&#39;re not
 mentioning all HTML possibilities associated with each type (e.g. a
-textarea has width and heigth..) as these can be parsed in via the
+textarea has width and height..) as these can be parsed in via the
 html_display_options.<br>
 </span></p>
 <ul>

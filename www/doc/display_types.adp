@@ -65,7 +65,7 @@ feature complete. It really is up to the coder to decide what
 attributes each widget should have, down here are only
 *suggestions*). Additionally we&#39;re not mentioning all HTML
 possibilities associated with each type (e.g. a textarea has width
-and heigth..).</p>
+and height..).</p>
 <ul>
 <li>textbox - single-line typed entry
 <ul><li>abs_size - An abstraction of the real size value in

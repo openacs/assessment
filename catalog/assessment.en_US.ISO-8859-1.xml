@@ -105,7 +105,7 @@ each question be shown to the subject.</msg>
   <msg key="as_Number_Tries_help">How often can a subject retake the test. 0 for infinite.</msg>
   <msg key="as_parameter_description_help">Purpouse of the variable (short desc.)</msg>
   <msg key="as_parameter_help">Name of the variable that you going to call on the tcl code (ie. student_id) without &quot;$&quot;</msg>
-  <msg key="as_parameter_query_help">Just put the query that retrive the info desired (Syntax: select name,id from table_name where condition)</msg>
+  <msg key="as_parameter_query_help">Just put the query that retrieve the info desired (Syntax: select name,id from table_name where condition)</msg>
   <msg key="as_parameter_type_help">Select the type of variable you spect to use. It it is a query you have to put your query below</msg>
   <msg key="as_password_help">Enter a password for the assessment</msg>
   <msg key="as_password_user_help">In order to take this assessment you need to enter the password.</msg>
@@ -634,7 +634,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="Subject">Subject</msg>
   <msg key="Subject_Name">Subject Name</msg>
   <msg key="Submit">Submit</msg>
-  <msg key="Submit_Answer">Seperate submit for each question</msg>
+  <msg key="Submit_Answer">Separate submit for each question</msg>
   <msg key="submit_answer_help">Does the respondee have to submit the answer for each question seperately.</msg>
   <msg key="Subtext">Subtext&lt;br&gt;(Optional)</msg>
   <msg key="Summary">Summary</msg>
