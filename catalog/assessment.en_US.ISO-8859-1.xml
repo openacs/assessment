@@ -126,7 +126,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Assessment_Imported_Correctly">Assessment Imported Correctly</msg>
   <msg key="assessment_Name_help">This allows you to give a special unique identifier to your assessment, which might be a code.</msg>
   <msg key="assessment_not_public">Assessment is not public.</msg>
-  <msg key="Assessment_porlet">Assessments</msg>
+  <msg key="Assessment_portlet">Assessments</msg>
   <msg key="assessment_restricted_ips">Access restricted, wrong IP.</msg>
   <msg key="Assessment_Title">Title</msg>
   <msg key="assessment_too_many_tries">Only %number_tries% tries allowed.</msg>

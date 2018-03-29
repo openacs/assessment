@@ -109,7 +109,7 @@
   <msg key="Assessment_Imported_Correctly">Cuestionario importado correctamente</msg>
   <msg key="assessment_Name_help">Permíteche dar un identificador único ao cuestionario, que pode ser un código</msg>
   <msg key="assessment_not_public">O cuestionario non é público</msg>
-  <msg key="Assessment_porlet">Cuestionarios</msg>
+  <msg key="Assessment_portlet">Cuestionarios</msg>
   <msg key="assessment_restricted_ips">Acceso restrinxido, IP errónea</msg>
   <msg key="Assessment_Title">Título</msg>
   <msg key="assessment_too_many_tries">Só permítense %number_tries% intentos.</msg>

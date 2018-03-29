@@ -108,7 +108,7 @@
   <msg key="Assessment_Imported_Correctly">Avaliação Importada Corretamente</msg>
   <msg key="assessment_Name_help">Permite fornecer um identificador especial único para a sua avaliação, que pode ser um código.</msg>
   <msg key="assessment_not_public">Avaliação não é pública</msg>
-  <msg key="Assessment_porlet">Avaliações</msg>
+  <msg key="Assessment_portlet">Avaliações</msg>
   <msg key="assessment_restricted_ips">Acesso restrito, endereço IP equivocado.</msg>
   <msg key="Assessment_Title">Título</msg>
   <msg key="assessment_too_many_tries">Apenas %number_tries% são permitidas.</msg>
