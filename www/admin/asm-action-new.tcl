@@ -1,6 +1,6 @@
 ad_page_contract {
     This page admin the new actions to be used on the checks
-    @authos vivian@viaro.net Viaro Networks (www.viaro.net)
+    @author vivian@viaro.net Viaro Networks (www.viaro.net)
     @date 07-01-2005
     @cvs-id $Id:
 } {
