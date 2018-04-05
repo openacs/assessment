@@ -53,7 +53,7 @@ basic functions.</p>
 We discuss the following stuff in detail through the subsequent
 pages, and we use a sort of "bird&#39;s eye view" of this
 global graphic to keep the schema for each subsystem in perspective
-while homing in on the relevent detail. Here&#39;s a brief
+while homing in on the relevant detail. Here&#39;s a brief
 introduction to each of these section<br>
 <ul>
 <li>
