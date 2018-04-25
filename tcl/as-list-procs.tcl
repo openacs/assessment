@@ -24,7 +24,7 @@ namespace eval as::list {
         @error
     } {
         # Process search items
-        set paramlist [list]
+        set paramlist {}
         if { [set form [rp_getform]] ne "" } {
             array set formarr [util_ns_set_to_list -set $form]
             set paramlist {}
@@ -50,7 +50,7 @@ namespace eval as::list {
         @error
     } {
         # Process search items
-        set as_item_ids ulist]
+        set as_item_ids {}
         if { [set form [rp_getform]] ne "" } {
             array set formarr [util_ns_set_to_list -set $form]
             set paramlist {}
