@@ -91,20 +91,20 @@ ad_form -extend -name item-add -form {
     {points:text(hidden),optional {value ""}}
     {data_type:text(hidden),optional {value ""}}
     {validate_block:text(textarea),optional \
-	 {label "[_ assessment.Validation_Block]"} \
-	 {help_text "[_ assessment.lt_This_field_is_used_to]"} \
-	 {html {cols 70 rows 6}}}
+    {label "[_ assessment.Validation_Block]"} \
+    {help_text "[_ assessment.lt_This_field_is_used_to]"} \
+    {html {cols 70 rows 6}}}
 }
 }
 
 if { $type ne "survey"} {
     #ad_form -extend -name item-add -form {
     #    {data_type:text(select) {label "[_ assessment.Data_Type]"} {options $data_types} {help_text "[_ assessment.Data_Type_help]"}}}
-} 
+}
 
 ad_form -extend -name item-add -form {
     {item_type:text(radio) {label "[_ assessment.Item_Type]"} {options $item_types} {help_text "[_ assessment.Item_Type_help]"}}
-    #	    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
+    #    {validate_block:text(textarea),optional {label "[_ assessment.Validation_Block]"} {help_text "[_ assessment.lt_This_field_is_used_to]"} {html {cols 70 rows 6}}}
     {num_choices:text(hidden)}
 }
 
@@ -117,30 +117,30 @@ set choice_sets [db_list_of_lists existing_choice_sets {}]
 if {[llength $choice_sets]} {
     set choice_sets [concat [list [list "--" ""]] $choice_sets]
     ad_form -extend -name item-add -form {
-	{add_existing_mc_id:text(select),optional {label "[_ assessment.Choice_Sets]"} {options $choice_sets} {help_text "[_ assessment.Choice_Sets_help]"}}
+        {add_existing_mc_id:text(select),optional {label "[_ assessment.Choice_Sets]"} {options $choice_sets} {help_text "[_ assessment.Choice_Sets_help]"}}
     }
 } else {
     ad_form -extend -name item-add -form {
-	{add_existing_mc_id:text(hidden),optional}
+        {add_existing_mc_id:text(hidden),optional}
     }
 }
 
 ad_form -extend -name item-add -form {
-    {save_answer_set:text(checkbox),optional 
+    {save_answer_set:text(checkbox),optional
         {options {{"#assessment.Save_this_set_of_answers_for_reuse_later#" t}}}
     }
     {formbutton_add_another_choice:text(submit) {label "[_ assessment.Add_another_choice]"}}
 }
 if {[template::form::is_submission item-add] \
-	&& [template::element::get_value item-add formbutton_add_another_choice] \
-	eq [_ assessment.Add_another_choice]} {
+    && [template::element::get_value item-add formbutton_add_another_choice] \
+    eq [_ assessment.Add_another_choice]} {
     set num_choices [element::get_value item-add num_choices]
     incr num_choices
     element::set_value item-add num_choices $num_choices
-} 
+}
 
 if {![template::form::is_submission item-add] \
-	&& ![info exists num_choices]} {
+    && ![info exists num_choices]} {
     set num_choices 5
 } else {
     set num_choices [template::element::get_value item-add num_choices]
@@ -185,137 +185,135 @@ ad_form -extend -name item-add -new_request {
 } -on_submit {
     set category_ids [category::ad_form::get_categories -container_object_id $package_id]
     if {$points eq ""} {
-	set points 0
+        set points 0
     }
 
     if {(![info exists formbutton_add_another_choice] || $formbutton_add_another_choice eq "")} {
     # map display types to data types
     switch -exact $item_type {
         sa {
-	set data_type "varchar" 
-	set display_type "tb"
+            set data_type "varchar"
+            set display_type "tb"
         }
         oq {
-	set data_type "text" 
-	set display_type "ta"
+            set data_type "text"
+            set display_type "ta"
         }
         mc {
-	set data_type "varchar" 
-	set display_type "rb"            
+            set data_type "varchar"
+            set display_type "rb"
         }
         ms {
             #multiple select is just multiple choice with checkboxes
-        set item_type "mc"
-	set data_type "varchar" 
-	set display_type "cb"                        
+            set item_type "mc"
+            set data_type "varchar"
+            set display_type "cb"
         }
         fu {
-	set data_type "file" 
-	set display_type "fu"
+            set data_type "file"
+            set display_type "fu"
         }
     }
     set question_text [template::util::richtext::get_property content $question_text]
     set feedback_right [template::util::richtext::get_property content $feedback_right]
     set feedback_wrong [template::util::richtext::get_property content $feedback_wrong]
     db_transaction {
-	if {![db_0or1row item_exists {}]} {
+        if {![db_0or1row item_exists {}]} {
 
-	    set as_item_id [as::item::new \
-				-item_item_id $as_item_id \
-				-title $question_text \
-				-description $description \
-				-field_name $field_name \
-				-field_code $field_code \
-				-required_p $required_p \
-				-data_type $data_type \
-				-feedback_right $feedback_right \
-				-feedback_wrong $feedback_wrong \
-				-max_time_to_complete $max_time_to_complete \
-				-points $points \
-				-validate_block $validate_block]
-	} else {
-	    set as_item_id [as::item::edit \
-				-as_item_id $as_item_id \
-				-title $question_text \
-				-description $description \
-				-field_name $field_name \
-				-field_code $field_code \
-				-required_p $required_p \
-				-data_type $data_type \
-				-feedback_right $feedback_right \
-				-feedback_wrong $feedback_wrong \
-				-max_time_to_complete $max_time_to_complete \
-				-points $points \
-				-validate_block $validate_block]
+            set as_item_id [as::item::new \
+                    -item_item_id $as_item_id \
+                    -title $question_text \
+                    -description $description \
+                    -field_name $field_name \
+                    -field_code $field_code \
+                    -required_p $required_p \
+                    -data_type $data_type \
+                    -feedback_right $feedback_right \
+                    -feedback_wrong $feedback_wrong \
+                    -max_time_to_complete $max_time_to_complete \
+                    -points $points \
+                    -validate_block $validate_block]
+        } else {
+            set as_item_id [as::item::edit \
+                    -as_item_id $as_item_id \
+                    -title $question_text \
+                    -description $description \
+                    -field_name $field_name \
+                    -field_code $field_code \
+                    -required_p $required_p \
+                    -data_type $data_type \
+                    -feedback_right $feedback_right \
+                    -feedback_wrong $feedback_wrong \
+                    -max_time_to_complete $max_time_to_complete \
+                    -points $points \
+                    -validate_block $validate_block]
 
-	    db_dml delete_files {}
-	}
+            db_dml delete_files {}
+        }
 
-	if {([info exists category_ids] && $category_ids ne "")} {
-	    category::map_object -object_id $as_item_id $category_ids
-	}
+        if {([info exists category_ids] && $category_ids ne "")} {
+            category::map_object -object_id $as_item_id $category_ids
+        }
 
-	if {$content ne ""} {
-	    set filename [lindex $content 0]
-	    set tmp_filename [lindex $content 1]
-	    set file_mimetype [lindex $content 2]
-	    set n_bytes [file size $tmp_filename]
-	    set max_file_size 10000000
-	    # [parameter::get -parameter MaxAttachmentSize]
-	    set pretty_max_size [util_commify_number $max_file_size]
+        if {$content ne ""} {
+            lassign $content filename tmp_filename file_mimetype
+            set n_bytes [file size $tmp_filename]
+            set max_file_size 10000000
+            # [parameter::get -parameter MaxAttachmentSize]
+            set pretty_max_size [util_commify_number $max_file_size]
 
-	    if { $n_bytes > $max_file_size && $max_file_size > 0 } {
-		ad_return_complaint 1 "[_ assessment.file_too_large]"
-		return
-	    }
-	    if { $n_bytes == 0 } {
-		ad_return_complaint 1 "[_ assessment.file_zero_size]"
-		return
-	    }
+            if { $n_bytes > $max_file_size && $max_file_size > 0 } {
+                ad_return_complaint 1 "[_ assessment.file_too_large]"
+                return
+            }
+            if { $n_bytes == 0 } {
+                ad_return_complaint 1 "[_ assessment.file_zero_size]"
+                return
+            }
 
-	    set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
-	    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
-	}
+            set content_rev_id [cr_import_content -title $filename $folder_id $tmp_filename $n_bytes $file_mimetype [as::item::generate_unique_name]]
+            as::item_rels::new -item_rev_id $as_item_id -target_rev_id $content_rev_id -type as_item_content_rel
+        }
         # check question type
-	set title [string range $question_text 0 999]
+        set title [string range $question_text 0 999]
         switch -exact $item_type {
             mc {
-		# title for MC is the name of a saved answer set
-		# always set to empty on a new question and
-		# ask for the title separately in save-answer-set page
+                # title for MC is the name of a saved answer set
+                # always set to empty on a new question and
+                # ask for the title separately in save-answer-set page
                 set new_mc_id [as::item_type_mc::add_to_assessment \
-				   -assessment_id $assessment_id \
-				   -section_id $section_id \
-				   -as_item_id $as_item_id \
-				   -choices [array get choice] \
-				   -correct_choices [array get correct] \
-				   -after $after \
-				   -title "" \
-				   -display_type $display_type]
+                    -assessment_id $assessment_id \
+                    -section_id $section_id \
+                    -as_item_id $as_item_id \
+                    -choices [array get choice] \
+                    -correct_choices [array get correct] \
+                    -after $after \
+                    -title "" \
+                    -display_type $display_type]
 
-		if {[info exists add_existing_mc_id] && $add_existing_mc_id ne ""} {
-		    set add_existing_mc_id [as::item_type_mc::copy -type_id $add_existing_mc_id -copy_correct_answer_p "f" -new_title ""]
-		    if {![db_0or1row item_type {}] || $object_type ne "as_item_type_mc"} {
-			if {![info exists object_type]} {
-			    # first item type mapped
-			    as::item_rels::new -item_rev_id $as_item_id -target_rev_id $add_existing_mc_id -type as_item_type_rel
-			} else {
-			    # old item type existing
-			    db_dml update_item_type {}
-			}
-		    } else {
-			# old mc item type existing
-			db_dml update_item_type {}
-		    }
-		}
-	    }
+                if {[info exists add_existing_mc_id] && $add_existing_mc_id ne ""} {
+                    set add_existing_mc_id [as::item_type_mc::copy -type_id $add_existing_mc_id -copy_correct_answer_p "f" -new_title ""]
+                    if {![db_0or1row item_type {}] || $object_type ne "as_item_type_mc"} {
+                        if {![info exists object_type]} {
+                            # first item type mapped
+                            as::item_rels::new -item_rev_id $as_item_id -target_rev_id $add_existing_mc_id -type as_item_type_rel
+                        } else {
+                            # old item type existing
+                            db_dml update_item_type {}
+                        }
+                    } else {
+                        # old mc item type existing
+                        db_dml update_item_type {}
+                    }
+                }
+            }
             oq {
                 as::item_type_oq::add_to_assessment \
                     -assessment_id $assessment_id \
                     -section_id $section_id \
                     -as_item_id $as_item_id \
                     -after $after \
-                    -title $title                    
+                    -title $title
             }
             sa {
                 as::item_type_sa::add_to_assessment \
@@ -323,7 +321,7 @@ ad_form -extend -name item-add -new_request {
                     -section_id $section_id \
                     -as_item_id $as_item_id \
                     -after $after \
-                    -title $title                    
+                    -title $title
             }
             fu {
                 as::item_type_fu::add_to_assessment \
@@ -331,25 +329,25 @@ ad_form -extend -name item-add -new_request {
                     -section_id $section_id \
                     -as_item_id $as_item_id \
                     -after $after \
-                    -title $title                                    
+                    -title $title
             }
         }
     }
 }
 } -after_submit {
     if {(![info exists formbutton_add_another_question] || $formbutton_add_another_question eq "") \
-	    && (![info exists formbutton_add_another_choice] || $formbutton_add_another_choice eq "")} {
-	set return_url "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
+        && (![info exists formbutton_add_another_choice] || $formbutton_add_another_choice eq "")} {
+        set return_url "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
     } elseif {([info exists formbutton_add_another_question] && $formbutton_add_another_question ne "")} {
-	set after [expr {$after + 1}]
-	set return_url  "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
+        set after [expr {$after + 1}]
+        set return_url  "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
     }
     if {[info exists return_url] && $return_url ne ""} {
-	if {[info exists save_answer_set] && $save_answer_set eq "on" && (![info exists add_existing_mc_id] || $add_existing_mc_id eq "")} {
-	    set return_url [export_vars -base save-answer-set {assessment_id as_item_id return_url {mc_id $new_mc_id}}]
-	}
-	ad_returnredirect $return_url
-	ad_script_abort	
+        if {[info exists save_answer_set] && $save_answer_set eq "on" && (![info exists add_existing_mc_id] || $add_existing_mc_id eq "")} {
+            set return_url [export_vars -base save-answer-set {assessment_id as_item_id return_url {mc_id $new_mc_id}}]
+        }
+        ad_returnredirect $return_url
+        ad_script_abort
     }
 }
 
