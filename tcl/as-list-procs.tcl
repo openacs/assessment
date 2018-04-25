@@ -27,7 +27,7 @@ namespace eval as::list {
 	set paramlist [list]
 	if { [set form [rp_getform]] ne "" } {
 	    array set formarr [util_ns_set_to_list -set $form]
-	    set paramlist [list]
+	    set paramlist {}
 	    
 	    foreach param [array names formarr] {
 		if { [regexp -nocase {^as_item_id_(\d+)$} $param match one_item_id] } {
@@ -53,7 +53,7 @@ namespace eval as::list {
 	set as_item_ids [list]
 	if { [set form [rp_getform]] ne "" } {
 	    array set formarr [util_ns_set_to_list -set $form]
-	    set paramlist [list]
+	    set paramlist {}
 	    
 	    foreach param [array names formarr] {
 		if { [regexp -nocase {^as_item_id_(\d+)$} $param match one_item_id] } {
@@ -102,7 +102,7 @@ ad_proc as::list::add_columns {
     @param assessment_ids List of IDs of the assessments to get the items from
 
 } {
-    set elements [list]
+    set elements {}
 
     set multirow __as_list_$list_name
     as::list::get_items_multirow \
@@ -110,7 +110,7 @@ ad_proc as::list::add_columns {
 	-multirow $multirow
     
     # don't query the same item more than one
-    array set visited_items [list]
+    array set visited_items {}
     template::multirow foreach $multirow {
 	if {![info exists visited_items($item_id)] && $as_item_id == $latest_revision} {
 	    set visited_items($item_id) $item_id
@@ -182,7 +182,7 @@ ad_proc as::list::get_filters {
     
     #get all the items
 
-    set filters [list]
+    set filters {}
 
 	# we just want the questions that are in all the assessments we received
     set multirow __as_list_$list_name
@@ -191,7 +191,7 @@ ad_proc as::list::get_filters {
 	-multirow $multirow
 
     # don't query the same item more than one
-    array set visited_items [list]
+    array set visited_items {}
     template::multirow foreach $multirow {
 	if {![info exists visited_items($item_id)]} {
 	    set visited_items($item_id) $item_id
@@ -271,7 +271,7 @@ ad_proc as::list::get_items_multirow {
     } else {
 	set multiple_assessment_where ""
     }
-    array set visited_sections [list]
+    array set visited_sections {}
     foreach section [db_list_of_lists sections {}] {
 	set option_section_title [lindex $section 0]
 	set option_section_id [lindex $section 1]
@@ -295,7 +295,7 @@ ad_proc as::list::get_groupbys {
     
     #get all the items
 
-    set groupbys [list]
+    set groupbys {}
 
     # we just want the questions that are in all the assessments we received
     set multirow __as_list_$list_name
@@ -304,7 +304,7 @@ ad_proc as::list::get_groupbys {
 	-multirow $multirow
 
     # don't query the same item more than one
-    array set visited_items [list]
+    array set visited_items {}
     template::multirow foreach $multirow {
 	if {![info exists visited_items($item_id)]} {
 	    set visited_items($item_id) $item_id
@@ -331,7 +331,7 @@ ad_proc as::list::get_orderbys {
     
     #get all the items
 
-    set orderbys [list]
+    set orderbys {}
 
     # we just want the questions that are in all the assessments we received
     set multirow __as_list_$list_name
@@ -340,7 +340,7 @@ ad_proc as::list::get_orderbys {
 	-multirow $multirow
 
     # don't query the same item more than one
-    array set visited_items [list]
+    array set visited_items {}
     template::multirow foreach $multirow {
 	if {![info exists visited_items($item_id)]} {
 	    set visited_items($item_id) $item_id
