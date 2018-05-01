@@ -89,9 +89,9 @@ scheme across the world&#39;s universities. In addition in the area
 of Knowledge Management, grades could be transferred into incentive
 points, that can be reused to reward employees for good work done
 (where they got good ratings for).</span></p>
-<p><span class="context">Last but not least, maybe embedded with the
-workflow system, is the possibility to execute actions based on the
-grade. An example would be the adding of the student to the
+<p><span class="context">Last but not least, maybe embedded with
+the workflow system, is the possibility to execute actions based on
+the grade. An example would be the adding of the student to the
 advanced class if his grade or score reaches a certain level.
 Alternatively this looks like a good thing for the curriculum
 module to achieve.</span></p>
@@ -126,10 +126,10 @@ display, it could include the poll package and make it
 redundant.</span></p>
 <p><span class="context">Last but not least with the ability to
 display questions in a multi dimensional way to the user, the
-assessment system is useful for quality assurance (how important
-is this feature / how good do you think we implemented it). And as
-you might have guessed, for anything the current survey module has
-been used for as well (e.g. plain and simple surveys).</span></p>
+assessment system is useful for quality assurance (how important is
+this feature / how good do you think we implemented it). And as you
+might have guessed, for anything the current survey module has been
+used for as well (e.g. plain and simple surveys).</span></p>
 <p><span class="context">The grading system on it&#39;s own would
 be useful for the OpenACS community as it would allow the handing
 out of "zorkmints" along with any benefits the collection

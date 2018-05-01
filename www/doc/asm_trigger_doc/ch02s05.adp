@@ -3,11 +3,11 @@
 <property name="doc(title)">5. Action Triggers</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="ch02s04" leftLabel="Prev"
-		    title="Chapter 2. User
+			leftLink="ch02s04" leftLabel="Prev"
+			title="Chapter 2. User
 Manual"
-		    rightLink="ch02s06" rightLabel="Next">
-		<div class="section" lang="en">
+			rightLink="ch02s06" rightLabel="Next">
+		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e204" id="d0e204"></a>5. Action Triggers</h2></div></div></div><p>To define an Action Trigger, the field "Type" in the
 form must be checked as "Action".</p><p>The condition field shows the question and its possible anwers,
@@ -31,10 +31,10 @@ questions defined in the assessment.</p></li></ul></div>
 </li></ul></div><div class="screenshot"><div class="mediaobject"><img src="resources/set_params.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="ch02s04" leftLabel="Prev" leftTitle="4. Branch
+			leftLink="ch02s04" leftLabel="Prev" leftTitle="4. Branch
 Triggers "
-		    rightLink="ch02s06" rightLabel="Next" rightTitle=" 6. Trigger
+			rightLink="ch02s06" rightLabel="Next" rightTitle=" 6. Trigger
 Administration"
-		    homeLink="index" homeLabel="Home" 
-		    upLink="ch02" upLabel="Up"> 
-		
+			homeLink="index" homeLabel="Home" 
+			upLink="ch02" upLabel="Up"> 
+		    

@@ -3,11 +3,11 @@
 <property name="doc(title)">7. Request Administration</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="ch02s06" leftLabel="Prev"
-		    title="Chapter 2. User
+			leftLink="ch02s06" leftLabel="Prev"
+			title="Chapter 2. User
 Manual"
-		    rightLink="ch03" rightLabel="Next">
-		<div class="section" lang="en">
+			rightLink="ch03" rightLabel="Next">
+		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e290" id="d0e290"></a>7. Request Administration</h2></div></div></div><p>The request Administration page can be reached following the
 link in the action bar for a site wide administrator or following
@@ -23,10 +23,10 @@ several users that requested the action. Through this interface the
 notifications can also be managed.</p><div class="screenshot"><div class="mediaobject"><img src="resources/request_actions.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="ch02s06" leftLabel="Prev" leftTitle="6. Trigger
+			leftLink="ch02s06" leftLabel="Prev" leftTitle="6. Trigger
 Administration "
-		    rightLink="ch03" rightLabel="Next" rightTitle="
+			rightLink="ch03" rightLabel="Next" rightTitle="
  Chapter 3. Registration Assessment"
-		    homeLink="index" homeLabel="Home" 
-		    upLink="ch02" upLabel="Up"> 
-		
+			homeLink="index" homeLabel="Home" 
+			upLink="ch02" upLabel="Up"> 
+		    

@@ -95,11 +95,11 @@ done by creating a registered filter that returns a 401 to popup an
 HTTP auth box. look in oacs_dav::authenticate for an example of how
 to check the username/password<br>
 </li><li>IP Netmask. short_text. Netmask that will be matched against
-the IP-Address of the respondee. If it does not match, the user will
-not be given access. Again this should be handled by the creation
-of a registered filter on the URL where the assessment resides (for
-the respondee that is, meaning the entry URL for responding to the
-assessment).<br>
+the IP-Address of the respondee. If it does not match, the user
+will not be given access. Again this should be handled by the
+creation of a registered filter on the URL where the assessment
+resides (for the respondee that is, meaning the entry URL for
+responding to the assessment).<br>
 </li>
 </ul>
 </li><li>Notifications
@@ -107,12 +107,12 @@ assessment).<br>
 <li>Notifications will be done using the notification system of
 OpenACS.<br>
 </li><li>For all notifications allow system variables should be
-used.</li><li style="list-style: none"><ul>
+used.</li><li style="list-style: none; display: inline"><ul>
 <li>System_name</li><li>User_name</li><li>user_id</li><li>... (free for the developer to think about what is
 useful)<br>
 </li>
 </ul></li><li>Links to spam the following group of people (information can be
-taken out of as_sessions):</li><li style="list-style: none"><ul>
+taken out of as_sessions):</li><li style="list-style: none; display: inline"><ul>
 <li>All respondees having access to the assessment</li><li>All respondees that have not started the assessment</li><li>All respondees with unfinished assessments<br>
 </li><li>All respondees with finished assessment</li>
 </ul></li><li>Notification message: richtext. This will allow the creator to
@@ -133,7 +133,7 @@ with checkboxes in front for deletion and a check/uncheck all
 link)</li><li>View responses per Question</li><li>View responses by Filter / Groups / Values (e.g. search for
 questions with a negative distractor)</li><li>Grant access to responses (using the permission
 system):<br>
-</li><li style="list-style: none"><ul>
+</li><li style="list-style: none; display: inline"><ul>
 <li>Closed - Only the owner of the assessment can see the
 responses<br>
 </li><li>Admin - Only admins of the assessment can see the

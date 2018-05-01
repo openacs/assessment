@@ -4,8 +4,8 @@
 <master>
 <h2>Overview</h2>
 <p>The schema for the entities that actually collect, store and
-retrieve Assessment data parallels the hierarchical structure of the
-<a href="data-modell">Metadata Data Model</a>. In the
+retrieve Assessment data parallels the hierarchical structure of
+the <a href="data-modell">Metadata Data Model</a>. In the
 antecedent "complex survey" and "questionnaire"
 systems, this schema was simple two-level structure:</p>
 <ul>

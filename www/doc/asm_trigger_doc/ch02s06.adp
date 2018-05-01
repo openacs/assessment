@@ -3,11 +3,11 @@
 <property name="doc(title)">6. Trigger Administration</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="ch02s05" leftLabel="Prev"
-		    title="Chapter 2. User
+			leftLink="ch02s05" leftLabel="Prev"
+			title="Chapter 2. User
 Manual"
-		    rightLink="ch02s07" rightLabel="Next">
-		<div class="section" lang="en">
+			rightLink="ch02s07" rightLabel="Next">
+		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e259" id="d0e259"></a>6. Trigger Administration</h2></div></div></div><p>The trigger administration page can be reached from two
 different links, the link "Administer Triggers" in the
@@ -27,10 +27,10 @@ allowst to search and register another users to the
 notifications.</p><div class="screenshot"><div class="mediaobject"><img src="resources/notifications.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="ch02s05" leftLabel="Prev" leftTitle="5. Action
+			leftLink="ch02s05" leftLabel="Prev" leftTitle="5. Action
 Triggers "
-		    rightLink="ch02s07" rightLabel="Next" rightTitle=" 7. Request
+			rightLink="ch02s07" rightLabel="Next" rightTitle=" 7. Request
 Administration"
-		    homeLink="index" homeLabel="Home" 
-		    upLink="ch02" upLabel="Up"> 
-		
+			homeLink="index" homeLabel="Home" 
+			upLink="ch02" upLabel="Up"> 
+		    

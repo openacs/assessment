@@ -3,11 +3,11 @@
 <property name="doc(title)">1. Manage Permissions</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="ch02" leftLabel="Prev"
-		    title="Chapter 2. User
+			leftLink="ch02" leftLabel="Prev"
+			title="Chapter 2. User
 Manual"
-		    rightLink="ch02s02" rightLabel="Next">
-		<div class="section" lang="en">
+			rightLink="ch02s02" rightLabel="Next">
+		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e54" id="d0e54"></a>1. Manage Permissions</h2></div></div></div><p>To create an assessment is necessary to have create permissions
 over the assessment instance. This permission can be inherit or can
@@ -23,10 +23,10 @@ permissions:</p><div class="screenshot"><div class="mediaobject"><img src="resou
 permissions can be set properly.</p><div class="screenshot"><div class="mediaobject"><img src="resources/user_permissions.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="ch02" leftLabel="Prev" leftTitle="Chapter 2. User
+			leftLink="ch02" leftLabel="Prev" leftTitle="Chapter 2. User
 Manual "
-		    rightLink="ch02s02" rightLabel="Next" rightTitle=" 2. Actions
+			rightLink="ch02s02" rightLabel="Next" rightTitle=" 2. Actions
 Administration"
-		    homeLink="index" homeLabel="Home" 
-		    upLink="ch02" upLabel="Up"> 
-		
+			homeLink="index" homeLabel="Home" 
+			upLink="ch02" upLabel="Up"> 
+		    

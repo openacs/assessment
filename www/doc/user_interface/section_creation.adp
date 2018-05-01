@@ -39,7 +39,7 @@ phase.<br>
 <li><span class="context">
 <a href="../sequencing"><span style="color: rgb(204, 102, 0);">Sequencing
 Information</span></a><br>
-</span></li><li style="list-style: none"><ul>
+</span></li><li style="list-style: none; display: inline"><ul>
 <li style="color: rgb(204, 102, 0);">Display of the Pre Display
 Checks (with an edit and a remove link).</li><li style="color: rgb(204, 102, 0);">Add new Pre Display
 Check.</li><li style="color: rgb(204, 102, 0);">Add new Post Display

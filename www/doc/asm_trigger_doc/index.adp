@@ -3,10 +3,10 @@
 <property name="doc(title)">Triggers and Action Execution in Assessment</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="" leftLabel=""
-		    title=" "
-		    rightLink="ch01" rightLabel="Next">
-		<div class="book" lang="en">
+			leftLink="" leftLabel=""
+			title=" "
+			rightLink="ch01" rightLabel="Next">
+		    <div class="book" lang="en">
 <div class="titlepage">
 <div><div><h1 class="title">
 <a name="d0e1" id="d0e1"></a>Triggers and Action
@@ -32,9 +32,9 @@ Authors</a></span></dt>
 </div><div class="list-of-figures"><a href="ch01s01"></a></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="" leftLabel="" leftTitle=" "
-		    rightLink="ch01" rightLabel="Next" rightTitle="
+			leftLink="" leftLabel="" leftTitle=" "
+			rightLink="ch01" rightLabel="Next" rightTitle="
  Chapter 1. Design"
-		    homeLink="" homeLabel="" 
-		    upLink="" upLabel=""> 
-		
+			homeLink="" homeLabel="" 
+			upLink="" upLabel=""> 
+		    

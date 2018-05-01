@@ -3,10 +3,10 @@
 <property name="doc(title)">Chapter 2. User Manual</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="ch01s01" leftLabel="Prev"
-		    title=" "
-		    rightLink="ch02s01" rightLabel="Next">
-		<div class="chapter" lang="en">
+			leftLink="ch01s01" leftLabel="Prev"
+			title=" "
+			rightLink="ch02s01" rightLabel="Next">
+		    <div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e49" id="d0e49"></a>Chapter 2. User Manual</h2></div></div></div><div class="toc">
 <p><strong>Table of Contents</strong></p><dl>
@@ -23,10 +23,10 @@ Administration</a></span></dt>
 sections or execute actions:</p>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="ch01s01" leftLabel="Prev" leftTitle="1. Data
+			leftLink="ch01s01" leftLabel="Prev" leftTitle="1. Data
 Model "
-		    rightLink="ch02s01" rightLabel="Next" rightTitle=" 1. Manage
+			rightLink="ch02s01" rightLabel="Next" rightTitle=" 1. Manage
 Permissions"
-		    homeLink="index" homeLabel="Home" 
-		    upLink="" upLabel=""> 
-		
+			homeLink="index" homeLabel="Home" 
+			upLink="" upLabel=""> 
+		    

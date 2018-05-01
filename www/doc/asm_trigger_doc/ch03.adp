@@ -3,10 +3,10 @@
 <property name="doc(title)">Chapter 3. Registration Assessment</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"
-		    leftLink="ch02s07" leftLabel="Prev"
-		    title=" "
-		    rightLink="ch04" rightLabel="Next">
-		<div class="chapter" lang="en">
+			leftLink="ch02s07" leftLabel="Prev"
+			title=" "
+			rightLink="ch04" rightLabel="Next">
+		    <div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e316" id="d0e316"></a>Chapter 3. Registration Assessment</h2></div></div></div><p>To be able to select an assessment that will be related to the
 registration process is necessary that the user has site wide admin
@@ -22,10 +22,10 @@ other option is selected, the assessment will be displayed when a
 user creates a new account.</p><div class="screenshot"><div class="mediaobject"><img src="resources/none_asm.JPG"></div></div><div class="screenshot"><div class="mediaobject"><img src="resources/select_asm.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
-		    leftLink="ch02s07" leftLabel="Prev" leftTitle="7. Request
+			leftLink="ch02s07" leftLabel="Prev" leftTitle="7. Request
 Administration "
-		    rightLink="ch04" rightLabel="Next" rightTitle="
+			rightLink="ch04" rightLabel="Next" rightTitle="
  Chapter 4. Authors"
-		    homeLink="index" homeLabel="Home" 
-		    upLink="" upLabel=""> 
-		
+			homeLink="index" homeLabel="Home" 
+			upLink="" upLabel=""> 
+		    

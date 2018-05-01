@@ -68,8 +68,8 @@ file upload with an "I certify this test and state it is
 mine" checkbox. This will be stored in addition to the
 test.</span></li><li><span class="context">Notifications shall be send to the admin,
 staff and respondee.</span></li><li><span class="context">If we shall display the results to the
-respondee immediately after finishing the assessment, show it to him
-/ her. Display the comments along depending on the
+respondee immediately after finishing the assessment, show it to
+him / her. Display the comments along depending on the
 settings.</span></li><li><span class="context">If we have a special score, show this
 result to the user (e.g. if 90% means "you are a dream
 husband", display this along with the 90%).</span></li><li><span class="context">Display a link with the possibility to

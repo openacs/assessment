@@ -2,10 +2,10 @@
 <property name="context">{/doc/assessment {Assessment}} {Tests}</property>
 <property name="doc(title)">Tests</property>
 <master>
-<!-- START HEADER --><span class="context"><span class="reg">A test
-is a special kind of accessment that allows the respondee&#39;s
-answers to be rated immediately. Unless otherwise stated, all pages
-described are admin viewable only.</span></span>
+<!-- START HEADER --><span class="context"><span class="reg">A
+test is a special kind of accessment that allows the
+respondee&#39;s answers to be rated immediately. Unless otherwise
+stated, all pages described are admin viewable only.</span></span>
 <ul>
 <li>
 <span class="context">Settings</span><ul>
