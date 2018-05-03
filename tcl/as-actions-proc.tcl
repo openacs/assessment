@@ -17,7 +17,7 @@ ad_proc -public as::action::action_exec {
 
     set parameter_name [db_1row select_name "select varname from as_action_params where parameter_id = :parameter_id"]
 
-    if {![exists_and_not_null value]} {
+    if {![info exists value] || $value eq ""} {
 
         set $varname [db_string get_item_choice {select idc.choice_id from as_item_data_choices idc,as_item_data id where id.as_item_id=$item_id and id.item_data_id=idc.item_data_id and id.session_id=:session_id}]
 
