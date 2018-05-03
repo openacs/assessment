@@ -150,7 +150,7 @@ set edit_data "{
 	
 	set count 0
 	foreach i \[lsort -integer \[array names choice\]\] {
-	    if {!\[empty_string_p \$choice(\$i)\]} {
+	    if { \$choice(\$i) ne \"\" } {
 		incr count
 		set choice_id \[as::item_choice::new -mc_id \$mc_id \\
 				   -title \$choice(\$i) \\

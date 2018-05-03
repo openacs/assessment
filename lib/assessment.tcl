@@ -540,7 +540,7 @@ if {$display(submit_answer_p) != "t"} {
 \# NOTE the code just incrementes section order so when the section order
 \# is greate than the number of items in the list of sections
 \# we know we are done and should finish the assessment
-	if {!\[empty_string_p \$new_section_order\] && \$new_section_order <= \[llength \$section_list\]} {
+	if { \$new_section_order ne \"\" && \$new_section_order <= \[llength \$section_list\]} {
 	    # go to next section
             if { \$section_to != \"\"} {
                 set section_order \$section_to
@@ -559,7 +559,7 @@ if {$display(submit_answer_p) != "t"} {
             # section based aa checks
             as::assessment::check::eval_sa_checks -session_id $session_id -assessment_id $assessment_id 
             as::assessment::check::eval_m_checks -session_id $session_id -assessment_id $assessment_id
-	if {\[empty_string_p \$assessment_data(return_url)\]} {
+	if {\$assessment_data(return_url) eq \"\"} {
 	    set return_url \[export_vars -base finish {session_id assessment_id return_url next_asm total_pages current_page}\]
 	} else {
 	    set return_url \$assessment_data(return_url)
