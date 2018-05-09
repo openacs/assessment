@@ -274,7 +274,7 @@ ad_proc -public as::assessment::check::action_exec {
     }
     set admin [db_list_of_lists get_assessment_admin {}]
     
-    set to {}
+    set to [list]
     foreach notify_user $admin {
 	lappend to $notify_user
     }
@@ -348,7 +348,7 @@ ad_proc -public as::assessment::check::manual_action_exec {
     db_dml update_actions_log {}
         set admin [db_list_of_lists get_assessment_admin {}]
     
-    set to {}
+    set to [list]
     foreach notify_user $admin {
 	lappend to $notify_user
     }

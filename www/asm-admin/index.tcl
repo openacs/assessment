@@ -28,7 +28,7 @@ ad_form -name form_upload_file -action {unzip-file} -html {enctype multipart/for
     {zipfile:file {label "[_ assessment.Import_QTI_ZIP_File]"}}
 }
 
-set actions {}
+set actions [list]
 set advanced_options_p [parameter::get -parameter ShowAdvancedOptions -default 1]
 if { $advanced_options_p } {
     lappend actions [_ assessment.New_Survey] {assessment-form?type=survey} [_ assessment.New_Survey] \

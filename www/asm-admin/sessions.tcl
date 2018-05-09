@@ -34,7 +34,7 @@ if {[info exists assessment_id]} {
 }
 set base_url [ad_return_url]
 
-set actions {}
+set actions [list]
 
 if { [info exists subject_id] } {
     set actions [list "[_ assessment.All_Users]" ? "[_ assessment.All_Users]"]    

@@ -68,7 +68,7 @@ ad_form -name get_params -export { assessment_id section_id action_perform by_it
     
 } 
 db_foreach get_params {} {
-    set choices {}
+    set choices [list]
     if { $type eq "n" } {
 	if { $action_perform eq "aa" || $action_perform eq "m" || $action_perform eq "or" || $action_perform eq "sa"} {
 	    set choices [db_list_of_lists choices {}]

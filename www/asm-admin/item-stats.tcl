@@ -33,7 +33,7 @@ if { ([info exists catalog_section_id] && $catalog_section_id ne "") } {
 
  if {[info exists session_id_list]} {
      set session_ids $session_id_list
-     set session_id_list {}
+     set session_id_list [list]
      foreach elm [split $session_id_list] {
  	if {$elm ne ""} {
  	    lappend session_id_list $elm
@@ -95,8 +95,8 @@ order by ism.sort_order
 	    set total_correct 0
 	    set total_choices 0
 
-	    set choices {}
-	    set visited_session_ids {}
+	    set choices [list]
+	    set visited_session_ids [list]
 
 	    set item_choices_limit_session ""
 	    if { ([info exists limit_to_section_clause] && $limit_to_section_clause ne "") } { set item_choices_limit_session "and d.session_id in $limit_to_section_clause" }
@@ -210,7 +210,7 @@ if {([info exists session_id_list] && $session_id_list ne "")} {
 		"float" {
 		    set stats "<table>\n"
 
-		    set number_answers {}
+		    set number_answers [list]
 		    set total_responses 0
 		    db_foreach get_number_answers {
 			select count(*) as n_responses, numeric_answer
