@@ -49,7 +49,7 @@
     <td>#assessment.Type#:</td>
     <td><if @assessment_data.type@ nil>#assessment.None#</if>
         <elseif @assessment_data.type@ eq "survey">#assessment.type_s#</elseif>
-        <elseif @assessment_data.type@ eq "test">#assessment.type_test#</elseif> 
+        <elseif @assessment_data.type@ eq "test">#assessment.type_test#</elseif>
         (<a href="@toggle_type_url@">#assessment.Change_type#</a>)
     </td>
   </tr>
@@ -107,12 +107,12 @@
 </tr>
 
 <tr class="even"><td valign="top">#assessment.Email_Options#</td><td >@notification_chunk;noquote@ <br><a href="send-mail?assessment_id=@assessment_id@">#assessment.Send_bulkmail#</a> #assessment.regarding_this_assess# </td></tr>
-	
+
 <tr class="odd">
 	<td>#assessment.Extreme_Actions# </td>
 	<td><a href="assessment-delete?assessment_id=@assessment_id@">#assessment.Delete_this_assess#</a> #assessment.Removes_all_questio#<br>
 	<a href="assessment-copy?assessment_id=@assessment_id@">#assessment.Copy_this_assess#</a> #assessment.Lets_you_use_this_a#
-	<if @admin_p;literal@ true>	
+	<if @admin_p;literal@ true>
 	 <if @anonymous_p;literal@ true>
 	   <if @read_p;literal@ true>
 	      <br><a href="@reg_url@/set-reg-assessment?assessment_id=@assessment_id@">#acs-subsite.set_reg_asm#</a>

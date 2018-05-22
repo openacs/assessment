@@ -7,27 +7,27 @@
 <legend>#assessment.Question#</legend>
   <formwidget id="__confirmed_p"><formwidget id="__refreshing_p"><formwidget id="assessment_id"><formwidget id="section_id"><formwidget id="after"><formwidget id="type"><formwidget id="__key_signature"><formwidget id="__new_p"><formwidget id="as_item_id"><formwidget id="num_choices">
       <br>
-        
+
               <if @formerror.question_text@ not nil>
                 <span class="form-label-error">
               </if>
               <else>
                 <span class="form-label">
               </else>
-            
+
             <label for="question_text">
               #assessment.Item_Question#
             </label>
             <span class="form-required-mark">*</span>
           </span>
-          
+
             <if @formerror.question_text@ not nil>
               <span class="form-widget-error">
             </if>
             <else>
-              <span class="form-widget">                  
+              <span class="form-widget">
             </else>
-          
+
               <formwidget id="question_text">
             </span>
               <formerror id="question_text">
@@ -36,114 +36,114 @@
                   @formerror.question_text;noquote@
               </span>
             </formerror>
-          
+
             <p class="form-help-text">
-              
+
                 <formhelp id="question_text">
-              
+
             </p>
-          
+
       <br>
-        
+
               <if @formerror.required_p@ not nil>
                 <span class="form-label-error">
               </if>
               <else>
                 <span class="form-label">
               </else>
-            
+
             <label for="required_p">
               #assessment.Required#
             </label>
-            
+
           </span>
-          
+
             <if @formerror.required_p@ not nil>
               <span class="form-widget-error">
             </if>
             <else>
-              <span class="form-widget">                  
+              <span class="form-widget">
             </else>
-          
+
               <formwidget id="required_p">
             </span>
             <formerror id="required_p">
               <br>
                   @formerror.required_p;noquote@
             </formerror>
-          
+
             <p class="form-help-text">
-              
+
                 <formhelp id="required_p">
-              
+
             </p>
-          
+
       <br>
-        
+
               <if @formerror.feedback_right@ not nil>
                 <span class="form-label-error">
               </if>
               <else>
                 <span class="form-label">
               </else>
-            
+
             <label for="feedback_right">
               #assessment.Feedback_right#
             </label>
-            
+
           </span>
-          
+
             <if @formerror.feedback_right@ not nil>
               <span class="form-widget-error">
             </if>
             <else>
-              <span class="form-widget">                  
+              <span class="form-widget">
             </else>
-          
+
               <formwidget id="feedback_right">
             </span>
             <formerror id="feedback_right">
               <br>
                   @formerror.feedback_right;noquote@
             </formerror>
-          
+
             <p class="form-help-text">
-              
+
                 <formhelp id="feedback_right">
-              
+
             </p>
-          
+
       <br>
-        
+
               <if @formerror.feedback_wrong@ not nil>
                 <span class="form-label-error">
               </if>
               <else>
                 <span class="form-label">
               </else>
-            
+
             <label for="feedback_wrong">
               #assessment.Feedback_wrong#
             </label>
-            
+
           </span>
-          
+
             <if @formerror.feedback_wrong@ not nil>
               <span class="form-widget-error">
             </if>
             <else>
-              <span class="form-widget">                  
+              <span class="form-widget">
             </else>
-          
+
               <formwidget id="feedback_wrong">
             </span>
             <formerror id="feedback_wrong">
               <br>
                   @formerror.feedback_wrong;noquote@
             </formerror>
-          
+
             <p class="form-help-text">
-              
+
                 <formhelp id="feedback_wrong">
             </p>
 
@@ -174,7 +174,7 @@
            </p>
           <br>
 
-</fieldset>        
+</fieldset>
 <fieldset>
         <legend>
               #assessment.Question_Type#
@@ -185,7 +185,7 @@
               <div class="form-widget-error">
             </if>
             <else>
-              <div class="form-widget">                  
+              <div class="form-widget">
             </else>
 
             <formerror id="item_type">
@@ -200,7 +200,7 @@
 <p class="form-help-text">       #assessment.item_type_multiple_choice_help#</p>
         <formgroup-widget id="item_type" row=2></formgroup-widget><br>
         <formgroup-widget id="item_type" row=5></formgroup-widget>
-           
+
        <p><span class="form-label">#assessment.Correct_Answer#</span><br>
         <multiple name="choice_elements">
        <formgroup id="correct.@choice_elements.id@">
@@ -218,7 +218,7 @@
 <formwidget id="add_existing_mc_id">
 </p></if>
 <br>
-</fieldset>        
+</fieldset>
 </div>
 <div>
 <fieldset>

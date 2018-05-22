@@ -4,7 +4,7 @@
 
 
 <!-- Pretty output starts here -->
-<if @show_title_p@ true and @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@</h2></if>
+<if @show_title_p;literal@ true and @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@</h2></if>
   <if @assessment_data.instructions@ not nil><p>@assessment_data.instructions;noquote@</p></if>
 
   <if @assessment_data.time_for_response@ not nil><br>#assessment.session_time_remaining#</if>
