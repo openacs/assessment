@@ -33,7 +33,7 @@
       <input type="hidden" name="as_item_id" value="@items.as_item_id@">
       <tr>
       <tr bgcolor="#e4eaef"><if @assessment_data.show_item_name_p;literal@ true><td colspan="2" nowrap><strong>@items.name@:<if @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></strong></td></if>
-        <td><strong><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p;literal@ eq f and @items.required_p;literal@ eq t> <span style="color: #f00;">*</span></if></if></strong></td></tr>
+        <td><strong><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p;literal@ false and @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></if></strong></td></tr>
       <if @items.content@ not nil><tr><if @assessment_data.show_item_name_p;literal@ true><td colspan="4"></if><else><td colspan="3"></else>@items.content;noquote@</td></tr></if>
 
       <tr><if @assessment_data.show_item_name_p;literal@ true><td colspan="4"></if><else><td colspan="3"></else>
