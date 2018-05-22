@@ -1,10 +1,14 @@
-ad_page_contract {
+ad_include_contract {
 
     Show the result of a session.
 
     @author timo@timohentschel.de
     @date   2004-12-24
-    @cvs-id $Id: 
+    @cvs-id $Id:
+
+    @param session_id
+}
+    session_id:integer,notnull
 }
 
 set user_id [ad_conn user_id]
@@ -57,10 +61,10 @@ if {$session_finish ne ""} {
     #set max_time_to_complete [as::assessment::pretty_time -seconds $assessment_data(max_time_to_complete)]
     set max_time_to_complete ""
     if {$session_score ne "" && $assessment_score ne "" && $assessment_score > 0} {
-	set percent_score "[format "%3.2f" [expr {$session_score / ($assessment_score + 0.0) * 100}]]%"
+        set percent_score "[format "%3.2f" [expr {$session_score / ($assessment_score + 0.0) * 100}]]%"
     } else {
-	set percent_score ""
-    } 
+        set percent_score ""
+    }
     set showpoints [parameter::get -parameter "ShowPoints" -default 1 ]
 } else {
     set percent_score ""
