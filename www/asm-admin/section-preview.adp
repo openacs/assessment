@@ -24,7 +24,7 @@
       <multiple name="items">
       <tr>
       <tr><if @assessment_data.show_item_name_p;literal@ true><td bgcolor="#e4eaef" colspan="2" nowrap><strong>@items.name@:</strong><if @items.required_p;literal@ true> <span style="color: #f00;">*</span></if></td></if>
-        <td bgcolor="#e4eaef"><strong><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p@ eq f and @items.required_p@ eq t> <span style="color: #f00;">*</span></if></if></strong>
+        <td bgcolor="#e4eaef"><strong><if @items.presentation_type@ ne fitb>@items.title;noquote@<if @assessment_data.show_item_name_p;literal@ eq f and @items.required_p;literal@ eq t> <span style="color: #f00;">*</span></if></if></strong>
       <if @items.content@ not nil><tr><td bgcolor="#e4eaef" colspan="4"><br>@items.content;noquote@</if>
       <if @items.title@ ne @items.next_title@>
         </td></tr>
