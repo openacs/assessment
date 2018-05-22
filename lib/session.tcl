@@ -7,7 +7,7 @@ ad_include_contract {
     @cvs-id $Id:
 
     @param session_id
-}
+} {
     session_id:integer,notnull
 }
 
