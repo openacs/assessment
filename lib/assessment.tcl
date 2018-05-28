@@ -360,7 +360,7 @@ foreach one_item $item_list {
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p -random_p $assessment_data(random_p)]
         if {$required_p == "t"} {
             # make sure that mandatory items are answered
-            if {[lsearch {rbo sbo cbo} $presentation_type] > -1} {
+            if {$presentation_type in {rbo sbo cbo}} {
                 lappend validate_list "response_to_item.$as_item_id {\$\{response_to_item.$as_item_id\} ne \"\" || \[ns_queryget response_to_item.${as_item_id}\.text\] ne \"\"} \"\[_ assessment.form_element_required\]\""                
             } else {
                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
@@ -396,7 +396,7 @@ foreach one_item $item_list {
 	set presentation_type [as::item_form::add_item_to_form -name show_item_form_$as_item_id -session_id $session_id -section_id $section_id -item_id $as_item_id -default_value $default_value -required_p $required_p]
         if {$required_p == "t"} {
             # make sure that mandatory items are answered
-            if {[lsearch {rbo sbo cbo} $presentation_type] > -1} {
+            if {$presentation_type in {rbo sbo cbo}} {
                 lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\] || \[exists_and_not_null response_to_item($as_item_id)\.text\]} \"\[_ assessment.form_element_required\]\""                
             } else {
                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
