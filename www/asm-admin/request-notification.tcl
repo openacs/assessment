@@ -91,7 +91,18 @@ template::list::create -name notify_users\
 	    label "[_ notifications.Delivery_Method]"
 	}
     }
-db_multirow notify_users notify_users {}
+
+db_multirow -extend {name} notify_users notify_users {
+    select nr.user_id,
+           (select name from notification_intervals
+             where interval_id = nr.interval_id) as interval_name,
+           (select short_name from notification_delivery_methods
+             where delivery_method_id = nr.delivery_method_id) as delivery_name
+      from notification_requests nr
+     where nr.object_id = :inter_item_check_id
+} {
+    set name [acs_user::get_element -user_id $user_id -element name]
+}
 
 # Local variables:
 #    mode: tcl
