@@ -40,7 +40,13 @@ set assessment_query ""
 set state_query ""
 
 if {![acs_user::site_wide_admin_p -user_id [ad_conn user_id]]} {
-    set permission "and c.assessment_id in (select object_id from acs_permissions where grantee_id=:party_id and privilege='admin')"
+    set permission {
+        and c.assessment_id in (
+                                select object_id from acs_permissions
+                                 where grantee_id=:party_id
+                                and privilege='admin'
+                                )
+    }
 }
 if {$assessment ne "" && $assessment ne "all"} {
     permission::require_permission -object_id $assessment -privilege admin
@@ -49,14 +55,32 @@ if {$assessment ne "" && $assessment ne "all"} {
     set d_assessment $assessment
     set new_assessment_revision $assessment_data(assessment_rev_id)
     
-    set assessment_query "and c.section_id_from in (select s.section_id from as_sections s, cr_revisions cr, cr_items ci, as_assessment_section_map asm  where ci.item_id = cr.item_id  and cr.revision_id = s.section_id and s.section_id = asm.section_id and asm.assessment_id = :new_assessment_revision)"
+    set assessment_query {
+        and c.section_id_from in (
+                                  select s.section_id
+                                    from as_sections s,
+                                         cr_revisions cr,
+                                         cr_items ci,
+                                         as_assessment_section_map asm
+                                   where ci.item_id = cr.item_id
+                                     and cr.revision_id = s.section_id
+                                     and s.section_id = asm.section_id
+                                     and asm.assessment_id = :new_assessment_revision)
+    }
 } else {
     
-    set assessment_query "and assessment_id in (select ci.item_id as assessment_i
-    from cr_folders cf, cr_items ci, cr_revisions cr, as_assessments a 
-    where cr.revision_id = ci.latest_revision
-    and a.assessment_id = cr.revision_id
-    and ci.parent_id = cf.folder_id and cf.package_id = :package_id)"
+    set assessment_query {
+        and assessment_id in (
+                              select ci.item_id as assessment_i
+                                from cr_folders cf,
+                                     cr_items ci,
+                                     cr_revisions cr,
+                                     as_assessments a 
+                               where cr.revision_id = ci.latest_revision
+                                 and a.assessment_id = cr.revision_id
+                                 and ci.parent_id = cf.folder_id
+                                 and cf.package_id = :package_id)
+    }
 }
 
 if {$state ne ""} {
@@ -142,9 +166,38 @@ ad_form -name  specific_date_form  -form {
 }
 
 
-set query "select c.section_id_from,al.failed_p,al.inter_item_check_id,c.name,al.action_log_id,c.assessment_id,a.name as action_name,a.action_id,(select p.first_names || ' ' || p.last_name as name from persons p where p.person_id = (select subject_id from as_sessions where session_id=al.session_id))as user_name,al.session_id,c.description,al.date_requested from as_actions a, as_actions_log al, as_inter_item_checks c where al.inter_item_check_id=c.inter_item_check_id $assessment_query and c.action_p='t' $state_query  and a.action_id=al.action_id $interval_query $date_query $permission and (select latest_revision from  cr_items where item_id=c.assessment_id) in (select assessment_id from as_assessments)"
+set query [subst {
+    select c.section_id_from,
+           al.failed_p,
+           al.inter_item_check_id,
+           c.name,
+           al.action_log_id,
+           c.assessment_id,
+           a.name as action_name,
+           a.action_id,
+           (select subject_id from as_sessions where session_id=al.session_id) as subject_id,
+           al.session_id,
+           c.description,
+           al.date_requested
+      from as_actions a,
+           as_actions_log al,
+           as_inter_item_checks c
+     where al.inter_item_check_id = c.inter_item_check_id
+           $assessment_query
+       and c.action_p = 't'
+           $state_query
+       and a.action_id = al.action_id
+           $interval_query
+           $date_query
+           $permission
+       and (select latest_revision
+              from cr_items where item_id = c.assessment_id) in (select assessment_id from as_assessments)
+}]
 
-db_multirow actions_log actions_log $query
+db_multirow -extend {user_name request_url} actions_log actions_log $query {
+    set user_name [acs_user::get_element -user_id $subject_id -element name]
+    set request_url [export_vars -base "request-notification" {assessment_id {section_id $section_id_from} inter_item_check_id}]
+}
 
 template::list::create \
     -name actions_log \
@@ -187,11 +240,10 @@ template::list::create \
 	}
 	notified_users {
 	    label "[_ assessment.notified_users]"
-	    display_template {<a href=request-notification?assessment_id=@actions_log.assessment_id@&section_id=@actions_log.section_id_from@&inter_item_check_id=@actions_log.inter_item_check_id@>[_ assessment.notified_users]</a>}
+	    display_template {
+                <a href="@actions_log.request_url@">#assessment.notified_users#</a>
+            }
 	}
-
-
-	
     }
 
 
