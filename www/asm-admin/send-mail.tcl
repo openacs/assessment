@@ -32,20 +32,41 @@ set context [list [list index [_ assessment.admin]] [list [export_vars -base one
 
 
 ad_form -name send-mail -has_submit 1 -form {
-    {subject:text(text) {value $assessment_name} {label "[_ assessment.Message_Subject]"} {html {size 50}}}
-    {message:text(textarea) {label "[_ assessment.Enter_Message]"} {html {rows 15 cols 60}}}
-    {assessment_id:text(hidden) {value $assessment_id}}
-    {formbutton_ok:text(submit) {label "[_ acs-templating.OK]"}}
+    {subject:text(text)
+        {value $assessment_name}
+        {label "[_ assessment.Message_Subject]"}
+        {html {size 50}}
+    }
+    {message:text(textarea)
+        {label "[_ assessment.Enter_Message]"}
+        {html {rows 15 cols 60}}
+    }
+    {assessment_id:text(hidden)
+        {value $assessment_id}
+    }
+    {formbutton_ok:text(submit)
+        {label "[_ acs-templating.OK]"}
+    }
 }
 
 if {[llength $session_id]} {
     if {[llength $session_id] == 1} {
 	set session_id [split [lindex $session_id 0]]
     }
-    set options [db_list_of_lists get_session_user_options "select u.last_name || ', ' || u.first_names,user_id  from acs_users_all u, as_sessions s where s.session_id in ([template::util::tcl_to_sql_list $session_id]) and u.user_id = s.subject_id"]
+    set options [db_list_of_lists get_session_user_options [subst {
+        select u.last_name || ', ' || u.first_names, user_id
+        from acs_users_all u, as_sessions s
+        where s.session_id in ([template::util::tcl_to_sql_list $session_id])
+        and u.user_id = s.subject_id
+    }]]
     ad_form -extend -name send-mail -form {
-        {user_ids:text(checkbox) {label "[_ assessment.Send_mail_to_the_selected_users]"} {options $options}}
-        {session_id:text(hidden) {value $session_id}}
+        {user_ids:text(checkbox)
+            {label "[_ assessment.Send_mail_to_the_selected_users]"}
+            {options $options}
+        }
+        {session_id:text(hidden)
+            {value $session_id}
+        }
     }
 } else {
     set n_responses [db_string n_responses {}]
@@ -73,16 +94,14 @@ if {[llength $session_id]} {
 
 ad_form -extend -name send-mail -on_request {
     if {[info exists options]} {
-        set user_ids [list]
-        foreach elm $options {
-            lappend user_ids [lindex $elm 1]
-        }
+        set user_ids [lmap elm $options {lindex $elm 1}]
     }
 } -on_submit {
     acs_user::get -user_id $user_id -array sender
-    set sender_email $sender(email)
+    set sender_email       $sender(email)
+    set from_addr          $sender(email)
     set sender_first_names $sender(first_names)
-    set sender_last_name $sender(last_name)
+    set sender_last_name   $sender(last_name)
     set query ""
 
     if {[info exists to] && $to ne ""} {

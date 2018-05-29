@@ -5,10 +5,7 @@
 
     <partialquery name="all">
 	<querytext>
-            select '[db_quote $sender_email]' as from_addr,
-               '[db_quote $sender_first_names]' as sender_first_names,
-               '[db_quote $sender_last_name]' as sender_last_name,
-               parties.email,
+            select parties.email,
             decode(acs_objects.object_type,
             'user',
             (select first_names
@@ -48,10 +45,7 @@
 
     <partialquery name="responded">
 	<querytext>
- 		select '[db_quote $sender_email]' as from_addr,
-               '[db_quote $sender_first_names]' as sender_first_names,
-               '[db_quote $sender_last_name]' as sender_last_name,
-               parties.email,
+ 		select parties.email,
                decode(acs_objects.object_type,
                       'user',
                       (select first_names
@@ -90,10 +84,7 @@
 
     <partialquery name="not_responded">
 	<querytext>
-		select '[db_quote $sender_email]' as from_addr,
-               '[db_quote $sender_first_names]' as sender_first_names,
-               '[db_quote $sender_last_name]' as sender_last_name,
-               parties.email,
+		select parties.email,
                decode(acs_objects.object_type,
                       'user',
                       (select first_names
@@ -135,32 +126,4 @@
 	</querytext>
     </partialquery>
 
-    <partialquery name="responded">
-	<querytext>
- 		select '[db_quote $sender_email]' as from_addr,
-               '[db_quote $sender_first_names]' as sender_first_names,
-               '[db_quote $sender_last_name]' as sender_last_name,
-               parties.email
-            from parties
-            where
-                parties.party_id in (
-		select s.subject_id
-		from as_sessions s, cr_revisions r
-		where s.assessment_id = r.revision_id
-		and s.completed_datetime is not null
-		and r.item_id = $assessment_id)
-	</querytext>
-    </partialquery>
-
-    <partialquery name="list_of_user_ids">
-	<querytext>
- 		select '[db_quote $sender_email]' as from_addr,
-               '[db_quote $sender_first_names]' as sender_first_names,
-               '[db_quote $sender_last_name]' as sender_last_name,
-               parties.email
-            from parties
-            where
-                parties.party_id in ([template::util::tcl_to_sql_list $user_ids])
-                </querytext>
-        </partialquery>
 </queryset>

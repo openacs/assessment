@@ -24,4 +24,26 @@
 	</querytext>
     </fullquery>
 
+    <partialquery name="responded">
+	<querytext>
+ 		select parties.email
+            from parties
+            where
+                parties.party_id in (
+		select s.subject_id
+		from as_sessions s, cr_revisions r
+		where s.assessment_id = r.revision_id
+		and s.completed_datetime is not null
+		and r.item_id = :assessment_id)
+	</querytext>
+    </partialquery>
+    
+    <partialquery name="list_of_user_ids">
+	<querytext>
+ 	  select parties.email
+            from parties
+            where parties.party_id in ([template::util::tcl_to_sql_list $user_ids])
+	</querytext>
+    </partialquery>    
+
 </queryset>
