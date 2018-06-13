@@ -49,7 +49,7 @@ ad_proc -public as::item_choice::new {
 					[list percent_score $percent_score] \
 					[list fixed_position $fixed_position] ] ]
     # FIXME too much code repetition here
-    # maybe there are more efficient ways to to it (maybe using hashes to pass the values between functions)
+    # maybe there are more efficient ways to do it (maybe using hashes to pass the values between functions)
     }
 
     return $as_item_choice_id
