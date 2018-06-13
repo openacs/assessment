@@ -28,18 +28,18 @@ ad_proc -public as::item_answer::new {
     db_transaction {
         set item_answer_id [content::item::new -parent_id $folder_id -content_type {as_item_choices} -name [as::item::generate_unique_name]]
         set as_item_answer_id [content::revision::new \
-				-item_id $item_answer_id \
-				-content_type {as_item_sa_answers} \
-				-title $title \
-				-attributes [list [list answer_id $answer_id ] \
-						[list data_type $data_type ] \
-						[list case_sensitive_p $case_sensitive_p ] \
-						[list percent_score $percent_score] \
-						[list compare_by $compare_by] \
-						[list regexp_text $regexp_text] \
-						[list allowed_answerbox_list $allowed_answerbox_list] ] ]
-    # FIXME too much code repetition here
-    # maybe there are more efficient ways to do it (maybe using hashes to pass the values between functions)
+            -item_id $item_answer_id \
+            -content_type {as_item_sa_answers} \
+            -title $title \
+            -attributes [list [list answer_id $answer_id ] \
+                [list data_type $data_type ] \
+                [list case_sensitive_p $case_sensitive_p ] \
+                [list percent_score $percent_score] \
+                [list compare_by $compare_by] \
+                [list regexp_text $regexp_text] \
+                [list allowed_answerbox_list $allowed_answerbox_list] ] ]
+                # FIXME too much code repetition here
+                # maybe there are more efficient ways to do it (maybe using hashes to pass the values between functions)
     }
 
     return $as_item_answer_id
