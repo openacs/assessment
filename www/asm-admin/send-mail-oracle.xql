@@ -43,45 +43,6 @@
 	</querytext>
     </partialquery>
 
-    <partialquery name="responded">
-	<querytext>
- 		select parties.email,
-               decode(acs_objects.object_type,
-                      'user',
-                      (select first_names
-                       from persons
-                       where person_id = parties.party_id),
-                      'group',
-                      (select group_name
-                       from groups
-                       where group_id = parties.party_id),
-                      'rel_segment',
-                      (select segment_name
-                       from rel_segments
-                       where segment_id = parties.party_id),
-                      '') as first_names,
-               decode(acs_objects.object_type,
-                      'user',
-                      (select last_name
-                       from persons
-                       where person_id = parties.party_id),
-                      '') as last_name
-            from 
-                 parties,
-                 acs_objects,
-                 users
-            where
-            parties.party_id = users.user_id                 
-            and parties.party_id = acs_objects.object_id
-	    and parties.party_id in (
-		select s.subject_id
-		from as_sessions s, cr_revisions r
-		where s.assessment_id = r.revision_id
-		and s.completed_datetime is not null
-		and r.item_id = $assessment_id)
-	</querytext>
-    </partialquery>
-
     <partialquery name="not_responded">
 	<querytext>
 		select parties.email,
