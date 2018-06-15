@@ -17,7 +17,7 @@ ad_proc -public as::item_type_sa::new {
 
     New Short Answer Answers item to the data database
 } {
-    if { (![info exists package_id] || $package_id eq "") } {
+    if { $package_id eq "" } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]

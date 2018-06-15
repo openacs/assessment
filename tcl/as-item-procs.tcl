@@ -27,7 +27,7 @@ ad_proc -public as::item::new {
 
     New item to the database
 } {
-    if { (![info exists package_id] || $package_id eq "") } {
+    if { $package_id eq "" } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -166,7 +166,7 @@ ad_proc -public as::item::copy {
     Copies an item in the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
-    if { (![info exists package_id] || $package_id eq "") } {
+    if { $package_id eq "" } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]

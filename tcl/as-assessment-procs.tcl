@@ -40,7 +40,7 @@ ad_proc -public as::assessment::new {
 
     New assessment to the database
 } {
-    if { (![info exists package_id] || $package_id eq "") } { set package_id [ad_conn package_id] }
+    if { $package_id eq "" } { set package_id [ad_conn package_id] }
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     if { $creator_id eq "" } { set creator_id [ad_conn user_id]}

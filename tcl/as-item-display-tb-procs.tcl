@@ -17,7 +17,7 @@ ad_proc -public as::item_display_tb::new {
 
     New Item Display TextBox Type to the database
 } {
-    if { (![info exists package_id] || $package_id eq "") } {
+    if { $package_id eq "" } {
     	set package_id [ad_conn package_id]
     }
     set folder_id [as::assessment::folder_id -package_id $package_id]
