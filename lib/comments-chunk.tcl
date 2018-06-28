@@ -46,7 +46,7 @@ if {[set has_permission_p [permission::permission_p -object_id $object_id -privi
           and o.object_id = g.comment_id
 	  order by o.creation_date
     } {
-        set author [acs_user::get_element -user_id $creation_user -element "name"]
+        set author [person::name -person_id $creation_user]
         set html_content [ad_html_text_convert -from $mime_type -- $content]
         set edit_url [export_vars -base "${general_comments_url}comment-edit" {comment_id return_url}]
     }

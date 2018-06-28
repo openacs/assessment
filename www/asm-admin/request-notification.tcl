@@ -101,7 +101,7 @@ db_multirow -extend {name} notify_users notify_users {
       from notification_requests nr
      where nr.object_id = :inter_item_check_id
 } {
-    set name [acs_user::get_element -user_id $user_id -element name]
+    set name [person::name -person_id $user_id]
 }
 
 # Local variables:
