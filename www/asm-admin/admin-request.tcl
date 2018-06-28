@@ -195,7 +195,7 @@ set query [subst {
 }]
 
 db_multirow -extend {user_name request_url} actions_log actions_log $query {
-    set user_name [acs_user::get_element -user_id $subject_id -element name]
+    set user_name [person::name -person_id $user_id]
     set request_url [export_vars -base "request-notification" {assessment_id {section_id $section_id_from} inter_item_check_id}]
 }
 
