@@ -2,7 +2,7 @@ ad_page_contract {
     Form to add an open question item.
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @cvs-id $Id:
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,notnull

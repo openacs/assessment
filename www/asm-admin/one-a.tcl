@@ -5,8 +5,8 @@ ad_page_contract {
     @param  assessment_id integer specifying assessment
 
     @author timo@timohentschel.de
-    @date   September 28, 2004
-    @cvs-id $Id: 
+    @creation-date   September 28, 2004
+    @cvs-id $Id$ 
 } {
     assessment_id:naturalnum,notnull
     {context ""}

@@ -2,7 +2,7 @@ ad_page_contract {
     Export assessment responses as csv file.
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @cvs-id $Id:
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,notnull
 } -properties {

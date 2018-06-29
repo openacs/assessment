@@ -3,7 +3,7 @@ ad_page_contract {
     Thank user for completing assessment and provide link to results
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @date   2005-01-20
+    @creation-date   2005-01-20
 } {
     session_id:naturalnum,notnull
     assessment_id:naturalnum,notnull

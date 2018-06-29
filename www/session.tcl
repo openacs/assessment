@@ -3,8 +3,8 @@
      Show the result of a session.
 
      @author timo@timohentschel.de
-     @date   2004-12-24
-     @cvs-id $Id: 
+     @creation-date   2004-12-24
+     @cvs-id $Id$
  } {
     {session_id:naturalnum,notnull 0}
     {assessment_id:naturalnum,notnull 0}

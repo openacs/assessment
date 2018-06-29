@@ -3,7 +3,7 @@ ad_page_contract {
     Let user confirm consent string before starting assessment
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @date   2005-01-24
+    @creation-date   2005-01-24
 } {
     session_id:naturalnum,notnull
     assessment_id:naturalnum,notnull

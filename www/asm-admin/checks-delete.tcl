@@ -1,7 +1,7 @@
 ad_page_contract {
     This page deletes checks
     @author Anny Flores (annyflores@viaro.net) Viaro Networks
-    @date 2005-01-17
+    @creation-date 2005-01-17
 } {
     inter_item_check_id:naturalnum,multiple
     section_id:naturalnum,notnull

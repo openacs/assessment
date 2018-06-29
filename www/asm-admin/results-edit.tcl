@@ -2,7 +2,7 @@ ad_page_contract {
     Form to edit the points awarded to an item response.
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @cvs-id $Id:
+    @cvs-id $Id$
 } {
     session_id:naturalnum,notnull
     section_id:naturalnum,notnull

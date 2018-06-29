@@ -7,8 +7,8 @@ ad_page_contract {
     @param  as_item_id list of integers specifying items
 
     @author timo@timohentschel.de
-    @date   2004-12-08
-    @cvs-id $Id:
+    @creation-date   2004-12-08
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,notnull

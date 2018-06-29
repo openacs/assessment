@@ -2,7 +2,7 @@ ad_page_contract {
     Form to add a short answer item.
 
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
-    @creation date  2005-06-23
+    @creation-date  2005-06-23
 } {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,notnull

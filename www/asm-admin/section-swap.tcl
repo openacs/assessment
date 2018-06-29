@@ -7,7 +7,7 @@ ad_page_contract {
 
   @author timo@timohentschel.de
 
-  @cvs-id $Id: section-swap.tcl
+  @cvs-id $Id$
 
 } {
     assessment_id:naturalnum,notnull

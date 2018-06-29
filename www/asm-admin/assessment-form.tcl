@@ -2,7 +2,7 @@ ad_page_contract {
     Form to add/edit an assessment.
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @cvs-id $Id:
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,optional
     {__new_p:boolean 0}

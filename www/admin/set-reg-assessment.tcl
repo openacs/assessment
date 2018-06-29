@@ -3,7 +3,7 @@ ad_page_contract {
     
     @author Vivian Hernandez (vivian@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-20
-    @cvs-id $Id: 
+    @cvs-id $Id$ 
 } {
     assessment_id:naturalnum,optional
 }

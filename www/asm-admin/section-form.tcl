@@ -2,7 +2,7 @@ ad_page_contract {
     Form to add/edit a section.
 
     @author Timo Hentschel (timo@timohentschel.de)
-    @cvs-id $Id:
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,optional

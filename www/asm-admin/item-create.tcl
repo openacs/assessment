@@ -3,7 +3,7 @@ ad_page_contract {
     Form for creating an item.
     
     @author nperper@it.uc3m.es
-    @date September 14, 2004
+    @creation-date September 14, 2004
 } -properties {
     context:onevalue
     as_items__title:onevalue

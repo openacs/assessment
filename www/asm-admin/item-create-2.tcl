@@ -3,7 +3,7 @@ ad_page_contract {
     Form for creating a specific type of item
     
     @author nperper@it.uc3m.es
-    @date July 20, 2004
+    @creation-date July 20, 2004
 } {     
     {as_item_id1:integer ""}        
     {item_type:html}

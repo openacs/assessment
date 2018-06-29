@@ -1,13 +1,12 @@
 ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
-    @creation_date 2005-01-17
-    
+    @creation-date 2005-01-17
+
 } {
     {assessment:optional ""}
     {interval:optional ""}
     {date:optional ""}
     {state:optional ""}
-    
 } -properties {
     context
 }

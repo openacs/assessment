@@ -298,7 +298,7 @@ ad_proc -private as::item::update_item_type {
     Update the item_type of an as_item object. This could happen if you change the type of a
     question (as_item), and the associated as_item_type object that was related changed.
     @param item_type_id revision_id of as_item_type_* object
-    @parma as_item_id revision_id of as_item_object
+    @param as_item_id revision_id of as_item_object
 
     @return does not return anything interesting
 

@@ -2,7 +2,7 @@ ad_page_contract {
     Form to edit an item with shortanswer display.
 
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
-    @cvs-id $Id:
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,notnull

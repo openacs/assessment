@@ -1,8 +1,8 @@
 ad_page_contract {
     This page display the parameters that receive the actions
     @author vivian@viaro.net Viaro Networks (www.viaro.net)
-    @date 07-01-2005
-    @cvs-id $Id:
+    @creation-date 07-01-2005
+    @cvs-id $Id$
 } {
     parameter_id:naturalnum,notnull
     action_id:naturalnum,notnull
