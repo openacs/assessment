@@ -606,8 +606,9 @@ ad_proc -private as::assessment::compare_numbers {a b} {
 ad_proc -private as::assessment::title {
     -title
 } {
-    @annyflores@viaro.net
     Remove html tags from assessment title
+
+    @author Anny Flores (annyflores@viaro.net)
 } {
 
     regsub -all {\<[a-zA-Z]*\>} $title "" title
