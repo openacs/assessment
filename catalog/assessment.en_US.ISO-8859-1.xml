@@ -110,7 +110,7 @@ each question be shown to the subject.</msg>
   <msg key="as_password_help">Enter a password for the assessment</msg>
   <msg key="as_password_user_help">In order to take this assessment you need to enter the password.</msg>
   <msg key="as_Return_Url_help">URL to go to after the assessment has been finished by a subject</msg>
-  <msg key="as_Reuse_Responses_help">If yes, the system will look for previous responses to the the questions and prefill the last answer the respondee has given in the assessment form of the respondee</msg>
+  <msg key="as_Reuse_Responses_help">If yes, the system will look for previous responses to the questions and prefill the last answer the respondee has given in the assessment form of the respondee</msg>
   <msg key="as_Secure_Access_help">Is https:// method required to access this assessment?</msg>
   <msg key="as_Show_Item_Name_help">If yes, the respondee will see the name of the question&lt;br&gt;
 in addition to the question itself when taking the survey.</msg>

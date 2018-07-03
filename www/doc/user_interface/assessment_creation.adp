@@ -29,7 +29,7 @@ possible for them to go back and choose another answer to that
 question.</span></li><li><span class="context">Sectioned</span></li>
 </ul>
 </li><li><span class="context">Reuse responses: boolean (yes/no). If
-yes, the system will look for previous responses to the the
+yes, the system will look for previous responses to the
 questions and prefill the last answer the respondee has given in
 the assessment form of the respondee. <em>It is debatable whether
 this function should be per assessment and/or per
@@ -51,7 +51,7 @@ kind of progress bar shall be displayed to the respondee while
 taking the assessment.</li><li>Styles
 <ul>
 <li>Custom header / footer: richtext. Custom header and footer that
-will be displayed the the respondee when answering an assessment.
+will be displayed to the respondee when answering an assessment.
 Possibility to include system variables (e.g. first name).</li><li>Select presentation style. Style (form_template) that will be
 used for this assessment</li><li>Upload new: file. Possibility to upload a new style</li><li>Edit (brings up a page with the possibility to edit the
 selected style)</li><li>Customizable Entry page: richtext. The page that will be

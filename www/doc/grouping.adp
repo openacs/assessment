@@ -41,7 +41,7 @@ shall still be possible to see the user that have not finished the
 survey though.</span></span></li><li><span class="context"><span class="reg">secure_access_p - The
 assessment can only be taken if a secure connection (https) is
 used.</span></span></li><li><span class="context"><span class="reg">reuse_responses_p - If
-yes, the system will look for previous responses to the the
+yes, the system will look for previous responses to the
 questions and prefill the last answer the respondee has given in
 the assessment form of the respondee</span></span></li><li><span class="context"><span class="reg">show_item_name_p - If
 yes, the respondee will see the name of the item in addition to the
