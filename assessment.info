@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="2.10.0d0" url="http://openacs.org/repository/download/apm/assessment-2.10.0d0.apm">
+    <version name="2.10.0d1" url="http://openacs.org/repository/download/apm/assessment-2.10.0d1.apm">
         <owner url="mailto:eperez@it.uc3m.es">Eduardo Perez Ureta</owner>
         <summary>Assessment package that will replace the surveys
     quizz, complex survey, poll and other data collection packages
@@ -18,7 +18,7 @@
         <maturity>2</maturity>
         <package_instance_name>#assessment.Assessment#</package_instance_name>
 
-        <provides url="assessment" version="2.10.0d0"/>
+        <provides url="assessment" version="2.10.0d1"/>
         <requires url="acs-content-repository" version="5.9.1"/>
 	<requires url="acs-tcl" version="5.9.1"/>
         <requires url="acs-kernel" version="5.9.1"/>

@@ -263,7 +263,7 @@ content::type::attribute::new \
 content::type::attribute::new \
     -content_type {as_item_display_sb} \
     -attribute_name {multiple_p} \
-    -datatype {string}    \
+    -datatype {boolean} \
     -pretty_name {Allow Multiple} \
     -column_spec {char(1)}
 content::type::attribute::new \
@@ -281,7 +281,7 @@ content::type::attribute::new \
 content::type::attribute::new \
     -content_type {as_item_display_sb} \
     -attribute_name {prepend_empty_p} \
-    -datatype {string}    \
+    -datatype {boolean} \
     -pretty_name {Prepend Empty Item} \
     -column_spec {char(1)}
 content::type::attribute::new \
@@ -759,14 +759,14 @@ content::type::attribute::new \
     -column_spec {varchar(50)}
 content::type::attribute::new \
     -content_type {as_assessments} \
-    -attribute_name {start_time}            \
-    -datatype {number}  \
+    -attribute_name {start_time} \
+    -datatype {timestamp}  \
     -pretty_name {Assessment Start Time}  \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_assessments} \
-    -attribute_name {end_time}            \
-    -datatype {number}  \
+    -attribute_name {end_time} \
+    -datatype {timestamp} \
     -pretty_name {Assessment End Time}  \
     -column_spec {timestamptz}
 content::type::attribute::new \
@@ -840,33 +840,33 @@ content::type::attribute::new \
     -column_spec {integer}
 content::type::attribute::new \
     -content_type {as_sessions} \
-    -attribute_name {target_datetime}     \
-    -datatype {number}  \
-    -pretty_name {Target Date Time}     \
+    -attribute_name {target_datetime} \
+    -datatype {timestamp} \
+    -pretty_name {Target Date Time} \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_sessions} \
-    -attribute_name {creation_datetime}     \
-    -datatype {number}  \
-    -pretty_name {Creation Date Time}     \
+    -attribute_name {creation_datetime} \
+    -datatype {timestamp} \
+    -pretty_name {Creation Date Time} \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_sessions} \
-    -attribute_name {first_mod_datetime}     \
-    -datatype {number}  \
+    -attribute_name {first_mod_datetime} \
+    -datatype {timestamp} \
     -pretty_name {First Submission}     \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_sessions} \
-    -attribute_name {last_mod_datetime}     \
-    -datatype {number}  \
-    -pretty_name {Most Recent Submission}     \
+    -attribute_name {last_mod_datetime} \
+    -datatype {timestamp} \
+    -pretty_name {Most Recent Submission} \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_sessions} \
-    -attribute_name {completed_datetime}     \
-    -datatype {number}  \
-    -pretty_name {Final Submission}     \
+    -attribute_name {completed_datetime} \
+    -datatype {timestamp} \
+    -pretty_name {Final Submission} \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_sessions} \
@@ -926,14 +926,14 @@ content::type::attribute::new \
     -column_spec {float}
 content::type::attribute::new \
     -content_type {as_section_data} \
-    -attribute_name {creation_datetime}     \
-    -datatype {number}  \
-    -pretty_name {Creation Date Time}     \
+    -attribute_name {creation_datetime} \
+    -datatype {timestamp} \
+    -pretty_name {Creation Date Time} \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_section_data} \
-    -attribute_name {completed_datetime}     \
-    -datatype {number}  \
+    -attribute_name {completed_datetime} \
+    -datatype {timestamp} \
     -pretty_name {Final Submission}     \
     -column_spec {timestamptz}
 
@@ -1006,9 +1006,9 @@ content::type::attribute::new \
     -column_spec {varchar(500)}
 content::type::attribute::new \
     -content_type {as_item_data} \
-    -attribute_name {timestamp_answer}    \
-    -datatype {number}  \
-    -pretty_name {TimeStamp Answer}    \
+    -attribute_name {timestamp_answer} \
+    -datatype {timestamp} \
+    -pretty_name {TimeStamp Answer} \
     -column_spec {timestamptz}
 content::type::attribute::new \
     -content_type {as_item_data} \
@@ -1258,13 +1258,13 @@ ad_proc -public as::install::after_upgrade {
                     content::type::attribute::new \
                         -content_type {as_section_data} \
                         -attribute_name {creation_datetime} \
-                        -datatype {number} \
+                        -datatype {timestamp} \
                         -pretty_name {Creation Date Time} \
                         -column_spec {timestamptz}
                     content::type::attribute::new \
                         -content_type {as_section_data} \
                         -attribute_name {completed_datetime} \
-                        -datatype {number} \
+                        -datatype {timestamp} \
                         -pretty_name {Final Submission} \
                         -column_spec {timestamptz}
                     content::type::attribute::new \
