@@ -5,6 +5,11 @@ ad_library {
 aa_register_case assessment_create_and_respond {
     Create an assessment and respond to it
 } {
+    if {[info commands ::tclwebtest::init] eq ""} {
+        aa_log "::tclwebtest::init not found. Skipping this test case."
+        return
+    }
+    
 ::tclwebtest::init 
     set assessment_name "__test [ns_mktemp XXXXXX]"
     set assessment_url "__test_[ns_mktemp XXXXXX]"
