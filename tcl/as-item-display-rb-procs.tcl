@@ -17,7 +17,7 @@ ad_proc -public as::item_display_rb::new {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-07-26
 
-    New Item Display RadioButton Type to the database
+    New Item Display RadioButton Type to the database.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -49,7 +49,7 @@ ad_proc -public as::item_display_rb::edit {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
 
-    Edit Item Display RadioButton Type to the database
+    Edit Item Display RadioButton Type to the database.
 } {
     # Update as_item_display_rb in the CR (and as_item_display_rb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -73,7 +73,7 @@ ad_proc -public as::item_display_rb::copy {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
 
-    Copy an Item Display RadioButton Type
+    Copy an Item Display RadioButton Type.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -108,7 +108,7 @@ ad_proc -public as::item_display_rb::render {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
 
-    Render an Item Display RadioButton Type
+    Render an Item Display RadioButton Type.
 } {
     if {$required_p eq ""} {
 	set required_p f
@@ -158,7 +158,7 @@ ad_proc -public as::item_display_rb::data {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
 
-    Get the cached Display Data of RadioButton Type
+    Get the cached Display Data of RadioButton Type.
 } {
     return [util_memoize [list as::item_display_rb::data_not_cached -type_id $type_id]]
 }
@@ -169,13 +169,13 @@ ad_proc -private as::item_display_rb::data_not_cached {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
 
-    Get the Display Data of RadioButton Type
+    Get the Display Data of RadioButton Type.
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
 }
 
-ad_proc as::item_display_rb::set_item_display_type {
+ad_proc -private as::item_display_rb::set_item_display_type {
     -assessment_id
     -section_id
     -as_item_id
@@ -186,6 +186,7 @@ ad_proc as::item_display_rb::set_item_display_type {
     {-label_orientation "top"}
     {-order_type "order_of_entry"}
     {-answer_alignment "beside_right"}
+} {
 } {
 
     db_transaction {
