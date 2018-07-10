@@ -14,7 +14,7 @@ namespace eval as::list {
 
     ad_proc -public params {
     } {
-        Check form vars for assessment item submits
+        Check form vars for assessment item submits.
 
         @author Roel Canicula (roel@solutiongrove.com)
         @creation-date 2006-05-12
@@ -40,7 +40,7 @@ namespace eval as::list {
 
     ad_proc -public as_items {
     } {
-        Check form vars for assessment item submits
+        Check form vars for assessment item submits.
 
         @author Roel Canicula (roel@solutiongrove.com)
         @creation-date 2006-05-12
@@ -72,7 +72,7 @@ ad_proc as::list::set_elements_property {
     {-property:required}
     {-value:required}
 } {
-    Sets a property on multiple list elements
+    Sets a property on multiple list elements.
 
     @param list_name Name of the list
     @param element_names List of element names
@@ -96,8 +96,8 @@ ad_proc as::list::add_columns {
     {-element_select 1}
     {-element_from 1}
 } {
-    Add columns to the list for assessment questions
-    All columns will be hidden
+    Add columns to the list for assessment questions.
+    All columns will be hidden.
 
     @param assessment_ids List of IDs of the assessments to get the items from
 
@@ -135,6 +135,10 @@ ad_proc as::list::column_element_spec {
     {-hide_p 0}
     {-element_select 1}
     {-element_from 1}
+} {    
+    Build list template specs from assessment item information.
+
+    @return list of specs
 } {
     set item_type [db_string get_item_type {}]
     if {$item_type eq "as_item_type_mc"} {
