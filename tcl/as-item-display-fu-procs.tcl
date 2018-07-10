@@ -11,7 +11,7 @@ ad_proc -public as::item_display_f::new {
     {-abs_size ""}
     {-box_orientation ""}    
 } {
-    New Item Display File Upload Type to the database
+    New Item Display File Upload Type to the database.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -36,8 +36,7 @@ ad_proc -public as::item_display_f::edit {
     {-abs_size ""}
     {-box_orientation ""}    
 } {
-
-    Edit Item Display File Upload Type to the database
+    Edit Item Display File Upload Type to the database.
 } {
     # Update as_item_display_f in the CR (and as_item_display_f table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -56,8 +55,7 @@ ad_proc -public as::item_display_f::edit {
 ad_proc -public as::item_display_f::copy {
     -type_id:required
 } {
-
-    Copy an Item Display File Upload Type
+    Copy an Item Display File Upload Type.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -87,7 +85,7 @@ ad_proc -public as::item_display_f::render {
     {-data ""}
     -item:required
 } {
-    Render an Item Display File Upload Type
+    Render an Item Display File Upload Type.
 } {
     array set type [util_memoize [list as::item_display_f::data -type_id $type_id]]
     if {$required_p eq ""} {
@@ -113,8 +111,7 @@ ad_proc -public as::item_display_f::render {
 ad_proc -public as::item_display_f::data {
     -type_id:required
 } {
-
-    Get the cached Display Data of File Upload Type
+    Get the cached Display Data of File Upload Type.
 } {
     return [util_memoize [list as::item_display_f::data_not_cached -type_id $type_id]]
 }
@@ -122,8 +119,7 @@ ad_proc -public as::item_display_f::data {
 ad_proc -private as::item_display_f::data_not_cached {
     -type_id:required
 } {
-
-    Get the Display Data of File Upload Type
+    Get the Display Data of File Upload Type.
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
@@ -133,12 +129,14 @@ ad_proc -public as::item_display_f::view {
     -item_id:required
     -session_id:required
     -section_id:required
+} {    
+    Builds the URL to show file associated with this as_item_id,
+    session_id and section_id.
+
+    @return a URL
 } {
-    set file_id [db_string file_id {} -default "-1"]
-    if { $file_id == -1 } {
-	return 
-    }
-    return "view?revision_id=$file_id"
+    set file_id [db_string file_id {} -default ""]
+    return [expr {$file_id eq "" ? "" : "view?revision_id=$file_id"}]
 }
 
 ad_proc -private as::item_display_f::set_item_display_type {
@@ -151,7 +149,7 @@ ad_proc -private as::item_display_f::set_item_display_type {
     {-abs_size "1000"}
     {-box_orientation "vertical"}
 } {
-
+    
 } {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
 	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
