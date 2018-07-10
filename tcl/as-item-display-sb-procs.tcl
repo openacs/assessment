@@ -17,7 +17,7 @@ ad_proc -public as::item_display_sb::new {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-08
 
-    New Item Display SelectBox Type to the database
+    New Item Display SelectBox Type to the database.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -51,7 +51,7 @@ ad_proc -public as::item_display_sb::edit {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-08
 
-    Edit Item Display SelectBox Type to the database
+    Edit Item Display SelectBox Type to the database.
 } {
     # Update as_item_display_sb in the CR (and as_item_display_sb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -76,7 +76,7 @@ ad_proc -public as::item_display_sb::copy {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
 
-    Copy an Item Display SelectBox Type
+    Copy an Item Display SelectBox Type.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -111,7 +111,7 @@ ad_proc -public as::item_display_sb::render {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
 
-    Render an Item Display SelectBox Type
+    Render an Item Display SelectBox Type.
 } {
     if {$required_p eq ""} {
 	set required_p f
@@ -171,7 +171,7 @@ ad_proc -public as::item_display_sb::data {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
 
-    Get the cached Display Data of SelectBox Type
+    Get the cached Display Data of SelectBox Type.
 } {
     return [util_memoize [list as::item_display_sb::data_not_cached -type_id $type_id]]
 }
@@ -182,13 +182,13 @@ ad_proc -private as::item_display_sb::data_not_cached {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
 
-    Get the Display Data of SelectBox Type
+    Get the Display Data of SelectBox Type.
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
 }
 
-ad_proc as::item_display_sb::set_item_display_type {
+ad_proc -private as::item_display_sb::set_item_display_type {
     -assessment_id
     -section_id
     -as_item_id
