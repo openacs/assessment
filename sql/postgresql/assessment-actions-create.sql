@@ -100,7 +100,7 @@ select acs_object_type__create_type (
 	null,
 	'f',
 	null,
-	'as_action__name'
+	null -- name method
 );
 
 

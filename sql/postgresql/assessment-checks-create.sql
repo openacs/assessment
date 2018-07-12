@@ -8,7 +8,7 @@ select acs_object_type__create_type (
 	'As_Inter_item_check',
 	'As_Inter_item_checks',
 	'acs_object',
-	'as_inter_items_checks',
+	'as_inter_item_checks',
 	'inter_item_check_id',
 	null,
 	'f',
