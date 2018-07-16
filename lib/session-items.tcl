@@ -209,7 +209,10 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     }
 }
 
-if { $feedback_only_p && $feedback_count == 0 && ([info exists next_url] && $next_url ne "") } {
+if { $feedback_only_p
+     && $feedback_count == 0
+     && $next_url ne ""
+ } {
     ad_returnredirect $next_url
     ad_script_abort
 }
