@@ -59,7 +59,7 @@ set choices [db_list_of_lists get_choices {} ]
 set question_text [db_string get_question {}]
 
 if {[info exists edit_check] && $edit_check ne ""} {
-    if { (![info exists type] || $type eq "")} {
+    if { ![info exists type] || $type eq "" } {
         set return_url "&check_id=$inter_item_check_id&edit_check=t"
     }
     

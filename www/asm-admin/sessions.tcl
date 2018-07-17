@@ -54,7 +54,7 @@ if { [info exists assessment_id] } {
     lappend actions "[_ assessment.Summary]" [export_vars -base item-stats { assessment_id {return_url [ad_return_url]} }] "[_ assessment.Summary]"
 }
 
-if { ([info exists status] && $status ne "") } {
+if { [info exists status] && $status ne "" } {
         if { $status eq "complete" } {
                 set whereclause "cs.completed_datetime is not null"
         } elseif { $status eq "incomplete" } {

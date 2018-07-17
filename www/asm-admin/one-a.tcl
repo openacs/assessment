@@ -49,7 +49,7 @@ set sessions_url [export_vars -base sessions {assessment_id}]
 set results_url [export_vars -base results-users {assessment_id}]
 set export_url [export_vars -base results-export {assessment_id}]
 
-if { ([info exists asm_instance] && $asm_instance ne "")} {
+if { [info exists asm_instance] && $asm_instance ne "" } {
     set reg_url "[apm_package_url_from_id $asm_instance]admin"
 } else {
     set reg_url "../admin"

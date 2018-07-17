@@ -27,7 +27,7 @@ set package_id [ad_conn package_id]
 # if we get a dotlrn_ecommerce_section_id (catalog_section_id),
 #  let's create a clause to query all the rel_ids with type membership_rels
 set limit_to_section_clause ""
-if { ([info exists catalog_section_id] && $catalog_section_id ne "") } {
+if { [info exists catalog_section_id] && $catalog_section_id ne "" } {
 	set limit_to_section_clause "(select session_id from dotlrn_ecommerce_application_assessment_map where rel_id in (select rel_id from acs_rels where rel_type='dotlrn_member_rel' and object_id_one = (select community_id from dotlrn_ecommerce_section where section_id=:catalog_section_id)))"	
 }
 
@@ -99,7 +99,7 @@ order by ism.sort_order
 	    set visited_session_ids [list]
 
 	    set item_choices_limit_session ""
-	    if { ([info exists limit_to_section_clause] && $limit_to_section_clause ne "") } { set item_choices_limit_session "and d.session_id in $limit_to_section_clause" }
+	    if { [info exists limit_to_section_clause] && $limit_to_section_clause ne "" } { set item_choices_limit_session "and d.session_id in $limit_to_section_clause" }
 if {([info exists session_id_list] && $session_id_list ne "")} {set item_choices_limit_session " and d.session_id in ([template::util::tcl_to_sql_list $session_id_list]) " }
 	    set item_choices_query "select r.title as choice_title, c.choice_id, c.correct_answer_p,
 			(select count(*)
@@ -139,7 +139,7 @@ if {([info exists session_id_list] && $session_id_list ne "")} {set item_choices
 	    }
     
 	    set total_responses_limit_session ""
-	    if { ([info exists limit_to_section_clause] && $limit_to_section_clause ne "") } { set total_responses_limit_session "and s.session_id in $limit_to_section_clause" }
+	    if { [info exists limit_to_section_clause] && $limit_to_section_clause ne "" } { set total_responses_limit_session "and s.session_id in $limit_to_section_clause" }
 
 if {([info exists session_id_list] && $session_id_list ne "")} {
     set total_responses_limit_session " and s.session_id in ([template::util::tcl_to_sql_list $session_id_list]) "

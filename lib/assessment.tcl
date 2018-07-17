@@ -191,7 +191,7 @@ db_transaction {
 	}
 
 	# determine on which page we are right now based on item_order
-	if { (![info exists item_order] || $item_order eq "") } { set item_order 0 }
+	if { ![info exists item_order] || $item_order eq "" } { set item_order 0 }
 	# add 1 because we want to compare the 1 indexed display number
 	# to the current page
 	set current_page [expr {$item_order == 0 ? 0 : $item_order / $page_display_per_page + 1}]
