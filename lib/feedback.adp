@@ -4,7 +4,7 @@
 <if @assessment_data.html_title@ not nil><h2>@assessment_data.html_title;noquote@: Feedback</h2></if>
 
 <if @total_pages@ defined>
-  <include src="/packages/assessment/lib/progress-bar" total="@total_pages;literal@" current="@current_page;literal@" finished_page="@finished_page;literal@">
+  <include src="/packages/acs-tcl/lib/static-progress-bar" total="@total_pages;literal@" current="@current_page;literal@" finished_page="@finished_page;literal@">
 </if>
 
   <h2>@section_title@</h2>
