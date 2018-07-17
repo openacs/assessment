@@ -6,7 +6,7 @@ ad_page_contract {
 
     @author timo@timohentschel.de
     @creation-date   September 28, 2004
-    @cvs-id $Id$ 
+    @cvs-id $Id$
 } {
     assessment_id:naturalnum,notnull
     {context ""}
@@ -53,7 +53,7 @@ if { [info exists asm_instance] && $asm_instance ne "" } {
     set reg_url "[apm_package_url_from_id $asm_instance]admin"
 } else {
     set reg_url "../admin"
-} 
+}
 
 if { $assessment_id eq $registration_id } {
     # This is the user-registration assessment
@@ -78,14 +78,14 @@ if {$assessment_data(number_tries) > 0} {
 set target "[export_vars -base one-a {assessment_id reg_p}]"
 
 set notification_chunk [notification::display::request_widget \
-			    -type assessment_response_notif \
-			    -object_id $assessment_id \
-			    -pretty_name   $title \
-			    -url [ad_return_url] ]
+                            -type assessment_response_notif \
+                            -object_id $assessment_id \
+                            -pretty_name   $title \
+                            -url [ad_return_url] ]
 
 db_multirow -extend { section_url } sections assessment_sections {} {
     if {$points eq ""} {
-	set points 0
+        set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
     set section_url [export_vars -base one-section {assessment_id section_id}]

@@ -1,9 +1,9 @@
 ad_page_contract {
-    
+
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-07
-    
-    This page allows to add branches or actions to the question and its choices.    
+
+    This page allows to add branches or actions to the question and its choices.
 } {
     assessment_id:naturalnum,notnull
     inter_item_check_id:naturalnum,notnull
@@ -29,9 +29,9 @@ set return_url "one-a?assessment_id=$assessment_id"
 
 if { [info exists by_item_p] && $by_item_p ne "" } {
     if { $by_item_p == 1} {
-	set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id&item_id=$item_id"
+        set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id&item_id=$item_id"
     } else {
-	set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
+        set return_url "checks-admin?assessment_id=$assessment_id&section_id=$section_id"
     }
 }
 
@@ -47,29 +47,30 @@ set title "[_ assessment.section_select]"
 ad_form -name get_section -export {by_item_p item_id} -form {
     inter_item_check_id:key
     {assessment_id:text(hidden)
-	{value $assessment_id}}
+        {value $assessment_id}}
     {section_id:text(hidden)
-	{value $section_id}}
-    
+        {value $section_id}}
+
     {section_id_to:text(select)
-	{label "[_ assessment.section_to_branch]"}
-	{options $sections_list}
-	{help_text "[_ assessment.lead_you]"}
+        {label "[_ assessment.section_to_branch]"}
+        {options $sections_list}
+        {help_text "[_ assessment.lead_you]"}
     }
-    
+
 } -new_data {
     db_transaction {
-	db_dml update_check {}
+        db_dml update_check {}
     }
 } -edit_request {
     db_1row get_section {}
 } -edit_data {
     db_dml update_check {}
-    
+
 } -on_submit {
-    ad_returnredirect $return_url 
+    ad_returnredirect $return_url
     ad_script_abort
 }
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4

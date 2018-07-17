@@ -1,9 +1,9 @@
 # packages/assessment/www/asm-admin/sessions.tcl
 
 ad_page_contract {
-    
+
     List subjects who completed assessment
-    
+
     @author Roel Canicula (roel@solutiongrove.com)
     @creation-date 2006-06-05
 
@@ -37,7 +37,7 @@ set base_url [ad_return_url]
 set actions [list]
 
 if { [info exists subject_id] } {
-    set actions [list "[_ assessment.All_Users]" ? "[_ assessment.All_Users]"]    
+    set actions [list "[_ assessment.All_Users]" ? "[_ assessment.All_Users]"]
     set person_name [person::name -person_id $subject_id]
 }
 
@@ -73,69 +73,69 @@ template::list::create \
     -actions $actions \
     -no_data "[_ assessment.No_sessions_found]" \
     -elements {
-	name {
-	    label "[_ assessment.Name]"
-	    display_template {
-		<a href="?subject_id=@sessions.user_id@">@sessions.last_name@, @sessions.first_names@</a>
-	    }
-	    hide_p {[info exists subject_id]}
-	}
-	title {
-	    label "[_ assessment.Assessment]"
-	    display_template {
-		<a href="?assessment_id=@sessions.item_id@">@sessions.title@</a>
-	    }
-	    hide_p {[info exists assessment_id]}
-	}
-	status {
-	    label "[_ assessment.Status]"
-	    display_template {
-		<if @sessions.session_id@ nil>
-		[_ assessment.Not_Taken]
-		</if>		
-		<elseif @sessions.completed_datetime@ nil>
-		[_ assessment.Incomplete]
-		</elseif>
-		<else>
-		[_ assessment.Complete]
-		</else>
-	    }
-	}
-	last_mod_datetime {
-	    label "[_ assessment.Last_Updated]"	    
-	}
-	percent_score {
-	    label {[_ assessment.Percent_Score]}
-	    html {align right}
-	    display_template {
-		<if @sessions.session_id@ not nil>
-		<a href="../session?session_id=@sessions.session_id@">
-		<if @sessions.percent_score@ not nil>
-		@sessions.percent_score@%
-		</if>
-		<img src="/resources/right.gif" style="border:0"></a>
-		</if>
-	    }
-	    hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) ne "test"}]}
-	}
+        name {
+            label "[_ assessment.Name]"
+            display_template {
+                <a href="?subject_id=@sessions.user_id@">@sessions.last_name@, @sessions.first_names@</a>
+            }
+            hide_p {[info exists subject_id]}
+        }
+        title {
+            label "[_ assessment.Assessment]"
+            display_template {
+                <a href="?assessment_id=@sessions.item_id@">@sessions.title@</a>
+            }
+            hide_p {[info exists assessment_id]}
+        }
+        status {
+            label "[_ assessment.Status]"
+            display_template {
+                <if @sessions.session_id@ nil>
+                [_ assessment.Not_Taken]
+                </if>
+                <elseif @sessions.completed_datetime@ nil>
+                [_ assessment.Incomplete]
+                </elseif>
+                <else>
+                [_ assessment.Complete]
+                </else>
+            }
+        }
+        last_mod_datetime {
+            label "[_ assessment.Last_Updated]"
+        }
+        percent_score {
+            label {[_ assessment.Percent_Score]}
+            html {align right}
+            display_template {
+                <if @sessions.session_id@ not nil>
+                <a href="../session?session_id=@sessions.session_id@">
+                <if @sessions.percent_score@ not nil>
+                @sessions.percent_score@%
+                </if>
+                <img src="/resources/right.gif" style="border:0"></a>
+                </if>
+            }
+            hide_p {[expr {[info exists assessment_data(type)] && $assessment_data(type) ne "test"}]}
+        }
     } \
     -filters {
-	assessment_id {
-	    where_clause {
-		a.item_id = :assessment_id
-	    }
-	}
-	subject_id {
-	    where_clause {
-		cs.subject_id = :subject_id
-	    }
-	}
-	status {
-	    values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
-	    where_clause {
-			$whereclause
-	    }
-	}
+        assessment_id {
+            where_clause {
+                a.item_id = :assessment_id
+            }
+        }
+        subject_id {
+            where_clause {
+                cs.subject_id = :subject_id
+            }
+        }
+        status {
+            values {{"[_ assessment.Complete]" complete} {"[_ assessment.Incomplete]" incomplete} {"[_ assessment.Not_Taken]" nottaken}}
+            where_clause {
+                $whereclause
+            }
+        }
     }
 
 db_multirow sessions get_sessions ""
