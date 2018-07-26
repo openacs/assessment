@@ -217,8 +217,7 @@ ad_proc as::list::filter_spec {
 } {
     Generate list builder filter spec from one assessment question
 
-    @param as_item_id Revision_id of hte question
-    @param item_type Type of question
+    @param as_item_id Revision_id of the question
     @param item_title What we display for the filter label for the question
 } {
 
@@ -364,8 +363,7 @@ ad_proc as::list::groupby_spec {
 } {
     Generate list builder groupby filter spec from one assessment question
 
-    @param as_item_id Revision_id of hte question
-    @param item_type Type of question
+    @param as_item_id Revision_id of the question
     @param item_title What we display for the filter label for the question
 } {
 
@@ -380,8 +378,7 @@ ad_proc as::list::orderby_spec {
 } {
     Generate list builder orderby filter spec from one assessment question
 
-    @param as_item_id Revision_id of hte question
-    @param item_type Type of question
+    @param as_item_id Revision_id of the question
     @param item_title What we display for the filter label for the question
 } {
     set item_ref as_item_id_$cr_item_id

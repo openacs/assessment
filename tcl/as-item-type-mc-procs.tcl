@@ -601,7 +601,7 @@ ad_proc -private as::item_type_mc::add_existing_choices_to_edit_form {
     Add form elements for multiple choice question choices
 
     @param form_id Form builder form_id of the form to add the elements to. Error if form does not exist
-    @param num_choices Number of choice form elements to add
+    @param existing_choices Choice form elements to add
     @param choice_array_name Name of array in callers scope to look for existing choices
     @param correct_choice_array_name Name of array in the caller's scope to check for correct choices
 
