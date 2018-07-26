@@ -135,7 +135,7 @@ ad_proc as::list::column_element_spec {
     {-hide_p 0}
     {-element_select 1}
     {-element_from 1}
-} {    
+} {
     Build list template specs from assessment item information.
 
     @return list of specs
