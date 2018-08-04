@@ -7,7 +7,7 @@
 members of the OpenACS community for data collection functionality
 within the OpenACS framework. We&#39;re using the term
 "Assessment" instead of "Survey" or
-"Questionnaire" (or "Case Report Form" aka CRF,
+"Questionnaire" (or "Case Report Form" a.k.a. CRF,
 the term used in clinical trials) because it is a term used by IMS
 and because it connotes the more generic nature of the data
 collection system we&#39;re focusing on.</p>
@@ -19,7 +19,7 @@ Identified applications include:</p>
 Simple-Survey package to the Survey package now in the current
 distribution. A number of groups in the OpenACS community are
 interested in adding capabilities defined in the <a href="http://www.imsglobal.org/" target="_blank">IMS Global Learning
-Consortium</a>'s specs for <a href="http://www.imsglobal.org/question/index.cfm" target="_blank">Question and Test Interoperability</a> and <a href="http://www.imsglobal.org/simplesequencing/index.cfm" target="_blank">Simple Sequencing</a>.</li><li>Clinical research settings. <a href="http://www.epimetrics.com/">The Epimetrics Group</a> has created
+Consortium</a>'s specs for <a href="http://www.imsglobal.org/question/index.cfm" target="_blank">Question and Test Interoperability</a> and <a href="http://www.imsglobal.org/simpleasequencing/index.cfm" target="_blank">Simple Sequencing</a>.</li><li>Clinical research settings. <a href="http://www.epimetrics.com/">The Epimetrics Group</a> has created
 an enhanced version of the Simple-Survey package that adds a
 variety of scoring and scheduling tools for use in health-related
 quality-of-life assessments. This Questionnaire package has not

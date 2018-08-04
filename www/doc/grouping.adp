@@ -26,7 +26,7 @@ Assessment package, it seems likely that in some applications,
 users would indeed want to designate a single "live"
 version, while in many others, they wouldn&#39;t. </p><p>Attributes of Assessments will include those previously included
 in Surveys plus some others:</p><ul>
-<li>assessment_id</li><li>cr:name - a curt name appropriate for urls<br>
+<li>assessment_id</li><li>cr:name - a curt name appropriate for URLs<br>
 </li><li>cr:title - a formal title to use in page layouts etc</li><li>creator_id - Who is the "main" author and creator of
 this assessment</li><li>cr:description - text that can appear in introductory web
 pages</li><li>instructions - text that explains any specific steps the
@@ -84,7 +84,7 @@ as_assessment_styles:</li>
 <li style="list-style: none; display: inline">
 <ul>
 <li>custom_header - Custom header (and footer) that will be
-displayed the the respondee when answering an assessment.
+displayed the respondee when answering an assessment.
 Possibility to include system variables (e.g. first name).<br>
 </li><li>custom_footer<br>
 </li><li>form_template - Style (form_template) that will be used for

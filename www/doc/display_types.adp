@@ -95,14 +95,14 @@ entry (sort_order field).</li>
 </ul>
 </li><li>checkbox - multiple-choice multiple-option
 <ul>
-<li>choice_orientation (see above)</li><li>allow_multiple_p - Is it allow to select multiple values ?</li><li>sort_order: Numerical, alphabetic, randomized or by order of
+<li>choice_orientation (see above)</li><li>allow_multiple_p - Is it allow one to select multiple values ?</li><li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li>
 </ul>
 </li><li>select - multiple-option displayed in "popup
 menu"</li><li style="list-style: none; display: inline"><ul>
 <li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li><li><span class="context"><span class="reg">allow_multiple_p - Is
-it allow to select multiple values ?</span></span></li>
+it allow one to select multiple values ?</span></span></li>
 </ul></li><li>multiple-choice-other: Consider, for instance, a combo box that
 consists of a radiobutton plus a textbox -- used for instance when
 you need a check "other" and then fill in what that
@@ -147,7 +147,7 @@ sorted"</li><li>Number of questions per page: integer. THIS HAS TO BE CHANGED
 IN THE DATAMODELL FROM PAGINATION_STYLE. How many questions shall
 be displayed per page in this section. Usually the answer would be
 "" for all questions on one page (default), or
-"1" for one question per page (aka one question at a
+"1" for one question per page (a.k.a. one question at a
 time), but any number is imagineable.</li><li>
 <span class="context"><span class="reg">ADP style: ADP to
 choose from that will control the makeup of the section along with
@@ -168,7 +168,7 @@ display a "save" button next to each answer along with
 green "V" if the answer has been already submitted. To
 finish the section, you still have to click on the OK button at the
 buttom. Once the section is finished all answers that have not been
-seperatly submitted will be treated as not being submitted at
+separately submitted will be treated as not being submitted at
 all.<br>
 </li>
 </ul>

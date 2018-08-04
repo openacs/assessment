@@ -24,7 +24,7 @@ user for anwering.</span></li>
 assessment will vary:</span>
 <ul>
 <li><span class="context">If all answers have to be submited
-seperatly, a submit button will be shown next to each answer. If
+separately, a submit button will be shown next to each answer. If
 the user hits the submit button next to the question the answer
 will be stored in the response.</span></li><li><span class="context">Else the normal section view will be
 displayed with a submit button at the end of the
@@ -43,7 +43,7 @@ question).</span></li><li><span class="context">Display a finish test button at 
 of the page to "hand the test to the TA" if this is
 allowed</span></li><li><span class="context">Allow for chancellation of the test with
 a chancel button. The result will not be stored but the test will
-be marked as taken.</span></li><li><span class="context">If immediate answer validation (aka.
+be marked as taken.</span></li><li><span class="context">If immediate answer validation (a.k.a..
 ad_form check) for a question is true, check the answer if it is
 valid, otherwise notify the user that it is not and do not store
 the result.</span></li>

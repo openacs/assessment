@@ -197,8 +197,8 @@ Rank questions ask for the answers to be ranked.</span><ul>
 <li><span class="context">Rank Type: Boolean (alphabetic, numeric).
 Shall the rank be from a to z or from 1 to n.</span></li><li><span class="context">Only unique rank: Boolean (yes/no). Shall
 the ranking only allow unique ranks (like 1,2,3,5,6 instead of
-1,2,2,4,5)</span></li><li><span class="context">Straigth order: Boolean (alphabetic,
-numeric). Shall the rank be in a straigth order or is it allowed to
+1,2,2,4,5)</span></li><li><span class="context">Straight order: Boolean (alphabetic,
+numeric). Shall the rank be in a straight order or is it allowed to
 skip values (1,2,3 vs. 1,3,4)</span></li><li>
 <span class="context">For each answer we ask the following
 questions:</span><ul>

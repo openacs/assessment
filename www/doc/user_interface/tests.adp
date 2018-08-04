@@ -31,9 +31,9 @@ with the given answer</span></li><li><span class="context">Feedback for question
 is stored with the question</span></li><li><span class="context">Total result. The total result of the
 test (at the buttoms)</span></li>
 </ul>
-</li><li><span class="context">Submit each answer seperatly: boolean
+</li><li><span class="context">Submit each answer separately: boolean
 (yes/no). Does the user have to submit each answer
-seperatly.</span></li><li><span class="context">Answer changeable: boolean (yes/no). Can
+separately.</span></li><li><span class="context">Answer changeable: boolean (yes/no). Can
 the user change a submitted answer.</span></li><li><span class="context">Finish button: boolean (yes/no). Allow
 the respondee to finish the test early, despite not having answered
 all the questions. The respondee will not have the option to go
@@ -125,8 +125,7 @@ to 100% and not less than -100%.</span></li>
 are selected.</span></li><li>
 <span class="context">The response is matched with each of the
 possible answers</span><ul>
-<li><span class="context">Equals: Only award the percentage if the
-the strings match exactly (case senstivity depends on the setting
+<li><span class="context">Equals: Only award the percentage if the strings match exactly (case senstivity depends on the setting
 for the question).</span></li><li><span class="context">Contains: If the answer contains exactly
 the string, points are granted. If you want to give percentages for
 multiple words, add another answer to the answerbox (so instead of

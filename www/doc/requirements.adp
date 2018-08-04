@@ -322,7 +322,7 @@ Assessment or set of Assessments to a specific set of subjects,
 students or other data entry personnel. These actions potentially
 will involve interfacing with other Workflow management tools (e.g.
 an "Enrollment" package that would handle creation of new
-Parties (aka clinical trial subjects) in the database.</p>
+Parties (a.k.a. clinical trial subjects) in the database.</p>
 <p>Schedulers could also be teachers, curriculum designers, site
 coordinators in clinical trials, etc.</p>
 <h3>Analyst</h3>

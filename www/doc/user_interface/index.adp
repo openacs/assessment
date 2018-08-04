@@ -17,7 +17,7 @@ for the possibility to give and store ratings on objects within the
 system as part of a knowledge management solution.</span></p>
 <p><span class="context">The documents on these page will provide a
 solution that is flexible to meet ababove needs but still be
-focused enought to apply for special clients demands.</span></p>
+focused enough to apply for special clients demands.</span></p>
 <h1><span class="context">Assessments</span></h1>
 <span class="context">The current survey system will build the
 basis for a new assessment package and will consist of various
@@ -33,7 +33,7 @@ administrators are given the possibility to add questions that do
 not store the results within the scope of the assessment package
 but in other database tables (e.g. the name of the user) or trigger
 some other events (e.g. send email to the email address filled out
-by the respondee). A detailed description can be found <a href="question_catalogue">here</a>.</span>
+by the respondee). A detailed description can be found <a href="item_creation">here</a>.</span>
 <h2><span class="context">Assessment creation</span></h2>
 <span class="context">An assessment is either a survey or a test.
 The functionality for both is nearly identical though a test needs
@@ -58,7 +58,7 @@ of the evaluation (what have the respondees answered, how have they
 done in total (points)). A description for this can be found
 <a href="tests">here</a>.</span>
 <p><span class="context">The backend for the test processing, that
-enables the automatic tests is described in a <a href="test_processing">separate document</a> as it will be parsed while
+enables the automatic tests is described in a <a href="tests">separate document</a> as it will be parsed while
 the respondee answers the test, not manually. In addition this
 document describes how the grades are calculated (automatically or
 manually) for each question. The result is being stored in the
@@ -121,7 +121,7 @@ the /pvt/home page as a collection of assessment data and the
 "change basic information" as one assessment among
 many.</span></p>
 <p><span class="context">With a little bit of tweaking and the
-possibility to add instant gratification, aka aggregated result
+possibility to add instant gratification, a.k.a. aggregated result
 display, it could include the poll package and make it
 redundant.</span></p>
 <p><span class="context">Last but not least with the ability to
@@ -137,8 +137,8 @@ of mints gives to the users. As mentioned earlier, this is also
 very important in a Knowledge Management environment, where you
 want to give rated feedback to users.</span></p>
 <blockquote><p><span class="context">
-<strong><a href="question_catalogue">Question Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
-Creation</a></strong><br><br><strong><a href="sections">Sections</a></strong><br><br><strong><a href="tests">Tests</a></strong><br><br><strong><a href="test_processing">Test Processing</a></strong><br><br><strong><a href="user_experience">User Experience</a></strong><br><br><strong><a href="current/"><br></a></strong>
+<strong><a href="item_creation">Question Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
+Creation</a></strong><br><br><strong><a href="section_creation">Sections</a></strong><br><br><strong><a href="item_creation">Tests</a></strong><br><br><strong><a href="tests">Test Processing</a></strong><br><br><strong><a href="user_experience">User Experience</a></strong><br><br><strong><a href="current/"><br></a></strong>
 </span></p></blockquote>
 <span class="context">
 <span class="etp-link"><a class="top" href="etp?name=index"></a></span><!-- END ETP LINK -->

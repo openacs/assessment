@@ -46,7 +46,7 @@ messages, etc for use in different Assessments, we abstract out a
 number of attributes from as_items into mapping tables where
 "override" values for these attributes can optionally be
 set by authors. If they choose not to set overrides, then the
-values originally created in the as_item supercede.</span></p>
+values originally created in the as_item supersede.</span></p>
 <p><span class="context">Separately we will deal with Checks on
 as_items. These will allow us to make checks on the input (is the
 value given by the user actually a valid value??), branches (if we
@@ -383,7 +383,7 @@ the "question"</span></li>
 </li><li>checkbox (as_item_display_cb) - multiple-choice multiple-option
 <ul>
 <li>choice_orientation (see above)</li><li>choice_label_orientation<br>
-</li><li>allow_multiple_p - Is it allow to select multiple values ?</li><li>sort_order_type: Numerical, alphabetic, randomized or by order
+</li><li>allow_multiple_p - Is it allow one to select multiple values ?</li><li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation
 between the "question part" of the Item (the
@@ -405,7 +405,7 @@ the "question"</span></li>
 </li><li style="list-style: none; display: inline"><ul>
 <li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li><span class="context"><span class="reg">allow_multiple_p - Is
-it allow to select multiple values ?</span></span></li><li>
+it allow one to select multiple values ?</span></span></li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation
 between the "question part" of the Item (the
 title/subtext) and the "answer part" -- the native Item
@@ -423,7 +423,7 @@ the "question"</span></li>
 </ul></li><li>image map (as_item_display_im) - Title with picture</li><li style="list-style: none; display: inline"><ul>
 <li>
 <span class="context"><span class="reg">allow_multiple_p - Is
-it allow to select multiple values ?</span></span><br>
+it allow one to select multiple values ?</span></span><br>
 </li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation between the
 "question part" of the Item (the title/subtext) and the

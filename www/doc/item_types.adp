@@ -176,8 +176,8 @@ which the select options are ordinal values, not arbitrary
 strings.</p><ul>
 <li>Rank Type: Boolean (alphabetic, numeric). Shall the rank be
 from a to z or from 1 to n.</li><li>Only unique rank: Boolean (yes/no). Shall the ranking only
-allow unique ranks (like 1,2,3,5,6 instead of 1,2,2,4,5)</li><li>Straigth order: Boolean (alphabetic, numeric). Shall the rank
-be in a straigth order or is it allowed to skip values (1,2,3 vs.
+allow unique ranks (like 1,2,3,5,6 instead of 1,2,2,4,5)</li><li>Straight order: Boolean (alphabetic, numeric). Shall the rank
+be in a straight order or is it allowed to skip values (1,2,3 vs.
 1,3,4)</li><li>For each answer we ask the following questions:
 <ul>
 <li>Answer: Richtext widget.</li><li>Rank: correct rank</li>

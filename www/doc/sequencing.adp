@@ -86,7 +86,7 @@ check_sql would look like ":item_1234 == 'blue' AND
 :item_4231 == 'red'". Additionally other variables
 might be defined by the API at a later stage,  e.g.
 ":percent_score", which would be replaced by the current
-percentage value (aka score) that subject had in the test so far
+percentage value (a.k.a. score) that subject had in the test so far
 (taken from the as_session_table). It might be interesting to pass
 these variables along in the API, this remains to be seen when
 actually implementing the system.<br><br>
