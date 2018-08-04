@@ -135,7 +135,7 @@ ad_proc as::list::column_element_spec {
     {-hide_p 0}
     {-element_select 1}
     {-element_from 1}
-} {
+} {    
     Build list template specs from assessment item information.
 
     @return list of specs
@@ -217,7 +217,8 @@ ad_proc as::list::filter_spec {
 } {
     Generate list builder filter spec from one assessment question
 
-    @param as_item_id Revision_id of the question
+    @param as_item_id Revision_id of hte question
+    @param item_type Type of question
     @param item_title What we display for the filter label for the question
 } {
 
@@ -363,7 +364,8 @@ ad_proc as::list::groupby_spec {
 } {
     Generate list builder groupby filter spec from one assessment question
 
-    @param as_item_id Revision_id of the question
+    @param as_item_id Revision_id of hte question
+    @param item_type Type of question
     @param item_title What we display for the filter label for the question
 } {
 
@@ -378,7 +380,8 @@ ad_proc as::list::orderby_spec {
 } {
     Generate list builder orderby filter spec from one assessment question
 
-    @param as_item_id Revision_id of the question
+    @param as_item_id Revision_id of hte question
+    @param item_type Type of question
     @param item_title What we display for the filter label for the question
 } {
     set item_ref as_item_id_$cr_item_id

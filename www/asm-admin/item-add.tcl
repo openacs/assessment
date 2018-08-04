@@ -339,7 +339,7 @@ ad_form -extend -name item-add -new_request {
         && (![info exists formbutton_add_another_choice] || $formbutton_add_another_choice eq "")} {
         set return_url "[export_vars -base questions {assessment_id}]\&#Q$as_item_id"
     } elseif {([info exists formbutton_add_another_question] && $formbutton_add_another_question ne "")} {
-        incr after
+        set after [expr {$after + 1}]
         set return_url  "[export_vars -base item-add {after assessment_id section_id}]\#Q$as_item_id"
     }
     if {[info exists return_url] && $return_url ne ""} {
