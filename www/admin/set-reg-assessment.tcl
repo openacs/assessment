@@ -1,6 +1,6 @@
 ad_page_contract {
     This display the anonymous assessments available for registration
-    
+
     @author Vivian Hernandez (vivian@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-20
     @cvs-id $Id$ 
@@ -18,7 +18,6 @@ if {(![info exists assessment_id] || $assessment_id eq "")} {
 }
 
 
-
 set page_title "[_ acs-subsite.set_reg_asm]"
 set context [list "[_ acs-subsite.set_reg_asm]"]
 
@@ -30,75 +29,31 @@ set asm_p [llength $assessments]
 
 ad_form -name get_assessment  -form {
     {assessment_id:text(select)
-	{label "[_ acs-subsite.choose_assessment]"}
-	{options $assessments}
-	{help_text "[_ acs-subsite.choose_assessment_help]"}
-	{value $assessment_id}}
+        {label "[_ acs-subsite.choose_assessment]"}
+        {options $assessments}
+        {help_text "[_ acs-subsite.choose_assessment_help]"}
+        {value $assessment_id}}
     {submit:text(submit)
-	{label "   OK   "}}
+        {label "   OK   "}}
     {edit:text(submit)
-	{label "[_ acs-subsite.edit_asm]"}}
+        {label "[_ acs-subsite.edit_asm]"}}
 } -after_submit {
     if {$edit ne ""} {
-	if { $assessment_id != 0} {
-	    set package_id [db_string package_id {}]
-	    set url [apm_package_url_from_id $package_id]
-	    ad_returnredirect "${url}asm-admin/one-a?assessment_id=$assessment_id&reg_p=1&asm_instance=$asm_instance"
+        if { $assessment_id != 0} {
+            set package_id [db_string package_id {}]
+            set url [apm_package_url_from_id $package_id]
+            ad_returnredirect "${url}asm-admin/one-a?assessment_id=$assessment_id&reg_p=1&asm_instance=$asm_instance"
             ad_script_abort
-	}
-    }  else {
-	parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationId -value $assessment_id
-	parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationImplName -value "asm_url"
-	ad_returnredirect ""
+        }
+    } else {
+        parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationId -value $assessment_id
+        parameter::set_value -package_id [subsite::main_site_id] -parameter RegistrationImplName -value "asm_url"
+        ad_returnredirect ""
         ad_script_abort
     }
 }
 
 ad_return_template
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Local variables:
 #    mode: tcl
