@@ -849,14 +849,14 @@ ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items
                     set selected_p f
                     set as_item_choices__ident [$response_label getAttribute {ident}]
                     set mattextNodes [$response_label selectNodes {material/mattext}]
-                    set as_item_choices__choice_text [db_null]
+                    set as_item_choices__choice_text ""
                     # get the title of each choice
                     foreach mattext $mattextNodes {
                         set as_item_choices__choice_text [as::qti::mattext_gethtml $mattext]
                     }
                     # for multimedia items
                     set matmediaNodes [$response_label selectNodes {material/matimage[@uri]}]
-                    set as_item_choices__content_value [db_null]
+                    set as_item_choices__content_value ""
                     foreach matmedia $matmediaNodes {
                         set mediabasepath [file join $basepath [$matmedia getAttribute {uri}]]
                         # insert as_file in the CR (and in the as_file table) getting the content value
