@@ -13,11 +13,11 @@ set node_id [ad_conn node_id]
 
 if { ![ad_form_new_p -key action_id] } {
     set page_title [_ assessment.Edit_Assessment]
-      set parameter_exist "y"
+    set parameter_exist "y"
     db_0or1row get_action_info {}
 } else {
     set page_title [_ assessment.New_Assessment2]
-       set parameter_exist "n"
+    set parameter_exist "n"
 }
 
 set page_title "[_ assessment.add_new_action]"
@@ -25,16 +25,16 @@ set context_bar [ad_context_bar [list [export_vars -base asm-action-admin ] [_ a
 
 ad_form -name action_admin -form {
     action_id:key
-    {name:text {label "[_ assessment.action_name]"} 
-	{html {size 30 maxlength 40}} 
-	{help_text "[_ assessment.as_action_help]"}
+    {name:text {label "[_ assessment.action_name]"}
+        {html {size 30 maxlength 40}}
+        {help_text "[_ assessment.as_action_help]"}
     }
-    {description:text(textarea) {label "[_ assessment.action_description]"} 
-	{html {rows 5 cols 80}}
-	{help_text "[_ assessment.as_action_description_help]"}
-	}
+    {description:text(textarea) {label "[_ assessment.action_description]"}
+        {html {rows 5 cols 80}}
+        {help_text "[_ assessment.as_action_description_help]"}
+    }
     {tcl_code:text(textarea) {label "[_ assessment.action_tcl_code]"}
-	{html {rows 5 cols 80}}
+        {html {rows 5 cols 80}}
         {help_text "[_ assessment.as_action_tcl_code_help]"}
     }
 
@@ -42,9 +42,9 @@ ad_form -name action_admin -form {
     {tcl_code {$tcl_code ne ""} "[_ assessment.error_enter_tcl_code]"}
 
 } -select_query {
-    	select name,description,tcl_code 
-	from as_actions
-	where action_id = :action_id
+    select name,description,tcl_code
+    from as_actions
+    where action_id = :action_id
 
 } -new_data {
     db_exec_plsql insert_action {}
@@ -54,8 +54,6 @@ ad_form -name action_admin -form {
     ad_returnredirect "asm-action-new?action_id=$action_id"
     ad_script_abort
 }
-
-
 
 
 # Local variables:
