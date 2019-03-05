@@ -568,7 +568,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
                                -content_value "" \
                                -feedback_text "" \
                                -selected_p "" \
-                               -correct_answer_p [ad_decode [info exists correct($i)] 0 f t] \
+                               -correct_answer_p [expr {[info exists correct($i)] ? "t" : "f"}] \
                                -sort_order $count \
                                -percent_score ""]
 
