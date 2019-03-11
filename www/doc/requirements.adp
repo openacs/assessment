@@ -50,7 +50,7 @@ group of use cases (testing scenarios). Last but not least, the
 assessment tool should be able to provide it&#39;s information
 gathering features to other packages within the OpenACS framework
 as well.
-<p>It is very important to note, that not all parameters and
+<p>It is very important to note that not all parameters and
 features mentioned in this use case should be displayed to the user
 at all times. Depending on the use case, a good guess with pre
 determined parameters should be made for the user (e.g. no need to

@@ -251,7 +251,7 @@ OpenACS</li>
 <ul><li>
 <span style="font-weight: bold;">Signing of content</span>
 allows one to verify that the data submitted is actually from the
-person it is pretended to be from. This assumes an public key
+person it is pretended to be from. This assumes a public key
 environment where the public key is stored along with the user
 information (e.g. with the users table) and the data stored in
 as_item_data is additionally stored in a signed version (signed

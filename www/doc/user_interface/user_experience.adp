@@ -23,7 +23,7 @@ user for anwering.</span></li>
 <span class="context">Depending on the settings, the display of the
 assessment will vary:</span>
 <ul>
-<li><span class="context">If all answers have to be submited
+<li><span class="context">If all answers have to be submitted
 separately, a submit button will be shown next to each answer. If
 the user hits the submit button next to the question the answer
 will be stored in the response.</span></li><li><span class="context">Else the normal section view will be
