@@ -27,13 +27,17 @@ permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 
 if {![info exists assessment_data(assessment_id)]} {
-    ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
+    ad_return_complaint 1 [_ assessment.Requested_assess_does]
     ad_script_abort
 }
 
 set package_id [ad_conn package_id]
 set page_title [_ assessment.edit_item_type_mc_choices]
-set context [list [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base questions {assessment_id}] Questions] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
+set context [list \
+                 [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] \
+                 [list [export_vars -base questions {assessment_id}] Questions] \
+                 [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] \
+                 $page_title]
 
 set selected_options [list [list "[_ assessment.yes]" t]]
 

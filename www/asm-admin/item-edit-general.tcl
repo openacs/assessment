@@ -30,7 +30,11 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set page_title [_ assessment.edit_item_general]
-set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
+set context [list \
+                 [list index [_ assessment.admin]] \
+                 [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] \
+                 [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] \
+                 $page_title]
 set package_id [ad_conn package_id]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
