@@ -3,7 +3,7 @@ ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-07
     
-    This page allows to relate an action to the check.    
+    This page allows one to relate an action to the check.    
 } {
     assessment_id:naturalnum,notnull
     inter_item_check_id:naturalnum,notnull

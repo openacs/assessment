@@ -2,7 +2,7 @@ ad_page_contract {
 
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-07
-    This page allows to add branches or actions to the question and its choices.
+    This page allows one to add branches or actions to the question and its choices.
 
 } {
     assessment_id:naturalnum,notnull

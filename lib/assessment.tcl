@@ -1,6 +1,6 @@
 ad_page_contract {
 
-    This page allows to display an assessment with sections and items
+    This page allows one to display an assessment with sections and items
 
     @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
     @author Timo Hentschel (timo@timohentschel.de)
