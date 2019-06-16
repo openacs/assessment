@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <queryset>
 
-  <fullquery name="open_asssessments">
+  <fullquery name="open_assessments">
     <rdbms><type>postgresql</type><version>7.3</version></rdbms>
     <querytext>
 	select cr.item_id as assessment_id, cr.title, cr.description, a.password,

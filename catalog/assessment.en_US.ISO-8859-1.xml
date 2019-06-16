@@ -83,9 +83,9 @@
   <msg key="approve_actions">Approve Actions</msg>
   <msg key="approved">Approved</msg>
   <msg key="approved_with">Approved with errors</msg>
-  <msg key="as_action_description_help">Description of the action. (ie. what it does?)</msg>
+  <msg key="as_action_description_help">Description of the action (i.e. what it does?)</msg>
   <msg key="as_action_help">The name you want to refer when call the action</msg>
-  <msg key="as_action_tcl_code_help">Tcl code to execute when the action is invoqued. (ie. Can be a call to a function or any kind of tcl code validation)</msg>
+  <msg key="as_action_tcl_code_help">Tcl code to execute when the action is invoqued (i.e. can be a call to a function or any kind of Tcl code validation)</msg>
   <msg key="as_Allow_Random_help">Allow random selection?</msg>
   <msg key="as_Anonymous_help">Is it possible to provide an anonymous answer? 
 &lt;br&gt;
@@ -104,7 +104,7 @@ each question be shown to the subject.</msg>
   <msg key="as_Navigation_help">How shall the navigation between sections happen in the assessment.</msg>
   <msg key="as_Number_Tries_help">How often can a subject retake the test. 0 for infinite.</msg>
   <msg key="as_parameter_description_help">Purpouse of the variable (short desc.)</msg>
-  <msg key="as_parameter_help">Name of the variable that you going to call on the tcl code (ie. student_id) without &quot;$&quot;</msg>
+  <msg key="as_parameter_help">Name of the variable that you going to call on the Tcl code (i.e. student_id) without &quot;$&quot;</msg>
   <msg key="as_parameter_query_help">Just put the query that retrieve the info desired (Syntax: select name,id from table_name where condition)</msg>
   <msg key="as_parameter_type_help">Select the type of variable you spect to use. It it is a query you have to put your query below</msg>
   <msg key="as_password_help">Enter a password for the assessment</msg>
@@ -237,7 +237,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="delete_parameter">Delete Parameter</msg>
   <msg key="Delete_this_assess">Delete this assessment</msg>
   <msg key="Description">Description&lt;br&gt;(Optional)</msg>
-  <msg key="description_trigger">Description of the trigger.(ie. What action will perform?)</msg>
+  <msg key="description_trigger">Description of the trigger (i.e. what action will perform?)</msg>
   <msg key="disabled">disabled</msg>
   <msg key="Display_Type">Display Type&lt;br&gt;(Optional)</msg>
   <msg key="Display_Type_help">Display Type of the question</msg>
@@ -265,7 +265,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Enter_Message">Enter Message</msg>
   <msg key="Entry_Page">Entry Page</msg>
   <msg key="Entry_Page_help">This is where you should put text you want someone to read before starting the assessment</msg>
-  <msg key="error_enter_tcl_code">You must enter a tcl code to execute</msg>
+  <msg key="error_enter_tcl_code">You must enter a Tcl code to execute</msg>
   <msg key="error_html_options">Need to be pairs of \&quot;key value\&quot;.</msg>
   <msg key="Exit_Page">Exit Page</msg>
   <msg key="Exit_Page_help">This is where you should put text that you want people to see at the end of the assessment.</msg>
@@ -293,7 +293,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="filter_contingent_attributes">Contingent Attributes</msg>
   <msg key="filter_edit">Edit Filter</msg>
   <msg key="filter_edit_instructions">If you edit this existing filter, you will create a new version of it. The original will still be available for use elsewhere.</msg>
-  <msg key="filter_eval_output">Filter TCL Expression</msg>
+  <msg key="filter_eval_output">Filter Tcl Expression</msg>
   <msg key="filter_output">Filter Description</msg>
   <msg key="filter_outputs">Filter Outputs</msg>
   <msg key="filter_preview">Filter Preview</msg>
@@ -397,7 +397,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="lt_Prepend_an_empty_item">Prepend an empty item to the list</msg>
   <msg key="lt_Responses_for_assessm">Responses for: %assessment_data.html_title;noquote%</msg>
   <msg key="lt_Responses_of_user_per">Responses of user: %person_name%</msg>
-  <msg key="lt_This_field_is_used_to">This field is used to validate the answer entered. This must have a multiple of 2 lines. The first line is a TCL expression to be used to check the answer and the second line is the error message. The string %%answer%% will be replaced by the answer entered.</msg>
+  <msg key="lt_This_field_is_used_to">This field is used to validate the answer entered. This must have a multiple of 2 lines. The first line is a Tcl expression to be used to check the answer and the second line is the error message. The string %%answer%% will be replaced by the answer entered.</msg>
   <msg key="make_anonymous">Make anonymous</msg>
   <msg key="make_editable">Make editable</msg>
   <msg key="make_hide_item_name">Hide item name</msg>
@@ -414,7 +414,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Mean">Mean:</msg>
   <msg key="message">Message</msg>
   <msg key="Message_Subject">Message Subject</msg>
-  <msg key="message_to_display_to">Message to display to the user when the action is executed (ie. You have joined &quot;My Community&quot;)</msg>
+  <msg key="message_to_display_to">Message to display to the user when the action is executed (i.e. you have joined &quot;My Community&quot;)</msg>
   <msg key="Minutes_for_Retry">Minutes required for Retry</msg>
   <msg key="Mode">Mode</msg>
   <msg key="Modified_Time">Time Modified</msg>
@@ -696,7 +696,7 @@ Only useful if you display less than the total number of sections.</msg>
   <msg key="View_results">View Answers</msg>
   <msg key="View_session_in_a_new_window">(&lt;a href=&quot;%view_session_url%&quot; target=&quot;new&quot;&gt;View Session&lt;/a&gt;)</msg>
   <msg key="View_Sessions">View Sessions</msg>
-  <msg key="when_this_action">When this action will be executed (ie. At the end of this section)</msg>
+  <msg key="when_this_action">When this action will be executed (i.e. at the end of this section)</msg>
   <msg key="when_this_will">When this will be executed?</msg>
   <msg key="yes">Yes</msg>
   <msg key="yesterday">Yesterday</msg>
