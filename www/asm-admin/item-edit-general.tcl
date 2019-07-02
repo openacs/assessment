@@ -292,7 +292,7 @@ ad_form -extend -name item_edit_general -edit_request {
                 set n_bytes [file size $tmp_filename]
                 set max_file_size 10000000
                 # [parameter::get -parameter MaxAttachmentSize]
-                set pretty_max_size [util_commify_number $max_file_size]
+                set pretty_max_size [lc_content_size_pretty -size $max_file_size]
 
                 if { $n_bytes > $max_file_size && $max_file_size > 0 } {
                     ad_return_complaint 1 "[_ assessment.file_too_large]"

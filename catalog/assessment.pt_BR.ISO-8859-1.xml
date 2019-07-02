@@ -247,7 +247,7 @@
   <msg key="Field_Code_help">Um rótulo curto usado quando for exportar a questão em QTI</msg>
   <msg key="Field_Name">Nome do Campo CSV</msg>
   <msg key="Field_Name_help">Um rótulo curto usado quando for exportar a resposta da questão em arquivo CSV</msg>
-  <msg key="file_too_large">Seu arquivo é muito grande. O Tamanho é limitado a %pretty_max_size% bytes.\n</msg>
+  <msg key="file_too_large">Seu arquivo é muito grande. O Tamanho é limitado a %pretty_max_size%.\n</msg>
   <msg key="file_zero_size">Seu arquivo está com o tamanho igual a zero. Você tentou transferir um arquivo está com o tamanho igual a zero, ou um arquivo que não existe, ou aconteceu alguma coisa errada durante a transferência do arquivo.\n</msg>
   <msg key="filter">Filtro</msg>
   <msg key="filter_add">Adicionar Novo Filtro</msg>

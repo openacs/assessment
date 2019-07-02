@@ -279,7 +279,7 @@
   <msg key="Field_Code_help">Breve etiqueta usada cuando se exporta una pregunta (por ejemplo, el nombre de una columna o una fila en una hoja de cálculo)</msg>
   <msg key="Field_Name">CSV Nombre del Campo</msg>
   <msg key="Field_Name_help">Nombre corto usado en la exportación de preguntas y respuestas en archivo CSV</msg>
-  <msg key="file_too_large">Tu archivo es demasiado grande. El tamaño de los archivos está limitado a %pretty_max_size% bytes.</msg>
+  <msg key="file_too_large">Tu archivo es demasiado grande. El tamaño de los archivos está limitado a %pretty_max_size%.</msg>
   <msg key="File_Upload">Fichero Subido</msg>
   <msg key="file_zero_size">Tu archivo tiene 0 bytes. Puede que hayas intentado subir un archivo de 0 bytes, un archivo que no exista o puede que haya ocurrido un error durante la transferencia.</msg>
   <msg key="filter">Filtro</msg>

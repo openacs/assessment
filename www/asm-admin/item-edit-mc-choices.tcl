@@ -101,7 +101,7 @@ ad_form -extend -name item_edit_mc_choices -edit_request {
     db_transaction {
         set max_file_size 10000000
         # [parameter::get -parameter MaxAttachmentSize]
-        set pretty_max_size [util_commify_number $max_file_size]
+        set pretty_max_size [lc_content_size_pretty -size $max_file_size]
         set folder_id [as::assessment::folder_id -package_id $package_id]
 
         set count 0

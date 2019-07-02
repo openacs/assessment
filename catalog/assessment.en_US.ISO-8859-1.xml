@@ -284,7 +284,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Field_Code_help">A short label used when exporting question in QTI</msg>
   <msg key="Field_Name">CSV Field Name&lt;br&gt;(Optional)</msg>
   <msg key="Field_Name_help">A short label used when exporting question answers to spreadsheets (will be generated if you do not create it)</msg>
-  <msg key="file_too_large">Your file is too large. Files are limited to %pretty_max_size% bytes.\n</msg>
+  <msg key="file_too_large">Your file is too large. Files are limited to %pretty_max_size%.\n</msg>
   <msg key="File_Upload">File Upload</msg>
   <msg key="file_zero_size">Your file is zero-length. Either you attempted to upload a zero length file, a file which does not exists, or something went wrong during the transfer.\n</msg>
   <msg key="filter">Filter</msg>

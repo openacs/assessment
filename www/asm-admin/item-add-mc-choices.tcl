@@ -53,7 +53,7 @@ set count_correct 0
 if { $type == 1} {
     set max_file_size 10000000
     # [parameter::get -parameter MaxAttachmentSize]
-    set pretty_max_size [util_commify_number $max_file_size]
+    set pretty_max_size [lc_content_size_pretty -size $max_file_size]
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     db_transaction {
@@ -127,7 +127,7 @@ ad_form -extend -name item_add_mc_choices -edit_request {
 } -edit_data {
     set max_file_size 10000000
     # [parameter::get -parameter MaxAttachmentSize]
-    set pretty_max_size [util_commify_number $max_file_size]
+    set pretty_max_size [lc_content_size_pretty -size $max_file_size]
     set folder_id [as::assessment::folder_id -package_id $package_id]
 
     db_transaction {

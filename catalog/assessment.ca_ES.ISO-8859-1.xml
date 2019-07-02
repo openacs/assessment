@@ -243,7 +243,7 @@
   <msg key="Field_Code_help">S'empra una etiqueta breu quan s'exporta una pregunta en QTI (per exemple, el nom d'una columna o una fila en un full de càlcul) </msg>
   <msg key="Field_Name">Nom del camp CSV </msg>
   <msg key="Field_Name_help">S'empra una etiqueta curta en exportar respostes a preguntes en arxiu CSV </msg>
-  <msg key="file_too_large">L'arxiu és massa gran. La grandària dels arxius es limita a %pretty_max_size% bytes. </msg>
+  <msg key="file_too_large">L'arxiu és massa gran. La grandària dels arxius es limita a %pretty_max_size%. </msg>
   <msg key="file_zero_size">L'arxiu està buit. Potser heu intentat pujar un arxiu buit, un arxiu inexistent o s'ha produït un error durant la transferència. </msg>
   <msg key="filter">Filtre </msg>
   <msg key="filter_add">Afegeix filtre nou</msg>
