@@ -159,7 +159,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Categorization">Categorization</msg>
   <msg key="Categorization_exact">Exact</msg>
   <msg key="Categorization_sub">Include Subcategories</msg>
-  <msg key="Change_multiple_timings">Change Availability (alle)</msg>
+  <msg key="Change_multiple_timings">Change Availability (all)</msg>
   <msg key="Change_status">Change status</msg>
   <msg key="Change_timings">Change time based availability</msg>
   <msg key="Change_type">Change type</msg>
@@ -233,7 +233,7 @@ in addition to the question itself when taking the survey.</msg>
   <msg key="Delete">Delete</msg>
   <msg key="Delete_Attempts">Delete Attempts</msg>
   <msg key="Delete_cancelled">Delete Cancelled</msg>
-  <msg key="delete_checked">Delete cheked items</msg>
+  <msg key="delete_checked">Delete checked items</msg>
   <msg key="delete_parameter">Delete Parameter</msg>
   <msg key="Delete_this_assess">Delete this assessment</msg>
   <msg key="Description">Description&lt;br&gt;(Optional)</msg>
