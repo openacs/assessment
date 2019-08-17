@@ -4,7 +4,7 @@
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">Section page. This page is for editing information about a
 section and adding questions to it. It contains a couple of
-subpages. Datamodell can be found <a href="http://sussdorff.de/assessment/doc/grouping.html">here.</a><br><br>
+subpages. Data model can be found <a href="http://sussdorff.de/assessment/doc/grouping.html">here.</a><br><br>
 On the Top of the page display the title and description along with
 the display type for information purposes. Below this put links to
 the following pages.<br><br>

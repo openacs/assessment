@@ -79,5 +79,5 @@ So this is how we currently anticipate this would all
 interrelate:</li>
 </ul>
 <center>
-<a href="http://openacs.org/storage/download/assessment-page-flow.graffle?version_id=166250"></a><p><img alt="data modell" src="images/assessment-page-flow.jpg" style="width: 950px; height: 1058px;"></p>
+<a href="http://openacs.org/storage/download/assessment-page-flow.graffle?version_id=166250"></a><p><img alt="data model" src="images/assessment-page-flow.jpg" style="width: 950px; height: 1058px;"></p>
 </center>

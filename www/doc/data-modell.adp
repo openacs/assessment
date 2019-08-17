@@ -1,6 +1,6 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Data Modell Overview}</property>
-<property name="doc(title)">Assessment Data Modell Overview</property>
+<property name="context">{/doc/assessment {Assessment}} {Assessment Data Model Overview}</property>
+<property name="doc(title)">Assessment Data Model Overview</property>
 <master>
 <h2>Overview</h2>
 <p>At its core, the Assessment package defines a hierarchical
@@ -84,5 +84,5 @@ activities that change that status as the user users the
 system</li>
 </ul>
 <center>
-<a href="http://openacs.org/storage/download/assessment.graffle?version_id=187542"></a><p><img alt="Data Modell Graphic" src="images/assessment.jpg" style="width: 1076px; height: 1442px;"></p>
+<a href="http://openacs.org/storage/download/assessment.graffle?version_id=187542"></a><p><img alt="Data Model Graphic" src="images/assessment.jpg" style="width: 1076px; height: 1442px;"></p>
 </center>

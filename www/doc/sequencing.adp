@@ -41,7 +41,7 @@ pairwise</li>
 <p>So how might we implement this in our datamodel? Consider the
 "sequencing" subsystem of the Assessment package:<br>
 </p>
-<center><p><img alt="Data Modell Graphic" src="images/assessment-sequencefocus.jpg" style="width: 711px; height: 707px;"></p></center>
+<center><p><img alt="Data Model Graphic" src="images/assessment-sequencefocus.jpg" style="width: 711px; height: 707px;"></p></center>
 <h2>Specific Entities</h2>
 <ul>
 <li>Item-checks (as_item_checks) define 1..n ordered evaluations of

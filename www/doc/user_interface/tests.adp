@@ -3,7 +3,7 @@
 <property name="doc(title)">Tests</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">A
-test is a special kind of accessment that allows the
+test is a special kind of assessment that allows the
 respondee&#39;s answers to be rated immediately. Unless otherwise
 stated, all pages described are admin viewable only.</span></span>
 <ul>
@@ -100,7 +100,7 @@ question.</span>
 <li><span class="context">All or nothing. In this scenario it will
 be looked, if all correct answers have been chosen by the respondee
 and none of the incorrect ones. If this is the case, respondee
-get&#39;s 100%, otherwise nothing.</span></li><li><span class="context">Cumultative. Each answer has a certain
+gets 100%, otherwise nothing.</span></li><li><span class="context">Cumultative. Each answer has a certain
 percentage associated with it. This can also be negative. For each
 option the user choose he will get the according percentage. If
 negative points are allowed, the user will get a negative
@@ -109,7 +109,7 @@ less then -100%.</span></li>
 </ul>
 </li><li>
 <span class="context">Matching question</span><ul>
-<li><span class="context">All or nothing: User get&#39;s 100% if
+<li><span class="context">All or nothing: User gets 100% if
 all matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weighted: Each match is worth
 100/{number of matches} percent. Each correct match will give the
 according percentage and the end result will be the sum of all

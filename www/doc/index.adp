@@ -131,7 +131,7 @@ all these separate modules.<br>
 The API will be defined during the development phase.<br>
 <h2>Data model</h2>
 
-The data model is described in detail in the <a href="data-modell">design descriptions</a>
+The data model is described in detail in the <a href="data-model">design descriptions</a>
 .<br>
 <h2><a href="user_interface/index">User Interface</a></h2>
 

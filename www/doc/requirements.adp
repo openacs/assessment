@@ -250,7 +250,7 @@ deemed more important, therefore it gets a weight of 40%, the other
 two sections only 30% towards the total score. Each section
 consists of multiple questions that have a different weight (in
 percent) for the total score of the section. The sum of the weights
-has to be 100%, otherwise the author of the section get&#39;s a
+has to be 100%, otherwise the author of the section gets a
 warning. Some of the questions are multiple choice questions, that
 get different percentages for each answer. As the computer science
 department wants to discourage students from giving wrong answers,

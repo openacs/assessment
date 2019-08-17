@@ -114,7 +114,7 @@ assessment system has been written mainly with this in mind.</span>
 system to collect user information. When signing up to a site the
 user could be asked to fill out an assessment where part of the
 questions will be stored in the acs_users table, some other
-questions in other tables and the rest in the accessment package.
+questions in other tables and the rest in the assessment package.
 This way a quick view can be given about the user (aggregating user
 information in a flexible way). Best explanation would be to treat
 the /pvt/home page as a collection of assessment data and the

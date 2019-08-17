@@ -534,7 +534,7 @@ if {$display(submit_answer_p) != "t"} {
 
     set after_submit "{
         \# NOTE the code just incrementes section order so when the section order
-        \# is greate than the number of items in the list of sections
+        \# is greater than the number of items in the list of sections
         \# we know we are done and should finish the assessment
         if { \$new_section_order ne \"\" && \$new_section_order <= \[llength \$section_list\]} {
             # go to next section

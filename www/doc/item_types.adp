@@ -126,7 +126,7 @@ response items.</p><ul>
 <ul>
 <li>Allow Multiple: boolean (yes/no). This will determine if the
 respondee has the option to choose multiple possible answers for
-his response. In the datamodell this information is stored with the
+his response. In the data model this information is stored with the
 as_item_display_* object (e.g. along with the checkbox /
 select).</li><li>Increasing: boolean (all or nothing / increasing). All or
 nothing will either give 100%, if all correct answers are given, or

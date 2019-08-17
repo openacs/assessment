@@ -144,7 +144,7 @@ attributes:<br>
 <ul>
 <li>Name: text. Name of the section like "test view
 sorted"</li><li>Number of questions per page: integer. THIS HAS TO BE CHANGED
-IN THE DATAMODELL FROM PAGINATION_STYLE. How many questions shall
+IN THE DATA MODEL FROM PAGINATION_STYLE. How many questions shall
 be displayed per page in this section. Usually the answer would be
 "" for all questions on one page (default), or
 "1" for one question per page (a.k.a. one question at a

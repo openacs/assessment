@@ -57,7 +57,7 @@ give).</span></p>
 as_item-related subsystems, including the as_item Display subsystem
 described <a style="font-family: monospace;" href="display_types">here</a>.<br>
 </span></p>
-<center><p><span class="context"><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg" style="width: 752px; height: 1121px;"></span></p></center>
+<center><p><span class="context"><img alt="Data model graphic" src="images/assessment-itemfocus.jpg" style="width: 752px; height: 1121px;"></span></p></center>
 <h2><span class="context">Core Function: as_items<br>
 </span></h2>
 <ul><li>

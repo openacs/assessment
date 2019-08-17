@@ -6,7 +6,7 @@
 package that organizes Items into Sections and whole
 Assessments:<br>
 </p>
-<center><p><img alt="Data modell graphic" src="images/assessment-groupingfocus.jpg" style="width: 797px; height: 565px;"></p></center>
+<center><p><img alt="Data model graphic" src="images/assessment-groupingfocus.jpg" style="width: 797px; height: 565px;"></p></center>
 <h2>Review of Specific Entities</h2>
 <ul>
 <li>Assessments (as_assessments) are the highest-level container in
@@ -34,7 +34,7 @@ subject needs to follow</li><li>mode - whether this is a standalone assessment (
 surveys), or if it provides an "assessment service" to
 another OpenACS app, or a "web service" via SOAP etc</li><li>editable_p - whether the response to the assessment is editable
 once an item has been responded to by the user.</li><li><span class="context"><span class="reg">anonymous_p - This
-shows whether the creator of the accessment will have the
+shows whether the creator of the assessment will have the
 possibility to see the personal details of the respondee or not. In
 particular this will exclude the user_id from the CSV files. It
 shall still be possible to see the user that have not finished the
@@ -89,7 +89,7 @@ Possibility to include system variables (e.g. first name).<br>
 </li><li>custom_footer<br>
 </li><li>form_template - Style (form_template) that will be used for
 this assessment. You can either select an existing one or upload a
-new style as well as edit the currently chosen one (no datamodell
+new style as well as edit the currently chosen one (no data model
 but UI thought).<br>
 </li><li>
 <span class="context"><span class="reg">progress_bar: What kind
