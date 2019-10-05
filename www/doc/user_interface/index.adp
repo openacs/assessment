@@ -28,7 +28,7 @@ questions of the assessment package. It is a pool where all the
 questions from all assessments are stored in. This creates the
 opportunity to make the questions reusable, allowing for statistics
 across surveys and prevents the respondee from having to fill out a
-question he has already filled out. Furthermore special
+question he has already filled out. Furthermore, special
 administrators are given the possibility to add questions that do
 not store the results within the scope of the assessment package
 but in other database tables (e.g. the name of the user) or trigger
@@ -80,7 +80,7 @@ class result will depend on the result of all the tests a respondee
 did in addition to any manual grades the professor can come up
 with. Providing a clean UI for this is going to be the
 challenge.</span></p>
-<p><span class="context">Furthermore the grading package offers to
+<p><span class="context">Furthermore, the grading package offers to
 transfer scores (which are stored as integer values) into a grade
 (e.g. the american A-F scheme, or the German 1-6). This is where it
 gets the name from I&#39;d say ;). Grading schemes are flexible and

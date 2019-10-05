@@ -8,7 +8,7 @@
 of the assessment system. It deals with the storing of the various
 questions that can be used in a survey. You are able to
 add/edit/delete a question of a certain type to a certain scope.
-Furthermore it allows you to search and browse for questions for
+Furthermore, it allows you to search and browse for questions for
 inclusion in your assessment as well as import and export multiple
 questions using various formats. This concept is new to survey 0.1d
 and changes the design of the survey module considerably. No
@@ -86,7 +86,7 @@ answer.</span></li>
 <span class="context">Calculation:<br>
 This type of question will not be supported. But we should make
 sure we can take care of that type while importing the data.
-Therefore we have to know the values. And while we are at it, we
+Therefore, we have to know the values. And while we are at it, we
 can as well just generate the input form :-).</span><ul>
 <li><span class="context">Formula: string</span></li><li><span class="context">Units</span></li><li><span class="context">Value (in %): integer</span></li><li><span class="context">Required (boolean)</span></li><li><span class="context">Ignore Space (boolean)</span></li><li><span class="context">Ignore spell checking
 (boolean)</span></li><li><span class="context">General Feedback: richtext</span></li>

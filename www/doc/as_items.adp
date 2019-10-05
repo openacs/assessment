@@ -9,7 +9,7 @@ support reuse of Assessment components by storing of the various
 as_items (or questions if you like) and groups of as_items (e.g.
 Sections) that can be used in an assessment. You are able to
 add/edit/delete an as_item of a certain type to a certain scope.
-Furthermore it allows you to search and browse for questions for
+Furthermore, it allows you to search and browse for questions for
 inclusion in your assessment as well as import and export multiple
 questions using various formats.</span></p>
 <p><span class="context">In this description here we will only
@@ -36,7 +36,7 @@ can only be linked to one as_item_type instance and one
 as_item_display instance.<br>
 </span></p>
 <p><span class="context">Categorization and internationalization
-will make it into OpenACS 5.2, therefore we are not dealing with it
+will make it into OpenACS 5.2, therefore, we are not dealing with it
 in Assessment separately but use the (to be) built in functionality
 of OpenACS 5.2</span></p>
 <p><span class="context">Additionally we have support functionality
@@ -192,7 +192,7 @@ belong to an as_item, but to the instance of the
 as_item_type!</span> This way we can reuse multiple choice answers
 easier. It is debatable if we should allow n:m relationships
 between choices and as_item_types (thereby allowing the same choice
-been reused). In my opinion this is not necessary, therefore we
+been reused). In my opinion this is not necessary, therefore, we
 relate this using the parent_id (which will be treated as a
 relationship in cr_child_rels by the content repository
 internally). Following the Lars Skinny Table approach of conflating

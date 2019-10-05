@@ -175,5 +175,5 @@ all.<br>
 
 Additionally each section has certain parameters that determine the
 look and feel of the section itself. Luckily it is not necessary to
-have differing attributes for the sections, therefore all these
+have differing attributes for the sections, therefore, all these
 display attributes can be found with the <a href="grouping">section and assessment specification</a>

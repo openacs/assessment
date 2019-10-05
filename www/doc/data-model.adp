@@ -41,7 +41,7 @@ by the fact that the CR has become "the Right Way" to
 build OpenACS systems. Note that one implication of this is that we
 can&#39;t use a couple column names in our derived tables because
 of naming clashes with columns in cr_items and cr_revisions: title
-and description. Furthermore we can handle <a href="versioning">versioning</a> and internationalization through
+and description. Furthermore, we can handle <a href="versioning">versioning</a> and internationalization through
 the CR.</p>
 <h2>Synopsis of The Data Model</h2>
 <p>Here&#39;s a detailed summary view of the entities in the

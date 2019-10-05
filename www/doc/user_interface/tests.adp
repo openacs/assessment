@@ -59,7 +59,7 @@ grading in test-processing.html)</span></li><li><span class="context">The try th
 respondee is displayed with a green background. If we take the
 median of all tries, mark all of them green.</span></li>
 </ul>
-</li><li><span class="context">Furthermore links to details about the
+</li><li><span class="context">Furthermore, links to details about the
 test, reports and summary are given.</span></li>
 </ul>
 </li>
@@ -177,7 +177,7 @@ will get a wrong in front).</span></li><li><span class="context">Matching questi
 side and the picked item are displayed in a connecting manner. A
 correct / wrong statement will be added depending whether the
 displayed (and responded) match is correct.</span></li><li><span class="context">Open Question: The answer is displayed as
-written by the user. Furthermore the correct answer is displayed as
+written by the user. Furthermore, the correct answer is displayed as
 well. This should allow the TA to easily come to a conclusion
 concerning the number of points.</span></li><li><span class="context">Short Answer: For each answerbox the
 response will be displayed along with the percentage it got and all

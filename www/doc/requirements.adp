@@ -131,7 +131,7 @@ that the majority of it&#39;s user base is not native English
 speakers. This is why they want to add additional translations to
 the questions to broaden the response base. For consistency, the
 assessment may only be shown to the subject if all questions used
-have been translated. Furthermore it is necessary to store the
+have been translated. Furthermore, it is necessary to store the
 language used along with the response (as a translation might not
 be as good as the original).
 <h4>The poll</h4>
@@ -246,7 +246,7 @@ The computer science department has a final exam for the students.
 The exam consists of 3 sections. The exam is passed, if the student
 achieves at least 50% total score. In addition the student has to
 achieve at least 40% in each of the sections. The first section is
-deemed more important, therefore it gets a weight of 40%, the other
+deemed more important, therefore, it gets a weight of 40%, the other
 two sections only 30% towards the total score. Each section
 consists of multiple questions that have a different weight (in
 percent) for the total score of the section. The sum of the weights

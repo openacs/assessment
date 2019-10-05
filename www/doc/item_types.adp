@@ -205,7 +205,7 @@ field. Usually used for the "Other" thing</p>
 </li><li>Calculation:
 <p>This type of question will not be supported. But we should make
 sure we can take care of that type while importing the data from
-WebCT. Therefore we have to know the values. At a later stage, we
+WebCT. Therefore, we have to know the values. At a later stage, we
 will add more info on this.</p><ul>
 <li>Formula: string</li><li>Units</li><li>Value (in %): integer</li><li>Required (boolean)</li><li>Ignore Space (boolean)</li><li>Ignore spell checking (boolean)</li><li>General Feedback: richtext</li>
 </ul>
