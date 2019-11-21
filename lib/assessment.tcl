@@ -360,7 +360,7 @@ foreach one_item $item_list {
             if {$presentation_type in {rbo sbo cbo}} {
                 lappend validate_list "response_to_item.$as_item_id {\$\{response_to_item.$as_item_id\} ne \"\" || \[ns_queryget response_to_item.${as_item_id}\.text\] ne \"\"} \"\[_ assessment.form_element_required\]\""
             } else {
-                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
+                lappend validate_list "response_to_item.$as_item_id {\[info exists response_to_item($as_item_id)\] && \$response_to_item($as_item_id) ne \"\"} \"\[_ assessment.form_element_required\]\""
             }
             incr required_count
         }
@@ -393,9 +393,9 @@ foreach one_item $item_list {
         if {$required_p == "t"} {
             # make sure that mandatory items are answered
             if {$presentation_type in {rbo sbo cbo}} {
-                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\] || \[exists_and_not_null response_to_item($as_item_id)\.text\]} \"\[_ assessment.form_element_required\]\""
+                lappend validate_list "response_to_item.$as_item_id {\[info exists response_to_item($as_item_id)\] && \$response_to_item($as_item_id) ne \"\" || {\[info exists response_to_item($as_item_id)\.text\] && \$response_to_item($as_item_id)\.text ne \"\"} \"\[_ assessment.form_element_required\]\""
             } else {
-                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
+                lappend validate_list "response_to_item.$as_item_id {\[info exists response_to_item($as_item_id)\] && \$response_to_item($as_item_id) ne \"\"} \"\[_ assessment.form_element_required\]\""
             }
             incr required_count
         }
