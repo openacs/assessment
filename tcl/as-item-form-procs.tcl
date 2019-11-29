@@ -21,7 +21,7 @@ ad_proc -public as::item_form::add_item_to_form  {
 
     Add items to a form. The form values are stored in response_to_item.item_id
 } {
-    randomInit [randomRange 20000]
+    util::random_init [util::random_range 20000]
     set element_name "response_to_item.$item_id"
     array set item [as::item::item_data -as_item_id $item_id]
 
