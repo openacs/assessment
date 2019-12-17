@@ -773,13 +773,8 @@ set out_file [file join ${out_path} ${tmp_file}]
 set cmd "zip -r -9 -X '$out_file' *"
 
 # create the archive
-with_catch errmsg {
-    # TODO SECURITY DONT USE THE SHELL
-    exec bash -c "cd '$in_path'; $cmd; cd -"
-} {
-    # some day we'll do something useful here
-    error $errmsg
-}
+# TODO SECURITY DONT USE THE SHELL
+exec bash -c "cd '$in_path'; $cmd; cd -"
 
 # return the archive to the connection.
 ns_returnfile 200 [ns_guesstype $out_file] $out_file
