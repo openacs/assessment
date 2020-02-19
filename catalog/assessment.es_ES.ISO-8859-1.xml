@@ -350,6 +350,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="item_Title">Pregunta</msg>
   <msg key="item_Title_help">El texto de la pregunta</msg>
   <msg key="Item_Type">Tipo de Pregunta</msg>
+  <msg key="item_type_sb">Caja de selección</msg>
   <msg key="item_type_dq">Pregunta de base de datos</msg>
   <msg key="item_type_file">Fichero</msg>
   <msg key="item_type_fu">Subir fichero</msg>
@@ -384,7 +385,7 @@ Si ha elegido &quot;no&quot;, se obtendrá el 100% en caso de que todas las respu
   <msg key="lt_Everyone_who_has_not_">Alguien que todavía no ha completado este cuestionario</msg>
   <msg key="lt_Insert_new_question_h">Insertar una nueva pregunta</msg>
   <msg key="lt_Prepend_an_empty_item">Añadir un elemento vacío al principio de la lista</msg>
-  <msg key="lt_Responses_for_assessm">Respuestas para: %assessment_data.html_title%</msg>
+  <msg key="lt_Responses_for_assessm">Respuestas para: %assessment_data.html_title;noquote%</msg>
   <msg key="lt_Responses_of_user_per">Respuestas para: %person_name%</msg>
   <msg key="lt_This_field_is_used_to">Este bloque será utilizado para validar la respuesta introducida. Debe contener un número par de líneas donde la primera línea es una expresión TCL que será utilizada para la validación y la segunda el texto de error mostrado. La cadena %%answer%% será reemplazada por la respuesta introducida.</msg>
   <msg key="make_anonymous">Hacer anónimo</msg>
