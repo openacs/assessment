@@ -1509,6 +1509,11 @@ ad_proc -public as::install::after_upgrade {
                     -pretty_name {Allow Other?} \
                     -column_spec {char(1) default 'f'}
 	    }
+        2.10.0d5 2.10.0d6 {
+            content::type::attribute::delete \
+                -content_type {as_assessments} \
+                -attribute_name {survey_p}
+        }
 	}    
 }
 
