@@ -421,8 +421,11 @@ ad_proc -public as::assessment::check::eval_aa_checks {
 } {
 
 } {
-
-    set assessment_rev_id [db_string get_assessment_id {}]
+    # This value is not used anywhere, except, maybe, in tcl code
+    # stored in as_actions.tcl_code column where people was brave
+    # enough to use an upvar... One can never know in this package, so
+    # I just comment it out.
+    # set assessment_rev_id [db_string get_assessment_id {}]
 
 	set checks [db_list_of_lists section_checks {}]
 	foreach check_id $checks {
@@ -488,8 +491,11 @@ ad_proc -public as::assessment::check::eval_sa_checks {
 } {
 
 } {
-
-    set assessment_rev_id [db_string get_assessment_id {}]
+    # This value is not used anywhere, except, maybe, in tcl code
+    # stored in as_actions.tcl_code column where people was brave
+    # enough to use an upvar... One can never know in this package, so
+    # I just comment it out.
+    # set assessment_rev_id [db_string get_assessment_id {}]
 
 	set checks [db_list_of_lists section_checks {}]
 	foreach check_id $checks {
