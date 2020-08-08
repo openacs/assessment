@@ -189,7 +189,7 @@ aa_register_case -cats { api } as_assessment_edit {
 
 
 aa_register_case -cats { api } as_assessment_copy {
-  Test of a assessment copy
+  Test of an assessment copy
 } {
    aa_run_with_teardown	\
      -rollback \
@@ -225,7 +225,7 @@ aa_register_case -cats { api } as_assessment_copy {
 
 
 aa_register_case -cats { api } as_assessment_new_revisions {
-  Test of a assessment new revisions
+  Test of an assessment new revisions
 } {
    aa_run_with_teardown \
      -rollback \

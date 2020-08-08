@@ -124,7 +124,7 @@ ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a ma
     }
 }
 
-ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI file } {
+ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse an XML QTI file } {
     set as_assessments__assessment_id {}
 
     # Parser
@@ -133,7 +133,7 @@ ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI 
     # DOM document => DOM root
     $document documentElement root
     # XPath v1.0
-    # get all <questestinterop> elements of a XML instance file
+    # get all <questestinterop> elements of an XML instance file
     set questestinteropNodes [$root selectNodes {/questestinterop}]
     foreach questestinterop $questestinteropNodes {
         # Looks for assessments
@@ -453,7 +453,7 @@ ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI 
 return $as_assessments__assessment_id
 }
 
-ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items from a XML QTI file } {
+ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items from an XML QTI file } {
 
     #get all <item> elements
     set itemNodes [$qtiNode selectNodes {item}]
