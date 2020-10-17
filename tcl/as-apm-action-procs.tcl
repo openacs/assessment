@@ -9,7 +9,7 @@ namespace eval as::actions {}
 ad_proc -private as::actions::get_admin_user_id {} {
     Return the user id of a site-wide-admin on the system
 } {
-    set context_root_id [acs_lookup_magic_object security_context_root]
+    set context_root_id [acs_magic_object security_context_root]
 
     return [db_string select_user_id {
         select min(user_id)
