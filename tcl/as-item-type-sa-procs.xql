@@ -29,9 +29,9 @@
 	from as_item_data d, as_session_item_map m, cr_revisions ri, cr_revisions rs
 	where d.session_id in ([join $sessions ,])
 	and d.as_item_id = ri.revision_id
-	and ri.item_id = $as_item_item_id
+	and ri.item_id = :as_item_item_id
 	and d.section_id = rs.revision_id
-	and rs.item_id = $section_item_id
+	and rs.item_id = :section_item_id
 	and m.session_id = d.session_id
 	and m.item_data_id = d.item_data_id
 
