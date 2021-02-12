@@ -40,8 +40,10 @@ set package_id [ad_conn package_id]
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set type $assessment_data(type)
 
-ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
+ad_form -name item_edit_general -action item-edit-general -html {enctype multipart/form-data} -form {
     {as_item_id:key}
+    {assessment_id:naturalnum(hidden),optional}
+    {section_id:naturalnum(hidden),optional}
     {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 12 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }

@@ -42,8 +42,12 @@ set type $assessment_data(type)
 
 set item_types [as_item_type::get_item_types]
 
-ad_form -name item-add -action item-add -export { assessment_id section_id after type } -html {enctype multipart/form-data} -form {
+ad_form -name item-add -action item-add -html {enctype multipart/form-data} -form {
     {as_item_id:key}
+    {assessment_id:naturalnum(hidden),optional}
+    {section_id:naturalnum(hidden),optional}
+    {after:integer(hidden),optional}
+    {type:text(hidden),optional}
     {question_text:richtext,nospell {label "[_ assessment.item_Question]"} {html {rows 12 cols 80 style {width: 99%}}} {help_text "[_ assessment.item_Question_help]"}}
 }
 if { $type ne "survey"} {
