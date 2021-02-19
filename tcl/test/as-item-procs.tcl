@@ -9,7 +9,15 @@ ad_library {
     @cvs-id $Id$
 }
 
-aa_register_case as_item_new {
+aa_register_case -procs {
+    as::assessment::folder_id
+    as::item::new
+    as::item::edit
+    as::item::new_revision
+    as::item::copy
+} -cats {
+    api
+} as_item_new {
     Create a new question
 } {
    

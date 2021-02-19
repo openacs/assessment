@@ -33,7 +33,20 @@ aa_register_init_class mount_assessment {
     }
 }
 
-aa_register_case -cats api as_instantiate {
+aa_register_case -cats api -procs {
+    as::assessment::new
+    as::assessment::folder_id
+    as::assessment::data
+    as::assessment::sections
+    as::item_type_sa::new
+    as::item_type_sa::add_to_assessment
+    as::section::new
+    as::section::add_to_assessment
+    as::section_data::new
+    as::section::items
+    as::assessment::sections
+    as::session::new
+} as_instantiate {
     Test package instantiate and uninstantiate.
 } {
     # If this test fails, turn off rollback, so that you can 
@@ -105,8 +118,12 @@ aa_register_case -cats api as_instantiate {
 
 
 
-aa_register_case -cats { api } as_assessment_new {
-  Test of a new created assessment 
+aa_register_case -cats { api } -procs {
+    as::assessment::folder_id
+    as::assessment::new
+    as::assessment::data
+} as_assessment_new {
+    Test of a new created assessment
 } {
    aa_run_with_teardown	\
      -rollback \
@@ -146,8 +163,12 @@ aa_register_case -cats { api } as_assessment_new {
 }
 
 
-aa_register_case -cats { api } as_assessment_edit {
-  Test of an Assessment Edit 
+aa_register_case -cats { api } -procs {
+    as::assessment::folder_id
+    as::assessment::new
+    as::assessment::edit
+} as_assessment_edit {
+    Test of an Assessment Edit
 } {
    aa_run_with_teardown	\
      -rollback \
@@ -188,8 +209,12 @@ aa_register_case -cats { api } as_assessment_edit {
 }
 
 
-aa_register_case -cats { api } as_assessment_copy {
-  Test of an assessment copy
+aa_register_case -cats { api } -procs {
+    as::assessment::folder_id
+    as::assessment::new
+    as::assessment::copy
+} as_assessment_copy {
+    Test of an assessment copy
 } {
    aa_run_with_teardown	\
      -rollback \
@@ -224,7 +249,11 @@ aa_register_case -cats { api } as_assessment_copy {
 }
 
 
-aa_register_case -cats { api } as_assessment_new_revisions {
+aa_register_case -cats { api } -procs {
+    as::assessment::folder_id
+    as::assessment::new
+    as::assessment::new_revision
+} as_assessment_new_revisions {
   Test of an assessment new revisions
 } {
    aa_run_with_teardown \
@@ -261,7 +290,9 @@ aa_register_case -cats { api } as_assessment_new_revisions {
 }
 
 
-aa_register_case -cats { api }   as_assessment {
+aa_register_case -cats { api } -procs {
+    as::assessment::pretty_time
+} as_assessment {
     Test for assessment  proc
 } {
     foreach seconds {"" 0} {
