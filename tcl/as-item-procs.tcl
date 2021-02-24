@@ -250,19 +250,13 @@ ad_proc -private as::item::item_data_not_cached  {
     return [array get item]
 }
 
-ad_proc -private as::item::generate_unique_name {
+ad_proc -public as::item::generate_unique_name {
     args
 } {
     Generate a unique string to be used as item name
 
     @author Roel Canicula (roelmc@info.com.ph)
     @creation-date 2005-05-06
-
-    @param args
-
-    @return
-
-    @error
 } {
     if { [llength $args] } {
         return [join $args "-"]
