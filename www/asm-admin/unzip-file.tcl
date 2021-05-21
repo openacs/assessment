@@ -22,7 +22,7 @@ set tmpdirectory [ad_tmpnam]
 file mkdir $tmpdirectory
 
 # UNZIP the zip file in the temporary directory
-catch { exec unzip ${zipfile.tmpfile} -d $tmpdirectory } outMsg
+util::unzip -source ${zipfile.tmpfile} -destination $tmpdirectory
 
 # Read the content of the temporary directory
 foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {

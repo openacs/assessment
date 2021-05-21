@@ -21,7 +21,7 @@ ad_proc -public as::qti::register {
         # Create a temporary directory
         file mkdir $tmpdirectory
         # UNZIP the zip file in the temporary directory
-        catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+        util::unzip -source ${tmp_dir} -destination $tmpdirectory
 
         set url_assessment {}
         # Read the content of the temporary directory
@@ -53,7 +53,7 @@ ad_proc -public as::qti::register_object_id {
         # Create a temporary directory
         file mkdir $tmpdirectory
         # UNZIP the zip file in the temporary directory
-        catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+        util::unzip -source ${tmp_dir} -destination $tmpdirectory
 
         set assessment_id {}
         # Read the content of the temporary directory
