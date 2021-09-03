@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Tests}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Tests}</property>
 <property name="doc(title)">Tests</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">A
@@ -99,8 +99,8 @@ question.</span>
 <span class="context">Multiple Choice</span><ul>
 <li><span class="context">All or nothing. In this scenario it will
 be looked, if all correct answers have been chosen by the respondee
-and none of the incorrect ones. If this is the case, respondee
-gets 100%, otherwise nothing.</span></li><li><span class="context">Cumultative. Each answer has a certain
+and none of the incorrect ones. If this is the case, respondee gets
+100%, otherwise nothing.</span></li><li><span class="context">Cumultative. Each answer has a certain
 percentage associated with it. This can also be negative. For each
 option the user choose he will get the according percentage. If
 negative points are allowed, the user will get a negative
@@ -109,8 +109,8 @@ less then -100%.</span></li>
 </ul>
 </li><li>
 <span class="context">Matching question</span><ul>
-<li><span class="context">All or nothing: User gets 100% if
-all matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weighted: Each match is worth
+<li><span class="context">All or nothing: User gets 100% if all
+matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weighted: Each match is worth
 100/{number of matches} percent. Each correct match will give the
 according percentage and the end result will be the sum of all
 correct matches.</span></li><li><span class="context">Allow negative: If we have equally
@@ -125,8 +125,9 @@ to 100% and not less than -100%.</span></li>
 are selected.</span></li><li>
 <span class="context">The response is matched with each of the
 possible answers</span><ul>
-<li><span class="context">Equals: Only award the percentage if the strings match exactly (case senstivity depends on the setting
-for the question).</span></li><li><span class="context">Contains: If the answer contains exactly
+<li><span class="context">Equals: Only award the percentage if the
+strings match exactly (case senstivity depends on the setting for
+the question).</span></li><li><span class="context">Contains: If the answer contains exactly
 the string, points are granted. If you want to give percentages for
 multiple words, add another answer to the answerbox (so instead of
 having one answerbox containing "rugby soccer football",
@@ -177,8 +178,8 @@ will get a wrong in front).</span></li><li><span class="context">Matching questi
 side and the picked item are displayed in a connecting manner. A
 correct / wrong statement will be added depending whether the
 displayed (and responded) match is correct.</span></li><li><span class="context">Open Question: The answer is displayed as
-written by the user. Furthermore, the correct answer is displayed as
-well. This should allow the TA to easily come to a conclusion
+written by the user. Furthermore, the correct answer is displayed
+as well. This should allow the TA to easily come to a conclusion
 concerning the number of points.</span></li><li><span class="context">Short Answer: For each answerbox the
 response will be displayed along with the percentage it got and all
 the correct answers for this answerbox (with percentage). Might be

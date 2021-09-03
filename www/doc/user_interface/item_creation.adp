@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Question Catalogue}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Question Catalogue}</property>
 <property name="doc(title)">Question Catalogue</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">

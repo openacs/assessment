@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Chapter 1. Design}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Chapter 1. Design}</property>
 <property name="doc(title)">Chapter 1. Design</property>
 <master>
 <include src="/packages/acs-core-docs/lib/navheader"

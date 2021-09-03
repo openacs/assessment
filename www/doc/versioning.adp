@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Versioning}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Versioning}</property>
 <property name="doc(title)">Versioning</property>
 <master>
 <h2>Overview</h2>

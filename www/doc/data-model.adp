@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Data Model Overview}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment Data Model Overview}</property>
 <property name="doc(title)">Assessment Data Model Overview</property>
 <master>
 <h2>Overview</h2>

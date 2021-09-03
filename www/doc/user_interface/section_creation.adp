@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Sections}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Sections}</property>
 <property name="doc(title)">Sections</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">Section page. This page is for editing information about a
@@ -99,8 +99,8 @@ displayed with the options to<br>
 <ul>
 <li>Edit question<br>
 </li><li>Search and add question(s) from question database: Link to the
-search page which allows one to search for questions that can be added
-to this section (multiple add possibility).</li><li>Add question: Link to the question catalogue entry form with a
+search page which allows one to search for questions that can be
+added to this section (multiple add possibility).</li><li>Add question: Link to the question catalogue entry form with a
 return_url that adds the question from the catalogue to this
 section and return to the section page.</li><li>Change order of questions (arrow navigation) Title of the
 question Link to edit question properties with regards to this

@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {As_Items}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {As_Items}</property>
 <property name="doc(title)">As_Items</property>
 <master>
 <h2><span class="context">Overview</span></h2>
@@ -36,9 +36,9 @@ can only be linked to one as_item_type instance and one
 as_item_display instance.<br>
 </span></p>
 <p><span class="context">Categorization and internationalization
-will make it into OpenACS 5.2, therefore, we are not dealing with it
-in Assessment separately but use the (to be) built in functionality
-of OpenACS 5.2</span></p>
+will make it into OpenACS 5.2, therefore, we are not dealing with
+it in Assessment separately but use the (to be) built in
+functionality of OpenACS 5.2</span></p>
 <p><span class="context">Additionally we have support functionality
 for an as_item. This includes the help functionality. To give
 Assessment authors flexibility in adapting as_item defaults, help
@@ -383,7 +383,8 @@ the "question"</span></li>
 </li><li>checkbox (as_item_display_cb) - multiple-choice multiple-option
 <ul>
 <li>choice_orientation (see above)</li><li>choice_label_orientation<br>
-</li><li>allow_multiple_p - Is it allow one to select multiple values ?</li><li>sort_order_type: Numerical, alphabetic, randomized or by order
+</li><li>allow_multiple_p - Is it allow one to select multiple values
+?</li><li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation
 between the "question part" of the Item (the

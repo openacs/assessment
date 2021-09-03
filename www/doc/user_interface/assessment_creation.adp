@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Creation}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment Creation}</property>
 <property name="doc(title)">Assessment Creation</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">When
@@ -11,7 +11,7 @@ based on the UI and not on the data model. So you should follow
 this with regards to the UI:</span></span>
 <ul>
 <li><span class="context">Title: Title of the
-assessment</span></li><li><span class="context">Anonymous Assessment: boolean (yes/no).
+Assessment</span></li><li><span class="context">Anonymous Assessment: boolean (yes/no).
 This shows whether the creator of the assessment will have the
 possibility to see the personal details of the respondee or not. In
 particular this will exclude the user_id from the CSV files. It
@@ -29,10 +29,10 @@ possible for them to go back and choose another answer to that
 question.</span></li><li><span class="context">Sectioned</span></li>
 </ul>
 </li><li><span class="context">Reuse responses: boolean (yes/no). If
-yes, the system will look for previous responses to the
-questions and prefill the last answer the respondee has given in
-the assessment form of the respondee. <em>It is debatable whether
-this function should be per assessment and/or per
+yes, the system will look for previous responses to the questions
+and prefill the last answer the respondee has given in the
+assessment form of the respondee. <em>It is debatable whether this
+function should be per assessment and/or per
 question</em>
 </span></li><li><span class="context">Navigation of sections: select (default
 path, randomized, rule-based branching, maybe looping in the
@@ -90,10 +90,10 @@ have achieved in that exam.</li><li>Bulk upload: file. Upload a CSV file with em
 allow access to the assessment. Add users to the system if not
 already part of it. Notify users via email that they should take
 the assessment.</li><li>Password: short_text. Password that has to be typed in before
-the respondee gets access to the assessment. This should be
-done by creating a registered filter that returns a 401 to popup an
-HTTP auth box. look in oacs_dav::authenticate for an example of how
-to check the username/password<br>
+the respondee gets access to the assessment. This should be done by
+creating a registered filter that returns a 401 to popup an HTTP
+auth box. look in oacs_dav::authenticate for an example of how to
+check the username/password<br>
 </li><li>IP Netmask. short_text. Netmask that will be matched against
 the IP-Address of the respondee. If it does not match, the user
 will not be given access. Again this should be handled by the

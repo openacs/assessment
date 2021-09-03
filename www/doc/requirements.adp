@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment functional requirements}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment functional requirements}</property>
 <property name="doc(title)">Assessment functional requirements</property>
 <master>
 <h2>Introduction</h2>
@@ -246,13 +246,13 @@ The computer science department has a final exam for the students.
 The exam consists of 3 sections. The exam is passed, if the student
 achieves at least 50% total score. In addition the student has to
 achieve at least 40% in each of the sections. The first section is
-deemed more important, therefore, it gets a weight of 40%, the other
-two sections only 30% towards the total score. Each section
+deemed more important, therefore, it gets a weight of 40%, the
+other two sections only 30% towards the total score. Each section
 consists of multiple questions that have a different weight (in
 percent) for the total score of the section. The sum of the weights
-has to be 100%, otherwise the author of the section gets a
-warning. Some of the questions are multiple choice questions, that
-get different percentages for each answer. As the computer science
+has to be 100%, otherwise the author of the section gets a warning.
+Some of the questions are multiple choice questions, that get
+different percentages for each answer. As the computer science
 department wants to discourage students from giving wrong answers,
 some wrong answers have a negative percentage (thereby reducing the
 total score in the section).<br>

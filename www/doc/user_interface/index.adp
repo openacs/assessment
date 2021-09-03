@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Appendix A: RFC for Assessment Specs}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Appendix A: RFC for Assessment Specs}</property>
 <property name="doc(title)">Appendix A: RFC for Assessment Specs</property>
 <master>
 <!-- START HEADER --><h1><span class="context">Introduction</span></h1>
@@ -58,11 +58,11 @@ of the evaluation (what have the respondees answered, how have they
 done in total (points)). A description for this can be found
 <a href="tests">here</a>.</span>
 <p><span class="context">The backend for the test processing, that
-enables the automatic tests is described in a <a href="tests">separate document</a> as it will be parsed while
-the respondee answers the test, not manually. In addition this
-document describes how the grades are calculated (automatically or
-manually) for each question. The result is being stored in the
-grading package.</span></p>
+enables the automatic tests is described in a <a href="tests">separate document</a> as it will be parsed while the
+respondee answers the test, not manually. In addition this document
+describes how the grades are calculated (automatically or manually)
+for each question. The result is being stored in the grading
+package.</span></p>
 <h1><span class="context">Scoring/Grading</span></h1>
 <span class="context">The grading package will be designed first of
 all to all the storing of test results. In addition to this, it
@@ -137,7 +137,8 @@ of mints gives to the users. As mentioned earlier, this is also
 very important in a Knowledge Management environment, where you
 want to give rated feedback to users.</span></p>
 <blockquote><p><span class="context">
-<strong><a href="item_creation">Question Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
+<strong><a href="item_creation">Question
+Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
 Creation</a></strong><br><br><strong><a href="section_creation">Sections</a></strong><br><br><strong><a href="item_creation">Tests</a></strong><br><br><strong><a href="tests">Test Processing</a></strong><br><br><strong><a href="user_experience">User Experience</a></strong><br><br><strong><a href="current/"><br></a></strong>
 </span></p></blockquote>
 <span class="context">

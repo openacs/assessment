@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {User Experience}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {User Experience}</property>
 <property name="doc(title)">User Experience</property>
 <master>
 <!-- START HEADER --><span class="context"><span class="reg">User

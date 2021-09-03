@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment}</property>
 <property name="doc(title)">Assessment</property>
 <master>
 <p>Here is a graphical overview of the subsystem in the Assessment
@@ -41,9 +41,9 @@ shall still be possible to see the user that have not finished the
 survey though.</span></span></li><li><span class="context"><span class="reg">secure_access_p - The
 assessment can only be taken if a secure connection (https) is
 used.</span></span></li><li><span class="context"><span class="reg">reuse_responses_p - If
-yes, the system will look for previous responses to the
-questions and prefill the last answer the respondee has given in
-the assessment form of the respondee</span></span></li><li><span class="context"><span class="reg">show_item_name_p - If
+yes, the system will look for previous responses to the questions
+and prefill the last answer the respondee has given in the
+assessment form of the respondee</span></span></li><li><span class="context"><span class="reg">show_item_name_p - If
 yes, the respondee will see the name of the item in addition to the
 item itself when taking the survey.</span></span></li><li>entry_page - The customizable entry page that will be displayed
 before the first response. </li><li>exit_page - Customizable exit / thank you page that will be
@@ -84,7 +84,7 @@ as_assessment_styles:</li>
 <li style="list-style: none; display: inline">
 <ul>
 <li>custom_header - Custom header (and footer) that will be
-displayed the respondee when answering an assessment.
+displayed to the respondee when answering an assessment.
 Possibility to include system variables (e.g. first name).<br>
 </li><li>custom_footer<br>
 </li><li>form_template - Style (form_template) that will be used for

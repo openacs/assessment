@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/assessment {Assessment}} {As_Item Display Types}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {As_Item Display Types}</property>
 <property name="doc(title)">As_Item Display Types</property>
 <master>
 <h2><span class="context">Overview</span></h2>
@@ -95,7 +95,8 @@ entry (sort_order field).</li>
 </ul>
 </li><li>checkbox - multiple-choice multiple-option
 <ul>
-<li>choice_orientation (see above)</li><li>allow_multiple_p - Is it allow one to select multiple values ?</li><li>sort_order: Numerical, alphabetic, randomized or by order of
+<li>choice_orientation (see above)</li><li>allow_multiple_p - Is it allow one to select multiple values
+?</li><li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li>
 </ul>
 </li><li>select - multiple-option displayed in "popup
