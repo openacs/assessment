@@ -23,7 +23,18 @@ if {$session_id == 0} {
         ad_script_abort
     }
     #find the latest session
-    if {![db_0or1row get_latest_session "" -column_array latest_session]} {
+    if {![db_0or1row get_latest_session {
+        select max(o.creation_date), s.session_id
+          from as_sessions s,
+          acs_objects o,
+          cr_revisions cr
+        where s.subject_id=:user_id
+          and s.assessment_id in (select revision_id from cr_revisions where item_id= :assessment_id)
+          and o.object_id = cr.item_id
+          and s.session_id = cr.revision_id
+        group by assessment_id, subject_id, session_id
+        fetch first 1 rows only
+    } -column_array latest_session]} {
 	ad_return_complaint 1 "You have not completed this assessment yet."
         ad_script_abort
     }
