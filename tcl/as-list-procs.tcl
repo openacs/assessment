@@ -26,10 +26,9 @@ namespace eval as::list {
         # Process search items
         set paramlist [list]
         if { [set form [rp_getform]] ne "" } {
-            array set formarr [util_ns_set_to_list -set $form]
             set paramlist [list]
 
-            foreach param [array names formarr] {
+            foreach param [ns_set keys $form] {
                 if { [regexp -nocase {^as_item_id_(\d+)$} $param match one_item_id] } {
                     lappend paramlist ${param}:multiple
                 }
@@ -52,10 +51,9 @@ namespace eval as::list {
         # Process search items
         set as_item_ids [list]
         if { [set form [rp_getform]] ne "" } {
-            array set formarr [util_ns_set_to_list -set $form]
             set paramlist [list]
 
-            foreach param [array names formarr] {
+            foreach param [ns_set keys $form] {
             if { [regexp -nocase {^as_item_id_(\d+)$} $param match one_item_id] } {
                 lappend as_item_ids $one_item_id
             }
