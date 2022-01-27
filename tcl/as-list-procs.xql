@@ -17,7 +17,7 @@
                where 
                m.assessment_id = o.object_id
 	       and m.assessment_id 
-               in ([template::util::tcl_to_sql_list $assessment_ids])) s1 
+               in ([ns_dbquotelist $assessment_ids])) s1 
                $multiple_assessment_where) map
 	where ci.item_id = cr.item_id
 	and cr.revision_id = s.section_id

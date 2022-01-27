@@ -235,7 +235,7 @@ ad_proc as::list::filter_spec {
         }
         lappend spec values $values
         lappend spec null_where_clause " 1=1 "
-        lappend spec where_clause_eval "subst \"( ( :as_item_id_$cr_item_id is null and coalesce(trim( from as_item_id_${cr_item_id}.choice_value),'') = '' ) or (:as_item_id_${cr_item_id} is not null and btrim(as_item_id_${cr_item_id}.choice_value) in (\[template::util::tcl_to_sql_list \$as_item_id_${cr_item_id}\]) ) ) and as_item_id_$cr_item_id.session_id = m.session_id\""
+        lappend spec where_clause_eval "subst \"( ( :as_item_id_$cr_item_id is null and coalesce(trim( from as_item_id_${cr_item_id}.choice_value),'') = '' ) or (:as_item_id_${cr_item_id} is not null and btrim(as_item_id_${cr_item_id}.choice_value) in (\[ns_dbquotelist \$as_item_id_${cr_item_id}\]) ) ) and as_item_id_$cr_item_id.session_id = m.session_id\""
         # FIXME Check elements list for this
 
         lappend spec form_element_properties [list widget ajax_list_select options $values]
@@ -265,7 +265,7 @@ ad_proc as::list::get_items_multirow {
         return
     }
     if {[llength $assessment_ids] > 1} {
-        # set multiple_assessment_where "where exists (select null from (select m.assessment_id, m.section_id from as_assessment_section_map m where  m.assessment_id in ([template::util::tcl_to_sql_list $assessment_ids])) s2 where s1.section_id=s2.section_id and s1.assessment_id <> s2.assessment_id)"
+        # set multiple_assessment_where "where exists (select null from (select m.assessment_id, m.section_id from as_assessment_section_map m where  m.assessment_id in ([ns_dbquotelist $assessment_ids])) s2 where s1.section_id=s2.section_id and s1.assessment_id <> s2.assessment_id)"
         set multiple_assessment_where ""
     } else {
         set multiple_assessment_where ""

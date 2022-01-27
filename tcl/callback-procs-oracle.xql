@@ -13,7 +13,7 @@
          ) as completed_number
        from cr_items ci, cr_revisions cr, acs_objects o
        where cr.revision_id = ci.latest_revision
-       and o.package_id in ([template::util::tcl_to_sql_list $list_of_package_ids])
+       and o.package_id in ([ns_dbquotelist $list_of_package_ids])
        and o.object_id = ci.item_id
        and ci.content_type = 'as_assessments'
 and not exists (select 1 from

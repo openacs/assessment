@@ -56,7 +56,7 @@ if {[llength $session_id]} {
     set options [db_list_of_lists get_session_user_options [subst {
         select u.last_name || ', ' || u.first_names, user_id
         from acs_users_all u, as_sessions s
-        where s.session_id in ([template::util::tcl_to_sql_list $session_id])
+        where s.session_id in ([ns_dbquotelist $session_id])
         and u.user_id = s.subject_id
     }]]
     ad_form -extend -name send-mail -form {
