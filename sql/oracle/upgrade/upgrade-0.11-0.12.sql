@@ -1,4 +1,4 @@
-alter table as_item_data add column file_id integer constraint as_item_data_file_id_fk references cr_revisions(revision_id);
+alter table as_item_data add file_id integer constraint as_item_data_file_id_fk references cr_revisions(revision_id);
 insert into as_item_types_map (item_type, display_type) values ('fu', 'f');
 
 -- File Upload Item
