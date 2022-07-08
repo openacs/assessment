@@ -22,7 +22,7 @@ namespace eval inter_item_checks::notification_delivery {
         
         # Notifies the users that requested notification for the specific INTER_ITEM_CHECK
 
-	set method_id [notification::get_delivery_method_id -name "email"]
+	set method_id [notification::delivery::get_id -name "email"]
         set type_id [notification::type::get_type_id \
                          -short_name inter_item_check_notif]
         
