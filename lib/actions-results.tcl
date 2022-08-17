@@ -1,3 +1,9 @@
+ad_include_contract {
+    Show actions performed
+} {
+    session_id:integer
+}
+
 db_multirow actions get_actions {}
 
 # Local variables:
