@@ -1,21 +1,12 @@
-# packages/assessment/lib/comments-chunk.tcl
-#
-# shows comments for an object
-#
-# @author Deds Castillo (deds@i-manila.com.ph)
-# @creation-date 2005-08-16
-# @arch-tag: 989f6620-380f-49b9-a6e0-00c0effd7bb8
-# @cvs-id $Id$
+ad_include_contract {
+    Shows comments for an object
 
-foreach required_param {object_id} {
-    if {![info exists $required_param]} {
-        return -code error "$required_param is a required parameter."
-    }
-}
-foreach optional_param {} {
-    if {![info exists $optional_param]} {
-        set $optional_param {}
-    }
+    @author Deds Castillo (deds@i-manila.com.ph)
+    @creation-date 2005-08-16
+    @arch-tag: 989f6620-380f-49b9-a6e0-00c0effd7bb8
+    @cvs-id $Id$
+} {
+    object_id:object_type(acs_object)
 }
 
 set return_url [ad_return_url]
