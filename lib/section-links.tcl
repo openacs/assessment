@@ -1,8 +1,16 @@
-# shows links relating to 1 assessment
-# example:
-# Assessment Admin | Results | Section 1 | Section 2 
-# Params: assessment_id (required)
-#         tab (required) specifies which tab we're currently on. options are "front", "results" or a section_id
+ad_include_contract {
+    Shows links relating to 1 assessment
+
+    example:
+    Assessment Admin | Results | Section 1 | Section 2
+
+    @param tab specifies which tab we're currently on. options are
+               "front", "results" or a section_id
+
+} {
+    assessment_id:object_type(as_assessments)
+    tab
+}
 
 as::assessment::data -assessment_id $assessment_id
 set assessment_rev_id $assessment_data(assessment_rev_id)

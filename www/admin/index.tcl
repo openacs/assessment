@@ -1,3 +1,6 @@
+ad_page_contract {
+    Admin Index Page
+}
 
 ad_returnredirect "../asm-admin/"
 ad_script_abort
