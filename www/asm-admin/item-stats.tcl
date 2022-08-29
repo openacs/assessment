@@ -131,10 +131,10 @@ template::multirow foreach sections {
                 incr total_choices
                 lappend choices [list choice_title $choice_title \
                              choice_responses $choice_responses \
-                             correct_answer_p [template::util::is_true $correct_answer_p]]
+                             correct_answer_p [string is true -strict $correct_answer_p]]
                 incr total_responses $choice_responses
                 # Review the computation of correct percentage
-                if { [template::util::is_true $correct_answer_p] } {
+                if { [string is true -strict $correct_answer_p] } {
                     incr total_correct $choice_responses
                 }
             }
