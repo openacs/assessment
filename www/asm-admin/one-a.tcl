@@ -35,7 +35,7 @@ set admin_p [acs_user::site_wide_admin_p]
 set anonymous_p [db_string has_privilege {} -default "f"]
 set read_p [permission::permission_p -object_id $assessment_id -privilege read -party_id -1]
 
-set creation_date [util_AnsiDatetoPrettyDate $assessment_data(creation_date)]
+set creation_date [lc_time_fmt $assessment_data(creation_date) %q]
 set creator_url [acs_community_member_url -user_id $assessment_data(creation_user)]
 set history_url [export_vars -base assessment-history {assessment_id}]
 set edit_url [export_vars -base assessment-form {assessment_id}]
