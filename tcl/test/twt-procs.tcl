@@ -19,8 +19,8 @@ aa_register_case assessment_create_and_respond {
     set assessment_package_id [site_node::instantiate_and_mount \
                                    -node_name $assessment_url \
                                    -package_key assessment]
-    array set user [twt::user::create]
-    array set admin_user [twt::user::create -admin]
+    array set user [acs::test::user::create]
+    array set admin_user [acs::test::user::create -admin]
 
     twt::user::login $admin_user(email) $admin_user(password) $admin_user(username)
 
@@ -72,9 +72,9 @@ aa_register_case assessment_create_and_respond {
     # unmount and uninstantiate
     apm_package_instance_delete $assessment_package_id
     
-   catch {twt::user::delete -user_id $user(user_id)} errmsg
+   catch {acs::test::user::delete -user_id $user(user_id)} errmsg
     aa_log $errmsg
-    catch {twt::user::delete -user_id $admin_user(user_id)} errmsg
+    catch {acs::test::user::delete -user_id $admin_user(user_id)} errmsg
     aa_log $errmsg
 }
 
@@ -91,7 +91,7 @@ aa_log "Found assessment_id $item_id title $title"
     db_multirow users q "
 select user_id from cc_users where email like '%test.test'
 " {
-    catch {twt::user::delete -user_id $user_id} errmsg
+    catch {acs::test::user::delete -user_id $user_id} errmsg
     aa_log $errmsg
 }
 }
