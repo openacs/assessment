@@ -22,10 +22,10 @@ ad_proc -public as::item::new {
     {-package_id ""}
     {-validate_block ""}
 } {
+    New item to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
-
-    New item to the database
 } {
     if { $package_id eq "" } {
         set package_id [ad_conn package_id]
@@ -41,7 +41,14 @@ ad_proc -public as::item::new {
         if {$field_name eq ""} {
             set field_name $name
         }
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -creation_user [ad_conn user_id] -creation_ip [ad_conn peeraddr] -storage_type text]
+        set item_item_id [content::item::new \
+                              -item_id $item_item_id \
+                              -parent_id $folder_id \
+                              -content_type {as_items} \
+                              -name $name \
+                              -creation_user [ad_conn user_id] \
+                              -creation_ip [ad_conn peeraddr] \
+                              -storage_type text]
 
         set as_item_id [content::revision::new -item_id $item_item_id \
                             -content_type {as_items} \
@@ -76,10 +83,10 @@ ad_proc -public as::item::edit {
     {-points ""}
     {-validate_block ""}
 } {
+    Edit item to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit item to the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     db_transaction {
@@ -107,10 +114,10 @@ ad_proc -public as::item::edit {
 ad_proc -public as::item::new_revision {
     -as_item_id:required
 } {
+    Creates a new revision of an item in the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Creates a new revision of an item in the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     db_transaction {
@@ -142,10 +149,10 @@ ad_proc -public as::item::latest {
     -section_id:required
     {-default ""}
 } {
+    Returns the latest revision of an item
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-13
-
-    Returns the latest revision of an item
 } {
     if {![db_0or1row get_latest_item_id {}] && $default ne ""} {
         return $default
@@ -160,10 +167,10 @@ ad_proc -public as::item::copy {
     {-field_name ""}
     {-package_id ""}
 } {
+    Copies an item in the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copies an item in the database
 } {
     # Update as_item in the CR (and as_items table) getting the revision_id (as_item_id)
     if { $package_id eq "" } {
@@ -180,7 +187,11 @@ ad_proc -public as::item::copy {
             set field_name $name
         }
 
-        set item_item_id [content::item::new -item_id $item_item_id -parent_id $folder_id -content_type {as_items} -name $name -storage_type text]
+        set item_item_id [content::item::new \
+                              -item_id $item_item_id \
+                              -parent_id $folder_id \
+                              -content_type {as_items} \
+                              -name $name -storage_type text]
         set new_item_id [content::revision::new \
                              -item_id $item_item_id \
                              -content_type {as_items} \
@@ -215,10 +226,10 @@ ad_proc as::item::copy_types {
     {-as_item_id:required}
     {-new_item_id:required}
 } {
+    Copies item types and display types from as_item_id to new_item_id
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copies item types and display types from as_item_id to new_item_id
 } {
     db_dml copy_types {}
 }
@@ -226,10 +237,10 @@ ad_proc as::item::copy_types {
 ad_proc -public as::item::item_data {
     -as_item_id:required
 } {
+    Return cached item data
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-13
-
-    Return cached item data
 } {
     return [util_memoize [list as::item::item_data_not_cached -as_item_id $as_item_id]]
 }
@@ -237,10 +248,10 @@ ad_proc -public as::item::item_data {
 ad_proc -private as::item::item_data_not_cached  {
     -as_item_id:required
 } {
+    Gets the item type and display
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Gets the item type and display
 } {
     db_1row item_properties {} -column_array item
 
