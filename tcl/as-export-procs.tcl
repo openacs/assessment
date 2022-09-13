@@ -24,21 +24,21 @@ ad_proc -public as::export::new_element {
     if {$value ne ""} {
         set label [$root createElement $label]
         $father appendChild $label
-	if {$attribute_label ne ""} {
-	    $label setAttribute $attribute_label $attribute_value
-	}
-	if {$material_p == "t"} {
-	    set material [$root createElement material]
+        if {$attribute_label ne ""} {
+            $label setAttribute $attribute_label $attribute_value
+        }
+        if {$material_p == "t"} {
+            set material [$root createElement material]
             $label appendChild $material
             set mattext [$root createElement mattext]
-	    $mattext setAttribute texttype text/html
+            $mattext setAttribute texttype text/html
             $material appendChild $mattext
             set text [$root createCDATASection $value]
             $mattext appendChild $text
-	} else {
+        } else {
             set text [$root createCDATASection $value]
             $label appendChild $text
-	}
+        }
     }
 }
 
