@@ -15,10 +15,10 @@ ad_proc -public as::export::new_element {
     {-attribute_label ""}
     {-attribute_value ""}
 } {
+    New element
+
     @author Natalia Pérez (nperper@it.uc3m.es)
     @creation-date 2004-02-01
-
-    New element
 } {
     #create a new element named "label" and child of "father", with attribute_label=attribute_value
     if {$value ne ""} {
@@ -49,27 +49,27 @@ ad_proc -public as::export::element_qtimetadatafield {
     {-label ""}
     {-value ""}
 } {
+    New element qtimetadatafield
+
     @author Natalia Pérez (nperper@it.uc3m.es)
     @creation-date 2004-02-03
-
-    New element qtimetadatafield
 } {
-   #create an element <qtimetadatafield><fieldlabel></fieldlabel><fieldentry></fieldentry></qtimetadatafield>
-   if {$value ne ""} {
-    #<qtimetadatafield>
-    set qtimetadatafield [$root createElement qtimetadatafield]
-    $father appendChild $qtimetadatafield
-    #<fieldlabel>
-    set fieldlabel [$root createElement fieldlabel]
-    $qtimetadatafield appendChild $fieldlabel
-    set text [$root createCDATASection $label]
-    $fieldlabel appendChild $text
-    #<fieldentry>
-    set fieldentry [$root createElement fieldentry]
-    $qtimetadatafield appendChild $fieldentry
-    set text [$root createCDATASection $value]
-    $fieldentry appendChild $text
-  }
+    #create an element <qtimetadatafield><fieldlabel></fieldlabel><fieldentry></fieldentry></qtimetadatafield>
+    if {$value ne ""} {
+        #<qtimetadatafield>
+        set qtimetadatafield [$root createElement qtimetadatafield]
+        $father appendChild $qtimetadatafield
+        #<fieldlabel>
+        set fieldlabel [$root createElement fieldlabel]
+        $qtimetadatafield appendChild $fieldlabel
+        set text [$root createCDATASection $label]
+        $fieldlabel appendChild $text
+        #<fieldentry>
+        set fieldentry [$root createElement fieldentry]
+        $qtimetadatafield appendChild $fieldentry
+        set text [$root createCDATASection $value]
+        $fieldentry appendChild $text
+    }
 }
 
 # Local variables:
