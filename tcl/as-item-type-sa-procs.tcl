@@ -12,10 +12,10 @@ ad_proc -public as::item_type_sa::new {
     {-allow_negative_p ""}
     {-package_id ""}
 } {
+    New Short Answer Answers item to the data database
+
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
-
-    New Short Answer Answers item to the data database
 } {
     if { $package_id eq "" } {
         set package_id [ad_conn package_id]
@@ -42,10 +42,10 @@ ad_proc -public as::item_type_sa::edit {
     {-increasing_p ""}
     {-allow_negative_p ""}
 } {
+    Edit Short Answer Answers item to the data database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Short Answer Answers item to the data database
 } {
     # Update as_item_type_sa in the CR (and as_item_type_sa table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -64,10 +64,10 @@ ad_proc -public as::item_type_sa::edit {
 ad_proc -public as::item_type_sa::copy {
     -type_id:required
 } {
+    Copy a Short Answer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy a Short Answer Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -92,10 +92,10 @@ ad_proc -public as::item_type_sa::render {
     {-session_id ""}
     {-show_feedback ""}
 } {
+    Render a Short Answer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render a Short Answer Type
 } {
     if {$default_value ne ""} {
         array set values $default_value
@@ -119,12 +119,21 @@ ad_proc -public as::item_type_sa::process {
     {-allow_overwrite_p t}
     {-package_id ""}
 } {
+    Process a Response to a Short Answer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
-
-    Process a Response to a Short Answer Type
 } {
-    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -text_answer [lindex $response 0] -points "" -allow_overwrite_p $allow_overwrite_p -package_id $package_id
+    as::item_data::new \
+        -session_id $session_id \
+        -subject_id $subject_id \
+        -staff_id $staff_id \
+        -as_item_id $as_item_id \
+        -section_id $section_id \
+        -text_answer [lindex $response 0] \
+        -points "" \
+        -allow_overwrite_p $allow_overwrite_p \
+        -package_id $package_id
 }
 
 ad_proc -public as::item_type_sa::results {
@@ -133,10 +142,10 @@ ad_proc -public as::item_type_sa::results {
     -data_type:required
     -sessions:required
 } {
+    Return the results of a given item in a given list of sessions as an array
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-26
-
-    Return the results of a given item in a given list of sessions as an array
 } {
     db_foreach get_results {} {
         set results($session_id) $text_answer
@@ -161,8 +170,8 @@ ad_proc -private as::item_type_sa::add_to_assessment {
     {-allow_negative_p "f"}
 } {
     Add the short answer item to an assessment. The creates the
-    as_item_type_sa object and associates the as_item_id
-    with an assessment, or updates the assessment with the latest version
+    as_item_type_sa object and associates the as_item_id with an
+    assessment, or updates the assessment with the latest version.
 
     @param assessment_id Assessment to attach question to
     @param section_id Section the question is in

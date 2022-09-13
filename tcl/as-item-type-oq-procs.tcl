@@ -13,10 +13,10 @@ ad_proc -public as::item_type_oq::new {
     {-reference_answer ""}
     {-keywords ""}
 } {
+    New Open Question item to the data database
+
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
-
-    New Open Question item to the data database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -45,10 +45,10 @@ ad_proc -public as::item_type_oq::edit {
     {-reference_answer ""}
     {-keywords ""}
 } {
+    Edit Open Question item to the data database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Open Question item to the data database
 } {
     # Update as_item_type_oq in the CR (and as_item_type_oq table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -69,10 +69,10 @@ ad_proc -public as::item_type_oq::edit {
 ad_proc -public as::item_type_oq::copy {
     -type_id:required
 } {
+    Copy an Open Question Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Open Question Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -99,10 +99,10 @@ ad_proc -public as::item_type_oq::render {
     {-session_id ""}
     {-show_feedback ""}
 } {
+    Render an Open Question Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Open Question Type
 } {
     if {$default_value ne ""} {
 	array set values $default_value
@@ -127,13 +127,12 @@ ad_proc -public as::item_type_oq::process {
     {-allow_overwrite_p t}
     {-package_id ""}
 } {
+    Process a Response to an Open Question Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
-
-    Process a Response to an Open Question Type
 } {
     array set type [util_memoize [list as::item_type_oq::data -type_id $type_id]]
-
 
     if {[llength $type(keywords)] > 0} {
 	set points 0
@@ -147,17 +146,26 @@ ad_proc -public as::item_type_oq::process {
 	set points ""
     }
 
-    set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -clob_answer $response -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
+    set item_data_id [as::item_data::new \
+                          -session_id $session_id \
+                          -subject_id $subject_id \
+                          -staff_id $staff_id \
+                          -as_item_id $as_item_id \
+                          -section_id $section_id \
+                          -clob_answer $response \
+                          -points $points \
+                          -allow_overwrite_p $allow_overwrite_p \
+                          -package_id $package_id]
     as::session_results::new -target_id $item_data_id -points $points
 }
 
 ad_proc -public as::item_type_oq::data {
     -type_id:required
 } {
+    Return the Data of an Open Question Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Return the Data of an Open Question Type
 } {
     db_1row item_type_data {} -column_array type
     return [array get type]
@@ -169,10 +177,10 @@ ad_proc -public as::item_type_oq::results {
     -data_type:required
     -sessions:required
 } {
+    Return the results of a given item in a given list of sessions as an array
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-26
-
-    Return the results of a given item in a given list of sessions as an array
 } {
     db_foreach get_results {} {
 	set results($session_id) $clob_answer
@@ -197,9 +205,9 @@ ad_proc -private as::item_type_oq::add_to_assessment {
     {-default_value ""}
 } {
     Add the open question (long answer/essay) item to an assessment.
-    This creates the  as_item_type_oq object and
-    associates the as_item_id
-    with an assessment, or updates the assessment with the latest version
+    This creates the as_item_type_oq object and associates the
+    as_item_id with an assessment, or updates the assessment with the
+    latest version.
 
     @param assessment_id Assessment to attach question to
     @param section_id Section the question is in
