@@ -1,46 +1,48 @@
-ad_library {    Assessment Checks procs
+ad_library {
+
+    Assessment Checks procs
+
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-13
+
 }
 
 namespace eval as::assessment::check {}
 
-ad_proc -public as::assessment::check::get_types {
-} {
+ad_proc -public as::assessment::check::get_types {} {
     Return the checks types
 } {
     set types [list [list "\#assessment.action\#" "t"] [list "\#assessment.branch\#" "f"]]
     return $types
 }
 
-ad_proc -public as::assessment::check::get_assessments {
-} {
-
+ad_proc -public as::assessment::check::get_assessments {} {
+    @return list of assessments the currently connected user can
+            administrate.
 } {
     set package_id [ad_conn package_id]
     set user_id [ad_conn user_id]
     set permission ""
     if {![acs_user::site_wide_admin_p -user_id $user_id]} {
-        set permission "and ci.item_id in (select object_id from acs_permissions where grantee_id=:user_id and privilege='admin')"}
+        set permission "and ci.item_id in (select object_id from acs_permissions where grantee_id=:user_id and privilege='admin')"
+    }
     set assessment_list [list [list "[_ assessment.all]" "all"]]
     set assessments [db_list_of_lists assessment {}]
-    foreach  assessment $assessments {
+    foreach assessment $assessments {
         lappend assessment_list [list [lindex $assessment 0] [lindex $assessment 1]]
     }
 
     return $assessment_list
 }
 
-ad_proc -public as::assessment::check::state_options {
-} {
-
+ad_proc -public as::assessment::check::state_options {} {
+    @return the list of possible options for the state of an assessment
 } {
     set approved_options [list  [list "[_ assessment.approved]" "t"] [list "[_ assessment.approved_with]" "ae"] [list "[_ assessment.not_approved]" "f"] ]
     return $approved_options
 }
 
-ad_proc -public as::assessment::check::intervals {
-} {
+ad_proc -public as::assessment::check::intervals {} {
     Return the time intervals
 } {
     set today [clock format [clock seconds] -format %Y-%m-%d]
@@ -63,7 +65,7 @@ ad_proc -public as::assessment::check::add_check_return_url {
     Return the url
 } {
     if { $action_p == "t"} {
-        return  "action-select"
+        return "action-select"
     } else {
         return "section-select"
     }
@@ -95,10 +97,8 @@ ad_proc -public as::assessment::check::get_parameter_value {
         return  [db_string get_param_n {} -default " "]
     } else {
         return [db_string get_param_q {} -default " "]
-
     }
 }
-
 
 ad_proc -public as::assessment::check::set_parameter_value {
     {-parameter_id}
@@ -106,7 +106,7 @@ ad_proc -public as::assessment::check::set_parameter_value {
     {-check_id}
     {-type}
 } {
-
+    Sets the value of the parameter
 } {
     set exists_p [db_string get_check_id {} -default 0]
 
@@ -130,7 +130,7 @@ ad_proc -public as::assessment::check::re_order_actions {
     {-action_perform}
     {-section_id}
 } {
-
+    Re-orders the actions
 } {
     set order_by [db_string get_order_by {}]
     set count 0
@@ -146,7 +146,7 @@ ad_proc -public as::assessment::check::get_sql {
     {-item_id}
     {-condition}
 } {
-
+    @return a SQL snippet
 } {
     set as_item_id [db_string get_item_id {select item_id from cr_revisions where revision_id=:item_id}]
 
@@ -162,7 +162,7 @@ ad_proc -public as::assessment::check::swap_actions {
     {-direction}
     {-order_by}
 } {
-
+    Swaps actions
 } {
     if { $direction eq "d"} {
         set order_p [expr {$order_by + 1}]
@@ -182,7 +182,7 @@ ad_proc -public as::assessment::check::action_log {
     {-check_id}
     {-failed }
 } {
-
+    Log action
 } {
     set user_id [ad_conn user_id]
     set log_id [db_string get_next_val {}]
@@ -201,9 +201,8 @@ ad_proc -public as::assessment::check::action_log {
 ad_proc -public as::assessment::check::manual_action_log {
     {-session_id}
     {-check_id}
-
 } {
-
+    Manual action log
 } {
     set user_id [ad_conn user_id]
     set log_id [db_string get_next_val {}]
@@ -215,12 +214,11 @@ ad_proc -public as::assessment::check::manual_action_log {
     }
 }
 
-
 ad_proc -public as::assessment::check::action_exec {
     {-inter_item_check_id}
     {-session_id}
 } {
-
+    Execute an action
 } {
     set error_txt ""
 
@@ -230,29 +228,29 @@ ad_proc -public as::assessment::check::action_exec {
         set $varname ""
 
         if {$value eq ""} {
-                set choice [db_list_of_lists get_item_choice {}]
+            set choice [db_list_of_lists get_item_choice {}]
             set answer [db_0or1row get_answer {}]
-            if {([info exists choice_id] && $choice_id ne "")} {
-            set $varname "$choice_id"
+            if {[info exists choice_id] && $choice_id ne ""} {
+                set $varname $choice_id
             } else {
-            if { [info exists boolean_answer] } {
-                append $varname $boolean_answer
-            }
-            if { [info exists numeric_answer] } {
-                append $varname $numeric_answer
-            }
-            if { [info exists integer_answer] } {
-                append $varname $integer_answer
-            }
-            if { [info exists text_answer] } {
-                append $varname $text_answer
-            }
-            if { [info exists clob_answer] } {
-                append $varname $clob_answer
-            }
-            if { [info exists content_answer] } {
-                append $varname $content_answer
-            }
+                if { [info exists boolean_answer] } {
+                    append $varname $boolean_answer
+                }
+                if { [info exists numeric_answer] } {
+                    append $varname $numeric_answer
+                }
+                if { [info exists integer_answer] } {
+                    append $varname $integer_answer
+                }
+                if { [info exists text_answer] } {
+                    append $varname $text_answer
+                }
+                if { [info exists clob_answer] } {
+                    append $varname $clob_answer
+                }
+                if { [info exists content_answer] } {
+                    append $varname $content_answer
+                }
             }
         } else {
             set $varname $value
@@ -273,20 +271,28 @@ ad_proc -public as::assessment::check::action_exec {
     }
 
     if {$failed_p} {
-        notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has encountered an error: $errorMsg" -subset $to -force -action_id $inter_item_check_id
+        notification::new \
+            -type_id [notification::type::get_type_id -short_name inter_item_check_notif] \
+            -object_id $inter_item_check_id \
+            -notif_subject "$action_name has been executed" \
+            -notif_text "The action $action_name has encountered an error: $errorMsg" \
+            -subset $to \
+            -force \
+            -action_id $inter_item_check_id
     }
 
-    as::assessment::check::action_log -session_id $session_id -check_id $inter_item_check_id -failed $failed_p
-
+    as::assessment::check::action_log \
+        -session_id $session_id \
+        -check_id $inter_item_check_id \
+        -failed $failed_p
 }
-
 
 ad_proc -public as::assessment::check::manual_action_exec {
     {-inter_item_check_id}
     {-session_id}
     {-action_log_id}
 } {
-
+    Execute manual action
 } {
     db_0or1row subject_id {select subject_id from as_sessions where session_id=:session_id}
     db_foreach get_check_params {} {
@@ -297,8 +303,8 @@ ad_proc -public as::assessment::check::manual_action_exec {
         if {$value eq ""} {
             set choice [db_list_of_lists get_item_choice {}]
             set answer [db_0or1row get_answer {}]
-            if {([info exists choice_id] && $choice_id ne "")} {
-                set $varname "$choice_id"
+            if {[info exists choice_id] && $choice_id ne ""} {
+                set $varname $choice_id
             } else {
                 if { [info exists boolean_answer] } {
                     append $varname $boolean_answer
@@ -318,7 +324,6 @@ ad_proc -public as::assessment::check::manual_action_exec {
                 if { [info exists content_answer] } {
                     append $varname $content_answer
                 }
-
             }
         } else {
             set $varname $value
@@ -335,25 +340,31 @@ ad_proc -public as::assessment::check::manual_action_exec {
 
     set user_id [ad_conn user_id]
     db_dml update_actions_log {}
-        set admin [db_list_of_lists get_assessment_admin {}]
+    set admin [db_list_of_lists get_assessment_admin {}]
 
     set to [list]
     foreach notify_user $admin {
         lappend to $notify_user
     }
-    if { [parameter::get -package_id [ad_conn package_id] -parameter NotifyAdminOfActions -default 1] } {
-        notification::new -type_id [notification::type::get_type_id -short_name inter_item_check_notif] -object_id $inter_item_check_id -notif_subject "$action_name has been executed" -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" -subset $to -force -action_id $inter_item_check_id
+    if { [parameter::get -package_id [ad_conn package_id] \
+              -parameter NotifyAdminOfActions -default 1] } {
+        notification::new \
+            -type_id [notification::type::get_type_id -short_name inter_item_check_notif] \
+            -object_id $inter_item_check_id \
+            -notif_subject "$action_name has been executed" \
+            -notif_text "The action $action_name has been executed. This message has been showed to the user: $user_message" \
+            -subset $to \
+            -force \
+            -action_id $inter_item_check_id
     }
 }
-
 
 ad_proc -public as::assessment::check::eval_i_checks {
     {-session_id}
     {-section_id}
 } {
-
+    Evaluate section
 } {
-
     set section_checks [db_list_of_lists section_checks {}]
 
     foreach check $section_checks  {
@@ -361,19 +372,20 @@ ad_proc -public as::assessment::check::eval_i_checks {
         set perform [db_string check_sql $check_sql -default 0]
         if {[lindex $check 2] == "t"} {
             if {$perform == 1} {
-                as::assessment::check::action_exec -inter_item_check_id [lindex $check 0] -session_id $session_id
+                as::assessment::check::action_exec \
+                    -inter_item_check_id [lindex $check 0] \
+                    -session_id $session_id
             }
         }
     }
 }
-
 
 ad_proc -public as::assessment::check::branch_checks {
     {-session_id}
     {-section_id}
     {-assessment_id}
 } {
-
+    Branch checks
 } {
     set order "f"
     set perform 0
@@ -383,7 +395,7 @@ ad_proc -public as::assessment::check::branch_checks {
         as::assessment::data -assessment_id $assessment_id
         set new_assessment_revision $assessment_data(assessment_rev_id)
         set section_id_to [lindex $check 2]
-        set perform [db_string check_sql "[lindex $check 0]" -default 0]
+        set perform [db_string check_sql [lindex $check 0] -default 0]
 
         if {$perform == 1} {
             set order [db_string get_order {}]
@@ -398,14 +410,11 @@ ad_proc -public as::assessment::check::branch_checks {
     }
 }
 
-
-
-
 ad_proc -public as::assessment::check::eval_aa_checks {
     {-session_id}
     {-assessment_id}
 } {
-
+    Eval AA checks
 } {
     # This value is not used anywhere, except, maybe, in tcl code
     # stored in as_actions.tcl_code column where people was brave
@@ -420,27 +429,29 @@ ad_proc -public as::assessment::check::eval_aa_checks {
         set perform [db_string check_sql $check_sql -default 0]
         if {$action_p == "t"} {
             if {$perform == 1} {
-                as::assessment::check::action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id
+                as::assessment::check::action_exec \
+                    -inter_item_check_id $inter_item_check_id \
+                    -session_id $session_id
             }
         }
     }
 }
 
-
 ad_proc -public as::assessment::check::eval_m_checks {
     {-session_id}
     {-assessment_id}
 } {
-
+    Eval m checks
 } {
-
     db_foreach assessment_checks {} {
         if {$action_p == "t"} {
             set perform [db_string check_sql $check_sql -default 0]
 
             if {$perform == 1} {
                 set failed ""
-                as::assessment::check::manual_action_log -check_id $inter_item_check_id -session_id $session_id
+                as::assessment::check::manual_action_log \
+                    -check_id $inter_item_check_id \
+                    -session_id $session_id
             }
         }
     }
@@ -450,9 +461,8 @@ ad_proc -public as::assessment::check::eval_or_checks {
     {-session_id}
     {-section_id}
 } {
-
+    Eval or checks
 } {
-
     set section_checks [db_list_of_lists section_checks {}]
 
     foreach check $section_checks  {
@@ -460,18 +470,19 @@ ad_proc -public as::assessment::check::eval_or_checks {
         set perform [db_string check_sql $check_sql -default 0]
         if {[lindex $check 2] == "t"} {
             if {$perform == 1} {
-                as::assessment::check::action_exec -inter_item_check_id [lindex $check 0] -session_id $session_id
+                as::assessment::check::action_exec \
+                    -inter_item_check_id [lindex $check 0] \
+                    -session_id $session_id
             }
         }
     }
 }
 
-
 ad_proc -public as::assessment::check::eval_sa_checks {
     {-session_id}
     {-assessment_id}
 } {
-
+    Eval sa checks
 } {
     # This value is not used anywhere, except, maybe, in tcl code
     # stored in as_actions.tcl_code column where people was brave
@@ -486,18 +497,19 @@ ad_proc -public as::assessment::check::eval_sa_checks {
         set perform [db_string check_sql $check_sql -default 0]
         if {$action_p == "t"} {
             if {$perform == 1} {
-                as::assessment::check::action_exec -inter_item_check_id $inter_item_check_id -session_id $session_id
+                as::assessment::check::action_exec \
+                    -inter_item_check_id $inter_item_check_id \
+                    -session_id $session_id
             }
         }
     }
 }
 
-
 ad_proc -public as::assessment::check::confirm_display {
     {-check_id}
     {-index}
 } {
-
+    @return HTML
 } {
     set show_check_info ""
     set mod ""
@@ -542,7 +554,7 @@ ad_proc -public as::assessment::check::copy_checks {
     {-new_section_id:required}
     {-assessment_id:required}
 } {
-
+    Copy checks from one section to another.
 } {
     set user_id [ad_conn user_id]
     set checks [db_list_of_lists get_checks {}]
@@ -558,7 +570,7 @@ ad_proc -public as::assessment::check::update_checks {
     {-section_id:required}
     {-new_section_id:required}
 } {
-
+    Update checks
 } {
     set checks [db_list_of_lists checks {}]
     foreach check_id $checks {
@@ -569,19 +581,20 @@ ad_proc -public as::assessment::check::update_checks {
 ad_proc -public as::assessment::check::delete_assessment_checks {
     {-assessment_id:required}
 } {
-
+    Delete checks
 } {
     set checks [db_list_of_lists assessment_checks {}]
     foreach check_id $checks {
         set delete_p [db_exec_plsql delete_checks {}]
     }
 }
+
 ad_proc -public as::assessment::check::delete_item_checks {
     {-assessment_id:required}
     {-section_id}
     {-as_item_id}
 } {
-
+    Delete item checks
 } {
     set checks [db_list_of_lists related_checks {}]
     foreach check $checks {
@@ -601,7 +614,7 @@ ad_proc -public as::assessment::check::copy_item_checks {
     {-as_item_id}
     {-new_item_id}
 } {
-
+    Copy item checks from one item to another.
 } {
     set checks [db_list_of_lists related_checks {}]
     set user_id [ad_conn user_id]
@@ -620,13 +633,12 @@ ad_proc -public as::assessment::check::copy_item_checks {
     }
 }
 
-
 ad_proc -public as::assessment::check::eval_single_check {
     {-session_id}
     {-assessment_id}
     {-inter_item_check_id}
 } {
-
+    Eval single check
 } {
     db_1row get_check_info {}
 
@@ -634,23 +646,28 @@ ad_proc -public as::assessment::check::eval_single_check {
     ns_log notice "$check_sql $perform"
     if {$perform == 1} {
         set failed ""
-        as::assessment::check::manual_action_log -check_id $inter_item_check_id -session_id $session_id
+        as::assessment::check::manual_action_log \
+            -check_id $inter_item_check_id \
+            -session_id $session_id
     }
 }
-
 
 ad_proc -public as::assessment::check::add_manual_check {
     {-assessment_id:required}
     {-inter_item_check_id:required}
 } {
-
+    Add manual check
 } {
-    set sessions [db_list_of_lists get_sessions {select session_id from as_sessions where assessment_id=:assessment_id}]
+    set sessions [db_list_of_lists get_sessions {
+        select session_id from as_sessions where assessment_id=:assessment_id
+    }]
     foreach session_id $sessions {
-        as::assessment::check::eval_single_check -session_id $session_id -assessment_id $assessment_id  -inter_item_check_id $inter_item_check_id
+        as::assessment::check::eval_single_check \
+            -session_id $session_id \
+            -assessment_id $assessment_id \
+            -inter_item_check_id $inter_item_check_id
     }
 }
-
 
 # Local variables:
 #    mode: tcl
