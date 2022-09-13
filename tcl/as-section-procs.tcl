@@ -18,10 +18,10 @@ ad_proc -public as::section::new {
     {-points ""}
     {-package_id ""}
 } {
+    New section to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
-
-    New section to the database
 } {
     if {$package_id eq "" \
             && [ad_conn -connected_p]} {
@@ -66,10 +66,10 @@ ad_proc -public as::section::edit {
     {-points ""}
     {-assessment_id:required}
 } {
+    Edit section in the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-10-26
-
-    Edit section in the database
 } {
     # edit as_section in the CR
     set section_item_id [db_string section_item_id {}]
@@ -98,10 +98,10 @@ ad_proc -public as::section::new_revision {
     {-section_id:required}
     {-assessment_id:required}
 } {
+    Creates a new revision of a section with all items
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
-
-    Creates a new revision of a section with all items
 } {
     # edit as_section in the CR
     db_transaction {
@@ -131,10 +131,10 @@ ad_proc -public as::section::latest {
     -assessment_rev_id:required
     {-default ""}
 } {
+    Returns the latest revision of a section
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-13
-
-    Returns the latest revision of a section
 } {
     if {![db_0or1row get_latest_section_id {}] && $default ne ""} {
 	return $default
@@ -148,11 +148,11 @@ ad_proc -public as::section::copy {
     {-assessment_id:required}
     {-required_p "0"}
 } {
+    Copies a section with all items
+
     @param required_p Should the new section be required or not? (1|0)
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
-
-    Copies a section with all items
 } {
     # edit as_section in the CR
     set package_id [ad_conn package_id]
@@ -193,10 +193,10 @@ ad_proc as::section::copy_items {
     {-section_id:required}
     {-new_section_id:required}
 } {
+    Copies all items from section_id to new_section_id
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
-
-    Copies all items from section_id to new_section_id
 } {
     db_dml copy_items {}
 }
@@ -208,11 +208,11 @@ ad_proc as::section::items {
     {-num_items ""}
     {-random_p "t"}
 } {
+    Returns all items of a section in the correct order.  May vary
+    from session to session.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
-
-    Returns all items of a section in the correct order.
-    may vary from session to session
 } {
     set item_list [db_list_of_lists get_sorted_items {}]
 
@@ -224,7 +224,19 @@ ad_proc as::section::items {
     set open_positions ""
     set max_pos 0
     db_foreach section_items {} {
-	set section_items($as_item_id) [list $name $title $description $subtext $required_p $max_time_to_complete $content_rev_id $content_filename $content_type $as_item_type_id $validate_block $question_text]
+	set section_items($as_item_id) [list \
+                                            $name \
+                                            $title \
+                                            $description \
+                                            $subtext \
+                                            $required_p \
+                                            $max_time_to_complete \
+                                            $content_rev_id \
+                                            $content_filename \
+                                            $content_type \
+                                            $as_item_type_id \
+                                            $validate_block \
+                                            $question_text]
 	if {$fixed_position ne "" && $fixed_position != 0} {
 	    set fixed_positions($fixed_position) $as_item_id
 	    if {$max_pos < $fixed_position} {
@@ -272,7 +284,7 @@ ad_proc as::section::items {
 	    }
 	}
     }
-    
+
     if {$num_items ne "" && [llength $sorted_items] > $num_items} {
     	set sorted_items [lreplace $sorted_items $num_items end]
     }
@@ -298,10 +310,10 @@ ad_proc -public as::section::calculate {
     -assessment_id:required
     -session_id:required
 } {
+    Award points to this section if all items are filled out in this section
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-14
-
-    Award points to this section if all items are filled out in this section
 } {
     if {![db_0or1row max_section_points {}]} {
 	return
@@ -334,13 +346,18 @@ ad_proc -public as::section::skip {
     {-staff_id ""}
     {-package_id ""}
 } {
+    Skip section in a session and award 0 points
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-22
-
-    Skip section in a session and award 0 points
 } {
     db_transaction {
-	as::section_data::new -section_id $section_id -session_id $session_id -subject_id $subject_id -staff_id $staff_id -package_id $package_id
+	as::section_data::new \
+            -section_id $section_id \
+            -session_id $session_id \
+            -subject_id $subject_id \
+            -staff_id $staff_id \
+            -package_id $package_id
 	db_dml set_zero_points {}
     }
 }
@@ -352,16 +369,23 @@ ad_proc -public as::section::close {
     -subject_id:required
     {-staff_id ""}
 } {
+    Close started section in a session and award 0 points with empty
+    answers to all remaining items.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-22
-
-    Close started section in a session and award 0 points with empty answers
-    to all remaining items
 } {
     db_transaction {
 	set item_list [db_list remaining_items {}]
 	foreach as_item_id $item_list {
-	    as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -points 0 -allow_overwrite_p f
+	    as::item_data::new \
+                -session_id $session_id \
+                -subject_id $subject_id \
+                -staff_id $staff_id \
+                -as_item_id $as_item_id \
+                -section_id $section_id \
+                -points 0 \
+                -allow_overwrite_p f
 	}
 
 	calculate -section_id $section_id -assessment_id $assessment_id -session_id $session_id
@@ -374,10 +398,9 @@ ad_proc -private as::section::checks_list {
     -section_id:required
 } {
     Return a list of checks for the section within the assessment
-    
+
     Allow caching of the choice_orientation as it is unlikely to change.
 } {
-    
     return [as::section::checks_list_not_cached -assessment_id $assessment_id -section_id $section_id]
 }
 
@@ -386,9 +409,8 @@ ad_proc -private as::section::checks_list_not_cached {
     -section_id:required
 } {
     Return a list of checks for the section within the assessment
-    
 } {
-    return [db_list_of_lists checks_related {} ] 
+    return [db_list_of_lists checks_related {} ]
 }
 
 ad_proc -private as::section::update_section_in_assessment {
