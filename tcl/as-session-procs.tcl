@@ -33,7 +33,7 @@ ad_proc -public as::session::new {
 
 #    # Check to see if there's a session already to not submit another one
 #    db_0or1row as_session_last {SELECT session_id AS as_session_id FROM as_sessionsx WHERE subject_id = :subject_id AND assessment_id = :assessment_id}
-#    if { ! [info exists as_session_id] } {    
+#    if { ! [info exists as_session_id] } {
     # Insert as_session in the CR (and as_sessions table) getting the revision_id (session_id)
 
     set transaction_successful_p 0
@@ -142,9 +142,9 @@ ad_proc -private as::session::update_elapsed_time {
     based on how long the user took to submit the specified section
 
     @author Dave Bauer (dave@solutiongrove.com)
-    
+
     @param session_id
-    @param section_id 
+    @param section_id
 
 } {
     set last_viewed ""
@@ -157,7 +157,7 @@ ad_proc -private as::session::update_elapsed_time {
 	} else {
 	    set elapsed_seconds 600
 	}
-    } 
+    }
 
     if {$last_viewed ne ""} {
 	set last_seconds [clock scan $last_viewed]
