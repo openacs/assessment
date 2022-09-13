@@ -16,10 +16,10 @@ ad_proc -public as::item_answer::new {
     {-regexp_text ""}
     {-allowed_answerbox_list ""}
 } {
+    New item answer to the data database
+
     @author Natalia Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-29
-
-    New item answer to the data database
 } {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]

@@ -21,10 +21,10 @@ ad_proc -public as::item_choice::new {
     {-percent_score ""}
     {-fixed_position ""}
 } {
+    New item choice to the data database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
-
-    New item choice to the data database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -59,10 +59,10 @@ ad_proc -public as::item_choice::new_revision {
     -choice_id:required
     -mc_id:required
 } {
+    New item choice revision
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    New item choice revision
 } {
     # New revision of as_item_choice in the CR (and as_item_choices table) getting the revision_id (as_item_choice_id)
     db_transaction {
@@ -94,10 +94,10 @@ ad_proc -public as::item_choice::copy {
     -mc_id:required
     {-copy_correct_answer_p "t"}
 } {
+    Copy a Multiple Choice
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy a Multiple Choice
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]

@@ -25,10 +25,10 @@ ad_proc -public as::item_data::new {
     {-points ""}
     {-package_id ""}
 } {
+    New as_item_data to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-12
-
-    New as_item_data to the database
 } {
     if {$package_id eq ""} {
 	set package_id [ad_conn package_id]
@@ -98,10 +98,10 @@ ad_proc -public as::item_data::get {
     {-session_id ""}
     {-section_id ""}
 } {
+    Get as_item_data from the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-24
-
-    Get as_item_data from the database
 } {
     if {$session_id eq ""} {
 	set last_sessions [db_list_of_lists last_sessions {}]
