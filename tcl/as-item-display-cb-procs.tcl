@@ -13,11 +13,11 @@ ad_proc -public as::item_display_cb::new {
     {-sort_order_type ""}
     {-item_answer_alignment ""}
 } {
+    New Item Display CheckBox Type to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-23
-
-    New Item Display CheckBox Type to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -46,10 +46,10 @@ ad_proc -public as::item_display_cb::edit {
     {-sort_order_type ""}
     {-item_answer_alignment ""}
 } {
+    Edit Item Display CheckBox Type to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Item Display CheckBox Type to the database
 } {
     # Update as_item_display_cb in the CR (and as_item_display_cb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -70,10 +70,10 @@ ad_proc -public as::item_display_cb::edit {
 ad_proc -public as::item_display_cb::copy {
     -type_id:required
 } {
+    Copy an Item Display CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Item Display CheckBox Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -105,10 +105,10 @@ ad_proc -public as::item_display_cb::render {
     {-data ""}
     -item:required
 } {
+    Render an Item Display CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Item Display CheckBox Type
 } {
     if {$required_p eq ""} {
 	set required_p f
@@ -156,10 +156,10 @@ ad_proc -public as::item_display_cb::render {
 ad_proc -public as::item_display_cb::data {
     -type_id:required
 } {
+    Get the cached Display Data of CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the cached Display Data of CheckBox Type
 } {
     return [util_memoize [list as::item_display_cb::data_not_cached -type_id $type_id]]
 }
@@ -167,10 +167,10 @@ ad_proc -public as::item_display_cb::data {
 ad_proc -private as::item_display_cb::data_not_cached {
     -type_id:required
 } {
+    Get the Display Data of CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the Display Data of CheckBox Type
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
@@ -189,7 +189,7 @@ ad_proc as::item_display_cb::set_item_display_type {
     {-order_type "order_of_entry"}
     {-answer_alignment "beside_right"}
 } {
-
+    Set item display type
 } {
     db_transaction {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
