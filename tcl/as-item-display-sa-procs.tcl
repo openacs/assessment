@@ -9,7 +9,7 @@ namespace eval as::item_display_sa {}
 ad_proc -public as::item_display_sa::new {
     {-html_display_options ""}
     {-abs_size ""}
-    {-box_orientation ""}    
+    {-box_orientation ""}
 } {
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
@@ -37,7 +37,7 @@ ad_proc -public as::item_display_sa::edit {
     -as_item_display_id:required
     {-html_display_options ""}
     {-abs_size ""}
-    {-box_orientation ""}    
+    {-box_orientation ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07

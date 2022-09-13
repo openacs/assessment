@@ -32,7 +32,7 @@ ad_proc -public as::item_display_rb::new {
 					[list choice_orientation $choice_orientation] \
 					[list choice_label_orientation $choice_label_orientation] \
 					[list sort_order_type $sort_order_type] \
-					[list item_answer_alignment $item_answer_alignment] ] ]	
+					[list item_answer_alignment $item_answer_alignment] ] ]
     }
 
     return $as_item_display_rb_id
@@ -61,7 +61,7 @@ ad_proc -public as::item_display_rb::edit {
 						      [list choice_orientation $choice_orientation] \
 						      [list choice_label_orientation $choice_label_orientation] \
 						      [list sort_order_type $sort_order_type] \
-						      [list item_answer_alignment $item_answer_alignment] ] ]	
+						      [list item_answer_alignment $item_answer_alignment] ] ]
     }
 
     return $new_item_display_id
@@ -144,7 +144,7 @@ ad_proc -public as::item_display_rb::render {
         set widget radio
         set datatype text
     }
-    
+
     set param_list [list [list label \$title] [list help_text \$subtext] [list value \$default_value] [list options \$data] [list html \$type(html_display_options)]]
     set element_params [concat [list "$element\:${datatype}($widget)$optional"] $param_list]
     ad_form -extend -name $form -form [list $element_params]
@@ -204,7 +204,7 @@ ad_proc -private as::item_display_rb::set_item_display_type {
 					-choice_label_orientation $label_orientation \
 					-sort_order_type $order_type \
 					-item_answer_alignment $answer_alignment]
-	
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel

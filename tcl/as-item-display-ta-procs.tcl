@@ -9,7 +9,7 @@ namespace eval as::item_display_ta {}
 ad_proc -public as::item_display_ta::new {
     {-html_display_options ""}
     {-abs_size ""}
-    {-acs_widget ""}    
+    {-acs_widget ""}
     {-item_answer_alignment ""}
 } {
     @author Natalia Perez (nperper@it.uc3m.es)
@@ -39,7 +39,7 @@ ad_proc -public as::item_display_ta::edit {
     -as_item_display_id:required
     {-html_display_options ""}
     {-abs_size ""}
-    {-acs_widget ""}    
+    {-acs_widget ""}
     {-item_answer_alignment ""}
 } {
     @author Timo Hentschel (timo@timohentschel.de)
@@ -177,7 +177,7 @@ ad_proc -private as::item_display_ta::set_item_display_type {
 					-abs_size $abs_size \
 					-acs_widget "" \
 					-item_answer_alignment $answer_alignment]
-	    
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
