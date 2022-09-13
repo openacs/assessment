@@ -12,10 +12,10 @@ ad_proc -public as::item_display_ta::new {
     {-acs_widget ""}
     {-item_answer_alignment ""}
 } {
+    New Item Display TextArea Type to the database
+
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
-
-    New Item Display TextArea Type to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -24,12 +24,12 @@ ad_proc -public as::item_display_ta::new {
     db_transaction {
         set item_item_display_ta_id [content::item::new -parent_id $folder_id -content_type {as_item_display_ta} -name [as::item::generate_unique_name]]
         set as_item_display_ta_id [content::revision::new \
-				-item_id $item_item_display_ta_id \
-				-content_type {as_item_display_ta} \
-				-attributes [list [list html_display_options $html_display_options] \
-						[list abs_size $abs_size] \
-						[list acs_widget $acs_widget] \
-						[list item_answer_alignment $item_answer_alignment] ] ]
+                                       -item_id $item_item_display_ta_id \
+                                       -content_type {as_item_display_ta} \
+                                       -attributes [list [list html_display_options $html_display_options] \
+                                                        [list abs_size $abs_size] \
+                                                        [list acs_widget $acs_widget] \
+                                                        [list item_answer_alignment $item_answer_alignment] ] ]
     }
 
     return $as_item_display_ta_id
@@ -42,10 +42,10 @@ ad_proc -public as::item_display_ta::edit {
     {-acs_widget ""}
     {-item_answer_alignment ""}
 } {
+    Edit Item Display TextArea Type to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Item Display TextArea Type to the database
 } {
     # Update as_item_display_ta in the CR (and as_item_display_ta table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -65,10 +65,10 @@ ad_proc -public as::item_display_ta::edit {
 ad_proc -public as::item_display_ta::copy {
     -type_id:required
 } {
+    Copy an Item Display TextArea Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Item Display TextArea Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -99,10 +99,10 @@ ad_proc -public as::item_display_ta::render {
     {-data ""}
     -item:required
 } {
+    Render an Item Display TextArea Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Item Display TextArea Type
 } {
     array set type [util_memoize [list as::item_display_ta::data -type_id $type_id]]
     if {$required_p eq ""} {
@@ -131,10 +131,10 @@ ad_proc -public as::item_display_ta::render {
 ad_proc -public as::item_display_ta::data {
     -type_id:required
 } {
+    Get the cached Display Data of TextArea Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the cached Display Data of TextArea Type
 } {
     return [util_memoize [list as::item_display_ta::data_not_cached -type_id $type_id]]
 }
@@ -142,10 +142,10 @@ ad_proc -public as::item_display_ta::data {
 ad_proc -private as::item_display_ta::data_not_cached {
     -type_id:required
 } {
+    Get the Display Data of TextArea Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the Display Data of TextArea Type
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
@@ -165,48 +165,49 @@ ad_proc -private as::item_display_ta::set_item_display_type {
     and section
 } {
     # add display type and add to asessment and section
-	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
-	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
-	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-	db_dml update_section_in_assessment {}
-	set old_item_id $as_item_id
+    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+    set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
+    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+    db_dml update_section_in_assessment {}
+    set old_item_id $as_item_id
 
-	if {![db_0or1row item_display {}] || $object_type ne "as_item_display_ta"} {
-	    set as_item_display_id [as::item_display_ta::new \
-					-html_display_options $html_options \
-					-abs_size $abs_size \
-					-acs_widget "" \
-					-item_answer_alignment $answer_alignment]
+    if {![db_0or1row item_display {}] || $object_type ne "as_item_display_ta"} {
+        set as_item_display_id [as::item_display_ta::new \
+                                    -html_display_options $html_options \
+                                    -abs_size $abs_size \
+                                    -acs_widget "" \
+                                    -item_answer_alignment $answer_alignment]
 
-	    if {![info exists object_type]} {
-		# first item display mapped
-		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
-	    } else {
-		# old item display existing
-		set as_item_id [as::item::new_revision -as_item_id $as_item_id]
-	    }
-	} else {
-	    # old ta item display existing
-	    set as_item_id [as::item::new_revision -as_item_id $as_item_id]
-	    set as_item_display_id [as::item_display_ta::edit \
-					-as_item_display_id $as_item_display_id \
-					-html_display_options $html_options \
-					-abs_size $abs_size \
-					-acs_widget "" \
-					-item_answer_alignment $answer_alignment]
-	}
+        if {![info exists object_type]} {
+            # first item display mapped
+            as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel
+        } else {
+            # old item display existing
+            set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+        }
+    } else {
+        # old ta item display existing
+        set as_item_id [as::item::new_revision -as_item_id $as_item_id]
+        set as_item_display_id [as::item_display_ta::edit \
+                                    -as_item_display_id $as_item_display_id \
+                                    -html_display_options $html_options \
+                                    -abs_size $abs_size \
+                                    -acs_widget "" \
+                                    -item_answer_alignment $answer_alignment]
+    }
 
-	set old_item_id [as::item::latest -as_item_id $old_item_id -section_id $new_section_id -default 0]
-	if {$old_item_id == 0} {
-	    db_dml move_down_items {}
-	    incr after
-	    db_dml insert_new_item {}
-	} else {
-	    db_dml update_item_display {}
-	    db_1row item_data {}
-	    db_dml update_item {}
-	}
+    set old_item_id [as::item::latest -as_item_id $old_item_id -section_id $new_section_id -default 0]
+    if {$old_item_id == 0} {
+        db_dml move_down_items {}
+        incr after
+        db_dml insert_new_item {}
+    } else {
+        db_dml update_item_display {}
+        db_1row item_data {}
+        db_dml update_item {}
+    }
 }
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4
