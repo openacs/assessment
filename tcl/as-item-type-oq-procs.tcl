@@ -41,7 +41,7 @@ ad_proc -public as::item_type_oq::edit {
     -as_item_type_id:required
     {-title ""}
     {-default_value ""}
-    {-feedback_text ""}    
+    {-feedback_text ""}
     {-reference_answer ""}
     {-keywords ""}
 } {
@@ -196,8 +196,8 @@ ad_proc -private as::item_type_oq::add_to_assessment {
     {-keywords ""}
     {-default_value ""}
 } {
-    Add the open question (long answer/essay) item to an assessment. 
-    This creates the  as_item_type_oq object and 
+    Add the open question (long answer/essay) item to an assessment.
+    This creates the  as_item_type_oq object and
     associates the as_item_id
     with an assessment, or updates the assessment with the latest version
 
@@ -218,7 +218,7 @@ ad_proc -private as::item_type_oq::add_to_assessment {
                                  -feedback_text $feedback_text \
                                  -reference_answer $reference_answer \
                                  -keywords $keywords]
-	
+
         if {![info exists item_type_info(object_type)]} {
             # first item type mapped
             as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_type_id -type as_item_type_rel
@@ -237,7 +237,7 @@ ad_proc -private as::item_type_oq::add_to_assessment {
                                  -feedback_text $feedback_text \
                                  -reference_answer $reference_answer \
                                  -keywords $keywords]
-	
+
         as::item::update_item_type -item_type_id $as_item_type_id -as_item_id $as_item_id
     }
     as::item_display_ta::set_item_display_type \
