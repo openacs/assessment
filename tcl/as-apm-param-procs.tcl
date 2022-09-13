@@ -9,6 +9,7 @@ ad_proc -public as::parameter::reset_parameter {
     {-package_id}
     {-node_id ""}
 } {
+    Reset the RegistrationId parameter.
 } {
     set exist_assessment [parameter::get -parameter RegistrationId]
     if { $exist_assessment != 0} {
