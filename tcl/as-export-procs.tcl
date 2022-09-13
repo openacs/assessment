@@ -9,8 +9,8 @@ namespace eval as::export {}
 ad_proc -public as::export::new_element {
     {-value ""}
     {-father ""}
-    {-label ""} 
-    {-root ""}   
+    {-label ""}
+    {-root ""}
     {-material_p "f"}
     {-attribute_label ""}
     {-attribute_value ""}
@@ -18,7 +18,7 @@ ad_proc -public as::export::new_element {
     @author Natalia Pérez (nperper@it.uc3m.es)
     @creation-date 2004-02-01
 
-    New element 
+    New element
 } {
     #create a new element named "label" and child of "father", with attribute_label=attribute_value
     if {$value ne ""} {
@@ -30,9 +30,9 @@ ad_proc -public as::export::new_element {
 	if {$material_p == "t"} {
 	    set material [$root createElement material]
             $label appendChild $material
-            set mattext [$root createElement mattext]    
+            set mattext [$root createElement mattext]
 	    $mattext setAttribute texttype text/html
-            $material appendChild $mattext    
+            $material appendChild $mattext
             set text [$root createCDATASection $value]
             $mattext appendChild $text
 	} else {
@@ -44,10 +44,10 @@ ad_proc -public as::export::new_element {
 
 
 ad_proc -public as::export::element_qtimetadatafield {
-    {-root ""}   
+    {-root ""}
     {-father ""}
-    {-label ""} 
-    {-value ""}    
+    {-label ""}
+    {-value ""}
 } {
     @author Natalia Pérez (nperper@it.uc3m.es)
     @creation-date 2004-02-03
@@ -69,7 +69,7 @@ ad_proc -public as::export::element_qtimetadatafield {
     $qtimetadatafield appendChild $fieldentry
     set text [$root createCDATASection $value]
     $fieldentry appendChild $text
-  }  
+  }
 }
 
 # Local variables:
