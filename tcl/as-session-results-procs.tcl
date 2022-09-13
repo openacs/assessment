@@ -13,11 +13,10 @@ ad_proc -public as::session_results::new {
     {-description ""}
     {-package_id ""}
 } {
-    @author Timo Hentschel (timo@timohentschel.de)
-    @creation-date 2005-02-17
-
     New as_session_results
 
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2005-02-17
 } {
     if {$package_id eq ""} {
 	set package_id [ad_conn package_id]
