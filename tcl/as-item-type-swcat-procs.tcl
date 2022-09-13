@@ -1,9 +1,7 @@
-# 
-
 ad_library {
-    
+
     Procedures for sitewide category item type
-    
+
     @author Dave Bauer (dave@solutiongrove.com)
     @creation-date 2005-05-15
     @arch-tag: ba556f8e-d5bf-4455-bb19-06be198014d8
