@@ -14,10 +14,10 @@ ad_proc -public as::section_data::new {
     {-points ""}
     {-package_id ""}
 } {
+    New as_section_data
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-14
-
-    New as_section_data
 } {
     if {$package_id eq ""} {
 	set package_id [ad_conn package_id]
