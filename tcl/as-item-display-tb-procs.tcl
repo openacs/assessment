@@ -12,10 +12,10 @@ ad_proc -public as::item_display_tb::new {
     {-item_answer_alignment ""}
     {-package_id ""}
 } {
+    New Item Display TextBox Type to the database
+
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
-
-    New Item Display TextBox Type to the database
 } {
     if { $package_id eq "" } {
         set package_id [ad_conn package_id]
@@ -42,10 +42,10 @@ ad_proc -public as::item_display_tb::edit {
     {-abs_size ""}
     {-item_answer_alignment ""}
 } {
+    Edit Item Display TextBox Type to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Item Display TextBox Type to the database
 } {
     # Update as_item_display_tb in the CR (and as_item_display_tb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -64,10 +64,10 @@ ad_proc -public as::item_display_tb::edit {
 ad_proc -public as::item_display_tb::copy {
     -type_id:required
 } {
+    Copy an Item Display TextBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Item Display TextBox Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -97,10 +97,10 @@ ad_proc -public as::item_display_tb::render {
     {-data ""}
     -item:required
 } {
+    Render an Item Display TextBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Item Display TextBox Type
 } {
     array set type [util_memoize [list as::item_display_tb::data -type_id $type_id]]
     if {$required_p eq ""} {
@@ -128,10 +128,10 @@ ad_proc -public as::item_display_tb::render {
 ad_proc -public as::item_display_tb::data {
     -type_id:required
 } {
+    Get the cached Display Data of TextBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the cached Display Data of TextBox Type
 } {
     return [util_memoize [list as::item_display_tb::data_not_cached -type_id $type_id]]
 }
@@ -139,10 +139,10 @@ ad_proc -public as::item_display_tb::data {
 ad_proc -private as::item_display_tb::data_not_cached {
     -type_id:required
 } {
+    Get the Display Data of TextBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the Display Data of TextBox Type
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
@@ -160,8 +160,6 @@ ad_proc -private as::item_display_tb::set_item_display_type {
 } {
     Add display type to item and add item and all components to assessment
     and section
-
-
 } {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
