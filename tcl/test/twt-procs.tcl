@@ -78,23 +78,6 @@ aa_register_case assessment_create_and_respond {
     aa_log $errmsg
 }
 
-aa_register_case cleanup_test {
-    cleanup cruft from previous tests
-} {
-    db_multirow assessments q "
-select distinct item_id,title from as_assessmentsx where title like '__test%'
-"
-    template::multirow foreach assessments {
-aa_log "Found assessment_id $item_id title $title"
-	as::assessment::delete -assessment_id $item_id
-    }
-    db_multirow users q "
-select user_id from cc_users where email like '%test.test'
-" {
-    catch {acs::test::user::delete -user_id $user_id} errmsg
-    aa_log $errmsg
-}
-}
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4
