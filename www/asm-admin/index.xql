@@ -3,17 +3,20 @@
 
 <fullquery name="get_all_assessments">
       <querytext>
-    select ci.item_id as assessment_id, cr.title, ci.publish_status
-    from cr_items ci, cr_revisions cr
-    where cr.revision_id = ci.latest_revision
-    and ci.content_type = 'as_assessments'
-    and ci.parent_id = :folder_id
-    and exists (select 1 from acs_object_party_privilege_map ppm 
-                    where ppm.object_id = ci.item_id
-                    and ppm.privilege = 'admin'
-                    and ppm.party_id = :user_id)
-    order by cr.title
-    
+        select
+            ci.item_id as assessment_id,
+            cr.title,
+            ci.content_type
+        from cr_folders cf
+             inner join cr_items ci
+                on ci.parent_id = cf.folder_id
+                    and cf.package_id = :package_id
+             inner join cr_revisions cr
+                on cr.revision_id = coalesce(ci.latest_revision, content_item__get_latest_revision(ci.item_id))
+             inner join as_assessments a
+                on  a.assessment_id = cr.revision_id
+        where ci.latest_revision is not null
+        order by cr.title    
       </querytext>
 </fullquery>
 
