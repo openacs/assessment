@@ -44,7 +44,7 @@
   <a href="section-swap?assessment_id=@assessment_id@&amp;sort_order=@sort_order@&amp;direction=up"><img src="/resources/assessment/up.gif" border="0" alt="#assessment.Move_Up#"></a>
 </if>
 
-<a href="section-delete?section_id=@section_id@&amp;assessment_id=@assessment_id@"><img src="/resources/acs-subsite/Delete16.gif" border="0" alt="#assessment.remove_section#"></a>
+<a href="section-delete?section_id=@section_id@&amp;assessment_id=@assessment_id@"><adp:icon name="trash" title="#assessment.remove_section#"></a>
 
 </td></tr>
 </table>      
