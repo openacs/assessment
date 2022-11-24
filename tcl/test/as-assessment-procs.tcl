@@ -134,7 +134,7 @@ aa_register_case -cats { api } -procs {
         -rollback \
         -test_code {
 
-            set folder_name [ns_mktemp as_folder_XXXXXX]
+            set folder_name [ad_tmpnam as_folder_XXXXXX]
             set folder_id [content::folder::new \
                 -name $folder_name \
                 -label $folder_name \
@@ -174,7 +174,7 @@ aa_register_case -cats { api } -procs {
         -rollback \
         -test_code {
 
-            set folder_name [ns_mktemp as_folder_XXXXXX]
+            set folder_name [ad_tmpnam as_folder_XXXXXX]
             set folder_id [content::folder::new \
                 -name $folder_name \
                 -label $folder_name \
@@ -219,7 +219,7 @@ aa_register_case -cats { api } -procs {
         -rollback \
         -test_code {
 
-            set folder_name [ns_mktemp as_folder_XXXXXX]
+            set folder_name [ad_tmpnam as_folder_XXXXXX]
             set folder_id [content::folder::new \
                 -name $folder_name \
                 -label $folder_name \
@@ -256,7 +256,7 @@ aa_register_case -cats { api } -procs {
         -rollback \
         -test_code {
 
-            set folder_name [ns_mktemp as_folder_XXXXXX]
+            set folder_name [ad_tmpnam as_folder_XXXXXX]
             set folder_id [content::folder::new \
                 -name $folder_name \
                 -label $folder_name \

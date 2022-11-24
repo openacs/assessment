@@ -11,8 +11,8 @@ aa_register_case assessment_create_and_respond {
     }
 
     ::tclwebtest::init
-    set assessment_name "__test [ns_mktemp XXXXXX]"
-    set assessment_url "__test_[ns_mktemp XXXXXX]"
+    set assessment_name "__test [ad_tmpnam XXXXXX]"
+    set assessment_url "__test_[ad_tmpnam XXXXXX]"
     aa_log "Assessment url = '${assessment_url}'"
     aa_log "Assessment name = '${assessment_name}'"
 
