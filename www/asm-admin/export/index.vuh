@@ -36,13 +36,11 @@ as::assessment::data -assessment_id $assessment_id
 set assessment_id1 $assessment_data(assessment_rev_id)
 
 # publish the object to the file system
-set in_path [ad_tmpnam]
-file mkdir $in_path
+set in_path [ad_mktmpdir]
 
 
 # create a temp dir to put the archive in
-set out_path [ad_tmpnam]
-file mkdir $out_path
+set out_path [ad_mktmpdir]
 
 # First create our top-level document
 #set doc [dom createDocument questestinterop]
