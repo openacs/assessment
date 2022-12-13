@@ -16,10 +16,8 @@ permission::require_permission \
 
 set context [list "[_ assessment.Import_Results]"]
 
-# Generate a random directory name
-set tmpdirectory [ad_tmpnam]
-# Create a temporary directory
-file mkdir $tmpdirectory
+# Generate a random temporary directory
+set tmpdirectory [ad_mktmpdir]
 
 # UNZIP the zip file in the temporary directory
 util::unzip -source ${zipfile.tmpfile} -destination $tmpdirectory
