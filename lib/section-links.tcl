@@ -19,11 +19,11 @@ set assessment_url [export_vars -base one-a {assessment_id}]
 set questions_url [export_vars -base questions {assessment_id}]
 
 # validate that tab is set properly
-if { ![string is integer $tab] && ($tab ne "front") && ($tab ne "results") && ($tab ne "questions") } {
+if { ![string is integer -strict $tab] && $tab ni {"front" "results" "questions"} } {
     error "lib/section-links: tab should be front, results, questions or a section_id"
 }
 
-if { [string is integer $tab] } {
+if { [string is integer -strict $tab] } {
     set tab questions
 }
 
