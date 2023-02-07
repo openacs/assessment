@@ -52,10 +52,8 @@ the "question"</span></li>
 </li><li><span class="context">html_display_options - field to specify
 other stuff like textarea dimensions ("rows=10 cols=50"
 eg)</span></li><li><span class="context"><span class="context"><span class="reg">as_item_default - optional field that sets what the as_item
-will display when first output (eg text in a textbox; eg the
-defaults that ad_dateentrywidget expects: "" for "no
-date", "0" for "today", or else some
-specific date set by the author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
+will display when first output (e.g. text in a textbox, such as the defaults from formwidgets, or else
+some specific date set by the author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
 this example</a>)</span></span></span></li>
 </ul>
 <p>Depending on the presentation_types <font color="red">additional
