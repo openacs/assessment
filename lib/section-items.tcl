@@ -1,7 +1,7 @@
 ad_include_contract {
     Section Items
 } {
-    assessment_id:object_type(as_assessments)
+    assessment_id:object_type(content_item)
     section_id:object_type(as_sections)
 }
 
