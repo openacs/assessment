@@ -8,7 +8,7 @@ ad_include_contract {
                "front", "results" or a section_id
 
 } {
-    assessment_id:object_type(as_assessments)
+    assessment_id:object_type(content_item)
     tab
 }
 
