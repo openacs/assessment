@@ -271,10 +271,8 @@ ad_proc -public as::item::generate_unique_name {
 } {
     if { [llength $args] } {
         return [join $args "-"]
-    } elseif { ! [catch {set uuid [exec uuidgen]}] } {
-        return $uuid
     } else {
-        return "[clock seconds]-[expr round([ns_rand]*100000)]"
+        return [ns_uuid]
     }
 }
 
