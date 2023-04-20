@@ -9,6 +9,20 @@ ad_library {
     @cvs-id $Id$
 }
 
+aa_register_case -cats {
+    smoke production_safe
+} -procs {
+    util::which
+} assessment_exec_dependencies {
+    Test external command dependencies for this package.
+} {
+    foreach cmd [list \
+                     [::util::which uuidgen] \
+                    ] {
+        aa_true "'$cmd' is executable" [file executable $cmd]
+    }
+}
+
 aa_register_init_class mount_assessment {
     Mount assessment package
 } {
