@@ -164,7 +164,7 @@ ad_proc -private as::item_display_ta::set_item_display_type {
     Add display type to item and add item and all components to assessment
     and section
 } {
-    # add display type and add to asessment and section
+    # add display type and add to assessment and section
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
     set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
