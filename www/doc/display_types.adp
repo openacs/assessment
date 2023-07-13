@@ -52,8 +52,9 @@ the "question"</span></li>
 </li><li><span class="context">html_display_options - field to specify
 other stuff like textarea dimensions ("rows=10 cols=50"
 eg)</span></li><li><span class="context"><span class="context"><span class="reg">as_item_default - optional field that sets what the as_item
-will display when first output (e.g. text in a textbox, such as the defaults from formwidgets, or else
-some specific date set by the author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
+will display when first output (eg text in a textbox, such as the
+defaults from formwidgets, or else some specific date set by the
+author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
 this example</a>)</span></span></span></li>
 </ul>
 <p>Depending on the presentation_types <font color="red">additional
@@ -98,7 +99,7 @@ entry (sort_order field).</li>
 entry (sort_order field).</li>
 </ul>
 </li><li>select - multiple-option displayed in "popup
-menu"</li><li style="list-style: none; display: inline"><ul>
+menu"</li><li style="list-style: none"><ul>
 <li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li><li><span class="context"><span class="reg">allow_multiple_p - Is
 it allow one to select multiple values ?</span></span></li>

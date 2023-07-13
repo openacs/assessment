@@ -127,7 +127,7 @@ requirements section.</a>
 <ul>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Open
 Question
-(as_item_type_oq):</font></strong></span></span></span></span></li><li style="list-style: none; display: inline"><ul>
+(as_item_type_oq):</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>as_item_type_id<br>
 </li><li>cr::name - Identifier<br>
 </li><li>default_value: The content of this field will be prefilled in
@@ -136,7 +136,7 @@ contents of this box as correct answer for comparison with the user
 response.</li>
 </ul></li><li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Short
 Answer
-(as_item_type_sa):</font></strong></span></span></span></span></li><li style="list-style: none; display: inline"><ul>
+(as_item_type_sa):</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>as_item_type_id<br>
 </li><li>cr::name - Identifier</li><li>increasing_p:  Increasing will give (number of correct
 matches / number of total matches) *100% points. All or nothing
@@ -148,7 +148,7 @@ else.</li><li>allow_negative_p: This will allow a negative percentage as well
 <ul>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Short
 Answer Answers
-(as_item_sa_answers):</font></strong></span></span></span></span></li><li style="list-style: none; display: inline"><ul>
+(as_item_sa_answers):</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>answer_id<br>
 </li><li>cr::name - Identifier</li><li>cr::title - Answer string that will be matched against the
 response</li><li>data_type - Integer vs. real number vs. text</li><li>case_sensitive_p - Shall the match be case sensitive</li><li>percent_score - Percentage a correct match gives<br>
@@ -166,7 +166,7 @@ relationship.<br>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Multiple
 Choice Item
 (as_item_type_mc)<br>
-</font></strong></span></span></span></span></li><li style="list-style: none; display: inline"><ul>
+</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>cr::name - Identifier<br>
 </li><li>increasing_p:  Increasing will give (number of correct
 matches / number of total matches) *100% points. All or nothing
@@ -223,7 +223,7 @@ Inter-as_item Checks.</p>
 </li><li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Image Map
 Multiple Choice Item
 (as_item_type_im):<br>
-</font></strong></span></span></span></span></li><li style="list-style: none; display: inline"><ul>
+</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>cr::name - Identifier</li><li>cr::title - Title of the image map.<br>
 </li><li>increasing_p:  Increasing will give (number of correct
 matches / number of total matches) *100% points. All or nothing
@@ -239,7 +239,7 @@ cr_revisions<br>
 <li><span class="context"><span class="reg"><span class="context"><span class="reg"><strong><font color="green">Image Map
 Choices
 (as_item_image_choices):<br>
-</font></strong></span></span></span></span></li><li style="list-style: none; display: inline"><ul>
+</font></strong></span></span></span></span></li><li style="list-style: none"><ul>
 <li>choice_id</li><li>cr::parent_id (belonging to an as_item_type_im object).</li><li>cr::name - Identifier<br>
 </li><li>cr::title - what is displayed in the choice&#39;s
 "label"</li><li>data_type - which of the value columns has the information this
@@ -309,7 +309,7 @@ the "question"</span></li>
 </li>
 </ul>
 </li><li>short_answer (as_item_display_sa) - Multiple textboxes in one
-item.</li><li style="list-style: none; display: inline"><ul>
+item.</li><li style="list-style: none"><ul>
 <li><span class="context"><span class="reg">abs_size - An
 abstraction of the real size value in
 "small","medium","large". Up to the
@@ -403,7 +403,7 @@ the "question"</span></li>
 </ul>
 </li><li>select (as_item_display_sb) - multiple-option displayed in
 "popup menu" (select box)<br>
-</li><li style="list-style: none; display: inline"><ul>
+</li><li style="list-style: none"><ul>
 <li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li><span class="context"><span class="reg">allow_multiple_p - Is
 it allow one to select multiple values ?</span></span></li><li>
@@ -421,7 +421,7 @@ the "question"</span></li><li><span class="context">above - the "answers" are ab
 the "question"</span></li>
 </ol><span class="context"><br></span>
 </li>
-</ul></li><li>image map (as_item_display_im) - Title with picture</li><li style="list-style: none; display: inline"><ul>
+</ul></li><li>image map (as_item_display_im) - Title with picture</li><li style="list-style: none"><ul>
 <li>
 <span class="context"><span class="reg">allow_multiple_p - Is
 it allow one to select multiple values ?</span></span><br>
@@ -468,9 +468,9 @@ the "question"</span></li>
 </ul><br>
 </li><li>pop-up_date - a widget with month-day-year select elements that
 resets the day element based on year and month (ie include Feb 29
-during leap years -- via Javascript) and tests for valid dates</li><li style="list-style: none; display: inline"><ul><li><br></li></ul></li><li>typed_date - similar to pop-up_date but month-day-year elements
+during leap years -- via Javascript) and tests for valid dates</li><li style="list-style: none"><ul><li><br></li></ul></li><li>typed_date - similar to pop-up_date but month-day-year elements
 are textboxes for all-keyboard entry; needs no resetting scripts
-but does need date validity check</li><li style="list-style: none; display: inline"><ul><li><br></li></ul></li><li>file_upload - present a File box (browse button, file_name
+but does need date validity check</li><li style="list-style: none"><ul><li><br></li></ul></li><li>file_upload - present a File box (browse button, file_name
 textbox, and submit button together) so user can upload a file</li>
 </ul>
 <h2><span class="context">Help System</span></h2>
