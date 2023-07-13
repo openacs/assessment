@@ -7,25 +7,25 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="2.10.1" url="http://openacs.org/repository/download/apm/assessment-2.10.1.apm">
+    <version name="2.10.1b1" url="http://openacs.org/repository/download/apm/assessment-2.10.1.apm">
         <owner url="mailto:eperez@it.uc3m.es">Eduardo Perez Ureta</owner>
         <summary>Assessment package that will replace the surveys
     quizz, complex survey, poll and other data collection packages
     that OpenACS currently supports.</summary>
-        <release-date>2021-09-15</release-date>
+        <release-date>2022-10-04</release-date>
         <vendor url="http://dotlrn.org">DotLRN Consortium</vendor>
         <description format="text/plain">Create assessments and evaluate.</description>
         <maturity>2</maturity>
         <package_instance_name>#assessment.Assessment#</package_instance_name>
 
-        <provides url="assessment" version="2.10.1"/>
-        <requires url="acs-content-repository" version="5.10.0"/>
-        <requires url="acs-tcl" version="5.10.1d16"/>
-        <requires url="acs-kernel" version="5.10.0"/>
-        <requires url="acs-templating" version="5.10.0"/>
+        <provides url="assessment" version="2.10.1b1"/>
+        <requires url="acs-content-repository" version="5.10.1b1"/>
+        <requires url="acs-tcl" version="5.10.1b1"/>
+        <requires url="acs-kernel" version="5.10.1b1"/>
+        <requires url="acs-templating" version="5.10.1b1"/>
         <requires url="categories" version="1.1.3"/>
-        <requires url="notifications" version="5.10.0"/>
-        <requires url="views" version="2.10.0"/>
+        <requires url="notifications" version="5.10.1b1"/>
+        <requires url="views" version="2.10.1b1"/>
 
         <callbacks>
             <callback type="after-install"  proc="as::install::after_install"/>
