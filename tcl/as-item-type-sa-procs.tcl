@@ -177,7 +177,7 @@ ad_proc -private as::item_type_sa::add_to_assessment {
     @param section_id Section the question is in
     @param as_item_id Item object this multiple choice belongs to
     @param title Title of question/choice set for question library
-    @param after Add this question after the queston number in the section
+    @param after Add this question after the question number in the section
 
     @author Dave Bauer (dave@solutiongrove.com)
     @creation-date 2006-10-25
