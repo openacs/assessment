@@ -75,7 +75,7 @@ ad_form -name session-delete -export {assessment_id subject_id return_url orig_s
 template::head::add_javascript -script {
     function acs_CheckAll(elementName, checkP) {
 	var Obj, Type, Name, Id;
-	var Controls = acs_ListFindInput(); if (!Controls) { return; }
+	var Controls = document.querySelectorAll('input'); if (!Controls) { return; }
 	// Regexp to find name of controls
 	var re = new RegExp('^' + elementName + '.+');
 
