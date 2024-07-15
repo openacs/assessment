@@ -1055,7 +1055,7 @@ ad_proc -public as::install::assessment_create_install {
         -pretty_name {Points} \
         -column_spec {float}
 
-    #File Upload Ansers
+    #File Upload Answers
     content::type::new \
         -content_type {as_item_type_fu} \
         -supertype {content_revision} \
