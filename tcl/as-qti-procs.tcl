@@ -127,7 +127,7 @@ ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse an XML QTI
 
     # Parser
     # XML => DOM document
-    dom parse [::tdom::xmlReadFile $xmlfile] document
+    dom parse -- [::tdom::xmlReadFile $xmlfile] document
     # DOM document => DOM root
     $document documentElement root
     # XPath v1.0
