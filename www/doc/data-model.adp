@@ -18,7 +18,7 @@ mostly because these terms are more general and thus suit the
 broader applicability intended for this package.</p>
 <p>As is the custom in the OpenACS framework, all RDBMS tables in
 the package will be prepended with "as_" to prevent
-further prefent naming clashes. Judicious use of namespaces will
+further prevent naming clashes. Judicious use of namespaces will
 also be made in keeping with current OpenACS best practice.</p>
 <p>Several of the Metadata entities have direct counterparts in the
 Data-related partition of the data model. Some standards (notably

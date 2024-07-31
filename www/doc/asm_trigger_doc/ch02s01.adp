@@ -19,7 +19,7 @@ creates an assessment and also can be granted by the assessment
 administrator. This permissions can be managed follogging the
 Permission link that appears in the list of assessments.</p><div class="screenshot"><div class="mediaobject"><img src="resources/asm_admin_permissions.JPG"></div></div><p>Both links will lead the user to a page where the necessary
 permissions can be set.</p><div class="screenshot"><div class="mediaobject"><img src="resources/manage_permissions.JPG"></div></div><p>Also the user can search for another user to manage his
-permissions:</p><div class="screenshot"><div class="mediaobject"><img src="resources/search_user.JPG"></div></div><p>After clicking OK, the user will appear in the list an the
+permissions:</p><div class="screenshot"><div class="mediaobject"><img src="resources/search_user.JPG"></div></div><p>After clicking OK, the user will appear in the list the
 permissions can be set properly.</p><div class="screenshot"><div class="mediaobject"><img src="resources/user_permissions.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"

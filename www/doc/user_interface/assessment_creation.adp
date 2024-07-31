@@ -66,8 +66,8 @@ URL.</li>
 <ul>
 <li>Availability: 2 date widgets (from, and to). This will set the
 time the time the survey will become visible for the respondees. It
-is overridden by the parameter enabled (if a assessment is not
-enabled, it will never be visible, regardless of date).</li><li>How often can a assessment be taken: Number of times a survey
+is overridden by the parameter enabled (if an assessment is not
+enabled, it will never be visible, regardless of date).</li><li>How often can an assessment be taken: Number of times a survey
 can be taken by a respondee.</li><li>How long has a user to pause: Number of hours a respondee has
 to wait before he can take the assessment again.</li><li>Answer_time: integer: Time in minutes a respondee has to answer
 a survey.</li>
@@ -155,7 +155,7 @@ responses</li><li>Public - Everyone can see the responses<br>
 </ul>
 </li><li>Survey Import / Export
 <ul>
-<li>Type: (select box): CSV, WebCT, SCORM, Blackboard, IMS</li><li>File: file (file for import)</li><li>Download file name: short_text. Filename for the download of
+<li>Type: (select box): CSV, WebCT, SCORM, Blackboard, IMS</li><li>File: file (file for import)</li><li>Download filename: short_text. Filename for the download of
 the export.</li>
 </ul>
 </li><li>Delete assessment with / without responses</li><li>Assign category to the assessment<br>

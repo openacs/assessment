@@ -105,7 +105,7 @@ percentage associated with it. This can also be negative. For each
 option the user choose he will get the according percentage. If
 negative points are allowed, the user will get a negative
 percentage. In any case, a user can never get more than 100% or
-less then -100%.</span></li>
+less than -100%.</span></li>
 </ul>
 </li><li>
 <span class="context">Matching question</span><ul>

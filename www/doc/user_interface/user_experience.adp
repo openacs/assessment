@@ -18,7 +18,7 @@ left</span></li>
 </ul>
 </li><li><span class="context">Starttime of the response will be
 logged</span></li><li><span class="context">First section will be delivered to the
-user for anwering.</span></li>
+user for answering.</span></li>
 </ul>
 <span class="context">Depending on the settings, the display of the
 assessment will vary:</span>
@@ -43,7 +43,7 @@ question).</span></li><li><span class="context">Display a finish test button at 
 of the page to "hand the test to the TA" if this is
 allowed</span></li><li><span class="context">Allow for chancellation of the test with
 a chancel button. The result will not be stored but the test will
-be marked as taken.</span></li><li><span class="context">If immediate answer validation (a.k.a..
+be marked as taken.</span></li><li><span class="context">If immediate answer validation (aka.
 ad_form check) for a question is true, check the answer if it is
 valid, otherwise notify the user that it is not and do not store
 the result.</span></li>

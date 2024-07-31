@@ -201,7 +201,7 @@ selects, or radiobuttons, or small textboxes, etc.</p>
 are displayed in each column.</p>
 </li><li>Composite multiple choice with Fill-in-Blank item:
 <p>Multiple Choice question with an additional short_text input
-field. Usually used for the "Other" thing</p>
+field. Usually, used for the "Other" thing</p>
 </li><li>Calculation:
 <p>This type of question will not be supported. But we should make
 sure we can take care of that type while importing the data from

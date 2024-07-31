@@ -97,7 +97,7 @@ of defining a special scope variable we will use the acs permission
 system to grant access rights to an as_item.</span></p><ul>
 <li><span class="context">Read: An assessment author (who is
 granted this permission) can reuse this as_item in one of his
-sections. (NB: Usually the original author has admin privileges.).
+sections. (NB: Usually, the original author has admin privileges.).
 This is a finer granulation than the previous "enabled_p"
 as it allows specific access to an item.</span></li><li><span class="context">Write: Author can reuse and change this
 as_item.</span></li><li><span class="context">Admin: Author can reuse, change and give
@@ -362,7 +362,7 @@ the item_alignment option (discussed below).
 <li>horizontal - all Choices are in one line</li><li>vertical - all Choices are in one column</li>
 </ol>
 </li><li>choice_label_orientation - how shall the label be positioned in
-relation to the choice (top, left, right, buttom).<br>
+relation to the choice (top, left, right, bottom).<br>
 </li><li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation

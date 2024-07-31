@@ -322,7 +322,7 @@ Assessment or set of Assessments to a specific set of subjects,
 students or other data entry personnel. These actions potentially
 will involve interfacing with other Workflow management tools (e.g.
 an "Enrollment" package that would handle creation of new
-Parties (a.k.a. clinical trial subjects) in the database.</p>
+Parties (aka clinical trial subjects) in the database.</p>
 <p>Schedulers could also be teachers, curriculum designers, site
 coordinators in clinical trials, etc.</p>
 <h3>Analyst</h3>
@@ -354,7 +354,7 @@ verification steps and electronic signatures at final submission.
 center around mechanisms encountered here: to prove exactly who
 created any datum, when, whether it is a correct value, whether
 anyone has looked at it or edited it and when, etc etc...)</p>
-<p>Staff could be site coordinators in clinical trials, insurance
+<p>Staff could be site coordinators in clinical trials, ensurance
 adjustors, accountants, tax preparation staff, etc.</p>
 <h2>System / Application Overview<br>
 </h2>
@@ -529,7 +529,7 @@ will define:
 <ul>
 <li>Start and End Dates for an Assessment</li><li>Number of times a Subject can perform the Assessment (1-n)</li><li>Interval between Assessment completion if Subject can perform
 it more than once</li><li>Whether anonymous Subjects are allowed</li><li>Text of email to Subjects to Invite, Remind and Thank them for
-performing Assessment</li><li>Text of email to Staff to Instuct, Remind and Thank them for
+performing Assessment</li><li>Text of email to Staff to Instruct, Remind and Thank them for
 performing Assessment on a Subject</li>
 </ul>
 </li><li>Provide these additional functions:

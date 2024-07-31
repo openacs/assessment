@@ -7,7 +7,7 @@
 members of the OpenACS community for data collection functionality
 within the OpenACS framework. We&#39;re using the term
 "Assessment" instead of "Survey" or
-"Questionnaire" (or "Case Report Form" a.k.a.
+"Questionnaire" (or "Case Report Form" aka
 CRF, the term used in clinical trials) because it is a term used by
 IMS and because it connotes the more generic nature of the data
 collection system we&#39;re focusing on.</p>
@@ -149,7 +149,7 @@ Authoring</a>: all the pages involved in creating, editing, and
 deleting the Sections themselves. Includes the page to browse for
 items to include in sections</li><li>
 <a href="user_interface/item_creation">Item Authoring and
-Catalogue</a>: all the pages involing the item creation and the
+Catalogue</a>: all the pages involving the item creation and the
 item catalogue.</li><li>
 <a href="user_interface/user_experience">Assessment
 Delivery</a>: all the pages involved in deploying a given

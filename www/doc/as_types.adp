@@ -10,7 +10,7 @@ display types:</span></p>
 assessment-item-types-create.sql</span></li><li><span class="context">add entry to matrix table item_type -&gt;
 display_type in assessment-types-create.sql</span></li><li><span class="context">add content type data to
 tcl/as-install-procs.tcl. adhere to the naming
-standards!!</span></li><li><span class="context">add tcl procs to
+standards!!</span></li><li><span class="context">add Tcl procs to
 tcl/as-item-type-$$-procs or tcl/as-item-display-$$-procs with
 ::new, ::edit, ::copy procs. adhere to naming
 standards!!</span></li><li><span class="context">add admin pages to add new instance:

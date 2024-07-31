@@ -70,7 +70,7 @@ comments attached to a given revision of a data element. The
 integration between Assessment and GC thus will need to be at the
 UI level, not the data model level. Using GC will support post-test
 "discussions" between student and teacher, for example,
-about inidividual items, sections or sessions.</li><li>
+about individual items, sections or sessions.</li><li>
 <strong>Scoring-grading</strong>: This has been a rather
 controversial area because of the wide range of needs for derived
 calculations/evaluations that different applications need to
@@ -250,7 +250,7 @@ OpenACS</li>
 </ul>
 <ul><li>
 <span style="font-weight: bold;">Signing of content</span>
-allows to verify that the data submitted is actually from the
+allows one to verify that the data submitted is actually from the
 person it is pretended to be from. This assumes a public key
 environment where the public key is stored along with the user
 information (e.g. with the users table) and the data stored in

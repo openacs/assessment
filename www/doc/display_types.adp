@@ -145,9 +145,9 @@ attributes:<br>
 <li>Name: text. Name of the section like "test view
 sorted"</li><li>Number of questions per page: integer. THIS HAS TO BE CHANGED
 IN THE DATA MODEL FROM PAGINATION_STYLE. How many questions shall
-be displayed per page in this section. Usually the answer would be
+be displayed per page in this section. Usually, the answer would be
 "" for all questions on one page (default), or
-"1" for one question per page (a.k.a. one question at a
+"1" for one question per page (aka one question at a
 time), but any number is imagineable.</li><li>
 <span class="context"><span class="reg">ADP style: ADP to
 choose from that will control the makeup of the section along with
@@ -167,7 +167,7 @@ answered separately, even if we display multiple answers? If yes,
 display a "save" button next to each answer along with
 green "V" if the answer has been already submitted. To
 finish the section, you still have to click on the OK button at the
-buttom. Once the section is finished all answers that have not been
+bottom. Once the section is finished all answers that have not been
 separately submitted will be treated as not being submitted at
 all.<br>
 </li>

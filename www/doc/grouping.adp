@@ -110,7 +110,7 @@ question.</span></li><li><span class="context">Sectioned</span></li>
 shareable_p boolean. As with Items and Sections, we instead will
 use the acs permission system:</p><ul>
 <li>Read: An assessment author (who is granted this permission) can
-reuse this assessment (NB: Usually the original author has admin
+reuse this assessment (NB: Usually, the original author has admin
 privileges.)</li><li>Write: Author can reuse and change this assessment.</li><li>Admin: Author can reuse, change and give permission on this
 assessment</li><li>Respond: The user can respond to the survey.<br>
 </li>
@@ -141,7 +141,7 @@ perform Section</li>
 shareable_p boolean. As with Items and Assessments, we instead will
 use the acs permission system:</p><ul>
 <li>Read: A section author (who is granted this permission) can
-reuse this section (NB: Usually the original author has admin
+reuse this section (NB: Usually, the original author has admin
 privileges.)</li><li>Write: Author can reuse and change this section.</li><li>Admin: Author can reuse, change and give permission on this
 section</li>
 </ul>

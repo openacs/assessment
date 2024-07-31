@@ -68,7 +68,7 @@ package.</span></p>
 all to all the storing of test results. In addition to this, it
 will provide functionality to other packages to allow rating of
 their contents (one example of this would be Lars Rating package,
-that would be used as a basis for this). In general it should
+that would be used as a basis for this). In general, it should
 provide a very flexible way of adding scores into the system,
 either automatically (as described above) or manually (e.g. this
 student did a good oral exam).</span>
@@ -121,7 +121,7 @@ the /pvt/home page as a collection of assessment data and the
 "change basic information" as one assessment among
 many.</span></p>
 <p><span class="context">With a little bit of tweaking and the
-possibility to add instant gratification, a.k.a. aggregated result
+possibility to add instant gratification, aka aggregated result
 display, it could include the poll package and make it
 redundant.</span></p>
 <p><span class="context">Last but not least with the ability to
