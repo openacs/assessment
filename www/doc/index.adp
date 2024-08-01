@@ -7,9 +7,9 @@
 members of the OpenACS community for data collection functionality
 within the OpenACS framework. We&#39;re using the term
 "Assessment" instead of "Survey" or
-"Questionnaire" (or "Case Report Form" aka
-CRF, the term used in clinical trials) because it is a term used by
-IMS and because it connotes the more generic nature of the data
+"Questionnaire" (or "Case Report Form" aka CRF,
+the term used in clinical trials) because it is a term used by IMS
+and because it connotes the more generic nature of the data
 collection system we&#39;re focusing on.</p>
 <p>There has been considerable recent interest in expanding the
 capabilities of generic data collection packages within OpenACS.

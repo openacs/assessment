@@ -155,8 +155,8 @@ responses</li><li>Public - Everyone can see the responses<br>
 </ul>
 </li><li>Survey Import / Export
 <ul>
-<li>Type: (select box): CSV, WebCT, SCORM, Blackboard, IMS</li><li>File: file (file for import)</li><li>Download filename: short_text. Filename for the download of
-the export.</li>
+<li>Type: (select box): CSV, WebCT, SCORM, Blackboard, IMS</li><li>File: file (file for import)</li><li>Download filename: short_text. Filename for the download of the
+export.</li>
 </ul>
 </li><li>Delete assessment with / without responses</li><li>Assign category to the assessment<br>
 </li><li>Link to a mapping and browsing page to link sections to this
