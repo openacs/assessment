@@ -212,7 +212,7 @@ will add more info on this.</p><ul>
 </li>
 </ul>
 
-Only site wide admins will get to see the following question types:
+Only site-wide admins will get to see the following question types:
 <ul><li>Database question:
 <p>The answer to this question will be stored in the database. The
 concept here is to support bidirectional interchange of data

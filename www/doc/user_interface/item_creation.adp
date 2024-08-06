@@ -29,8 +29,7 @@ a question using the normal survey interface</span></li>
 </ul>
 </li><li><span class="context">Questions should be able to be assigned
 to multiple categories with multiple hierarchies (e.g. catogorize
-by symptoms or by classes). These categories must be editable site
-wide.</span></li><li><span class="context">Questions will have a title, so they can
+by symptoms or by classes). These categories must be editable site-wide.</span></li><li><span class="context">Questions will have a title, so they can
 easily be found again.</span></li><li><span class="context">Questions have to be versionable. This
 allows a survey to use the older version of a question, if the
 question is changed.</span></li>
@@ -216,7 +215,7 @@ setup (if all questions in a section have the same answers they
 would be shown in a matrix). One could think about making this a
 special question type on it&#39;s own.</span></li>
 </ul>
-<span class="context">Only site wide admins will get to see the
+<span class="context">Only site-wide admins will get to see the
 following question types:</span>
 <ul><li>
 <span class="context">Database question:<br>

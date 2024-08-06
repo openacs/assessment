@@ -11,8 +11,8 @@ Manual"
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e54" id="d0e54"></a>1. Manage Permissions</h2></div></div></div><p>To create an assessment is necessary to have create permissions
 over the assessment instance. This permission can be inherit or can
-be granted by a site wide administrator. This permissions can be
-managed by the site wide administrator following the Permissions
+be granted by a site-wide administrator. This permissions can be
+managed by the site-wide administrator following the Permissions
 link in the assessment admin page.</p><div class="screenshot"><div class="mediaobject"><img src="resources/create_permissions.JPG"></div></div><p>To create triggers is necessary to have admin permissions over
 an assessment. The admin permission is inherit to the user that
 creates an assessment and also can be granted by the assessment

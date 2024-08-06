@@ -82,8 +82,8 @@
 
       <para>To create an assessment is necessary to have create permissions
       over the assessment instance. This permission can be inherit or can be
-      granted by a site wide administrator. This permissions can be managed by
-      the site wide administrator following the Permissions link in the
+      granted by a site-wide administrator. This permissions can be managed by
+      the site-wide administrator following the Permissions link in the
       assessment admin page.</para>
 
       <screenshot>
@@ -145,7 +145,7 @@
     <section>
       <title>Actions Administration</title>
 
-      <para>To be able to administrate actions the user must have site wide
+      <para>To be able to administrate actions the user must have site-wide
       admin privileges. To admin actions the user must follow the link "Action
       Administration" in the assessment admin page.</para>
 
@@ -489,7 +489,7 @@
       <title>Request Administration</title>
 
       <para>The request Administration page can be reached following the link
-      in the action bar for a site wide administrator or following the link
+      in the action bar for a site-wide administrator or following the link
       show in the list of assessments that belong to a user.</para>
 
       <para><screenshot>
@@ -506,7 +506,7 @@
       executed triggers).</para>
 
       <para>This interface will display those requests related to the
-      assessments that the user owns, if the user is site wide administrator,
+      assessments that the user owns, if the user is site-wide administrator,
       all the requests related to all the assessments will be display.</para>
 
       <para><screenshot>
@@ -536,7 +536,7 @@
     <title>Registration Assessment</title>
 
     <para>To be able to select an assessment that will be related to the
-    registration process is necessary that the user has site wide admin
+    registration process is necessary that the user has site-wide admin
     privileges, because the interface can only be reached through the Main
     Site Administration Page. This link only will appear if the Assessment
     Package is installed and mounted.</para>

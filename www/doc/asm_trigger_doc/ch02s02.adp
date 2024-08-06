@@ -9,7 +9,7 @@ Manual"
 			rightLink="ch02s03" rightLabel="Next">
 		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="d0e87" id="d0e87"></a>2. Actions Administration</h2></div></div></div><p>To be able to administrate actions the user must have site wide
+<a name="d0e87" id="d0e87"></a>2. Actions Administration</h2></div></div></div><p>To be able to administrate actions the user must have site-wide
 admin privileges. To admin actions the user must follow the link
 "Action Administration" in the assessment admin page.</p><div class="screenshot"><div class="mediaobject"><img src="resources/admin_actions.JPG"></div></div><div class="orderedlist"><ol type="1">
 <li><p>Register User: create a new user account in the system.</p></li><li><p>Event Registration: register the user to an event.</p></li><li><p>Add to Community: register the user to dotlrn and also to a
