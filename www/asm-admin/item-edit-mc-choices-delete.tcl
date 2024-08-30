@@ -23,7 +23,7 @@ db_transaction {
     set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
     set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
     set new_item_id [as::item::new_revision -as_item_id $as_item_id]
-    # HAM : querried the mc_id for the given choice id
+    # HAM : queried the mc_id for the given choice id
     set mc_id [db_string get_mc_id {select mc_id from as_item_choices where choice_id = :choice_id}]
     #  ***********
     set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id -with_choices_p f]
