@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Item Types and Item Display Types}</property>
 <property name="doc(title)">Item Types and Item Display Types</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2><span class="context">Overview</span></h2>
 <p><span class="context">What to do to add new item types or item
 display types:</span></p>

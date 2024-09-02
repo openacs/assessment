@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Assessment}</property>
 <property name="doc(title)">Assessment</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <p>Here is a graphical overview of the subsystem in the Assessment
 package that organizes Items into Sections and whole
 Assessments:<br>
@@ -65,7 +69,7 @@ shall be displayed to the respondee (All, none, correct,
 incorrect). Correct and Incorrect will only show the feedback_text
 if the response was correct or incorrect.</li><li><span class="context"><span class="reg"><span class="reg">section_navigation - How shall the navigation
 happen<br>
-</span></span></span></li><li style="list-style: none"><ul>
+</span></span></span></li><li style="list-style: none; display: inline"><ul>
 <li><span class="context"><span class="reg"><span class="reg">default path - Order given by the relationship between
 assessment and section (the order value in cr_rels, if this is
 used).<br>
@@ -81,7 +85,7 @@ within a department) they are covered in the
 as_assessment_styles:</li>
 </ul>
 <ul>
-<li style="list-style: none">
+<li style="list-style: none; display: inline">
 <ul>
 <li>custom_header - Custom header (and footer) that will be
 displayed to the respondee when answering an assessment.

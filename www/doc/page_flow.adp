@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Page Flow}</property>
 <property name="doc(title)">Page Flow</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>Through the OpenACS templating system, the UI look&amp;feel will
 be modifiable by specific sites, so we needn&#39;t address page

@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Sections}</property>
 <property name="doc(title)">Sections</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">Section page. This page is for editing information about a
 section and adding questions to it. It contains a couple of
 subpages. Data model can be found <a href="http://sussdorff.de/assessment/doc/grouping.html">here.</a><br><br>
@@ -39,7 +43,7 @@ phase.<br>
 <li><span class="context">
 <a href="../sequencing"><span style="color: rgb(204, 102, 0);">Sequencing
 Information</span></a><br>
-</span></li><li style="list-style: none"><ul>
+</span></li><li style="list-style: none; display: inline"><ul>
 <li style="color: rgb(204, 102, 0);">Display of the Pre Display
 Checks (with an edit and a remove link).</li><li style="color: rgb(204, 102, 0);">Add new Pre Display
 Check.</li><li style="color: rgb(204, 102, 0);">Add new Post Display

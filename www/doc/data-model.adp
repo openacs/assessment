@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Assessment Data Model Overview}</property>
 <property name="doc(title)">Assessment Data Model Overview</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>At its core, the Assessment package defines a hierarchical
 container model of a "survey", "questionnaire"

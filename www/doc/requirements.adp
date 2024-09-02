@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Assessment functional requirements}</property>
 <property name="doc(title)">Assessment functional requirements</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Introduction</h2>
 
 The assessment module provides OpenACS with capabilities to conduct

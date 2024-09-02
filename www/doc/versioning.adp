@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Versioning}</property>
 <property name="doc(title)">Versioning</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>This topic requires special mention because it is centrally
 important to Assessment and one of the most radical departures from

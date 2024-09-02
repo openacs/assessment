@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {As_Item Display Types}</property>
 <property name="doc(title)">As_Item Display Types</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2><span class="context">Overview</span></h2>
 <span class="context">Displaying items to users has a couple of
 challenges. First of all the display of a single item can be
@@ -99,7 +103,7 @@ entry (sort_order field).</li>
 entry (sort_order field).</li>
 </ul>
 </li><li>select - multiple-option displayed in "popup
-menu"</li><li style="list-style: none"><ul>
+menu"</li><li style="list-style: none; display: inline"><ul>
 <li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li><li><span class="context"><span class="reg">allow_multiple_p - Is
 it allow one to select multiple values ?</span></span></li>

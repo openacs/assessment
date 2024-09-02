@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Appendix A: RFC for Assessment Specs}</property>
 <property name="doc(title)">Appendix A: RFC for Assessment Specs</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><h1><span class="context">Introduction</span></h1>
 <span class="context">In recent times the survey system has
 expanded beyond it&#39;s initial scope of providing a quick and

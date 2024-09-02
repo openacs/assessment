@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Assessment Overview}</property>
 <property name="doc(title)">Assessment Overview</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Introduction</h2>
 <p>The Assessment Package unites the work and needs of various
 members of the OpenACS community for data collection functionality

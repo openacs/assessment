@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Chapter 3. Registration Assessment}</property>
 <property name="doc(title)">Chapter 3. Registration Assessment</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch02s07" leftLabel="Prev"
 			title=" "

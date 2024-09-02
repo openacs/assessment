@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Question Catalogue}</property>
 <property name="doc(title)">Question Catalogue</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">
 <strong>Question Catalogue: Summary</strong>:</span></span>
 <p><span class="context">The question catalogue is a central part

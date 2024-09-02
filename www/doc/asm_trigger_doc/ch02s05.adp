@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {5. Action Triggers}</property>
 <property name="doc(title)">5. Action Triggers</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch02s04" leftLabel="Prev"
 			title="Chapter 2. User

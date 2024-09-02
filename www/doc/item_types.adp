@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {AS_item Types}</property>
 <property name="doc(title)">AS_item Types</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 
 This is a list of item types and <span style="font-weight: bold;">some of</span>

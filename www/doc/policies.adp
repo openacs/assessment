@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Policies and Events}</property>
 <property name="doc(title)">Policies and Events</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Policies and Events<br>
 </h2>
 <ul>

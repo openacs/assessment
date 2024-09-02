@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Assessment Creation}</property>
 <property name="doc(title)">Assessment Creation</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">When
 creating an assessment the administrator has a couple of fields to
 determine the look and feel of the assessment along with the option
@@ -107,12 +111,12 @@ responding to the assessment).<br>
 <li>Notifications will be done using the notification system of
 OpenACS.<br>
 </li><li>For all notifications allow system variables should be
-used.</li><li style="list-style: none"><ul>
+used.</li><li style="list-style: none; display: inline"><ul>
 <li>System_name</li><li>User_name</li><li>user_id</li><li>... (free for the developer to think about what is
 useful)<br>
 </li>
 </ul></li><li>Links to spam the following group of people (information can be
-taken out of as_sessions):</li><li style="list-style: none"><ul>
+taken out of as_sessions):</li><li style="list-style: none; display: inline"><ul>
 <li>All respondees having access to the assessment</li><li>All respondees that have not started the assessment</li><li>All respondees with unfinished assessments<br>
 </li><li>All respondees with finished assessment</li>
 </ul></li><li>Notification message: richtext. This will allow the creator to
@@ -133,7 +137,7 @@ with checkboxes in front for deletion and a check/uncheck all
 link)</li><li>View responses per Question</li><li>View responses by Filter / Groups / Values (e.g. search for
 questions with a negative distractor)</li><li>Grant access to responses (using the permission
 system):<br>
-</li><li style="list-style: none"><ul>
+</li><li style="list-style: none; display: inline"><ul>
 <li>Closed - Only the owner of the assessment can see the
 responses<br>
 </li><li>Admin - Only admins of the assessment can see the

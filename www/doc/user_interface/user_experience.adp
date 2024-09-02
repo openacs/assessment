@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {User Experience}</property>
 <property name="doc(title)">User Experience</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">User
 experience describes the various steps the USER sees and what he
 can do when taking an assessment. When answering a section a couple

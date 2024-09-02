@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Chapter 4. Authors}</property>
 <property name="doc(title)">Chapter 4. Authors</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch03" leftLabel="Prev"
 			title=" "

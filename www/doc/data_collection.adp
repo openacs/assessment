@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Data Collection}</property>
 <property name="doc(title)">Data Collection</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>The schema for the entities that actually collect, store and
 retrieve Assessment data parallels the hierarchical structure of

@@ -2,6 +2,10 @@
 <property name="context">{/doc/assessment/ {Assessment}} {Assessment Item Checks}</property>
 <property name="doc(title)">Assessment Item Checks</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Sequencing</h2>
 <p>Along with Data Validation and Versioning, probably the most
 vexing problem confronting the Assessment package is how to handle
