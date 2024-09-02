@@ -29,7 +29,7 @@ comment given by the evaluator</span></li><li><span class="context">Correct Answ
 question</span></li><li><span class="context">Feedback. The feedback that is stored
 with the given answer</span></li><li><span class="context">Feedback for question. The feedback that
 is stored with the question</span></li><li><span class="context">Total result. The total result of the
-test (at the buttoms)</span></li>
+test (at the bottom)</span></li>
 </ul>
 </li><li><span class="context">Submit each answer separately: boolean
 (yes/no). Does the user have to submit each answer
@@ -126,7 +126,7 @@ are selected.</span></li><li>
 <span class="context">The response is matched with each of the
 possible answers</span><ul>
 <li><span class="context">Equals: Only award the percentage if the
-strings match exactly (case senstivity depends on the setting for
+strings match exactly (case sensitivity depends on the setting for
 the question).</span></li><li><span class="context">Contains: If the answer contains exactly
 the string, points are granted. If you want to give percentages for
 multiple words, add another answer to the answerbox (so instead of

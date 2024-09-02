@@ -197,7 +197,7 @@
         </listitem>
 
         <listitem>
-          <para>Tcl code: the code that its executed to performe the
+          <para>Tcl code: the code that its executed to perform the
           action.</para>
         </listitem>
 
@@ -257,7 +257,7 @@
           </mediaobject>
         </screenshot>Before deleting an action, a confirm message will be
       displayed, the action will not be deleted if there is some reference to
-      this action (i.e. a trigger that wil execute this action).<screenshot>
+      this action (i.e. a trigger that will execute this action).<screenshot>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/action_del_confirm.JPG" />
@@ -276,7 +276,7 @@
 
       <itemizedlist>
         <listitem>
-          <para>Branch: This trigger will make that the secuence of sections
+          <para>Branch: This trigger will make that the sequence of sections
           in the assessment change, depending on the answer that a user gives
           to the question related to the trigger when the assessment is being
           responded.</para>
@@ -312,7 +312,7 @@
 
       <para>The condition field shows the question and its possible answers,
       this means that if a user that respond the assessment choose that
-      response the trigger will be activated, and the section secuence will
+      response the trigger will be activated, and the section sequence will
       change.</para>
 
       <para><screenshot>
@@ -589,7 +589,7 @@
       <listitem>
         <para>Vivian Aguilar -- vivian@viaro.net</para>
 
-        <para>Desing and Development</para>
+        <para>Design and Development</para>
       </listitem>
 
       <listitem>

@@ -108,7 +108,7 @@ section</li><li>Points: integer. Number of Points this question is worth in
 this section.<br>
 </li><li>Mandatory: boolean (yes/no). Is this question mandatory in this
 section. It will be displayed in any case, regardless of
-randomizing.</li><li>Fixed Position: select (1,2..., buttom). Position the question
+randomizing.</li><li>Fixed Position: select (1,2..., bottom). Position the question
 has to be displayed, regardless of randomizing.</li>
 </ul>
 <span class="context">

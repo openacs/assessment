@@ -41,9 +41,9 @@ left.</span></li><li><span class="context">If we have to show a progress bar, sh
 it and renew it after each submit (so also for each
 question).</span></li><li><span class="context">Display a finish test button at the end
 of the page to "hand the test to the TA" if this is
-allowed</span></li><li><span class="context">Allow for chancellation of the test with
-a chancel button. The result will not be stored but the test will
-be marked as taken.</span></li><li><span class="context">If immediate answer validation (aka.
+allowed</span></li><li><span class="context">Allow for cancellation of the test with a
+cancel button. The result will not be stored but the test will be
+marked as taken.</span></li><li><span class="context">If immediate answer validation (aka.
 ad_form check) for a question is true, check the answer if it is
 valid, otherwise notify the user that it is not and do not store
 the result.</span></li>
@@ -55,7 +55,7 @@ notes into consideration:</span>
 answer but may also depend on the result within a section (branch
 by disctractor, median)</span></li><li><span class="context">questions within a section can be
 randomly displayed. Take also into account that not all questions
-have to be displayed and that some of the questions migt be
+have to be displayed and that some of the questions might be
 mandatory and even mandatory in position.</span></li><li><span class="context">When displaying random questions the
 randomizing element has to be the same for each response_id (the
 user shall not have the option to see different questions just by

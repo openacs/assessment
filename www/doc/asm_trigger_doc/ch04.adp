@@ -12,7 +12,7 @@
 <li>
 <p>Rocael Hernandez -- roc\@viaro.net</p><p>Design</p>
 </li><li>
-<p>Vivian Aguilar -- vivian\@viaro.net</p><p>Desing and Development</p>
+<p>Vivian Aguilar -- vivian\@viaro.net</p><p>Design and Development</p>
 </li><li>
 <p>Anny Flores -- annyflores\@viaro.net</p><p>Development and Documentation</p>
 </li>

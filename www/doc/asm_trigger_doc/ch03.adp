@@ -9,7 +9,7 @@
 		    <div class="chapter" lang="en">
 <div class="titlepage"><div><div><h2 class="title">
 <a name="d0e316" id="d0e316"></a>Chapter 3. Registration Assessment</h2></div></div></div><p>To be able to select an assessment that will be related to the
-registration process is necessary that the user has site-wide admin
+registration process is necessary that the user has site wide admin
 privileges, because the interface can only be reached through the
 Main Site Administration Page. This link only will appear if the
 Assessment Package is installed and mounted.</p><div class="screenshot"><div class="mediaobject"><img src="resources/register_asm.JPG"></div></div><p>If the Assessment Package is installed and mounted, the link can

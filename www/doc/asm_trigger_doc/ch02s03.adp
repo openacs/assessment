@@ -10,7 +10,7 @@ Manual"
 		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e164" id="d0e164"></a>3. Trigger Definition</h2></div></div></div><p>After the assessment is created, the triggers can be defined for
-questions with multiple choice responses.</p><p>There are two type of triggers:</p><div class="itemizedlist"><ul type="disc"><li><p>Branch: This trigger will make that the secuence of sections in
+questions with multiple choice responses.</p><p>There are two type of triggers:</p><div class="itemizedlist"><ul type="disc"><li><p>Branch: This trigger will make that the sequence of sections in
 the assessment change, depending on the answer that a user gives to
 the question related to the trigger when the assessment is being
 responded.</p></li></ul></div><div class="itemizedlist"><ul type="disc"><li><p>Action: This trigger will execute the action related, also
