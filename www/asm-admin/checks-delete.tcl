@@ -6,8 +6,8 @@ ad_page_contract {
     inter_item_check_id:naturalnum,multiple
     section_id:naturalnum,notnull
     assessment_id:naturalnum,notnull
-    by_item_p:boolean
-    item_id:naturalnum,optional
+    {by_item_p:boolean,notnull 0}
+    item_id:naturalnum,optional,notnull
   }
 
 permission::require_permission \
@@ -25,7 +25,7 @@ for { set i 0} { $i< $count } {incr i} {
 	db_exec_plsql delete_check {}
     }
 }
-if {$by_item_p == 1} {
+if {$by_item_p} {
     ad_returnredirect "checks-admin?section_id=$section_id&assessment_id=$assessment_id&by_item_p=$by_item_p&item_id=$item_id"
 } else {
     ad_returnredirect "checks-admin?section_id=$section_id&assessment_id=$assessment_id&by_item_p=$by_item_p"

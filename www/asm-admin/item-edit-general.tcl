@@ -30,14 +30,20 @@ if {![info exists assessment_data(assessment_id)]} {
 }
 
 set page_title [_ assessment.edit_item_general]
-set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
+set context [list \
+                 [list index [_ assessment.admin]] \
+                 [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] \
+                 [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] \
+                 $page_title]
 set package_id [ad_conn package_id]
 
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 set type $assessment_data(type)
 
-ad_form -name item_edit_general -action item-edit-general -export { assessment_id section_id } -html {enctype multipart/form-data} -form {
+ad_form -name item_edit_general -action item-edit-general -html {enctype multipart/form-data} -form {
     {as_item_id:key}
+    {assessment_id:naturalnum(hidden),optional}
+    {section_id:naturalnum(hidden),optional}
     {question_text:richtext,nospell {label "[_ assessment.Question]"} {html {rows 12 cols 80 style {width: 95%}}} {help_text "[_ assessment.item_Question_help]"}}
     {required_p:text(select) {label "[_ assessment.Required]"} {options $boolean_options} {help_text "[_ assessment.item_Required_help]"}}
 }
@@ -288,7 +294,7 @@ ad_form -extend -name item_edit_general -edit_request {
                 set n_bytes [file size $tmp_filename]
                 set max_file_size 10000000
                 # [parameter::get -parameter MaxAttachmentSize]
-                set pretty_max_size [util_commify_number $max_file_size]
+                set pretty_max_size [lc_content_size_pretty -size $max_file_size]
 
                 if { $n_bytes > $max_file_size && $max_file_size > 0 } {
                     ad_return_complaint 1 "[_ assessment.file_too_large]"

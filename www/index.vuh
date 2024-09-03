@@ -6,6 +6,7 @@ set valid_pages {assessment feedback finish session}
 if {![lsearch $valid_pages $path_info] \
     || ![file exists "[acs_root_dir]/packages/assessment/lib/${path_info}.tcl"]} {
     ns_returnnotfound
+    ad_script_abort
 }
 
 

@@ -83,7 +83,7 @@ if {([info exists itype] && $itype ne "")} {
 
 set category_ids_length [llength $category_ids]
 if {$category_ids_length > 0} {
-    set category_id_sql [join $category_ids ,]
+    set category_id_sql [ns_dbquotelist $category_ids]
     if {$join eq "and"} {
 	# combining categories with and
 	if {$subtree_p == "t"} {

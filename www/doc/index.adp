@@ -1,13 +1,17 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Overview}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment Overview}</property>
 <property name="doc(title)">Assessment Overview</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Introduction</h2>
 <p>The Assessment Package unites the work and needs of various
 members of the OpenACS community for data collection functionality
 within the OpenACS framework. We&#39;re using the term
 "Assessment" instead of "Survey" or
-"Questionnaire" (or "Case Report Form" a.k.a. CRF,
+"Questionnaire" (or "Case Report Form" aka CRF,
 the term used in clinical trials) because it is a term used by IMS
 and because it connotes the more generic nature of the data
 collection system we&#39;re focusing on.</p>
@@ -131,7 +135,7 @@ all these separate modules.<br>
 The API will be defined during the development phase.<br>
 <h2>Data model</h2>
 
-The data model is described in detail in the <a href="data-modell">design descriptions</a>
+The data model is described in detail in the <a href="data-model">design descriptions</a>
 .<br>
 <h2><a href="user_interface/index">User Interface</a></h2>
 
@@ -149,7 +153,7 @@ Authoring</a>: all the pages involved in creating, editing, and
 deleting the Sections themselves. Includes the page to browse for
 items to include in sections</li><li>
 <a href="user_interface/item_creation">Item Authoring and
-Catalogue</a>: all the pages involing the item creation and the
+Catalogue</a>: all the pages involving the item creation and the
 item catalogue.</li><li>
 <a href="user_interface/user_experience">Assessment
 Delivery</a>: all the pages involved in deploying a given

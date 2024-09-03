@@ -3,7 +3,7 @@ ad_page_contract {
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-01-13
 
-    This page allows to swap action up and down
+    This page allows one to swap action up and down
 } {
     section_id:naturalnum,notnull
     check_id:naturalnum,notnull

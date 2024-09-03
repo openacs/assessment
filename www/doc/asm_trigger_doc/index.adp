@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Triggers and Action Execution in Assessment}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Triggers and Action Execution in Assessment}</property>
 <property name="doc(title)">Triggers and Action Execution in Assessment</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="" leftLabel=""
 			title=" "

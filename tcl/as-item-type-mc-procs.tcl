@@ -16,10 +16,10 @@ ad_proc -public as::item_type_mc::new {
     {-choices ""}
     {-allow_other_p "f"}
 } {
+    New Multiple Choice item to the data database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
-
-    New Multiple Choice item to the data database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -50,10 +50,10 @@ ad_proc -public as::item_type_mc::edit {
     {-num_answers ""}
     {-allow_other_p "f"}
 } {
+    Edit Multiple Choice item to the data database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Multiple Choice item to the data database
 } {
     # Update as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -76,10 +76,10 @@ ad_proc -public as::item_type_mc::new_revision {
     -as_item_type_id:required
     {-with_choices_p "t"}
 } {
+    Create new revision of Multiple Choice item in the data database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Create new revision of Multiple Choice item in the data database
 } {
     # Update as_item_type_mc in the CR (and as_item_type_mc table) getting the revision_id (as_item_type_id)
     db_transaction {
@@ -110,10 +110,10 @@ ad_proc -public as::item_type_mc::copy {
     {-copy_correct_answer_p "t"}
     -new_title
 } {
+    Copy a Multiple Choice Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy a Multiple Choice Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -151,10 +151,10 @@ ad_proc -public as::item_type_mc::render {
     {-session_id ""}
     {-show_feedback ""}
 } {
+    Render a Multiple Choice Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render a Multiple Choice Type
 } {
     set allow_other_p [as::item_type_mc::allow_other_p -item_type_id $type_id]
 
@@ -331,10 +331,10 @@ ad_proc -public as::item_type_mc::process {
     {-allow_overwrite_p t}
     {-package_id ""}
 } {
+    Process a Response to a Multiple Choice Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
-
-    Process a Response to a Multiple Choice Type
 } {
     array set type [util_memoize [list as::item_type_mc::data -type_id $type_id]]
     array set choices $type(choices)
@@ -376,9 +376,28 @@ ad_proc -public as::item_type_mc::process {
         set widget [as::item_type_mc::form_widget -type_id $type_id]
         set response_value [template::util::${widget}_text::get_property ${widget}_value $response]
         set response_text [template::util::${widget}_text::get_property text_value $response]
-        set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response_value -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id -clob_answer $response_text]
+        set item_data_id [as::item_data::new \
+                              -session_id $session_id \
+                              -subject_id $subject_id \
+                              -staff_id $staff_id \
+                              -as_item_id $as_item_id \
+                              -section_id $section_id \
+                              -choice_answer $response_value \
+                              -points $points \
+                              -allow_overwrite_p $allow_overwrite_p \
+                              -package_id $package_id \
+                              -clob_answer $response_text]
     } else {
-        set item_data_id [as::item_data::new -session_id $session_id -subject_id $subject_id -staff_id $staff_id -as_item_id $as_item_id -section_id $section_id -choice_answer $response -points $points -allow_overwrite_p $allow_overwrite_p -package_id $package_id]
+        set item_data_id [as::item_data::new \
+                              -session_id $session_id \
+                              -subject_id $subject_id \
+                              -staff_id $staff_id \
+                              -as_item_id $as_item_id \
+                              -section_id $section_id \
+                              -choice_answer $response \
+                              -points $points \
+                              -allow_overwrite_p $allow_overwrite_p \
+                              -package_id $package_id]
     }
     as::session_results::new -target_id $item_data_id -points $points -package_id $package_id
 }
@@ -386,10 +405,10 @@ ad_proc -public as::item_type_mc::process {
 ad_proc -public as::item_type_mc::data {
     -type_id:required
 } {
+    Return the Data of a Multiple Choice Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Return the Data of a Multiple Choice Type
 } {
     db_1row item_type_data {} -column_array type
 
@@ -414,10 +433,10 @@ ad_proc -public as::item_type_mc::results {
     {-data_type ""}
     -sessions:required
 } {
+    Return the results of a given item in a given list of sessions as an array
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-26
-
-    Return the results of a given item in a given list of sessions as an array
 } {
 
     db_foreach get_results {} {
@@ -492,16 +511,19 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     {-allow_other_p "f"}
 } {
     Add the multiple choice item to an assessment. The creates the
-    as_item_type_mc object and all the choices and associates the as_item_id
-    with an assessment, or updates the assessment with the latest version
+    as_item_type_mc object and all the choices and associates the
+    as_item_id with an assessment, or updates the assessment with the
+    latest version
 
     @param choices List in array get format of choice number/choice
-    @param correct_choices List in array get format of choice number/t. Elements appear in this list if choice number is one of the correct choices
+    @param correct_choices List in array get format of choice
+                           number/t. Elements appear in this list if
+                           choice number is one of the correct choices
     @param assessment_id Assessment to attach question to
     @param section_id Section the question is in
     @param as_item_id Item object this multiple choice belongs to
     @param title Title of question/choice set for question library
-    @param after Add this question after the queston number in the section
+    @param after Add this question after the question number in the section
 
     @author Dave Bauer (dave@solutiongrove.com)
     @creation-date 2006-10-25
@@ -568,7 +590,7 @@ ad_proc -private as::item_type_mc::add_to_assessment {
                                -content_value "" \
                                -feedback_text "" \
                                -selected_p "" \
-                               -correct_answer_p [ad_decode [info exists correct($i)] 0 f t] \
+                               -correct_answer_p [expr {[info exists correct($i)] ? "t" : "f"}] \
                                -sort_order $count \
                                -percent_score ""]
 
@@ -655,37 +677,37 @@ ad_proc -private as::item_type_mc::choices_swap {
     Switch order of two choices
 } {
 
-if { $direction=="up" } {
-     set next_sort_order [expr { $sort_order - 1 }]
-} else {
-     set next_sort_order [expr { $sort_order + 1 }]
-}
+    if { $direction=="up" } {
+        set next_sort_order [expr { $sort_order - 1 }]
+    } else {
+        set next_sort_order [expr { $sort_order + 1 }]
+    }
 
-db_transaction {
-    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
-    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-    set new_item_id [as::item::new_revision -as_item_id $as_item_id]
-    as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id $new_section_id -as_item_id $as_item_id -new_item_id $new_item_id
-    set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id]
+    db_transaction {
+        set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+        set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+        set new_item_id [as::item::new_revision -as_item_id $as_item_id]
+        as::assessment::check::copy_item_checks -assessment_id $assessment_id -section_id $new_section_id -as_item_id $as_item_id -new_item_id $new_item_id
+        set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id]
 
-    as::section::update_section_in_assessment \
-        -old_section_id $section_id \
-        -new_section_id $new_section_id \
-        -new_assessment_rev_id $new_assessment_rev_id
+        as::section::update_section_in_assessment \
+            -old_section_id $section_id \
+            -new_section_id $new_section_id \
+            -new_assessment_rev_id $new_assessment_rev_id
 
-    as::item::update_item_in_section \
-        -new_section_id $new_section_id \
-        -old_item_id $as_item_id \
-        -new_item_id $new_item_id
+        as::item::update_item_in_section \
+            -new_section_id $new_section_id \
+            -old_item_id $as_item_id \
+            -new_item_id $new_item_id
 
-    as::item::update_item_type_in_item \
-        -new_item_id $new_item_id \
-        -old_item_type_id $mc_id \
-        -new_item_type_id $new_mc_id
+        as::item::update_item_type_in_item \
+            -new_item_id $new_item_id \
+            -old_item_type_id $mc_id \
+            -new_item_type_id $new_mc_id
 
-    db_dml swap_choices {}
-}
-return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
+        db_dml swap_choices {}
+    }
+    return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
 }
 
 ad_proc -private as::item_type_mc::choice_delete {
@@ -696,39 +718,39 @@ ad_proc -private as::item_type_mc::choice_delete {
 } {
     Delete a choice
 } {
-db_transaction {
-    set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
-    set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-    set new_item_id [as::item::new_revision -as_item_id $as_item_id]
-    # HAM : querried the mc_id for the given choice id
-    set mc_id [db_string get_mc_id {select mc_id from as_item_choices where choice_id=:choice_id}]
-    #  ***********
-    set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id -with_choices_p f]
-    as::section::update_section_in_assessment \
-        -old_section_id $section_id \
-        -new_section_id $new_section_id \
-        -new_assessment_rev_id $new_assessment_rev_id
+    db_transaction {
+        set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+        set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+        set new_item_id [as::item::new_revision -as_item_id $as_item_id]
+        # HAM : query the mc_id for the given choice id
+        set mc_id [db_string get_mc_id {select mc_id from as_item_choices where choice_id=:choice_id}]
+        #  ***********
+        set new_mc_id [as::item_type_mc::new_revision -as_item_type_id $mc_id -with_choices_p f]
+        as::section::update_section_in_assessment \
+            -old_section_id $section_id \
+            -new_section_id $new_section_id \
+            -new_assessment_rev_id $new_assessment_rev_id
 
-    as::item::update_item_in_section \
-        -new_section_id $new_section_id \
-        -old_item_id $as_item_id \
-        -new_item_id $new_item_id
+        as::item::update_item_in_section \
+            -new_section_id $new_section_id \
+            -old_item_id $as_item_id \
+            -new_item_id $new_item_id
 
-    as::item::update_item_type_in_item \
-        -new_item_id $new_item_id \
-        -old_item_type_id $mc_id \
-        -new_item_type_id $new_mc_id
+        as::item::update_item_type_in_item \
+            -new_item_id $new_item_id \
+            -old_item_type_id $mc_id \
+            -new_item_type_id $new_mc_id
 
-    db_1row get_sort_order_to_be_removed {}
-    set choices [db_list get_choices {}]
-    foreach old_choice_id $choices {
-        if {$old_choice_id != $choice_id} {
-            set new_choice_id [as::item_choice::new_revision -choice_id $old_choice_id -mc_id $new_mc_id]
+        db_1row get_sort_order_to_be_removed {}
+        set choices [db_list get_choices {}]
+        foreach old_choice_id $choices {
+            if {$old_choice_id != $choice_id} {
+                set new_choice_id [as::item_choice::new_revision -choice_id $old_choice_id -mc_id $new_mc_id]
+            }
         }
+        db_dml move_up_choices {}
     }
-    db_dml move_up_choices {}
-}
-return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
+    return [list as_item_id $new_item_id section_id $new_section_id assessment_rev_id $new_assessment_rev_id]
 }
 
 
@@ -752,7 +774,7 @@ ad_proc -private as::item_type_mc::form_widget {
     set display_type [db_string allow_other_p "select object_type from acs_objects, as_item_rels r1, as_item_rels r2, cr_items ci where r1.item_rev_id = ci.latest_revision and r1.item_rev_id=r2.item_rev_id and r1.target_rev_id=:type_id and r1.rel_type='as_item_type_rel' and r2.target_rev_id=object_id and r2.rel_type='as_item_display_rel'"]
     set display_type [string range $display_type [string length $display_type]-2 end]
 
-    return [string map {rb radio cb checkbox sb selet} $display_type]
+    return [string map {rb radio cb checkbox sb select} $display_type]
 }
 
 # Local variables:

@@ -13,11 +13,11 @@ ad_proc -public as::item_display_cb::new {
     {-sort_order_type ""}
     {-item_answer_alignment ""}
 } {
+    New Item Display CheckBox Type to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-23
-
-    New Item Display CheckBox Type to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -32,7 +32,7 @@ ad_proc -public as::item_display_cb::new {
 						[list choice_orientation $choice_orientation] \
 						[list choice_label_orientation $choice_label_orientation] \
 						[list sort_order_type $sort_order_type] \
-						[list item_answer_alignment $item_answer_alignment] ] ]	
+						[list item_answer_alignment $item_answer_alignment] ] ]
     }
 
     return $as_item_display_cb_id
@@ -46,10 +46,10 @@ ad_proc -public as::item_display_cb::edit {
     {-sort_order_type ""}
     {-item_answer_alignment ""}
 } {
+    Edit Item Display CheckBox Type to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Item Display CheckBox Type to the database
 } {
     # Update as_item_display_cb in the CR (and as_item_display_cb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -61,7 +61,7 @@ ad_proc -public as::item_display_cb::edit {
 						      [list choice_orientation $choice_orientation] \
 						      [list choice_label_orientation $choice_label_orientation] \
 						      [list sort_order_type $sort_order_type] \
-						      [list item_answer_alignment $item_answer_alignment] ] ]	
+						      [list item_answer_alignment $item_answer_alignment] ] ]
     }
 
     return $new_item_display_id
@@ -70,10 +70,10 @@ ad_proc -public as::item_display_cb::edit {
 ad_proc -public as::item_display_cb::copy {
     -type_id:required
 } {
+    Copy an Item Display CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Item Display CheckBox Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -105,10 +105,10 @@ ad_proc -public as::item_display_cb::render {
     {-data ""}
     -item:required
 } {
+    Render an Item Display CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Item Display CheckBox Type
 } {
     if {$required_p eq ""} {
 	set required_p f
@@ -133,7 +133,7 @@ ad_proc -public as::item_display_cb::render {
     if {$required_p != "t"} {
 	set optional ",optional"
     }
-    
+
     array set item_array $item
     set allow_other_p $item_array(allow_other_p)
 
@@ -144,22 +144,22 @@ ad_proc -public as::item_display_cb::render {
         set widget checkbox
         set datatype text
     }
-        
+
     set param_list [list [list label \$title] [list help_text \$subtext] [list values \$default_value] [list options \$data] [list html \$type(html_display_options)]]
     set element_params [concat [list "$element\:${datatype}($widget)$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]
 
-    return [expr {$allow_other_p ? "cbo" : "cb"}]    
+    return [expr {$allow_other_p ? "cbo" : "cb"}]
 }
 
 ad_proc -public as::item_display_cb::data {
     -type_id:required
 } {
+    Get the cached Display Data of CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the cached Display Data of CheckBox Type
 } {
     return [util_memoize [list as::item_display_cb::data_not_cached -type_id $type_id]]
 }
@@ -167,10 +167,10 @@ ad_proc -public as::item_display_cb::data {
 ad_proc -private as::item_display_cb::data_not_cached {
     -type_id:required
 } {
+    Get the Display Data of CheckBox Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the Display Data of CheckBox Type
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
@@ -189,7 +189,7 @@ ad_proc as::item_display_cb::set_item_display_type {
     {-order_type "order_of_entry"}
     {-answer_alignment "beside_right"}
 } {
-
+    Set item display type
 } {
     db_transaction {
 	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
@@ -205,7 +205,7 @@ ad_proc as::item_display_cb::set_item_display_type {
 					-choice_label_orientation $label_orientation \
 					-sort_order_type $order_type \
 					-item_answer_alignment $answer_alignment]
-	
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel

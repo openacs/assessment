@@ -11,13 +11,13 @@ When creating an assessment the administrator has a couple of fields to
 determine the look and feel of the assessment along with the option to
 view the responses. This is a list of attributes the administrator can
 edit when creating an assessment. The grouping is based on the UI and
-not on the datamodell. So you should follow this with regards to the
+not on the data model. So you should follow this with regards to the
 UI:
 <ul>
-  <li>Title: Title of the accessment
+  <li>Title: Title of the Assessment
   </li>
-  <li>Anonymous Accessment: boolean (yes/no). This shows whether the
-creator of the accessment will have the possibility to see the personal
+  <li>Anonymous Assessment: boolean (yes/no). This shows whether the
+creator of the assessment will have the possibility to see the personal
 details of the respondee or not. In particular this will exclude the
 user_id from the CSV files. It shall still be possible to see the user
 that have not finished the survey though.
@@ -97,14 +97,14 @@ thank you page context, so we can have a "continue" URL.
     <ul>
       <li>Availability: 2 date widgets (from, and to). This will set the
 time the time the survey will become visible for the respondees. It is
-overridden by the parameter enabled (if a accessment is not enabled, it
+overridden by the parameter enabled (if an assessment is not enabled, it
 will never be visible, regardless of date).
       </li>
-      <li>How often can a accessment be taken: Number of times a survey
+      <li>How often can an assessment be taken: Number of times a survey
 can be taken by a respondee.
       </li>
       <li>How long has a user to pause: Number of hours a respondee has
-to wait before he can take the accessment again.
+to wait before he can take the assessment again.
       </li>
       <li>Answer_time: integer: Time in minutes a respondee has to
 answer a survey.
@@ -136,11 +136,11 @@ select exams and a minimum point number the student has to have
 achieved in that exam.
       </li>
       <li>Bulk upload: file. Upload a CSV file with email addresses to
-allow access to the accessment. Add users to the system if not already
+allow access to the assessment. Add users to the system if not already
 part of it. Notify users via email that they should take the
-accessment. </li>
+assessment. </li>
       <li>Password: short_text. Password that has to be typed in before
-the respondee get's access to the accessment. This should be done by
+the respondee gets access to the assessment. This should be done by
 creating a registered filter that returns a 401 to popup an HTTP auth
 box. look in oacs_dav::authenticate for an example of how to check the
 username/password<br>
@@ -256,7 +256,7 @@ responses</li>
       </li>
       <li>File: file (file for import)
       </li>
-      <li>Download file name: short_text. Filename for the download of
+      <li>Download filename: short_text. Filename for the download of
 the export.
       </li>
     </ul>

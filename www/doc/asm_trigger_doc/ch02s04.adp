@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {4. Branch Triggers}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {4. Branch Triggers}</property>
 <property name="doc(title)">4. Branch Triggers</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch02s03" leftLabel="Prev"
 			title="Chapter 2. User
@@ -13,7 +17,7 @@ Manual"
 form must be checked as branch. Is necessary that at least one
 section is created after the one that is being evaluated.</p><p>The condition field shows the question and its possible answers,
 this means that if a user that respond the assessment choose that
-response the trigger will be activated, and the section secuence
+response the trigger will be activated, and the section sequence
 will change.</p><div class="screenshot"><div class="mediaobject"><img src="resources/branch_trigger.JPG"></div></div><p>After the trigger is defined as branch, the section that will be
 displayed next must be chosen:</p><div class="screenshot"><div class="mediaobject"><img src="resources/select_section.JPG"></div></div>
 </div>

@@ -1,14 +1,18 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Question Catalogue}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Question Catalogue}</property>
 <property name="doc(title)">Question Catalogue</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">
 <strong>Question Catalogue: Summary</strong>:</span></span>
 <p><span class="context">The question catalogue is a central part
 of the assessment system. It deals with the storing of the various
 questions that can be used in a survey. You are able to
 add/edit/delete a question of a certain type to a certain scope.
-Furthermore it allows you to search and browse for questions for
+Furthermore, it allows you to search and browse for questions for
 inclusion in your assessment as well as import and export multiple
 questions using various formats. This concept is new to survey 0.1d
 and changes the design of the survey module considerably. No
@@ -86,7 +90,7 @@ answer.</span></li>
 <span class="context">Calculation:<br>
 This type of question will not be supported. But we should make
 sure we can take care of that type while importing the data.
-Therefore we have to know the values. And while we are at it, we
+Therefore, we have to know the values. And while we are at it, we
 can as well just generate the input form :-).</span><ul>
 <li><span class="context">Formula: string</span></li><li><span class="context">Units</span></li><li><span class="context">Value (in %): integer</span></li><li><span class="context">Required (boolean)</span></li><li><span class="context">Ignore Space (boolean)</span></li><li><span class="context">Ignore spell checking
 (boolean)</span></li><li><span class="context">General Feedback: richtext</span></li>
@@ -119,9 +123,9 @@ shall be matched with this answer. w</span></li>
 </li><li>
 <span class="context">Matching Question:<br>
 Matching questions are useful for matching some items on the left
-with pull down menues on the right hand side of a survey. The
-number of the items is identical to the number of items on the
-right hand side.</span><ul>
+with pull down menus on the right hand side of a survey. The number
+of the items is identical to the number of items on the right hand
+side.</span><ul>
 <li>
 <span class="context">Settings:</span><ul>
 <li><span class="context">Distribution of points: boolean (all or
@@ -210,7 +214,7 @@ shall be remembered and 4 more answerboxes be shown.</span></li>
 </ul>
 </li><li><span class="context">[FE]: Matrix table (blocked
 questions)<br>
-A matric table allows multiple questions with the same answer to be
+A metric table allows multiple questions with the same answer to be
 displayed in one block. At the moment this is done in the section
 setup (if all questions in a section have the same answers they
 would be shown in a matrix). One could think about making this a

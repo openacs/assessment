@@ -34,7 +34,7 @@ template::list::create \
 
 # get the information of all open assessments
 template::multirow create assessments assessment_id title description assessment_url
-db_foreach open_asssessments {} {
+db_foreach open_assessments {} {
     set title [as::assessment::title -title $title]
     if {($start_time eq "" || $start_time <= $cur_time) && ($end_time eq "" || $end_time >= $cur_time)} {
 	if {$password eq ""} {
@@ -63,7 +63,7 @@ template::list::create \
     }
 
 # get the information of all assessments store in the database
-db_multirow -extend { session } sessions answered_asssessments {} {
+db_multirow -extend { session } sessions answered_assessments {} {
     set session [_ assessment.Sessions]
 }
 

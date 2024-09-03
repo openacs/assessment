@@ -107,7 +107,7 @@ ad_proc -callback learning_materials_portlet::portlet_multirow_data -impl assess
 	set node_id [dotlrn_community::get_community_node_id $community_id]
 	set list_of_package_ids [site_node::get_children -node_id $node_id -element package_id -package_key assessment]
 	if {[llength $list_of_package_ids]} {
-	    set package_id_clause "and ass.package_id in ([join $list_of_package_ids ", "])"
+	    set package_id_clause "and ass.package_id in ([ns_dbquotelist $list_of_package_ids])"
 	} else {
 	    return
 	}
@@ -146,7 +146,7 @@ ad_proc -callback learning_materials_portlet::portlet_multirow_admin_data -impl 
     }
     set folder_id_clause ""
     if {[llength $list_of_folder_ids]} {
-	set folder_id_clause "and ci.parent_id in ([join $list_of_folder_ids ", "])"
+	set folder_id_clause "and ci.parent_id in ([ns_dbquotelist $list_of_folder_ids])"
     } else {
 	return
     }

@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Data Modell Overview}</property>
-<property name="doc(title)">Assessment Data Modell Overview</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment Data Model Overview}</property>
+<property name="doc(title)">Assessment Data Model Overview</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>At its core, the Assessment package defines a hierarchical
 container model of a "survey", "questionnaire"
@@ -18,7 +22,7 @@ mostly because these terms are more general and thus suit the
 broader applicability intended for this package.</p>
 <p>As is the custom in the OpenACS framework, all RDBMS tables in
 the package will be prepended with "as_" to prevent
-further prefent naming clashes. Judicious use of namespaces will
+further prevent naming clashes. Judicious use of namespaces will
 also be made in keeping with current OpenACS best practice.</p>
 <p>Several of the Metadata entities have direct counterparts in the
 Data-related partition of the data model. Some standards (notably
@@ -41,7 +45,7 @@ by the fact that the CR has become "the Right Way" to
 build OpenACS systems. Note that one implication of this is that we
 can&#39;t use a couple column names in our derived tables because
 of naming clashes with columns in cr_items and cr_revisions: title
-and description. Furthermore we can handle <a href="versioning">versioning</a> and internationalization through
+and description. Furthermore, we can handle <a href="versioning">versioning</a> and internationalization through
 the CR.</p>
 <h2>Synopsis of The Data Model</h2>
 <p>Here&#39;s a detailed summary view of the entities in the
@@ -84,5 +88,5 @@ activities that change that status as the user users the
 system</li>
 </ul>
 <center>
-<a href="http://openacs.org/storage/download/assessment.graffle?version_id=187542"></a><p><img alt="Data Modell Graphic" src="images/assessment.jpg" style="width: 1076px; height: 1442px;"></p>
+<a href="http://openacs.org/storage/download/assessment.graffle?version_id=187542"></a><p><img alt="Data Model Graphic" src="images/assessment.jpg" style="width: 1076px; height: 1442px;"></p>
 </center>

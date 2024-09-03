@@ -1,6 +1,6 @@
 ad_page_contract {
 
-    This page allows to display an assessment with sections and items
+    This page allows one to display an assessment with sections and items
 
     @author Eduardo Pérez Ureta (eperez@it.uc3m.es)
     @author Timo Hentschel (timo@timohentschel.de)
@@ -360,7 +360,7 @@ foreach one_item $item_list {
             if {$presentation_type in {rbo sbo cbo}} {
                 lappend validate_list "response_to_item.$as_item_id {\$\{response_to_item.$as_item_id\} ne \"\" || \[ns_queryget response_to_item.${as_item_id}\.text\] ne \"\"} \"\[_ assessment.form_element_required\]\""
             } else {
-                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
+                lappend validate_list "response_to_item.$as_item_id {\[info exists response_to_item($as_item_id)\] && \$response_to_item($as_item_id) ne \"\"} \"\[_ assessment.form_element_required\]\""
             }
             incr required_count
         }
@@ -393,9 +393,9 @@ foreach one_item $item_list {
         if {$required_p == "t"} {
             # make sure that mandatory items are answered
             if {$presentation_type in {rbo sbo cbo}} {
-                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\] || \[exists_and_not_null response_to_item($as_item_id)\.text\]} \"\[_ assessment.form_element_required\]\""
+                lappend validate_list "response_to_item.$as_item_id {\[info exists response_to_item($as_item_id)\] && \$response_to_item($as_item_id) ne \"\" || \[info exists response_to_item($as_item_id)\.text\] && \$response_to_item($as_item_id)\.text ne \"\"} \"\[_ assessment.form_element_required\]\""
             } else {
-                lappend validate_list "response_to_item.$as_item_id {\[exists_and_not_null response_to_item($as_item_id)\]} \"\[_ assessment.form_element_required\]\""
+                lappend validate_list "response_to_item.$as_item_id {\[info exists response_to_item($as_item_id)\] && \$response_to_item($as_item_id) ne \"\"} \"\[_ assessment.form_element_required\]\""
             }
             incr required_count
         }
@@ -534,7 +534,7 @@ if {$display(submit_answer_p) != "t"} {
 
     set after_submit "{
         \# NOTE the code just incrementes section order so when the section order
-        \# is greate than the number of items in the list of sections
+        \# is greater than the number of items in the list of sections
         \# we know we are done and should finish the assessment
         if { \$new_section_order ne \"\" && \$new_section_order <= \[llength \$section_list\]} {
             # go to next section

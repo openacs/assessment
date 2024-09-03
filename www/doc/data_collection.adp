@@ -1,11 +1,15 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Data Collection}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Data Collection}</property>
 <property name="doc(title)">Data Collection</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>The schema for the entities that actually collect, store and
 retrieve Assessment data parallels the hierarchical structure of
-the <a href="data-modell">Metadata Data Model</a>. In the
+the <a href="data-model">Metadata Data Model</a>. In the
 antecedent "complex survey" and "questionnaire"
 systems, this schema was simple two-level structure:</p>
 <ul>
@@ -70,7 +74,7 @@ comments attached to a given revision of a data element. The
 integration between Assessment and GC thus will need to be at the
 UI level, not the data model level. Using GC will support post-test
 "discussions" between student and teacher, for example,
-about inidividual items, sections or sessions.</li><li>
+about individual items, sections or sessions.</li><li>
 <strong>Scoring-grading</strong>: This has been a rather
 controversial area because of the wide range of needs for derived
 calculations/evaluations that different applications need to
@@ -250,8 +254,8 @@ OpenACS</li>
 </ul>
 <ul><li>
 <span style="font-weight: bold;">Signing of content</span>
-allows one to verify that the data submitted is actually from the
-person it is pretended to be from. This assumes an public key
+allows to verify that the data submitted is actually from the
+person it is pretended to be from. This assumes a public key
 environment where the public key is stored along with the user
 information (e.g. with the users table) and the data stored in
 as_item_data is additionally stored in a signed version (signed

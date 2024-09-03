@@ -35,10 +35,10 @@ ad_proc -public as::assessment::new {
     {-package_id ""}
     {-type ""}
 } {
+    New assessment to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-07-26
-
-    New assessment to the database
 } {
     if { $package_id eq "" } { set package_id [ad_conn package_id] }
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -121,10 +121,10 @@ ad_proc -public as::assessment::edit {
     {-section_navigation ""}
     {-type ""}
 } {
+    Edit assessment in the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-10-26
-
-    Edit assessment in the database
 } {
     set assessment_rev_id [db_string assessment_revision {}]
 
@@ -165,13 +165,14 @@ ad_proc -public as::assessment::edit {
 ad_proc -public as::assessment::data {
     {-assessment_id:required}
 } {
-    @author Timo Hentschel (timo@timohentschel.de)
-    @creation-date 2004-10-25
-
     Get all assessment info
 
-    creates a Tcl array variable named "assessment_data" in the caller's environment,
-    which contains key/value pairs for all properties of the requested assessment.
+    Creates a Tcl array variable named "assessment_data" in the
+    caller's environment, which contains key/value pairs for all
+    properties of the requested assessment.
+
+    @author Timo Hentschel (timo@timohentschel.de)
+    @creation-date 2004-10-25
 } {
     upvar assessment_data assessment_data
 
@@ -194,10 +195,10 @@ ad_proc -public as::assessment::data {
 ad_proc -public as::assessment::new_revision {
     {-assessment_id:required}
 } {
+    Creates new revision of an assessment with all sections
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-02
-
-    Creates new revision of an assessment with all sections
 } {
     data -assessment_id $assessment_id
     array set a [array get assessment_data]
@@ -246,10 +247,10 @@ ad_proc -public as::assessment::copy {
     {-folder_id ""}
     {-new_title ""}
 } {
+    Copies an assessment with all sections and items
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-23
-
-    Copies an assessment with all sections and items
 } {
     if {$folder_id eq ""} {
         set package_id [ad_conn package_id]
@@ -310,10 +311,10 @@ ad_proc as::assessment::copy_sections {
     {-assessment_id:required}
     {-new_assessment_id:required}
 } {
+    Copies all sections from assessment_id to new_assessment_id
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-11-07
-
-    Copies all sections from assessment_id to new_assessment_id
 } {
     db_dml copy_sections {}
 }
@@ -322,10 +323,10 @@ ad_proc as::assessment::copy_categories {
     {-from_id:required}
     {-to_id:required}
 } {
+    Copies all categories from one object to new object
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copies all categories from one object to new object
 } {
     db_dml copy_categories {}
 }
@@ -336,11 +337,11 @@ ad_proc as::assessment::sections {
     {-sort_order_type ""}
     {-random_p ""}
 } {
+    Returns all sections of an assessment in the correct order.  May
+    vary from session to session.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
-
-    Returns all sections of an assessment in the correct order.
-    may vary from session to session
 } {
     set section_list [db_list get_sorted_sections {}]
 
@@ -379,10 +380,10 @@ ad_proc -public as::assessment::calculate {
     -assessment_id:required
     -session_id:required
 } {
+    Award points to this assessment if all sections are filled out.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-14
-
-    Award points to this assessment if all sections are filled out
 } {
     if {[db_string check_sections_calculated {}] > 0} {
         return
@@ -404,10 +405,10 @@ ad_proc -public as::assessment::check_session_conditions {
     -subject_id:required
     -password:required
 } {
+    Checks if subject is allowed to take the assessment.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-22
-
-    Checks if subject is allowed to take the assessment
 } {
     db_1row assessment_data {}
     db_1row total_tries {}
@@ -450,10 +451,10 @@ ad_proc as::assessment::pretty_time {
     {-seconds}
     {-hours:boolean}
 } {
+    Returns a pretty string of min:sec
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
-
-    Returns a pretty string of min:sec
 } {
     if {$seconds eq "0" || $seconds eq ""} {
         return $seconds
@@ -478,10 +479,10 @@ ad_proc as::assessment::pretty_time {
 ad_proc as::assessment::pretty_time_hours_minutes {
     {-seconds}
 } {
+    Returns a pretty string of min:sec
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-14
-
-    Returns a pretty string of min:sec
 } {
     if {$seconds eq "0" || $seconds eq ""} {
         return $seconds
@@ -501,16 +502,26 @@ ad_proc as::assessment::pretty_time_hours_minutes {
     return $time
 }
 
+ad_proc as::assessment::folder_id_not_cached {
+    -package_id:required
+} {
+    Returns the folder_id of the package instance. Not cached.
+} {
+    return [db_string get_folder_id {
+        select folder_id from cr_folders where package_id = :package_id
+    }]
+}
+
 ad_proc as::assessment::folder_id {
     -package_id:required
 } {
+    Returns the folder_id of the package instance. Cached
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-06
-
-    Returns the folder_id of the package instance. Cached
 } {
     ns_log notice "assessment folder id  package_id = '${package_id}'"
-    return [content::folder::get_folder_from_package -package_id $package_id]
+    return [util_memoize [list as::assessment::folder_id_not_cached -package_id $package_id]]
 }
 
 ad_proc as::assessment::unique_name {
@@ -518,10 +529,11 @@ ad_proc as::assessment::unique_name {
     {-new_p 1}
     {-item_id ""}
 } {
+    Checks if a name string is unique or empty, excluding a given
+    item.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-05
-
-    Checks if a name string is unique or empty, excluding a given item
 } {
     if {$new_p && $name ne ""} {
         if {$item_id eq ""} {
@@ -539,10 +551,10 @@ ad_proc as::assessment::unique_name {
 ad_proc as::assessment::check_html_options {
     -options:required
 } {
+    Checks if list contains only key value pairs
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-11
-
-    Checks if list contains only key value pairs
 } {
     if {[llength $options] % 2 == 0} {
         return 1
@@ -557,10 +569,10 @@ ad_proc as::assessment::display_content {
     -filename:required
     {-title ""}
 } {
+    Returns a html snippet to display a content item (i.e. image)
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-06
-
-    Returns a html snippet to display a content item (i.e. image)
 } {
     if {$content_id eq ""} {
         return $title
@@ -575,10 +587,10 @@ ad_proc as::assessment::display_content {
 ad_proc -private as::assessment::quote_export {
     -text:required
 } {
+    Quotes a string for csv export
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-26
-
-    Quotes a string for csv export
 } {
     regsub -all {;} $text {,,} text
     regsub -all "\n" $text {} text
@@ -587,10 +599,10 @@ ad_proc -private as::assessment::quote_export {
 }
 
 ad_proc -private as::assessment::compare_numbers {a b} {
+    Compares the first part of a pair of strings as numbers
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-01-18
-
-    Compares the first part of a pair of strings as numbers
 } {
     set a0 [expr double([lindex $a 0 0])]
     set b0 [expr double([lindex $b 0 0])]

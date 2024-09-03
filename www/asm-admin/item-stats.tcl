@@ -46,7 +46,7 @@ if { [info exists catalog_section_id] && $catalog_section_id ne "" } {
 permission::require_permission -object_id $package_id -privilege create
 template::multirow create items item_id revision_id title data_type display_type stats section_id section_title
 if {[info exists assessment_id_list]} {
-    set assessment_id_list [db_list get_assessment_id_list "select distinct item_id from cr_revisions where revision_id in ([template::util::tcl_to_sql_list [split $assessment_id_list]])"]
+    set assessment_id_list [db_list get_assessment_id_list "select distinct item_id from cr_revisions where revision_id in ([ns_dbquotelist [split $assessment_id_list]])"]
 }
 if {![info exists assessment_id] && [info exists assessment_id_list] && [llength $assessment_id_list]} {
     set assessment_id [lindex $assessment_id_list 0]
@@ -63,7 +63,7 @@ db_multirow sections get_sections "
     and cr.revision_id = s.section_id
     and s.section_id = asm.section_id
     and asm.assessment_id = ai.latest_revision
-    and ai.item_id in ([template::util::tcl_to_sql_list $assessment_id_list])
+    and ai.item_id in ([ns_dbquotelist $assessment_id_list])
     order by asm.sort_order
     "
 template::multirow foreach sections {
@@ -101,7 +101,7 @@ template::multirow foreach sections {
 
             set item_choices_limit_session ""
             if { [info exists limit_to_section_clause] && $limit_to_section_clause ne "" } { set item_choices_limit_session "and d.session_id in $limit_to_section_clause" }
-            if {([info exists session_id_list] && $session_id_list ne "")} {set item_choices_limit_session " and d.session_id in ([template::util::tcl_to_sql_list $session_id_list]) " }
+            if {([info exists session_id_list] && $session_id_list ne "")} {set item_choices_limit_session " and d.session_id in ([ns_dbquotelist $session_id_list]) " }
             set item_choices_query "select r.title as choice_title, c.choice_id, c.correct_answer_p,
                 (select count(*)
                  from as_item_data_choices
@@ -131,10 +131,10 @@ template::multirow foreach sections {
                 incr total_choices
                 lappend choices [list choice_title $choice_title \
                              choice_responses $choice_responses \
-                             correct_answer_p [template::util::is_true $correct_answer_p]]
+                             correct_answer_p [string is true -strict $correct_answer_p]]
                 incr total_responses $choice_responses
                 # Review the computation of correct percentage
-                if { [template::util::is_true $correct_answer_p] } {
+                if { [string is true -strict $correct_answer_p] } {
                     incr total_correct $choice_responses
                 }
             }
@@ -143,7 +143,7 @@ template::multirow foreach sections {
             if { [info exists limit_to_section_clause] && $limit_to_section_clause ne "" } { set total_responses_limit_session "and s.session_id in $limit_to_section_clause" }
 
             if {([info exists session_id_list] && $session_id_list ne "")} {
-                set total_responses_limit_session " and s.session_id in ([template::util::tcl_to_sql_list $session_id_list]) "
+                set total_responses_limit_session " and s.session_id in ([ns_dbquotelist $session_id_list]) "
             }
             set total_responses [db_string count_responses "select count(*) from (select distinct s.session_id from as_sessions s, as_item_data, cr_revisions cr1, cr_revisions cr2 where cr1.revision_id=:revision_id and cr1.item_id=cr2.item_id and as_item_id = cr2.revision_id and s.session_id = as_item_data.session_id and s.completed_datetime is not null $total_responses_limit_session ) d"]
 

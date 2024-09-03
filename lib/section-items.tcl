@@ -1,3 +1,10 @@
+ad_include_contract {
+    Section Items
+} {
+    assessment_id:object_type(content_item)
+    section_id:object_type(as_sections)
+}
+
 set package_url [ad_conn package_url]
 as::assessment::data -assessment_id $assessment_id
 

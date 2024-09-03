@@ -1,18 +1,22 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Creation}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment Creation}</property>
 <property name="doc(title)">Assessment Creation</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">When
 creating an assessment the administrator has a couple of fields to
 determine the look and feel of the assessment along with the option
 to view the responses. This is a list of attributes the
 administrator can edit when creating an assessment. The grouping is
-based on the UI and not on the datamodell. So you should follow
+based on the UI and not on the data model. So you should follow
 this with regards to the UI:</span></span>
 <ul>
 <li><span class="context">Title: Title of the
-accessment</span></li><li><span class="context">Anonymous Accessment: boolean (yes/no).
-This shows whether the creator of the accessment will have the
+Assessment</span></li><li><span class="context">Anonymous Assessment: boolean (yes/no).
+This shows whether the creator of the assessment will have the
 possibility to see the personal details of the respondee or not. In
 particular this will exclude the user_id from the CSV files. It
 shall still be possible to see the user that have not finished the
@@ -29,10 +33,10 @@ possible for them to go back and choose another answer to that
 question.</span></li><li><span class="context">Sectioned</span></li>
 </ul>
 </li><li><span class="context">Reuse responses: boolean (yes/no). If
-yes, the system will look for previous responses to the
-questions and prefill the last answer the respondee has given in
-the assessment form of the respondee. <em>It is debatable whether
-this function should be per assessment and/or per
+yes, the system will look for previous responses to the questions
+and prefill the last answer the respondee has given in the
+assessment form of the respondee. <em>It is debatable whether this
+function should be per assessment and/or per
 question</em>
 </span></li><li><span class="context">Navigation of sections: select (default
 path, randomized, rule-based branching, maybe looping in the
@@ -66,10 +70,10 @@ URL.</li>
 <ul>
 <li>Availability: 2 date widgets (from, and to). This will set the
 time the time the survey will become visible for the respondees. It
-is overridden by the parameter enabled (if a accessment is not
-enabled, it will never be visible, regardless of date).</li><li>How often can a accessment be taken: Number of times a survey
+is overridden by the parameter enabled (if an assessment is not
+enabled, it will never be visible, regardless of date).</li><li>How often can an assessment be taken: Number of times a survey
 can be taken by a respondee.</li><li>How long has a user to pause: Number of hours a respondee has
-to wait before he can take the accessment again.</li><li>Answer_time: integer: Time in minutes a respondee has to answer
+to wait before he can take the assessment again.</li><li>Answer_time: integer: Time in minutes a respondee has to answer
 a survey.</li>
 </ul>
 </li><li>Show comments to the user
@@ -87,13 +91,13 @@ Permissions are (take_survey, administer_survey)</li><li>Grant permission on sta
 defined. Otherwise we will write a small page, that allows the
 admin to select exams and a minimum point number the student has to
 have achieved in that exam.</li><li>Bulk upload: file. Upload a CSV file with email addresses to
-allow access to the accessment. Add users to the system if not
+allow access to the assessment. Add users to the system if not
 already part of it. Notify users via email that they should take
-the accessment.</li><li>Password: short_text. Password that has to be typed in before
-the respondee get&#39;s access to the accessment. This should be
-done by creating a registered filter that returns a 401 to popup an
-HTTP auth box. look in oacs_dav::authenticate for an example of how
-to check the username/password<br>
+the assessment.</li><li>Password: short_text. Password that has to be typed in before
+the respondee gets access to the assessment. This should be done by
+creating a registered filter that returns a 401 to popup an HTTP
+auth box. look in oacs_dav::authenticate for an example of how to
+check the username/password<br>
 </li><li>IP Netmask. short_text. Netmask that will be matched against
 the IP-Address of the respondee. If it does not match, the user
 will not be given access. Again this should be handled by the
@@ -155,8 +159,8 @@ responses</li><li>Public - Everyone can see the responses<br>
 </ul>
 </li><li>Survey Import / Export
 <ul>
-<li>Type: (select box): CSV, WebCT, SCORM, Blackboard, IMS</li><li>File: file (file for import)</li><li>Download file name: short_text. Filename for the download of
-the export.</li>
+<li>Type: (select box): CSV, WebCT, SCORM, Blackboard, IMS</li><li>File: file (file for import)</li><li>Download filename: short_text. Filename for the download of the
+export.</li>
 </ul>
 </li><li>Delete assessment with / without responses</li><li>Assign category to the assessment<br>
 </li><li>Link to a mapping and browsing page to link sections to this

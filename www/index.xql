@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="answered_asssessments">
+<fullquery name="answered_assessments">
 	<querytext>
 	select cr.item_id as assessment_id, cr.title, cr.description
 	from as_assessments a, cr_revisions cr, cr_items ci

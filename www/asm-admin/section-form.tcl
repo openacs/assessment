@@ -6,8 +6,8 @@ ad_page_contract {
 } {
     assessment_id:naturalnum,notnull
     section_id:naturalnum,optional
-    {after:integer,optional 1}
-    {__new_p:boolean 0}
+    {after:integer,,notnull,optional 1}
+    {__new_p:boolean,notnull 0}
 } -properties {
     context:onevalue
     page_title:onevalue

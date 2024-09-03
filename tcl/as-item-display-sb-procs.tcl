@@ -14,10 +14,10 @@ ad_proc -public as::item_display_sb::new {
     {-item_answer_alignment ""}
     {-prepend_empty_p "t"}
 } {
+    New Item Display SelectBox Type to the database.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-08
-
-    New Item Display SelectBox Type to the database.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -33,7 +33,7 @@ ad_proc -public as::item_display_sb::new {
 						[list choice_label_orientation $choice_label_orientation] \
 						[list sort_order_type $sort_order_type] \
 						[list item_answer_alignment $item_answer_alignment] \
-						[list prepend_empty_p $prepend_empty_p] ] ]	
+						[list prepend_empty_p $prepend_empty_p] ] ]
     }
 
     return $as_item_display_sb_id
@@ -48,10 +48,10 @@ ad_proc -public as::item_display_sb::edit {
     {-item_answer_alignment ""}
     {-prepend_empty_p "f"}
 } {
+    Edit Item Display SelectBox Type to the database.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-08
-
-    Edit Item Display SelectBox Type to the database.
 } {
     # Update as_item_display_sb in the CR (and as_item_display_sb table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -64,7 +64,7 @@ ad_proc -public as::item_display_sb::edit {
 						      [list choice_label_orientation $choice_label_orientation] \
 						      [list sort_order_type $sort_order_type] \
 						      [list item_answer_alignment $item_answer_alignment] \
-						      [list prepend_empty_p $prepend_empty_p] ] ]	
+						      [list prepend_empty_p $prepend_empty_p] ] ]
     }
 
     return $new_item_display_id
@@ -73,10 +73,10 @@ ad_proc -public as::item_display_sb::edit {
 ad_proc -public as::item_display_sb::copy {
     -type_id:required
 } {
+    Copy an Item Display SelectBox Type.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Item Display SelectBox Type.
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -91,7 +91,7 @@ ad_proc -public as::item_display_sb::copy {
 				     -sort_order_type $sort_order_type \
 				     -item_answer_alignment $item_answer_alignment]
     }
-    
+
     return $new_item_display_id
 }
 
@@ -108,10 +108,10 @@ ad_proc -public as::item_display_sb::render {
     {-data ""}
     -item:required
 } {
+    Render an Item Display SelectBox Type.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Item Display SelectBox Type.
 } {
     if {$required_p eq ""} {
 	set required_p f
@@ -137,7 +137,7 @@ ad_proc -public as::item_display_sb::render {
 	    set data [util::randomize_list $data]
 	}
     }
-    
+
     if { $type(prepend_empty_p) == "t" } {
 	set data [linsert $data 0 [list "[_ assessment.Please_select_one]" ""]]
     }
@@ -156,22 +156,22 @@ ad_proc -public as::item_display_sb::render {
         set widget select
         set datatype text
     }
-        
+
     set param_list [list [list label \$title] [list help_text \$subtext] [list values \$default_value] [list options \$data] [list html \$type(html_display_options)]]
     set element_params [concat [list "$element\:${datatype}($widget)$optional"] $param_list]
 
     ad_form -extend -name $form -form [list $element_params]
 
-    return [expr {$allow_other_p ? "sbo" : "sb"}]    
+    return [expr {$allow_other_p ? "sbo" : "sb"}]
 }
 
 ad_proc -public as::item_display_sb::data {
     -type_id:required
 } {
+    Get the cached Display Data of SelectBox Type.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the cached Display Data of SelectBox Type.
 } {
     return [util_memoize [list as::item_display_sb::data_not_cached -type_id $type_id]]
 }
@@ -179,10 +179,10 @@ ad_proc -public as::item_display_sb::data {
 ad_proc -private as::item_display_sb::data_not_cached {
     -type_id:required
 } {
+    Get the Display Data of SelectBox Type.
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the Display Data of SelectBox Type.
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]
@@ -209,7 +209,7 @@ ad_proc -private as::item_display_sb::set_item_display_type {
 	    set as_item_display_id [as::item_display_sb::new \
 					-html_display_options $html_options \
 					-sort_order_type $order_type]
-	
+
 	    if {![info exists object_type]} {
 		# first item display mapped
 		as::item_rels::new -item_rev_id $as_item_id -target_rev_id $as_item_display_id -type as_item_display_rel

@@ -16,12 +16,11 @@ ad_proc -public as::qti::register {
 } {
 
     if {[regexp -nocase -- {\.zip$} $tmp_dir]} {
-        # Generate a random directory name
-        set tmpdirectory [ad_tmpnam]
-        # Create a temporary directory
-        file mkdir $tmpdirectory
+        # Create a random temporary directory
+        set tmpdirectory [ad_mktmpdir]
+
         # UNZIP the zip file in the temporary directory
-        catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+        util::unzip -source ${tmp_dir} -destination $tmpdirectory
 
         set url_assessment {}
         # Read the content of the temporary directory
@@ -48,12 +47,11 @@ ad_proc -public as::qti::register_object_id {
 } {
 
     if {[regexp -nocase -- {\.zip$} $tmp_dir]} {
-        # Generate a random directory name
-        set tmpdirectory [ad_tmpnam]
-        # Create a temporary directory
-        file mkdir $tmpdirectory
+        # Create a random temporary directory
+        set tmpdirectory [ad_mktmpdir]
+
         # UNZIP the zip file in the temporary directory
-        catch { exec unzip ${tmp_dir} -d $tmpdirectory } outMsg
+        util::unzip -source ${tmp_dir} -destination $tmpdirectory
 
         set assessment_id {}
         # Read the content of the temporary directory
@@ -124,16 +122,16 @@ ad_proc -private as::qti::mattext_gethtml { mattextNode } { Get the HTML of a ma
     }
 }
 
-ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI file } {
+ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse an XML QTI file } {
     set as_assessments__assessment_id {}
 
     # Parser
     # XML => DOM document
-    dom parse [::tdom::xmlReadFile $xmlfile] document
+    dom parse -- [::tdom::xmlReadFile $xmlfile] document
     # DOM document => DOM root
     $document documentElement root
     # XPath v1.0
-    # get all <questestinterop> elements of a XML instance file
+    # get all <questestinterop> elements of an XML instance file
     set questestinteropNodes [$root selectNodes {/questestinterop}]
     foreach questestinterop $questestinteropNodes {
         # Looks for assessments
@@ -453,7 +451,7 @@ ad_proc -public as::qti::parse_qti_xml { {-prop ""} xmlfile } { Parse a XML QTI 
 return $as_assessments__assessment_id
 }
 
-ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items from a XML QTI file } {
+ad_proc -private as::qti::parse_item {{-prop ""} qtiNode basepath} { Parse items from an XML QTI file } {
 
     #get all <item> elements
     set itemNodes [$qtiNode selectNodes {item}]

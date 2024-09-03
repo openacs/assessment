@@ -1,175 +1,4 @@
--- Assessment Package
--- @author annyflores@viaro.net
--- @creation-date 2005-01-06
-
-
-------------------------------------------------
--- 	table as_actions
-------------------------------------------------
-
-
-create table as_actions(
-	action_id	integer
-			constraint as_action_action_id_fk
-			references acs_objects(object_id)
-			on delete cascade
-			constraint as_actions_pk
-			primary key,
-	name		varchar(200),
-	description	varchar(200),
-	tcl_code	text
-			constraint as_actions_tcl_code_nn not null
-);
-
-------------------------------------------------
--- 	table as_action_map
-------------------------------------------------
-
-create table as_action_map (
-	inter_item_check_id	integer,
-	action_id		integer,
-	order_by		integer,
-	user_message		varchar(200),
-	action_perform		varchar(2)
-);
-
-
-------------------------------------------------
--- 	table as_action_params
-------------------------------------------------
-
-create table as_action_params (
-	parameter_id	integer 
-			constraint as_action_params_pk
-			primary key,
-	action_id	integer,
-	type		varchar(1) not null,
-	varname		varchar(50) not null,
-	description	varchar(200),
-	query		text
-);
-
-
-
-------------------------------------------------
--- 	table as_param_map
-------------------------------------------------
-
-create table as_param_map (
-	parameter_id	integer,
-	value		integer,
-
-	item_id		integer,
-	inter_item_check_id 	integer
-	
-);
-
-
-
------------------------------------------------
--- 	table as_actions_log
-------------------------------------------------
-
-create table as_actions_log (
-	action_log_id		integer
-				constraint as_actions_log_pk 
-				primary key,
-	inter_item_check_id	integer not null,
-	action_id		integer not null,
-	finally_executed_by	integer,
-	date_requested		date,
-	date_processed		date,
-	approved_p		boolean not null,
-	failed_p		boolean not null,
-	error_txt		varchar,
-	session_id		integer
-	
-
-);
-
-create sequence as_actions_log_action_log_id;	
-create sequence as_action_params_parameter_id;
-
-select acs_object_type__create_type (
-	'as_action',
-	'as_action',
-	'as_actions',
-	'acs_object',
-	'as_actions',
-	'action_id',
-	null,
-	'f',
-	null,
-	null -- name method
-);
-
-
-
-
-
--- added
-select define_function_args('as_action__new','action_id,name,description,tcl_code,context_id,creation_user,package_id');
-
---
--- procedure as_action__new/7
---
-CREATE OR REPLACE FUNCTION as_action__new(
-   new__action_id integer,
-   new__name varchar,
-   new__description varchar,
-   new__tcl_code text,
-   new__context_id integer,
-   new__creation_user integer,
-   new__package_id integer
-) RETURNS integer AS $$
-DECLARE 
-	v_action_id	     integer;
-BEGIN
-	v_action_id := acs_object__new (
-		new__action_id,
-		'as_action',
-		now(),
-		new__creation_user,
-		null,
-		new__package_id,
-		't'
-	);
-	insert into as_actions 
-	(action_id,name,description,tcl_code)
-        values (v_action_id,new__name,new__description,new__tcl_code);
-
-        return v_action_id;
-END;
-$$ LANGUAGE plpgsql;
-
-
-select define_function_args('as_action__del','action_id');
-
-
-
---
--- procedure as_action__del/1
---
-CREATE OR REPLACE FUNCTION as_action__del(
-   del__action_id integer
-) RETURNS integer AS $$
-DECLARE 
-BEGIN
-	
-		
-	delete from as_action_params where action_id=del__action_id;
-	
-	delete from as_actions where action_id = del__action_id;
-
-        PERFORM acs_object__delete (del__action_id);	
-	return del__action_id;	
-
-END;
-$$ LANGUAGE plpgsql;	
-	
-	
--- added
-select define_function_args('as_action__default_actions','context_id,creation_user,package_id');
+begin;
 
 --
 -- procedure as_action__default_actions/3
@@ -179,7 +8,7 @@ CREATE OR REPLACE FUNCTION as_action__default_actions(
    new__creation_user integer,
    new__package_id integer
 ) RETURNS integer AS $$
-DECLARE 
+DECLARE
 	v_action_id		integer;
 	v_parameter_id		integer;
 BEGIN
@@ -187,12 +16,12 @@ BEGIN
 		null,
 		'Register User',
 		'Register new users',
-		'set password [ad_generate_random_string] 
+		'set password [ad_generate_random_string]
 db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
 set admin_user_id [as::actions::get_admin_user_id]
-set administration_name [db_string admin_name "select first_names || '' '' || last_name from 
+set administration_name [db_string admin_name "select first_names || '' '' || last_name from
 persons where person_id = :admin_user_id"]
 set system_name [ad_system_name]
 set system_url [parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""].
@@ -242,7 +71,7 @@ v_action_id:= as_action__new (
 	'set user_id [ad_conn user_id]
 if { [info exists subject_id] && $subject_id ne "" } {
 	set user_id $subject_id
-} 
+}
 dotlrn_privacy::set_user_guest_p -user_id $user_id -value "t"
 dotlrn::user_add -can_browse  -user_id $user_id
 dotlrn_community::add_user_to_community -community_id $community_id -user_id $user_id
@@ -280,4 +109,13 @@ insert into as_action_params (parameter_id, action_id,type, varname, description
 
 	return v_action_id;
 END; $$ language 'plpgsql';
+
+-- update entries containing deprecated code
+update as_actions set
+ tcl_code = replace(tcl_code, '[exists_and_not_null subject_id]', '[info exists subject_id] && $subject_id ne ""');
+
+update as_actions set
+ tcl_code = replace(tcl_code, '[ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""]', '[parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""]');
+
+end;
 

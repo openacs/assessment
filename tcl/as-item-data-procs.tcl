@@ -25,10 +25,10 @@ ad_proc -public as::item_data::new {
     {-points ""}
     {-package_id ""}
 } {
+    New as_item_data to the database
+
     @author Eduardo Perez (eperez@it.uc3m.es)
     @creation-date 2004-09-12
-
-    New as_item_data to the database
 } {
     if {$package_id eq ""} {
 	set package_id [ad_conn package_id]
@@ -98,10 +98,10 @@ ad_proc -public as::item_data::get {
     {-session_id ""}
     {-section_id ""}
 } {
+    Get as_item_data from the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-24
-
-    Get as_item_data from the database
 } {
     if {$session_id eq ""} {
 	set last_sessions [db_list_of_lists last_sessions {}]
@@ -112,7 +112,20 @@ ad_proc -public as::item_data::get {
     if {$session_id ne "" && [db_0or1row response {} -column_array response]} {
 	# response found in session
 	set item_data_id $response(item_data_id)
-	set response(choice_answer) [db_list mc_response {}]
+	set response(choice_answer) [db_list mc_response {
+            select d.item_data_id, d.boolean_answer, d.clob_answer, d.numeric_answer,
+                   d.integer_answer, d.text_answer, d.timestamp_answer, d.content_answer,
+                   d.points
+            from as_session_item_map m, as_item_data d
+            where d.session_id = :session_id
+            and d.subject_id = :subject_id
+            and d.as_item_id = :as_item_id
+            and m.session_id = d.session_id
+            and m.item_data_id = d.item_data_id
+
+            order by d.item_data_id desc
+            fetch first 1 rows only
+        }]
 	return [array get response]
     } else {
 	# no response given in that session

@@ -67,7 +67,7 @@
 	<querytext>
  	  select parties.email
             from parties
-            where parties.party_id in ([template::util::tcl_to_sql_list $user_ids])
+            where parties.party_id in ([ns_dbquotelist $user_ids])
 	</querytext>
     </partialquery>    
 

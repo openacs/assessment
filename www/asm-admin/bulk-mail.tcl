@@ -30,7 +30,12 @@ append users_list ")"
 
 set query "select email from cc_users where object_id in $users_list"
 
-set spam_name [bulk_mail::parameter -parameter PrettyName -default [_ assessment.Spam_]]
+
+set spam_name [parameter::get \
+                   -localize \
+                   -package_id [bulk_mail::package_id] \
+                   -parameter pretty_name \
+                   -default [_ assessment.Spam_]]
 
 set sender_id [ad_conn user_id]
 set context_bar ""

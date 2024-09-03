@@ -2,9 +2,9 @@
 
 ad_library {
     Assessment Package callbacks library
-    
+
     Procedures that deal with installing.
-    
+
     @creation-date 2004-09-20
     @author eperez@it.uc3m.es, nperper@it.uc3m.es
 }
@@ -12,10 +12,10 @@ ad_library {
 namespace eval as::install {}
 
 
-ad_proc -public as::install::after_install {  
-} { 
+ad_proc -public as::install::after_install {
+} {
     Create content types and implementations.
-} { 
+} {
 
     # Create implementation for notifications of type "inter_item"
     inter_item_checks::apm_callback::package_install
@@ -27,8 +27,8 @@ ad_proc -public as::install::after_install {
     as::install::notifications
 }
 
-ad_proc -public as::install::assessment_create_install {  
-} { 
+ad_proc -public as::install::assessment_create_install {
+} {
     Creates the content type and adds in attributes.
 } {
 
@@ -37,7 +37,7 @@ ad_proc -public as::install::assessment_create_install {
     if {$value eq ""} {
         apm_parameter_register "AsmForRegisterId" "Assessment used on the registration process." "acs-subsite" "0" "number" "user-login"
     }
-    
+
     content::type::new \
         -content_type {as_item_choices} \
         -supertype {content_revision} \
@@ -356,7 +356,7 @@ ad_proc -public as::install::assessment_create_install {
         -pretty_name {Item Answer Alignment} \
         -column_spec {varchar(20)}
 
-    # Item type multiple choice 
+    # Item type multiple choice
     content::type::attribute::new \
         -content_type {as_item_type_mc} \
         -attribute_name {increasing_p}  \
@@ -1055,7 +1055,7 @@ ad_proc -public as::install::assessment_create_install {
         -pretty_name {Points} \
         -column_spec {float}
 
-    #File Upload Ansers
+    #File Upload Answers
     content::type::new \
         -content_type {as_item_type_fu} \
         -supertype {content_revision} \
@@ -1377,7 +1377,6 @@ ad_proc -public as::install::after_upgrade {
                     -pretty_name {Item Field Name} \
                     -column_spec {varchar(500)}
             }
-            
             0.11 0.12 {
                 #File Upload new type
                 content::type::new \
@@ -1413,10 +1412,10 @@ ad_proc -public as::install::after_upgrade {
                     -datatype {string} \
                     -pretty_name {Box Orientation} \
                     -column_spec {varchar(20)}
-                
-                db_foreach packages { select package_id from apm_packages where package_key = 'assessment'} { 
+
+                db_foreach packages { select package_id from apm_packages where package_key = 'assessment'} {
                     set folder_id [as::assessment::folder_id -package_id $package_id]
-                    
+
                     # File Upload registration
                     content::folder::register_content_type \
                         -folder_id $folder_id \
@@ -1427,7 +1426,7 @@ ad_proc -public as::install::after_upgrade {
                         -content_type {as_item_display_f} \
                         -include_subtypes t
                 }
-                
+
             }
             0.12 0.13 {
                 content::type::attribute::new \
@@ -1435,19 +1434,19 @@ ad_proc -public as::install::after_upgrade {
                     -attribute_name {type}            \
                     -datatype {number}  \
                     -pretty_name {Type}  \
-                    -column_spec {integer}                
+                    -column_spec {integer}
             }
             0.13 0.14 {
                 # update as_param_map table to set the item_id  as a cr_item and not a cr_revision id
-                
+
                 db_foreach as_parameter { select cr.item_id, pm.parameter_id from as_param_map pm, cr_revisions cr where cr.revision_id = pm.item_id} {
                     db_dml update_parameters { update as_param_map set item_id=:item_id where parameter_id=:parameter_id}
                 }
-                
+
             }
             0.14 0.15 {
                 # update as_inter_item_check_id table to set the check_sql condition using the item_id of a choice instead of using the revision_id
-                
+
                 db_foreach check { select inter_item_check_id, check_sql from as_inter_item_checks } {
                     set cond_list  [split $check_sql "="]
                     set item_id [lindex [split [lindex $cond_list 2] " "] 0]
@@ -1458,7 +1457,7 @@ ad_proc -public as::install::after_upgrade {
                         db_dml update_check_sql { update as_inter_item_checks set check_sql = :check_sql_updated where inter_item_check_id=:inter_item_check_id}
                     }
                 }
-                
+
             }
             0.15 0.16 {
                 content::type::attribute::new \
@@ -1467,7 +1466,7 @@ ad_proc -public as::install::after_upgrade {
                     -datatype {string}    \
                     -pretty_name {Prepend Empty Item} \
                     -column_spec {char(1)}
-            } 
+            }
             0.16 0.17 {
                 content::type::attribute::new \
                     -content_type {as_items} \
@@ -1481,43 +1480,50 @@ ad_proc -public as::install::after_upgrade {
                     as::install::notifications
                 }
             }
-    	    0.22d7 0.22d8 {
-		# upgrade already done in SQL just add the attributes for
-		# completeness
-		content::type::attribute::new \
-                    -content_type {as_item_data} \
-                    -attribute_name {as_item_cr_item_id} \
-                    -datatype {number} \
-                    -pretty_name {as_item cr_item_id} \
-                    -column_spec {integer}
-		content::type::attribute::new \
-                    -content_type {as_item_data} \
-                    -attribute_name {choice_value} \
-                    -datatype {text} \
-                    -pretty_name {Choice Value}
-                
+            0.22d7 0.22d8 {
+                # upgrade already done in SQL just add the attributes for
+                # completeness
                 content::type::attribute::new \
-                    -content_type {as_sessions} \
-                    -attribute_name {elapsed_seconds} \
-                    -datatype {number}  \
-                    -pretty_name {Elapsed Seconds}  \
-                    -column_spec {integer}
-		content::type::attribute::new \
-                    -content_type {as_item_type_mc} \
-                    -attribute_name {allow_other_p} \
-                    -datatype {boolean}    \
-                    -pretty_name {Allow Other?} \
-                    -column_spec {char(1) default 'f'}
-	    }
-	}    
+                            -content_type {as_item_data} \
+                            -attribute_name {as_item_cr_item_id} \
+                            -datatype {number} \
+                            -pretty_name {as_item cr_item_id} \
+                            -column_spec {integer}
+                content::type::attribute::new \
+                            -content_type {as_item_data} \
+                            -attribute_name {choice_value} \
+                            -datatype {text} \
+                            -pretty_name {Choice Value}
+
+                content::type::attribute::new \
+                            -content_type {as_sessions} \
+                            -attribute_name {elapsed_seconds} \
+                            -datatype {number}  \
+                            -pretty_name {Elapsed Seconds}  \
+                            -column_spec {integer}
+                content::type::attribute::new \
+                            -content_type {as_item_type_mc} \
+                            -attribute_name {allow_other_p} \
+                            -datatype {boolean}    \
+                            -pretty_name {Allow Other?} \
+                            -column_spec {char(1) default 'f'}
+            }
+            2.10.0d5 2.10.0d6 {
+                if { [attribute::exists_p as_assessments survey_p] } {
+                    content::type::attribute::delete \
+                        -content_type {as_assessments} \
+                        -attribute_name {survey_p}
+                }
+            }
+    }
 }
 
-ad_proc -public as::install::before_uninstantiate {  
+ad_proc -public as::install::before_uninstantiate {
     {-package_id}
     {-node_id ""}
-} { 
+} {
     before-uninstantiate callback.
-} { 
+} {
     # reset the RegistrationId parameter
     as::parameter::reset_parameter -package_id $package_id -node_id $node_id
     ns_log notice "delete assessment package $package_id"
@@ -1532,20 +1538,20 @@ ad_proc -public as::install::before_uninstantiate {
     }
 }
 
-ad_proc -public as::install::before_unmount {  
+ad_proc -public as::install::before_unmount {
     {-package_id}
     {-node_id ""}
-} { 
+} {
     before-unmount callback.
-} { 
+} {
     # reset the RegistrationId parameter
     as::parameter::reset_parameter -package_id $package_id -node_id $node_id
 }
 
-ad_proc -private as::install::notifications {  
-} { 
+ad_proc -private as::install::notifications {
+} {
     Create notif implementation for type assessment_response.
-} { 
+} {
 
     db_transaction {
         set impl_id [acs_sc::impl::new \

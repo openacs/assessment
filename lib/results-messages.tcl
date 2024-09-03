@@ -1,5 +1,11 @@
-# Display all change messages for result points
-# author Timo Hentschel (timo@timohentschel.de)
+ad_include_contract {
+    Display all change messages for result points
+
+    @author Timo Hentschel (timo@timohentschel.de)
+} {
+    section_id:object_type(as_sections)
+    as_item_id:object_type(as_items)
+}
 
 set format "[lc_get d_fmt], [lc_get t_fmt]"
 

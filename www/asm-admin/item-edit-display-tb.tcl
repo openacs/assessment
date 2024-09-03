@@ -20,12 +20,16 @@ permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 
 if {![info exists assessment_data(assessment_id)]} {
-    ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
+    ad_return_complaint 1 [_ assessment.Requested_assess_does]
     ad_script_abort
 }
 
 set page_title [_ assessment.edit_item_display_tb]
-set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] $page_title]
+set context [list \
+                 [list index [_ assessment.admin]] \
+                 [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] \
+                 [list [export_vars -base item-edit {assessment_id section_id as_item_id}] [_ assessment.edit_item]] \
+                 $page_title]
 
 set alignment_types [list]
 foreach alignment_type [list besideleft besideright below above] {
@@ -42,45 +46,45 @@ ad_form -name item_edit_display_tb -action item-edit-display-tb -export { assess
 } -edit_request {
     db_1row last_used_display_type {}
     if {$as_item_display_id ne ""} {
-	db_1row display_type_data {}
+        db_1row display_type_data {}
     } else {
-	# default data if display newly mapped
-	set html_display_options ""
-	set abs_size 20
-	set item_answer_alignment "besideright"
-	set as_item_display_id 0
+        # default data if display newly mapped
+        set html_display_options ""
+        set abs_size 20
+        set item_answer_alignment "besideright"
+        set as_item_display_id 0
     }
 } -validate {
     {html_display_options {[as::assessment::check_html_options -options $html_display_options]} "[_ assessment.error_html_options]"}
 } -edit_data {
     db_transaction {
-	set new_item_id [as::item::new_revision -as_item_id $as_item_id]
+        set new_item_id [as::item::new_revision -as_item_id $as_item_id]
 
-	if {$as_item_display_id} {
-	    # edit existing display type
-	    set new_item_display_id [as::item_display_tb::edit \
-					 -as_item_display_id $as_item_display_id \
-					 -html_display_options $html_display_options \
-					 -abs_size $abs_size \
-					 -item_answer_alignment $item_answer_alignment]
-	} else {
-	    # create new display type
-	    set new_item_display_id [as::item_display_tb::new \
-					 -html_display_options $html_display_options \
-					 -abs_size $abs_size \
-					 -item_answer_alignment $item_answer_alignment]
-	}
+        if {$as_item_display_id} {
+            # edit existing display type
+            set new_item_display_id [as::item_display_tb::edit \
+                                         -as_item_display_id $as_item_display_id \
+                                         -html_display_options $html_display_options \
+                                         -abs_size $abs_size \
+                                         -item_answer_alignment $item_answer_alignment]
+        } else {
+            # create new display type
+            set new_item_display_id [as::item_display_tb::new \
+                                         -html_display_options $html_display_options \
+                                         -abs_size $abs_size \
+                                         -item_answer_alignment $item_answer_alignment]
+        }
 
-	set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
-	set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
-	set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
-	set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
-	as::section::update_section_in_assessment\
+        set new_assessment_rev_id [as::assessment::new_revision -assessment_id $assessment_id]
+        set section_id [as::section::latest -section_id $section_id -assessment_rev_id $new_assessment_rev_id]
+        set new_section_id [as::section::new_revision -section_id $section_id -assessment_id $assessment_id]
+        set as_item_id [as::item::latest -as_item_id $as_item_id -section_id $new_section_id]
+        as::section::update_section_in_assessment\
                 -old_section_id $section_id \
                 -new_section_id $new_section_id \
                 -new_assessment_rev_id $new_assessment_rev_id
-	db_dml update_item_in_section {}
-	db_dml update_display_of_item {}
+        db_dml update_item_in_section {}
+        db_dml update_display_of_item {}
     }
     set as_item_id $new_item_id
     set section_id $new_section_id

@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Chapter 4. Authors}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Chapter 4. Authors}</property>
 <property name="doc(title)">Chapter 4. Authors</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch03" leftLabel="Prev"
 			title=" "
@@ -12,7 +16,7 @@
 <li>
 <p>Rocael Hernandez -- roc\@viaro.net</p><p>Design</p>
 </li><li>
-<p>Vivian Aguilar -- vivian\@viaro.net</p><p>Desing and Development</p>
+<p>Vivian Aguilar -- vivian\@viaro.net</p><p>Design and Development</p>
 </li><li>
 <p>Anny Flores -- annyflores\@viaro.net</p><p>Development and Documentation</p>
 </li>

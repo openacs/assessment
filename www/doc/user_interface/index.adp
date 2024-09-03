@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Appendix A: RFC for Assessment Specs}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Appendix A: RFC for Assessment Specs}</property>
 <property name="doc(title)">Appendix A: RFC for Assessment Specs</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><h1><span class="context">Introduction</span></h1>
 <span class="context">In recent times the survey system has
 expanded beyond it&#39;s initial scope of providing a quick and
@@ -28,7 +32,7 @@ questions of the assessment package. It is a pool where all the
 questions from all assessments are stored in. This creates the
 opportunity to make the questions reusable, allowing for statistics
 across surveys and prevents the respondee from having to fill out a
-question he has already filled out. Furthermore special
+question he has already filled out. Furthermore, special
 administrators are given the possibility to add questions that do
 not store the results within the scope of the assessment package
 but in other database tables (e.g. the name of the user) or trigger
@@ -58,17 +62,17 @@ of the evaluation (what have the respondees answered, how have they
 done in total (points)). A description for this can be found
 <a href="tests">here</a>.</span>
 <p><span class="context">The backend for the test processing, that
-enables the automatic tests is described in a <a href="tests">separate document</a> as it will be parsed while
-the respondee answers the test, not manually. In addition this
-document describes how the grades are calculated (automatically or
-manually) for each question. The result is being stored in the
-grading package.</span></p>
+enables the automatic tests is described in a <a href="tests">separate document</a> as it will be parsed while the
+respondee answers the test, not manually. In addition this document
+describes how the grades are calculated (automatically or manually)
+for each question. The result is being stored in the grading
+package.</span></p>
 <h1><span class="context">Scoring/Grading</span></h1>
 <span class="context">The grading package will be designed first of
 all to all the storing of test results. In addition to this, it
 will provide functionality to other packages to allow rating of
 their contents (one example of this would be Lars Rating package,
-that would be used as a basis for this). In general it should
+that would be used as a basis for this). In general, it should
 provide a very flexible way of adding scores into the system,
 either automatically (as described above) or manually (e.g. this
 student did a good oral exam).</span>
@@ -80,7 +84,7 @@ class result will depend on the result of all the tests a respondee
 did in addition to any manual grades the professor can come up
 with. Providing a clean UI for this is going to be the
 challenge.</span></p>
-<p><span class="context">Furthermore the grading package offers to
+<p><span class="context">Furthermore, the grading package offers to
 transfer scores (which are stored as integer values) into a grade
 (e.g. the american A-F scheme, or the German 1-6). This is where it
 gets the name from I&#39;d say ;). Grading schemes are flexible and
@@ -114,14 +118,14 @@ assessment system has been written mainly with this in mind.</span>
 system to collect user information. When signing up to a site the
 user could be asked to fill out an assessment where part of the
 questions will be stored in the acs_users table, some other
-questions in other tables and the rest in the accessment package.
+questions in other tables and the rest in the assessment package.
 This way a quick view can be given about the user (aggregating user
 information in a flexible way). Best explanation would be to treat
 the /pvt/home page as a collection of assessment data and the
 "change basic information" as one assessment among
 many.</span></p>
 <p><span class="context">With a little bit of tweaking and the
-possibility to add instant gratification, a.k.a. aggregated result
+possibility to add instant gratification, aka aggregated result
 display, it could include the poll package and make it
 redundant.</span></p>
 <p><span class="context">Last but not least with the ability to
@@ -137,7 +141,8 @@ of mints gives to the users. As mentioned earlier, this is also
 very important in a Knowledge Management environment, where you
 want to give rated feedback to users.</span></p>
 <blockquote><p><span class="context">
-<strong><a href="item_creation">Question Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
+<strong><a href="item_creation">Question
+Catalogue</a></strong><br><br><strong><a href="assessment_creation">Assessment
 Creation</a></strong><br><br><strong><a href="section_creation">Sections</a></strong><br><br><strong><a href="item_creation">Tests</a></strong><br><br><strong><a href="tests">Test Processing</a></strong><br><br><strong><a href="user_experience">User Experience</a></strong><br><br><strong><a href="current/"><br></a></strong>
 </span></p></blockquote>
 <span class="context">

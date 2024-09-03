@@ -20,12 +20,17 @@ permission::require_permission -object_id $assessment_id -privilege admin
 as::assessment::data -assessment_id $assessment_id
 
 if {![info exists assessment_data(assessment_id)]} {
-    ad_return_complaint 1 "[_ assessment.Requested_assess_does]"
+    ad_return_complaint 1 [_ assessment.Requested_assess_does]
     ad_script_abort
 }
 
 set page_title [_ assessment.edit_item]
-set context [list [list index [_ assessment.admin]] [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] [list index [_ assessment.admin]] [list [export_vars -base questions {assessment_id}] Questions] $page_title]
+set context [list \
+                 [list index [_ assessment.admin]] \
+                 [list [export_vars -base one-a {assessment_id}] $assessment_data(title)] \
+                 [list index [_ assessment.admin]] \
+                 [list [export_vars -base questions {assessment_id}] Questions] \
+                 $page_title]
 set package_id [ad_conn package_id]
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]
 
@@ -47,21 +52,21 @@ ad_form -name item_edit -mode display -action item-edit-general -export { assess
 set linked_objects [application_data_link::get_links_from -object_id $as_item_id]
 if {[llength $linked_objects]} {
     foreach l $linked_objects {
-	acs_object::get -object_id $l -array object
-	if {$object(object_type) eq "content_item"} {
-	    set object(object_type) [content::item::get_content_type -item_id $l]
-	}
-	set link_type o
-	if {$object(object_type) eq "image"} {
-	    set link_type image
-	} 
-	if {$object(object_type) eq "content_revision"} {
-	    set link_type file
-	}
-	append links "<a href='/${link_type}/$l'>$object(title)</a><br>"
+        acs_object::get -object_id $l -array object
+        if {$object(object_type) eq "content_item"} {
+            set object(object_type) [content::item::get_content_type -item_id $l]
+        }
+        set link_type o
+        if {$object(object_type) eq "image"} {
+            set link_type image
+        }
+        if {$object(object_type) eq "content_revision"} {
+            set link_type file
+        }
+        append links "<a href='/${link_type}/$l'>$object(title)</a><br>"
     }
     ad_form -extend -name item_edit -form {
-	{content:text(inform),optional {label "[_ assessment.item_display_Content]"} {value {$links}} {help_text "[_ assessment.item_Content_help]"}}
+        {content:text(inform),optional {label "[_ assessment.item_display_Content]"} {value {$links}} {help_text "[_ assessment.item_Content_help]"}}
     }
 }
 
@@ -70,7 +75,7 @@ if {[llength $linked_objects]} {
 if {[db_0or1row get_item_content {}]} {
     set remove_url [export_vars -base remove-content {as_item_id content_rev_id {return_url [ad_return_url]}}]
     ad_form -extend -name item_edit -form {
-	{content2:text(inform),optional {label "OLD UI [_ assessment.item_display_Content]"} {value {<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a> \[<a href="${remove_url}">Remove File</a>\]}} {help_text "[_ assessment.item_Content_help]"}}
+        {content2:text(inform),optional {label "OLD UI [_ assessment.item_display_Content]"} {value {<a href="../view/$content_filename?revision_id=$content_rev_id" target=view>$content_name</a> \[<a href="${remove_url}">Remove File</a>\]}} {help_text "[_ assessment.item_Content_help]"}}
     }
 }
 

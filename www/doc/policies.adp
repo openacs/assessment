@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Policies and Events}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Policies and Events}</property>
 <property name="doc(title)">Policies and Events</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Policies and Events<br>
 </h2>
 <ul>
@@ -43,7 +47,7 @@ instances of an Assessment&#39;s deployment. Attributes include:
 enrolled in a trial or the beginning of a term</li><li>optimal_days_pre - along with the next attribute, defines a
 range of dates when the Assessment should be performed (if zero,
 then the date must be exact)</li><li>optimal_days_post</li><li>required_days_pre - as above, only the range within which the
-Assessment must be performed</li><li>required_days_post</li><li style="font-family: monospace;"><center><p><img alt="Data modell" src="images/assessment-schedfocus.jpg" style="width: 716px; height: 653px;"></p></center></li>
+Assessment must be performed</li><li>required_days_post</li><li style="font-family: monospace;"><center><p><img alt="Data model" src="images/assessment-schedfocus.jpg" style="width: 716px; height: 653px;"></p></center></li>
 </ul>
 </li>
 </ul>

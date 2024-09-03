@@ -9,10 +9,10 @@ namespace eval as::file {}
 ad_proc -public as::file::new {
     {-file_pathname:required}
 } {
+    New file to the CR
+
     @author eperez@it.uc3m.es
     @creation-date 2004-10-25
-
-    New file to the CR
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]

@@ -16,7 +16,7 @@ storing of the various as_items (or questions if you like) and groups
 of as_items (e.g. Sections) that can be used in an assessment. You are
 able to
 add/edit/delete an as_item of a certain type to a certain scope.
-Furthermore it allows you to search and browse for questions for
+Furthermore, it allows you to search and browse for questions for
 inclusion in your assessment as well as import and export multiple
 questions using various formats.
 </p>
@@ -45,7 +45,7 @@ tables. Each as_item can only be linked to one as_item_type instance
 and one as_item_display instance.<br>
 </p>
 <p>Categorization and internationalization will make it into
-OpenACS 5.2, therefore we are not dealing with it in Assessment
+OpenACS 5.2, therefore, we are not dealing with it in Assessment
 separately but use the (to be) built in functionality of OpenACS 5.2</p>
 <p>
 Additionally we have support functionality for an as_item. This
@@ -69,7 +69,7 @@ including the as_item Display subsystem described <a
  style="font-family: monospace;" href="display_types.html">here</a>.<br>
 </p>
 <center>
-<p><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg"
+<p><img alt="Data model graphic" src="images/assessment-itemfocus.jpg"
  style="width: 752px; height: 1121px;"></p>
 </center>
 <p>
@@ -131,7 +131,7 @@ as_item. </p>
     <ul>
       <li>Read: An assessment author (who is granted this permission)
 can
-reuse this as_item in one of his sections. (NB: Usually the original
+reuse this as_item in one of his sections. (NB: Usually, the original
 author has admin privileges.). This is a finer granulation than the
 previous "enabled_p" as it allows specific access to an item. </li>
       <li>Write: Author can reuse and change this as_item. </li>
@@ -268,7 +268,7 @@ easier. It
 is
 debatable if we should allow n:m relationships between choices and
 as_item_types (thereby allowing the same choice been reused). In my
-opinion this is not necessary, therefore we relate this using the
+opinion this is not necessary, therefore, we relate this using the
     parent_id (which will be treated as a relationship in
     cr_child_rels by the content repository internally).
 Following the Lars Skinny Table approach of conflating all the
@@ -489,7 +489,7 @@ below).
         </ol>
       </li>
       <li>choice_label_orientation - how shall the label be positioned
-in relation to the choice (top, left, right, buttom).<br>
+in relation to the choice (top, left, right, bottom).<br>
       </li>
       <li>sort_order_type: Numerical, alphabetic, randomized or
 by order of entry (sort_order field).</li>

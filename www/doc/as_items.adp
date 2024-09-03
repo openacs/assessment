@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {As_Items}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {As_Items}</property>
 <property name="doc(title)">As_Items</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2><span class="context">Overview</span></h2>
 <p><span class="context">The  As_Item and Section catalogues
 are central parts of the assessment system. These repositories
@@ -9,7 +13,7 @@ support reuse of Assessment components by storing of the various
 as_items (or questions if you like) and groups of as_items (e.g.
 Sections) that can be used in an assessment. You are able to
 add/edit/delete an as_item of a certain type to a certain scope.
-Furthermore it allows you to search and browse for questions for
+Furthermore, it allows you to search and browse for questions for
 inclusion in your assessment as well as import and export multiple
 questions using various formats.</span></p>
 <p><span class="context">In this description here we will only
@@ -36,9 +40,9 @@ can only be linked to one as_item_type instance and one
 as_item_display instance.<br>
 </span></p>
 <p><span class="context">Categorization and internationalization
-will make it into OpenACS 5.2, therefore we are not dealing with it
-in Assessment separately but use the (to be) built in functionality
-of OpenACS 5.2</span></p>
+will make it into OpenACS 5.2, therefore, we are not dealing with
+it in Assessment separately but use the (to be) built in
+functionality of OpenACS 5.2</span></p>
 <p><span class="context">Additionally we have support functionality
 for an as_item. This includes the help functionality. To give
 Assessment authors flexibility in adapting as_item defaults, help
@@ -57,7 +61,7 @@ give).</span></p>
 as_item-related subsystems, including the as_item Display subsystem
 described <a style="font-family: monospace;" href="display_types">here</a>.<br>
 </span></p>
-<center><p><span class="context"><img alt="Data modell graphic" src="images/assessment-itemfocus.jpg" style="width: 752px; height: 1121px;"></span></p></center>
+<center><p><span class="context"><img alt="Data model graphic" src="images/assessment-itemfocus.jpg" style="width: 752px; height: 1121px;"></span></p></center>
 <h2><span class="context">Core Function: as_items<br>
 </span></h2>
 <ul><li>
@@ -97,7 +101,7 @@ of defining a special scope variable we will use the acs permission
 system to grant access rights to an as_item.</span></p><ul>
 <li><span class="context">Read: An assessment author (who is
 granted this permission) can reuse this as_item in one of his
-sections. (NB: Usually the original author has admin privileges.).
+sections. (NB: Usually, the original author has admin privileges.).
 This is a finer granulation than the previous "enabled_p"
 as it allows specific access to an item.</span></li><li><span class="context">Write: Author can reuse and change this
 as_item.</span></li><li><span class="context">Admin: Author can reuse, change and give
@@ -192,7 +196,7 @@ belong to an as_item, but to the instance of the
 as_item_type!</span> This way we can reuse multiple choice answers
 easier. It is debatable if we should allow n:m relationships
 between choices and as_item_types (thereby allowing the same choice
-been reused). In my opinion this is not necessary, therefore we
+been reused). In my opinion this is not necessary, therefore, we
 relate this using the parent_id (which will be treated as a
 relationship in cr_child_rels by the content repository
 internally). Following the Lars Skinny Table approach of conflating
@@ -362,7 +366,7 @@ the item_alignment option (discussed below).
 <li>horizontal - all Choices are in one line</li><li>vertical - all Choices are in one column</li>
 </ol>
 </li><li>choice_label_orientation - how shall the label be positioned in
-relation to the choice (top, left, right, buttom).<br>
+relation to the choice (top, left, right, bottom).<br>
 </li><li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation
@@ -383,7 +387,8 @@ the "question"</span></li>
 </li><li>checkbox (as_item_display_cb) - multiple-choice multiple-option
 <ul>
 <li>choice_orientation (see above)</li><li>choice_label_orientation<br>
-</li><li>allow_multiple_p - Is it allow one to select multiple values ?</li><li>sort_order_type: Numerical, alphabetic, randomized or by order
+</li><li>allow_multiple_p - Is it allow one to select multiple values
+?</li><li>sort_order_type: Numerical, alphabetic, randomized or by order
 of entry (sort_order field).</li><li>
 <span class="context"><span class="reg"><span class="context"><span class="reg">item_answer_alignment - the orientation
 between the "question part" of the Item (the

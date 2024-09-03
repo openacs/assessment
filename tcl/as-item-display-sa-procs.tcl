@@ -9,12 +9,12 @@ namespace eval as::item_display_sa {}
 ad_proc -public as::item_display_sa::new {
     {-html_display_options ""}
     {-abs_size ""}
-    {-box_orientation ""}    
+    {-box_orientation ""}
 } {
+    New Item Display ShortAnswer Type to the database
+
     @author Natalia Perez (nperper@it.uc3m.es)
     @creation-date 2004-09-29
-
-    New Item Display ShortAnswer Type to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -37,12 +37,12 @@ ad_proc -public as::item_display_sa::edit {
     -as_item_display_id:required
     {-html_display_options ""}
     {-abs_size ""}
-    {-box_orientation ""}    
+    {-box_orientation ""}
 } {
+    Edit Item Display ShortAnswer Type to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Edit Item Display ShortAnswer Type to the database
 } {
     # Update as_item_display_sa in the CR (and as_item_display_sa table) getting the revision_id (as_item_display_id)
     db_transaction {
@@ -61,10 +61,10 @@ ad_proc -public as::item_display_sa::edit {
 ad_proc -public as::item_display_sa::copy {
     -type_id:required
 } {
+    Copy an Item Display ShortAnswer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-07
-
-    Copy an Item Display ShortAnswer Type
 } {
     set package_id [ad_conn package_id]
     set folder_id [as::assessment::folder_id -package_id $package_id]
@@ -94,10 +94,10 @@ ad_proc -public as::item_display_sa::render {
     {-data ""}
     -item:required
 } {
+    Render an Item Display ShortAnswer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-10
-
-    Render an Item Display ShortAnswer Type
 } {
     array set type [util_memoize [list as::item_display_sa::data -type_id $type_id]]
     if {$required_p eq ""} {
@@ -123,10 +123,10 @@ ad_proc -public as::item_display_sa::render {
 ad_proc -public as::item_display_sa::data {
     -type_id:required
 } {
+    Get the cached Display Data of ShortAnswer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the cached Display Data of ShortAnswer Type
 } {
     return [util_memoize [list as::item_display_sa::data_not_cached -type_id $type_id]]
 }
@@ -134,10 +134,10 @@ ad_proc -public as::item_display_sa::data {
 ad_proc -private as::item_display_sa::data_not_cached {
     -type_id:required
 } {
+    Get the Display Data of ShortAnswer Type
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2005-04-08
-
-    Get the Display Data of ShortAnswer Type
 } {
     db_1row display_item_data {} -column_array type
     return [array get type]

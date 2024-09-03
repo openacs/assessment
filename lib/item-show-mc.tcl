@@ -1,5 +1,10 @@
-# Display multiple choice type data.
-# author Timo Hentschel (timo@timohentschel.de)
+ad_include_contract {
+    Display multiple choice type data.
+
+    @author Timo Hentschel (timo@timohentschel.de)
+} {
+    as_item_id:object_type(acs_object)
+}
 
 db_1row item_type_data {}
 set boolean_options [list [list "[_ assessment.yes]" t] [list "[_ assessment.no]" f]]

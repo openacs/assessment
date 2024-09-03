@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {User Experience}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {User Experience}</property>
 <property name="doc(title)">User Experience</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">User
 experience describes the various steps the USER sees and what he
 can do when taking an assessment. When answering a section a couple
@@ -18,12 +22,12 @@ left</span></li>
 </ul>
 </li><li><span class="context">Starttime of the response will be
 logged</span></li><li><span class="context">First section will be delivered to the
-user for anwering.</span></li>
+user for answering.</span></li>
 </ul>
 <span class="context">Depending on the settings, the display of the
 assessment will vary:</span>
 <ul>
-<li><span class="context">If all answers have to be submited
+<li><span class="context">If all answers have to be submitted
 separately, a submit button will be shown next to each answer. If
 the user hits the submit button next to the question the answer
 will be stored in the response.</span></li><li><span class="context">Else the normal section view will be
@@ -41,9 +45,9 @@ left.</span></li><li><span class="context">If we have to show a progress bar, sh
 it and renew it after each submit (so also for each
 question).</span></li><li><span class="context">Display a finish test button at the end
 of the page to "hand the test to the TA" if this is
-allowed</span></li><li><span class="context">Allow for chancellation of the test with
-a chancel button. The result will not be stored but the test will
-be marked as taken.</span></li><li><span class="context">If immediate answer validation (a.k.a..
+allowed</span></li><li><span class="context">Allow for cancellation of the test with a
+cancel button. The result will not be stored but the test will be
+marked as taken.</span></li><li><span class="context">If immediate answer validation (aka.
 ad_form check) for a question is true, check the answer if it is
 valid, otherwise notify the user that it is not and do not store
 the result.</span></li>
@@ -55,7 +59,7 @@ notes into consideration:</span>
 answer but may also depend on the result within a section (branch
 by disctractor, median)</span></li><li><span class="context">questions within a section can be
 randomly displayed. Take also into account that not all questions
-have to be displayed and that some of the questions migt be
+have to be displayed and that some of the questions might be
 mandatory and even mandatory in position.</span></li><li><span class="context">When displaying random questions the
 randomizing element has to be the same for each response_id (the
 user shall not have the option to see different questions just by

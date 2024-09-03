@@ -23,8 +23,10 @@ permission::require_permission -object_id $package_id -privilege create
 set folder_id [as::assessment::folder_id -package_id $package_id]
 set user_id [ad_conn user_id]
 set context_object_id $package_id
-set form [rp_getform]
-ns_set delkey $form status
+set form [ns_getform]
+if { $form ne "" } {
+    ns_set delkey $form status
+}
 set page_title [_ assessment.All_Users]
 if {[info exists assessment_id]} {
     as::assessment::data -assessment_id $assessment_id

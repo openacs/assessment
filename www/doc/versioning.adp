@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Versioning}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Versioning}</property>
 <property name="doc(title)">Versioning</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>This topic requires special mention because it is centrally
 important to Assessment and one of the most radical departures from
@@ -11,7 +15,7 @@ can be cloned but not readily modified in a controlled
 fashion).</p>
 <p>During its lifetime, an Assessment may undergo revisions in the
 midst of data collection. These revisions may be minor (change of a
-label on an Item or adddition of a new Choice to an Item) or major
+label on an Item or addition of a new Choice to an Item) or major
 (addition or deletion of an entire Section). Obviously in most
 applications, such changes are undesirable and people want to avoid
 them. But the reality is that such changes are inevitable and so

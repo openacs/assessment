@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Chapter 2. User Manual}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Chapter 2. User Manual}</property>
 <property name="doc(title)">Chapter 2. User Manual</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch01s01" leftLabel="Prev"
 			title=" "

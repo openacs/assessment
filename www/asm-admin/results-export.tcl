@@ -113,7 +113,7 @@ ad_form -name assessment_export -action results-export -form {
 	    if {$mc_item_list ne ""} {
 		db_foreach mc_items {} {
 		    if {$text_value eq ""} {
-			if {[exists_and_not_null csv_${section_id}_${as_item_id}($session_id)]} {
+			if {[info exists csv_${section_id}_${as_item_id}($session_id)] && [set csv_${section_id}_${as_item_id}($session_id)] ne ""} {
 			    # append list of choices separated with comma
 			    append csv_${section_id}_${as_item_id}($session_id) ",[as::assessment::quote_export -text $title]"
 			} else {
@@ -121,7 +121,7 @@ ad_form -name assessment_export -action results-export -form {
 			    set csv_${section_id}_${as_item_id}($session_id) [as::assessment::quote_export -text $title]
 			}
 		    } else {
-			if {[exists_and_not_null csv_${section_id}_${as_item_id}($session_id)]} {
+			if {[info exists csv_${section_id}_${as_item_id}($session_id)] && [set csv_${section_id}_${as_item_id}($session_id)] ne ""} {
 			    append csv_${section_id}_${as_item_id}($session_id) ",[as::assessment::quote_export -text $text_value]"
 			} else {
 			    set csv_${section_id}_${as_item_id}($session_id) [as::assessment::quote_export -text $text_value]
@@ -140,7 +140,7 @@ ad_form -name assessment_export -action results-export -form {
 
     foreach session_id $session_list {
 	foreach {section_id item_id} $item_list {
-	    if {[exists_and_not_null csv_${section_id}_${item_id}($session_id)]} {
+	    if {[info exists csv_${section_id}_${item_id}($session_id)] && [set csv_${section_id}_${item_id}($session_id)] ne ""} {
 		lappend csv_result_list($session_id) "\"[set csv_${section_id}_${item_id}($session_id)]\""
 	    } else {
 		lappend csv_result_list($session_id) ""

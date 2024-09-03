@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {5. Action Triggers}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {5. Action Triggers}</property>
 <property name="doc(title)">5. Action Triggers</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch02s04" leftLabel="Prev"
 			title="Chapter 2. User
@@ -10,7 +14,7 @@ Manual"
 		    <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="d0e204" id="d0e204"></a>5. Action Triggers</h2></div></div></div><p>To define an Action Trigger, the field "Type" in the
-form must be checked as "Action".</p><p>The condition field shows the question and its possible anwers,
+form must be checked as "Action".</p><p>The condition field shows the question and its possible answers,
 it means that when the user is responding the assessment, if this
 answer is given for this question, the action will be executed.</p><div class="screenshot"><div class="mediaobject"><img src="resources/action_trigger.JPG"></div></div><p>After the trigger is created, the action related must be chosen,
 also the time when the action will be executed, and the message

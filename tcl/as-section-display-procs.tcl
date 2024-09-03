@@ -16,10 +16,10 @@ ad_proc -public as::section_display::new {
     {-submit_answer_p ""}
     {-sort_order_type ""}
 } {
+    New section display type to the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-09
-
-    New section display type to the database
 } {
     set package_id [ad_conn package_id]
     set folder_id [db_string get_folder_id "select folder_id from cr_folders where package_id=:package_id"]
@@ -54,10 +54,10 @@ ad_proc -public as::section_display::edit {
     {-submit_answer_p ""}
     {-sort_order_type ""}
 } {
+    Edit section display type in the database
+
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-09
-
-    Edit section display type in the database
 } {
     # edit as_section_display_type in the CR
     set display_item_id [db_string display_item_id {}]

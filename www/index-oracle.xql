@@ -2,7 +2,7 @@
 <queryset>
 	<rdbms><type>oracle</type><version>8.1.6</version></rdbms>
 
-<fullquery name="open_asssessments">
+<fullquery name="open_assessments">
 	<querytext>
 
 select cr.item_id as assessment_id, cr.title, cr.description, a.password,

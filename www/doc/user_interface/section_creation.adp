@@ -1,10 +1,14 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Sections}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Sections}</property>
 <property name="doc(title)">Sections</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">Section page. This page is for editing information about a
 section and adding questions to it. It contains a couple of
-subpages. Datamodell can be found <a href="http://sussdorff.de/assessment/doc/grouping.html">here.</a><br><br>
+subpages. Data model can be found <a href="http://sussdorff.de/assessment/doc/grouping.html">here.</a><br><br>
 On the Top of the page display the title and description along with
 the display type for information purposes. Below this put links to
 the following pages.<br><br>
@@ -99,8 +103,8 @@ displayed with the options to<br>
 <ul>
 <li>Edit question<br>
 </li><li>Search and add question(s) from question database: Link to the
-search page which allows one to search for questions that can be added
-to this section (multiple add possibility).</li><li>Add question: Link to the question catalogue entry form with a
+search page which allows one to search for questions that can be
+added to this section (multiple add possibility).</li><li>Add question: Link to the question catalogue entry form with a
 return_url that adds the question from the catalogue to this
 section and return to the section page.</li><li>Change order of questions (arrow navigation) Title of the
 question Link to edit question properties with regards to this
@@ -108,7 +112,7 @@ section</li><li>Points: integer. Number of Points this question is worth in
 this section.<br>
 </li><li>Mandatory: boolean (yes/no). Is this question mandatory in this
 section. It will be displayed in any case, regardless of
-randomizing.</li><li>Fixed Position: select (1,2..., buttom). Position the question
+randomizing.</li><li>Fixed Position: select (1,2..., bottom). Position the question
 has to be displayed, regardless of randomizing.</li>
 </ul>
 <span class="context">

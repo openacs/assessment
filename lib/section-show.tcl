@@ -1,3 +1,9 @@
+ad_include_contract {
+    Section Show
+} {
+    section_id:object_type(as_sections)
+}
+
 ad_form -name show_section -form {
     {section_id:text(hidden) {value $section_id}}
 }

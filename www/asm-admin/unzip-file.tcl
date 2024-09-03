@@ -16,13 +16,11 @@ permission::require_permission \
 
 set context [list "[_ assessment.Import_Results]"]
 
-# Generate a random directory name
-set tmpdirectory [ad_tmpnam]
-# Create a temporary directory
-file mkdir $tmpdirectory
+# Generate a random temporary directory
+set tmpdirectory [ad_mktmpdir]
 
 # UNZIP the zip file in the temporary directory
-catch { exec unzip ${zipfile.tmpfile} -d $tmpdirectory } outMsg
+util::unzip -source ${zipfile.tmpfile} -destination $tmpdirectory
 
 # Read the content of the temporary directory
 foreach file_i [ glob -directory $tmpdirectory *{.xml}  ] {

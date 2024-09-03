@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Page Flow}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Page Flow}</property>
 <property name="doc(title)">Page Flow</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 <p>Through the OpenACS templating system, the UI look&amp;feel will
 be modifiable by specific sites, so we needn&#39;t address page
@@ -79,5 +83,5 @@ So this is how we currently anticipate this would all
 interrelate:</li>
 </ul>
 <center>
-<a href="http://openacs.org/storage/download/assessment-page-flow.graffle?version_id=166250"></a><p><img alt="data modell" src="images/assessment-page-flow.jpg" style="width: 950px; height: 1058px;"></p>
+<a href="http://openacs.org/storage/download/assessment-page-flow.graffle?version_id=166250"></a><p><img alt="data model" src="images/assessment-page-flow.jpg" style="width: 950px; height: 1058px;"></p>
 </center>

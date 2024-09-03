@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment Item Checks}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment Item Checks}</property>
 <property name="doc(title)">Assessment Item Checks</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Sequencing</h2>
 <p>Along with Data Validation and Versioning, probably the most
 vexing problem confronting the Assessment package is how to handle
@@ -41,7 +45,7 @@ pairwise</li>
 <p>So how might we implement this in our datamodel? Consider the
 "sequencing" subsystem of the Assessment package:<br>
 </p>
-<center><p><img alt="Data Modell Graphic" src="images/assessment-sequencefocus.jpg" style="width: 711px; height: 707px;"></p></center>
+<center><p><img alt="Data Model Graphic" src="images/assessment-sequencefocus.jpg" style="width: 711px; height: 707px;"></p></center>
 <h2>Specific Entities</h2>
 <ul>
 <li>Item-checks (as_item_checks) define 1..n ordered evaluations of
@@ -86,7 +90,7 @@ check_sql would look like ":item_1234 == 'blue' AND
 :item_4231 == 'red'". Additionally other variables
 might be defined by the API at a later stage,  e.g.
 ":percent_score", which would be replaced by the current
-percentage value (a.k.a. score) that subject had in the test so far
+percentage value (aka score) that subject had in the test so far
 (taken from the as_session_table). It might be interesting to pass
 these variables along in the API, this remains to be seen when
 actually implementing the system.<br><br>

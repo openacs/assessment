@@ -1,9 +1,13 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Tests}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Tests}</property>
 <property name="doc(title)">Tests</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <!-- START HEADER --><span class="context"><span class="reg">A
-test is a special kind of accessment that allows the
+test is a special kind of assessment that allows the
 respondee&#39;s answers to be rated immediately. Unless otherwise
 stated, all pages described are admin viewable only.</span></span>
 <ul>
@@ -29,7 +33,7 @@ comment given by the evaluator</span></li><li><span class="context">Correct Answ
 question</span></li><li><span class="context">Feedback. The feedback that is stored
 with the given answer</span></li><li><span class="context">Feedback for question. The feedback that
 is stored with the question</span></li><li><span class="context">Total result. The total result of the
-test (at the buttoms)</span></li>
+test (at the bottom)</span></li>
 </ul>
 </li><li><span class="context">Submit each answer separately: boolean
 (yes/no). Does the user have to submit each answer
@@ -59,7 +63,7 @@ grading in test-processing.html)</span></li><li><span class="context">The try th
 respondee is displayed with a green background. If we take the
 median of all tries, mark all of them green.</span></li>
 </ul>
-</li><li><span class="context">Furthermore links to details about the
+</li><li><span class="context">Furthermore, links to details about the
 test, reports and summary are given.</span></li>
 </ul>
 </li>
@@ -99,18 +103,18 @@ question.</span>
 <span class="context">Multiple Choice</span><ul>
 <li><span class="context">All or nothing. In this scenario it will
 be looked, if all correct answers have been chosen by the respondee
-and none of the incorrect ones. If this is the case, respondee
-get&#39;s 100%, otherwise nothing.</span></li><li><span class="context">Cumultative. Each answer has a certain
+and none of the incorrect ones. If this is the case, respondee gets
+100%, otherwise nothing.</span></li><li><span class="context">Cumultative. Each answer has a certain
 percentage associated with it. This can also be negative. For each
 option the user choose he will get the according percentage. If
 negative points are allowed, the user will get a negative
 percentage. In any case, a user can never get more than 100% or
-less then -100%.</span></li>
+less than -100%.</span></li>
 </ul>
 </li><li>
 <span class="context">Matching question</span><ul>
-<li><span class="context">All or nothing: User get&#39;s 100% if
-all matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weighted: Each match is worth
+<li><span class="context">All or nothing: User gets 100% if all
+matches are correct, 0% otherwise.</span></li><li><span class="context">Equally weighted: Each match is worth
 100/{number of matches} percent. Each correct match will give the
 according percentage and the end result will be the sum of all
 correct matches.</span></li><li><span class="context">Allow negative: If we have equally
@@ -125,8 +129,9 @@ to 100% and not less than -100%.</span></li>
 are selected.</span></li><li>
 <span class="context">The response is matched with each of the
 possible answers</span><ul>
-<li><span class="context">Equals: Only award the percentage if the strings match exactly (case senstivity depends on the setting
-for the question).</span></li><li><span class="context">Contains: If the answer contains exactly
+<li><span class="context">Equals: Only award the percentage if the
+strings match exactly (case sensitivity depends on the setting for
+the question).</span></li><li><span class="context">Contains: If the answer contains exactly
 the string, points are granted. If you want to give percentages for
 multiple words, add another answer to the answerbox (so instead of
 having one answerbox containing "rugby soccer football",
@@ -177,8 +182,8 @@ will get a wrong in front).</span></li><li><span class="context">Matching questi
 side and the picked item are displayed in a connecting manner. A
 correct / wrong statement will be added depending whether the
 displayed (and responded) match is correct.</span></li><li><span class="context">Open Question: The answer is displayed as
-written by the user. Furthermore the correct answer is displayed as
-well. This should allow the TA to easily come to a conclusion
+written by the user. Furthermore, the correct answer is displayed
+as well. This should allow the TA to easily come to a conclusion
 concerning the number of points.</span></li><li><span class="context">Short Answer: For each answerbox the
 response will be displayed along with the percentage it got and all
 the correct answers for this answerbox (with percentage). Might be

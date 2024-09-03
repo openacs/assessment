@@ -1,71 +1,6 @@
--- Assessment Package
--- @author annyflores@viaro.net
--- @creation-date 2005-01-06
+-- Disclaimer: this has not really been tested
 
-begin 
-	-- create the action object
-        acs_object_type.create_type (
-		supertype	=>	'acs_object',
-		object_type 	=>	'as_action',
-		pretty_name	=>	'As_action',
-		pretty_plural	=>	'As_actions',
-		table_name	=>	'as_actions',
-		id_column	=>	'action_id'
-);
-end;
-/
-show errors;
-
-declare 
-
-	attr_id acs_attributes.attribute_id%TYPE;
-
-begin
-	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'as_action',
-		attribute_name 	=>	'name',
-		pretty_name	=>	'Name',
-		pretty_plural	=>	'Names',
-		datatype	=>	'string'
-	);
-	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'as_action',
-		attribute_name 	=>	'description',
-		pretty_name	=>	'Description',
-		pretty_plural	=>	'Descriptions',
-		datatype	=>	'string'
-	);
-	attr_id := acs_attribute.create_attribute (
-		object_type	=> 	'as_action',
-		attribute_name 	=>	'tcl_code',
-		pretty_name	=>	'Tcl_code',
-		pretty_plural	=>	'Tcl_code',
-		datatype	=>	'string'
-	);
-end;
-/
-show errors;
-
-create or replace package as_action
-as
-	function new (
-	action_id     	in acs_objects.object_id%TYPE default null,
-        name  		in as_actions.name%TYPE,
-        description     in as_actions.description%TYPE,
-        tcl_code        in as_actions.tcl_code%TYPE,
-	context_id	in acs_objects.context_id%TYPE,
-	creation_user	in acs_objects.creation_user%TYPE
-		     ) return as_actions.action_id%TYPE;
-	procedure del (
-	 	action_id 	in as_actions.action_id%TYPE
-	);
-	procedure default_actions (
-		context_id	in acs_objects.context_id%TYPE,
-		creation_user	in acs_objects.creation_user%TYPE
-	);
-end as_action;
-/
-show errors;
+begin;
 
 create or replace package body  as_action
 as
@@ -79,8 +14,8 @@ as
      ) return as_actions.action_id%TYPE
 	is
 		v_action_id as_actions.action_id%TYPE;
- 	
-	begin 
+
+	begin
 
 	v_action_id := acs_object.new (
 			object_id	=> 	action_id,
@@ -99,16 +34,16 @@ as
 
 
         procedure del (
-		action_id  as_actions.action_id%TYPE 
+		action_id  as_actions.action_id%TYPE
 		) is
 	begin
 
 		delete from as_action_params where action_id=as_action.del.action_id;
 		delete from as_actions where action_id = as_action.del.action_id;
-        	acs_object.del(as_action.del.action_id);	
+        	acs_object.del(as_action.del.action_id);
 
-	end del;	
-	
+	end del;
+
 
 	procedure default_actions (
 		context_id	in acs_objects.context_id%TYPE,
@@ -118,18 +53,18 @@ as
 		v_action_id		as_actions.action_id%TYPE;
 
 	begin
-		
+
 	v_action_id := new (
 		action_id	=>	null,
 		name		=>	'Register User',
 		description	=>	'Register new users',
-		tcl_code	=>	'set password [ad_generate_random_string] 
+		tcl_code	=>	'set password [ad_generate_random_string]
 db_transaction {
 array set user_new_info [auth::create_user -username $user_name -email $email -first_names $first_names -last_name $last_name -password $password]
 }
 
 set admin_user_id [as::actions::get_admin_user_id]
-set administration_name [db_string admin_name "select first_names || '' '' || last_name from persons where 
+set administration_name [db_string admin_name "select first_names || '' '' || last_name from persons where
 person_id = :admin_user_id"]
 
 set system_name [ad_system_name]
@@ -150,16 +85,16 @@ acs_mail_lite::send -to_addr "$email" -from_addr "$admin_email" -subject "You ha
 	);
 
 
-insert into as_action_params (parameter_id, action_id,type, varname, description) 
+insert into as_action_params (parameter_id, action_id,type, varname, description)
 values (parameter_id_seq.nextval,v_action_id,'n','first_names','First Names of the User');
 
-insert into as_action_params (parameter_id, action_id,type, varname, description) 
+insert into as_action_params (parameter_id, action_id,type, varname, description)
 values (parameter_id_seq.nextval,v_action_id,'n','last_name','Last Name of the User');
 
-insert into as_action_params (parameter_id, action_id,type, varname, description) 
+insert into as_action_params (parameter_id, action_id,type, varname, description)
 values (parameter_id_seq.nextval,v_action_id,'n','email','Email of the User');
 
-insert into as_action_params (parameter_id, action_id,type, varname, description) 
+insert into as_action_params (parameter_id, action_id,type, varname, description)
 values (parameter_id_seq.nextval,v_action_id,'n','user_name','User name of the User');
 
 v_action_id:=  new (
@@ -173,7 +108,7 @@ events::registration::new -event_id $event_id -user_id $user_id',
 	);
 
 
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) 
+insert into as_action_params (parameter_id, action_id,type, varname, description,query)
 values (parameter_id_seq.nextval,v_action_id,'q','event_id','Event to add the user', 'select event_id,event_id from acs_events');
 
 v_action_id:= new (
@@ -206,14 +141,22 @@ if [catch {acs_mail_lite::send -to_addr $email -from_addr $email_from -subject $
 	);
 
 
-insert into as_action_params (parameter_id, action_id,type, varname, description,query) 
-values (parameter_id_seq.nextval,v_action_id,'q','community_id','Community to add the user', 
+insert into as_action_params (parameter_id, action_id,type, varname, description,query)
+values (parameter_id_seq.nextval,v_action_id,'q','community_id','Community to add the user',
 'select pretty_name,community_id from dotlrn_communities');
 
 
 	end default_actions;
-	
+
 end as_action;
 /
 show errors;
-	
+
+-- update entries containing deprecated code
+update as_actions set
+ tcl_code = replace(tcl_code, '[exists_and_not_null subject_id]', '[info exists subject_id] && $subject_id ne ""');
+
+update as_actions set
+ tcl_code = replace(tcl_code, '[ad_parameter -package_id [ad_acs_kernel_id] SystemURL ""]', '[parameter::get -package_id [ad_acs_kernel_id] -parameter SystemURL -default ""]');
+
+end;

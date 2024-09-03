@@ -1,5 +1,10 @@
-# Display short answer type data.
-# author Timo Hentschel (timo@timohentschel.de)
+ad_include_contract {
+    Display short answer type data.
+
+    @author Timo Hentschel (timo@timohentschel.de)
+} {
+    item_data_id:object_type(as_item_data)
+}
 
 db_1row item_type_data {}
 

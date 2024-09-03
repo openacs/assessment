@@ -15,34 +15,31 @@
     cs.percent_score
  
     from (select a.assessment_id, cr.title, cr.item_id, cr.revision_id,
-	  u.user_id, u.first_names, u.last_name
-	  
-	  from as_assessments a, cr_revisions cr, cr_items ci, acs_users_all u
-	  where a.assessment_id = cr.revision_id
-	  and cr.revision_id = ci.latest_revision
-	  and ci.parent_id = :folder_id
-          and u.user_id <> 0 
-	  and exists (
-                      select 1 from acs_object_party_privilege_map
-                      where object_id = :context_object_id
-                      and party_id = u.user_id
-                      and privilege = 'read')) a
+          u.user_id, u.first_names, u.last_name
+          
+          from as_assessments a, cr_revisions cr, cr_items ci, acs_users_all u
+          where a.assessment_id = cr.revision_id
+          and cr.revision_id = ci.latest_revision
+          and ci.parent_id = :folder_id
+          and u.user_id <> 0
+          and acs_permission__permission_p(:context_object_id, u.user_id, 'read')
+          ) a
     left join (select as_sessions.*, cr.item_id
-	       from as_sessions, cr_revisions cr
-	       where session_id in (select max(session_id)
-				    from as_sessions, acs_objects o
-				    where not completed_datetime is null
+               from as_sessions, cr_revisions cr
+               where session_id in (select max(session_id)
+                                    from as_sessions, acs_objects o
+                                    where not completed_datetime is null
                                     and o.object_id = session_id
                                     and o.package_id = :package_id
-				    group by subject_id, assessment_id )
+                                    group by subject_id, assessment_id )
                and revision_id=assessment_id) cs
     on (a.user_id = cs.subject_id and a.item_id = cs.item_id)
 
     left join (select *
-	       from as_sessions
-	       where session_id in (select max(session_id)
-				    from as_sessions, acs_objects o
-				    where completed_datetime is null
+               from as_sessions
+               where session_id in (select max(session_id)
+                                    from as_sessions, acs_objects o
+                                    where completed_datetime is null
                                     and o.object_id = session_id
                                     and o.package_id = :package_id
                                     group by subject_id, assessment_id)) ns
@@ -51,7 +48,7 @@
     where 1=1
     [list::filter_where_clauses -and -name "sessions"]
 
-    order by lower(a.title), lower(a.last_name), lower(a.first_names)
+
     </querytext>
   </fullquery>
 </queryset>

@@ -1,3 +1,9 @@
+ad_include_contract {
+    Session Show
+} {
+    session_id:object_type(as_sessions)
+}
+
 db_multirow -extend { value } items session_items {
 
     select i.as_item_id, i.subtext, cr.title, cr.description, ci.name,

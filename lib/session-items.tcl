@@ -48,7 +48,7 @@ if {$next_url eq "" && [lsearch $section_list $section_id] eq [llength $section_
 }
 
 if {$item_id_list ne ""} {
-    set items_clause "and i.as_item_id in ([join $item_id_list ,])"
+    set items_clause "and i.as_item_id in ([ns_dbquotelist $item_id_list])"
 } else {
     set items_clause ""
 }

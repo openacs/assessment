@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {AS_item Types}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {AS_item Types}</property>
 <property name="doc(title)">AS_item Types</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Overview</h2>
 
 This is a list of item types and <span style="font-weight: bold;">some of</span>
@@ -126,7 +130,7 @@ response items.</p><ul>
 <ul>
 <li>Allow Multiple: boolean (yes/no). This will determine if the
 respondee has the option to choose multiple possible answers for
-his response. In the datamodell this information is stored with the
+his response. In the data model this information is stored with the
 as_item_display_* object (e.g. along with the checkbox /
 select).</li><li>Increasing: boolean (all or nothing / increasing). All or
 nothing will either give 100%, if all correct answers are given, or
@@ -201,11 +205,11 @@ selects, or radiobuttons, or small textboxes, etc.</p>
 are displayed in each column.</p>
 </li><li>Composite multiple choice with Fill-in-Blank item:
 <p>Multiple Choice question with an additional short_text input
-field. Usually used for the "Other" thing</p>
+field. Usually, used for the "Other" thing</p>
 </li><li>Calculation:
 <p>This type of question will not be supported. But we should make
 sure we can take care of that type while importing the data from
-WebCT. Therefore we have to know the values. At a later stage, we
+WebCT. Therefore, we have to know the values. At a later stage, we
 will add more info on this.</p><ul>
 <li>Formula: string</li><li>Units</li><li>Value (in %): integer</li><li>Required (boolean)</li><li>Ignore Space (boolean)</li><li>Ignore spell checking (boolean)</li><li>General Feedback: richtext</li>
 </ul>

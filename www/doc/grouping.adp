@@ -1,12 +1,16 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Assessment}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Assessment}</property>
 <property name="doc(title)">Assessment</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <p>Here is a graphical overview of the subsystem in the Assessment
 package that organizes Items into Sections and whole
 Assessments:<br>
 </p>
-<center><p><img alt="Data modell graphic" src="images/assessment-groupingfocus.jpg" style="width: 797px; height: 565px;"></p></center>
+<center><p><img alt="Data model graphic" src="images/assessment-groupingfocus.jpg" style="width: 797px; height: 565px;"></p></center>
 <h2>Review of Specific Entities</h2>
 <ul>
 <li>Assessments (as_assessments) are the highest-level container in
@@ -34,16 +38,16 @@ subject needs to follow</li><li>mode - whether this is a standalone assessment (
 surveys), or if it provides an "assessment service" to
 another OpenACS app, or a "web service" via SOAP etc</li><li>editable_p - whether the response to the assessment is editable
 once an item has been responded to by the user.</li><li><span class="context"><span class="reg">anonymous_p - This
-shows whether the creator of the accessment will have the
+shows whether the creator of the assessment will have the
 possibility to see the personal details of the respondee or not. In
 particular this will exclude the user_id from the CSV files. It
 shall still be possible to see the user that have not finished the
 survey though.</span></span></li><li><span class="context"><span class="reg">secure_access_p - The
 assessment can only be taken if a secure connection (https) is
 used.</span></span></li><li><span class="context"><span class="reg">reuse_responses_p - If
-yes, the system will look for previous responses to the
-questions and prefill the last answer the respondee has given in
-the assessment form of the respondee</span></span></li><li><span class="context"><span class="reg">show_item_name_p - If
+yes, the system will look for previous responses to the questions
+and prefill the last answer the respondee has given in the
+assessment form of the respondee</span></span></li><li><span class="context"><span class="reg">show_item_name_p - If
 yes, the respondee will see the name of the item in addition to the
 item itself when taking the survey.</span></span></li><li>entry_page - The customizable entry page that will be displayed
 before the first response. </li><li>exit_page - Customizable exit / thank you page that will be
@@ -84,12 +88,12 @@ as_assessment_styles:</li>
 <li style="list-style: none; display: inline">
 <ul>
 <li>custom_header - Custom header (and footer) that will be
-displayed the respondee when answering an assessment.
+displayed to the respondee when answering an assessment.
 Possibility to include system variables (e.g. first name).<br>
 </li><li>custom_footer<br>
 </li><li>form_template - Style (form_template) that will be used for
 this assessment. You can either select an existing one or upload a
-new style as well as edit the currently chosen one (no datamodell
+new style as well as edit the currently chosen one (no data model
 but UI thought).<br>
 </li><li>
 <span class="context"><span class="reg">progress_bar: What kind
@@ -110,7 +114,7 @@ question.</span></li><li><span class="context">Sectioned</span></li>
 shareable_p boolean. As with Items and Sections, we instead will
 use the acs permission system:</p><ul>
 <li>Read: An assessment author (who is granted this permission) can
-reuse this assessment (NB: Usually the original author has admin
+reuse this assessment (NB: Usually, the original author has admin
 privileges.)</li><li>Write: Author can reuse and change this assessment.</li><li>Admin: Author can reuse, change and give permission on this
 assessment</li><li>Respond: The user can respond to the survey.<br>
 </li>
@@ -141,7 +145,7 @@ perform Section</li>
 shareable_p boolean. As with Items and Assessments, we instead will
 use the acs permission system:</p><ul>
 <li>Read: A section author (who is granted this permission) can
-reuse this section (NB: Usually the original author has admin
+reuse this section (NB: Usually, the original author has admin
 privileges.)</li><li>Write: Author can reuse and change this section.</li><li>Admin: Author can reuse, change and give permission on this
 section</li>
 </ul>

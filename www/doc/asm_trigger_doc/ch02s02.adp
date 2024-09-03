@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {2. Actions Administration}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {2. Actions Administration}</property>
 <property name="doc(title)">2. Actions Administration</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch02s01" leftLabel="Prev"
 			title="Chapter 2. User
@@ -18,7 +22,7 @@ dotlrn class/community.</p></li>
 action":</p><div class="screenshot"><div class="mediaobject"><img src="resources/add_action.JPG"></div></div><p>The action is formed mainlly by four things:</p><div class="orderedlist"><ol type="1">
 <li><p>Name: the desire name that gives an idea of what the action
 do.</p></li><li><p>Description: short explanation of what the action do, and how
-its done.</p></li><li><p>Tcl code: the code that its executed to performe the action.</p></li><li><p>Parameter: this are the variables needed in the tcl code, that
+its done.</p></li><li><p>Tcl code: the code that its executed to perform the action.</p></li><li><p>Parameter: this are the variables needed in the tcl code, that
 depends of the user.</p></li>
 </ol></div><div class="screenshot"><div class="mediaobject"><img src="resources/create_action.JPG"></div></div><p>After the action is created, a link to add the parameters is
 shown.</p><div class="screenshot"><div class="mediaobject"><img src="resources/add_params.JPG"></div></div><p>When the link is followed, then a form to create the parameter
@@ -30,7 +34,7 @@ returns.</p></li>
 </ol></div><div class="screenshot"><div class="mediaobject"><img src="resources/create_param.JPG"></div></div><p>To delete an action the link "delete" in the action
 administration page must be followed:</p><div class="screenshot"><div class="mediaobject"><img src="resources/delete_action.JPG"></div></div><p>Before deleting an action, a confirm message will be displayed,
 the action will not be deleted if there is some reference to this
-action (i.e. a trigger that wil execute this action).</p><div class="screenshot"><div class="mediaobject"><img src="resources/action_del_confirm.JPG"></div></div>
+action (i.e. a trigger that will execute this action).</p><div class="screenshot"><div class="mediaobject"><img src="resources/action_del_confirm.JPG"></div></div>
 </div>
 <include src="/packages/acs-core-docs/lib/navfooter"
 			leftLink="ch02s01" leftLabel="Prev" leftTitle="1. Manage

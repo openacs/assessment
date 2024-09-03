@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {As_Item Display Types}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {As_Item Display Types}</property>
 <property name="doc(title)">As_Item Display Types</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2><span class="context">Overview</span></h2>
 <span class="context">Displaying items to users has a couple of
 challenges. First of all the display of a single item can be
@@ -52,10 +56,9 @@ the "question"</span></li>
 </li><li><span class="context">html_display_options - field to specify
 other stuff like textarea dimensions ("rows=10 cols=50"
 eg)</span></li><li><span class="context"><span class="context"><span class="reg">as_item_default - optional field that sets what the as_item
-will display when first output (eg text in a textbox; eg the
-defaults that ad_dateentrywidget expects: "" for "no
-date", "0" for "today", or else some
-specific date set by the author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
+will display when first output (eg text in a textbox, such as the
+defaults from formwidgets, or else some specific date set by the
+author; see <a href="http://www.epimetrics.com/groups/Bay%20Area%20OpenACS%20Users%20Group/questionnaires/index#Date%20Test">
 this example</a>)</span></span></span></li>
 </ul>
 <p>Depending on the presentation_types <font color="red">additional
@@ -95,7 +98,8 @@ entry (sort_order field).</li>
 </ul>
 </li><li>checkbox - multiple-choice multiple-option
 <ul>
-<li>choice_orientation (see above)</li><li>allow_multiple_p - Is it allow one to select multiple values ?</li><li>sort_order: Numerical, alphabetic, randomized or by order of
+<li>choice_orientation (see above)</li><li>allow_multiple_p - Is it allow one to select multiple values
+?</li><li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li>
 </ul>
 </li><li>select - multiple-option displayed in "popup
@@ -144,10 +148,10 @@ attributes:<br>
 <ul>
 <li>Name: text. Name of the section like "test view
 sorted"</li><li>Number of questions per page: integer. THIS HAS TO BE CHANGED
-IN THE DATAMODELL FROM PAGINATION_STYLE. How many questions shall
-be displayed per page in this section. Usually the answer would be
+IN THE DATA MODEL FROM PAGINATION_STYLE. How many questions shall
+be displayed per page in this section. Usually, the answer would be
 "" for all questions on one page (default), or
-"1" for one question per page (a.k.a. one question at a
+"1" for one question per page (aka one question at a
 time), but any number is imagineable.</li><li>
 <span class="context"><span class="reg">ADP style: ADP to
 choose from that will control the makeup of the section along with
@@ -167,7 +171,7 @@ answered separately, even if we display multiple answers? If yes,
 display a "save" button next to each answer along with
 green "V" if the answer has been already submitted. To
 finish the section, you still have to click on the OK button at the
-buttom. Once the section is finished all answers that have not been
+bottom. Once the section is finished all answers that have not been
 separately submitted will be treated as not being submitted at
 all.<br>
 </li>
@@ -175,5 +179,5 @@ all.<br>
 
 Additionally each section has certain parameters that determine the
 look and feel of the section itself. Luckily it is not necessary to
-have differing attributes for the sections, therefore all these
+have differing attributes for the sections, therefore, all these
 display attributes can be found with the <a href="grouping">section and assessment specification</a>

@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {6. Trigger Administration}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {6. Trigger Administration}</property>
 <property name="doc(title)">6. Trigger Administration</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <include src="/packages/acs-core-docs/lib/navheader"
 			leftLink="ch02s05" leftLabel="Prev"
 			title="Chapter 2. User
@@ -12,7 +16,7 @@ Manual"
 <a name="d0e259" id="d0e259"></a>6. Trigger Administration</h2></div></div></div><p>The trigger administration page can be reached from two
 different links, the link "Administer Triggers" in the
 action bar of each section, or from the link that show the number
-of triggers related to an item.</p><div class="screenshot"><div class="mediaobject"><img src="resources/checks_admin.JPG"></div></div><p>If the trigger administration page is reached from thi link of
+of triggers related to an item.</p><div class="screenshot"><div class="mediaobject"><img src="resources/checks_admin.JPG"></div></div><p>If the trigger administration page is reached from this link of
 the section, all the triggers related to the items of the section
 will be display, this allowst to manage the order of the execution
 of the actions when they are executed immediately or at the end or

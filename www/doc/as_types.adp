@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/assessment {Assessment}} {Item Types and Item Display Types}</property>
+<property name="context">{/doc/assessment/ {Assessment}} {Item Types and Item Display Types}</property>
 <property name="doc(title)">Item Types and Item Display Types</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2><span class="context">Overview</span></h2>
 <p><span class="context">What to do to add new item types or item
 display types:</span></p>
@@ -10,7 +14,7 @@ display types:</span></p>
 assessment-item-types-create.sql</span></li><li><span class="context">add entry to matrix table item_type -&gt;
 display_type in assessment-types-create.sql</span></li><li><span class="context">add content type data to
 tcl/as-install-procs.tcl. adhere to the naming
-standards!!</span></li><li><span class="context">add tcl procs to
+standards!!</span></li><li><span class="context">add Tcl procs to
 tcl/as-item-type-$$-procs or tcl/as-item-display-$$-procs with
 ::new, ::edit, ::copy procs. adhere to naming
 standards!!</span></li><li><span class="context">add admin pages to add new instance:
