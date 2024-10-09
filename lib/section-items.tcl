@@ -37,7 +37,7 @@ db_multirow -extend {
     if {$presentation_type eq "fitb"} {
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
-    array set item [as::item::item_data -as_item_id $as_item_id]
+    set item [as::item::item_data -as_item_id $as_item_id]
 
     set item_edit_url [export_vars -base item-edit-general {as_item_id section_id assessment_id return_url}]
     set item_copy_url [export_vars -base item-copy {as_item_id section_id assessment_id return_url {after $sort_order}}]
@@ -50,17 +50,13 @@ db_multirow -extend {
     set checks_admin_url [export_vars -base "../asm-admin/checks-admin" {section_id assessment_id {item_id $as_item_id}}]
 
     if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
-        array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
-        set choice_orientation $type(choice_orientation)
-        #        set allow_other_p $item(allow_other_p)
-        array unset type
+        set type [as::item_display_$presentation_type\::data -type_id [dict get $item display_type_id]]
+        set choice_orientation [dict get $type choice_orientation]
     } else {
         set choice_orientation ""
-        #        set allow_other_p "f"
     }
 
-    set item_type $item(item_type)
-    array unset item
+    set item_type [dict get $item item_type]
 
     if {$points eq ""} {
         set points 0

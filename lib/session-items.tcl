@@ -68,7 +68,7 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     set results_edit_url [export_vars -base "${admin_package_url}results-edit" {session_id section_id as_item_id}]
 
     set default_value [as::item_data::get -subject_id $subject_id -as_item_id $as_item_id -session_id $session_id]
-    array set item [as::item::item_data -as_item_id $as_item_id]
+    set item [as::item::item_data -as_item_id $as_item_id]
 
     set presentation_type [as::item_form::add_item_to_form -name session_results_$section_id -section_id $section_id -item_id $as_item_id -session_id $session_id -default_value $default_value -show_feedback $show_feedback -random_p $assessment_data(random_p)]
 
@@ -83,9 +83,8 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     }
 
     if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
-        array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
-        set choice_orientation $type(choice_orientation)
-        array unset type
+        set type [as::item_display_$presentation_type\::data -type_id [dict get $item display_type_id]]
+        set choice_orientation [dict get $type choice_orientation]
     } else {
         set choice_orientation ""
     }
@@ -95,10 +94,8 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
     if {$default_value ne ""} {
-        array set values $default_value
-        set result_points $values(points)
-        set item_data_id $values(item_data_id)
-        array unset values
+        set result_points [dict get $default_value points]
+        set item_data_id  [dict get $default_value item_data_id]
         set answered_p t
         #ns_log notice "points = $points result_points= $result_points"
         if { $points != 0 } {
@@ -201,7 +198,6 @@ db_multirow -extend { presentation_type html result_points feedback answered_p c
         set answered_p f
     }
 
-#    set content [as::assessment::display_content -content_id $item(content_rev_id) -filename $item(content_filename) -content_type $item(content_type)]
     set content $question_text
 
     if { $has_feedback_p == 1 } {

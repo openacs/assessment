@@ -84,11 +84,9 @@ db_multirow -extend { presentation_type html choice_orientation } items items {}
         regsub -all -line -nocase -- {<textbox as_item_choice_id=} $title "<input name=response_to_item.${as_item_id}_" html
     }
     if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
-	array set item [as::item::item_data -as_item_id $as_item_id]
-	array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
-	set choice_orientation $type(choice_orientation)
-	array unset type
-	array unset item
+	set item [as::item::item_data -as_item_id $as_item_id]
+	set type [as::item_display_$presentation_type\::data -type_id [dict get $item display_type_id]]
+	set choice_orientation [dict get $type choice_orientation]
     } else {
 	set choice_orientation ""
     }

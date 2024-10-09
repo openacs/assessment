@@ -97,15 +97,14 @@ ad_form -name assessment_export -action results-export -form {
 		if {$item_type eq "mc"} {
 		    lappend mc_item_list $as_item_id		    
 		} else {
-		    array set results [as::item_type_$item_type\::results -as_item_item_id $as_item_id -section_item_id $section_item_id -data_type $data_type -sessions $session_list]
+		    set results [as::item_type_$item_type\::results -as_item_item_id $as_item_id -section_item_id $section_item_id -data_type $data_type -sessions $session_list]
 		    foreach session_id $session_list {
-			if {[info exists results($session_id)]} {
-			    set csv_${section_id}_${as_item_id}($session_id) [as::assessment::quote_export -text $results($session_id)]
+			if {[dict exists $results $session_id]} {
+			    set csv_${section_id}_${as_item_id}($session_id) [as::assessment::quote_export -text [dict get $results $session_id]]
 			} else {
 			    set csv_${section_id}_${as_item_id}($session_id) ""
 			}
 		    }
-		    array unset results
 		}
 	    }
 
@@ -128,7 +127,6 @@ ad_form -name assessment_export -action results-export -form {
 			}
 		    }
 		}
-		array unset results
 	    }
 	}
     }

@@ -160,10 +160,9 @@ ad_proc -public as::item_type_mc::render {
 
     set defaults ""
     if {$default_value ne ""} {
-        array set values $default_value
-        set defaults $values(choice_answer)
+        set defaults [dict get $default_value choice_answer]
         if {$allow_other_p} {
-            set defaults [list $defaults $values(clob_answer)]
+            set defaults [list $defaults [dict get $default_value clob_answer]]
         }
     }
     if {$session_id ne ""} {
@@ -290,7 +289,7 @@ ad_proc -public as::item_type_mc::render {
         for {set position 1} {$position <= $max_pos} {incr position} {
             if {[info exists fixed_pos($position)]} {
                 lappend display_choices $fixed_pos($position)
-                array unset fixed_pos $position
+                unset fixed_pos($position)
             } elseif {[llength $open_positions] > 0} {
                 lappend display_choices [lindex $open_positions 0]
                 set open_positions [lreplace $open_positions 0 0]
@@ -336,42 +335,42 @@ ad_proc -public as::item_type_mc::process {
     @author Timo Hentschel (timo@timohentschel.de)
     @creation-date 2004-12-11
 } {
-    array set type [util_memoize [list as::item_type_mc::data -type_id $type_id]]
-    array set choices $type(choices)
-    if {[info exists type(correct_choices)]} {
-        array set correct_choices $type(correct_choices)
+    set type [util_memoize [list as::item_type_mc::data -type_id $type_id]]
+    set choices [dict get $type choices]
+    if {[dict exists $type correct_choices]} {
+        set correct_choices [dict get $type correct_choices]
     }
 
-    if {$type(increasing_p) == "t"} {
+    if {[dict get $type increasing_p] == "t"} {
     # if not all correct answers are given, award fraction of the points
         set percent 0
         foreach choice_id $response {
-            incr percent $choices($choice_id)
+            incr percent [dict get $choices $choice_id]
         }
     } else {
     # award 100% points if and only if all correct answers are given
         set count_correct 0
-        if {[array exists correct_choices] && [lsort -integer $response] == [lsort -integer [array names correct_choices]]} {
+        if {[info exists correct_choices] && [lsort -integer $response] == [lsort -integer [dict keys $correct_choices]]} {
             set points $max_points
-        } elseif {[array size correct_choices] > 0} {
+        } elseif {[llength $correct_choices] > 0} {
         # FIXME !! create setting for partial credit or use existing one
             foreach elm $response {
-                if {[lsearch [array names correct_choices] $elm] > -1} {
+                if {[dict exists $correct_choices $elm]} {
                     incr count_correct
                 }
             }
-            set points [expr {$count_correct / (0.0 + [array size correct_choices]) * $max_points}]
+            set points [expr {$count_correct / (0.0 + [dict size $correct_choices]) * $max_points}]
         } else {
             set points 0
         }
     }
 
-    if {$type(allow_negative_p) == "f" && $points < 0} {
+    if {[dict get $type allow_negative_p] == "f" && $points < 0} {
         # don't allow negative percentage
         set points 0
     }
 
-    if {$type(allow_other_p)} {
+    if {[dict get $type allow_other_p]} {
         # this is a pain we need display type to get the value
         set widget [as::item_type_mc::form_widget -type_id $type_id]
         set response_value [template::util::${widget}_text::get_property ${widget}_value $response]
@@ -414,14 +413,11 @@ ad_proc -public as::item_type_mc::data {
 
     db_foreach check_choices {} {
         if {$correct_answer_p == "t"} {
-            set correct_choices($choice_id) $percent_score
+            lappend type(correct_choices) \
+                $choice_id $percent_score
         }
-        set choices($choice_id) $percent_score
-    }
-
-    set type(choices) [array get choices]
-    if {[array exists correct_choices]} {
-        set type(correct_choices) [array get correct_choices]
+        lappend type(choices) \
+            $choice_id $percent_score
     }
 
     return [array get type]
@@ -439,23 +435,21 @@ ad_proc -public as::item_type_mc::results {
     @creation-date 2005-01-26
 } {
 
+    set results [dict create]
+
     db_foreach get_results {} {
         if {$text_value eq ""} {
-            lappend results($session_id) [as::assessment::quote_export -text $title]
+            dict lappend results $session_id [as::assessment::quote_export -text $title]
         } else {
-            lappend results($session_id) [as::assessment::quote_export -text $text_value]
+            dict lappend results $session_id [as::assessment::quote_export -text $text_value]
         }
     }
 
-    foreach session_id [array names results] {
-        set results($session_id) [join $results($session_id) ","]
+    foreach {session_id result} $results {
+        dict set results $session_id [join $result ","]
     }
 
-    if {[array exists results]} {
-        return [array get results]
-    } else {
-        return
-    }
+    return $results
 }
 
 ad_proc -private as::item_type_mc::add_choices_to_form {
@@ -528,19 +522,16 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     @author Dave Bauer (dave@solutiongrove.com)
     @creation-date 2006-10-25
 } {
-    array set choice $choices
-    array set correct $correct_choices
-
     set num_answers 0
     set num_correct_answers 0
 
-    foreach c [array names choice] {
-        if {$choice($c) ne ""} {
+    foreach {c v} $choices {
+        if {$v ne ""} {
             incr num_answers
         }
     }
-    foreach c [array names correct] {
-        if {$correct($c) == "t"} {
+    foreach {c v} $correct_choices {
+        if {$v == "t"} {
             incr num_correct_answers
         }
     }
@@ -580,17 +571,17 @@ ad_proc -private as::item_type_mc::add_to_assessment {
     }
 
     set count 0
-    foreach i [lsort -integer [array names choice]] {
-        if {$choice($i) ne ""} {
+    foreach i [lsort -integer [dict keys $choices]] {
+        if {[dict get $choices $i] ne ""} {
             incr count
             set choice_id [as::item_choice::new -mc_id $mc_id \
-                               -title $choice($i) \
+                               -title [dict get $choices $i] \
                                -numeric_value "" \
                                -text_value "" \
                                -content_value "" \
                                -feedback_text "" \
                                -selected_p "" \
-                               -correct_answer_p [expr {[info exists correct($i)] ? "t" : "f"}] \
+                               -correct_answer_p [expr {[dict exists $correct_choices $i] ? "t" : "f"}] \
                                -sort_order $count \
                                -percent_score ""]
 

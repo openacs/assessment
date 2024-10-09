@@ -448,11 +448,9 @@ foreach one_item $item_list {
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
 
     if {$presentation_type eq "rb" || $presentation_type eq "cb"} {
-        array set item [as::item::item_data -as_item_id $as_item_id]
-        array set type [as::item_display_$presentation_type\::data -type_id $item(display_type_id)]
-        set choice_orientation $type(choice_orientation)
-        array unset item
-        array unset type
+        set item [as::item::item_data -as_item_id $as_item_id]
+        set type [as::item_display_$presentation_type\::data -type_id [dict get $item display_type_id]]
+        set choice_orientation [dict get $type choice_orientation]
     } else {
         set choice_orientation ""
     }
