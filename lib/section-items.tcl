@@ -17,19 +17,19 @@ ad_form -name admin_section_${section_id} -form {
     {section_id:text(hidden) {value $section_id}}
 } -has_submit 1
 
-db_multirow -extend { 
-    checks_related 
-    presentation_type 
-    html 
-    item_type 
-    choice_orientation 
-    allow_other_p 
-    item_edit_url 
-    item_copy_url 
-    item_delete_url 
-    item_add_url 
-    item_swap_up_url 
-    item_swap_down_url 
+db_multirow -extend {
+    checks_related
+    presentation_type
+    html
+    item_type
+    choice_orientation
+    allow_other_p
+    item_edit_url
+    item_copy_url
+    item_delete_url
+    item_add_url
+    item_swap_up_url
+    item_swap_down_url
     add_edit_check_url
     checks_admin_url
 } items section_items {} {
@@ -66,8 +66,8 @@ db_multirow -extend {
         set points 0
     }
     set max_time_to_complete [as::assessment::pretty_time -seconds $max_time_to_complete]
-    
-    set checks [as::section::checks_list -assessment_id $assessment_id -section_id $section_id] 
+
+    set checks [as::section::checks_list -assessment_id $assessment_id -section_id $section_id]
     set checks_related 0
     #    ns_log notice "[llength $checks]"
     foreach  check_sql $checks {
@@ -76,7 +76,7 @@ db_multirow -extend {
         if {$item_id == $as_item_id_i} {
             incr checks_related
         }
-        
+
     }
 }
 
