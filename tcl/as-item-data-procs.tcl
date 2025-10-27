@@ -39,6 +39,7 @@ ad_proc -public as::item_data::new {
 
     # Insert as_item_data in the CR (and as_item_data table) getting the revision_id (item_data_id)
     set transaction_successful_p 0
+    set retry 5
 
     while { ! $transaction_successful_p } {
 	db_transaction {
@@ -85,7 +86,11 @@ ad_proc -public as::item_data::new {
 
 	    set transaction_successful_p 1
 	} on_error {
-	    ns_log notice "as::item_data::new: Transaction Error: $errmsg\nFull info: $::errorInfo"
+	    ns_log warning "as::item_data::new: Transaction Error: $errmsg\nFull info: $::errorInfo\nretry: $retry"
+            if {[incr retry -1] < 1} {
+                ns_log error "as::item_data::new: Transaction failed after retries"
+                ad_script_abort
+            }
 	}
     }
 

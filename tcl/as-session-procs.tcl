@@ -37,6 +37,7 @@ ad_proc -public as::session::new {
     # Insert as_session in the CR (and as_sessions table) getting the revision_id (session_id)
 
     set transaction_successful_p 0
+    set retry 5
 
     while { ! $transaction_successful_p } {
 	db_transaction {
@@ -61,7 +62,11 @@ ad_proc -public as::session::new {
 						    [list consent_timestamp $consent_timestamp] ] ]
 	    set transaction_successful_p 1
 	} on_error {
-	    ns_log notice "as::session::new: Transaction Error: $errmsg"
+	    ns_log notice "as::session::new: Transaction Error: $errmsg retry: $retry"
+            if {[incr retry -1] < 1} {
+                ns_log error "as::session::new: Transaction failed after retries"
+                ad_script_abort
+            }            
 	}
     }
 #    }
