@@ -69,7 +69,7 @@ shall be displayed to the respondee (All, none, correct,
 incorrect). Correct and Incorrect will only show the feedback_text
 if the response was correct or incorrect.</li><li><span class="context"><span class="reg"><span class="reg">section_navigation - How shall the navigation
 happen<br>
-</span></span></span></li><li style="list-style: none; display: inline"><ul>
+</span></span></span></li><li style="list-style: none"><ul>
 <li><span class="context"><span class="reg"><span class="reg">default path - Order given by the relationship between
 assessment and section (the order value in cr_rels, if this is
 used).<br>
@@ -85,7 +85,7 @@ within a department) they are covered in the
 as_assessment_styles:</li>
 </ul>
 <ul>
-<li style="list-style: none; display: inline">
+<li style="list-style: none">
 <ul>
 <li>custom_header - Custom header (and footer) that will be
 displayed to the respondee when answering an assessment.

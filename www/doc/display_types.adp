@@ -103,7 +103,7 @@ entry (sort_order field).</li>
 entry (sort_order field).</li>
 </ul>
 </li><li>select - multiple-option displayed in "popup
-menu"</li><li style="list-style: none; display: inline"><ul>
+menu"</li><li style="list-style: none"><ul>
 <li>sort_order: Numerical, alphabetic, randomized or by order of
 entry (sort_order field).</li><li><span class="context"><span class="reg">allow_multiple_p - Is
 it allow one to select multiple values ?</span></span></li>
